@@ -54,8 +54,8 @@
 </template>
 
 <script>
-  import ToolbarSimple from '@/layouts/FullPageSimple/Toolbar'
-  import Countdown from '@/components/Elements/Countdown'
+  import ToolbarSimple from '@/views/Components/App/FullPageSimple/Toolbar'
+  import Countdown from '@/views/Components/Elements/Countdown'
   import { required, email } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
 

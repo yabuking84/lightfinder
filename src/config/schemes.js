@@ -1,8 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
-
 export default {
   name: 'Default-light',
   dark: false,
-  scheme: 'md-white-500',
-  primary: colors.shades.white
+  // scheme: 'md-deep-purple-a700-scheme',
+  scheme: 'md-cyan-a700-scheme',
+  primary: colors.cyan.base
 }

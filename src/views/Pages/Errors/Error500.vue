@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import ToolbarSimple from '@/layouts/FullPageSimple/Toolbar'
+  import ToolbarSimple from '@/views/Components/App/FullPageSimple/Toolbar'
   export default {
     data () {
       return {

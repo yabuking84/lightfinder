@@ -48,7 +48,7 @@
 <script>
   import validationLangMixin from '@/mixins/validationLangMixin'
   import { required, sameAs } from 'vuelidate/lib/validators'
-  import Password from '@/components/PasswordStrength.vue'
+  import Password from '@/views/Components/PasswordStrength.vue'
 
   export default {
     props: ['email', 'code'],

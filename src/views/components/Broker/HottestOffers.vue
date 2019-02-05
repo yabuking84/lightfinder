@@ -27,7 +27,7 @@
 export default {
 	data: () => ({
 		items: [
-			{ src: '/static/bats/boats-uploaded/boat1.jpg' },
+			{ src: '/static/boats/boats-uploaded/boat1.jpg' },
 			{ src: '/static/boats/boats-uploaded/boat2.jpg' },
 			{ src: '/static/boats/boats-uploaded/boat3.jpg' },
 			{ src: '/static/boats/boats-uploaded/boat4.jpg' },

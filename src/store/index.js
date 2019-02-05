@@ -6,6 +6,9 @@ import getters from './getters'
 import navigation from './modules/navigation'
 import swatch from './modules/swatch'
 
+// import axios from 'axios';
+import auth from './modules/auth'
+ 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -15,6 +18,7 @@ export const store = new Vuex.Store({
   actions,
   modules: {
     navigation,
-    swatch
+    swatch,
+    auth,
   }
 })

@@ -1,56 +1,96 @@
-
 import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
-/* list of pages */
-import Dashboard from '@/views/Pages/Dashboard/Dashboard'
-import Inquiries from '@/views/Pages/Inquiries/Inquiries'
-import BuyerRegistration from '@/views/Pages/Registration/Register'
-import SellerRegistration from '@/views/Pages/Registration/SellerRegistration'
-import TermsandCondition from '@/views/Pages/Terms/index'
 
-export const routes =
- [
-   {
-	   path: '/',
-	   redirect: '/dashboard/' 
-   },
-   { 
-  	path: '/dashboard/',
-    name: 'dashboard',
-    components: { 
-    	default: Dashboard, sidebar: AppSidebar, header: AppToolbar, footer: AppFooter }
-   },
-   {
-  	path: '/inquiry',
-  	name: 'inquiry',
-  	components: { 
-      default: Inquiries, sidebar: AppSidebar, header: AppToolbar, footer: AppFooter }
-   },
-   {
-   	path: '/buyer/registration',
-   	name: 'registration',
-   	components: {
-   		default: BuyerRegistration 
-   	},
-   	meta: { title: 'Buyer Registration'}
-   },
-   
-   {
-   	path: '/packages',
-   	name: 'packages',
-   	components: {
-   		default: Inquiries, sidebar: AppSidebar, header:AppToolbar, footer:AppFooter
-   	}
-   },
-   {
-   	path: '/supplier/terms-and-conditions',
-   	name: 'terms-and-conditions',
-   	components: {
-   		default: TermsandCondition
-   	}
-   }
+
+import Contacts from '@/views/Applications/Contacts'
+import Chat from '@/views/Applications/Chat'
+
+// Pages
+import RegisterPage from '@/views/Pages/Authentication/RegisterPage'
+import AuthPage from '@/views/Pages/Authentication/AuthPage'
+import ForgotPasswordPage from '@/views/Pages/Authentication/ForgotPasswordPage'
+import LockScreenPage from '@/views/Pages/Authentication/LockScreenPage'
+
+import Error404 from '@/views/Pages/Errors/Error404'
+import Error500 from '@/views/Pages/Errors/Error500'
+
+import PricingStyleOne from '@/views/Pages/Pricing/PricingStyleOne'
+import PricingStyleTwo from '@/views/Pages/Pricing/PricingStyleTwo'
+
+import CountdownPage from '@/views/Pages/CountdownPage'
+import MaintenancePage from '@/views/Pages/MaintenancePage'
+import ProfileView from '@/views/Pages/Profile'
+
+
+
+
+
+
+import Home from '@/views/Pages/Home'
+import LoginPage from '@/views/Pages/Authentication/LoginPage'
+import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
+
+
+const routes = 
+[
+
+    // Pages
+    {
+        path: '/',
+        name: 'Home',
+        components: { 
+            default: Home, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+        },
+        meta: {
+            // layout: 'auth',
+            requiresAuth: true,
+        },
+    },
+
+
+
+    {
+        path: '/login',
+        name: 'Login',
+        component: LoginPage,
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: LogoutPage,
+    },
+
+ 
+
 
 ]
-	
+
+
+
+import AdminRoutes from '@/router/AdminRoutes.js'
+import BrokerRoutes from '@/router/BrokerRoutes.js'
+import OwnerRoutes from '@/router/OwnerRoutes.js'
+
+// Push routes here
+var i;
+for (i = 0; i < BrokerRoutes.length; i++) {     
+    routes.push(BrokerRoutes[i]);
+}
+for (i = 0; i < OwnerRoutes.length; i++) {     
+    routes.push(OwnerRoutes[i]);
+}
+for (i = 0; i < AdminRoutes.length; i++) {     
+    routes.push(AdminRoutes[i]);
+}
+
+
+// console.log(routes);
+
+
+
+export {routes};

@@ -67,7 +67,7 @@
 
 <script>
   import { rgba as Gradients } from '@/data/gradients'
-  import ToolbarSimple from '@/layouts/FullPageSimple/Toolbar'
+  import ToolbarSimple from '@/views/Components/App/FullPageSimple/Toolbar'
   export default {
     data () {
       return {

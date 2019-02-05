@@ -11,7 +11,10 @@
           >
             <v-layout align-center justify-center row fill-height wrap>
               <v-flex xs12 class="text-xs-center mt-3">
-                <img src="/static/vuse-circle-white.svg" alt="Vuse" class="text-xs-center" height="100">
+                
+                <!-- <img src="/static/vuse-circle-white.svg" alt="Vuse" class="text-xs-center" height="100"> -->
+                <img src="/static/logos/liliwaters-logo.png" alt="Lili Waters" class="text-xs-center" id="logo" >
+                
                 <div class="headline">Sign in to your account</div>
                 <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
                   <v-layout wrap row pa-4>
@@ -55,17 +58,18 @@
                             color="act"
                             type="submit"
                             :disabled="$v.$invalid"
+                            :loading="loading"
                             block
                             :class="$v.$invalid ? '' : 'white--text'"
                           >Login</v-btn>
                         </v-flex>
                         <!-- Forgot password -->
                         <v-flex xs12>
-                          <router-link :to="{ name: 'pages/authentication/ForgotPasswordPage' }" tag="div"
+                          <!-- <router-link :to="{ name: 'pages/authentication/ForgotPasswordPage' }" tag="div"
                             class="grey--text cursor-pointer"
                           >
                             <strong>Forgot Password ?</strong>
-                          </router-link>
+                          </router-link> -->
                         </v-flex>
                       </v-layout>
                     </v-flex>
@@ -77,6 +81,7 @@
         </v-flex>
       </v-layout>
     </v-container>
+
     <v-snackbar
       v-model="snackbar"
       absolute
@@ -87,6 +92,18 @@
       <span>Sign in successful!</span>
       <v-icon dark>check_circle</v-icon>
     </v-snackbar>
+
+    <v-snackbar
+      v-model="snackbar_error"
+      absolute
+      top
+      right
+      color="red"
+    >
+      <span>Sign in unsuccessful!</span>
+      <v-icon dark>error</v-icon>
+    </v-snackbar>
+
   </v-img>
 </template>
 
@@ -94,8 +111,8 @@
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
   const defaultForm = {
-    email: '',
-    password: '',
+    email: 'admin@liliwaters.com',
+    password: 'password',
     remeberme: false
   }
   export default {
@@ -118,26 +135,61 @@
         }
       }
     },
-    data () {
-      return {
+
+    data: () => ({      
         form: Object.assign({}, defaultForm),
         snackbar: false,
-        backgroundImg: '/static/doc-images/HexesisMaterial01.png'
-      }
-    },
+        snackbar_error: false,
+        // backgroundImg: '/static/doc-images/HexesisMaterial01.png'
+        // backgroundImg: '/static/background-img/dubai-waters-blue-1.jpg'
+        backgroundImg: '/static/boats/boats-uploaded/boat4.jpg',
+        loading: false,
+        test: 'testes',
+        test2: 'testes2',
+    }),
     components: {
 
     },
     methods: {
+
       submit () {
-        this.snackbar = true
-        this.resetForm()
-        this.$v.$reset()
-        setTimeout(() => {
-          this.$router.push({
-            name: 'dashboard/Dashboardv1'
-          })
-        }, 2000)
+
+        // setTimeout(() => {
+        //   this.$router.push({
+        //     name: 'dashboard/Dashboardv1'
+        //   })
+        // }, 2000)
+
+
+        this.loading = true;
+        
+        this.$store.dispatch('auth/retrieveToken_a',{
+            username: this.form.email,
+            password: this.form.password,
+        }).then((response) => {
+            this.snackbar = true
+            this.snackbar_error = false
+            this.resetForm()
+            this.$v.$reset()
+
+            var vueThis = this;
+            setTimeout(function(){
+                vueThis.$store.dispatch('auth/loginSuccess_a',response);
+                vueThis.loading = false;
+            }, 1500, vueThis);
+
+            
+
+        }).catch((e) => {
+            this.snackbar = false
+            this.snackbar_error = true
+            this.loading = false;
+            console.log('Error: '+e);
+        }).finally(()=>{
+            console.log('finally');
+            this.loading = false;
+        });
+
       },
       resetForm () {
         this.form = Object.assign({}, defaultForm)
@@ -146,3 +198,14 @@
     }
   }
 </script>
+
+
+
+
+
+<style scoped>
+#logo {
+    width: 75%;
+    margin: 15px 0 30px -25px;
+}  
+</style>

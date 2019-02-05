@@ -2,12 +2,22 @@
   <v-app :dark="colorScheme.dark" :class="colorScheme.scheme">
     <router-view name="header"/>
     <router-view name="sidebar"/>
+
     <v-content>
-      <router-view/>
+        <router-view/>
     </v-content>
+
     <router-view name="footer"/>
-    <!-- <app-settings :drawer="subDrawer" @toggleSubDrawer="handleSubdrawer"></app-settings>     -->
+    
+    <!-- <app-settings :drawer="subDrawer" @toggleSubDrawer="handleSubdrawer"></app-settings> -->
     <!-- Toggle settings button -->
+
+    <!-- 
+    <v-btn fixed class="settings-btn" @click.stop="subDrawer = !subDrawer">
+        <v-icon light>settings</v-icon>
+    </v-btn> 
+    -->
+
   </v-app>
 </template>
 <script>
@@ -17,7 +27,7 @@ import AppSettings from '@/views/Components/AppSettings'
 export default {
   data () {
     return {
-      subDrawer: true
+      subDrawer: false
     }
   },
   computed: {
@@ -28,7 +38,6 @@ export default {
   components: {
     AppSettings
   },
-
   methods: {
     handleSubdrawer (value) {
       this.subDrawer = value

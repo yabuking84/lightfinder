@@ -109,7 +109,7 @@
 </template>
 <script>
   import ResizeMixin from '@/mixins/ResizeMixin'
-  import Password from '@/components/PasswordStrength.vue'
+  import Password from '@/views/Components/PasswordStrength.vue'
   import { required, sameAs } from 'vuelidate/lib/validators'
   import validationLangMixin from '@/mixins/validationLangMixin'
 

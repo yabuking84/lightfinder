@@ -7,12 +7,8 @@ import router from './router'
 import Vuetify from 'vuetify'
 
 import { store } from './store'
-
 import Components from '@/views/Components/Stock/index' // Rolling useful components (PUG)
 import Widgets from '@/views/Components/Widgets/index'
-
-// import Components from '@views/Component/Stock/index'
-// import Widgets from '@views/Component/Widgets/index'
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
@@ -27,7 +23,12 @@ import Vuebar from 'vuebars'
 import Trend from 'vuetrend'
 import {truncate} from 'lodash'
 
+
 import App from './App'
+
+
+
+
 
 Vue.config.productionTip = false
 Vue.config.debug = true
@@ -97,6 +98,69 @@ Vue.filter('truncate', function (value, args) {
 
 const i18n = createI18n()
 
+
+
+// Custom by tawing
+////////////////////////////////////////////////////
+import OwlCarousel from 'v-owl-carousel'
+Vue.component('carousel', OwlCarousel)
+
+
+
+
+
+// authentication
+import middleware from '@/router/middleware'
+router.beforeEach(middleware)
+
+////////////////////////////////////////////////////
+// Custom by tawing
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -105,3 +169,5 @@ new Vue({
   i18n,
   render: h => h(App)
 })
+
+

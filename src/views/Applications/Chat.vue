@@ -243,7 +243,7 @@
 <script>
   import moment from 'moment'
   import { groupBy, find } from 'lodash'
-  import ChatEditable from '@/components/Editable/ChatEditable'
+  import ChatEditable from '@/views/Components/Editable/ChatEditable'
   import { rgba as Gradients } from '@/data/gradients'
   import { groups, conversation, authUser } from '@/data/dummyData'
 
