@@ -8,8 +8,8 @@ import Vuetify from 'vuetify'
 
 import { store } from './store'
 
-import Components from '@/views/components/Stock/index' // Rolling useful components (PUG)
-import Widgets from '@/views/components/Widgets/index'
+import Components from '@/views/Components/Stock/index' // Rolling useful components (PUG)
+import Widgets from '@/views/Components/Widgets/index'
 
 // import Components from '@views/Component/Stock/index'
 // import Widgets from '@views/Component/Widgets/index'

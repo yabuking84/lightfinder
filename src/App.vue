@@ -12,7 +12,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import AppSettings from '@/views/components/AppSettings'
+import AppSettings from '@/views/Components/AppSettings'
 
 export default {
   data () {

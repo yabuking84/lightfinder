@@ -1,7 +1,7 @@
 
-import AppSidebar from '@/views/components/App/NavDrawer'
-import AppToolbar from '@/views/components/App/Toolbar'
-import AppFooter from '@/views/components/App/Footer'
+import AppSidebar from '@/views/Components/App/NavDrawer'
+import AppToolbar from '@/views/Components/App/Toolbar'
+import AppFooter from '@/views/Components/App/Footer'
 
 /* list of pages */
 import Dashboard from '@/views/Pages/Dashboard/Dashboard'
