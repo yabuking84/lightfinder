@@ -37,7 +37,7 @@
                         :error-messages="fieldErrors('form.password')"
                         @blur="$v.form.password.$touch()"
                       ></v-text-field>
-                      <div class="width-150x margin-horiz-center">
+                      <!-- <div class="width-150x margin-horiz-center">
                         <v-checkbox
                           color="primary"
                           v-model="form.rememberme"
@@ -47,7 +47,7 @@
                             Remember me
                           </div>
                         </v-checkbox>
-                      </div>
+                      </div> -->
                     </v-flex>
 
                     <v-flex xs12>
