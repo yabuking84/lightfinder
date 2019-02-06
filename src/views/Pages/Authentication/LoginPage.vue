@@ -13,7 +13,7 @@
               <v-flex xs12 class="text-xs-center mt-3">
                 
                 <!-- <img src="/static/vuse-circle-white.svg" alt="Vuse" class="text-xs-center" height="100"> -->
-                <img src="/static/logos/liliwaters-logo.png" alt="Lili Waters" class="text-xs-center" id="logo" >
+                <img src="/static/logos/logo-black.png" alt="Buy Any Light" class="text-xs-center" id="logo" >
                 
                 <div class="headline">Sign in to your account</div>
                 <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
@@ -40,7 +40,7 @@
                       <div class="width-150x margin-horiz-center">
                         <v-checkbox
                           color="primary"
-                          v-model="form.remeberme"
+                          v-model="form.rememberme"
                           required
                         >
                           <div slot="label" @click.stop="() => {}">
@@ -55,7 +55,7 @@
                         <!-- Login form submit -->
                         <v-flex xs12 class="no-mrpd">
                           <v-btn
-                            color="act"
+                            color="md-black-500"
                             type="submit"
                             :disabled="$v.$invalid"
                             :loading="loading"
@@ -111,9 +111,9 @@
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
   const defaultForm = {
-    email: 'admin@liliwaters.com',
+    email: 'admin@buyanylight.com',
     password: 'password',
-    remeberme: false
+    rememberme: false
   }
   export default {
     mixins: [validationMixin],
@@ -142,7 +142,8 @@
         snackbar_error: false,
         // backgroundImg: '/static/doc-images/HexesisMaterial01.png'
         // backgroundImg: '/static/background-img/dubai-waters-blue-1.jpg'
-        backgroundImg: '/static/boats/boats-uploaded/boat4.jpg',
+        // backgroundImg: '/static/boats/boats-uploaded/boat4.jpg',
+        backgroundImg: '/static/login_bg.jpg',
         loading: false,
         test: 'testes',
         test2: 'testes2',
@@ -206,6 +207,6 @@
 <style scoped>
 #logo {
     width: 75%;
-    margin: 15px 0 30px -25px;
+    margin: 15px 0 30px 15px;
 }  
 </style>

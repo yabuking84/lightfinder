@@ -6,7 +6,7 @@
  */
 export default {
 	navDrawerAlphaImage: '/static/sidebar-imgs/sb-bg7.jpg',
-	navDrawerScheme: 'md-cyan-500',
+	navDrawerScheme: 'md-black-500',
 	navToolbarScheme: 'md-white-500',
 	navFooterScheme: 'md-white-500',
 	alpha: false, // Transparent Background of the sidebar navigation
