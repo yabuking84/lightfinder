@@ -33,6 +33,8 @@ import LoginPage from '@/views/Pages/Authentication/LoginPage'
 import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
 
 
+
+
 const routes = 
 [
 
@@ -73,19 +75,15 @@ const routes =
 
 
 import AdminRoutes from '@/router/AdminRoutes.js'
-import BrokerRoutes from '@/router/BrokerRoutes.js'
-import OwnerRoutes from '@/router/OwnerRoutes.js'
+import SupplierRoutes from '@/router/SupplierRoutes.js'
 
 // Push routes here
 var i;
-for (i = 0; i < BrokerRoutes.length; i++) {     
-    routes.push(BrokerRoutes[i]);
-}
-for (i = 0; i < OwnerRoutes.length; i++) {     
-    routes.push(OwnerRoutes[i]);
-}
 for (i = 0; i < AdminRoutes.length; i++) {     
     routes.push(AdminRoutes[i]);
+}
+for (i = 0; i < SupplierRoutes.length; i++) {
+    routes.push(SupplierRoutes[i]);
 }
 
 
