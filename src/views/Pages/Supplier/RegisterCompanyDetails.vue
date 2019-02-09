@@ -8,8 +8,8 @@
 			  		<v-container pa-2 align-center justify-center>
 			  			<h2 class="pt-4 text-uppercase font-weight-medium text-lg-center">Company Information</h2>
 			  			<h4 class="font-weight-light text-lg-center">
-                               Just one more step, and you are good to go
-                         </h4>
+                   Just one more step, and you are good to go
+              </h4>
 
 			  		  	<CompanyFormDetailsComponent></CompanyFormDetailsComponent>
 

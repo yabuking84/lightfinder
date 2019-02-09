@@ -1,5 +1,7 @@
 <template>
-	 <v-stepper v-model="e6" vertical>
+	
+	<v-stepper v-model="e6" vertical>
+
     <v-stepper-step :complete="e6 > 1" step="1">
       Select an app
       <small>Summarize if needed</small>
@@ -33,6 +35,7 @@
       <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
       <v-btn flat>Cancel</v-btn>
     </v-stepper-content>
+
   </v-stepper>
 
 </template>

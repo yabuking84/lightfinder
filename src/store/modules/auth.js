@@ -16,7 +16,6 @@ const state = {
             headers: {'Authorization': "bearer " + (localStorage.getItem('access_token') || null)},
         },
     },
-
     auth_user: {
         name:      localStorage.getItem('name') || null,
         firstname: localStorage.getItem('firstname') || null,
@@ -25,7 +24,6 @@ const state = {
         avatar:    localStorage.getItem('avatar') || null,
         role:      localStorage.getItem('role') || null,
     },
- 
 }
 
 const mutations = {
@@ -38,8 +36,7 @@ const mutations = {
         state.token = null;
     },
 
-    SET_AUTHUSER_M(state,user){
-
+    SET_AUTHUSER_M(state,user) {
         state.auth_user.name       = user.data.firstname+" "+user.data.lastname;
         state.auth_user.firstname  = user.data.firstname;
         state.auth_user.lastname   = user.data.lastname;
@@ -48,8 +45,7 @@ const mutations = {
         state.auth_user.role       = user.role;
     },
 
-    DESTROY_AUTHUSER_M(state){
-
+    DESTROY_AUTHUSER_M(state) {
         state.auth_user.name       = null;
         state.auth_user.firstname  = null;
         state.auth_user.lastname   = null;
@@ -75,6 +71,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             // var url = "https://almani.ddns.net:2024/liliwatersapi/public/api/v1/auth/jwtlogin";
             var url = state.api_url.login;
+
             var payload = {
                 email: data.username,
                 password: data.password,
@@ -86,6 +83,7 @@ const actions = {
                 data: payload,
             })
             .then(response => {
+
                 const token = response.data.access_token.token;
                 const user = response.data.user;
                 
@@ -107,6 +105,7 @@ const actions = {
             .catch(error => {
                 reject(error)
             })
+
         });
     },
 
