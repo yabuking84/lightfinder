@@ -23,7 +23,7 @@
                               <SocialButtonCompenent></SocialButtonCompenent>   
                         </v-flex>
 
-                        <v-flex lg4 xs12>
+                        <v-flex lg4 xs12> 
                           <v-layout row wrap>
                               <v-card class="pa-5">
                                   <div class="headline font-weight-medium text-xs-center">SIGN UP</div>

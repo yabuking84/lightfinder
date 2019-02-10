@@ -15,6 +15,7 @@ import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
 import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
+import BuyerPackages from '@/views/Pages/Buyer/Packages'
 
 const meta = { 
     requiresAuth: true,
@@ -82,6 +83,14 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+        }
+    },
+
+    {
+        name: 'buyer-packages',
+        path: '/buyer/packages',
+        components: {
+            default: BuyerPackages
         }
     },
 

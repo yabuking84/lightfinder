@@ -3,16 +3,18 @@
   <v-img :src="backgroundImg" class="page-vimg with-header" >
       <img class="logo" src="/static/bal-logo.png">
 		<v-container>
-			<v-flex xs4 offset-xs4>
-			  	<v-card>
-			  		<v-container pa-2 align-center justify-center>
-			  			<h2 class="pt-4 text-uppercase font-weight-medium text-lg-center">ACCOUNT INFORMATION</h2>
-			  			<h4 class="font-weight-light text-lg-center">
+
+<v-layout align-center justify-center row fill-height>
+    <v-flex lg3 xs12>
+          <v-card>
+            <v-container pa-2 align-center justify-center>
+              <h2 class="pt-4 text-uppercase font-weight-medium text-lg-center">ACCOUNT INFORMATION</h2>
+              <h4 class="font-weight-light text-lg-center">
                                Just one more step, and you are good to go
                          </h4>
-			  		</v-container>
-						<BuyerFormDetailsComponent> </BuyerFormDetailsComponent>
-			  		 <v-container align-center justify-space-between fill-height>
+            </v-container>
+                 <BuyerFormDetailsComponent> </BuyerFormDetailsComponent>
+             <v-container align-center justify-space-between fill-height>
                            <div class="text-xs-center">
                                 <v-btn round large flat color="grey darken-1" class="font-weight-light" dark>
                                       <span class="text-uppercase l-spacing">
@@ -29,8 +31,13 @@
                                 </v-btn>
                           </div>
                       </v-container>  
-			  	</v-card>
-			</v-flex>
+                      
+          </v-card>
+      </v-flex>
+</v-layout>
+		
+
+
 		</v-container>			
   </v-img>
 </template>
