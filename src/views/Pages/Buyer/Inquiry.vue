@@ -5,8 +5,9 @@
 				<v-flex>
 					<h1>Buyer Inquiries</h1>		
 
-					
-					
+						
+
+					<AddInquiry></AddInquiry>
 
 					
 				</v-flex>
@@ -20,6 +21,7 @@
 
 <script>
 
+import AddInquiry from "@/views/Components/App/Buyer/AddInquiry";
 
 export default {
 	data: () => ({
@@ -27,6 +29,7 @@ export default {
 	}),
 
 	components: {
+		AddInquiry,
 	},
 
 	computed: {

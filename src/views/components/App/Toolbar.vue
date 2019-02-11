@@ -7,8 +7,8 @@
     app
     flat>
 
-    <!-- 
-    <v-toolbar-side-icon
+    
+    <!-- <v-toolbar-side-icon
       class="hidden-lg-and-up"
       @click.stop="$store.dispatch('toggleDrawer', ! navDrawer)"></v-toolbar-side-icon>
     <v-toolbar-title v-text="title" class="ml-0 hidden-lg-and-up"></v-toolbar-title>
@@ -26,7 +26,8 @@
         <v-icon slot="activator">fas fa-arrow-circle-left</v-icon>
         <span>Collapse</span>
       </v-tooltip>
-    </v-btn>
+    </v-btn> -->
+
 
     <v-btn icon :to="{name: 'Contacts'}" flat>
       <v-icon>contacts</v-icon>
@@ -34,7 +35,7 @@
     
     <v-btn icon :to="{name: 'Chat'}" flat>
       <v-icon>chat</v-icon>
-    </v-btn>  -->
+    </v-btn> 
    
 
     <v-spacer></v-spacer>
