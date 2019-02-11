@@ -6,6 +6,12 @@ import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
 
+import BuyerRegistration from '@/views/Pages/Buyer/Register'
+import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
+import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
+import BuyerPackages from '@/views/Pages/Buyer/Packages'
+
+
 const meta = { 
     requiresAuth: true,
     role: 2,
@@ -25,6 +31,7 @@ const meta = {
 
 
 export default [
+
     {
         name: 'BuyerHome',
         path: '/buyer/dashboard',
@@ -47,6 +54,39 @@ export default [
         },
         meta: meta,
     },    
+
+    {
+        name: 'BuyerRegistration',
+        path: '/buyer/register',
+        components: {
+            default: BuyerRegistration
+        }
+    },
+
+    {
+        name: 'BuyerRegistrationDetails',
+        path: '/buyer/details',
+        components: {
+            default: BuyerRegistrationDetails
+        }
+    },
+
+    {
+        name: 'BuyerRegisterTerms',
+        path: '/buyer/terms',
+        components: {
+            default: BuyerRegistrationTerms
+        }
+    },
+
+
+    {
+        name: 'BuyerPackages',
+        path: '/buyer/packages',
+        components: {
+            default: BuyerPackages
+        }
+    },
 
 ]
 
