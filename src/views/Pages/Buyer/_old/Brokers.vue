@@ -3,12 +3,8 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-					<h1>Buyer Inquiries</h1>		
+					<h1>Brokers</h1>		
 
-					
-					
-
-					
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -17,21 +13,15 @@
 
 
 
-
 <script>
+
 
 
 export default {
 	data: () => ({
-		
+		title: 'Brokers',
 	}),
 
-	components: {
-	},
-
-	computed: {
-
-	},
 }
 	
 </script>

@@ -2,29 +2,34 @@ import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
-import AdminHome from '@/views/Pages/Admin/Home'
-import AdminInquiry from '@/views/Pages/Admin/Inquiry'
+import BuyerHome from '@/views/Pages/Buyer/Home'
+import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
 
 const meta = { 
     requiresAuth: true,
-    role: 3,
+    role: 2,
     items: [
         {
             title: 'Dashboard',
-            name: 'AdminHome',
+            name: 'BuyerHome',
             icon: 'fas fa-th-large',
+        },            
+        {
+            title: 'Inquiries',
+            name: 'BuyerInquiry',
+            icon: 'search',
         },
-    ],    
+    ],        
 }
 
 
 export default [
     {
-        name: 'AdminHome',
-        path: '/admin/dashboard',
-        components: {
-            default: AdminHome, 
+        name: 'BuyerHome',
+        path: '/buyer/dashboard',
+        components: { 
+            default: BuyerHome, 
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
@@ -32,15 +37,16 @@ export default [
         meta: meta,
     },
     {
-        name: 'AdminInquiry',
-        path: '/admin/inquiry',
-        components: {
-            default: AdminInquiry, 
+        name: 'BuyerInquiry',
+        path: '/buyer/inquiry',
+        components: { 
+            default: BuyerInquiry, 
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
         },
         meta: meta,
     },    
+
 ]
 

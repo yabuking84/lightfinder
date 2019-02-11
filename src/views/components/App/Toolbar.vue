@@ -5,8 +5,7 @@
     :class="navToolbarScheme"
     :clipped-left="toolbarClippedLeft"
     app
-    flat
-  >
+    flat>
 
     <!-- 
     <v-toolbar-side-icon
@@ -35,17 +34,20 @@
     
     <v-btn icon :to="{name: 'Chat'}" flat>
       <v-icon>chat</v-icon>
-    </v-btn> 
-    -->
+    </v-btn>  -->
+   
 
     <v-spacer></v-spacer>
-    <v-menu offset-y>
+    
+    <v-menu offset-x>
       <v-avatar slot="activator" size="40">
         <div :style="avatarBgImage">
             <!-- <img :src="authUser.avatar" :alt="authUser.name"> -->
         </div>
       </v-avatar>
+      
       <v-list dense>
+
         <v-list-tile avatar>
           <v-list-tile-avatar>
                 <div :style="avatarBgImage">
@@ -56,15 +58,17 @@
           <v-list-tile-content>
             <v-list-tile-title v-text="authUser.name"></v-list-tile-title>
             <v-list-tile-sub-title v-if="authUser.role==3">Administrator</v-list-tile-sub-title>
-            <v-list-tile-sub-title v-else-if="authUser.role==1">Owner</v-list-tile-sub-title>
-            <v-list-tile-sub-title v-else-if="authUser.role==2">Broker</v-list-tile-sub-title>
+            <v-list-tile-sub-title v-else-if="authUser.role==2">Buyer</v-list-tile-sub-title>
             <v-list-tile-sub-title v-else>Unknown</v-list-tile-sub-title>
           </v-list-tile-content>
+
         </v-list-tile>
+
+        <br>
         
         <v-divider></v-divider>
 
-        <!-- <v-list-tile @click="() => {}">
+        <v-list-tile @click="() => {}">
           <v-list-tile-avatar>
             <v-icon>person</v-icon>
           </v-list-tile-avatar>
@@ -81,7 +85,7 @@
             <v-icon>mail</v-icon>
           </v-list-tile-avatar>
           <v-list-tile-title>Inbox</v-list-tile-title>
-        </v-list-tile> -->
+        </v-list-tile>
 
         <v-divider></v-divider>
 
@@ -92,6 +96,7 @@
           <v-list-tile-title>Sign Out</v-list-tile-title>
         </v-list-tile>
       </v-list>
+
     </v-menu>
   </v-toolbar>
 </template>
@@ -100,7 +105,7 @@
 
   export default {
     data: () => ({
-        title: 'Lili Waters',
+        title: 'BuyAnyLight.com',
     }),
 
 
@@ -124,13 +129,13 @@
         },
     },
     methods: {
-      toggleMiniVariantMode () {
-        this.$store.dispatch('toggleMiniVariantMode')
-        this.$store.dispatch('toggleMiniVarient')
-      },
-      logout() {
-          this.$router.push({name:'Logout'});                
-      },      
+        toggleMiniVariantMode () {
+          this.$store.dispatch('toggleMiniVariantMode')
+          this.$store.dispatch('toggleMiniVarient')
+        },
+        logout() {
+            this.$router.push({name:'Logout'});                
+        },
 
     }
   }
@@ -138,7 +143,7 @@
 
 
 
-<style lang="SASS" scoped>
+<style lang="scss" scoped>
 
 .v-avatar {
     div {
