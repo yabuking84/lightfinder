@@ -3,14 +3,7 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-					<v-container fluid>
-					    <v-layout row>
-
-						
-
 					<AddInquiry></AddInquiry>
-
-					
 				</v-flex>
 			</v-layout>
 		</v-container>
