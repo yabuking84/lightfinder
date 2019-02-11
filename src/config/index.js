@@ -16,6 +16,9 @@ import schemes from './schemes'
 import navigation from './navigation'
 import swatch from './swatch'
 
+
+import auth from './auth'
+
 export const configSchemes = schemes
 export const configNavigation = navigation
 export const configSwatch = swatch
@@ -23,5 +26,6 @@ export const configSwatch = swatch
 export default {
   schemes,
   navigation,
-  swatch
+  swatch,
+  auth,
 }

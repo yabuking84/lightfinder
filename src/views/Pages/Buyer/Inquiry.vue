@@ -3,9 +3,11 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-					<h1>Home</h1>		
+					<h1>Buyer Inquiries</h1>		
 
-					<!-- <input type="text" v-model="broker"> -->
+					
+					
+
 					
 				</v-flex>
 			</v-layout>
@@ -15,30 +17,19 @@
 
 
 
+
 <script>
 
 
 export default {
 	data: () => ({
-		title: 'Home',
+		
 	}),
 
 	components: {
-
-		
 	},
 
 	computed: {
-
-		broker: {
-			set(data){
-				this.$store.commit('auth/CHANGE_TEST_M',data);
-			},
-			get(){				
-        		return this.$store.state.auth.auth_user.name;
-			},			
-		},
-        
 
 	},
 }

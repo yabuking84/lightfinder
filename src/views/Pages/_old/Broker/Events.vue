@@ -3,7 +3,7 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-					<h1>Home</h1>		
+					<h1>Events</h1>		
 
 					<!-- <input type="text" v-model="broker"> -->
 					
@@ -20,12 +20,10 @@
 
 export default {
 	data: () => ({
-		title: 'Home',
+		title: 'Events',
 	}),
 
 	components: {
-
-		
 	},
 
 	computed: {

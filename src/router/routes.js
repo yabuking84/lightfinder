@@ -1,7 +1,9 @@
-import AppSidebar from '@/views/Components/App/NavDrawer'
-import AppToolbar from '@/views/Components/App/Toolbar'
-import AppFooter from '@/views/Components/App/Footer'
+// import AppSidebar from '@/views/Components/App/NavDrawer'
+// import AppToolbar from '@/views/Components/App/Toolbar'
+// import AppFooter from '@/views/Components/App/Footer'
 
+import config from '@/config/index'
+import { store } from '@/store'
 
 
 import Contacts from '@/views/Applications/Contacts'
@@ -35,25 +37,15 @@ import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
 
 const routes = 
 [
-
-    // Pages
+    // so that when logged out and / is accessed it will got to logout.
     {
         path: '/',
         name: 'Home',
-        components: { 
-            default: Home, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-        },
         meta: {
-            // layout: 'auth',
             requiresAuth: true,
+            redirectToRole: true,
         },
     },
-
-
-
     {
         path: '/login',
         name: 'Login',
@@ -64,32 +56,62 @@ const routes =
         name: 'Logout',
         component: LogoutPage,
     },
-
- 
-
-
 ]
 
 
 
+
+// PAGES
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+var i;
 import AdminRoutes from '@/router/AdminRoutes.js'
-import BrokerRoutes from '@/router/BrokerRoutes.js'
-import OwnerRoutes from '@/router/OwnerRoutes.js'
+import BuyerRoutes from '@/router/BuyerRoutes.js'
+
+// console.log('store.state.auth.auth_user.role')
+// console.log(store.state.auth.auth_user.role)
+// console.log(config.auth.role.admin.id)
+// console.log('store.state.auth.auth_user.role')
 
 // Push routes here
-var i;
-for (i = 0; i < BrokerRoutes.length; i++) {     
-    routes.push(BrokerRoutes[i]);
-}
-for (i = 0; i < OwnerRoutes.length; i++) {     
-    routes.push(OwnerRoutes[i]);
-}
 for (i = 0; i < AdminRoutes.length; i++) {     
     routes.push(AdminRoutes[i]);
 }
+for (i = 0; i < BuyerRoutes.length; i++) {     
+    routes.push(BuyerRoutes[i]);
+}
+
+
+
+
+// if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
+//     for (i = 0; i < AdminRoutes.length; i++) {     
+//         routes.push(AdminRoutes[i]);
+//     }
+// }
+// else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) {    
+//     for (i = 0; i < BuyerRoutes.length; i++) {     
+//         routes.push(BuyerRoutes[i]);
+//     }
+// }
+// else {
+//     // so that when logged out and / is accessed it will got to logout.
+//     routes.push({
+//         path: '/',
+//         name: 'Home',
+//         meta: {
+//             requiresAuth: true,
+//         },
+//     });
+// }
 
 
 // console.log(routes);
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// PAGES
+
 
 
 

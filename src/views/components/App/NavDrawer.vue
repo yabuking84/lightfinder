@@ -20,24 +20,24 @@
 
     <!-- Drawer Toolbar -->
     <v-toolbar flat class="text-xs-center z-index-2">
-      <v-list>
-        <v-list-tile>
+        <v-list>
+            <v-list-tile>
 
-          <v-list-tile-avatar v-if="navMiniVarient">            
-            <img src="/static/logos/liliwaters-logo-square-white.png" id="nav_logo_square" :title="title">
-          </v-list-tile-avatar>
-          
-          <v-list-tile-content>
-            <img src="/static/logos/liliwaters-logo-white.png" id="nav_logo" :title="title">
-            <!-- <v-list-tile-title class="headline">Lili Waters</v-list-tile-title> -->
-          </v-list-tile-content>
+              <v-list-tile-avatar >
+                <img src="/static/logos/logo-white.png" id="nav_logo_square" :title="title">
+              </v-list-tile-avatar>
+              
+              <v-list-tile-content>
+                <!-- <img src="/static/logos/logo-white.png" id="nav_logo" :title="title"> -->
+                <v-list-tile-title class="headline">BuyAnyLight.com</v-list-tile-title>
+              </v-list-tile-content>
 
-          <!-- <v-list-tile-content>
-            <img src="/static/logos/liliwaters-logo-white.png" id="nav_logo">
-          </v-list-tile-content> -->
+              <!-- <v-list-tile-content>
+                <img src="/static/logos/liliwaters-logo-white.png" id="nav_logo">
+              </v-list-tile-content> -->
 
-        </v-list-tile>
-      </v-list>
+            </v-list-tile>
+        </v-list>
     </v-toolbar>
 
 
@@ -54,18 +54,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-    
-
-
     <!-- Drawer Items -->
     <v-list
       dense="dense"
@@ -76,108 +64,42 @@
 
 
 
-
-
-      <template v-for="(item, i) in items">
-
-
-
-        <!--group with subitems-->
-        <v-list-group
-          v-if="item.items"
-          :group="item.group"
-          :prepend-icon="item.icon"
-          no-action
-          :key="`${i}-item`"
-          active-class="act-menu">
-
-          <v-list-tile slot="activator" ripple>
-            <v-list-tile-content>s
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <template v-for="(subItem, i) in item.items">
-            <!--sub group-->
-            <v-list-group v-if="subItem.items" :group="subItem.group" sub-group :key="`${i}-subitems`">
-              <v-list-tile slot="activator" ripple class="list__tile-inner-group">
-                <v-list-tile-action v-if="subItem.icon">
-                  <v-icon>{{ subItem.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-action v-else>
-                  <v-avatar size="28">
-                    <span>{{ subItem.title | first2Char }}</span>
-                  </v-avatar>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile v-for="(grand, i) in subItem.items" :key="i" :to="genChildTarget(item, grand)" :href="grand.href" ripple>
-                <v-list-tile-action v-if="grand.icon">
-                  <v-icon>{{ grand.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-action v-else>
-                  <v-avatar size="28">
-                    <span>{{ grand.title | first2Char }}</span>
-                  </v-avatar>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ grand.title }}</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list-group>
-
-            <!--child item-->
-            <v-list-tile v-else :key="i" :to="genChildTarget(item, subItem)" :href="subItem.href" :disabled="subItem.disabled" :target="subItem.target" ripple>
-              <v-list-tile-action>
-                <v-icon v-if="subItem.prependIcon">{{ subItem.prependIcon }}</v-icon>
-                <v-avatar size="28" v-else>
-                  <span>{{ subItem.title | first2Char }}</span>
-                </v-avatar>
-              </v-list-tile-action>
-              <v-list-tile-content class="">
-                <v-list-tile-title><span>{{ subItem.title }}</span></v-list-tile-title>
-              </v-list-tile-content>
-              <v-chip v-if="subItem.badge" color="primary" disabled class="white--text pa-0 chip--x-small">{{ subItem.badge }}</v-chip>
-              <v-list-tile-action v-if="subItem.action">
-                <v-icon :class="[subItem.actionClass || 'success--text']">{{ subItem.action }}</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-          </template>
-        </v-list-group>
-
-
-
-
+    <template v-for="(item, i) in items">
 
         <!-- single items -->
         <v-list-tile
-          v-else :to="!item.href ? { name: item.name } : null"
-          :href="item.href"
-          ripple
-          :disabled="item.disabled"
-          :target="item.target"
-          rel="noopener"
-          :key="`${i}-item`"
-          class="list__tile-solo">
+            :to="!item.href ? { name: item.name } : null"
+            :href="item.href"
+            :disabled="item.disabled"
+            :target="item.target"
+            :key="`${i}-item`"
+            ripple
+            rel="noopener"
+            class="list__tile-solo">
           
-          <v-list-tile-action>
-            <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
-            <v-avatar size="28" v-else>
-              <span>{{ item.title | first2Char }}</span>
-            </v-avatar>
-          </v-list-tile-action>
+            <v-list-tile-action>
+                <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+                <v-avatar size="28" v-else>
+                    <span>{{ item.title | first2Char }}</span>
+                </v-avatar>
+            </v-list-tile-action>
 
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
+            <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
 
         </v-list-tile>
 
 
+    </template>
 
-      </template>
+
+
+
+
+
+
+
 
 
       <v-spacer class="mb-5"></v-spacer>
@@ -247,20 +169,16 @@
 
 
 <script>
-    import {
-        mapGetters
-    } from 'vuex'
-    import appDrawerItems from '@/data/app-drawer-items'
-    import {
-        camel
-    } from '@/utils/helpers'
+    import {mapGetters} from 'vuex';
+    import {camel} from '@/utils/helpers';
 
     export default {
         data() {
             return {
-                items: appDrawerItems,
+                items: this.$route.meta.items,
                 dark: false,
-                title: 'Lili Waters',
+                // navMiniVarientData: this.navMiniVarient,
+                title: "BuyAnyLight.com",
             }
         },
         mounted() {
@@ -310,22 +228,22 @@
                 this.$store.dispatch('toggleMiniVarient')
             },
 
-            miniEnterVariantHandler() {
-                // if it's tab or small devive then it won't listen this event
-                if (this.miniview && this.navMiniVarient === true && this.$vuetify.breakpoint.mdAndDown === false) {
-                    this.$store.dispatch('toggleMiniVarient', false)
-                    // const container = document.querySelector('#app-sidebar')
-                    // container.scrollTop = 0
-                }
-            },
-            miniLeaveVariantHandler() {
-                // if it's tab or small devive then it won't listen this event
-                if (this.miniview && this.navMiniVarient === false && this.$vuetify.breakpoint.mdAndDown === false) {
-                    this.$store.dispatch('toggleMiniVarient', true)
-                    // const container = document.querySelector('#app-sidebar')
-                    // container.scrollTop = 0
-                }
-            },
+            // miniEnterVariantHandler() {
+            //     // if it's tab or small devive then it won't listen this event
+            //     if (this.miniview && this.navMiniVarient === true && this.$vuetify.breakpoint.mdAndDown === false) {
+            //         this.$store.dispatch('toggleMiniVarient', false)
+            //         // const container = document.querySelector('#app-sidebar')
+            //         // container.scrollTop = 0
+            //     }
+            // },
+            // miniLeaveVariantHandler() {
+            //     // if it's tab or small devive then it won't listen this event
+            //     if (this.miniview && this.navMiniVarient === false && this.$vuetify.breakpoint.mdAndDown === false) {
+            //         this.$store.dispatch('toggleMiniVarient', true)
+            //         // const container = document.querySelector('#app-sidebar')
+            //         // container.scrollTop = 0
+            //     }
+            // },
             genChildTarget(item, subItem) {
                 if (subItem.href) return
                 if (item.component) {
@@ -359,35 +277,24 @@
 
 
 
-<style scoped lang="stylus">
-  // .no-overflow
-  //   overflow: hidden
-  #app-drawer
-    img.logo
-      margin 40px 0 15px
+<style scoped lang="scss">
 
-    .chip--x-small
-      font-size: 10px
-      height: 16px
+.v-avatar {
+    border-radius: 0px;
+    img {
+        border-radius: 0px;
+        height: auto;
+        width: 100%;        
+    }
+}
 
-      .chip__content
-        line-height: 1
-        padding: 8px
+.headline {
+    font-size: 20px !important;
+    font-weight: 400;
+    line-height: 20px !important;    
+}
 
-    .diamond-sponsor
-      // todo trim down actual image file dimensions
-      height: 35px
-      margin-bottom 0.25em
-
-      aside.navigation-drawer ul li
-        font-size 14px
-        color: #373737
-
-      &-label
-        color #676767
-        margin: 24px 0 16px 0
-        font-size 13px
-
-    #nav_logo
-      width: 100%
+    
 </style>
+
+

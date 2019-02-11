@@ -5,7 +5,7 @@
       :class="[!footer ? 'hide' : '', navFooterScheme]"
       app
     >
-      <div class="pa-3">&copy; {{ new Date().getFullYear() }} Lili Waters, All rights reserved.</div>
+      <div class="pa-3">&copy; {{ new Date().getFullYear() }} BuyAnyLight.com, All rights reserved.</div>
       <v-spacer></v-spacer>
       <!-- <div class="pa-3">Handcrafted with <v-icon right color="pink" small>favorite</v-icon></div> -->
   </v-footer>

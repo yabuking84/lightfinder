@@ -3,6 +3,7 @@
 import axios from 'axios';
 import router from '@/router'
 
+import config from '@/config/index'
 
 
 const state = {
@@ -88,12 +89,19 @@ const actions = {
             .then(response => {
                 const token = response.data.access_token.token;
                 const user = response.data.user;
+
+                // console.log('dfatadfatadfatadfatadfata');
+                // console.log(response.data);
+                // console.log('dfatadfatadfatadfatadfata');
                 
                 // set token
                 localStorage.setItem('access_token',token);
                 context.commit('SET_TOKEN_M',token);
 
-                // set user details
+                
+
+                // set user details                
+                localStorage.setItem('uuid'       ,user.data.id); // change this later to the real uuid
                 localStorage.setItem('name'       ,user.data.firstname+" "+user.data.lastname);
                 localStorage.setItem('firstname'  ,user.data.firstname);
                 localStorage.setItem('lastname'   ,user.data.lastname);
@@ -143,14 +151,12 @@ const actions = {
 
     loginSuccess_a(context,response){
 
-        // console.log(response.data.user.role);
+        console.log(response.data.user.role);
         
-        if(response.data.user.role == 3) 
+        if(response.data.user.role == config.auth.role.admin.id) 
         router.push({name:'AdminHome'});
-        else if(response.data.user.role == 1) 
-        router.push({name:'OwnerHome'});
-        else if(response.data.user.role == 2) 
-        router.push({name:'BrokerHome'});
+        else if(response.data.user.role == config.auth.role.buyer.id) 
+        router.push({name:'BuyerHome'});
         else
         router.push({name:'Login'});
 

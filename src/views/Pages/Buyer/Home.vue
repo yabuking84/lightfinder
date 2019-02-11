@@ -3,9 +3,10 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-					<h1>Home</h1>		
+					<h1>Buyer Home</h1>		
 
-					<!-- <input type="text" v-model="broker"> -->
+					<!-- <input type="text" v-model="buyer"> -->
+					<InquiriesTable></InquiriesTable>
 					
 				</v-flex>
 			</v-layout>
@@ -17,20 +18,21 @@
 
 <script>
 
+import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
 
 export default {
 	data: () => ({
 		title: 'Home',
 	}),
 
-	components: {
 
-		
+	components: {
+		InquiriesTable
 	},
 
 	computed: {
 
-		broker: {
+		buyer: {
 			set(data){
 				this.$store.commit('auth/CHANGE_TEST_M',data);
 			},
