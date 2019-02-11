@@ -1,4 +1,4 @@
-import AppSidebar from '@/views/Components/App/Owner/NavDrawer'
+import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
