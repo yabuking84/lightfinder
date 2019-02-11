@@ -1,36 +1,37 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Inquiries
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
+
+<!--     <v-card-title>
+  Inquiries
+  <v-spacer></v-spacer>
+  <v-text-field
+    v-model="search"
+    append-icon="search"
+    label="Search"
+    single-line
+    hide-details
+  ></v-text-field>
+</v-card-title> -->
+
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="data"
       :search="search">
     
         <template slot="items" slot-scope="props">
-            <td>{{ props.item.name }}</td>
-            <td class="text-xs-right">{{ props.item.calories }}</td>
-            <td class="text-xs-right">{{ props.item.fat }}</td>
-            <td class="text-xs-right">{{ props.item.carbs }}</td>
-            <td class="text-xs-right">{{ props.item.protein }}</td>
-            <td class="text-xs-right">{{ props.item.iron }}</td>
+            <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
+            <td class="text-xs-center">{{ props.item.name }}</td>
+            <td class="text-xs-center">{{ props.item.country }}</td>
+            <td class="text-xs-center">{{ props.item.inquiries }}</td>
+            <td class="text-xs-center"> <span v-html="props.item.status"></span></td>
+            <td class="text-xs-center">{{ props.item.date }}</td>
         </template>
-
 
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ search }}" found no results.
         </v-alert>
+        
     </v-data-table>
-  </v-card>
+
 </template>
 
 
@@ -40,109 +41,67 @@
       return {
         search: '',
         headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
+            {
+              text: 'Select',
+              align: 'center',
+              sortable: false,
+              value: 'select'
+            },
+            {
+              text: 'Name',
+              align: 'center',
+              sortable: false,
+              value: 'name'
+            },
+            {
+              text: 'Country',
+              align: 'center',
+              sortable: false,
+              value: 'country'
+            },
+            {
+              text: 'Inquiries',
+              align: 'center',
+              sortable: false,
+              value: 'inquiries'
+            },
+            {
+              text: 'Status',
+              align: 'center',
+              sortable: false,
+              value: 'status'
+            },
+            {
+              text: 'Date',
+              align: 'center',
+              sortable: false,
+              value: 'date'
+            },
         ],
-        desserts: [
+
+        data: [
           {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
+
+            select: true,
+            name: 'Ben Stiller',
+            country: 'United Arab Emirates',
+            inquiries: '1000 pieces of LED Garden Lights',
+            status: '<span tabindex="0" class="v-chip v-chip--label v-chip--small theme--light teal white--text"><span class="v-chip__content">Open</span></span>',
+            // status: '<v-chip close color="teal" text-color="white">  <v-avatar> <v-icon>check_circle</v-icon></v-avatar> Open </v-chip>'
+            date: 'January 19, 2017'
+
           },
+
           {
-            value: false,
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
+
+            select: true,
+            name: 'Ben Stiller',
+            country: 'United Arab Emirates',
+            inquiries: '1000 pieces of LED Garden Lights',
+            status: '<span tabindex="0" class="v-chip v-chip--label v-chip--small theme--light teal white--text"><span class="v-chip__content">Open</span></span>',
+            date: 'January 19, 2017'
+
           },
-          {
-            value: false,
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          },
-          {
-            value: false,
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-          },
-          {
-            value: false,
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-          },
-          {
-            value: false,
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-          },
-          {
-            value: false,
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-          },
-          {
-            value: false,
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-          },
-          {
-            value: false,
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            value: false,
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          }
         ]
       }
     }
