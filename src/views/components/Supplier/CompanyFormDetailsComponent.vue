@@ -1,6 +1,8 @@
 <template>
 	<v-container>
-	  	<v-layout row wrap mt-4>
+
+<v-form>
+    	<v-layout row wrap mt-4>
 	  	  	<v-flex xs6>
 	  	  		<v-flex xs9 offset-xs1>
 	  	  			<v-text-field  color="black" label="Brand Name" required></v-text-field>  
@@ -49,6 +51,66 @@
 	  	  		    	<v-text-field  color="black" label="Fax" required></v-text-field>
 	  	  			</v-flex>
 	  	  	</v-flex>
+
+
+			  		 <v-container align-center justify-space-between fill-height>
+
+                           <div class="text-xs-center">
+                                <v-btn round large flat color="grey darken-1" class="font-weight-light" dark>
+                                      <span class="text-uppercase l-spacing">
+<i class="fas fa-arrow-left"></i>
+                                           Back
+                                        </span>
+                                </v-btn>
+                          </div>
+        
+                          <div class="text-xs-center">
+                                <v-btn round large color="cyan lighten-2
+" class="font-weight-light" dark>
+                                <span class="text-capitalize l-spacing"><i class="fas fa-save" ></i> Save and Proceed</span>
+                                </v-btn>
+                          </div>
+                      </v-container>  
+
 	  	</v-layout>
+</v-form>
+
+	
+
+
+
 	</v-container>
 </template>
+
+
+<script>
+		
+	import { required, email, minLength } from 'vuelidate/lib/validators'
+	import validationMixin from '@/mixins/validationMixin'
+
+	const defaultForm = {
+
+	}
+
+	export default {
+
+		mixins: [validationMixin],
+		validation: {
+			form: {
+
+			}
+		},
+		data() {
+		
+			return {
+
+			}
+		
+		},
+		
+		methods: {
+
+		}
+	}
+
+</script>

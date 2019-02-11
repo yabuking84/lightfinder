@@ -34,7 +34,7 @@ export default [
 
     {
         name: 'supplier-company-details',
-        path: '/register/company/details',
+        path: '/supplier/details',
         components: {
             default: RegisterCompanyDetails
         }
@@ -68,7 +68,7 @@ export default [
     },
 
      {
-        name: 'buyer-registration-details',
+        name: 'buyer-registration-terms',
         path: '/buyer/terms',
         components: {
             default: BuyerRegistrationTerms

@@ -26,6 +26,8 @@ const state = {
     },
 }
 
+
+
 const mutations = {
 
     SET_TOKEN_M(state, token){
