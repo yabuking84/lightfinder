@@ -5,10 +5,11 @@ import AppFooter from '@/views/Components/App/Footer'
 import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
+import config from '@/config/index'
 
 const meta = { 
     requiresAuth: true,
-    role: 2,
+    role: config.auth.role.buyer.id,
     items: [
         {
             title: 'Dashboard',

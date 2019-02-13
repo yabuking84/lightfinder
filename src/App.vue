@@ -23,7 +23,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import AppSettings from '@/views/Components/AppSettings'
+// import AppSettings from '@/views/Components/AppSettings'
 
 export default {
   data () {
@@ -37,7 +37,7 @@ export default {
     })
   },
   components: {
-    AppSettings
+    // AppSettings
   },
   methods: {
     handleSubdrawer (value) {

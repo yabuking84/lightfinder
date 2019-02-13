@@ -8,8 +8,11 @@ import config from '@/config/index'
 
 const state = {
     api_url: {
-        login: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/login",
-        logout: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/logout",
+        // login: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/login",
+        // logout: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/logout",
+
+        login: "http://192.168.1.200:8000/v1/login",
+        logout: "http://192.168.1.200:8000/v1/logout",
     },
     token: localStorage.getItem('access_token') || null,
     axios: {
@@ -41,10 +44,10 @@ const mutations = {
 
     SET_AUTHUSER_M(state,user){
 
-        state.auth_user.name       = user.data.firstname+" "+user.data.lastname;
-        state.auth_user.firstname  = user.data.firstname;
-        state.auth_user.lastname   = user.data.lastname;
-        state.auth_user.email      = user.data.email;
+        state.auth_user.name       = user.firstname+" "+user.lastname;
+        state.auth_user.firstname  = user.firstname;
+        state.auth_user.lastname   = user.lastname;
+        state.auth_user.email      = user.email;
         state.auth_user.avatar     = user.avatar;
         state.auth_user.role       = user.role;
     },
@@ -74,7 +77,6 @@ const actions = {
         // alert(state.api_url.login);
 
         return new Promise((resolve, reject) => {
-            // var url = "https://almani.ddns.net:2024/liliwatersapi/public/api/v1/auth/jwtlogin";
             var url = state.api_url.login;
             var payload = {
                 email: data.username,
@@ -87,13 +89,16 @@ const actions = {
                 data: payload,
             })
             .then(response => {
-                const token = response.data.access_token.token;
-                const user = response.data.user;
 
                 // console.log('dfatadfatadfatadfatadfata');
                 // console.log(response.data);
                 // console.log('dfatadfatadfatadfatadfata');
                 
+                var token = response.data.token;
+                var user = response.data.user;
+                var uuid = response.data.uuid;
+
+
                 // set token
                 localStorage.setItem('access_token',token);
                 context.commit('SET_TOKEN_M',token);
@@ -101,14 +106,14 @@ const actions = {
                 
 
                 // set user details                
-                localStorage.setItem('uuid'       ,user.data.id); // change this later to the real uuid
-                localStorage.setItem('name'       ,user.data.firstname+" "+user.data.lastname);
-                localStorage.setItem('firstname'  ,user.data.firstname);
-                localStorage.setItem('lastname'   ,user.data.lastname);
-                localStorage.setItem('email'      ,user.data.email);
+                localStorage.setItem('uuid'       ,uuid); // change this later to the real uuid
+                localStorage.setItem('name'       ,user.firstname+" "+user.lastname);
+                localStorage.setItem('firstname'  ,user.firstname);
+                localStorage.setItem('lastname'   ,user.lastname);
+                localStorage.setItem('email'      ,user.email);
                 localStorage.setItem('avatar'     ,user.avatar);
                 localStorage.setItem('role'       ,user.role);
-                context.commit('SET_AUTHUSER_M',response.data.user);
+                context.commit('SET_AUTHUSER_M',user);
 
                 resolve(response);
             })
@@ -178,3 +183,33 @@ export default {
 	mutations,
 	actions	
 }
+
+
+
+
+
+// http://192.168.1.200:8000/v1/login
+
+// Admin Buyanylight
+
+// Supplier Buyanylight
+
+// Buyer Buyanylight
+// info@bal.com
+
+
+
+
+
+
+// {   
+//     uuid,
+//     token,
+//     user: {     
+//         firstname,
+//         lastname,
+//         email,
+//         role,
+//         avatar,
+//     },
+// }

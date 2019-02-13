@@ -58,8 +58,8 @@
 
           <v-list-tile-content>
             <v-list-tile-title v-text="authUser.name"></v-list-tile-title>
-            <v-list-tile-sub-title v-if="authUser.role==3">Administrator</v-list-tile-sub-title>
-            <v-list-tile-sub-title v-else-if="authUser.role==2">Buyer</v-list-tile-sub-title>
+            <v-list-tile-sub-title v-if="authUser.role==roles.admin.id">Administrator</v-list-tile-sub-title>
+            <v-list-tile-sub-title v-else-if="authUser.role==roles.buyer.id">Buyer</v-list-tile-sub-title>
             <v-list-tile-sub-title v-else>Unknown</v-list-tile-sub-title>
           </v-list-tile-content>
 
@@ -102,11 +102,16 @@
   </v-toolbar>
 </template>
 <script>
+  
   import { mapGetters } from 'vuex'
+  import config from '@/config/index'
+
+  console.log(config);
 
   export default {
     data: () => ({
         title: 'BuyAnyLight.com',
+        roles: config.auth.role,
     }),
 
 
