@@ -5,10 +5,12 @@ import AppFooter from '@/views/Components/App/Footer'
 import AdminHome from '@/views/Pages/Admin/Home'
 import AdminInquiry from '@/views/Pages/Admin/Inquiry'
 
+import config from '@/config/index'
+
 
 const meta = { 
     requiresAuth: true,
-    role: 3,
+    role: config.auth.role.admin.id,
     items: [
         {
             title: 'Dashboard',

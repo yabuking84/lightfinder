@@ -5,6 +5,7 @@ import AppFooter from '@/views/Components/App/Footer'
 import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
+import config from '@/config/index'
 
 import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
@@ -14,7 +15,7 @@ import BuyerPackages from '@/views/Pages/Buyer/Packages'
 
 const meta = { 
     requiresAuth: true,
-    role: 2,
+    role: config.auth.role.buyer.id,
     items: [
         {
             title: 'Dashboard',

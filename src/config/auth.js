@@ -3,10 +3,13 @@
 export default {
     role: {
         admin: {
-            id: 3,
+            id: 1,
+        },
+        supplier: {
+            id: 2,
         },
         buyer: {
-            id: 2,
+            id: 3,
         },
     }
 }

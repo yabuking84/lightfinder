@@ -18,7 +18,9 @@
             Your search for "{{ search }}" found no results.
         </v-alert>
     </v-data-table>
-       <dialog-test :openDialog="dialog" @closeDialog="dialog=false" ></dialog-test>
+
+    <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
+
  </div>
 </template>
 
@@ -113,6 +115,21 @@
         ]
       }
     },
+
+
+    components: {
+        DialogTest
+    },
+
+    methods: {
+
+        closeDialog: function(val){
+            // alert(val);
+            this.dialog=false;
+        },
+        
+    },
+
   }
 </script>
 
