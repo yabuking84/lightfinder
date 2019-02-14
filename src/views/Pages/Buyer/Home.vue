@@ -3,57 +3,89 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-						<v-container mt-5>
+						<v-container>
+							<v-layout row wrap>
+							  <h2 class="font-weight-light title pb-3">MY INQUIRIES</h2>
+							  <v-spacer></v-spacer>
+							</v-layout>
+							<v-layout row wrap>
+								<span class="grey darken-4 pa-1">
+							    	<v-btn flat value="left" class="v-btn--active">
+					                	<i class="ml-1 white--text font-weight-light subheading far fa-edit white--text"></i>
+					                	<span class="ml-1 white--text font-weight-light subheading">Compose Inquiry</span>
+					             	</v-btn>	
+							  	</span>  
+							  	<v-spacer></v-spacer>
+								<span class="red accent-4 pa-1">
+							    	<v-btn red accent-4 flat value="left" class="">
+					                	<span class="ml-1 white--text font-weight-light subheading">1 Inquiry Remaining </span>
+					             	</v-btn>	
+							  	</span>
+							</v-layout>
+						</v-container>
+						<v-divider></v-divider>		
+						<v-container mt-2>
 						  <v-card>
 						  	<v-layout row wrap pa-2>
-						  	   <v-flex xs8 >
-							      <div class="mt-2 mb-3">
-	    							    <v-btn-toggle v-model="icon">
+								<v-container>
+									<!-- toolbar -->
+									<v-toolbar dark color="grey darken-4">
+										
+	   									 <v-btn-toggle v-model="icon">
+	   									 		<!-- set active v-btn if click -->
+			    							    <span class="grey darken-4 pa-2">
+			    							    	<v-btn flat value="left" @click="openInquiry(InquiriesTable)">
+									                	<i class="fas fa-envelope-open-text white--text"></i> 
+									                	<span class="ml-1 font-weight-light white--text">Open Inquiry</span>
+									             	</v-btn>	
+			    							    </span>
+												<!-- set active v-btn if click -->
+												<span class="grey darken-4 pa-2">
+													<v-btn flat value="center" @click="Inprogress(InProgressTable)">
+										                <i class="fas fa-tasks white--text"></i> 
+										                <span class="ml-1 font-weight-light white--text">In-Progress Inquiry</span>
+										            </v-btn>	
+												</span>
+												<!-- set active v-btn if click -->
+												<span class="grey darken-4 pa-2">
+													<v-btn flat value="right" @click="CloseInquiry(CloseTable);">
+										               <i class="fas fa-envelope white--text"></i> 
+										               <span class="ml-1 font-weight-light white--text">Closed Inquiry</span>
+										            </v-btn>
+												</span>
+								          </v-btn-toggle>
 
-		    							    <span class="light-blue accent-3 pa-2">
-		    							    	<v-btn flat value="left" class="v-btn--active">
-								                	<i class="fas fa-envelope-open-text white--text"></i> 
-								                	<span class="ml-1 font-weight-light white--text">Open Inquiry</span>
-								             	</v-btn>	
-		    							    </span>
+									    <v-spacer></v-spacer>
 
-											<span class="light-blue accent-3 pa-2">
-												<v-btn flat value="center">
-									                <i class="fas fa-tasks white--text"></i> 
-									                <span class="ml-1 font-weight-light white--text">In-Progress Inquiry</span>
-									            </v-btn>	
-											</span>
-											 	
-											<span class="light-blue accent-3 pa-2">
-												<v-btn flat value="right">
-									               <i class="fas fa-envelope white--text"></i> 
-									               <span class="ml-1 font-weight-light white--text">Closed Inquiry</span>
-									            </v-btn>
-											</span>
+		   						 	 <v-flex xs12 sm6 md3>
+				   						 	 <v-text-field label="Search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>	  
+							        </v-flex>
 
-							            </v-btn-toggle>
-							      </div>
-					          </v-flex>
-					           <v-flex xs3 >
-						           	<div class="mt-2 mb-3">
-						           		<v-text-field v-model="search" color="black" label="Search" append-icon="search" required></v-text-field>  
-						           	</div>
-					          </v-flex>
-					          <v-flex xs1>
-					          	<div class="mt-4 mb-4">
-									<v-layout row wrap>
-										<v-btn flat icon color="gray lighten-4" class="">
-								            <i class="fas fa-filter"></i>
-								        </v-btn>
-								        <v-btn flat icon color="gray" class="">
-								            <i class="fas fa-sync-alt"></i>
-								        </v-btn>  
-									</v-layout>
-					          	</div>
-					          </v-flex>
-						  	</v-layout>
+								    <v-btn icon>
+								      <v-icon>sort</v-icon>
+								    </v-btn>
+
+								    <v-btn icon>
+								      <v-icon>refresh</v-icon>
+								    </v-btn>
+								
+									</v-toolbar>
+									<!--/ toolbar -->
+								</v-container>
+							</v-layout>
+
 						  	  <v-divider></v-divider>
-							  <InquiriesTable></InquiriesTable>
+						  	  <!-- dynamic table -->
+						  	  <div>
+						  	  	<keep-alive>
+						  	  	<component v-bind:is="component"></component>	
+						  		</keep-alive>
+
+						  	  </div>
+						  	  
+
+							  
+						  	  <!-- dynamic table -->
 						  </v-card>
 						</v-container>
 				</v-flex>
@@ -63,21 +95,41 @@
 </template>
 
 
-
 <script>
 
 import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
+import InProgressTable from "@/views/Components/App/Buyer/InProgressTable";
+import CloseTable from "@/views/Components/App/Buyer/CloseTable";
+
+let isActive = 'v-btn--active';
 
 export default {
-	data: () => ({
-		title: 'Home',
-	}),
 
 	components: {
-		InquiriesTable
+
+		InquiriesTable,
+		InProgressTable,
+	    CloseTable
+
 	},
 
+	data: () => ({
+
+		title: 'Home',
+		icon: null,
+		packageLink: '/buyer/packages',
+		isActive: false,
+		component: 'inquiries-table'
+
+	}),
+
 	computed: {
+
+		Compclasses: () => {
+			return {
+				isActive:this.isActive
+			}
+		},
 
 		buyer: {
 
@@ -89,9 +141,26 @@ export default {
         		return this.$store.state.auth.auth_user.name;
 			},			
 		},
-        
 
 	},
+
+	methods: {
+
+		openInquiry: (component) => {
+			this.component = component
+			alert('openInquiry')
+		},
+
+		Inprogress: (component) => {
+			this.component = component
+			alert('Inprogress')
+		},
+
+		CloseInquiry: (component) => {
+			this.component = component
+			alert('CloseInquiry')
+		}
+	}
 }
 	
 </script>
