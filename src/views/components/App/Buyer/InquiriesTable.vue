@@ -1,6 +1,5 @@
 <template>
  <div>
-     
     <v-data-table
       :headers="headers"
       :items="dataItems"
@@ -11,9 +10,7 @@
             <td class="text-xs-center font-weight-medium">{{ props.item.country }}</td>
             <td class="text-xs-center font-weight-medium">{{ props.item.inquiries }}</td>
             <td class="text-xs-center">
-                <v-btn flat @click="dialog = true" value="left" class="v-btn--active">                    
-                    <span class="ml-1 white--text font-weight-light subheading">Open</span>
-                </v-btn>                   
+                <status-component :status=props.item.status> </status-component>
             </td>
             <td class="text-xs-center">{{ props.item.date }}</td>
         </template>
@@ -21,24 +18,28 @@
             Your search for "{{ search }}" found no results.
         </v-alert>
     </v-data-table>
-
-    <dialog-test :openDialog="dialog" @closeDialog="dialog=false"></dialog-test>
-
+       <dialog-test :openDialog="dialog" @closeDialog="dialog=false" ></dialog-test>
  </div>
 </template>
-
 
 <script>
     
  import DialogTest from "@/views/Components/App/Buyer/DialogTest";
+ import StatusComponent from "@/views/Components/App/Buyer/StatusComponent";
 
   export default {
+
+    components: {
+        DialogTest,
+        StatusComponent
+    },
+
     data: function () {
       return {
 
         search: '',
         dialog: false,
-        class: 'color:red;',
+        statuscomponent: 'status-component',
         headers: [
             {
               text: 'Select',
@@ -60,7 +61,7 @@
             },
             {
               text: 'Inquiries',
-              align: 'center',
+              align: 'center',  
               sortable: false,
               value: 'inquiries'
             },
@@ -85,7 +86,7 @@
             name: 'Jane Doe Inquiries',
             country: 'United Arab Emirates',
             inquiries: '1000 pieces of LED Garden Lights',
-            status: '<span tabindex="0" class="v-chip pa-3 v-chip--label v-chip--small theme--light fix-width blue-grey lighten-4 white--text"><span class="v-chip__content text-xs-center">Open</span></span>',
+            status: 'Open',
             date: 'January 19, 2017'
 
           },
@@ -95,7 +96,7 @@
             name: 'Jane Doe',
             country: 'United Arab Emirates',
             inquiries: '1000 pieces of LED Garden Lights',
-            status: '<span tabindex="0" class="fix-width v-chip pa-3 v-chip--label v-chip--small fix-width theme--light amber darken-4 white--text text-xs-center"><span class="v-chip__content">Waiting for Confirmation</span></span>',
+            status: 'Confirming',
             date: 'January 19, 2017'
           },
           // verifying
@@ -105,23 +106,13 @@
             name: 'Ben Stiller',
             country: 'United Arab Emirates',
             inquiries: '1000 pieces of LED Garden Lights',
-            status: '  ',
+            status: 'Verifying',
             date: 'January 19, 2017'
           },
           // waiting for your confirmation
         ]
       }
     },
-
-
-    components: {
-        DialogTest
-    },
-
-    methods: {
-        
-    },
-
   }
 </script>
 

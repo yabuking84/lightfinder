@@ -3,7 +3,7 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-						<v-container>
+						<v-container fluid>
 							<v-layout row wrap>
 							  <h2 class="font-weight-light title pb-3">MY INQUIRIES</h2>
 							  <v-spacer></v-spacer>
@@ -24,31 +24,28 @@
 							</v-layout>
 						</v-container>
 						<v-divider></v-divider>		
-						<v-container mt-2>
+						<v-container fluid mt-2>
 						  <v-card>
 						  	<v-layout row wrap pa-2>
-								<v-container>
+								<v-container fluid>
 									<!-- toolbar -->
 									<v-toolbar dark color="grey darken-4">
 										
 	   									 <v-btn-toggle v-model="icon">
-	   									 		<!-- set active v-btn if click -->
 			    							    <span class="grey darken-4 pa-2">
-			    							    	<v-btn flat value="left" @click="openInquiry(InquiriesTable)">
+			    							    	<v-btn flat value="left" @click="component='inquiries-table' ">
 									                	<i class="fas fa-envelope-open-text white--text"></i> 
 									                	<span class="ml-1 font-weight-light white--text">Open Inquiry</span>
 									             	</v-btn>	
 			    							    </span>
-												<!-- set active v-btn if click -->
 												<span class="grey darken-4 pa-2">
-													<v-btn flat value="center" @click="Inprogress(InProgressTable)">
+													<v-btn flat value="center" @click="component='in-progress-table'">
 										                <i class="fas fa-tasks white--text"></i> 
 										                <span class="ml-1 font-weight-light white--text">In-Progress Inquiry</span>
 										            </v-btn>	
 												</span>
-												<!-- set active v-btn if click -->
 												<span class="grey darken-4 pa-2">
-													<v-btn flat value="right" @click="CloseInquiry(CloseTable);">
+													<v-btn flat value="right" @click="component='close-table'">
 										               <i class="fas fa-envelope white--text"></i> 
 										               <span class="ml-1 font-weight-light white--text">Closed Inquiry</span>
 										            </v-btn>
@@ -71,21 +68,21 @@
 								
 									</v-toolbar>
 									<!--/ toolbar -->
+
 								</v-container>
 							</v-layout>
 
 						  	  <v-divider></v-divider>
+
+
 						  	  <!-- dynamic table -->
 						  	  <div>
 						  	  	<keep-alive>
-						  	  	<component v-bind:is="component"></component>	
+						  		  	<component v-bind:is="component"></component>	
 						  		</keep-alive>
-
 						  	  </div>
-						  	  
-
-							  
 						  	  <!-- dynamic table -->
+
 						  </v-card>
 						</v-container>
 				</v-flex>
@@ -125,12 +122,6 @@ export default {
 
 	computed: {
 
-		Compclasses: () => {
-			return {
-				isActive:this.isActive
-			}
-		},
-
 		buyer: {
 
 			set(data){
@@ -142,22 +133,24 @@ export default {
 			},			
 		},
 
+
+
 	},
 
 	methods: {
 
-		openInquiry: (component) => {
-			this.component = component
+		openInquiry: (components) => {
+			this.component = components
 			alert('openInquiry')
 		},
 
 		Inprogress: (component) => {
-			this.component = component
+			this.component = components
 			alert('Inprogress')
 		},
 
 		CloseInquiry: (component) => {
-			this.component = component
+			this.component = components
 			alert('CloseInquiry')
 		}
 	}
