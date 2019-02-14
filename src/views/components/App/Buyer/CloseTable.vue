@@ -15,6 +15,7 @@
               <td class="text-xs-center">{{ props.item.date }}</td>
                <td class="text-xs-center">
                  <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1 font-weight-light">                    
+                  <i class="fas fa-eye white--text"></i>                             
                     <span class="ml-1 white--text font-weight-light ">View</span>
                 </v-btn>
             </td>

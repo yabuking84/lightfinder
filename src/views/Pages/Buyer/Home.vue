@@ -9,7 +9,7 @@
 							  <v-spacer></v-spacer>
 							</v-layout>
 							<v-layout row wrap>
-								
+
 								<span class="grey darken-4 pa-1">
 							    	<v-btn flat value="left" class="v-btn--active">
 					                	<i class="ml-1 white--text font-weight-light subheading far fa-edit white--text"></i>
@@ -59,7 +59,7 @@
 									    <v-spacer></v-spacer>
 
 		   						 	 <v-flex xs12 sm6 md3>
-				   						 	 <v-text-field label="Search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>	  
+				   						 	 <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>	  
 							        </v-flex>
 
 								    <v-btn icon>
@@ -114,7 +114,7 @@ export default {
 	},
 
 	data: () => ({
-
+		search:'',
 		title: 'Home',
 		icon: null,
 		packageLink: '/buyer/packages',
