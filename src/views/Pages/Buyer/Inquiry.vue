@@ -3,13 +3,7 @@
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				<v-flex>
-					<h1>Buyer Inquiries</h1>		
-
-						
-
 					<AddInquiry></AddInquiry>
-
-					
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -38,6 +32,17 @@ export default {
 }
 	
 </script>
+
+<style scoped lang="stylus">
+	.proposed_quote
+		height: 82vh;
+		max-height: 82vh;
+		overflow-y: auto;
+	.propposed_field
+		height: 82vh;	
+		max-height: 82vh;
+		overflow-y: auto;
+</style>
 
 
 

@@ -13,6 +13,7 @@ export const trending = [
       color: 'primary'
     }
   },
+
   {
     subheading: 'Revenue',
     headline: '6,553',
@@ -27,6 +28,7 @@ export const trending = [
       color: 'secondary'
     }
   },
+  
   {
     subheading: 'Orders',
     headline: '5,00',

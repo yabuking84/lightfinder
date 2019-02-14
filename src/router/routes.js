@@ -35,6 +35,8 @@ import LoginPage from '@/views/Pages/Authentication/LoginPage'
 import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
 
 
+
+
 const routes = 
 [
     // so that when logged out and / is accessed it will got to logout.
@@ -68,6 +70,7 @@ const routes =
 var i;
 import AdminRoutes from '@/router/AdminRoutes.js'
 import BuyerRoutes from '@/router/BuyerRoutes.js'
+import SupplierRoutes from '@/router/SupplierRoutes.js'
 
 // console.log('store.state.auth.auth_user.role')
 // console.log(store.state.auth.auth_user.role)
@@ -80,6 +83,9 @@ for (i = 0; i < AdminRoutes.length; i++) {
 }
 for (i = 0; i < BuyerRoutes.length; i++) {     
     routes.push(BuyerRoutes[i]);
+}
+for (i = 0; i < SupplierRoutes.length; i++) {
+    routes.push(SupplierRoutes[i]);
 }
 
 
