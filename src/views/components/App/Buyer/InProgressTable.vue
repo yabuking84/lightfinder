@@ -1,4 +1,5 @@
 <template>
+
  <div>
      
     <v-data-table
@@ -14,15 +15,21 @@
                   <status-component :status=props.item.status> </status-component>
             </td>
             <td class="text-xs-center">{{ props.item.date }}</td>
+            <td class="text-xs-center">
+                 <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1 font-weight-light">                    
+                    <span class="ml-1 white--text font-weight-light ">View</span>
+                </v-btn>
+            </td>
         </template>
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ search }}" found no results.
         </v-alert>
     </v-data-table>
 
-    <dialog-test :openDialog="dialog" @closeDialog="dialog=false"></dialog-test>
+    <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
 
  </div>
+
 </template>
 
 
@@ -30,7 +37,6 @@
     
  import DialogTest from "@/views/Components/App/Buyer/DialogTest";
  import StatusComponent from "@/views/Components/App/Buyer/StatusComponent";
-
 
   export default {
     data: function () {
@@ -72,6 +78,12 @@
             },
             {
               text: 'Date',
+              align: 'center',
+              sortable: false,
+              value: 'date'
+            },
+             {
+              text: 'Action',
               align: 'center',
               sortable: false,
               value: 'date'
@@ -130,6 +142,12 @@
     },
 
     methods: {
+      
+         closeDialog: function(val){
+            // alert(val);
+            this.dialog=false;
+        },
+        
         
     },
 
