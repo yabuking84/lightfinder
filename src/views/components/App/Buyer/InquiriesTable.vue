@@ -22,7 +22,7 @@
         </v-alert>
     </v-data-table>
 
-    <dialog-test :openDialog="dialog" @closeDialog="dialog=false"></dialog-test>
+    <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
 
  </div>
 </template>
@@ -119,6 +119,11 @@
     },
 
     methods: {
+
+        closeDialog: function(val){
+            // alert(val);
+            this.dialog=false;
+        },
         
     },
 

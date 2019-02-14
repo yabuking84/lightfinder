@@ -26,7 +26,11 @@
         openDialog : {
             type: Boolean,
             default: false,
-        },        
+        },
+
+        closeDialog: {
+            type: Function
+        }
     },
 
     data: function(){
@@ -42,7 +46,8 @@
             },
             set: function(newVal){
                 if(!newVal)
-                this.$emit('closeDialog');
+                this.closeDialog("gggg");
+                // this.$emit('closeDialog');
             },
         },
     },
