@@ -94,7 +94,7 @@
             name: 'Jane Doe',
             country: 'United Arab Emirates',
             inquiries: '1000 pieces of LED Garden Lights',
-            status: 'Confirming',
+            status: 'Confirmation',
             date: 'January 19, 2017'
           },
           // verifying
@@ -107,11 +107,19 @@
             status: 'Verifying',
             date: 'January 19, 2017'
           },
+          {
+
+            select: true,
+            name: 'Ben Stiller',
+            country: 'United Arab Emirates',
+            inquiries: '1000 pieces of LED Garden Lights',
+            status: 'Rejected',
+            date: 'January 19, 2017'
+          },
           // waiting for your confirmation
         ]
       }
     },
-
 
     components: {
         DialogTest,

@@ -1,36 +1,33 @@
 <template>
- <div>
-     
-    <v-data-table
-      :headers="headers"
-      :items="dataItems"
-      :search="search">
-        <template slot="items" slot-scope="props">
-            <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
-            <td class="text-xs-center font-weight-medium">{{ props.item.name }}</td>
-            <td class="text-xs-center font-weight-medium">{{ props.item.country }}</td>
-            <td class="text-xs-center font-weight-medium">{{ props.item.inquiries }}</td>
-            <td class="text-xs-center">
-                <v-btn flat @click="dialog = true" value="left" class="v-btn--active">                    
-                    <span class="ml-1 white--text font-weight-light subheading">Open</span>
-                </v-btn>                   
-            </td>
-            <td class="text-xs-center">{{ props.item.date }}</td>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-            Your search for "{{ search }}" found no results.
-        </v-alert>
-    </v-data-table>
-
-    <dialog-test :openDialog="dialog" @closeDialog="dialog=false"></dialog-test>
-
- </div>
+   <div>
+      <v-data-table
+        :headers="headers"
+        :items="dataItems"
+        :search="search">
+          <template slot="items" slot-scope="props">
+              <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
+              <td class="text-xs-center font-weight-medium">{{ props.item.name }}</td>
+              <td class="text-xs-center font-weight-medium">{{ props.item.country }}</td>
+              <td class="text-xs-center font-weight-medium">{{ props.item.inquiries }}</td>
+              <td class="text-xs-center">
+                   <status-component :status=props.item.status> </status-component>
+              </td>
+              <td class="text-xs-center">{{ props.item.date }}</td>
+          </template>
+          <v-alert slot="no-results" :value="true" color="error" icon="warning">
+              Your search for "{{ search }}" found no results.
+          </v-alert>
+      </v-data-table>
+      <dialog-test :openDialog="dialog" @closeDialog="dialog=false"></dialog-test>
+   </div>
 </template>
 
 
 <script>
     
  import DialogTest from "@/views/Components/App/Buyer/DialogTest";
+ import StatusComponent from "@/views/Components/App/Buyer/StatusComponent";
+
 
   export default {
     data: function () {
@@ -85,27 +82,17 @@
             name: 'Jane Doe',
             country: 'United Arab Emirates Close Table',
             inquiries: '1000 pieces of LED Garden Lights',
-            status: '<span tabindex="0" class="v-chip pa-3 v-chip--label v-chip--small theme--light fix-width blue-grey lighten-4 white--text"><span class="v-chip__content text-xs-center">Open</span></span>',
+            status: 'Cancelled',
             date: 'January 19, 2017'
 
           },
-           {
-            // open
-            select: true,
-            name: 'Jane Doe',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: '<span tabindex="0" class="fix-width v-chip pa-3 v-chip--label v-chip--small fix-width theme--light amber darken-4 white--text text-xs-center"><span class="v-chip__content">Waiting for Confirmation</span></span>',
-            date: 'January 19, 2017'
-          },
-          // verifying
           {
 
             select: true,
             name: 'Ben Stiller',
             country: 'United Arab Emirates',
             inquiries: '1000 pieces of LED Garden Lights',
-            status: '  ',
+            status: 'Success',
             date: 'January 19, 2017'
           },
           // waiting for your confirmation
@@ -115,7 +102,8 @@
 
 
     components: {
-        DialogTest
+        DialogTest,
+        StatusComponent
     },
 
     methods: {

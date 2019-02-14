@@ -74,7 +74,6 @@
 
 						  	  <v-divider></v-divider>
 
-
 						  	  <!-- dynamic table -->
 						  	  <div>
 						  	  	<keep-alive>
@@ -152,6 +151,9 @@ export default {
 		CloseInquiry: (component) => {
 			this.component = components
 			alert('CloseInquiry')
+		},
+		Search: () => {
+
 		}
 	}
 }
