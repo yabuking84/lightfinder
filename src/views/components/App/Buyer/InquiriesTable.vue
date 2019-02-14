@@ -4,6 +4,7 @@
       :headers="headers"
       :items="dataItems"
       :search="search">
+
         <template slot="items" slot-scope="props">
             <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
             <td class="text-xs-center font-weight-medium">{{ props.item.name }}</td>
@@ -14,9 +15,11 @@
             </td>
             <td class="text-xs-center">{{ props.item.date }}</td>
         </template>
+
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ search }}" found no results.
         </v-alert>
+
     </v-data-table>
 
     <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
@@ -31,17 +34,10 @@
 
   export default {
 
-    components: {
-        DialogTest,
-        StatusComponent
-    },
-
     data: function () {
       return {
-
         search: '',
         dialog: false,
-        statuscomponent: 'status-component',
         headers: [
             {
               text: 'Select',
@@ -118,7 +114,8 @@
 
 
     components: {
-        DialogTest
+        DialogTest,
+        StatusComponent
     },
 
     methods: {
