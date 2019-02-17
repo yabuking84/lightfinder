@@ -1,9 +1,17 @@
 <template>
  <div>
+    
+     <v-flex xs3 offset-xs9 mr-2 ml3>
+             <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>   
+    </v-flex>
+
+    <v-divider></v-divider>
+
     <v-data-table
-      :headers="headers"
-      :items="dataItems"
-      :search="search">
+
+          :headers="headers"
+          :items="dataItems"
+          :search="search">
 
         <template slot="items" slot-scope="props">
             <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
@@ -14,14 +22,12 @@
                 <status-component :status=props.item.status> </status-component>
             </td>
             <td class="text-xs-center">{{ props.item.date }}</td>
-
             <td class="text-xs-center">
                  <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1 font-weight-light">       
                     <i class="fas fa-eye white--text"></i>             
                     <span class="ml-1 white--text font-weight-light ">View</span>
                 </v-btn>
             </td>
-
         </template>
 
         <v-alert slot="no-results" :value="true" color="error" icon="warning">

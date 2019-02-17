@@ -10,7 +10,7 @@
 							</v-layout>
 							<v-layout row wrap>
 
-								<span class="grey darken-4 pa-1">
+								<span class="grey darken-4 pa-0">
 							    	<v-btn flat value="left" class="v-btn--active">
 					                	<i class="ml-1 white--text font-weight-light subheading far fa-edit white--text"></i>
 					                	<span class="ml-1 white--text font-weight-light subheading">Compose Inquiry</span>
@@ -19,23 +19,24 @@
 
 							  	<v-spacer></v-spacer>
 
-								<span class="red accent-4 pa-1">
+								<span class="red accent-4 pa-0">
 							    	<v-btn red accent-4 flat value="left" class="">
 					                	<span class="ml-1 white--text font-weight-light subheading">1 Inquiry Remaining </span>
 					             	</v-btn>	
 							  	</span>
 
+
 							</v-layout>
 						</v-container>
 						<v-divider></v-divider>		
-						<v-container fluid mt-2>
+						<v-container fluid >
 						  <v-card>
-						  	<v-layout row wrap pa-2>
+
+						  	<v-layout row wrap >
 								<v-container fluid>
 									<!-- toolbar -->
 									<v-toolbar dark color="grey darken-4">
-										
-	   									 <v-btn-toggle v-model="icon">
+	   									 <v-btn-toggle>
 			    							    <span class="grey darken-4 pa-2">
 			    							    	<v-btn flat value="left" @click="component='inquiries-table' ">
 									                	<i class="fas fa-envelope-open-text white--text"></i> 
@@ -54,38 +55,27 @@
 										               <span class="ml-1 font-weight-light white--text">Closed Inquiry</span>
 										            </v-btn>
 												</span>
-								          </v-btn-toggle>
-
+								         </v-btn-toggle>
 									    <v-spacer></v-spacer>
-
-		   						 	 <v-flex xs12 sm6 md3>
-				   						 	 <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>	  
-							        </v-flex>
-
 								    <v-btn icon>
 								      <v-icon>sort</v-icon>
 								    </v-btn>
-
 								    <v-btn icon>
 								      <v-icon>refresh</v-icon>
 								    </v-btn>
-								
 									</v-toolbar>
 									<!--/ toolbar -->
-
 								</v-container>
 							</v-layout>
-
-						  	  <v-divider></v-divider>
-
 						  	  <!-- dynamic table -->
 						  	  <div>
+
 						  	  	<keep-alive>
-						  		  	<component v-bind:is="component"></component>	
+						  		  	<component v-bind:is="component" ></component>	
 						  		</keep-alive>
+						  		
 						  	  </div>
 						  	  <!-- dynamic table -->
-
 						  </v-card>
 						</v-container>
 				</v-flex>
@@ -156,9 +146,10 @@ export default {
 			this.component = components
 			alert('CloseInquiry')
 		},
+
 		Search: () => {
 
-		}
+		}	
 	}
 }
 	

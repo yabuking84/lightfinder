@@ -1,5 +1,11 @@
 <template>
    <div>
+    
+    <v-flex xs3 offset-xs9 mr-2 ml3>
+             <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>   
+    </v-flex>
+
+ <v-divider></v-divider>
       <v-data-table
         :headers="headers"
         :items="dataItems"
@@ -20,13 +26,11 @@
                 </v-btn>
             </td>
           </template>
-          <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          <v-alert slot="no-results" :value="true" color="orange" icon="warning">
               Your search for "{{ search }}" found no results.
           </v-alert>
       </v-data-table>
-
      <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
-
    </div>
 </template>
 

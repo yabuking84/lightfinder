@@ -64,7 +64,12 @@
 
 <script>
 	export default {
-		props: [`status`],
+		props: {
+			status: {
+				type:String,
+				required:true
+			}
+		},
 		data: function () {
 			return {
 				dialog: false
