@@ -1,11 +1,9 @@
 <template>
-
  <div>
     <v-flex xs3 offset-xs9 mr-2 ml3>
              <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>   
     </v-flex>
  <v-divider></v-divider>
-     
     <v-data-table
       :headers="headers"
       :items="dataItems"

@@ -31,7 +31,6 @@
 						<v-divider></v-divider>		
 						<v-container fluid >
 						  <v-card>
-
 						  	<v-layout row wrap >
 								<v-container fluid>
 									<!-- toolbar -->
@@ -57,10 +56,10 @@
 												</span>
 								         </v-btn-toggle>
 									    <v-spacer></v-spacer>
-								    <v-btn icon>
+								    <v-btn icon @click="Sort('desc')">
 								      <v-icon>sort</v-icon>
 								    </v-btn>
-								    <v-btn icon>
+								    <v-btn icon @click="Refresh()">
 								      <v-icon>refresh</v-icon>
 								    </v-btn>
 									</v-toolbar>
@@ -69,11 +68,9 @@
 							</v-layout>
 						  	  <!-- dynamic table -->
 						  	  <div>
-
 						  	  	<keep-alive>
 						  		  	<component v-bind:is="component" ></component>	
 						  		</keep-alive>
-						  		
 						  	  </div>
 						  	  <!-- dynamic table -->
 						  </v-card>
@@ -109,8 +106,8 @@ export default {
 		icon: null,
 		packageLink: '/buyer/packages',
 		isActive: false,
-		component: 'inquiries-table'
-
+		component: 'inquiries-table',
+		sort: 'asc'
 	}),
 
 	computed: {
@@ -148,6 +145,17 @@ export default {
 		},
 
 		Search: () => {
+
+		},
+
+		Refresh: () => {
+
+			alert('Refresh')
+
+		},
+		Sort: () => {
+
+			alert('SOrt')
 
 		}	
 	}

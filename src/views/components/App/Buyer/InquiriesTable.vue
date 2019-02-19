@@ -1,18 +1,13 @@
 <template>
  <div>
-    
      <v-flex xs3 offset-xs9 mr-2 ml3>
              <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable ></v-text-field>   
     </v-flex>
-
     <v-divider></v-divider>
-
     <v-data-table
-
           :headers="headers"
           :items="dataItems"
           :search="search">
-
         <template slot="items" slot-scope="props">
             <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
             <td class="text-xs-center font-weight-medium">{{ props.item.name }}</td>
@@ -29,15 +24,11 @@
                 </v-btn>
             </td>
         </template>
-
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ search }}" found no results.
         </v-alert>
-
     </v-data-table>
-
     <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
-
  </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
 	<v-img :src="backgroundImg" class="page-vimg with-header" >
-    	<img class="logo" src="/static/bal-logo.png">
+    	<img class="logo" src="/static/logos/logo-white.png">
 
 		 <v-container>
 		   <v-layout align-center justify-center row fill-height>

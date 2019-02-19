@@ -1,7 +1,7 @@
 <template>
 
   <v-img :src="backgroundImg" class="page-vimg with-header" >
-      <img class="logo" src="/static/bal-logo.png">
+      <img class="logo" src="/static/logos/logo-white.png">
 		<v-container>
 			<v-flex xs6 offset-xs3>
 			  	<v-card>
