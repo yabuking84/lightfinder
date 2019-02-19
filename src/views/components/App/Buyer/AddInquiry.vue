@@ -21,15 +21,12 @@
     <v-stepper-content step="2" ref="step_2">
             <v-container>
                 <v-layout row wrap>
-                    <v-flex xs12>
                         <v-text-field
-                            outline
                             single-line                            
                             v-model="formData.keywords"
                             @keyup.enter="stepUp()"
                             label="Write keyword here..">
                         </v-text-field>
-                    </v-flex>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -45,7 +42,6 @@
     <v-stepper-content step="3" ref="step_3">
             <v-container>
                 <v-layout row wrap>
-                    <v-flex xs12>
                         <v-autocomplete
                             v-model="formData.category"
                             :loading="loading"
@@ -60,7 +56,6 @@
                             label="Type here the category.."
                             solo-inverted>
                         </v-autocomplete>
-                    </v-flex>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp(2)">next</v-btn>
@@ -77,20 +72,14 @@
     </v-stepper-step>
     <v-stepper-content step="5" ref="step_5">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_1">
                         <v-text-field
-                            class="digits_3"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.warranty"
                             @keyup.enter="stepUp()"
                             :value="formData.warranty"
-                            mask="#"> 
+                            suffix="yr/s"
+                            mask="#">
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;">yr/s</h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -104,20 +93,14 @@
     </v-stepper-step>
     <v-stepper-content step="6" ref="step_6">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_4">
                         <v-text-field
-                            class="digits_4"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.power"
                             @keyup.enter="stepUp()"
                             :value="formData.power"
+                            suffix="watts"
                             mask="####"> 
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;">watts</h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -132,20 +115,14 @@
     </v-stepper-step>
     <v-stepper-content step="7" ref="step_7">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_4">
                         <v-text-field
-                            class="digits_4"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.lumen"
                             @keyup.enter="stepUp()"
                             :value="formData.lumen"
+                            suffix="lm"
                             mask="####"> 
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;">lm</h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -160,20 +137,14 @@
     </v-stepper-step>
     <v-stepper-content step="8" ref="step_8">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_4">                    
                         <v-text-field
-                            class="digits_4"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.efficiency"
                             @keyup.enter="stepUp()"
                             :value="formData.efficiency"
+                            suffix="lm/w"
                             mask="####"> 
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;">lm/w</h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -189,20 +160,14 @@
     </v-stepper-step>
     <v-stepper-content step="9" ref="step_9">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_3">
                         <v-text-field
-                            class="digits_4"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.beam_angle"
                             @keyup.enter="stepUp()"
                             :value="formData.beam_angle"
-                            mask="##"> 
+                            suffix="degrees"
+                            mask="###"> 
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;">degrees</h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -217,20 +182,14 @@
     </v-stepper-step>
     <v-stepper-content step="10" ref="step_10">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_4">
                         <v-text-field
-                            class="digits_4"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.cct"
                             @keyup.enter="stepUp()"
                             :value="formData.cct"
+                            suffix="lm"
                             mask="####"> 
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;">lm</h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -244,20 +203,13 @@
     </v-stepper-step>
     <v-stepper-content step="11" ref="step_11">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs1>
+                <v-layout row class="digits_4">
                         <v-text-field
-                            class="digits_4"
-                            full-width
-                            outline
-                            single-line
                             v-model="formData.ip"
                             @keyup.enter="stepUp()"
-                            :value="formData.ip"
+                            :value="formData.ip"                            
                             mask="####"> 
                         </v-text-field>
-                    </v-flex>
-                    <h4 style="padding-top: 30px;"></h4>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -271,10 +223,8 @@
     </v-stepper-step>
     <v-stepper-content step="12" ref="step_12">
             <v-container>
-                <v-layout row wrap>
-                    <v-flex xs12>
+                <v-layout row >
                         <v-text-field
-                            outline
                             single-line                            
                             v-model="formData.finish"
                             @keyup.enter="stepUp()"
@@ -294,21 +244,17 @@
     <v-stepper-content step="13" ref="step_13">
             <v-container>
                 <v-layout row wrap>
-                    <v-flex xs12>
                         <v-text-field
-                            outline
                             single-line                            
                             v-model="formData.size"
                             @keyup.enter="stepUp()"
-                            label="Input finish here..">
+                            label="Input size here..">
                         </v-text-field>
-                    </v-flex>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
         <v-btn flat @click="stepDown()">back</v-btn>
     </v-stepper-content>
-
 
 
 
@@ -329,6 +275,139 @@
                     </v-flex>
 
 
+                </v-layout>
+            </v-container>
+        <v-btn color="primary" @click="stepUp()">next</v-btn>
+        <v-btn flat @click="stepDown()">back</v-btn>
+    </v-stepper-content>
+
+
+
+
+
+    <v-stepper-step step="15" editable>
+        Quantity
+    </v-stepper-step>
+    <v-stepper-content step="15" ref="step_15">
+            <v-container>
+                <v-layout row class="digits_4">
+                        <v-text-field
+                            v-model="formData.quantity"
+                            @keyup.enter="stepUp()"
+                            :value="formData.quantity"
+                            suffix="pc/s"
+                            mask="####"> 
+                        </v-text-field>
+                </v-layout>
+            </v-container>
+        <v-btn color="primary" @click="stepUp()">next</v-btn>
+        <v-btn flat @click="stepDown()">back</v-btn>
+    </v-stepper-content>
+
+
+
+
+    <v-stepper-step step="16" editable>
+        Desired Price
+    </v-stepper-step>
+    <v-stepper-content step="16" ref="step_16">
+            <v-container>
+                <v-layout row>
+                    <v-flex xs3>
+                        <v-text-field
+                            v-model="formData.desired_price"
+                            @keyup.enter="stepUp()"
+                            :value="formData.desired_price"                            
+                            suffix="USD"
+                            mask="#######"> 
+                        </v-text-field>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        <v-btn color="primary" @click="stepUp()">next</v-btn>
+        <v-btn flat @click="stepDown()">back</v-btn>
+    </v-stepper-content>
+
+
+
+
+
+
+    <v-stepper-step step="17" editable>
+        Preferred Shipment Date
+    </v-stepper-step>
+    <v-stepper-content step="17" ref="step_17" isCalendar>
+            <v-container>
+                <v-layout row>
+
+                    <v-menu
+                        v-model="calendar_menu"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px">
+
+                        <v-text-field
+                            slot="activator"
+                            v-model="formData.shipping_date"
+                            label="Shipment Date"
+                            prepend-icon="event"
+                            readonly></v-text-field>
+                        <v-date-picker 
+                            v-model="formData.shipping_date" 
+                            header-color="black"
+                            @input="calendar_menu = false">
+                                
+                        </v-date-picker>
+                    
+                    </v-menu>
+
+                </v-layout>
+            </v-container>
+        <v-btn color="primary" @click="stepUp()">next</v-btn>
+        <v-btn flat @click="stepDown()">back</v-btn>
+    </v-stepper-content>
+
+
+
+
+
+    <v-stepper-step step="18" editable>
+        Payment Method
+    </v-stepper-step>
+    <v-stepper-content step="18" ref="step_18">
+            <v-container>
+                <v-layout row wrap>
+                    <v-flex xs4>
+                        <v-switch color="black" v-model="formData.payment_method" label="Credit Card" value="credit_card"></v-switch>
+                    </v-flex>
+                    <v-flex xs4>
+                        <v-switch color="black" v-model="formData.payment_method" label="Bank Transfer" value="bank_transfer"></v-switch>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        <v-btn color="primary" @click="stepUp()">next</v-btn>
+        <v-btn flat @click="stepDown()">back</v-btn>
+    </v-stepper-content>
+
+
+
+
+
+
+    <v-stepper-step step="19" editable>
+        Message
+    </v-stepper-step>
+    <v-stepper-content step="19" ref="step_19">
+            <v-container>
+                <v-layout row>
+                    <v-textarea 
+                        label="Type message here.."
+                        single-line>
+                    </v-textarea>
                 </v-layout>
             </v-container>
         <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -365,28 +444,6 @@
     background-color: #000 !important;
     border-color: #000 !important;    
 }
-
-.digits_2 {
-    width: 50px;
-    input {
-        text-align: right;
-    }
-}
-
-.digits_3 {
-    width: 100px;
-    input {
-        text-align: right;
-    }
-}
-
-.digits_4 {
-    width: 130px;
-    input {
-        text-align: right;
-    }
-}
-
 </style>
 
 
@@ -394,6 +451,44 @@
 
 
 <style lang="scss">
+
+.digits_1 {
+    width: 75px;
+    input {
+        // text-align: right;
+    }
+}
+
+.digits_2 {
+    width: 100px;
+    input {
+        // text-align: right;
+    }
+}
+
+.digits_3 {
+    width: 120px;
+    input {
+        // text-align: right;
+    }
+}
+
+.digits_4 {
+    width: 140px;
+    input {
+        // text-align: right;
+    }
+}
+
+.digits_6 {
+    width: 150px;
+    input {
+        // text-align: right;
+    }
+}
+
+
+
 .stepperClass .v-stepper__step__step {
     background-color: #000000  !important;
 }
@@ -408,8 +503,24 @@
 }
 
 
+.v-textarea textarea,
 .v-input input {
     caret-color: initial !important;
+}
+
+.v-text-field__suffix {
+    color: #000 !important;
+}
+
+
+.v-text-field--box input, 
+.v-text-field--full-width input, 
+.v-text-field--outline input {
+    margin-top: 10px;
+}
+
+.theme--light.v-icon {
+    color: #000;
 }
 
 </style>
@@ -444,7 +555,7 @@ export default {
             desired_price: null,
             shipping_method: null,
             trade_type: null,
-            shipping_date: '2019-01-01',
+            shipping_date: null,
             payment_method: null,
             message: null,
 
@@ -459,6 +570,7 @@ export default {
             'DALI',
             '0-10v',
         ],
+        calendar_menu: false,
       }
     },
 
@@ -467,7 +579,7 @@ export default {
 
     created: function() {
         // this.loading = true;
-        console.log('getCategories_a');
+        // console.log('getCategories_a');
 
         this.$store.dispatch('cat/getCategories_a')
         .then((response)=>{
@@ -489,19 +601,28 @@ export default {
 
         stepCnt(val) {
 
-            console.log("step_"+val);
+            // console.log("step_"+val);
             if(val>1) {
-                this.$refs["step_"+val].$el.querySelector('input').focus();
+
+                if(typeof this.$refs["step_"+val].$attrs.isCalendar !== "undefined") {
+                    // console.log('Is calendar!!');
+                } else {
+                    this.$refs["step_"+val].$el.querySelector('input').focus();
+                }
             }
         }
     },
 
     methods: {
         stepUp: function(val=1) {
-            this.stepCnt += val;
+            // console.log("stepCnt = "+this.stepCnt);
+            // console.log("val = "+val);
+            this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
+            // this.stepCnt += val;
         },
         stepDown: function(val=1)  {
-            this.stepCnt -= val;
+            this.stepCnt = parseInt(this.stepCnt) - parseInt(val);
+            // this.stepCnt -= val;
         },
 
         querySelections (v) {
