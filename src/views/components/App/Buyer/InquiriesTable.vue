@@ -28,19 +28,25 @@
             Your search for "{{ search }}" found no results.
         </v-alert>
     </v-data-table>
-    <dialog-test :openDialog="dialog" :closeDialog="closeDialog" ></dialog-test>
+
+    <dialog-test :dialog.sync="dialog" ></dialog-test>
+<!--     <test1></test1>
+    <test2></test2> -->
+
  </div>
 </template>
 
 <script>
     
  import DialogTest from "@/views/Components/App/Buyer/DialogTest";
+ // import Test1 from "@/views/Components/App/Buyer/Test1";
+ // import Test2 from "@/views/Components/App/Buyer/Test2";
  import StatusComponent from "@/views/Components/App/Buyer/StatusComponent";
 
   export default {
-
     data: function () {
-      return {
+    return {
+
         search: '',
         dialog: false,
         headers: [
@@ -132,20 +138,6 @@
       }
     },
 
-    components: {
-        DialogTest,
-        StatusComponent
-    },
-
-    methods: {
-
-        closeDialog: function(val){
-            // alert(val);
-            this.dialog=false;
-
-        },
-        
-    },
 
   }
 </script>

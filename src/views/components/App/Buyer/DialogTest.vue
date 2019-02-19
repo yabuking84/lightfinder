@@ -1,6 +1,7 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="dialog"  width="500" >
+    <!-- <v-dialog v-model="dialog"  width="500" > -->
+    <v-dialog :value="dialog"  @input="$emit('update:dialog', false)" width="500" >
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           Privacy Policy
@@ -11,7 +12,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="dialog = false" >
+          <v-btn color="primary" flat @click="$emit('update:dialog', false)" >
             I accept
           </v-btn>
         </v-card-actions>
@@ -23,33 +24,16 @@
 <script>
   export default {    
     props: {
-        openDialog : {
+        dialog: {
             type: Boolean,
-            default: false,
+            default: false,            
         },
-
-        closeDialog: {
-            type: Function
-        }
     },
 
     data: function(){
         return {
 
         }
-    },
-
-    computed: {
-        dialog: {
-            get: function(){
-                return this.openDialog;
-            },
-            set: function(newVal){
-                if(!newVal)
-                this.closeDialog("gggg");
-                // this.$emit('closeDialog');
-            },
-        },
     },
   }
 
