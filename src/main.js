@@ -3,6 +3,7 @@ import 'babel-polyfill'
 import 'event-source-polyfill'
 
 import Vue from 'vue'
+
 import router from './router'
 import Vuetify from 'vuetify'
 
@@ -24,9 +25,12 @@ import Trend from 'vuetrend'
 import {truncate} from 'lodash'
 
 
+
+
 import App from './App'
 
 
+import VueScrollTo from 'vue-scrollto'
 
 
 
@@ -35,22 +39,55 @@ Vue.config.debug = true
 Vue.config.devtools = true
 Vue.config.performance = process.env.NODE_ENV === 'development'
 
+
+
+const VueScrollToOptn = {
+    container: "body",
+    duration: 500,
+    easing: "ease",
+    offset: 0,
+    force: true,
+    cancelable: true,
+    onStart: false,
+    onDone: false,
+    onCancel: false,
+    x: false,
+    y: true
+};
+
+Vue.use(VueScrollTo,VueScrollToOptn)
+
+
 Vue.use(Vuebar)
 Vue.use(Trend)
 
 Vue.use(Vuetify, {
-  theme: {
-    primary: store.state.swatch.colorScheme.primary,
-    secondary: colors.pink.base,
-    accent: colors.deepPurple.accent2,
-    error: colors.red.accent4,
-    info: colors.blue.lighten1,
-    success: colors.green.accent4,
-    warning: colors.amber.darken2
-  },
-  options: {
-    themeVariations: ['primary', 'secondary']
-  }
+    // theme: {
+    //     primary: store.state.swatch.colorScheme.primary,
+    //     secondary: colors.pink.base,
+    //     accent: colors.deepPurple.accent2,
+    //     error: colors.red.accent4,
+    //     info: colors.blue.lighten1,
+    //     success: colors.green.accent4,
+    //     warning: colors.amber.darken2
+    // },
+
+
+    theme: {
+        primary:    "#000",
+        secondary:  "#fff",
+        accent:     "#000",
+        error:      colors.red.accent4,
+        info:       colors.blue.lighten1,
+        success:    colors.green.accent4,
+        warning:    colors.amber.darken2
+    },
+
+
+
+    options: {
+        themeVariations: ['primary', 'secondary']
+    }
 })
 
 Object.keys(Components).forEach(key => {

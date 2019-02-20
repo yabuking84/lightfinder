@@ -107,6 +107,12 @@
   </v-img>
 </template>
 
+
+
+
+
+
+
 <script>
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'

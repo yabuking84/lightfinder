@@ -106,7 +106,7 @@
   import { mapGetters } from 'vuex'
   import config from '@/config/index'
 
-  console.log(config);
+  // console.log(config);
 
   export default {
     data: () => ({

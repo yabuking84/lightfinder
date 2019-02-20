@@ -22,9 +22,7 @@
         </v-alert>
     </v-data-table>
 
-    <dialog-test :dialog.sync="dialog" ></dialog-test>
-<!--     <test1></test1>
-    <test2></test2> -->
+    <dialog-test :openDialog="dialog" @closeDialog="dialog=false"></dialog-test>
 
  </div>
 </template>
@@ -33,28 +31,10 @@
 <script>
     
  import DialogTest from "@/views/Components/App/Buyer/DialogTest";
- // import Test1 from "@/views/Components/App/Buyer/Test1";
- // import Test2 from "@/views/Components/App/Buyer/Test2";
 
   export default {
-
-    components: {
-        DialogTest,
-        // Test1,
-        // Test2,
-    },
-
-    methods: {
-
-        closeDialog: function(val){
-            // alert(val);
-            this.dialog=false;
-        },
-        
-    },
-
     data: function () {
-    return {
+      return {
 
         search: '',
         dialog: false,
@@ -102,8 +82,8 @@
           {
             // open
             select: true,
-            name: 'Jane Doe Inquiries',
-            country: 'United Arab Emirates',
+            name: 'Jane Doe',
+            country: 'United Arab Emirates Close Table',
             inquiries: '1000 pieces of LED Garden Lights',
             status: '<span tabindex="0" class="v-chip pa-3 v-chip--label v-chip--small theme--light fix-width blue-grey lighten-4 white--text"><span class="v-chip__content text-xs-center">Open</span></span>',
             date: 'January 19, 2017'
@@ -133,6 +113,14 @@
       }
     },
 
+
+    components: {
+        DialogTest
+    },
+
+    methods: {
+        
+    },
 
   }
 </script>

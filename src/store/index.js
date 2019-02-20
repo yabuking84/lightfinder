@@ -8,6 +8,7 @@ import swatch from './modules/swatch'
 
 // import axios from 'axios';
 import auth from './modules/auth'
+import cat from './modules/category'
  
 Vue.use(Vuex)
 
@@ -20,5 +21,6 @@ export const store = new Vuex.Store({
     navigation,
     swatch,
     auth,
+    cat,
   }
 })
