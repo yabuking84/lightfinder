@@ -11,7 +11,7 @@ import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
 import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerPackages from '@/views/Pages/Buyer/Packages'
-import BuyerInquiryDetails from '@/views/Pages/Buyer/Details'
+import BuyerInquiryDetails from '@/views/Pages/Buyer/InquiryDetails'
 
 
 import test from '@/views/Components/App/test'
@@ -62,7 +62,7 @@ export default [
     },    
 
       {
-        name: 'BuyerInquiry',
+        name: 'BuyerInquiryView',
         path: '/buyer/view',
         components: { 
             default: BuyerInquiryDetails, 
