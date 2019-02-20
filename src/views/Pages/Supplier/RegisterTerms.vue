@@ -1,13 +1,13 @@
 <template>
 	  <v-img :src="backgroundImg" class="page-vimg with-header" >
-	  	    <img class="logo" src="/static/bal-logo.png">
+	  	    <img class="logo" src="/static/logos/logo-white.png">
 			
 			 <v-layout align-center justify-center row wrap >
 		   	<v-container>
 		   	  <v-flex md8 offset-md2 xs12>
 		   	    <v-card color="white">
 		   	       <v-layout justify-center align-center row column>
-		 				<img class="logo2" src="/static/logo-black.png">
+		 				<img class="logo2" src="/static/logos/logo-black.png">
 		   	         	<h1 class="">Terms and Condition</h1>
 		   	         	<p class="text-uppercase font-weight-light">Please Read These terms and conditions carefully.</p>
 		   	         	<p class="text-uppercase font-weight-medium">These Terms and Conditions shall be binding upon users of www.buyanylight.com.</p>
