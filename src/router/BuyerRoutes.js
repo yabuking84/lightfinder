@@ -63,7 +63,7 @@ export default [
 
       {
         name: 'BuyerInquiryView',
-        path: '/buyer/view',
+        path: '/buyer/inquiry/view',
         components: { 
             default: BuyerInquiryDetails, 
             sidebar: AppSidebar, 

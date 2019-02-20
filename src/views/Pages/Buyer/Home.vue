@@ -102,7 +102,8 @@ export default {
 
 		'inquiries-table':DashboardOpenInquiriesTable,
 		'in-progress-table':DashboardInprogressTable,
-	    'close-table':DashboardCloseTable
+	    'close-table':DashboardCloseTable,
+	    InquiryCreate,
 
 	},
 
