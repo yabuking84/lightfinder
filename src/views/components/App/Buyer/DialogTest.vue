@@ -29,7 +29,6 @@
             default: false,            
         },
     },
-
     data: function(){
         return {
 

@@ -95,7 +95,7 @@
 
   import { required, email, sameAs, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
-  import SocialButtonCompenent from '@/views/components/Supplier/SocialButtonComponent'
+  import SocialButtonCompenent from '@/views/components/App/Supplier/SocialButtonComponent'
 
 
   const defaultForm = {
