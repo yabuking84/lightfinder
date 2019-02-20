@@ -1,7 +1,7 @@
 <template>
 
   <v-img :src="backgroundImg" class="page-vimg with-header" >
-    <img class="logo" src="/static/bal-logo.png">
+    <img class="logo" src="/static/logos/logo-white.png">
         <v-flex lg10 offset-lg1>
                <v-container mt-5>
                   <v-layout row justify-center grid-list-xl>
