@@ -1,4 +1,6 @@
 <template>
+<div>
+
   <v-stepper v-model="stepCnt" class="stepperClass" vertical>
 
 
@@ -44,7 +46,6 @@
                 <v-layout row wrap>
                         <v-autocomplete
                             v-model="formData.category"
-                            :loading="loading"
                             :items="categories"
                             :search-input.sync="search"                            
                             ref="categorySelect"
@@ -354,11 +355,12 @@
                             slot="activator"
                             v-model="formData.shipping_date"
                             label="Shipment Date"
-                            prepend-icon="event"
+                            prepend-icon="event"                            
                             readonly></v-text-field>
                         <v-date-picker 
                             v-model="formData.shipping_date" 
                             header-color="black"
+                            :min="minDate"
                             @input="calendar_menu = false">
                                 
                         </v-date-picker>
@@ -399,13 +401,13 @@
 
 
     <v-stepper-step step="19" editable>
-        Message
+        Files to attach
     </v-stepper-step>
     <v-stepper-content step="19" ref="step_19">
             <v-container>
                 <v-layout row>
                     <v-textarea 
-                        label="Type message here.."
+                        label="files here.."
                         single-line>
                     </v-textarea>
                 </v-layout>
@@ -415,8 +417,166 @@
     </v-stepper-content>
 
 
+
+    <v-stepper-step step="20" editable>
+        Message
+    </v-stepper-step>
+    <v-stepper-content step="20" ref="step_20">
+            <v-container>
+                <v-layout row>
+                    <v-textarea 
+                        label="Type message here.."
+                        v-model="formData.message"
+                        single-line>
+                    </v-textarea>
+                </v-layout>
+            </v-container>
+        <v-btn color="primary" @click="reviewDialog=true">next</v-btn>
+        <v-btn flat @click="stepDown()">back</v-btn>
+    </v-stepper-content>
+
+
   </v-stepper>
+
+
+<review-inquiry :dialog.sync="reviewDialog" :form-data="formData"></review-inquiry>
+    
+
+</div>
 </template>
+
+
+
+<script>
+
+import helpers from "@/mixins/helpers";
+import ReviewInquiry from "@/views/Components/App/Buyer/ReviewInquiry";
+
+export default {
+    mixins: [
+        helpers,
+    ],
+    data () {
+      return {
+        stepCnt: 1,
+        formData: {
+            keyword: null,
+            category: null,
+            warranty: null,
+            power: null,
+            lumen: null,
+            efficiency: null,
+            beam_angle: null,
+            cct: null,
+            ip: null,
+            finish: null,
+            size: null,
+            dimmable: [],
+            quantity: null,
+            desired_price: null,
+            shipping_method: null,
+            trade_type: null,
+            shipping_date: null,
+            payment_method: null,
+            message: null,
+
+        },
+
+        search: null,
+        select: null,
+        categories: [],
+        minDate: null,
+        reviewDialog: false,
+        dimmables: [
+            'TRIAC',
+            'DALI',
+            '0-10v',
+        ],
+        calendar_menu: false,
+      }
+    },
+
+    components: {
+        ReviewInquiry
+    },
+
+    created: function() {
+
+        // for shipping_date field
+        this.formData.shipping_date = this.getDateTime();
+        this.minDate = this.formData.shipping_date;
+
+        // get categories for category select box
+        this.$store.dispatch('cat/getCategories_a')
+        .then((response)=>{
+            this.categories = response;
+        })
+        .catch((e) => {
+            console.log('Error: ');
+            console.log(e);
+        });
+    
+    },
+
+    watch: {
+        search (val) {
+            return val && val !== this.select && this.querySelections(val)
+        },
+
+        stepCnt(val) {
+
+            // console.log("step_"+val);
+            if(val>1) {
+
+                if(typeof this.$refs["step_"+val].$attrs.isCalendar == "undefined") {
+
+                    
+                    if(this.$refs["step_"+val].$el.querySelector('input') != null) {
+                        this.$refs["step_"+val].$el.querySelector('input').focus();
+                    } 
+                    else if(this.$refs["step_"+val].$el.querySelector('textarea') != null) {
+                        this.$refs["step_"+val].$el.querySelector('textarea').focus();
+                    } 
+
+                } 
+            }
+        }
+    },
+
+    methods: {
+        stepUp: function(val=1) {
+            // console.log("stepCnt = "+this.stepCnt);
+            // console.log("val = "+val);
+            this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
+            // this.stepCnt += val;
+        },
+        stepDown: function(val=1)  {
+            this.stepCnt = parseInt(this.stepCnt) - parseInt(val);
+            // this.stepCnt -= val;
+        },
+
+        querySelections (v) {
+
+            this.items = this.categories.filter(e => {
+                return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+            })
+
+        }        
+    },
+
+
+}
+</script>
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -529,113 +689,4 @@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
-
-
-<script>
-export default {
-
-    data () {
-      return {
-        stepCnt: 1,
-        formData: {
-            keyword: null,
-            category: null,
-            warranty: null,
-            power: null,
-            lumen: null,
-            efficiency: null,
-            beam_angle: null,
-            cct: null,
-            ip: null,
-            finish: null,
-            size: null,
-            dimmable: [],
-            quantity: null,
-            desired_price: null,
-            shipping_method: null,
-            trade_type: null,
-            shipping_date: null,
-            payment_method: null,
-            message: null,
-
-        },
-
-        loading: false,
-        search: null,
-        select: null,
-        categories: [],
-        dimmables: [
-            'TRIAC',
-            'DALI',
-            '0-10v',
-        ],
-        calendar_menu: false,
-      }
-    },
-
-    components: {
-    },
-
-    created: function() {
-        // this.loading = true;
-        // console.log('getCategories_a');
-
-        this.$store.dispatch('cat/getCategories_a')
-        .then((response)=>{
-            this.categories = response;
-            // this.loading = false;
-        })
-        .catch((e) => {
-            // this.loading = false;
-            console.log('Error: ');
-            console.log(e);
-        });
-    
-    },
-
-    watch: {
-        search (val) {
-            return val && val !== this.select && this.querySelections(val)
-        },
-
-        stepCnt(val) {
-
-            // console.log("step_"+val);
-            if(val>1) {
-
-                if(typeof this.$refs["step_"+val].$attrs.isCalendar !== "undefined") {
-                    // console.log('Is calendar!!');
-                } else {
-                    this.$refs["step_"+val].$el.querySelector('input').focus();
-                }
-            }
-        }
-    },
-
-    methods: {
-        stepUp: function(val=1) {
-            // console.log("stepCnt = "+this.stepCnt);
-            // console.log("val = "+val);
-            this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
-            // this.stepCnt += val;
-        },
-        stepDown: function(val=1)  {
-            this.stepCnt = parseInt(this.stepCnt) - parseInt(val);
-            // this.stepCnt -= val;
-        },
-
-        querySelections (v) {
-
-            this.items = this.categories.filter(e => {
-                return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-            })
-
-        }        
-    }
-
-
-}
-</script>
-
 
