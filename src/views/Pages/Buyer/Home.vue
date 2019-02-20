@@ -9,12 +9,13 @@
 							  <v-spacer></v-spacer>
 							</v-layout>
 							<v-layout row wrap>
-
-								<span class="grey darken-4 pa-0">
-							    	<v-btn flat value="left" class="v-btn--active">
+								<span class="grey darken-4 pa-1">									
+							    	<v-btn flat value="left" class="v-btn--active" @click="openInquiryCreate=true">
 					                	<i class="ml-1 white--text font-weight-light subheading far fa-edit white--text"></i>
-					                	<span class="ml-1 white--text font-weight-light subheading">Compose Inquiry</span>
-					             	</v-btn>	
+					                	<span class="ml-1 white--text font-weight-light subheading">					                	
+						                	Compose Inquiry
+						                </span>
+					             	</v-btn>						            
 							  	</span>  
 
 							  	<v-spacer></v-spacer>
@@ -78,6 +79,9 @@
 				</v-flex>
 			</v-layout>
 		</v-container>
+
+		<inquiry-create :dialog.sync="openInquiryCreate"></inquiry-create>
+
 	</div>
 </template>
 
@@ -87,6 +91,8 @@
 import DashboardOpenInquiriesTable from "@/views/Components/App/Buyer/DashboardOpenInquiriesTable";
 import DashboardInprogressTable from "@/views/Components/App/Buyer/DashboardInprogressTable";
 import DashboardCloseTable from "@/views/Components/App/Buyer/DashboardCloseTable";
+
+import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
 let isActive = 'v-btn--active';
 
@@ -107,7 +113,8 @@ export default {
 		packageLink: '/buyer/packages',
 		isActive: false,
 		component: 'inquiries-table',
-		sort: 'asc'
+		openInquiryCreate: false,
+
 	}),
 
 	computed: {

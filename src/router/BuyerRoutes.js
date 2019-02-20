@@ -14,6 +14,9 @@ import BuyerPackages from '@/views/Pages/Buyer/Packages'
 import BuyerInquiryDetails from '@/views/Pages/Buyer/InquiryDetails'
 
 
+import test from '@/views/Components/App/test'
+
+
 const meta = { 
     requiresAuth: true,
     role: config.auth.role.buyer.id,
@@ -53,6 +56,7 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            testview: test, 
         },
         meta: meta,
     },    

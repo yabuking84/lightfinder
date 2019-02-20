@@ -8,6 +8,7 @@
             <router-view/>
         </v-content>
 
+
         <router-view name="footer"/>
         
         <!-- <app-settings :drawer="subDrawer" @toggleSubDrawer="handleSubdrawer"></app-settings> -->
