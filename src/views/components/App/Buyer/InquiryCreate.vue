@@ -242,7 +242,7 @@ Create Inquiry
             <v-stepper-step step="17" editable>
                 Preferred Shipment Date
             </v-stepper-step>
-            <v-stepper-content step="17" ref="step_17" isCalendar>
+            <v-stepper-content step="17" ref="step_17">
                 <v-container>
                     <v-layout row>
 
@@ -434,6 +434,8 @@ export default {
             console.log('Error: ');
             console.log(e);
         });
+
+
     
     },
 

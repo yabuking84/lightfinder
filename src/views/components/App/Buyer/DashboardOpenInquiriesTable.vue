@@ -21,12 +21,13 @@
             <td class="text-xs-center">{{ props.item.date }}</td>
             <td class="text-xs-center">
               <!-- <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1  -->
+                <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
                  <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
-                    <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
                        <i class="fas fa-eye white--text"></i>             
                       <span class="ml-1 white--text font-weight-light ">View</span>
-                  </router-link>
                 </v-btn>
+                </router-link>
+
                 
             </td>
             </tr>
