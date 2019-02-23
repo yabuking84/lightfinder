@@ -130,6 +130,6 @@
 
 <style scoped lang="stylus">
 	.proposal-section
-		height:27vh;
+		height:40vh;
 		overflow-y: auto;
 </style>

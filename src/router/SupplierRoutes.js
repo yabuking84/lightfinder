@@ -3,22 +3,60 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
 
+import config from '@/config/index'
+
+
 // SUPPLIER
+
+import SupplierHome from '@/views/Pages/Supplier/Home'
+import SupplierInquiryView from '@/views/Pages/Supplier/InquiryView'
 
 import Register from '@/views/Pages/Supplier/Register'
 import RegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
 import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
 
 
+
 const meta = { 
     requiresAuth: true,
-    role: 1,
+    role: config.auth.role.supplier.id,
+    items: [
+        {
+            title: 'Dashboard',
+            name: 'SupplierHome',
+            icon: 'fas fa-th-large',
+        },            
+    ],        
 }
 
+
 export default [
+    {
+        name: 'SupplierHome',
+        path: '/supplier/dashboard',
+        components: {
+            default:SupplierHome,
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+        },
+        meta: meta
+    },
 
     {
-        name: 'supplier-registration' ,
+        name: 'SupplierInquiryView',
+        path: '/supplier/inquiry/view',
+        components: {
+            default:SupplierInquiryView,
+            sidebar: AppSidebar,
+            header: AppToolbar,
+            footer:AppFooter
+        },
+         meta: meta
+    },
+
+    {
+        name: 'SupplierRegistration' ,
         path: '/supplier/register',
         components: { 
             default: Register, 
@@ -26,7 +64,7 @@ export default [
     },
 
     {
-        name: 'supplier-company-details',
+        name: 'SupplierRegistrationDetails',
         path: '/supplier/details',
         components: {
             default: RegisterCompanyDetails
@@ -34,7 +72,7 @@ export default [
     },
 
     {
-        name: 'supplier-terms&condition',
+        name: 'SupplierRegistrationTerms',
         path: '/register/terms',
         components: {
             default: RegisterTermsandCondition

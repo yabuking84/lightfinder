@@ -163,6 +163,8 @@ const actions = {
         router.push({name:'AdminHome'});
         else if(response.data.user.role == config.auth.role.buyer.id) 
         router.push({name:'BuyerHome'});
+        else if(response.data.user.role == config.auth.role.supplier.id) 
+        router.push({name:'SupplierHome'});
         else
         router.push({name:'Login'});
 

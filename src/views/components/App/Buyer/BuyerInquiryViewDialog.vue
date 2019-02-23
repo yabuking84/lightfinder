@@ -46,8 +46,6 @@
 								</v-layout>
 				      	</v-layout>
 
-				
-
 				      	<v-layout row wrap justify-end class="buyerinquirydialog">
 
 				      	    <v-btn @click="dialogConfirm = true" value="left"  class="v-btn--active orange">
@@ -61,6 +59,7 @@
 				                	<span class="ml-1 white--text font-weight-light subheading">Request Sample</span>
 			                	 </router-link>
 			             	</v-btn>
+			             	
 				      	</v-layout>
 
 			    </v-container>		
