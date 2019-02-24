@@ -100,12 +100,16 @@ const actions = {
 
 
                 // set token
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 localStorage.setItem('access_token',token);
                 context.commit('SET_TOKEN_M',token);
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // set token
 
                 
 
                 // set user details                
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 localStorage.setItem('uuid'       ,uuid); // change this later to the real uuid
                 localStorage.setItem('name'       ,user.firstname+" "+user.lastname);
                 localStorage.setItem('firstname'  ,user.firstname);
@@ -114,6 +118,12 @@ const actions = {
                 localStorage.setItem('avatar'     ,user.avatar);
                 localStorage.setItem('role'       ,user.role);
                 context.commit('SET_AUTHUSER_M',user);
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // set user details 
+
+                           
+
+
 
                 resolve(response);
             })
@@ -122,6 +132,34 @@ const actions = {
             })
 
         });
+    },
+
+
+    retrieveInquiryStatuses_a(context){
+        return new Promise((resolve, reject) => {            
+            var url = "http://192.168.1.200:8000/v1/inquiry-statuses";            
+
+            axios({
+                method: 'get',
+                url: url,
+            })
+            .then(response => {                        
+                resolve(response);
+
+                
+                // Set Inquiry Stage / Status
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                localStorage.setItem('inquiry_statuses',response.data); 
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // Set Inquiry Stage / Status
+
+            })
+            .catch(error => {
+                reject(error)
+            })
+        });
+
     },
 
 

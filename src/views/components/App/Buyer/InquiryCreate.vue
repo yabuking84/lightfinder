@@ -394,7 +394,6 @@ export default {
             quantity: null,
             desired_price: null,
             shipping_method: null,
-            trade_type: null,
             shipping_date: null,
             payment_method: null,
             message: null,
@@ -481,7 +480,6 @@ export default {
             this.formData.quantity = null;
             this.formData.desired_price = null;
             this.formData.shipping_method = null;
-            this.formData.trade_type = null;
             this.formData.shipping_date = this.getDateTime();
             this.formData.payment_method = null;
             this.formData.message = null;

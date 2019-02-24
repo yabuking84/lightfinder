@@ -117,9 +117,8 @@
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
   const defaultForm = {
-    // email: 'buyer@buyanylight.com',
-    // password: 'password',
-    email: 'info@bal.com',
+    email: 'buyer@bal.com',
+    // email: 'info@bal.com',
     password: '123456',
     rememberme: false
   }
@@ -181,11 +180,11 @@
             this.resetForm()
             this.$v.$reset()
 
-            var vueThis = this;
+            const vueThis = this;
             setTimeout(function(){
                 vueThis.$store.dispatch('auth/loginSuccess_a',response);
                 vueThis.loading = false;
-            }, 1500, vueThis);
+            }, 1500);
 
             
 

@@ -9,6 +9,7 @@ import swatch from './modules/swatch'
 // import axios from 'axios';
 import auth from './modules/auth'
 import cat from './modules/category'
+import inq from './modules/inquiry'
  
 Vue.use(Vuex)
 
@@ -22,5 +23,6 @@ export const store = new Vuex.Store({
     swatch,
     auth,
     cat,
+    inq,
   }
 })

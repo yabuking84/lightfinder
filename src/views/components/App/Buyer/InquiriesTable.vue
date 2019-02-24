@@ -1,21 +1,50 @@
 <template>
  <div>
-     
+     <v-flex xs3 offset-xs9 mr-2 ml3>
+             <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
+             </v-text-field>   
+    </v-flex>
+    <v-divider></v-divider>
     <v-data-table
-      :headers="headers"
-      :items="dataItems"
-      :search="search">
+          :headers="headers"
+          :items="dataItems"
+          :loading="loading"
+          :search="search">
         <template slot="items" slot-scope="props">
-            <td> <v-checkbox  v-model="props.select" primary hide-details  ></v-checkbox> </td>
-            <td class="text-xs-center font-weight-medium">{{ props.item.name }}</td>
-            <td class="text-xs-center font-weight-medium">{{ props.item.country }}</td>
-            <td class="text-xs-center font-weight-medium">{{ props.item.inquiries }}</td>
-            <td class="text-xs-center">
-                <v-btn flat @click="dialog = true" value="left" class="v-btn--active">                    
-                    <span class="ml-1 white--text font-weight-light subheading">Open</span>
-                </v-btn>                   
-            </td>
-            <td class="text-xs-center">{{ props.item.date }}</td>
+            <tr class="th-heading"  @click="click(props.item.name)">
+                
+                <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details  ></v-checkbox></td>
+                
+                <td class="text-xs-center font-weight-medium">{{ props.item.keywords }}</td>
+
+                <td class="text-xs-center font-weight-medium">{{ props.item.message }}</td>
+                
+                <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
+
+                <td class="text-xs-center">{{ props.item.quantity }}</td>
+
+                
+                <td class="text-xs-center">{{ props.item.shipping_date }}</td>
+
+                <td class="text-xs-center">{{ props.item.created_at }}</td>
+
+                <td class="text-xs-center">
+                       <!-- <inquiry-status :status=props.item.status> </inquiry-status> -->
+                       {{ props.item.status }}
+                </td>
+
+                <td class="text-xs-center">
+                  <!-- <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1  -->
+                     <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
+                        <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
+                           <i class="fas fa-eye white--text"></i>             
+                          <span class="ml-1 white--text font-weight-light ">View</span>
+                      </router-link>
+                    </v-btn>
+                    
+                </td>
+
+            </tr>
         </template>
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
             Your search for "{{ search }}" found no results.
@@ -29,111 +58,132 @@
  </div>
 </template>
 
-
 <script>
     
- import DialogTest from "@/views/Components/App/Buyer/DialogTest";
- // import Test1 from "@/views/Components/App/Buyer/Test1";
- // import Test2 from "@/views/Components/App/Buyer/Test2";
+import helpers from "@/mixins/helpers";
+import DialogTest from "@/views/Components/App/Buyer/DialogTest";
+import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
 
   export default {
-
-    components: {
-        DialogTest,
-        // Test1,
-        // Test2,
-    },
-
-    methods: {
-
-        closeDialog: function(val){
-            // alert(val);
-            this.dialog=false;
-        },
-        
-    },
-
+    mixins: [
+        helpers,
+    ],
     data: function () {
     return {
 
         search: '',
         dialog: false,
-        class: 'color:red;',
+        loading: false,
         headers: [
             {
               text: 'Select',
               align: 'left',
               sortable: false,
-              value: 'select'
+              value: 'inq_id'
             },
+           
             {
-              text: 'Name',
+              text: 'Keywords',
+              align: 'center',  
+              sortable: false,
+              value: 'keywords'
+            },
+           
+            {
+              text: 'Message',
+              align: 'center',  
+              sortable: false,
+              value: 'message'
+            },
+
+            {
+              text: 'Categories',
+              align: 'center',  
+              sortable: false,
+              value: 'categories'
+            },
+            
+            {
+              text: 'Quantity',
               align: 'center',
               sortable: false,
-              value: 'name'
+              value: 'quantity'
             },
+            
             {
-              text: 'Country',
+              text: 'Preferred Shipping Date',
               align: 'center',
               sortable: false,
-              value: 'country'
+              value: 'shipping_date'
             },
+            
             {
-              text: 'Inquiries',
+              text: 'Date',
               align: 'center',
               sortable: false,
-              value: 'inquiries'
+              value: 'created_at'
             },
+
             {
               text: 'Status',
               align: 'center',
               sortable: false,
               value: 'status'
             },
+
             {
-              text: 'Date',
+              text: 'Action',
               align: 'center',
               sortable: false,
-              value: 'date'
             },
         ],
 
-        dataItems: [
-          {
-            // open
-            select: true,
-            name: 'Jane Doe Inquiries',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: '<span tabindex="0" class="v-chip pa-3 v-chip--label v-chip--small theme--light fix-width blue-grey lighten-4 white--text"><span class="v-chip__content text-xs-center">Open</span></span>',
-            date: 'January 19, 2017'
-
-          },
-           {
-            // open
-            select: true,
-            name: 'Jane Doe',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: '<span tabindex="0" class="fix-width v-chip pa-3 v-chip--label v-chip--small fix-width theme--light amber darken-4 white--text text-xs-center"><span class="v-chip__content">Waiting for Confirmation</span></span>',
-            date: 'January 19, 2017'
-          },
-          // verifying
-          {
-
-            select: true,
-            name: 'Ben Stiller',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: '  ',
-            date: 'January 19, 2017'
-          },
-          // waiting for your confirmation
-        ]
+        dataItems: []
+      }
+    },
+    components: {
+      InquiryStatus,
+      DialogTest
+    },
+    methods: {
+      click: function(name) {
+        // window.location.href = '/buyer/view'
       }
     },
 
+    created(){
+        this.loading = true;
+        this.$store.dispatch('inq/getInquiries_a')
+        .then((response) => {
 
+            for (var i = response.length - 1; i >= 0; i--) {
+                var item = {};
+                item.inq_id = response[i].id;
+                item.keywords = this.ucwords(response[i].keyword);
+                item.message = response[i].message;
+                item.categories = response[i].categories.join(', ');
+                item.quantity = response[i].quantity;
+                item.shipping_date = response[i].desired_shipping_date;
+                item.created_at = response[i].created_at;
+                item.status = response[i].stage_id;
+                this.dataItems.push(item);
+            }
+
+            this.loading = false;
+
+
+        })
+        .catch((e) => {
+            console.log('Error: '+e);
+            this.loading = false;
+        })
+        .finally(()=>{
+            console.log('finally');
+            this.loading = false;
+        });;
+
+
+    },
   }
 </script>
 
@@ -144,4 +194,11 @@
       color:#fff;
     .fix-width
       width:198px;
+    .th-heading 
+       cursor: pointer; 
+    .text-decoration-none
+       text-decoration: none;
+    .th-heading a 
+       text-decoration:none;
+
 </style>
