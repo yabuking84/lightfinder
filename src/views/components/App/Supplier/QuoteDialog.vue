@@ -1,79 +1,74 @@
 <template>
+	
   <div class="text-xs-center">
-    <v-dialog
-      :value="QuoteDialog" 
-       @input="$emit('update:QuoteDialog', false)" 
-    	width="1000"
-    >
-
+    <v-dialog :value="QuoteDialog" @input="$emit('update:QuoteDialog', false)" width="600">
       <v-toolbar dark color="dark" height="45">
 			<v-toolbar-title class="font-weight-light">Add Quote</v-toolbar-title>
 	  </v-toolbar>
 
       <v-card>
-		<v-layout row wrap pa-3>
-				<v-flex xs12>
+		<v-layout row wrap >
+				<v-layout row wrap mt-2>
+		  	  		<v-container>
 
-					  <v-layout row wrap mb-2 mt-1>
-				    		<h4 class="font-weight-bold"> Supplier : LED STRIPS LIGHTS</h4>	  
-				    		<v-spacer></v-spacer>
-				    		<h4 class="font-weight-bold">Quantity: 1000</h4>	  
-				    		<v-spacer></v-spacer>
-				    		<h4 class="font-weight-bold">Posted: Jan 1, 2017 (3 days ago)</h4>	
+			  	  		<v-flex xs12>
+				          <v-text-field
+				            label="Pruduct Name"
+				            placeholder="Enter Product Name "
+				          ></v-text-field>
+				        </v-flex>
 
-					   </v-layout>
+				        <v-flex xs12>
+				          <v-textarea
+				            label="Pruduct Details"
+				            placeholder="Enter Product Details "
+				          ></v-textarea>
+				        </v-flex>
 
-					   <v-divider></v-divider>
+				        <v-layout row wrap >
 
-				</v-flex>
-							
-			  	<v-flex xs9 mt-3>
+				           <v-flex xs4 pa-2>
 
-					<v-layout row wrap>
+					          <v-text-field
+					            label="Quantity"
+					            placeholder="0"
+					            disabled
+					             suffix="Piece"
+					          ></v-text-field>
 
-						<v-flex xs2>
-						  <h1 class="subheading font-weight-light">Product Name</h1>
-						</v-flex>
+					        </v-flex>
+					        
+					        <v-flex xs4 pa-2>
+					          <v-text-field
+					            label="Unit Price"
+					            placeholder="0.00"
+					             prefix="$"
+					          ></v-text-field>
+					        </v-flex>
+				        
+				      		 <v-flex xs4 pa-2>
+						          <v-text-field
+						            label="Total Price"
+						            placeholder="0.00"
+						             prefix="$"
+						          ></v-text-field>
+					         </v-flex>
+				        </v-layout>
 
-				    	<v-flex xs7>
-			  	  			<v-text-field solo color="black" label="Product Name" required></v-text-field>  
-			  	  		</v-flex>
-
-					</v-layout>
-					
-
-					<v-layout row wrap>
-
-						<v-flex xs2>
-						  <h1 class="subheading font-weight-light">Product Details</h1>
-						</v-flex>
-
-					  	<v-flex xs7>
-		  	  			 <v-textarea
-				          solo
-				          name="input-7-4"
-				          label="Details"
-				          value=""
-				        ></v-textarea>
-		  	  		</v-flex>
-
-					</v-layout>
-					
-
-				
-
-				</v-flex>
-
-				<v-flex xs3 mt-3>
-					
-				</v-flex>
-
+				         <v-flex xs12>
+					          <v-textarea
+					            label="Message"
+					            placeholder="Enter Remarks Here"
+					          ></v-textarea>
+				      	 </v-flex>
+		  	  		</v-container>
+				</v-layout>
 		</v-layout>
-		
-
-    <!--     <v-card-actions>
-          <v-spacer></v-spacer>
-        </v-card-actions> -->
+		 <v-divider></v-divider>
+	 	<v-card-actions class="pa-3">
+	       <v-spacer></v-spacer>
+	        <v-btn color="primary" > Submit </v-btn>
+	    </v-card-actions>
 
       </v-card>
     </v-dialog>
@@ -82,6 +77,7 @@
 </template>
 
 <script>
+
   export default {
   	props: {
   		QuoteDialog: {
@@ -95,4 +91,5 @@
       }
     }
   }
+
 </script>

@@ -5,13 +5,16 @@
         	<v-toolbar-title class="subheading font-weight-light">Proposal List</v-toolbar-title>
         	<v-spacer></v-spacer>
         	<v-toolbar-title class="subheading font-weight-light">You're Current Quote is $ 100:00</v-toolbar-title>
+
 			<v-spacer></v-spacer>
-			<v-toolbar-title class="subheading font-weight-light">
+
+			<v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light">
 				    <v-btn depressed small color="green" dark>
 				    	<i class="fas fa-plus white--text mr-1"> </i>
 						Set new bid price per unit
 					</v-btn>
 			</v-toolbar-title>
+
       	</v-toolbar>
 
       	<v-card class="proposal-section" color="grey lighten-5">
@@ -60,8 +63,7 @@
 	    </v-card>
 		
 		<div>
-			<inquiry-dialog :dialog.sync="dialog"> </inquiry-dialog>	
-			<bid-dialog> </bid-dialog>
+			<bid-dialog :bidDialog.sync="bidDialog"> </bid-dialog>
 
 		</div>
 
@@ -85,7 +87,7 @@
     data: function () {
 
 			return {
-				dialog: false,
+				bidDialog:false,
 				img: `/static/examples/Logo-Samples2-08-min.jpg`,
 			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
 
