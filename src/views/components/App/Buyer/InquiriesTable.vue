@@ -29,8 +29,7 @@
                 <td class="text-xs-center">{{ props.item.created_at }}</td>
 
                 <td class="text-xs-center">
-                       <!-- <inquiry-status :status=props.item.status> </inquiry-status> -->
-                       {{ props.item.status }}
+                       <inquiry-status :status-id="props.item.status"> </inquiry-status>
                 </td>
 
                 <td class="text-xs-center">

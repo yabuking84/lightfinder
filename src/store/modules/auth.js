@@ -121,11 +121,13 @@ const actions = {
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 // set user details 
 
-                           
+                
+                context.dispatch('retrieveInquiryStatuses_a').then(function(){                    
+                    resolve(response);
+                });
 
 
 
-                resolve(response);
             })
             .catch(error => {
                 reject(error)
@@ -143,16 +145,15 @@ const actions = {
                 method: 'get',
                 url: url,
             })
-            .then(response => {                        
+            .then(response => {
+
+                // Set Inquiry Stage / Status
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                localStorage.setItem('inquiry_statuses',JSON.stringify(response.data)); 
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // Set Inquiry Stage / Status
+
                 resolve(response);
-
-                
-                // Set Inquiry Stage / Status
-                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-                localStorage.setItem('inquiry_statuses',response.data); 
-                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                // Set Inquiry Stage / Status
 
             })
             .catch(error => {

@@ -378,9 +378,31 @@ export default {
     data () {
       return {
         stepCnt: 1,
+        // formData: {
+        //     keywords: null,
+        //     category: null,
+        //     warranty: null,
+        //     power: null,
+        //     lumen: null,
+        //     efficiency: null,
+        //     beam_angle: null,
+        //     cct: null,
+        //     ip: null,
+        //     finish: null,
+        //     size: null,
+        //     dimmable: [],
+        //     quantity: null,
+        //     desired_price: null,
+        //     shipping_method: null,
+        //     shipping_date: null,
+        //     payment_method: null,
+        //     message: null,
+
+        // },
+
         formData: {
-            keywords: null,
-            category: null,
+            keywords: 'keywords',
+            category: '',
             warranty: null,
             power: null,
             lumen: null,
@@ -433,7 +455,7 @@ export default {
             console.log('Error: ');
             console.log(e);
         });
-    
+
     },
 
     watch: {
