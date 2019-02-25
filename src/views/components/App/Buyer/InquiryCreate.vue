@@ -378,9 +378,31 @@ export default {
     data () {
       return {
         stepCnt: 1,
+        // formData: {
+        //     keywords: null,
+        //     category: null,
+        //     warranty: null,
+        //     power: null,
+        //     lumen: null,
+        //     efficiency: null,
+        //     beam_angle: null,
+        //     cct: null,
+        //     ip: null,
+        //     finish: null,
+        //     size: null,
+        //     dimmable: [],
+        //     quantity: null,
+        //     desired_price: null,
+        //     shipping_method: null,
+        //     shipping_date: null,
+        //     payment_method: null,
+        //     message: null,
+
+        // },
+
         formData: {
-            keywords: null,
-            category: null,
+            keywords: 'keywords',
+            category: '',
             warranty: null,
             power: null,
             lumen: null,
@@ -394,7 +416,6 @@ export default {
             quantity: null,
             desired_price: null,
             shipping_method: null,
-            trade_type: null,
             shipping_date: null,
             payment_method: null,
             message: null,
@@ -435,8 +456,6 @@ export default {
             console.log(e);
         });
 
-
-    
     },
 
     watch: {
@@ -483,7 +502,6 @@ export default {
             this.formData.quantity = null;
             this.formData.desired_price = null;
             this.formData.shipping_method = null;
-            this.formData.trade_type = null;
             this.formData.shipping_date = this.getDateTime();
             this.formData.payment_method = null;
             this.formData.message = null;

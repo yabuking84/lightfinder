@@ -1,5 +1,5 @@
 <template>
-
+<span>
 	<div v-if="status == 'Open' ">
 		 <v-btn small flat @click="dialog = true" value="left" class="v-btn--active pink lighten-1 font-weight-light">                    
 		    <span class="ml-1 white--text font-weight-light ">{{ status }}</span>
@@ -60,13 +60,14 @@
 		</v-btn>
 	</div>  
 
+</span>
 </template>
 
 <script>
 	export default {
 		props: {
-			status: {
-				type:String,
+			statusId: {
+				type: Number,
 				required:true
 			}
 		},
@@ -76,8 +77,11 @@
 			}
 		},
 
-		methods: {
-
+		computed: {
+			status: function(){
+				var inquiry_statuses = JSON.parse(localStorage.getItem('inquiry_statuses'));
+				return inquiry_statuses.find(valObj => valObj.id+"" == this.statusId+"").name;
+			},
 		}
 	}
 </script> 

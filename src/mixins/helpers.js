@@ -27,6 +27,10 @@ export default {
       return retVal;
     },
 
+    ucwords(string){
+        return string.replace(/^./, string[0].toUpperCase());
+    },
+
   },
 
 }

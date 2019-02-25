@@ -92,6 +92,8 @@ import DashboardOpenInquiriesTable from "@/views/Components/App/Buyer/DashboardO
 import DashboardInprogressTable from "@/views/Components/App/Buyer/DashboardInprogressTable";
 import DashboardCloseTable from "@/views/Components/App/Buyer/DashboardCloseTable";
 
+import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
+
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
 let isActive = 'v-btn--active';
@@ -103,6 +105,7 @@ export default {
 		'inquiries-table':DashboardOpenInquiriesTable,
 		'in-progress-table':DashboardInprogressTable,
 	    'close-table':DashboardCloseTable,
+	    InquiriesTable,
 	    InquiryCreate,
 
 	},
@@ -113,7 +116,7 @@ export default {
 		icon: null,
 		packageLink: '/buyer/packages',
 		isActive: false,
-		component: 'inquiries-table',
+		component: 'InquiriesTable',
 		openInquiryCreate: false,
 
 	}),
@@ -166,7 +169,12 @@ export default {
 			alert('SOrt')
 
 		}	
-	}
+	},
+
+
+	created: function() {
+
+	},
 }
 	
 </script>
