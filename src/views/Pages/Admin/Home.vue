@@ -4,9 +4,7 @@
 			<v-layout row wrap>
 				<v-flex>
 					<h1>Home</h1>		
-
-					<!-- <input type="text" v-model="broker"> -->
-					
+						<!-- <input type="text" v-model="broker"> -->
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -24,12 +22,10 @@ export default {
 	}),
 
 	components: {
-
 		
 	},
 
 	computed: {
-
 		broker: {
 			set(data){
 				this.$store.commit('auth/CHANGE_TEST_M',data);
@@ -38,8 +34,6 @@ export default {
         		return this.$store.state.auth.auth_user.name;
 			},			
 		},
-        
-
 	},
 }
 	

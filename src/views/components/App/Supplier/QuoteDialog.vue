@@ -1,12 +1,15 @@
 <template>
-	
+
   <div class="text-xs-center">
+
     <v-dialog :value="QuoteDialog" @input="$emit('update:QuoteDialog', false)" width="600">
+    	
       <v-toolbar dark color="dark" height="45">
 			<v-toolbar-title class="font-weight-light">Add Quote</v-toolbar-title>
 	  </v-toolbar>
 
       <v-card>
+
 		<v-layout row wrap >
 				<v-layout row wrap mt-2>
 		  	  		<v-container>
@@ -64,7 +67,9 @@
 		  	  		</v-container>
 				</v-layout>
 		</v-layout>
+
 		 <v-divider></v-divider>
+
 	 	<v-card-actions class="pa-3">
 	       <v-spacer></v-spacer>
 	        <v-btn color="primary" > Submit </v-btn>
