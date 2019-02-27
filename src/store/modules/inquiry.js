@@ -7,12 +7,16 @@ import config from '@/config/index'
 
 
 const state = {
-    api_url: {
-        // login: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/login",
-        // logout: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/logout",
+    api: {
+        getInquiries: {
+            method: 'get',
+            url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+        },
+        addInquiry: {
+            method: 'post',
+            url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+        },
 
-        login: "http://192.168.1.200:8000/v1/login",
-        logout: "http://192.168.1.200:8000/v1/logout",
     },
     inquiries: [],
 
@@ -27,18 +31,18 @@ const mutations = {
     
 const actions = {
     getInquiries_a(context){
-
         return new Promise((resolve, reject) => {
-            var url = 'http://192.168.1.200:8000/v1/buyer/inquiries';
             var headers = {token:localStorage.access_token};
+            // console.log(state.api.getInquiries.url);
+            // console.log(state.api.getInquiries.method);
+            // console.log(headers);
             axios({
-                method: 'get',
-                url: url,
+                method: state.api.getInquiries.method,
+                url: state.api.getInquiries.url,
                 headers: headers,
             })
             .then(response => {
                 resolve(response.data);
-                console.log(response.data);
             })
             .catch(error => {
 
@@ -49,7 +53,7 @@ const actions = {
                     router.push({'name': 'Logout'})
                 }
                 else {
-                    console.log("normal error!");
+                    // console.log("normal error!");
                     reject(error);
                 }
 
@@ -58,20 +62,25 @@ const actions = {
     },
 
     addInquiry_a(context,data){
-
         return new Promise((resolve, reject) => {
-            var url = 'http://192.168.1.200:8000/v1/buyer/inquiries';
-            var headers = {token:localStorage.access_token};
+
+            // console.log(data.formData);
+            // console.log(JSON.stringify(data.formData));
+
+            var headers = {
+                token:localStorage.access_token,
+                "content-type": "application/json",
+            };
             axios({
-                method: 'get',
-                url: url,
+                method: state.api.addInquiry.method,
+                url: state.api.addInquiry.url,
                 headers: headers,
+                data: JSON.stringify(data.formData),
             })
             .then(response => {
                 resolve(response.data);
             })
             .catch(error => {
-
 
                 if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
                     console.log("EXPIRED");
@@ -82,7 +91,8 @@ const actions = {
                     reject(error);
                 }
 
-            })
+            });
+
         });
     },
 

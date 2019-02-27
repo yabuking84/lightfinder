@@ -18,6 +18,7 @@ import swatch from './swatch'
 
 
 import auth from './auth'
+import main from './main'
 
 export const configSchemes = schemes
 export const configNavigation = navigation
@@ -28,4 +29,5 @@ export default {
   navigation,
   swatch,
   auth,
+  main,
 }

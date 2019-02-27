@@ -3,8 +3,12 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
 
-// SUPPLIER
+import SupplierHome from '@/views/Pages/Supplier/Home'
+import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
 
+import config from '@/config/index'
+
+// SUPPLIER
 import Register from '@/views/Pages/Supplier/Register'
 import RegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
 import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
@@ -12,10 +16,33 @@ import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetail
 
 const meta = { 
     requiresAuth: true,
-    role: 1,
+    role: config.auth.role.supplier.id,
+    items: [
+        {
+            title: 'Dashboard',
+            name: 'SupplierHome',
+            icon: 'fas fa-th-large',
+        },            
+        {
+            title: 'Inquiries',
+            name: 'SupplierInquiry',
+            icon: 'search',
+        },
+    ],
 }
 
 export default [
+    {
+        name: 'SupplierHome',
+        path: '/supplier/dashboard',
+        components: { 
+            default: SupplierHome, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+        },
+        meta: meta,
+    },
 
     {
         name: 'supplier-registration' ,

@@ -28,6 +28,8 @@ export default {
     },
 
     ucwords(string){
+        string = string.trim();
+        if(string!="")
         return string.replace(/^./, string[0].toUpperCase());
     },
 
