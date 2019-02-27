@@ -1,186 +1,161 @@
 <template>
 	<div>
-		<v-container fluid grid-list-xl>
-			<v-layout row wrap>
-				<v-flex>
-						<v-container fluid>
-							<v-layout row wrap>
-							  <h2 class="font-weight-light title pb-3">MY INQUIRIES</h2>
-							  <v-spacer></v-spacer>
-							</v-layout>
-							<v-layout row wrap>
-								<span class="grey darken-4 pa-1">									
-							    	<v-btn flat value="left" class="v-btn--active" @click="openInquiryCreate=true">
-					                	<i class="ml-1 white--text font-weight-light subheading far fa-edit white--text"></i>
-					                	<span class="ml-1 white--text font-weight-light subheading">					                	
-						                	Compose Inquiry
-						                </span>
-					             	</v-btn>						            
-							  	</span>  
+		<v-container fluid>
 
-							  	<v-spacer></v-spacer>
+			<!-- start here -->
 
-								<span class="red accent-4 pa-0">
-							    	<v-btn red accent-4 flat value="left" class="">
-					                	<span class="ml-1 white--text font-weight-light subheading">1 Inquiry Remaining </span>
-					             	</v-btn>	
-							  	</span>
+			<v-layout row wrap ml-5>
 
+	 		   		<v-flex xs2 pa-1 >
+			  		<v-card>
+			  	  	   <h1 class="pa-3 title text-xs-center font-weight-light">Total Earnings: <span class="font-weight-bold subheading"> $100.00 </span> </h1>
+			  	  	</v-card>  
+		  		</v-flex>
 
-							</v-layout>
-						</v-container>
-						<v-divider></v-divider>		
-						<v-container fluid >
+		  	  	<v-flex xs2 offset-xs8 pa-1 text-xs-center>
+				    <v-chip color="grey darken-3" text-color="white">
+				      <v-avatar>
+				        <v-icon color="white">star</v-icon>
+				      </v-avatar>
+				     	 Verified Supplier
+				    </v-chip>			  
+		  		</v-flex>
+
+		  	</v-layout>
+
+		  	<!-- end here -->
+
+			<!-- start here -->
+
+		  	<v-layout row wrap>
+
+		  	  		<v-container fluid>
 						  <v-card>
-						  	<v-layout row wrap >
-								<v-container fluid>
+						  	<v-layout row wrap mb-3>
 									<!-- toolbar -->
-									<v-toolbar dark color="grey darken-4">
-	   									 <v-btn-toggle>
-			    							    <span class="grey darken-4 pa-2">
-			    							    	<v-btn flat value="left" @click="component='inquiries-table' ">
-									                	<i class="fas fa-envelope-open-text white--text"></i> 
-									                	<span class="ml-1 font-weight-light white--text">Open Inquiry</span>
-									             	</v-btn>	
-			    							    </span>
+								<v-toolbar dark color="grey darken-4">
+										 <v-btn-toggle>
+		    							    <span class="grey darken-4 pa-2">
+		    							    	<v-btn flat value="" @click="component='inquiries-table' ">
+								                	<i class="fas fa-envelope-open-text white--text"></i> 
+								                	<span class="ml-1 font-weight-light white--text">All</span>
+								             	</v-btn>	
+		    							    </span>
+											<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									                <i class="fas fa-tasks white--text"></i> 
+									                <span class="ml-1 font-weight-light white--text">Priority</span>
+									            </v-btn>	
+											</span>
+											<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="far fa-envelope-open white--text"></i> 
+									               <span class="ml-1 font-weight-light white--text">Open</span>
+									            </v-btn>
+											</span>
 												<span class="grey darken-4 pa-2">
-													<v-btn flat value="center" @click="component='in-progress-table'">
-										                <i class="fas fa-tasks white--text"></i> 
-										                <span class="ml-1 font-weight-light white--text">In-Progress Inquiry</span>
-										            </v-btn>	
-												</span>
+												<v-btn flat>
+									               <i class="fas fa-handshake white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Confirmation</span>
+									            </v-btn>
+											</span>
 												<span class="grey darken-4 pa-2">
-													<v-btn flat value="right" @click="component='close-table'">
-										               <i class="fas fa-envelope white--text"></i> 
-										               <span class="ml-1 font-weight-light white--text">Closed Inquiry</span>
-										            </v-btn>
-												</span>
-								         </v-btn-toggle>
-									    <v-spacer></v-spacer>
-								    <v-btn icon @click="Sort('desc')">
-								      <v-icon>sort</v-icon>
-								    </v-btn>
-								    <v-btn icon @click="Refresh()">
-								      <v-icon>refresh</v-icon>
-								    </v-btn>
-									</v-toolbar>
+												<v-btn flat>
+									               <i class="far fa-credit-card white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Payment</span>
+									            </v-btn>
+											</span>
+												<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="fas fa-industry white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Production</span>
+									            </v-btn>
+											</span>
+												<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="fas fa-truck white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Shipment</span>
+									            </v-btn>
+											</span>
+												<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="fas fa-envelope white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Closed Inquiry</span>
+									            </v-btn>
+											</span>
+												<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="fas fa-sign-in-alt white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Receiving</span>
+									            </v-btn>
+											</span>
+												<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="fas fa-exchange-alt white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Return</span>
+									            </v-btn>
+											</span>
+											<span class="grey darken-4 pa-2">
+												<v-btn flat>
+									               <i class="fas fa-ban white--text"></i>
+									               <span class="ml-1 font-weight-light white--text">Cancelled</span>
+									            </v-btn>
+											</span>
+							         </v-btn-toggle>
+								    <v-spacer></v-spacer>
+							    <v-btn icon @click="Sort('desc')">
+							      <v-icon>sort</v-icon>
+							    </v-btn>
+							    <v-btn icon @click="Refresh()">
+							      <v-icon>refresh</v-icon>
+							    </v-btn>
+								</v-toolbar>
 									<!--/ toolbar -->
-								</v-container>
 							</v-layout>
 						  	  <!-- dynamic table -->
 						  	  <div>
 						  	  	<keep-alive>
-						  		  	<component v-bind:is="component"></component>	
+						  		  	<component v-bind:is="component" ></component>	
 						  		</keep-alive>
 						  	  </div>
 						  	  <!-- dynamic table -->
 						  </v-card>
-						</v-container>
-				</v-flex>
-			</v-layout>
+					</v-container>
+		  	</v-layout>
+
+		  	<!-- end here -->
+
 		</v-container>
-
-		<inquiry-create :dialog.sync="openInquiryCreate"></inquiry-create>
-
 	</div>
 </template>
 
-
 <script>
 
-import DashboardOpenInquiriesTable from "@/views/Components/App/Buyer/DashboardOpenInquiriesTable";
-import DashboardInprogressTable from "@/views/Components/App/Buyer/DashboardInprogressTable";
-import DashboardCloseTable from "@/views/Components/App/Buyer/DashboardCloseTable";
 
-import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
+import DashboardOpenInquiriesTable from "@/views/Components/App/Supplier/DashboardOpenInquiryComponent"
 
-import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
+	// import OpenInquiry from '@/views/'
+	export default {
 
-let isActive = 'v-btn--active';
+		components: {
+				'inquiries-table':DashboardOpenInquiriesTable,
+		},
 
-export default {
+		data: () => ({
+			component: 'inquiries-table'
+		}),
 
-	components: {
+		methods: {
 
-		'inquiries-table':DashboardOpenInquiriesTable,
-		'in-progress-table':DashboardInprogressTable,
-	    'close-table':DashboardCloseTable,
-	    InquiriesTable,
-	    InquiryCreate,
+			Sort: () => {
 
-	},
-
-	data: () => ({
-		search:'',
-		title: 'Home',
-		icon: null,
-		packageLink: '/buyer/packages',
-		isActive: false,
-		component: 'InquiriesTable',
-		openInquiryCreate: false,
-
-	}),
-
-	computed: {
-
-		buyer: {
-
-			set(data){
-				this.$store.commit('auth/CHANGE_TEST_M',data);
 			},
 
-			get(){				
-        		return this.$store.state.auth.auth_user.name;
-			},			
-		},
+			Refresh: () => {
 
+			}
+		}
 
+	}
 
-	},
-
-	methods: {
-
-		openInquiry: (components) => {
-			this.component = components
-			alert('openInquiry')
-		},
-
-		Inprogress: (component) => {
-			this.component = components
-			alert('Inprogress')
-		},
-
-		CloseInquiry: (component) => {
-			this.component = components
-			alert('CloseInquiry')
-		},
-
-		Search: () => {
-
-		},
-
-		Refresh: () => {
-
-			alert('Refresh')
-
-		},
-		Sort: () => {
-
-			alert('SOrt')
-
-		},
-
-	},
-
-
-	created: function() {
-
-	},
-}
-	
 </script>
-
-<style scoped lang="stylus">
-	
-</style>
-

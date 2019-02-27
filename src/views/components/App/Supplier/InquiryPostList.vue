@@ -2,7 +2,19 @@
 	<div>
 
 		<v-toolbar color="grey darken-4" class="white--text" height="40px">
-        	<v-toolbar-title class="subheading font-weight-light">My Bids</v-toolbar-title>
+        	<v-toolbar-title class="subheading font-weight-light">Proposal List</v-toolbar-title>
+        	<v-spacer></v-spacer>
+        	<v-toolbar-title class="subheading font-weight-light">You're Current Quote is $ 100:00</v-toolbar-title>
+
+			<v-spacer></v-spacer>
+
+			<v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light">
+				    <v-btn depressed small color="green" dark>
+				    	<i class="fas fa-plus white--text mr-1"> </i>
+						Set new bid price per unit
+					</v-btn>
+			</v-toolbar-title>
+
       	</v-toolbar>
 
       	<v-card class="proposal-section" color="grey lighten-5">
@@ -24,9 +36,10 @@
 					
 							<!-- section list -->
 			   	 	     	<v-flex xs9 pl-5 pr-5>
-		   	 	     			<h2 class="ml-2">{{ item.supplier_name }}</h2>
-		   	 	     			<v-spacer></v-spacer>
-		   	 	     			 <h5 class="font-weight-light mb-1 ml-2"> {{ dummy }} </h5>	  
+		   	 	     			<h2 class="ml-2 ml-5">{{ item.supplier_name }}</h2>
+		   	 	     			<h5 class="ml-2 ml-5 font-weight-light">China Lightings Labs</h5>
+		   	 	     			<h5 class="ml-2 ml-5 font-weight-light">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+								</h5>
 			   	 	     	</v-flex>
 			   	 	     	<!-- section list -->
 
@@ -43,48 +56,38 @@
 						 		</v-layout>
 							 </v-flex>
 							 <!-- section pricing  -->
-
-
 			   	 	   </v-layout>
-
-			   	 	   <v-divider></v-divider>
-
-			   	 	   <v-layout row wrap justify-end pl-2 pr-2 pb-2>
-			   	 	   			<h5 class="font-weight-light mt-3 ml-2">January 6, 2017 10:00 AM</h5>
-			   	 	   			<v-spacer></v-spacer>
-			   	 	     		<v-btn flat value="left"  class="v-btn--active green" @click="dialog = true">
-								    <i class="fas fa-eye white--text"></i>
-								    <span class="ml-1 white--text font-weight-light body-2 font-weight-light" >View Proposal</span>
-							    </v-btn>  
-			   	 	   </v-layout>
-
 			   	 	</v-card>
 				</div>
 			</v-container>
 	    </v-card>
 		
 		<div>
-			<inquiry-dialog :dialog.sync="dialog"> </inquiry-dialog>	
+			<bid-dialog :bidDialog.sync="bidDialog"> </bid-dialog>
+
 		</div>
 
 	</div>
+
 
 </template>
 
 <script>
 
 	import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
+	import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 
 	export default {
 
 		components: {
-			InquiryDialog
+			InquiryDialog,
+			BidDialog
 		},
 
     data: function () {
 
 			return {
-				dialog: false,
+				bidDialog:false,
 				img: `/static/examples/Logo-Samples2-08-min.jpg`,
 			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
 
@@ -130,6 +133,6 @@
 
 <style scoped lang="stylus">
 	.proposal-section
-		height:27vh;
+		height:36.3vh;
 		overflow-y: auto;
 </style>

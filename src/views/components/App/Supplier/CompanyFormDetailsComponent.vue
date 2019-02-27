@@ -5,7 +5,7 @@
     	<v-layout row wrap mt-4>
 	  	  	<v-flex xs6>
 	  	  		<v-flex xs9 offset-xs1>
-	  	  			<v-text-field  color="black" label="Brand Name" required></v-text-field>  
+	  	  			<v-text-field color="black" label="Brand Name" required></v-text-field>  
 	  	  		</v-flex>
 	  	  		<v-flex xs9 offset-xs1>
 	  	  		    <v-text-field  color="black" label="Factory Name" required></v-text-field>

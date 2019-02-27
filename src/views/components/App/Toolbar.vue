@@ -60,6 +60,9 @@
             <v-list-tile-title v-text="authUser.name"></v-list-tile-title>
             <v-list-tile-sub-title v-if="authUser.role==roles.admin.id">Administrator</v-list-tile-sub-title>
             <v-list-tile-sub-title v-else-if="authUser.role==roles.buyer.id">Buyer</v-list-tile-sub-title>
+
+            <v-list-tile-sub-title v-else-if="authUser.role==roles.supplier.id">Supplier</v-list-tile-sub-title>
+
             <v-list-tile-sub-title v-else>Unknown</v-list-tile-sub-title>
           </v-list-tile-content>
 

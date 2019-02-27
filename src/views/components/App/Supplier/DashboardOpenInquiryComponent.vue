@@ -21,7 +21,7 @@
             <td class="text-xs-center">{{ props.item.date }}</td>
             <td class="text-xs-center">
               <!-- <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1  -->
-                <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
+                <router-link :to="{ name: 'SupplierInquiryView', params: { userId: 123 }}">
                  <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
                        <i class="fas fa-eye white--text"></i>             
                       <span class="ml-1 white--text font-weight-light ">View</span>
@@ -38,8 +38,6 @@
     </v-data-table>
 
     <dialog-test :dialog.sync="dialog" ></dialog-test>
-<!--     <test1></test1>
-    <test2></test2> -->
 
  </div>
 </template>
@@ -47,8 +45,6 @@
 <script>
     
  import DialogTest from "@/views/Components/App/Buyer/DialogTest";
- // import Test1 from "@/views/Components/App/Buyer/Test1";
- // import Test2 from "@/views/Components/App/Buyer/Test2";
  import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
 
   export default {

@@ -36,6 +36,8 @@ export default  (to, from, next) => {
             next({name: 'AdminHome'})
             if(store.state.auth.auth_user.role==config.auth.role.buyer.id)
             next({name: 'BuyerHome'})
+            if(store.state.auth.auth_user.role==config.auth.role.supplier.id)
+            next({name: 'SupplierHome'})
             else
             next({name: 'Logout'})
         }

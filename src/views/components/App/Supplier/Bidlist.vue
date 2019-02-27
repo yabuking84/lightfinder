@@ -119,7 +119,7 @@
 
 <style scoped lang="stylus">
 	.bids-section
-		height:28.3vh;
+		height:36.3vh;
 		overflow-y: auto;
 	.text-no-underline
 		text-decoration:none;
