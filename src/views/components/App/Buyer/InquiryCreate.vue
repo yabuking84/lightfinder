@@ -45,13 +45,28 @@ Create Inquiry
                 <v-btn flat @click="stepDown()">back</v-btn>
             </v-stepper-content>
 
+
+
             <v-stepper-step step="3" editable>
                 Choose a category
             </v-stepper-step>
-            <v-stepper-content step="3" ref="step_3">
+            <v-stepper-content step="3" ref="step_3" no-focus>
                 <v-container>
                     <v-layout row wrap>
-                        <v-autocomplete v-model="formData.category" :items="categories" :search-input.sync="search" ref="categorySelect" cache-items class="mx-3" flat hide-no-data hide-details label="Type here the category.." solo-inverted>
+                        <v-autocomplete 
+                            v-model="formData.category" 
+                            :items="categories" 
+                            item-text="name"
+                            item-value="id"
+                            :search-input.sync="search" 
+                            ref="categorySelect" 
+                            cache-items 
+                            class="mx-3" 
+                            flat 
+                            hide-no-data 
+                            hide-details 
+                            label="Type here the category.." 
+                            solo-inverted>
                         </v-autocomplete>
                     </v-layout>
                 </v-container>
@@ -60,6 +75,8 @@ Create Inquiry
             </v-stepper-content>
 
             <!-- Sub category here if there is -->
+
+
 
             <v-stepper-step step="5" editable>
                 Warranty
@@ -74,6 +91,8 @@ Create Inquiry
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
                 <v-btn flat @click="stepDown(2)">back</v-btn>
             </v-stepper-content>
+
+
 
             <v-stepper-step step="6" editable>
                 Power
@@ -242,7 +261,7 @@ Create Inquiry
             <v-stepper-step step="17" editable>
                 Preferred Shipment Date
             </v-stepper-step>
-            <v-stepper-content step="17" ref="step_17">
+            <v-stepper-content step="17" ref="step_17"  no-focus>
                 <v-container>
                     <v-layout row>
 
@@ -264,14 +283,11 @@ Create Inquiry
             <v-stepper-step step="18" editable>
                 Payment Method
             </v-stepper-step>
-            <v-stepper-content step="18" ref="step_18">
+            <v-stepper-content step="18" ref="step_18" no-focus>
                 <v-container>
                     <v-layout row wrap>
-                        <v-flex xs4>
-                            <v-switch color="black" v-model="formData.payment_method" label="Credit Card" value="credit_card"></v-switch>
-                        </v-flex>
-                        <v-flex xs4>
-                            <v-switch color="black" v-model="formData.payment_method" label="Bank Transfer" value="bank_transfer"></v-switch>
+                        <v-flex xs4 v-for="(payment_method, index) in payment_methods" :key="`pm-${index}`">
+                            <v-switch color="black" v-model="formData.payment_method" :label="payment_method.name" :value="payment_method.id"></v-switch>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -279,10 +295,28 @@ Create Inquiry
                 <v-btn flat @click="stepDown()">back</v-btn>
             </v-stepper-content>
 
+
             <v-stepper-step step="19" editable>
+                Shipping Method
+            </v-stepper-step>
+            <v-stepper-content step="19" ref="step_19" no-focus>
+                <v-container>
+                    <v-layout row wrap>
+
+                        <v-flex xs4 v-for="(shipping_method, index) in shipping_methods" :key="`sm-${index}`">
+                            <v-switch color="black" v-model="formData.shipping_method" :label="shipping_method.name" :value="shipping_method.id"></v-switch>
+                        </v-flex>                        
+
+                    </v-layout>
+                </v-container>
+                <v-btn color="primary" @click="stepUp()">next</v-btn>
+                <v-btn flat @click="stepDown()">back</v-btn>
+            </v-stepper-content>
+
+            <v-stepper-step step="20" editable>
                 Files to attach
             </v-stepper-step>
-            <v-stepper-content step="19" ref="step_19">
+            <v-stepper-content step="20" ref="step_20">
                 <v-container>
                     <v-layout row>
                         <v-textarea label="files here.." single-line>
@@ -293,10 +327,10 @@ Create Inquiry
                 <v-btn flat @click="stepDown()">back</v-btn>
             </v-stepper-content>
 
-            <v-stepper-step step="20" editable>
+            <v-stepper-step step="21" editable>
                 Message
             </v-stepper-step>
-            <v-stepper-content step="20" ref="step_20">
+            <v-stepper-content step="21" ref="step_21">
                 <v-container>
                     <v-layout row>
                         <v-textarea label="Type message here.." v-model="formData.message" single-line>
@@ -336,7 +370,7 @@ Create Inquiry
 
         <v-flex xs12 sm6>
             <v-layout align-center justify-end row fill-height class="ma-3">
-                <v-btn color="success" @click="">
+                <v-btn color="success" @click="submitForm()" :loading="formLoading">
                     submit
                 </v-btn>                
             </v-layout>
@@ -362,8 +396,12 @@ Create Inquiry
 
 <script>
 
+import inqEvntBs from "@/bus/inquiry";
+
+
 import helpers from "@/mixins/helpers";
 import ReviewInquiry from "@/views/Components/App/Buyer/ReviewInquiry";
+import config from '@/config/index'
 
 export default {
     mixins: [
@@ -372,11 +410,14 @@ export default {
     props: {
         dialog: {
             type: Boolean,
-            default: false,            
+            default: false,
         },
     },    
     data () {
       return {
+
+        cnt : 0,
+
         stepCnt: 1,
         // formData: {
         //     keywords: null,
@@ -393,7 +434,6 @@ export default {
         //     dimmable: [],
         //     quantity: null,
         //     desired_price: null,
-        //     shipping_method: null,
         //     shipping_date: null,
         //     payment_method: null,
         //     message: null,
@@ -402,26 +442,27 @@ export default {
 
         formData: {
             keywords: 'keywords',
-            category: '',
-            warranty: null,
-            power: null,
-            lumen: null,
-            efficiency: null,
-            beam_angle: null,
-            cct: null,
-            ip: null,
-            finish: null,
-            size: null,
-            dimmable: [],
-            quantity: null,
-            desired_price: null,
-            shipping_method: null,
-            shipping_date: null,
-            payment_method: null,
-            message: null,
-
+            category: 106,
+            warranty: 3,
+            power: 100,
+            lumen: 5000,
+            efficiency: 6000,
+            beam_angle: 35,
+            cct: 3000,
+            ip: 20,
+            finish: 'wood',
+            size: '85x30',
+            dimmable: ['DALI','0-10v'],
+            quantity: 350,
+            desired_price: 10.52,
+            shipping_date: "2019-06-20",
+            shipping_method: 3,
+            payment_method: 2,
+            message: "message ni lorem ipsum echius",
         },
 
+        shipping_methods: config.main.shipping_methods,
+        payment_methods: config.main.payment_methods,
         search: null,
         select: null,
         categories: [],
@@ -432,6 +473,7 @@ export default {
             'DALI',
             '0-10v',
         ],
+        formLoading: false,
         calendar_menu: false,
       }
     },
@@ -448,8 +490,8 @@ export default {
 
         // get categories for category select box
         this.$store.dispatch('cat/getCategories_a')
-        .then((response)=>{
-            this.categories = response;
+        .then((data)=>{
+            this.categories = data;
         })
         .catch((e) => {
             console.log('Error: ');
@@ -460,7 +502,8 @@ export default {
 
     watch: {
         search (val) {
-            return val && val !== this.select && this.querySelections(val)
+            // return val && val !== this.select && this.querySelections(val)
+            return val && val !== this.select
         },
 
         stepCnt(val) {
@@ -468,8 +511,8 @@ export default {
             // console.log("step_"+val);
             if(val>1) {
 
-                if(typeof this.$refs["step_"+val].$attrs.isCalendar == "undefined") {
-
+                // remove focus on fields to prevent auto select or display issues, just add no-focus
+                if(typeof this.$refs["step_"+val].$attrs['no-focus'] == "undefined") {
                     
                     if(this.$refs["step_"+val].$el.querySelector('input') != null) {
                         this.$refs["step_"+val].$el.querySelector('input').focus();
@@ -501,12 +544,14 @@ export default {
             this.formData.dimmable = [];
             this.formData.quantity = null;
             this.formData.desired_price = null;
-            this.formData.shipping_method = null;
             this.formData.shipping_date = this.getDateTime();
+            this.formData.shipment_method = null;
             this.formData.payment_method = null;
             this.formData.message = null;
-
             this.stepCnt = 1;
+
+
+
 
             
             let options = {
@@ -544,13 +589,63 @@ export default {
             // this.stepCnt -= val;
         },
 
-        querySelections (v) {
+        submitForm: function(){
+            this.formLoading = true;
 
-            this.items = this.categories.filter(e => {
-                return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+            var formData = {
+                "subject": " ",
+                "keyword": this.formData.keywords,
+                "warranty": this.formData.warranty,
+                "quantity": this.formData.quantity,
+                "desired_price": this.formData.desired_price,
+                "desired_shipping_date": this.formData.shipping_date,
+                "message": this.formData.message,
+                "shipping_method_id": this.formData.shipping_method,
+                "payment_method_id": this.formData.payment_method,
+                "message": this.formData.message,
+                "categories": [
+                    this.formData.category
+                ],
+                "attachments": [
+                    "cdn link here later later 1",
+                    "cdn link here later later 2"
+                ],
+                "specifications": {
+                    power       : this.formData.power,
+                    lumen       : this.formData.lumen,
+                    efficiency  : this.formData.efficiency,
+                    beam_angle  : this.formData.beam_angle,
+                    cct         : this.formData.cct,
+                    ip          : this.formData.ip,
+                    finish      : this.formData.finish,
+                    size        : this.formData.size,
+                    dimmable    : this.formData.dimmable.join(","),
+                }
+            }
+
+            this.$store.dispatch('inq/addInquiry_a',{
+                formData: formData,    
             })
+            .then((response) => {
+                this.formLoading = false;
+                this.$emit('update:dialog', false);
+                
+                // this.$emit('update-inquiry-table');
 
-        }        
+                inqEvntBs.$emit('inquiry-form-submitted');
+
+            }).catch((e) => {
+                this.formLoading = false;
+                console.log('Error: '+e);
+            }).finally(()=>{
+                this.formLoading = false;
+            });
+
+
+
+
+        },
+    
     },
 
 

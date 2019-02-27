@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import inqEvntBs from "@/bus/inquiry";
     
 import helpers from "@/mixins/helpers";
 import DialogTest from "@/views/Components/App/Buyer/DialogTest";
@@ -145,12 +146,45 @@ import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
       DialogTest
     },
     methods: {
-      click: function(name) {
-        // window.location.href = '/buyer/view'
-      }
+        click: function(name) {
+            // window.location.href = '/buyer/view'
+        },
+
+        fillTable() {
+
+            this.loading = true;
+            this.dataItems = [];
+            this.$store.dispatch('inq/getInquiries_a')
+            .then((response) => {
+                for (var i = response.length - 1; i >= 0; i--) {
+                    var item = {};
+                    item.inq_id = response[i].id;
+                    item.keywords = this.ucwords(response[i].keyword);
+                    item.message = response[i].message;
+                    item.categories = response[i].categories.join(', ');
+                    item.quantity = response[i].quantity;
+                    item.shipping_date = response[i].desired_shipping_date;
+                    item.created_at = response[i].created_at;
+                    item.status = response[i].stage_id;
+                    this.dataItems.push(item);
+                }
+
+                this.loading = false;
+
+            })
+            .catch((e) => {
+                console.log('Error: '+e);
+                this.loading = false;
+            })
+            .finally(()=>{
+                this.loading = false;
+            });
+
+        },
     },
 
     created(){
+<<<<<<< HEAD
         this.loading = true;
         this.$store.dispatch('inq/getInquiries_a')
         .then((response) => {
@@ -179,7 +213,14 @@ import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
             console.log('finally');
             this.loading = false;
         });;
+=======
+>>>>>>> rene-development
 
+        this.fillTable();
+
+        inqEvntBs.$on('inquiry-form-submitted',()=>{
+            this.fillTable();
+        });
 
     },
   }

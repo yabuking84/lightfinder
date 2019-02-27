@@ -7,12 +7,22 @@ import config from '@/config/index'
 
 
 const state = {
-    api_url: {
-        // login: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/login",
-        // logout: "http://192.168.1.205/liliwatersapi/public/api/v1/auth/logout",
+    api: {
+        login: {
+            method: 'post',
+            url: "http://192.168.1.200:8000/v1/login",  
+        },
+        logout: {
+            method: 'get',
+            url: "http://192.168.1.200:8000/v1/logout",
+        },
 
-        login: "http://192.168.1.200:8000/v1/login",
-        logout: "http://192.168.1.200:8000/v1/logout",
+        getInquiryStatuses: {
+            method: 'get',
+            url: "http://192.168.1.200:8000/v1/inquiry-statuses",
+        },
+
+
     },
     token: localStorage.getItem('access_token') || null,
     axios: {
@@ -76,7 +86,6 @@ const actions = {
         // alert(state.api_url.login);
 
         return new Promise((resolve, reject) => {
-            var url = state.api_url.login;
 
             var payload = {
                 email: data.username,
@@ -84,8 +93,8 @@ const actions = {
             };
 
             axios({
-                method: 'post',
-                url: url,
+                url: state.api.login.url,
+                method: state.api.login.method,
                 data: payload,
             })
             .then(response => {
@@ -139,11 +148,10 @@ const actions = {
 
     retrieveInquiryStatuses_a(context){
         return new Promise((resolve, reject) => {            
-            var url = "http://192.168.1.200:8000/v1/inquiry-statuses";            
 
             axios({
-                method: 'get',
-                url: url,
+                url: state.api.getInquiryStatuses.url,
+                method: state.api.getInquiryStatuses.method,
             })
             .then(response => {
 
@@ -166,15 +174,11 @@ const actions = {
 
     destroyToken_a(context){
         if(context.getters.isLoggedIn_g) {
-
             return new Promise((resolve, reject) => {
-                var url = state.api_url.logout;
-                var headers = state.axios.config.headers;
-
                 axios({
-                    method: 'post',
-                    url: url,                      
-                    headers: headers,
+                    method: state.api_url.logout.method,
+                    url: state.api_url.logout.url,
+                    headers: state.axios.config.headers,
                 })
                 .then(response => {                        
                     // localStorage.removeItem('access_token');
@@ -191,7 +195,6 @@ const actions = {
                 })
             });
         }
-
     },
 
     loginSuccess_a(context,response){

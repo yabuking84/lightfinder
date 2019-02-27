@@ -117,8 +117,9 @@
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
   const defaultForm = {
-    email: 'buyer@bal.com',
+    // email: 'buyer@bal.com',
     // email: 'info@bal.com',
+    email: 'supplier@bal.com',
     password: '123456',
     rememberme: false
   }
@@ -160,45 +161,47 @@
     },
     methods: {
 
-      submit () {
+        submit () {
 
-        // setTimeout(() => {
-        //   this.$router.push({
-        //     name: 'dashboard/Dashboardv1'
-        //   })
-        // }, 2000)
+            // setTimeout(() => {
+            //   this.$router.push({
+            //     name: 'dashboard/Dashboardv1'
+            //   })
+            // }, 2000)
 
 
-        this.loading = true;
-        
-        this.$store.dispatch('auth/retrieveToken_a',{
-            username: this.form.email,
-            password: this.form.password,
-        }).then((response) => {
-            this.snackbar = true
-            this.snackbar_error = false
-            this.resetForm()
-            this.$v.$reset()
-
-            const vueThis = this;
-            setTimeout(function(){
-                vueThis.$store.dispatch('auth/loginSuccess_a',response);
-                vueThis.loading = false;
-            }, 1500);
-
+            this.loading = true;
             
+            this.$store.dispatch('auth/retrieveToken_a',{
+                username: this.form.email,
+                password: this.form.password,
+            }).then((response) => {
+                this.snackbar = true
+                this.snackbar_error = false
+                this.resetForm()
+                this.$v.$reset()
 
-        }).catch((e) => {
-            this.snackbar = false
-            this.snackbar_error = true
-            this.loading = false;
-            console.log('Error: '+e);
-        }).finally(()=>{
-            console.log('finally');
-            this.loading = false;
-        });
+                const vueThis = this;
+                setTimeout(function(){
+                    vueThis.$store.dispatch('auth/loginSuccess_a',response);
+                    vueThis.loading = false;
+                }, 1500);
 
-      },
+
+
+            }).catch((e) => {
+                this.snackbar = false
+                this.snackbar_error = true
+                this.loading = false;
+                console.log('Error: '+e);
+            }).finally(()=>{
+                // console.log('finally');
+                this.loading = false;
+            });
+
+        },
+
+
       resetForm () {
         this.form = Object.assign({}, defaultForm)
         this.$refs.form.reset()
