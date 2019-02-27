@@ -4,7 +4,6 @@
 			<v-layout row wrap>
 				<v-flex>
 					<h1>Home</h1>		
-						<!-- <input type="text" v-model="broker"> -->
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -17,12 +16,12 @@
 
 
 export default {
+	
 	data: () => ({
 		title: 'Home',
 	}),
 
 	components: {
-		
 	},
 
 	computed: {

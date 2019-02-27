@@ -170,7 +170,6 @@ import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
 
             this.loading = false;
 
-
         })
         .catch((e) => {
             console.log('Error: '+e);
