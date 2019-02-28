@@ -98,47 +98,7 @@
             },
         ],
 
-        dataItems: [
-          {
-            // open
-            select: true,
-            name: 'Jane Doe Inquiries',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: 'Open',
-            date: 'January 19, 2017'
-
-          },
-           {
-            // open
-            select: true,
-            name: 'Jane Doe',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: 'Confirmation',
-            date: 'January 19, 2017'
-          },
-          // verifying
-          {
-
-            select: true,
-            name: 'Ben Stiller',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: 'Verifying',
-            date: 'January 19, 2017'
-          },
-          {
-
-            select: true,
-            name: 'Ben Stiller',
-            country: 'United Arab Emirates',
-            inquiries: '1000 pieces of LED Garden Lights',
-            status: 'Rejected',
-            date: 'January 19, 2017'
-          },
-          // waiting for your confirmation
-        ]
+        
       }
     },
     components: {
@@ -146,9 +106,53 @@
       DialogTest
     },
     methods: {
-      click: function(name) {
-        // window.location.href = '/buyer/view'
-      }
+        click: function(name) {
+            // window.location.href = '/buyer/view'
+        },
+
+        fillTable() {
+
+            this.loading = true;
+            this.dataItems = [];
+            this.$store.dispatch('inq/getInquiries_a')
+            .then((response) => {
+                for (var i = response.length - 1; i >= 0; i--) {
+                    var item = {};
+                    item.inq_id = response[i].id;
+                    item.keywords = this.ucwords(response[i].keyword);
+                    item.message = response[i].message;
+                    item.categories = response[i].categories.join(', ');
+                    item.quantity = response[i].quantity;
+                    item.shipping_date = response[i].desired_shipping_date;
+                    item.created_at = response[i].created_at;
+                    item.status = response[i].stage_id;
+                    this.dataItems.push(item);
+                }
+
+                this.loading = false;
+
+            })
+            .catch((e) => {
+                console.log('Error: '+e);
+                this.loading = false;
+            })
+            .finally(()=>{
+                this.loading = false;
+            });
+
+        },
+
+        created(){
+
+            this.fillTable();
+
+            inqEvntBs.$on('inquiry-form-submitted',()=>{
+                this.fillTable();
+            });
+
+        },
+
+
     }
   }
 </script>

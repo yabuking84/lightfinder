@@ -17,7 +17,7 @@ import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetail
 
 
 
-const meta = { 
+const meta = {
     requiresAuth: true,
     role: config.auth.role.supplier.id,
     items: [

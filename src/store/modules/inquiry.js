@@ -61,6 +61,37 @@ const actions = {
         });
     },
 
+    getSupplierInquiries_a(context,data){
+        return new Promise((resolve, reject) => {
+            var headers = {token:localStorage.access_token};
+            // console.log(state.api.getInquiries.url);
+            // console.log(state.api.getInquiries.method);
+            // console.log(headers);
+            axios({
+                method: state.api.getInquiries.method,
+                url: state.api.getInquiries.url,
+                headers: headers,
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+
+                // console.log(error);
+
+                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+                    console.log("EXPIRED");
+                    router.push({'name': 'Logout'})
+                }
+                else {
+                    // console.log("normal error!");
+                    reject(error);
+                }
+
+            })
+        });
+    },
+
     addInquiry_a(context,data){
         return new Promise((resolve, reject) => {
 

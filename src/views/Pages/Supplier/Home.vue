@@ -115,7 +115,7 @@
 						  	  <!-- dynamic table -->
 						  	  <div>
 						  	  	<keep-alive>
-						  		  	<component v-bind:is="component" ></component>	
+						  		  	<component :is="component" ></component>	
 						  		</keep-alive>
 						  	  </div>
 						  	  <!-- dynamic table -->
@@ -132,17 +132,17 @@
 <script>
 
 
-import DashboardOpenInquiriesTable from "@/views/Components/App/Supplier/DashboardOpenInquiryComponent"
+import InquiriesTable from "@/views/Components/App/Supplier/InquiriesTable"
 
 	// import OpenInquiry from '@/views/'
 	export default {
 
 		components: {
-				'inquiries-table':DashboardOpenInquiriesTable,
+				InquiriesTable,
 		},
 
 		data: () => ({
-			component: 'inquiries-table'
+			component: InquiriesTable
 		}),
 
 		methods: {

@@ -186,10 +186,7 @@ import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
     created(){
 
         this.fillTable();
-
-        inqEvntBs.$on('inquiry-form-submitted',()=>{
-            this.fillTable();
-        });
+        inqEvntBs.onFormSubmitted(this.fillTable);
 
     },
   }
