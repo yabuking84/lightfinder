@@ -23,15 +23,9 @@
 
 	      	<v-layout row wrap>
 
-	      		  <v-flex xs8>
-	      		  	  	<h4 class="font-weight-bold mb-1 mt-1">Message</h4>
-	      		  </v-flex>
-
-				  <v-flex xs4>
-				   		<h4 class="font-weight-bold mb-1 mt-1">Specifications</h4>
-				  </v-flex>
 
 		      	  <v-flex xs8>
+	      		  	  	<h4 class="font-weight-bold mb-2 mt-2">Message</h4>
 	      		     
 		      		      <h5 class="font-weight-light mb-2">
 				      	  	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -49,6 +43,7 @@
 				
 				<!-- specification -->
 				  <v-flex xs4>
+				   		<h4 class="font-weight-bold mb-2 mt-2">Specifications</h4>
 						<v-layout row wrap justify-center>
 							     <v-chip label dark outline color="green">Category: LED STRIP LIGHTS</v-chip>
 							     <v-chip label dark outline color="green">Warranty: 1 Years</v-chip>

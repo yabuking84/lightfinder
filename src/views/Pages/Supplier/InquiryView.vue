@@ -13,10 +13,7 @@
 
 		             	<v-spacer></v-spacer>
 		             	
-		             	<v-btn @click="QuoteDialog = true" class="font-weight-light" color="green" dark>
-					    	<i class="fas fa-plus  white--text mr-1"> </i>
-							Add Quote
-						</v-btn>
+
 
 				</v-layout>
 				
@@ -27,23 +24,23 @@
 					</v-flex>
 					<!-- end of detils  -->
 
-					<!-- proposal list -->
+					
+					<!-- supplier quote -->
 					<v-flex xs8>
+						<quote-details> </quote-details>
+					</v-flex>  
+					<!-- supplier quote -->
+
+
+					<!-- proposal list -->
+					<v-flex xs4>
 					  	<inquiry-post-list> </inquiry-post-list>
 					</v-flex>
 					<!-- proposal list -->
 
-
-					<!-- recent bids -->
-					<v-flex xs4 >
-						<Bidlist> </Bidlist>
-					</v-flex>  
-					<!-- recebt bids -->
-
 				</v-layout>
 		</v-container>
 
-		 <quote-dialog :QuoteDialog.sync="QuoteDialog"></quote-dialog>
 
 
 	</div>
@@ -51,22 +48,26 @@
 
 <script>
 
-import Bidlist from "@/views/Components/App/Supplier/Bidlist"
+import QuoteDetails from "@/views/Components/App/Supplier/QuoteDetails"
 import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Supplier/InquiryDetailsCard"
 import BidDialog from "@/views/Components/App/Supplier/BidDialog"
-import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
 
 export default {
 
 	components: {
 
-		Bidlist,
+		QuoteDetails,
 	    InquiryPostList,
 	    InquiryDetailsCard,
 	    BidDialog,
-	    QuoteDialog
 
+	},
+
+	props: {
+		inq_id: {
+			type: String,
+		},
 	},
 
 	data: () => ({
@@ -74,7 +75,6 @@ export default {
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
-		QuoteDialog:false
 
 	}),
 
@@ -105,7 +105,20 @@ export default {
 			alert('SOrt')
 
 		}	
-	}
+	},
+
+	created() {
+
+		console.log("inq_id = "+this.inq_id);
+
+		// this.dispatch('')
+		// .then((data)=>{
+		// 	console.log(data);
+		// })
+		// .catch((error)=>{
+
+		// });		
+	},
 }
 	
 </script>

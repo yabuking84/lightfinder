@@ -5,6 +5,7 @@
              </v-text-field>   
     </v-flex>
     <v-divider></v-divider>
+
     <v-data-table
           :headers="headers"
           :items="dataItems"
@@ -12,7 +13,7 @@
           :search="search">
         <template slot="items" slot-scope="props">
             <tr class="th-heading"  @click="click(props.item.name)">
-                
+
                 <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details  ></v-checkbox></td>
                 
                 <td class="text-xs-center font-weight-medium">{{ props.item.keywords }}</td>
@@ -23,13 +24,12 @@
 
                 <td class="text-xs-center">{{ props.item.quantity }}</td>
 
-                
                 <td class="text-xs-center">{{ props.item.shipping_date }}</td>
 
                 <td class="text-xs-center">{{ props.item.created_at }}</td>
 
                 <td class="text-xs-center">
-                       <inquiry-status :status-id="props.item.status"> </inquiry-status>
+                       <inquiry-status-buttons :status-id="props.item.status"/>
                 </td>
 
                 <td class="text-xs-center">
@@ -50,6 +50,7 @@
         </v-alert>
     </v-data-table>
 
+
     <dialog-test :dialog.sync="dialog" ></dialog-test>
 <!--     <test1></test1>
     <test2></test2> -->
@@ -62,7 +63,7 @@ import inqEvntBs from "@/bus/inquiry";
     
 import helpers from "@/mixins/helpers";
 import DialogTest from "@/views/Components/App/Buyer/DialogTest";
-import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
+import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
   export default {
     mixins: [
@@ -142,7 +143,7 @@ import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
       }
     },
     components: {
-      InquiryStatus,
+      InquiryStatusButtons,
       DialogTest
     },
     methods: {
@@ -154,7 +155,7 @@ import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
 
             this.loading = true;
             this.dataItems = [];
-            this.$store.dispatch('inq/getInquiries_a')
+            this.$store.dispatch('byrInq/getInquiries_a')
             .then((response) => {
                 for (var i = response.length - 1; i >= 0; i--) {
                     var item = {};

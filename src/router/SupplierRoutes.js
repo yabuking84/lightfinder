@@ -52,7 +52,8 @@ export default [
             header: AppToolbar,
             footer:AppFooter
         },
-         meta: meta
+        meta: meta,
+        props: true,
     },
 
     {
