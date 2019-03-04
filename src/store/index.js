@@ -9,8 +9,8 @@ import swatch from './modules/swatch'
 // import axios from 'axios';
 import auth from './modules/auth'
 import cat from './modules/category'
-import inq from './modules/inquiry'
-import adminHelper from './modules/admin-helper'
+import byrInq from './modules/BuyerInquiry'
+import spplrInq from './modules/SupplierInquiry'
  
 Vue.use(Vuex)
 
@@ -27,5 +27,7 @@ export const store = new Vuex.Store({
     inq,
     adminHelper,
     
+    byrInq,
+    spplrInq,
   }
 })

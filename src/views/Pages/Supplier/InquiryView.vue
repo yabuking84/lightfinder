@@ -2,48 +2,31 @@
 	<div class="scopedcontainer">
 		<v-container fluid grid-list-xl >
 				
-				<v-layout row wrap>
-
-						<v-btn flat value="left"  class="v-btn--active blue-grey">
-				    		<router-link :to="{ name: 'SupplierHome' }">
-			                	<i class="fas fa-arrow-left white--text"></i>
-			                	<span class="ml-1 white--text font-weight-light subheading">back</span>
-		                	 </router-link>
-		             	</v-btn>
-
-		             	<v-spacer></v-spacer>
-		             	
-		             	<v-btn @click="QuoteDialog = true" class="font-weight-light" color="green" dark>
-					    	<i class="fas fa-plus  white--text mr-1"> </i>
-							Add Quote
-						</v-btn>
-
-				</v-layout>
 				
 				<v-layout row wrap>
 
 					<v-flex xs12>
-						<inquiry-details-card> </inquiry-details-card>
+						<inquiry-details-card :inquiry="inquiry"> </inquiry-details-card>
 					</v-flex>
 					<!-- end of detils  -->
 
-					<!-- proposal list -->
+					
+					<!-- supplier quote -->
 					<v-flex xs8>
-					  	<inquiry-post-list> </inquiry-post-list>
+						<quote-details :inquiry="inquiry"> </quote-details>
+					</v-flex>  
+					<!-- supplier quote -->
+
+
+					<!-- proposal list -->
+					<v-flex xs4>
+					  	<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
 					</v-flex>
 					<!-- proposal list -->
-
-
-					<!-- recent bids -->
-					<v-flex xs4 >
-						<Bidlist> </Bidlist>
-					</v-flex>  
-					<!-- recebt bids -->
 
 				</v-layout>
 		</v-container>
 
-		 <quote-dialog :QuoteDialog.sync="QuoteDialog"></quote-dialog>
 
 
 	</div>
@@ -51,30 +34,57 @@
 
 <script>
 
-import Bidlist from "@/views/Components/App/Supplier/Bidlist"
+import QuoteDetails from "@/views/Components/App/Supplier/QuoteDetails"
 import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Supplier/InquiryDetailsCard"
 import BidDialog from "@/views/Components/App/Supplier/BidDialog"
-import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
+import inqEvntBs from "@/bus/inquiry";
 
 export default {
 
+
 	components: {
 
-		Bidlist,
+		QuoteDetails,
 	    InquiryPostList,
 	    InquiryDetailsCard,
 	    BidDialog,
-	    QuoteDialog
 
 	},
+
+	props: ['inq_id'],
+
+	// props: {
+	// 	inq_id: {
+	// 		type: String,
+	// 	},
+	// },
 
 	data: () => ({
 
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
-		QuoteDialog:false
+		inquiry: {
+		    "id": null,
+		    "subject": null,
+		    "keyword": null,
+		    "warranty": null,
+		    "quantity": null,
+		    "desired_price": null,
+		    "desired_shipping_date": null,
+		    "message": null,
+		    "status_id": null,
+		    "stage_id": null,
+		    "payment_method_id": null,
+		    "shipping_method_id": null,
+		    "shipping_date": null,
+		    "awarded": null,
+		    "paid": null,
+		    "created_at": null,
+		    "updated_at": null,
+		    "categories": [],
+		},
 
 	}),
 
@@ -104,15 +114,34 @@ export default {
 
 			alert('SOrt')
 
-		}	
-	}
+		},
+
+		getInquiry(){
+			
+		},
+
+	},
+
+	created() {
+
+		this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:this.inq_id})
+		.then((data)=>{
+			this.inquiry = data;
+			inqEvntBs.inquiry = this.inquiry;
+
+		})
+		.catch((error)=>{
+			console.log(error);
+		});
+	},
 }
 	
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 	.scopedcontainer a {
 	  	text-decoration:none;
 	}
+
 </style>
 

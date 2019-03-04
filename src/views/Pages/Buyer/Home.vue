@@ -87,9 +87,9 @@
 
 <script>
 
-import DashboardOpenInquiriesTable from "@/views/Components/App/Buyer/DashboardOpenInquiriesTable";
-import DashboardInprogressTable from "@/views/Components/App/Buyer/DashboardInprogressTable";
-import DashboardCloseTable from "@/views/Components/App/Buyer/DashboardCloseTable";
+// import DashboardOpenInquiriesTable from "@/views/Components/App/Buyer/DashboardOpenInquiriesTable";
+// import DashboardInprogressTable from "@/views/Components/App/Buyer/DashboardInprogressTable";
+// import DashboardCloseTable from "@/views/Components/App/Buyer/DashboardCloseTable";
 
 import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
@@ -100,9 +100,9 @@ export default {
 
 	components: {
 
-		'inquiries-table':DashboardOpenInquiriesTable,
-		'in-progress-table':DashboardInprogressTable,
-	    'close-table':DashboardCloseTable,
+		// 'inquiries-table':DashboardOpenInquiriesTable,
+		// 'in-progress-table':DashboardInprogressTable,
+	 //    'close-table':DashboardCloseTable,
 	    InquiriesTable,
 	    InquiryCreate,
 

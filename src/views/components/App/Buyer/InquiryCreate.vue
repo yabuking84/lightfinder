@@ -629,10 +629,8 @@ export default {
             .then((response) => {
                 this.formLoading = false;
                 this.$emit('update:dialog', false);
-                
-                // this.$emit('update-inquiry-table');
 
-                inqEvntBs.$emit('inquiry-form-submitted');
+                inqEvntBs.emitFormSubmitted();
 
             }).catch((e) => {
                 this.formLoading = false;

@@ -17,7 +17,7 @@ import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetail
 
 
 
-const meta = { 
+const meta = {
     requiresAuth: true,
     role: config.auth.role.supplier.id,
     items: [
@@ -45,14 +45,15 @@ export default [
 
     {
         name: 'SupplierInquiryView',
-        path: '/supplier/inquiry/view',
+        path: '/supplier/inquiry/view/:inq_id',
         components: {
             default:SupplierInquiryView,
             sidebar: AppSidebar,
             header: AppToolbar,
             footer:AppFooter
         },
-         meta: meta
+        meta: meta,
+        props: { default:true },
     },
 
     {
