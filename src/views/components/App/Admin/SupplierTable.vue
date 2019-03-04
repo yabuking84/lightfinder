@@ -1,0 +1,212 @@
+<template>
+ <div>
+
+    <v-card>
+          <v-toolbar dark color="grey darken-4">
+            <h1 class="font-weight-light title">Supplier</h1> 
+           <v-spacer></v-spacer>
+            <v-btn icon @click="Sort('desc')">
+              <v-icon>sort</v-icon>
+            </v-btn>
+            <v-btn icon @click="Refresh('refresh')">
+              <v-icon>refresh</v-icon>
+            </v-btn>
+          </v-toolbar>
+
+            <!-- component  -->
+            <div class="mt-4">
+              <v-flex xs3 offset-xs9 mr-2 ml3>
+                         <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
+                         </v-text-field>   
+                </v-flex>
+
+                <v-divider></v-divider>
+
+                <v-data-table
+                      :headers="headers"
+                      :items="dataItems"
+                      :loading="loading"
+                      :search="search">
+                      
+                    <template slot="items" slot-scope="props">
+
+                        <tr class="th-heading"  @click="click(props.item.name)">
+
+                            <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details  ></v-checkbox></td>
+                            <td class="text-xs-center font-weight-medium">{{ props.item.keywords }}</td>
+                            <td class="text-xs-center font-weight-medium">{{ props.item.message }}</td>
+                            <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
+                            <td class="text-xs-center">{{ props.item.quantity }}</td>
+                            <td class="text-xs-center">{{ props.item.shipping_date }}</td>
+                            <td class="text-xs-center">{{ props.item.created_at }}</td>
+                            <td class="text-xs-center">
+                                   <inquiry-status :status-id="props.item.status"> </inquiry-status>
+                            </td>
+
+                            <td class="text-xs-center">
+                                 <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
+                                    <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
+                                       <i class="fas fa-eye white--text"></i>             
+                                      <span class="ml-1 white--text font-weight-light ">View</span>
+                                  </router-link>
+                                </v-btn>
+                            </td>
+
+                        </tr>
+
+                    </template>
+
+                    <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                        Your search for "{{ search }}" found no results.
+                    </v-alert>
+
+                </v-data-table>
+            </div>
+            <!-- component  -->
+
+        </v-card>
+     
+
+
+ </div>
+</template>
+
+<script>
+import inqEvntBs from "@/bus/inquiry";
+    
+import helpers from "@/mixins/helpers";
+import DialogTest from "@/views/Components/App/Buyer/DialogTest";
+import InquiryStatus from "@/views/Components/App/Buyer/InquiryStatus";
+
+  export default {
+    mixins: [
+        helpers,
+    ],
+    data: function () {
+    return {
+
+        search: '',
+        dialog: false,
+        loading: false,
+        headers: [
+            {
+              text: 'Select',
+              align: 'left',
+              sortable: false,
+              value: 'inq_id'
+            },
+           
+            {
+              text: 'First Name',
+              align: 'center',  
+              sortable: false,
+              value: 'first_name'
+            },
+           
+            {
+              text: 'Last Name',
+              align: 'center',  
+              sortable: false,
+              value: 'last_name'
+            },
+
+            {
+              text: 'Phone Number',
+              align: 'center',  
+              sortable: false,
+              value: 'categories'
+            },
+            
+            {
+              text: 'Company Name',
+              align: 'center',
+              sortable: false,
+              value: 'company'
+            },
+            
+            {
+              text: 'Country',
+              align: 'center',
+              sortable: false,
+              value: 'country'
+            },
+            
+            {
+              text: 'Action',
+              align: 'center',
+              sortable: false,
+            },
+        ],
+        dataItems: []
+      }
+    },
+    components: {
+      InquiryStatus,
+      DialogTest
+    },
+    methods: {
+
+        click: function(name) {
+            // window.location.href = '/buyer/view'
+        },
+
+        fillTable() {
+
+            // this.loading = true;
+            // this.dataItems = [];
+            // this.$store.dispatch('inq/getInquiries_a')
+            // .then((response) => {
+            //     for (var i = response.length - 1; i >= 0; i--) {
+            //         var item = {};
+            //         item.inq_id = response[i].id;
+            //         item.keywords = this.ucwords(response[i].keyword);
+            //         item.message = response[i].message;
+            //         item.categories = response[i].categories.join(', ');
+            //         item.quantity = response[i].quantity;
+            //         item.shipping_date = response[i].desired_shipping_date;
+            //         item.created_at = response[i].created_at;
+            //         item.status = response[i].stage_id;
+            //         this.dataItems.push(item);
+            //     }
+
+            //     this.loading = false;
+
+            // })
+            // .catch((e) => {
+            //     console.log('Error: '+e);
+            //     this.loading = false;
+            // })
+            // .finally(()=>{
+            //     this.loading = false;
+            // });
+
+        },
+    },
+
+    created(){
+
+        this.fillTable();
+        
+        inqEvntBs.$on('inquiry-form-submitted',()=>{
+            this.fillTable();
+        });
+
+    },
+  }
+</script>
+
+
+<style scoped lang="stylus">
+    .theme--light.v-table thead tr
+      background:#000000;
+      color:#fff;
+    .fix-width
+      width:198px;
+    .th-heading 
+       cursor: pointer; 
+    .text-decoration-none
+       text-decoration: none;
+    .th-heading a 
+       text-decoration:none;
+
+</style>

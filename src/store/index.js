@@ -10,6 +10,7 @@ import swatch from './modules/swatch'
 import auth from './modules/auth'
 import cat from './modules/category'
 import inq from './modules/inquiry'
+import adminHelper from './modules/admin-helper'
  
 Vue.use(Vuex)
 
@@ -24,5 +25,7 @@ export const store = new Vuex.Store({
     auth,
     cat,
     inq,
+    adminHelper,
+    
   }
 })

@@ -4,6 +4,8 @@ import AppFooter from '@/views/Components/App/Footer'
 
 import AdminHome from '@/views/Pages/Admin/Home'
 import AdminInquiry from '@/views/Pages/Admin/Inquiry'
+import AdminBuyer from '@/views/Pages/Admin/Buyer'
+import AdminSupplier from '@/views/Pages/Admin/Supplier'
 
 import config from '@/config/index'
 
@@ -16,6 +18,21 @@ const meta = {
             title: 'Dashboard',
             name: 'AdminHome',
             icon: 'fas fa-th-large',
+        },
+          {
+            title: 'Inquiry',
+            name: 'AdminInquiry',
+            icon: 'fas fa-search',
+        },
+        {
+            title: 'Buyer',
+            name: 'AdminBuyer',
+            icon: 'fas fa-user',
+        },
+          {
+            title: 'Supplier',
+            name: 'AdminSupplier',
+            icon: 'fas fa-user-tie',
         },
     ],    
 }
@@ -42,6 +59,28 @@ export default [
             footer: AppFooter,
         },
         meta: meta,
-    },    
+    },
+    {
+        name: 'AdminBuyer',
+        path: '/admin/buyer/',
+        components: {
+            default: AdminBuyer,
+            sidebar: AppSidebar,
+            header: AppToolbar,
+            footer: AppFooter
+        },
+        meta: meta
+    },
+    {
+        name: 'AdminSupplier',
+        path: '/admin/supplier',
+        components: {
+            default: AdminSupplier,
+            sidebar: AppSidebar,
+            header: AppToolbar,
+            footer: AppFooter
+        },
+        meta: meta
+    }    
 ]
 

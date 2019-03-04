@@ -5,22 +5,28 @@
 
 				<v-layout row wrap>
 					<v-spacer></v-spacer>
-				    <div> <v-btn @click="dialog=true" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-search white--text"></i>&nbsp Add Inquiry </v-btn> </div>
+				    <div> <v-btn @click="dialog=true" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-user-plus white--text"></i>&nbsp Add Supplier </v-btn> </div>
 				</v-layout>
-
-				<!-- inquiry table -->
-					<inquiry-table> </inquiry-table>
-				<!-- inquiry table -->
 				
+				<!-- supplier table -->
+					<supplier-table> </supplier-table>
+				<!-- supplier table -->
+
 			</v-container>	
 		</v-layout>
+
+		<!-- supplier dialog -->
+		<supplier-dialog :dialog.sync="dialog"> </supplier-dialog>
+		<!-- supplier dialog -->
+
 	</div>
 	
 </template>
 
 <script>
 	
-	import InquiryTable from '@/views/components/app/Admin/InquiryTable'
+	import SupplierTable from '@/views/components/app/Admin/SupplierTable'
+	import SupplierDialog from '@/views/components/app/Admin/SupplierDialog'
 
 	export default {
 
@@ -49,8 +55,8 @@
 
 		components: {
 
-			InquiryTable,
-			
+			SupplierTable,
+			SupplierDialog
 
 		},
 		methods: {

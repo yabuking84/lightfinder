@@ -526,6 +526,7 @@ export default {
         stepCnt(val) {
 
             // console.log("step_"+val);
+            
             if(val>1) {
 
                 if(typeof this.$refs["step_"+val].$attrs.isCalendar == "undefined") {

@@ -2,25 +2,32 @@
 	<div>
 		<v-layout row wrap>
 			<v-container fluid>
-
+				
 				<v-layout row wrap>
 					<v-spacer></v-spacer>
-				    <div> <v-btn @click="dialog=true" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-search white--text"></i>&nbsp Add Inquiry </v-btn> </div>
+				    <div> <v-btn @click="dialog=true" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-user-plus white--text"></i>&nbsp Add Buyer </v-btn> </div>
 				</v-layout>
+					
+				<!-- buyer table -->
+					<buyer-table> </buyer-table>
+				<!-- buyer table -->
 
-				<!-- inquiry table -->
-					<inquiry-table> </inquiry-table>
-				<!-- inquiry table -->
-				
 			</v-container>	
+
 		</v-layout>
+
+		<!-- buyer dialog -->
+		<buyer-dialog :dialog.sync="dialog"> </buyer-dialog>
+		<!-- buyer dialog -->
+		
 	</div>
-	
+
 </template>
 
 <script>
 	
-	import InquiryTable from '@/views/components/app/Admin/InquiryTable'
+	import BuyerTable from '@/views/components/app/Admin/BuyerTable'
+	import BuyerDialog from '@/views/components/app/Admin/BuyerDialog'
 
 	export default {
 
@@ -49,8 +56,8 @@
 
 		components: {
 
-			InquiryTable,
-			
+			BuyerTable,
+			BuyerDialog
 
 		},
 		methods: {
