@@ -1,6 +1,20 @@
 <template>
  <div>
-     <v-flex xs3 offset-xs9 mr-2 ml3>
+
+  <v-card>
+
+    <v-toolbar dark color="grey darken-4">
+            <h1 class="font-weight-light title">Inquiry</h1>  
+           <v-spacer></v-spacer>
+            <v-btn icon @click="Sort('desc')">
+              <v-icon>sort</v-icon>
+            </v-btn>
+            <v-btn icon @click="Refresh('refresh')">
+              <v-icon>refresh</v-icon>
+            </v-btn>
+          </v-toolbar>
+    
+      <v-flex xs3 offset-xs9 mr-2 ml3 mt-4>
              <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
              </v-text-field>   
     </v-flex>
@@ -41,6 +55,9 @@
         </v-alert>
     </v-data-table>
 
+  </v-card>
+
+   
 
     <dialog-test :dialog.sync="dialog" ></dialog-test>
 <!--     <test1></test1>

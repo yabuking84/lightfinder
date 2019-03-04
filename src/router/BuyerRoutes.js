@@ -74,6 +74,21 @@ export default [
     },    
 
 
+
+
+
+
+
+
+
+
+
+
+
+    /*
+        public views
+    */
+
     {
         name: 'BuyerRegistration',
         path: '/buyer/register',
