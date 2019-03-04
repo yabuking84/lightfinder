@@ -8,7 +8,7 @@ const state =  {
 	api: {
 		
 		/*
-			get single buyer
+			get countries
 		*/
 		
 		get: {
@@ -20,16 +20,7 @@ const state =  {
 		},
 
 		
-		/*
-		    post single buyer
-		*/
-		
-		post: {
 
-			method: 'post',
-			url: 	'http://192.168.1.200:8000/v1/login'
-
-		},
 
 		
 
