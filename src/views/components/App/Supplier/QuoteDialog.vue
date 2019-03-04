@@ -9,22 +9,23 @@
 	  </v-toolbar>
 
       <v-card>
+		<v-container>
 
 		<v-layout row wrap>
-			<v-flex xs6>
+			<v-flex xs5>
+		  	  	<v-container>
 				<v-layout row wrap>
-		  	  		<v-container>
 
 			  	  		<v-flex xs12>
 				          <v-text-field
-				            label="Pruduct Name"
+				            label="Product Name"
 				            placeholder="Enter Product Name "
 				          ></v-text-field>
 				        </v-flex>
 
 				        <v-flex xs12>
 				          <v-textarea
-				            label="Pruduct Details"
+				            label="Product Details"
 				            placeholder="Enter Product Details "
 				          ></v-textarea>
 				        </v-flex>
@@ -65,30 +66,39 @@
 					            placeholder="Enter Remarks Here"
 					          ></v-textarea>
 				      	 </v-flex>
-		  	  		</v-container>
+				</v-layout>
+		  	  	</v-container>
+			</v-flex>
+
+			<v-flex xs1 justify-center>
+				<v-layout align-center justify-center row fill-height>		
 				</v-layout>
 			</v-flex>
+
 			<v-flex xs6>
+		  	  	<v-container>
 				<v-layout row wrap>
-		  	  		<v-container>
-                <v-layout row wrap>                	
+				  	<v-flex xs12>
+			            <h2 class="font-weight-thin mb-5">Inquiry # <span class="font-weight-medium">{{ inquiry.id }}</span> </h2>
+				  	</v-flex>
 				  	<v-flex xs8>
                 		<v-layout row wrap>
-		                    <v-flex shrink>
+
+		                    <v-flex xs12 mr-4 mb-3>
 			                    <h5 class="font-weight-thin">Keywords </h5>
 			                    <h4 class="font-weight-bold">
 									<p class="mb-0">{{ inquiry.keyword }}</p>
 						      	</h4>
 		                    </v-flex>
 
-					  	  	<v-flex shrink>
+					  	  	<v-flex xs12 mr-4 mb-3>
 			                    <h5 class="font-weight-thin">Category</h5>
 			                    <h4 class="font-weight-bold">                     	
 			                    	<span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
 			                    </h4>
 		                	</v-flex>
 
-					  	  	<v-flex shrink>
+					  	  	<v-flex xs12 mr-4 mb-3>
 			                    <h5 class="font-weight-thin">Quantity</h5>
 			                    <h4 class="font-weight-bold">                     	
 			                    	<span>{{ inquiry.quantity }} pcs</span>
@@ -97,14 +107,14 @@
 
 
 
-		                    <v-flex xs12>
+		                    <v-flex xs12 mr-4 mb-3>
 			                    <h5 class="font-weight-thin">Message </h5>
 			                    <h4 class="font-weight-bold">                     	
 									<p class="mb-0">{{ inquiry.message }}</p>
 						      	</h4>
 		                    </v-flex>
 
-		                    <v-flex xs12>
+		                    <v-flex xs12 mr-4 mb-3>
 			                    <h5 class="font-weight-thin">Attachments </h5>
 		                        <img width="100px;" src="/static/examples/led-strip-lights-daaden-al-sl-1017-7777.jpg">
 		                        <img width="100px;" src="/static/examples/led-strip-lights-dieburg-al-sl-1018-7778.jpg">
@@ -137,11 +147,8 @@
 		                </v-layout>
 	                </v-flex>
 
-                </v-layout>
-
-		  	  		</v-container>				
-				</v-layout>
-			
+				</v-layout>			
+		  	  	</v-container>
 			</v-flex>
 		</v-layout>
 
@@ -152,6 +159,8 @@
 	        <v-btn color="primary" > Submit </v-btn>
 	    </v-card-actions>
 
+
+  		</v-container>
       </v-card>
     </v-dialog>
   </div>

@@ -110,9 +110,12 @@ export default {
 
 	},
 
+	watch: {
+
+	},
+
 	created(){
 
-		console.log(inqEvntBs.inquiry);
 	},
 
 }

@@ -6,22 +6,22 @@
             <v-toolbar dark color="grey darken-4">
 
 
-                <v-btn-toggle v-model="inquiryStatus">
+                <v-btn-toggle multiple v-model="inquiryStatus">
                     <!-- for loop -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                    <span v-for="(status, index) in statusesSupplier" class="grey darken-4 pa-2">
+                    <!-- <span v-for="(status, index) in statusesSupplier" class="grey darken-4 pa-2">
                         <v-btn flat @click="inquiryStatus=status.id+''" :value="status.id+''" :title="status.name">
                             <i class="white--text" :class="status.icon"></i> 
-                            <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
+                            <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
                         </v-btn>
-                    </span>
+                    </span> -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <!-- for loop -->
 
                     <!-- for loop -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
-                        <v-btn flat @click="inquiryStatus=status.id+''" :value="status.id+''" :title="status.name">
+                        <v-btn flat :value="status.id" :title="status.name">
                             <i class="white--text" :class="status.icon"></i> 
                             <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
                         </v-btn>
@@ -32,16 +32,10 @@
                 
                 <v-spacer></v-spacer>
 
-                <v-btn icon @click="Refresh()">
+                <v-btn icon @click="refresh()">
                     <v-icon>refresh</v-icon>
                 </v-btn>
 
-
-                <v-flex xs3 offset-xs9 mr-2 ml3>
-                    <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
-                    </v-text-field>
-                </v-flex>
-                <v-spacer></v-spacer>
 
 
 
@@ -50,8 +44,17 @@
         </v-layout>
 
         <v-card-title>
-            <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
-            </v-text-field>
+            <v-flex xs3 offset-xs9>
+                <v-text-field 
+                    label="Search" 
+                    v-model="search" 
+                    placeholder="Search" 
+                    prepend-inner-icon="search" 
+                    solo 
+                    clearable
+                    ma-0>
+                </v-text-field>
+            </v-flex>
         </v-card-title>
 
         <v-divider></v-divider>
@@ -132,7 +135,7 @@ import main from "@/config/main"
 
         statuses: main.inquiry_statuses.default,
         statusesSupplier: main.inquiry_statuses.suppliers,
-        inquiryStatus: 'all',
+        inquiryStatus: [],
         search: '',
         headers: [
             {
@@ -191,6 +194,7 @@ import main from "@/config/main"
             },
         ],
 
+        allInquiries: [],
         dataItems: [],
 
       }
@@ -202,7 +206,6 @@ import main from "@/config/main"
         },
 
         fillTable() {
-
             this.loading = true;
             this.dataItems = [];
             this.$store.dispatch('spplrInq/getInquiries_a')
@@ -236,20 +239,43 @@ import main from "@/config/main"
             });
 
         },
+
+        refresh(){
+            this.fillTable();
+            this.inquiryStatus = [];
+        },
+
+        filterTable(){
+
+            if(!this.inquiryStatus.length) {
+
+            } else {
+                console.log("this.inquiryStatus");
+                console.log(this.inquiryStatus);
+                console.log("this.dataItems");
+                console.log(this.dataItems.filter(inq=>this.inquiryStatus.includes(inq.status)));
+                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
+
+
+
+            }
+
+        },
+
     },
 
     created(){
-
         this.fillTable();
-
     },
 
     watch: {
+        inquiryStatus(nVal,oVal){
+            // console.log("inquiry status");
+            // console.log(nVal);
 
-        inquiryStatus(newVal, oldVal){
-            this.fillTable();
+            this.filterTable();
         },
-
     },    
   }
 </script>
