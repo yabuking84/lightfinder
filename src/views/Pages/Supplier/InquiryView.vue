@@ -6,21 +6,21 @@
 				<v-layout row wrap>
 
 					<v-flex xs12>
-						<inquiry-details-card :inquiry="inquiry"> </inquiry-details-card>
+						<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>						
 					</v-flex>
 					<!-- end of detils  -->
 
 					
 					<!-- supplier quote -->
 					<v-flex xs8>
-						<quote-details :inquiry="inquiry"> </quote-details>
+						<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
 					</v-flex>  
 					<!-- supplier quote -->
 
 
 					<!-- proposal list -->
 					<v-flex xs4>
-					  	<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
+					  	<inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
 					</v-flex>
 					<!-- proposal list -->
 
@@ -65,26 +65,7 @@ export default {
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
-		inquiry: {
-		    "id": null,
-		    "subject": null,
-		    "keyword": null,
-		    "warranty": null,
-		    "quantity": null,
-		    "desired_price": null,
-		    "desired_shipping_date": null,
-		    "message": null,
-		    "status_id": null,
-		    "stage_id": null,
-		    "payment_method_id": null,
-		    "shipping_method_id": null,
-		    "shipping_date": null,
-		    "awarded": null,
-		    "paid": null,
-		    "created_at": null,
-		    "updated_at": null,
-		    "categories": [],
-		},
+		inquiry: false,
 
 	}),
 
@@ -116,8 +97,10 @@ export default {
 
 		},
 
-		getInquiry(){
-			
+		testButton(){
+
+		
+
 		},
 
 	},
@@ -127,12 +110,13 @@ export default {
 		this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:this.inq_id})
 		.then((data)=>{
 			this.inquiry = data;
-			inqEvntBs.inquiry = this.inquiry;
-
 		})
 		.catch((error)=>{
 			console.log(error);
 		});
+
+	
+
 	},
 }
 	
