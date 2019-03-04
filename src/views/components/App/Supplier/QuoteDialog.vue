@@ -37,10 +37,11 @@
 					          <v-text-field
 					            label="Quantity"
 					            placeholder="0"
-					            disabled
-					             suffix="Piece"
-					          ></v-text-field>
-
+					            readonly
+					            :value="inquiry.quantity"
+					            style="color: #000;"
+					            suffix="pcs">					            	
+					            </v-text-field>
 					        </v-flex>
 					        
 					        <v-flex xs4 pa-2>

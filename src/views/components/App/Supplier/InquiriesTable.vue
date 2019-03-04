@@ -59,7 +59,7 @@
 
         <v-divider></v-divider>
 
-        <v-data-table :headers="headers" :items="dataItems" :loading="loading" :search="search">
+        <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
             <template slot="items" slot-scope="props">
                 <tr class="th-heading" @click="click(props.item.name)">
 
@@ -135,7 +135,6 @@ import main from "@/config/main"
 
         statuses: main.inquiry_statuses.default,
         statusesSupplier: main.inquiry_statuses.suppliers,
-        inquiryStatus: [],
         search: '',
         headers: [
             {
@@ -149,7 +148,7 @@ import main from "@/config/main"
               text: 'Keywords & Message',
               align: 'center',  
               sortable: true,
-              value: 'keywords'
+              value: 'keywordsAndMessage'
             },
            
             {
@@ -194,8 +193,9 @@ import main from "@/config/main"
             },
         ],
 
+        inquiryStatus: [],
         allInquiries: [],
-        dataItems: [],
+        tableItems: [],
 
       }
     },
@@ -207,7 +207,7 @@ import main from "@/config/main"
 
         fillTable() {
             this.loading = true;
-            this.dataItems = [];
+            this.allInquiries = [];
             this.$store.dispatch('spplrInq/getInquiries_a')
             .then((response) => {
 
@@ -218,15 +218,16 @@ import main from "@/config/main"
                     item.inq_id = response[i].id;
                     item.keywords = this.ucwords(response[i].keyword);
                     item.message = response[i].message;
+                    item.keywordsAndMessage = response[i].keyword+" "+response[i].message;                    
                     item.categories = response[i].categories.join(', ');
                     item.quantity = response[i].quantity;
                     item.shipping_date = response[i].desired_shipping_date;
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
                     item.inquiry = response[i];
-                    this.dataItems.push(item);
+                    this.allInquiries.push(item);
                 }
-
+                this.tableItems = this.allInquiries;
                 this.loading = false;
 
             })
@@ -246,21 +247,11 @@ import main from "@/config/main"
         },
 
         filterTable(){
-
             if(!this.inquiryStatus.length) {
-
+                this.tableItems = this.allInquiries;
             } else {
-                console.log("this.inquiryStatus");
-                console.log(this.inquiryStatus);
-                console.log("this.dataItems");
-                console.log(this.dataItems.filter(inq=>this.inquiryStatus.includes(inq.status)));
-                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
-
-
-
+                this.tableItems = this.allInquiries.filter(inq=>this.inquiryStatus.includes(inq.status));
             }
-
         },
 
     },
@@ -271,9 +262,6 @@ import main from "@/config/main"
 
     watch: {
         inquiryStatus(nVal,oVal){
-            // console.log("inquiry status");
-            // console.log(nVal);
-
             this.filterTable();
         },
     },    
