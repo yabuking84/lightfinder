@@ -54,16 +54,24 @@ export default {
 	        name: "product name", 
 	        images: [ 
 		        {
-		            index: 0, link: "https://www.dropbox.com/s/a8813qmu9f5yixz/shoe_left.png?raw=1"
+		            index: 0, 
+		            // link: "https://www.dropbox.com/s/a8813qmu9f5yixz/shoe_left.png?raw=1"
+		            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7599.jpg?v=1.58"
 		        }, 
 		        {
-		            index: 1, link: "https://www.dropbox.com/s/tbkydz8eu937spk/shoe_top.png?raw=1"
+		            index: 1, 
+		            // link: "https://www.dropbox.com/s/tbkydz8eu937spk/shoe_top.png?raw=1"
+		            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7598.jpg?v=1.58"
 		        }, 
 		        {
-		            index: 2, link: "https://www.dropbox.com/s/tbkydz8eu937spk/shoe_top.png?raw=1"
+		            index: 2, 
+		            // link: "https://www.dropbox.com/s/tbkydz8eu937spk/shoe_top.png?raw=1"
+		            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7600.jpg?v=1.58"
 		        }, 
 		        {
-		            index: 3, link: "https://www.dropbox.com/s/a8813qmu9f5yixz/shoe_left.png?raw=1"
+		            index: 3, 
+		            // link: "https://www.dropbox.com/s/a8813qmu9f5yixz/shoe_left.png?raw=1"
+		            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7021.jpg?v=1.58"
 		        }
 	        ]
 	    }, 

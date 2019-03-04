@@ -17,7 +17,7 @@
 
       	</v-toolbar>
 
-      	<v-card class="proposal-section" color="grey lighten-5">
+      	<v-card class="minh-500" color="grey lighten-5">
 			<v-container fluid grid-list-md>
 
 				<div v-for="item in items">
@@ -135,8 +135,9 @@
 
 
 <style scoped lang="scss">
-	.proposal-section {	
-		// height:36.3vh;
+
+	.minh-500 {	
+		min-height:300px;
 		overflow-y: auto;
-	}
+	}	
 </style>

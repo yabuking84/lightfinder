@@ -1,6 +1,10 @@
 import Vue from 'vue';
 const InquiryEventBus = new Vue({
 
+	data:{
+		inquiry : null,
+	},
+
 	methods: {
 
 		emitFormSubmitted(){

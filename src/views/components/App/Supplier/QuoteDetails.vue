@@ -4,7 +4,7 @@
 		<v-toolbar color="grey darken-4" class="white--text" height="40px">
         	<v-toolbar-title class="subheading font-weight-light">Quote Details</v-toolbar-title>
         	<v-spacer></v-spacer>
-        	<v-toolbar-title class="subheading font-weight-light">You're Current Quote is $11.50</v-toolbar-title>
+        	<v-toolbar-title class="subheading font-weight-light">Your Current Quote is $11.50</v-toolbar-title>
 
 			<v-spacer></v-spacer>
 
@@ -18,7 +18,7 @@
 
       	</v-toolbar>
 
-      	<v-card class="proposal-section" color="grey lighten-5">
+      	<v-card class="minh-500" color="grey lighten-5">
 			<v-container fluid grid-list-md>			
 	      	<v-layout row wrap>
 
@@ -58,7 +58,9 @@
 
 				         <v-flex xs12>					        
 				  	  		<h5 class="font-weight-thin">Message</h5>
-			  	  			<p>lorew ipsurew ipsurew ipsuipsurew ipsuipsurew ipsurew ipsum </p>
+				  	  		<h3>
+				  	  			<p>lorew ipsurew ipsurew ipsuipsurew ipsuipsurew ipsurew ipsum </p>				  	  			
+				  	  		</h3>
 				      	 </v-flex>
 		  	  		</v-container>
 				</v-flex>
@@ -73,7 +75,7 @@
 	    </v-card>
 		
 		<span>
-			<quote-dialog :QuoteDialog.sync="QuoteDialog"></quote-dialog>
+			<quote-dialog :QuoteDialog.sync="QuoteDialog" :inquiry="inquiry"></quote-dialog>
 		</span>
 
 </div>
@@ -88,6 +90,8 @@
 
 	export default {
 
+		props: ['inquiry'],
+
 		components: {
 			InquiryDialog,
 		    QuoteDialog,
@@ -99,6 +103,7 @@
 			QuoteDialog:false,
 			img: `/static/examples/Logo-Samples2-08-min.jpg`,
 		    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
+
 		}),
 
 	}
@@ -107,8 +112,8 @@
 
 
 <style scoped lang="scss">
-	.proposal-section {	
-		min-height:500px;
+	.minh-500 {	
+		min-height:300px;
 		overflow-y: auto;
 	}
 </style>

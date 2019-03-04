@@ -1,60 +1,112 @@
 <template>
  <div>
-     <v-flex xs3 offset-xs9 mr-2 ml3>
-             <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
-             </v-text-field>   
-             {{ inquiryStatus }}
-             <br><br>
-    </v-flex>
-    <v-divider></v-divider>
+    <v-card>
+        <v-layout row wrap mb-3>
+            <!-- toolbar -->
+            <v-toolbar dark color="grey darken-4">
 
 
-    <v-data-table
-          :headers="headers"
-          :items="dataItems"
-          :loading="loading"
-          :search="search">
-        <template slot="items" slot-scope="props">
-            <tr class="th-heading"  @click="click(props.item.name)">
-
-                <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details  ></v-checkbox></td>
-                
-                <td class="text-xs-center font-weight-medium">{{ props.item.keywords }}</td>
-
-                <td class="text-xs-center font-weight-medium">{{ props.item.message }}</td>
-                
-                <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
-
-                <td class="text-xs-center">{{ props.item.quantity }}</td>
-
-                <td class="text-xs-center">{{ props.item.shipping_date }}</td>
-
-                <td class="text-xs-center">{{ props.item.created_at }}</td>
-
-                <td class="text-xs-center">
-                       <inquiry-status-buttons :status-id="props.item.status"/>
-                </td>
-
-                <td class="text-xs-center">
-                  <!-- <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1  -->
-                    <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
-                         <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
-                               <i class="fas fa-eye white--text"></i>             
-                              <span class="ml-1 white--text font-weight-light ">View</span>
+                <v-btn-toggle v-model="inquiryStatus">
+                    <!-- for loop -->
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <span v-for="(status, index) in statusesSupplier" class="grey darken-4 pa-2">
+                        <v-btn flat @click="inquiryStatus=status.id+''" :value="status.id+''" :title="status.name">
+                            <i class="white--text" :class="status.icon"></i> 
+                            <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
                         </v-btn>
-                    </router-link>
-                    
-                </td>
+                    </span>
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <!-- for loop -->
 
-            </tr>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-            Your search for "{{ search }}" found no results.
-        </v-alert>
-    </v-data-table>
-    
+                    <!-- for loop -->
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
+                        <v-btn flat @click="inquiryStatus=status.id+''" :value="status.id+''" :title="status.name">
+                            <i class="white--text" :class="status.icon"></i> 
+                            <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
+                        </v-btn>
+                    </span>
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <!-- for loop -->
+                </v-btn-toggle>
+                
+                <v-spacer></v-spacer>
 
-    <dialog-test :dialog.sync="dialog" ></dialog-test>
+                <v-btn icon @click="Refresh()">
+                    <v-icon>refresh</v-icon>
+                </v-btn>
+
+
+                <v-flex xs3 offset-xs9 mr-2 ml3>
+                    <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
+                    </v-text-field>
+                </v-flex>
+                <v-spacer></v-spacer>
+
+
+
+            </v-toolbar>
+            <!--/ toolbar -->
+        </v-layout>
+
+        <v-card-title>
+            <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
+            </v-text-field>
+        </v-card-title>
+
+        <v-divider></v-divider>
+
+        <v-data-table :headers="headers" :items="dataItems" :loading="loading" :search="search">
+            <template slot="items" slot-scope="props">
+                <tr class="th-heading" @click="click(props.item.name)">
+
+                    <td>
+                        <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
+                    </td>
+
+                    <td class="text-xs-left font-weight-medium">
+                        <h3 class="mt-3 mb-1">{{ props.item.keywords }}</h3>
+                        <p class="mb-3">{{ props.item.message }}</p>
+                    </td>
+
+                    <td class="text-xs-left font-weight-medium">{{ props.item.categories }}</td>
+
+                    <td class="text-xs-left">{{ props.item.quantity }}</td>
+
+                    <td class="text-xs-left">
+                        <div class="dateCellWidth">{{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}</div>
+                    </td>
+
+                    <td class="text-xs-left">
+                        <div class="dateCellWidth">{{ getDateTime('mmm dd, yyyy hh:mm',props.item.created_at) }}</div>
+                    </td>
+
+                    <td class="text-xs-left">
+                        <inquiry-status-buttons :status-id="props.item.status" />
+                    </td>
+
+                    <td class="text-xs-center">
+                        <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
+                            <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                                <i class="fas fa-eye white--text"></i>
+                                <span class="ml-1 white--text font-weight-light ">View</span>
+                            </v-btn>
+                        </router-link>
+                    </td>
+
+                </tr>
+            </template>
+            <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                Your search for "{{ search }}" found no results.
+            </v-alert>
+        </v-data-table>
+
+
+
+
+
+    </v-card>
+
 
  </div>
 </template>
@@ -62,25 +114,26 @@
 <script>
 
 import helpers from "@/mixins/helpers";
-    
-import DialogTest from "@/views/Components/App/Buyer/DialogTest";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+import main from "@/config/main"
 
   export default {
+    components: {
+      InquiryStatusButtons,
+    },
+
     mixins: [
         helpers,
     ],    
     props: {
-        inquiryStatus: {
-            type: String,
-            default: "all",
-        }
     },
     data: function () {
     return {
 
+        statuses: main.inquiry_statuses.default,
+        statusesSupplier: main.inquiry_statuses.suppliers,
+        inquiryStatus: 'all',
         search: '',
-        dialog: false,
         headers: [
             {
               text: 'Select',
@@ -90,51 +143,44 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
             },
            
             {
-              text: 'Keywords',
+              text: 'Keywords & Message',
               align: 'center',  
-              sortable: false,
+              sortable: true,
               value: 'keywords'
             },
            
             {
-              text: 'Message',
-              align: 'center',  
-              sortable: false,
-              value: 'message'
-            },
-
-            {
               text: 'Categories',
-              align: 'center',  
-              sortable: false,
+              align: 'left',  
+              sortable: true,
               value: 'categories'
             },
             
             {
               text: 'Quantity',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'quantity'
             },
             
             {
               text: 'Preferred Shipping Date',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'shipping_date'
             },
             
             {
               text: 'Date',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'created_at'
             },
 
             {
               text: 'Status',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'status'
             },
 
@@ -149,10 +195,7 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
       }
     },
-    components: {
-      InquiryStatusButtons,
-      DialogTest,
-    },
+
     methods: {
         click: function(name) {
             // window.location.href = '/buyer/view'
@@ -177,6 +220,7 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
                     item.shipping_date = response[i].desired_shipping_date;
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
+                    item.inquiry = response[i];
                     this.dataItems.push(item);
                 }
 
@@ -223,5 +267,19 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
        text-decoration: none;
     .th-heading a 
        text-decoration:none;
+
+</style>
+
+<style scoped lang="scss">
+
+.theme--light.v-datatable thead th.column.sortable.active .v-icon,
+.v-datatable thead th.column.sortable:focus .v-icon, 
+.v-datatable thead th.column.sortable:hover .v-icon {
+    // margin-right: 5px;
+}
+
+.dateCellWidth {
+    min-width: 110px;
+}
 
 </style>

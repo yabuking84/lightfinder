@@ -99,9 +99,9 @@ const actions = {
             })
             .then(response => {
 
-                console.log('dfatadfatadfatadfatadfata');
-                console.log(response.data);
-                console.log('dfatadfatadfatadfatadfata');
+                // console.log('dfatadfatadfatadfatadfata');
+                // console.log(response.data);
+                // console.log('dfatadfatadfatadfatadfata');
                 
                 var token = response.data.token;
                 var user = response.data.user;

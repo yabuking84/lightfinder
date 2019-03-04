@@ -62,12 +62,12 @@ const actions = {
         });
     },
 
-    getInquiry_a(context){
+    getInquiry_a(context,data){
         return new Promise((resolve, reject) => {
             var headers = {token:localStorage.access_token};
             axios({
-                method: state.api.getInquiries.method,
-                url: state.api.getInquiries.url,
+                method: state.api.getInquiry.method,
+                url: state.api.getInquiry.url+"/"+data.inq_id,
                 headers: headers,
             })
             .then(response => {

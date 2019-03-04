@@ -45,7 +45,7 @@ export default [
 
     {
         name: 'SupplierInquiryView',
-        path: '/supplier/inquiry/view',
+        path: '/supplier/inquiry/view/:inq_id',
         components: {
             default:SupplierInquiryView,
             sidebar: AppSidebar,
@@ -53,7 +53,7 @@ export default [
             footer:AppFooter
         },
         meta: meta,
-        props: true,
+        props: { default:true },
     },
 
     {
