@@ -11,6 +11,7 @@ import auth from './modules/auth'
 import cat from './modules/category'
 import byrInq from './modules/BuyerInquiry'
 import spplrInq from './modules/SupplierInquiry'
+import adminHelper from './modules/admin-helper'
  
 Vue.use(Vuex)
 
@@ -24,9 +25,7 @@ export const store = new Vuex.Store({
     swatch,
     auth,
     cat,
-    inq,
     adminHelper,
-    
     byrInq,
     spplrInq,
   }
