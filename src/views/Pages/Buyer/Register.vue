@@ -26,7 +26,7 @@
                             <v-layout row wrap>
 
                                    <!-- form -->
-                                        <first-step-form> </first-step-form>
+                                        <first-step-form :type="type"> </first-step-form>
                                     <!-- form -->
   
                             </v-layout>
@@ -46,7 +46,7 @@
 
   import HeadingMessage from '@/views/components/App/Registration/HeadingMessage'
   import SocialButtons from '@/views/components/App/Registration/SocialButtons'
-  import FirstStepForm from '@/views/components/App/Buyer/Registration/FirstStepForm'
+  import FirstStepForm from '@/views/components/App/Registration/FirstStepForm'
 
 
   const defaultForm = {
@@ -69,7 +69,7 @@
     data () {
 
       return {
-
+        type: 'buyer',
         backgroundImg: '/static/background/buyer-background2.jpg',
         logo: '/static/logos/logo-white.png'
 
@@ -78,7 +78,7 @@
     methods: {
 
     }
-    
+
   }
   
 </script>

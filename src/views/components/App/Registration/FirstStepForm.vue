@@ -6,7 +6,7 @@
 
         <div class="headline font-weight-medium text-xs-center">SIGN UP</div>
 
-        <h4 color="grey--text" class="mt-2 text-xs-center font-weight-light">Sign-up to find the lights that you are looking for.</h4>
+        <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4>
        
         <v-layout row wrap>
 
@@ -146,7 +146,7 @@ export default {
     },
 
     resetForm() {
-      this.form = Object.assign({}, defaultForm)
+      this.form = Object.assign({}, dform)
       this.$refs.form.reset()
     }
 

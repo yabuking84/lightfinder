@@ -85,7 +85,7 @@
 	           
 	            <v-card-actions>
 	                <v-spacer></v-spacer>
-	               <v-btn color="grey darken-4" dark @click="$emit('update:dialog', false)">
+	               <v-btn color="grey darken-4" dark @click="submitData()" :loading="formloading" >
 	                    Submit
 	                </v-btn> 
 	            </v-card-actions>
@@ -152,6 +152,8 @@
 				form: Object.assign({}, dform ),
 				countries: [],
 				search: '',
+				formloading: false
+
 			}
 
 		},
@@ -172,6 +174,7 @@
 			*/
 			this.$store.dispatch('adminHelper/getCountries')
 	        .then((response)=>{
+
 				this.countries = response
 	        
 	        })
@@ -185,13 +188,53 @@
 		methods: {
 
 			resetForm() {
+				
 				this.form = Object.assign({}, dform)
 				this.$refs.form.reset()
 				this.$v.$reset()
+
 			},
 
-			submit() {
-				console.log(this.form);
+			submitData() {
+
+				this.formloading = true
+
+				let data = {
+
+					"firstname"  	: this.form.firstname,
+					"lastname"   	: this.form.lastname,
+					"phone"		 	: this.form.phone,
+					"email"		 	: this.form.email,
+					"company_name" 	: this.form.company_name,
+					"country"		: this.form.country,
+				};
+
+
+				this.$store.dispatch('AdminBuyer/postBuyer', {
+					data:data,
+				})
+				.then((response) => {
+
+					this.formloading = false
+					console.log(response);
+
+					// create a event bus 
+					this.$emit('update:dialog', false);
+					/*
+						inqEvent.emifornsubmitted()
+					*/
+					
+				})
+				.catch((e) => {
+					console.log(e);
+					this.formloading = false
+				})
+				.finally(() => {
+					this.formloading = false
+				})			
+
+
+				// console.log(this.form);
 			}
 		}
 	} 

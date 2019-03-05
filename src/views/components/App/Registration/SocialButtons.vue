@@ -28,19 +28,19 @@
 
 <script>
 
-        let OAUTHURL    =  "https://accounts.google.com/o/oauth2/auth?"
-        let VALIDURL    =  "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token="
-        let SCOPE       =  "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
-        let CLIENTID    =  "767693280692-o91eaup2r5ubtt23bks9re4oe9i46ujm.apps.googleusercontent.com"
-        let REDIRECT    =  "https://buyanylight.com"
-        let LOGOUT      =  "http://accounts.google.com/Logout"
-        let TYPE        =  "token"
-        let URL         =  OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE
-        let ACTOKEN     =  ""
-        let TOKENTYPE   =  ""
-        let EXPIRESIN   =  ""
-        let USER        =  ""
-        let LOGGEDIN    =  false
+  let OAUTHURL    =  "https://accounts.google.com/o/oauth2/auth?"
+  let VALIDURL    =  "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token="
+  let SCOPE       =  "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+  let CLIENTID    =  "767693280692-o91eaup2r5ubtt23bks9re4oe9i46ujm.apps.googleusercontent.com"
+  let REDIRECT    =  "https://buyanylight.com"
+  let LOGOUT      =  "http://accounts.google.com/Logout"
+  let TYPE        =  "token"
+  let URL         =  OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE
+  let ACTOKEN     =  ""
+  let TOKENTYPE   =  ""
+  let EXPIRESIN   =  ""
+  let USER        =  ""
+  let LOGGEDIN    =  false
 
   export default {
 

@@ -17,7 +17,7 @@ const state =  {
 		
 		get: {
 			method: 'get',
-			url: 	'http://192.168.1.200:8000/v1/login'
+			url: 	'http://192.168.1.200:8000/v1/admin/buyers'
 		},
 
 		
@@ -27,7 +27,7 @@ const state =  {
 		
 		post: {
 			method: 'post',
-			url: 	'http://192.168.1.200:8000/v1/login'
+			url: 	'http://192.168.1.200:8000/v1/admin/buyers'
 		},
 
 		
@@ -37,8 +37,7 @@ const state =  {
 
 	},
 
-	token: localStorage.getItem('access_token') || null;
-
+	token: localStorage.getItem('access_token') || null,
 	axios: {
 
 		config: {
@@ -54,6 +53,11 @@ const mutations = {
 
 }
 
+
+
+const getters = {
+
+}
 
 const actions = {
 
@@ -78,22 +82,38 @@ const actions = {
 	},
 
 
-	postBuyer() {
+	postBuyer(context,data) {
 
 		return new Promise((resolve, reject) => {
 
+			var headers = {
+				token:localStorage.access_token,
+              	"content-type": "application/json",
+			};
+
 			axios({
+
 				method	: state.api.post.method,
-				url     : state.api.post.url
+				url     : state.api.post.url,
+				headers : headers,
+				data 	: JSON.stringify(data)
 			})
 			.then(response => {	
 				resolve(response.data);
 			})
-			.catch(response => {
-				reject(error)
-			})
+			.catch(error => {
+				  
+				  if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+	                    console.log("EXPIRED")
+	                    router.push({'name': 'Logout'})
+	                } else {
+	                    console.log("normal error!")
+	                    reject(error)
+	                }
 
-		})
+			});
+
+		});
 
 	},
 
@@ -107,19 +127,19 @@ const actions = {
 	},
 
 
-	getAllBuyer() {
+	// getAllBuyer() {
 
-		return new Promise((resolve, reject) => {
+	// 	return new Promise((resolve, reject) => {
 				
-			axios({
-				method	: state.api.post.method,
-				url 	: state.api.post.url
+	// 		axios({
+	// 			method	: state.api.post.method,
+	// 			url 	: state.api.post.url
 
-			})
+	// 		})
 
-		})
+	// 	})
 
-	}
+	// }
 
 }
 
