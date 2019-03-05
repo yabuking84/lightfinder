@@ -31,7 +31,8 @@ export default {
             retVal = month[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
         } 
         else if(format=="mmm dd, yyyy hh:mm") {
-            retVal = month[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes();
+            var hrs = d.getHours()<10?"0"+d.getHours():d.getHours();
+            retVal = month[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+hrs+":"+d.getMinutes();
         } 
         else {
             retVal = null;

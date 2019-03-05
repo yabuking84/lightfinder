@@ -5,17 +5,18 @@
 				
 				<v-layout row wrap>
 
+					<!-- Inquiry Details  -->
 					<v-flex xs12>
 						<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>						
 					</v-flex>
-					<!-- end of detils  -->
+					<!-- Inquiry Details  -->
 
 					
-					<!-- supplier quote -->
+					<!-- supplier QuoteDetails -->
 					<v-flex xs8>
 						<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
 					</v-flex>  
-					<!-- supplier quote -->
+					<!-- supplier QuoteDetails -->
 
 
 					<!-- proposal list -->
@@ -38,7 +39,6 @@ import QuoteDetails from "@/views/Components/App/Supplier/QuoteDetails"
 import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Supplier/InquiryDetailsCard"
 import BidDialog from "@/views/Components/App/Supplier/BidDialog"
-import inqEvntBs from "@/bus/inquiry";
 
 export default {
 
@@ -66,6 +66,7 @@ export default {
 		icon: null,
 		bidDialog:false,
 		inquiry: false,
+		bids: false,
 
 	}),
 
@@ -115,7 +116,6 @@ export default {
 			console.log(error);
 		});
 
-	
 
 	},
 }

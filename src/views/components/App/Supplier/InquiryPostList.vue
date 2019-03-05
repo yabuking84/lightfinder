@@ -73,6 +73,7 @@
 
 	import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
 	import BidDialog from "@/views/Components/App/Supplier/BidDialog"
+	import inqEvntBs from "@/bus/inquiry";
 
 	export default {
 
@@ -81,7 +82,7 @@
 			BidDialog
 		},
 
-    data: function () {
+	    data: function () {
 
 			return {
 				bidDialog:false,
@@ -129,6 +130,11 @@
 			}
 		},
 
+	    created(){
+
+	        // inqEvntBs.onBidFormSubmitted(this.fillTable);
+
+	    },
 	}
 </script>
 

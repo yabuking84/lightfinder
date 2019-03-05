@@ -9,10 +9,29 @@
 			<v-spacer></v-spacer>
 
 			<v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2">
-             	<v-btn @click="QuoteDialog = true" class="font-weight-light" color="green" dark small>
+             	
+             	<v-btn 
+             		v-if="editButton" 
+             		@click="QuoteDialog = true" 
+             		class="font-weight-light" 
+             		color="blue" 
+             		dark 
+             		small>
+			    	<i class="fas fa-edit  white--text ma-2"> </i>
+					Edit Quote
+				</v-btn>
+
+             	<v-btn 
+             		v-else 
+             		@click="QuoteDialog = true" 
+             		class="font-weight-light" 
+             		color="green" 
+             		dark 
+             		small>
 			    	<i class="fas fa-plus  white--text ma-2"> </i>
 					Create Quote
 				</v-btn>
+
 			</v-toolbar-title>
 
 
@@ -54,7 +73,7 @@
 				  	  			<h2>$1150.00</h2>					          	
 					        </v-flex>
 				        </v-layout>
-				         </v-flex>
+				        </v-flex>
 
 				         <v-flex xs12>					        
 				  	  		<h5 class="font-weight-thin">Message</h5>
@@ -64,7 +83,6 @@
 				      	 </v-flex>
 		  	  		</v-container>
 				</v-flex>
-
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
@@ -75,7 +93,7 @@
 	    </v-card>
 		
 		<span>
-			<quote-dialog :QuoteDialog.sync="QuoteDialog" :inquiry="inquiry"></quote-dialog>
+			<quote-dialog :QuoteDialog.sync="QuoteDialog" :bidAdded.sync="bidAdded" :inquiry="inquiry"></quote-dialog>
 		</span>
 
 </div>
@@ -83,29 +101,50 @@
 
 <script>
 
-	import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-	import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
-	import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
+import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
 
-	export default {
+import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
+import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
 
-		props: ['inquiry'],
+export default {
 
-		components: {
-			InquiryDialog,
-		    QuoteDialog,
-		    ImageGallerySmall,
-		},
+	props: ['inquiry'],
 
-	    data: ()=>({
-			bidDialog:false,
-			QuoteDialog:false,
-			img: `/static/examples/Logo-Samples2-08-min.jpg`,
-		    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
+	components: {
+		InquiryDialog,
+	    QuoteDialog,
+	    ImageGallerySmall,
+	},
 
-		}),
+    data: ()=>({
+		bidDialog:false,
+		QuoteDialog:false,
+		bid: null,
+		editButton: false,
+		bidAdded: false,
+	}),
 
-	}
+
+
+	created() {
+
+		this.$store.dispatch('spplrInq/getInquiryBid_a',{inq_id:this.inq_id})
+		.then((data)=>{
+			this.bid = data;
+			console.log(this.bid);
+
+			// check if  already has bid
+			if(this.bid)
+			this.editButton = true;
+
+		})
+		.catch((error)=>{
+			console.log(error);
+		});
+	
+	},
+
+}
 </script>
 
 
