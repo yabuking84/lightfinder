@@ -97,6 +97,7 @@ const actions = {
 				url     : state.api.post.url,
 				headers : headers,
 				data 	: JSON.stringify(data)
+				
 			})
 			.then(response => {	
 				resolve(response.data);

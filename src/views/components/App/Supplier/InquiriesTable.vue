@@ -201,10 +201,6 @@ import main from "@/config/main"
     },
 
     methods: {
-        click: function(name) {
-            // window.location.href = '/buyer/view'
-        },
-
         fillTable() {
             this.loading = true;
             this.allInquiries = [];
@@ -265,6 +261,7 @@ import main from "@/config/main"
             this.filterTable();
         },
     },    
+    
   }
 </script>
 

@@ -1,4 +1,4 @@
-<template>
+template>
   <div class="text-xs-center">
     <br><br><br><br>
     <hr>  

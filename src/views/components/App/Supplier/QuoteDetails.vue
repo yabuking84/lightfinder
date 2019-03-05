@@ -84,7 +84,6 @@
 <script>
 
 	import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-
 	import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
 	import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
 
