@@ -19,6 +19,18 @@ const InquiryEventBus = new Vue({
 		},
 
 
+		emitBidFormSubmitted(){
+			this.$emit('inquiry-bid-form-submitted');
+			// console.log('emitFormSubmitted');
+		},
+		onBidFormSubmitted(func){
+			this.$on('inquiry-bid-form-submitted',()=>{
+				func();
+				// console.log('onFormSubmitted');
+	        });
+		},
+
+
 	},
 
 });

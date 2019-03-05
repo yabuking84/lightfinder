@@ -2,15 +2,16 @@
 
   <div class="text-xs-center">
 
-    <v-dialog :value="QuoteDialog" @input="$emit('update:QuoteDialog', false)" width="80%">
+    <v-dialog :value="QuoteDialog" @input="$emit('update:QuoteDialog', false)" width="80%" scrollable>
     	
-      <v-toolbar dark color="dark" height="45">
-			<v-toolbar-title class="font-weight-light">Add Quote</v-toolbar-title>
-	  </v-toolbar>
-
       <v-card>
-		<v-container>
 
+      	<v-card-title class="black white--text">
+			<h2 class="font-weight-light">Add Quote</h2>
+      	</v-card-title>
+		
+
+		<v-card-text style="max-height: 80%;">
 		<v-layout row wrap>
 
 			<v-flex xs7>
@@ -19,7 +20,7 @@
 				  	<v-flex xs12>
 			            <h2 class="font-weight-thin mb-5">Inquiry # <span class="font-weight-medium">{{ inquiry.id }}</span> </h2>
 				  	</v-flex>
-				  	<v-flex xs6>
+				  	<v-flex xs7>
                 		<v-layout row wrap>
 
 		                    <v-flex xs12 mr-4 mb-3>
@@ -60,23 +61,35 @@
 		                </v-layout>
 	            	</v-flex>
 
-	            	<v-flex xs6>
+	            	<v-flex xs5>
 		                <v-layout row wrap>
 
 		                    <!-- specification -->
 		                    <v-flex xs12>
 			                    <h5 class="font-weight-thin">Specifications</h5>
-		                        <v-layout row wrap class="specifications" >
-		                            <v-chip label dark outline text-color="black">Warranty: 1 Years</v-chip>
-		                            <v-chip label dark outline text-color="black">Power 180 </v-chip>
-		                            <v-chip label dark outline text-color="black">Lumens: 190 </v-chip>
-		                            <v-chip label dark outline text-color="black">Efficiency: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Bean Angle: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">CCT: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">IP Rating: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">IP Rating: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Finish: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Size: 109</v-chip>
+		                        <v-layout row wrap class="specifications">
+		                            <v-chip 
+		                            	label 
+		                            	dark 
+		                            	outline 
+		                            	text-color="black" 
+		                            	v-for="(specification, index) in inquiry.specifications" 
+		                            	:key="specification+'_'+index">
+		                            	{{ specification.name }}: &nbsp;
+		                            	<span class="font-weight-bold">
+			                            	{{ specification.value.split(',').join(', ') }}
+		                            	</span>		                            	
+		                            </v-chip>
+
+									<v-alert 
+										:value="!inquiry.specifications.length" 
+										type="warning" 
+										style="width: 100%;"
+										class="ma-4"
+										outline>
+										No specifications..
+									</v-alert>									
+
 		                        </v-layout>
 		                    </v-flex>
 		                </v-layout>
@@ -95,15 +108,15 @@
 			  	  		<v-flex xs12>
 				          <v-text-field
 				            label="Product Name"
-				            placeholder="Enter Product Name "
-				          ></v-text-field>
+				            v-model="formData.product_name"
+				            placeholder="Enter Product Name "></v-text-field>
 				        </v-flex>
 
 				        <v-flex xs12>
 				          <v-textarea
 				            label="Product Details"
-				            placeholder="Enter Product Details "
-				          ></v-textarea>
+				            v-model="formData.description"
+				            placeholder="Enter Product Details "></v-textarea>
 				        </v-flex>
 
 				        <v-layout row wrap >
@@ -113,27 +126,26 @@
 					          <v-text-field
 					            label="Quantity"
 					            placeholder="0"
-					            readonly
+					            readonly					            
 					            :value="inquiry.quantity"
 					            style="color: #000;"
-					            suffix="pcs">					            	
-					            </v-text-field>
+					            suffix="pcs"></v-text-field>
 					        </v-flex>
 					        
 					        <v-flex xs4 pa-2>
 					          <v-text-field
 					            label="Unit Price"
+					            v-model="formData.price"
 					            placeholder="0.00"
-					             prefix="$"
-					          ></v-text-field>
+					             prefix="$"></v-text-field>
 					        </v-flex>
 				        
 				      		 <v-flex xs4 pa-2>
 						          <v-text-field
 						            label="Total Price"
+						            v-model="formData.total_price"
 						            placeholder="0.00"
-						             prefix="$"
-						          ></v-text-field>
+						             prefix="$"></v-text-field>
 					         </v-flex>
 				        </v-layout>
 
@@ -141,24 +153,28 @@
 					          <v-textarea
 					            label="Message"
 					            placeholder="Enter Remarks Here"
-					          ></v-textarea>
+					            v-model="formData.remarks"></v-textarea>
+				      	 </v-flex>
+
+				         <v-flex xs12>
+			                <h5 class="font-weight-thin mt-3">Attachments </h5>
+							<upload-file></upload-file>
 				      	 </v-flex>
 				</v-layout>
 		  	  	</v-container>
 			</v-flex>
-
-
 		</v-layout>
+  		</v-card-text>
 
-		 <v-divider></v-divider>
+		<v-divider></v-divider>
 
 	 	<v-card-actions class="pa-3">
 	       <v-spacer></v-spacer>
-	        <v-btn color="primary" > Submit </v-btn>
+	        <v-btn color="primary" :loading="loading" @click="submitForm()"> Submit </v-btn>
 	    </v-card-actions>
 
 
-  		</v-container>
+
       </v-card>
     </v-dialog>
   </div>
@@ -168,11 +184,17 @@
 <script>
 
 import helpers from "@/mixins/helpers";
+import UploadFile from "@/views/Components/App/UploadFile";
+import inqEvntBs from "@/bus/inquiry";
 
 export default {
     mixins: [
         helpers,
     ],
+
+    components: {
+    	UploadFile,
+    },
 
   	props: {
   		QuoteDialog: {
@@ -184,11 +206,55 @@ export default {
   		},
 
   	},
-    data () {
-      return {
 
-      }
-    }
+    data: ()=>({
+
+    	loading: false,
+    	formData: {
+			price: 11.11,
+			total_price: 7777.56,
+			product_name: "Super LED Industrial",
+			remarks: "Nice light",
+			description: "Last multiple years!",
+    	},
+
+    }),
+
+    methods: {
+    	submitForm() {
+
+            this.loading = true;
+
+            var formData = {
+                "price": this.formData.total_price,
+                "total_price": this.formData.total_price,
+                "product_name": this.formData.product_name,
+                "remarks": this.formData.remarks,
+                "description": this.formData.description,
+            };
+
+
+            this.$store.dispatch('spplrInq/addInquiryBid_a',{
+                formData: formData,
+                inq_id: this.inquiry.id,
+            })
+            .then((response) => {
+                this.loading = false;
+                this.$emit('update:QuoteDialog', false);
+
+                inqEvntBs.emitBidFormSubmitted();
+
+            }).catch((e) => {
+                this.formLoading = false;
+                console.log('Error: '+e);
+            }).finally(()=>{
+                this.formLoading = false;
+            });
+
+
+
+    	},
+    },
 }
 
 </script>
@@ -198,7 +264,7 @@ export default {
 <style scoped lang="scss">
 .specifications {
 	.v-chip {
-		width: 150px;
+		width: 210px;
 	}
 }
 .attachments {

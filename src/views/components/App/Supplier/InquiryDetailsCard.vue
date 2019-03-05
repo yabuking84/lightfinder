@@ -62,16 +62,28 @@
 		                    <v-flex xs12>
 			                    <h5 class="font-weight-thin">Specifications</h5>
 		                        <v-layout row wrap class="specifications">
-		                            <v-chip label dark outline text-color="black">Warranty: 1 Years</v-chip>
-		                            <v-chip label dark outline text-color="black">Power 180 </v-chip>
-		                            <v-chip label dark outline text-color="black">Lumens: 190 </v-chip>
-		                            <v-chip label dark outline text-color="black">Efficiency: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Bean Angle: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">CCT: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">IP Rating: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">IP Rating: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Finish: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Size: 109</v-chip>
+		                            <v-chip 
+		                            	label 
+		                            	dark 
+		                            	outline 
+		                            	text-color="black" 
+		                            	v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+		                            	{{ specification.name }}: &nbsp;
+		                            	<span class="font-weight-bold">
+			                            	{{ specification.value.split(',').join(', ') }}
+		                            	</span>		                            	
+		                            </v-chip>
+									
+									
+									<v-alert 
+										:value="!inquiry.specifications.length" 
+										type="warning" 
+										style="width: 100%;"
+										class="ma-4"
+										outline>
+										No specifications..
+									</v-alert>									
+
 		                        </v-layout>
 		                    </v-flex>
 		                </v-layout>
@@ -112,7 +124,7 @@ export default {
 	},
 
 	created(){
-		console.log(this.inquiry);
+		// console.log(this.inquiry);
 	},
 
 }
@@ -122,7 +134,7 @@ export default {
 <style scoped lang="scss">
 .specifications {
 	.v-chip {
-		width: 150px;
+		width:210px;
 	}
 }
 
