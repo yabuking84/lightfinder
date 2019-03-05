@@ -47,10 +47,10 @@
 						      	</h4>
 		                    </v-flex>
 
-		                    <v-flex xs12>
+		                    <v-flex xs12 class="attachments">
 			                    <h5 class="font-weight-thin">Attachments </h5>
-		                        <img width="100px;" src="/static/examples/led-strip-lights-daaden-al-sl-1017-7777.jpg">
-		                        <img width="100px;" src="/static/examples/led-strip-lights-dieburg-al-sl-1018-7778.jpg">
+		                        <v-icon large>far fa-file-excel</v-icon>
+		                        <v-icon large>far fa-file-archive</v-icon>
 		                    </v-flex>
 		                </v-layout>
 	            	</v-flex>
@@ -61,8 +61,7 @@
 		                    <!-- specification -->
 		                    <v-flex xs12>
 			                    <h5 class="font-weight-thin">Specifications</h5>
-		                        <v-layout row wrap >
-		                            <v-chip label dark outline text-color="black">Category: LED STRIP LIGHTS</v-chip>
+		                        <v-layout row wrap class="specifications">
 		                            <v-chip label dark outline text-color="black">Warranty: 1 Years</v-chip>
 		                            <v-chip label dark outline text-color="black">Power 180 </v-chip>
 		                            <v-chip label dark outline text-color="black">Lumens: 190 </v-chip>
@@ -72,8 +71,6 @@
 		                            <v-chip label dark outline text-color="black">IP Rating: 190</v-chip>
 		                            <v-chip label dark outline text-color="black">IP Rating: 190</v-chip>
 		                            <v-chip label dark outline text-color="black">Finish: 190</v-chip>
-		                            <v-chip label dark outline text-color="black">Size: 109</v-chip>
-		                            <v-chip label dark outline text-color="black">Size: 109</v-chip>
 		                            <v-chip label dark outline text-color="black">Size: 109</v-chip>
 		                        </v-layout>
 		                    </v-flex>
@@ -115,13 +112,28 @@ export default {
 	},
 
 	created(){
-
+		console.log(this.inquiry);
 	},
 
 }
 
 </script>
 
-<style scoped lang="">
+<style scoped lang="scss">
+.specifications {
+	.v-chip {
+		width: 150px;
+	}
+}
+
+.attachments {
+	.v-icon {
+		width: 50px;
+		margin-right: 15px;
+		margin-top: 15px;
+		font-size: 60px !important;
+		cursor: pointer;
+	}
+}
 
 </style>

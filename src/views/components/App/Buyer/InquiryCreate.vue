@@ -337,7 +337,7 @@ Create Inquiry
                         </v-textarea>
                     </v-layout>
                 </v-container>
-                <v-btn color="primary" @click="reviewDialog=true">SUBMIT</v-btn>
+                <v-btn color="primary" @click="submitForm()">SUBMIT</v-btn>
                 <v-btn flat @click="stepDown()">back</v-btn>
             </v-stepper-content>
 
@@ -441,7 +441,7 @@ export default {
         // },
 
         formData: {
-            keywords: 'keywords',
+            keywords: 'Tawing LED Spotlight',
             category: 106,
             warranty: 3,
             power: 100,
@@ -458,7 +458,10 @@ export default {
             shipping_date: "2019-06-20",
             shipping_method: 3,
             payment_method: 2,
-            message: "message ni lorem ipsum echius",
+            message: 
+            `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
         },
 
         shipping_methods: config.main.shipping_methods,
@@ -622,9 +625,12 @@ export default {
                     dimmable    : this.formData.dimmable.join(","),
                 }
             }
+            
+            console.log("formData = ");
+            console.log(formData);
 
-            this.$store.dispatch('inq/addInquiry_a',{
-                formData: formData,    
+            this.$store.dispatch('byrInq/addInquiry_a',{
+                formData: formData,
             })
             .then((response) => {
                 this.formLoading = false;
