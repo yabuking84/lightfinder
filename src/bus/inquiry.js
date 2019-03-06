@@ -7,6 +7,7 @@ const InquiryEventBus = new Vue({
 
 	methods: {
 
+
 		emitFormSubmitted(){
 			this.$emit('inquiry-form-submitted');
 			// console.log('emitFormSubmitted');
@@ -17,6 +18,7 @@ const InquiryEventBus = new Vue({
 				// console.log('onFormSubmitted');
 	        });
 		},
+
 
 
 		emitBidFormSubmitted(){

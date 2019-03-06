@@ -151,7 +151,7 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
-                resolve(response.data);
+                resolve(response.data[0]);
             })
             .catch(error => {
 

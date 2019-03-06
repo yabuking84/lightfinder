@@ -2,7 +2,7 @@
 
   <div class="text-xs-center">
 
-    <v-dialog :value="QuoteDialog" @input="$emit('update:QuoteDialog', false)" width="80%" scrollable>
+    <v-dialog :value="openQuoteDialog" @input="$emit('update:openQuoteDialog', false)" width="80%" scrollable>
     	
       <v-card>
 
@@ -197,7 +197,7 @@ export default {
     },
 
   	props: {
-  		QuoteDialog: {
+  		openQuoteDialog: {
   			type:Boolean,
   			default:false,
   		},
@@ -240,15 +240,14 @@ export default {
             })
             .then((response) => {
                 this.loading = false;
-                this.$emit('update:QuoteDialog', false);
-
                 inqEvntBs.emitBidFormSubmitted();
+                this.$emit('update:openQuoteDialog', false);
 
             }).catch((e) => {
-                this.formLoading = false;
+                this.loading = false;
                 console.log('Error: '+e);
             }).finally(()=>{
-                this.formLoading = false;
+                this.loading = false;
             });
 
 

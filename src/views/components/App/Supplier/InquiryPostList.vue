@@ -4,7 +4,7 @@
 		<v-toolbar color="grey darken-4" class="white--text" height="40px">
         	<v-toolbar-title class="subheading font-weight-light">Proposal List</v-toolbar-title>
         	<v-spacer></v-spacer>
-        	<v-toolbar-title class="subheading font-weight-light">You're Current Quote is $11.50</v-toolbar-title>
+        	<!-- <v-toolbar-title class="subheading font-weight-light">You're Current Quote is $11.50</v-toolbar-title> -->
 
 			<v-spacer></v-spacer>
 

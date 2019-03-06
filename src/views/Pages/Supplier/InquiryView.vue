@@ -1,8 +1,21 @@
 <template>
+<span>
+<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
+<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
+    <v-card>
+        <!-- <v-card-title class="headline grey lighten-2" primary-title>
+            Privacy Policy
+        </v-card-title> -->
+
+        <v-card-text>	
+
+
+
+
+
+
 	<div class="scopedcontainer">
-		<v-container fluid grid-list-xl >
-				
-				
+		<v-container fluid grid-list-xl >				
 				<v-layout row wrap>
 
 					<!-- Inquiry Details  -->
@@ -27,10 +40,24 @@
 
 				</v-layout>
 		</v-container>
-
-
-
 	</div>
+
+
+
+
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="black" flat @click="closeOpenInquiry()">
+                close
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>   
+</span>	
 </template>
 
 <script>
@@ -52,7 +79,7 @@ export default {
 
 	},
 
-	props: ['inq_id'],
+	props: ['inquiry','openInquiry'],
 
 	// props: {
 	// 	inq_id: {
@@ -65,7 +92,6 @@ export default {
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
-		inquiry: false,
 		bids: false,
 
 	}),
@@ -98,24 +124,17 @@ export default {
 
 		},
 
-		testButton(){
-
-		
-
+		closeOpenInquiry(){
+            this.$emit('update:openInquiry', false);
 		},
 
 	},
 
+	watch: {
+
+	},
+
 	created() {
-
-		this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:this.inq_id})
-		.then((data)=>{
-			this.inquiry = data;
-		})
-		.catch((error)=>{
-			console.log(error);
-		});
-
 
 	},
 }

@@ -61,14 +61,15 @@
 
         <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
             <template slot="items" slot-scope="props">
-                <tr class="th-heading" @click="click(props.item.name)">
+                <tr class="th-heading">
 
                     <td>
                         <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
                     </td>
 
                     <td class="text-xs-left font-weight-medium">
-                        <h3 class="mt-3 mb-1">{{ props.item.keywords }}</h3>
+                        <h3 class="mt-3 mb-0">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
+                        <h3 class="mt-1 mb-1">{{ props.item.keywords }}</h3>
                         <p class="mb-3">{{ props.item.message }}</p>
                     </td>
 
@@ -89,12 +90,17 @@
                     </td>
 
                     <td class="text-xs-center">
-                        <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
-                            <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                            <v-btn 
+                                small 
+                                flat 
+                                value="left" 
+                                @click="viewInquiry(props.item.inq_id)"
+                                class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
                                 <i class="fas fa-eye white--text"></i>
                                 <span class="ml-1 white--text font-weight-light ">View</span>
                             </v-btn>
-                        </router-link>
+                        <!-- <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
+                        </router-link> -->
                     </td>
 
                 </tr>
@@ -105,10 +111,13 @@
         </v-data-table>
 
 
-
-
-
     </v-card>
+
+
+    
+    <span>
+        <inquiry-view :openInquiry.sync="openInquiry" :inquiry="inquiry" ></inquiry-view>     
+    </span>
 
 
  </div>
@@ -118,11 +127,16 @@
 
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+
+import InquiryView from "@/views/Pages/Supplier/InquiryView";
+
 import main from "@/config/main"
 
   export default {
     components: {
       InquiryStatusButtons,
+      InquiryView,
+
     },
 
     mixins: [
@@ -148,7 +162,7 @@ import main from "@/config/main"
               text: 'Keywords & Message',
               align: 'center',  
               sortable: true,
-              value: 'keywordsAndMessage'
+              value: 'keywordsMessage'
             },
            
             {
@@ -197,10 +211,29 @@ import main from "@/config/main"
         allInquiries: [],
         tableItems: [],
 
+        openInquiry: false,
+        inquiry: null,
+
       }
     },
 
     methods: {
+
+
+        viewInquiry(inq_id){            
+
+            this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:inq_id})
+            .then((data)=>{
+                this.inquiry = data;
+                this.openInquiry = true;
+            })
+            .catch((error)=>{
+                console.log(error);
+            });
+
+
+        },
+
         fillTable() {
             this.loading = true;
             this.allInquiries = [];
@@ -214,7 +247,7 @@ import main from "@/config/main"
                     item.inq_id = response[i].id;
                     item.keywords = this.ucwords(response[i].keyword);
                     item.message = response[i].message;
-                    item.keywordsAndMessage = response[i].keyword+" "+response[i].message;                    
+                    item.keywordsMessage = response[i].keyword+" "+response[i].message;
                     item.categories = response[i].categories.join(', ');
                     item.quantity = response[i].quantity;
                     item.shipping_date = response[i].desired_shipping_date;
