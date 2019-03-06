@@ -2,70 +2,67 @@
 	<div>
 
 		<v-toolbar color="grey darken-4" class="white--text" height="40px">
-        	<v-toolbar-title class="subheading font-weight-light">My Bids</v-toolbar-title>
+        	<v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
       	</v-toolbar>
 
       	<v-card class="proposal-section" color="grey lighten-5">
-			<v-container fluid grid-list-md>
-
-				<div v-for="item in items">
 					
-					<v-card class="mb-2 pa-2" >
+			<v-card-text>
 
-			   	 	   <v-layout row wrap pa-0>
+				  <v-card class="mb-1" v-for="item in items" >
 
+							<v-card-title primary-title>
 
-							<!-- section image -->
-			   	 	     	<v-flex xs1 class="justify-center text-xs-center row column">
-								<img class="pa-0" width="160px;" :src="img">
-			   	 	     	</v-flex>
-							<!-- section image -->
+								    <h4 class="font-weight-bold">Product Name:  {{ item.product_name }}  </h4>
+								    <v-spacer></v-spacer>
+									<h4 class="font-weight-bold">Quantiy: {{ item.quantity }} </h4>
+									<v-spacer></v-spacer>
+									 <h4 class="font-weight-bold"> Unit Price: $ {{ item.unit_price }}  USD </h4>
+									<v-spacer></v-spacer>
+									<h4 class="font-weight-bold">Total Price: {{ item.total_price }} </h4>
 
-					
-							<!-- section list -->
-			   	 	     	<v-flex xs9 pl-5 pr-5>
-		   	 	     			<h2 class="ml-2">{{ item.supplier_name }}</h2>
-		   	 	     			<v-spacer></v-spacer>
-		   	 	     			 <h5 class="font-weight-light mb-1 ml-2"> {{ dummy }} </h5>	  
-			   	 	     	</v-flex>
-			   	 	     	<!-- section list -->
+							</v-card-title>
 
+							<v-divider></v-divider>
 
-							<!-- section pricing  -->
-							  <v-flex xs2 mt-4>
-						  		<v-layout align-end justify-end row column>
-						  			<v-layout justify-end align-end row pa-0 mr-1>
-										<v-chip color="blue" text-color="white">{{ item.supplier_status }}</v-chip>
-							 		</v-layout>
-							 		<v-layout justify-end align-end row pa-0 mr-3 mt-4 >
-								     	  <h1 class="text-xs-center">$99.99/piece</h1>
-							 		</v-layout>
-						 		</v-layout>
-							 </v-flex>
-							 <!-- section pricing  -->
+							<v-card-text>
 
+									<v-layout row wrap pa-2>
 
-			   	 	   </v-layout>
+										<h4 class="font-weight-bold">Message</h4>
+									  	<h5 class="font-weight-light text-xs-justify"> {{ dummy }} </h5>	
 
-			   	 	   <v-divider></v-divider>
+										<div>
+									  		<img width="100px;" src="/static/examples/led-strip-lights-daaden-al-sl-1017-7777.jpg">
+							      	      	<img width="100px;" src="/static/examples/led-strip-lights-dieburg-al-sl-1018-7778.jpg">
+							      	  	</div>
 
-			   	 	   <v-layout row wrap justify-end pl-2 pr-2 pb-2>
-			   	 	   			<h5 class="font-weight-light mt-3 ml-2">January 6, 2017 10:00 AM</h5>
-			   	 	   			<v-spacer></v-spacer>
-			   	 	     		<v-btn flat value="left"  class="v-btn--active green" @click="dialog = true">
-								    <i class="fas fa-eye white--text"></i>
-								    <span class="ml-1 white--text font-weight-light body-2 font-weight-light" >View Proposal</span>
-							    </v-btn>  
-			   	 	   </v-layout>
+									</v-layout>
 
-			   	 	</v-card>
-				</div>
-			</v-container>
+							</v-card-text>
+							
+			   	 	   	  <v-divider></v-divider>
+
+			   	 	   	   <v-card-actions>
+
+					   	 	    		<h5 class="font-weight-light">January 6, 2017 10:00 AM</h5>
+					   	 	   			<v-spacer></v-spacer>
+
+					   	 	     		<v-btn class="green darken-1" @click="dialog = true"> <i class="fas fa-eye white--text"></i> <span class="ml-1 white--text" >Award this Supplier</span>
+									    </v-btn> 
+									    <v-btn class="orange darken-3" @click="dialog = true">
+										    <i class="fas fa-eye white--text"></i>
+										    <span class="ml-1 white--text" >Request Sample</span>
+									    </v-btn> 
+
+					   	 </v-card-actions>
+		   	 	</v-card>
+			  
+			</v-card-text>
+
 	    </v-card>
-		
-		<div>
+
 			<inquiry-dialog :dialog.sync="dialog"> </inquiry-dialog>	
-		</div>
 
 	</div>
 
@@ -90,33 +87,68 @@
 
 				items: [
 				  {
-					supplier_name: 'China Lighting',
-					supplier_status: 'Verified Badge'				  	
+					product_name: 'LED STRIP Light',
+					quantity	: '13',
+					unit_price	: '98',
+					total_price : '212',
+					message 	: 'Lorem asdasdas',
+					supplier_id : '23123',
+					bid_id 		: '231029381',
+
 				  },
 
 				  {
-					supplier_name: 'Up Shine Labs',
-					supplier_status: 'Verified Badge'
+					product_name: 'LED STRIP Light',
+					quantity	: '23',
+					unit_price	: '98',
+					total_price : '212',
+					message 	: 'Lorem asdasdas',
+					supplier_id : '23123',
+					bid_id 		: '231029381',
+
 				  },
 
 				  {
-					supplier_name: 'Almani Ligthing',
-					supplier_status: 'Verified Badge'				  	
+					product_name: 'LED STRIP Light',
+					quantity	: '11',
+					unit_price	: '98',
+					total_price : '212',
+					message 	: 'Lorem asdasdas',
+					supplier_id : '23123',
+					bid_id 		: '231029381',
+
 				  },
 
 				  {
-					supplier_name: 'Go Light',
-					supplier_status: 'Verified Badge'
+					product_name: 'LED STRIP Light',
+					quantity	: '12',
+					unit_price	: '98',
+					total_price : '212',
+					message 	: 'Lorem asdasdas',
+					supplier_id : '23123',
+					bid_id 		: '231029381',
+
 				  },
 
 				  {
-					supplier_name: 'Lighting Labs',
-					supplier_status: 'Verified Badge'									  	
+					product_name: 'LED STRIP Light',
+					quantity	: '32',
+					unit_price	: '98',
+					total_price : '212',
+					message 	: 'Lorem asdasdas',
+					supplier_id : '23123',
+					bid_id 		: '231029381',
+
 				  },
 
 				  {
-					supplier_name: 'Binve Strip Lights',
-					supplier_status: 'Verified Badge'				  	
+					product_name: 'LED STRIP Light',
+					quantity	: '23',
+					unit_price	: '98',
+					total_price : '212',
+					message 	: 'Lorem asdasdas',
+					supplier_id : '23123',
+
 				  },
 
 				]
@@ -130,6 +162,6 @@
 
 <style scoped lang="stylus">
 	.proposal-section
-		height:40vh;
+		max-height:80vh;
 		overflow-y: auto;
 </style>

@@ -1,13 +1,14 @@
 <template>
     <div>
 
-	   <router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
+	   
+        <v-toolbar color="grey darken-4" class="white--text" height="40px">
+        	<router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
             <v-btn class="blue-grey" small style="min-width: 50px;">
                 <i class="fas fa-arrow-left white--text"></i>
             </v-btn>
         </router-link>
 
-        <v-toolbar color="grey darken-4" class="white--text" height="40px">
          
             <v-toolbar-title class="body-2 font-weight-light">Inquiry# {{ inquiry.id }}</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -18,7 +19,7 @@
             <v-container>
 
                 <v-layout row wrap>                	
-				  	<v-flex xs8>
+				  	<v-flex xs12>
                 		<v-layout row wrap>
 		                    <v-flex shrink>
 			                    <h5 class="font-weight-thin">Keywords </h5>
@@ -58,13 +59,34 @@
 		                </v-layout>
 	            	</v-flex>
 
-	            	<v-flex xs4>
-	            		
+	            	<v-flex xs12>
+
 		                <v-layout row wrap>
 		                    <v-flex xs12>
 			                    <h5 class="font-weight-thin">Specifications</h5>
 		                        <v-layout row wrap class="specifications">
-		                            <v-chip label dark outline text-color="black">Warranty: 1 Years</v-chip>
+		                            <v-chip 
+		                            	label 
+		                            	dark 
+		                            	outline 
+		                            	text-color="black" 
+		                            	v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+		                            	{{ specification.name }}: &nbsp;
+		                            	<span class="font-weight-bold">
+			                            	{{ specification.value.split(',').join(', ') }}
+		                            	</span>		                            	
+		                            </v-chip>
+									
+									
+									<v-alert 
+										:value="!inquiry.specifications.length" 
+										type="warning" 
+										style="width: 100%;"
+										class="ma-4"
+										outline>
+										No specifications..
+									</v-alert>									
+
 		                        </v-layout>
 		                    </v-flex>
 		                </v-layout>

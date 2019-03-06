@@ -6,15 +6,15 @@
 				<v-layout row wrap>
 					
 					<!-- inquiry details card -->
-					<v-flex xs12>
+					<v-flex xs5>
 						<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
 					</v-flex>
 					<!-- end of detils  -->
 
 					
 					<!-- supplier quote -->
-					<v-flex xs8>
-						<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
+					<v-flex xs7>
+						<inquiry-post-list> </inquiry-post-list>
 					</v-flex>  
 					<!-- supplier quote -->
 

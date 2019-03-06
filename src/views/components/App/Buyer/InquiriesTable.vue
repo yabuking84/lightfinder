@@ -45,7 +45,8 @@
                               </td>
 
                               <td class="text-xs-left font-weight-medium">
-                                  <h3 class="mt-3 mb-1">{{ props.item.keywords }}</h3>
+                                  <h4 class="mt-3"># {{ props.item.inq_id }}</h4>
+                                  <h3 class="mb-1">{{ props.item.keywords }}</h3>
                                   <p class="mb-3">{{ props.item.message }}</p>
                               </td>
 
