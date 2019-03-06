@@ -48,11 +48,13 @@
 					   	 	    		<h5 class="font-weight-light">January 6, 2017 10:00 AM</h5>
 					   	 	   			<v-spacer></v-spacer>
 
-					   	 	     		<v-btn class="green darken-1" @click="dialog = true"> <i class="fas fa-eye white--text"></i> <span class="ml-1 white--text" >Award this Supplier</span>
+					   	 	     		<v-btn class="green darken-1" 
+					   	 	     		@click="dialog = true"> <i class="fas fa-award white--text"></i>
+					   	 	     		 <span class="font-weight-light ml-1 white--text" >Award</span>
 									    </v-btn> 
 									    <v-btn class="orange darken-3" @click="dialog = true">
-										    <i class="fas fa-eye white--text"></i>
-										    <span class="ml-1 white--text" >Request Sample</span>
+										    <i class="fas fa-tasks white--text"></i>
+										    <span class="font-weight-light ml-1 white--text" >Request Sample</span>
 									    </v-btn> 
 
 					   	 </v-card-actions>
@@ -62,7 +64,7 @@
 
 	    </v-card>
 
-			<inquiry-dialog :dialog.sync="dialog"> </inquiry-dialog>	
+			<inquiry-confirm :dialog.sync="dialog"> </inquiry-confirm>	
 
 	</div>
 
@@ -70,12 +72,12 @@
 
 <script>
 
-	import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
+	import InquiryConfirm from "@/views/Components/App/Buyer/InquiryConfirm"
 
 	export default {
 
 		components: {
-			InquiryDialog
+			InquiryConfirm
 		},
 
     data: function () {

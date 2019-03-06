@@ -57,11 +57,7 @@
 
   </v-card>
 
-   
 
-    <dialog-test :dialog.sync="dialog" ></dialog-test>
-<!--     <test1></test1>
-    <test2></test2> -->
  </div>
 </template>
 
@@ -69,7 +65,6 @@
 import inqEvntBs from "@/bus/inquiry";
     
 import helpers from "@/mixins/helpers";
-import DialogTest from "@/views/Components/App/Buyer/DialogTest";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
   export default {
@@ -151,7 +146,6 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
     },
     components: {
       InquiryStatusButtons,
-      DialogTest
     },
     methods: {
         click: function(name) {

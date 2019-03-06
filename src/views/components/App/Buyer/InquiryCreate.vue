@@ -386,7 +386,7 @@ Create Inquiry
 </v-dialog>
 
 
-<review-inquiry :dialog.sync="reviewDialog" :form-data="formData"></review-inquiry>
+<!-- <review-inquiry :dialog.sync="reviewDialog" :form-data="formData"></review-inquiry> -->
     
 
 </div>
@@ -400,7 +400,6 @@ import inqEvntBs from "@/bus/inquiry";
 
 
 import helpers from "@/mixins/helpers";
-import ReviewInquiry from "@/views/Components/App/Buyer/ReviewInquiry";
 import config from '@/config/index'
 
 export default {
@@ -482,7 +481,7 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
     },
 
     components: {
-        ReviewInquiry
+        
     },
 
     created: function() {

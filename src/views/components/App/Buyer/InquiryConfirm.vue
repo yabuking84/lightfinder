@@ -1,6 +1,7 @@
 <template>
 	<div>
-	<v-dialog :value="dialogConfirm" @input="$emit('update:dialogConfirm',false)" max-width="850px">
+	<v-dialog :value="dialog" @input="$emit('update:dialog',false)" max-width="850px">
+		
 	     <v-toolbar dark color="dark">
             <v-toolbar-title class="font-weight-light subheading">
            	 <i class="fas fa-award white--text"></i>
@@ -8,6 +9,9 @@
         	</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
+
+
+
         <v-card>
 
         	<v-container fluid>
@@ -201,7 +205,7 @@
 
 		props: ({
 
-			dialogConfirm: {
+			dialog: {
 				type:Boolean,
 				default:false
 			}
