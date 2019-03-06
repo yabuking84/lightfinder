@@ -31,28 +31,43 @@
                         
                       <template slot="items" slot-scope="props">
 
-                          <tr class="th-heading"  @click="click(props.item.name)">
+                          <tr class="th-heading">
 
-                              <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details  ></v-checkbox></td>
-                              <td class="text-xs-center font-weight-medium">{{ props.item.keywords }}</td>
-                              <td class="text-xs-center font-weight-medium">{{ props.item.message }}</td>
-                              <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
-                              <td class="text-xs-center">{{ props.item.quantity }}</td>
-                              <td class="text-xs-center">{{ props.item.shipping_date }}</td>
-                              <td class="text-xs-center">{{ props.item.created_at }}</td>
-                              <td class="text-xs-center">
-                                     <inquiry-status-buttons :status-id="props.item.status"> </inquiry-status-buttons>
+                              <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.id" primary hide-details  ></v-checkbox></td>
+                              <td class="font-weight-medium"> 
+
+                                <v-avatar size="40px">
+                                    <img
+                                      v-if="props.item.avatar"
+                                      :src="props.item.avatar"
+                                      alt="Avatar"
+                                    > </v-avatar>
+
+                              </td>
+                              <td class="font-weight-medium">{{ props.item.first_name }}</td>
+                              <td class="font-weight-medium">{{ props.item.last_name }}</td>
+                              <td class="">{{ props.item.email }}</td>
+                              <td class="">{{ props.item.job_title }}</td>
+                              <td class="">
+                                     {{ props.item.date_created }}
                               </td>
 
-                              <td class="text-xs-center">
-                                   <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
-                                      <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
-                                         <i class="fas fa-eye white--text"></i>             
-                                        <span class="ml-1 white--text font-weight-light ">View</span>
-                                    </router-link>
-                                  </v-btn>
-                              </td>
+                                <td> 
 
+                                 <v-icon
+                                    small
+                                    class="mr-2"
+                                    @click="editItem(props.item)"
+                                  >
+                                    edit
+                                  </v-icon>
+                                  <v-icon
+                                    small
+                                    @click="deleteItem(props.item)"
+                                  >
+                                    delete
+                                  </v-icon>
+                                </td>
                           </tr>
 
                       </template>
@@ -73,8 +88,8 @@
 
 <script>
 import inqEvntBs from "@/bus/inquiry";
-    
 import helpers from "@/mixins/helpers";
+
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
   export default {
@@ -92,47 +107,54 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
               text: 'Select',
               align: 'left',
               sortable: false,
-              value: 'inq_id'
+              value: 'id'
+            },
+
+            {
+              text: 'Avatar',
+              align: 'left',
+              sortable: false,
+              value: 'avatar'
             },
            
             {
-              text: 'First Name',
-              align: 'center',  
-              sortable: false,
+              text: 'Firstname',
+              align: 'left',  
+              sortable: true,
               value: 'first_name'
             },
            
             {
-              text: 'Last Name',
-              align: 'center',  
-              sortable: false,
+              text: 'Lastname',
+              align: 'left',  
+              sortable: true,
               value: 'last_name'
             },
 
             {
-              text: 'Phone Number',
-              align: 'center',  
-              sortable: false,
-              value: 'categories'
+              text: 'Email',
+              align: 'left',  
+              sortable: true,
+              value: 'email'
             },
             
             {
-              text: 'Company Name',
-              align: 'center',
-              sortable: false,
-              value: 'company'
+              text: 'Job Title',
+              align: 'left',
+              sortable: true,
+              value: 'job_title'
             },
-            
-            {
-              text: 'Country',
-              align: 'center',
-              sortable: false,
-              value: 'country'
+
+             {
+              text: 'Date Created',
+              align: 'left',
+              sortable: true,
+              value: 'created_at'
             },
             
             {
               text: 'Action',
-              align: 'center',
+              align: 'left',
               sortable: false,
             },
         ],
@@ -140,43 +162,48 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
       }
     },
     components: {
+
       InquiryStatusButtons,
+
     },
     methods: {
 
-        click: function(name) {
-            // window.location.href = '/buyer/view'
-        },
-
+      
         fillTable() {
 
-            // this.loading = true;
-            // this.dataItems = [];
-            // this.$store.dispatch('inq/getInquiries_a')
-            // .then((response) => {
-            //     for (var i = response.length - 1; i >= 0; i--) {
-            //         var item = {};
-            //         item.inq_id = response[i].id;
-            //         item.keywords = this.ucwords(response[i].keyword);
-            //         item.message = response[i].message;
-            //         item.categories = response[i].categories.join(', ');
-            //         item.quantity = response[i].quantity;
-            //         item.shipping_date = response[i].desired_shipping_date;
-            //         item.created_at = response[i].created_at;
-            //         item.status = response[i].stage_id;
-            //         this.dataItems.push(item);
-            //     }
+            this.loading = true;
+            this.dataItems = [];
+            this.$store.dispatch('adminBuyer/getAllBuyer_a')
 
-            //     this.loading = false;
+            .then((response) => {
 
-            // })
-            // .catch((e) => {
-            //     console.log('Error: '+e);
-            //     this.loading = false;
-            // })
-            // .finally(()=>{
-            //     this.loading = false;
-            // });
+                console.log(response);
+
+                for (var i = response.length - 1; i >= 0; i--) {
+
+                    var item = {};
+
+                    item.id           = response[i].id;
+                    item.avatar       = response[i].avatar;
+                    item.first_name    = response[i].first_name;
+                    item.last_name     = response[i].last_name;
+                    item.email        = response[i].email;
+                    item.job_title    = response[i].job_title;
+                    item.date_created = response[i].created_at;
+
+                    this.dataItems.push(item);
+                }
+
+                this.loading = false;
+
+            })
+            .catch((e) => {
+                console.log('Error: '+e);
+                this.loading = false;
+            })
+            .finally(()=>{
+                this.loading = false;
+            });
 
         },
     },

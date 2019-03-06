@@ -12,17 +12,12 @@
 					<!-- end of detils  -->
 
 					
-					<!-- supplier quote -->
+					<!-- supplier quote / bids -->
 					<v-flex xs7>
 						<inquiry-post-list> </inquiry-post-list>
 					</v-flex>  
 					<!-- supplier quote -->
-
-
-					<!-- proposal list -->
-					<v-flex xs4>
-					</v-flex>
-					<!-- proposal list -->
+				
 
 				</v-layout>
 		</v-container>
@@ -33,6 +28,7 @@
 
 import InquiryPostList from "@/views/Components/App/Buyer/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Buyer/InquiryDetailsCard"
+import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
 
 import inqEvntBs from "@/bus/inquiry";
 
@@ -42,6 +38,7 @@ export default {
 
 	    InquiryPostList,
 	    InquiryDetailsCard,
+	    InquiryAwardCard
 
 	},
 

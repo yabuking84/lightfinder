@@ -38,13 +38,6 @@
 					  		      label="Last Name" required></v-text-field>
 					  		</v-flex>
 
-					  		<v-flex xs10 offset-xs1>
-					  		    <v-text-field  color="black"
-					  		     v-model="form.phone"
-					  		     :error-messages="fieldErrors('form.phone')"
-                			    @blur="$v.form.phone.$touch()" 
-					  		      label="Phone Number" required></v-text-field>
-					  		</v-flex>
 
 					  		<v-flex xs10 offset-xs1>
 					  		    <v-text-field  color="black"
@@ -55,22 +48,62 @@
 					  		</v-flex>
 
 					  		<v-flex xs10 offset-xs1>
+
+					  		    <v-text-field
+					  		     v-model="form.password"
+					            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+					            :type="showPassword ? 'text' : 'password'"
+					            name="input-10-2"
+					            :error-messages="fieldErrors('form.password')"
+                			    @blur="$v.form.password.$touch()" 
+					            label="Password"
+					            hint="At least 8 characters"
+					            @click:append="showPassword = !showPassword"
+					          ></v-text-field>
+
+					  		</v-flex>
+
+					  		<v-flex xs10 offset-xs1>
 					  		    <v-text-field  color="black"
-					  		    v-model="form.company_name"
-					  		    :error-messages="fieldErrors('form.company_name')"
-                			    @blur="$v.form.company_name.$touch()" 
-					  		     label="Company Name" required></v-text-field>
+					  		    v-model="form.job_title"
+					  		    :error-messages="fieldErrors('form.job_title')"
+                			    @blur="$v.form.job_title.$touch()" 
+					  		     label="Job Title" required></v-text-field>
+					  		</v-flex>
+
+					  		<v-flex xs10 offset-xs1>
+					  		    <v-text-field  color="black"
+					  		     v-model="form.phone"
+					  		     :error-messages="fieldErrors('form.phone')"
+                			    @blur="$v.form.phone.$touch()" 
+					  		      label="Phone" required></v-text-field>
+					  		</v-flex>
+
+					  		<v-flex xs10 offset-xs1>
+					  		    <v-text-field  color="black"
+					  		     v-model="form.fax"
+					  		     :error-messages="fieldErrors('form.fax')"
+                			    @blur="$v.form.fax.$touch()" 
+					  		      label="Fax" required></v-text-field>
+					  		</v-flex>
+
+					  		<v-flex xs10 offset-xs1>
+					  		    <v-text-field  color="black"
+					  		     v-model="form.address"
+					  		     :error-messages="fieldErrors('form.address')"
+                			    @blur="$v.form.address.$touch()" 
+					  		      label="Address" required></v-text-field>
 					  		</v-flex>
 
 					  		<v-flex xs10 offset-xs1>
 					  		     <v-select 
-					  		        v-model="form.country"
+					  		        v-model="form.country_id"
 					  		     	:items="countries"
 					  		     	item-text="name"
 								  	item-value="id"
                           			:search-input.sync="search" 
-                          			:error-messages="fieldErrors('form.country')"
-	                   			    @blur="$v.form.country.$touch()"       
+                          			:error-messages="fieldErrors('form.country_id')"
+	                   			    @blur="$v.form.country_id.$touch()"       
 					  		     	color="black" 
 					  		     	label="Country"
 					  		     	data-vv-name="Country"
@@ -104,12 +137,15 @@
 
 	const dform = {
 
-		firstname: '',
-		lastname: '',
-		phone:'',
-		company_name: '',
-		country: '',
-		email:'',
+		email 	  : '',
+		password  : '',
+		firstname : '',
+		lastname  : '',
+		job_title : '',
+		phone 	  : '',
+		fax 	  : '',
+		address   : '',
+		country_id: '',
 
 	}
 
@@ -121,12 +157,15 @@
 
 			form: {
 
-				firstname: { required },
-				lastname: { required },
-				phone: { required },
-				company_name: { required },
-				country: { required },
-				email: { required, email },
+				email    	 : { required, email },
+				password 	 : { required },
+				firstname 	 : { required },
+				lastname     : { required },
+				job_title	 : { required },
+				phone     	 : { required },
+				fax 		 : { required },
+				address 	 : { required },
+				country_id 	 : { required },
 			}
 
 		},
@@ -136,12 +175,16 @@
 
 			form: {
 
-				firstname: { required: 'First Name is Required' },
-				lastname: { required: 'Last Name is Required'},
-				phone: { required: 'Phone is Required.' },
-				country: { required: 'Country is Required' },
-				company_name: { required: 'Company name is Rquired' },
-				email: { required: 'Email is Required ', email: 'Email is Invalid' },
+				email     	: { required: 'Email is Required ', email: 'Email is Invalid' },
+				password  	: { required: 'Password is Required' },
+				firstname 	: { required: 'First Name is Required' },
+				lastname  	: { required: 'Last Name is Required'},
+				job_title 	: { required: 'Job Title is Required'},
+				phone     	: { required: 'Phone is Required.' },
+				fax     	: { required: 'fax is Required.' },
+				address 	: { required: 'Address is Required '},
+				country   	: { required: 'Country is Required' },
+				
 			}
 		},
 
@@ -152,7 +195,8 @@
 				form: Object.assign({}, dform ),
 				countries: [],
 				search: '',
-				formloading: false
+				formloading: false,
+				showPassword: false
 
 			}
 
@@ -201,16 +245,20 @@
 
 				let data = {
 
-					"firstname"  	: this.form.firstname,
-					"lastname"   	: this.form.lastname,
+					"email"			: this.form.email,
+					"password" 		: this.form.password,
+					"first_name"  	: this.form.firstname,
+					"last_name"   	: this.form.lastname,
+					"job_title"  	: this.form.job_title,
 					"phone"		 	: this.form.phone,
-					"email"		 	: this.form.email,
-					"company_name" 	: this.form.company_name,
-					"country"		: this.form.country,
+					"fax"			: this.form.fax,
+					"address"		: this.form.address,
+					"country_id"	: this.form.country_id,
 				};
 
+				console.log(data);
 
-				this.$store.dispatch('AdminBuyer/postBuyer', {
+				this.$store.dispatch('adminBuyer/postBuyer_a', {
 					data:data,
 				})
 				.then((response) => {

@@ -93,6 +93,8 @@
 
 	                </v-flex>
 
+
+
                 </v-layout>
 
             </v-container>
@@ -104,10 +106,19 @@
 </template>
 <script>
 
+
+import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
 import helpers from "@/mixins/helpers";
 import inqEvntBs from "@/bus/inquiry";
 
 export default {
+
+	components: {
+
+		InquiryAwardCard
+
+	},
+
     mixins: [
         helpers,
     ],
