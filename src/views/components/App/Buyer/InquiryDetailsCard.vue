@@ -1,62 +1,166 @@
 <template>
-	<div>
-		 <v-toolbar color="grey darken-4" class="white--text" height="40px">
-            <v-toolbar-title class="subheading font-weight-light">Title of the Inquiry</v-toolbar-title>
+    <div>
+
+	   
+        <v-toolbar color="grey darken-4" class="white--text" height="40px">
+        	<router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
+            <v-btn class="blue-grey" small style="min-width: 50px;">
+                <i class="fas fa-arrow-left white--text"></i>
+            </v-btn>
+        </router-link>
+
+         
+            <v-toolbar-title class="body-2 font-weight-light">Inquiry# {{ inquiry.id }}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-title class="subheading font-weight-light">Inquiry # 112938273</v-toolbar-title>
-      </v-toolbar>
-	<v-card>
-	    <v-container fluid>
-	    	
-	    	<v-layout row wrap mb-2 mt-1>
-	    		<h4 class="font-weight-bold"> Category: LED STRIPS LIGHTS</h4>	  
-	    		<v-spacer></v-spacer>
-	    		<h4 class="font-weight-bold">Quantity: 1000</h4>	  
-	    		<v-spacer></v-spacer>
-	    		<h4 class="font-weight-bold">Posted: Jan 1, 2017 (3 days ago)</h4>	
-	    	</v-layout>
+            <v-toolbar-title class="body-2 font-weight-light"> Posted: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
+        </v-toolbar>
+        <v-card>
 
-	    	<v-layout row wrap>
-	    	  	<v-divider></v-divider>
-	    	</v-layout>
+            <v-container>
 
-			<h4 class="font-weight-bold mb-2">Details</h4>
+                <v-layout row wrap>                	
+				  	<v-flex xs12>
+                		<v-layout row wrap>
+		                    <v-flex shrink>
+			                    <h5 class="font-weight-thin">Keywords </h5>
+			                    <h4 class="font-weight-bold">
+									<p class="mb-0">{{ inquiry.keyword }}</p>
+						      	</h4>
+		                    </v-flex>
 
-	      	<v-layout row wrap mt-3>
-	      		<v-flex xs6>
-	      		    <h5 class="font-weight-light">
-			      	  	Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-			      	  </h5>
-	      		</v-flex>
+					  	  	<v-flex shrink>
+			                    <h5 class="font-weight-thin">Category</h5>
+			                    <h4 class="font-weight-bold">                     	
+			                    	<span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
+			                    </h4>
+		                	</v-flex>
 
-				<v-flex xs6>
-				  	 <v-layout row column mt-4>
-				      	<h4 class="font-weight-bold">Attachments</h4>
-						<v-layout row wrap>
-						  <v-flex xs12>
-						  		<img width="100px;" src="/static/examples/led-strip-lights-daaden-al-sl-1017-7777.jpg">
-				      	      	<img width="100px;" src="/static/examples/led-strip-lights-dieburg-al-sl-1018-7778.jpg">
-				      	  </v-flex>
-						</v-layout>
-				  	</v-layout>
-				</v-flex>
-
-	      	</v-layout>
+					  	  	<v-flex shrink>
+			                    <h5 class="font-weight-thin">Quantity</h5>
+			                    <h4 class="font-weight-bold">                     	
+			                    	<span>{{ inquiry.quantity }} pcs</span>
+			                    </h4>
+		                	</v-flex>
 
 
-	    </v-container>
-	  </v-card>
-	</div>
+
+		                    <v-flex xs12>
+			                    <h5 class="font-weight-thin">Message </h5>
+			                    <h4 class="font-weight-bold">                     	
+									<p class="mb-0">{{ inquiry.message }}</p>
+						      	</h4>
+		                    </v-flex>
+
+		                    <v-flex xs12 class="attachments">
+			                    <h5 class="font-weight-thin">Attachments </h5>
+		                        <v-icon large>far fa-file-excel</v-icon>
+		                        <v-icon large>far fa-file-archive</v-icon>
+		                    </v-flex>
+		                </v-layout>
+	            	</v-flex>
+
+	            	<v-flex xs12>
+
+		                <v-layout row wrap>
+		                    <v-flex xs12>
+			                    <h5 class="font-weight-thin">Specifications</h5>
+		                        <v-layout row wrap class="specifications">
+		                            <v-chip 
+		                            	label 
+		                            	dark 
+		                            	outline 
+		                            	text-color="black" 
+		                            	v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+		                            	{{ specification.name }}: &nbsp;
+		                            	<span class="font-weight-bold">
+			                            	{{ specification.value.split(',').join(', ') }}
+		                            	</span>		                            	
+		                            </v-chip>
+									
+									
+									<v-alert 
+										:value="!inquiry.specifications.length" 
+										type="warning" 
+										style="width: 100%;"
+										class="ma-4"
+										outline>
+										No specifications..
+									</v-alert>									
+
+		                        </v-layout>
+		                    </v-flex>
+		                </v-layout>
+
+	                </v-flex>
+
+
+
+                </v-layout>
+
+            </v-container>
+
+        </v-card>
+
+    </div>
+
 </template>
-
 <script>
-	
-	export default {
 
-	}
+
+import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
+import helpers from "@/mixins/helpers";
+import inqEvntBs from "@/bus/inquiry";
+
+export default {
+
+	components: {
+
+		InquiryAwardCard
+
+	},
+
+    mixins: [
+        helpers,
+    ],
+
+    props: [
+    	'inquiry',
+    ],
+
+	data: ()=>({		
+	}),
+
+	methods: {
+
+	},
+
+	watch: {
+
+	},
+
+	created(){
+		console.log(this.inquiry);
+	},
+
+}
 
 </script>
 
-<style scoped lang="">
+<style scoped lang="scss">
+.specifications {
+	.v-chip {
+		width: 150px;
+	}
+}
+
+.attachments {
+	.v-icon {
+		width: 50px;
+		margin-right: 15px;
+		margin-top: 15px;
+		font-size: 60px !important;
+		cursor: pointer;
+	}
+}
 
 </style>

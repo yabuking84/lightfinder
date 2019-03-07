@@ -8,6 +8,8 @@
 			  		<v-card>
 			  	  	   <h1 class="pa-3 title text-xs-center font-weight-light">Total Earnings: <span class="font-weight-bold subheading"> $100.00 </span> </h1>
 			  	  	</v-card>  
+							
+
 		  		</v-flex>
 		  	</v-layout>
 

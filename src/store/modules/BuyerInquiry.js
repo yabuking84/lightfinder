@@ -9,12 +9,24 @@ import config from '@/config/index'
 const state = {
     api: {
         getInquiries: {
-            method: 'get',
-            url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+        
+            method  : 'get',
+            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+        
         },
+
+        getInquiry: {
+
+            method  : 'get',
+            url     :'http://192.168.1.200:8000/v1/buyer/inquiries'
+        
+        },
+
         addInquiry: {
-            method: 'post',
-            url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+
+            method  : 'post',
+            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+        
         },
 
     },
@@ -59,6 +71,37 @@ const actions = {
 
             })
         });
+    },
+
+
+    getInquiry_a(context, data) {
+        return new Promise((resolve, reject) => {
+
+            var headers = { token: localStorage.access_token }
+
+            axios({
+
+                method  : state.api.getInquiry.method,
+                url     : state.api.getInquiry.url + "/" + data.inq_id,
+                headers : headers
+
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+
+              if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+                    console.log("EXPIRED");
+                    router.push({'name': 'Logout'})
+                }
+                else {
+                    reject(error);
+                }
+
+            })
+
+        }) 
     },
 
     addInquiry_a(context,data){

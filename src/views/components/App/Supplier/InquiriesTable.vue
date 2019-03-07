@@ -367,6 +367,7 @@ import main from "@/config/main"
             this.filterTable();
         },
     },    
+    
   }
 </script>
 

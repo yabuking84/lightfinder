@@ -1,17 +1,22 @@
 <template>
 	<div>
-	<v-dialog :value="dialogConfirm" @input="$emit('update:dialogConfirm',false)" max-width="850px">
+	<v-dialog :value="dialog" @input="$emit('update:dialog',false)" max-width="850px">
+		
 	     <v-toolbar dark color="dark">
+
             <v-toolbar-title class="font-weight-light subheading">
            	 <i class="fas fa-award white--text"></i>
           	  Award This Supplier
         	</v-toolbar-title>
-            <v-spacer></v-spacer>
           </v-toolbar>
+
         <v-card>
 
-        	<v-container fluid>
+		<v-card-text>
+
+		
 				<v-layout row wrap>
+
 					<v-flex xs8 >
 						<h1 class="font-weight-light subheading">Payment Information</h1>
 
@@ -182,8 +187,12 @@
 
 				</v-layout>
 
+		</v-card-text>
 
-        	</v-container>
+
+
+
+
 				
         </v-card>
       </v-dialog>
@@ -201,7 +210,7 @@
 
 		props: ({
 
-			dialogConfirm: {
+			dialog: {
 				type:Boolean,
 				default:false
 			}

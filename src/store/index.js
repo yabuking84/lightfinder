@@ -11,6 +11,10 @@ import auth from './modules/auth'
 import cat from './modules/category'
 import byrInq from './modules/BuyerInquiry'
 import spplrInq from './modules/SupplierInquiry'
+import adminHelper from './modules/adminHelper'
+import adminBuyer from './modules/adminBuyer'
+import adminSupplier from './modules/adminSupplier'
+import adminInquiries from './modules/adminInquiries'
  
 Vue.use(Vuex)
 
@@ -26,5 +30,10 @@ export const store = new Vuex.Store({
     cat,
     byrInq,
     spplrInq,
+    adminHelper,
+    adminBuyer,
+    adminSupplier,
+    adminInquiries
+
   }
 })

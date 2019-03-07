@@ -3,7 +3,9 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
 import BuyerHome from '@/views/Pages/Buyer/Home'
-import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
+import BuyerInquiryView from '@/views/Pages/Buyer/InquiryView'
+
+
 
 import config from '@/config/index'
 
@@ -11,7 +13,6 @@ import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
 import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerPackages from '@/views/Pages/Buyer/Packages'
-import BuyerInquiryDetails from '@/views/Pages/Buyer/InquiryDetails'
 
 
 import test from '@/views/Components/App/test'
@@ -26,11 +27,6 @@ const meta = {
             name: 'BuyerHome',
             icon: 'fas fa-th-large',
         },            
-        {
-            title: 'Inquiries',
-            name: 'BuyerInquiry',
-            icon: 'search',
-        },
     ],        
 }
 
@@ -49,30 +45,35 @@ export default [
         meta: meta,
     },
     {
-        name: 'BuyerInquiry',
-        path: '/buyer/inquiry',
+        name: 'BuyerInquiryView',
+        path: '/buyer/inquiry/:inq_id',
         components: { 
-            default: BuyerInquiry, 
+            default: BuyerInquiryView, 
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
             testview: test, 
         },
         meta: meta,
+        props: { default:true },
+
     },    
 
-      {
-        name: 'BuyerInquiryView',
-        path: '/buyer/inquiry/view',
-        components: { 
-            default: BuyerInquiryDetails, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-        },
-        meta: meta,
-    },    
 
+
+
+
+
+
+
+
+
+
+
+
+    /*
+        public views
+    */
 
     {
         name: 'BuyerRegistration',

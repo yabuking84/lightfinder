@@ -188,7 +188,7 @@ export default {
 
             this.loading = true;
             this.allInquiries = [];
-            this.$store.dispatch('byrInq/getInquiries_a')
+            this.$store.dispatch('adminInquiries/getAllInquiries_a')
             .then((response) => {
 
                 for (var i = response.length - 1; i >= 0; i--) {
