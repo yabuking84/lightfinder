@@ -90,41 +90,41 @@
 			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
 
 				items: [
-				  {
+				{
 					supplier_name: 'China Lighting',
 					supplier_status: 'Verified Badge',
 					price_piece: '15.69',
-				  },
+				},
 
-				  {
+				{
 					supplier_name: 'Up Shine Labs',
 					supplier_status: 'Verified Badge',
 					price_piece: '17.69',
-				  },
+				},
 
-				  {
+				{
 					supplier_name: 'Almani Ligthing',
 					supplier_status: 'Verified Badge',				  	
 					price_piece: '14.19',
-				  },
+				},
 
-				  {
+				{
 					supplier_name: 'Go Light',
 					supplier_status: 'Verified Badge',
 					price_piece: '18.29',
-				  },
+				},
 
-				  {
+				{
 					supplier_name: 'Lighting Labs',
 					supplier_status: 'Verified Badge',									  	
 					price_piece: '12.29',
-				  },
+				},
 
-				  {
+				{
 					supplier_name: 'Binve Strip Lights',
-					supplier_status: 'Verified Badge',				  	
+					supplier_status: 'Verified Badge',
 					price_piece: '10.33',
-				  },
+				},
 
 				]
 			}
