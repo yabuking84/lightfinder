@@ -20,17 +20,18 @@
       	<v-card class="minh-500" color="grey lighten-5">
 			<v-container fluid grid-list-md>
 
-				<div v-for="bidItem in bidItems">					
-					<v-card class="mb-2 pa-2" >
+				<div v-for="bidItem in bidItems">
+					<v-card class="mb-2 pa-2" :class="(bidItem.owned)?'blue lighten-5':''">
 			   	 	   <v-layout row wrap class="pa-2">
-			   	 	     	<v-flex xs6>			   	 	     		
+
+			   	 	     	<v-flex xs6>
 			   	 	     		<h3 class="text-xs-left ml-3">
 			   	 	     			<span class="font-weight-light">Overall: </span>
 			   	 	     			${{ bidItem.total_price}}
 			   	 	     		</h3>
 			   	 	     	</v-flex>
 							
-			   	 	     	<v-flex xs6>			   	 	     		
+			   	 	     	<v-flex xs6>
 								<h3 class="font-weight-light text-xs-left ml-3">
 									${{ bidItem.price }} / piece
 								</h3>
@@ -39,6 +40,14 @@
 			   	 	</v-card>
 				</div>
 
+				<v-alert 
+					:value="!bidItems.length"
+					type="warning" 
+					style="width: auto;"
+					class="ma-4"
+					outline>
+					No bids yet..
+				</v-alert>
 
 			</v-container>
 	    </v-card>
@@ -97,6 +106,7 @@
                     console.log(error);					
 				});
 			},
+
 		},
 
 	    created(){
@@ -107,12 +117,20 @@
 	    mounted(){
 
 		    this.$nextTick(function () {
-		      //   window.setInterval(() => {
-			    	// this.fillBidTable();
-		      //   },5000);
-			    console.log("nexttick");
+		        window.setInterval(() => {
+			    	this.fillBidTable();
+			    	console.log("nexttick");
+		        },10000);
 		    })
+	    },
 
+	    watch: {
+	    	inquiry: {
+	    		handler(nVal,oVal){
+			    	this.fillBidTable();	    			
+	    		},
+	    		deep: true,
+	    	}
 	    },
 	}
 </script>

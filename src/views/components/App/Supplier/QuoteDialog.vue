@@ -136,8 +136,11 @@
 					          <v-text-field
 					            label="Unit Price"
 					            v-model="formData.price"
-					            placeholder="0.00"
-					             prefix="$"></v-text-field>
+					            placeholder="0.00"					            
+					            type="number"
+					            min="0"
+					            step="0.01"
+					            prefix="$"></v-text-field>
 					        </v-flex>
 				        
 				      		 <v-flex xs4 pa-2>
@@ -145,7 +148,10 @@
 						            label="Total Price"
 						            v-model="formData.total_price"
 						            placeholder="0.00"
-						             prefix="$"></v-text-field>
+						            type="number"
+						            min="0"
+						            step="0.01"						            
+						            prefix="$"></v-text-field>
 					         </v-flex>
 				        </v-layout>
 
@@ -204,6 +210,12 @@ export default {
   		inquiry: {
   			type:Object,
   		},
+  		bid: {
+  			type:Object,
+  		},
+  		editQuote: {
+  			type:Boolean,
+  		},
 
   	},
 
@@ -211,11 +223,17 @@ export default {
 
     	loading: false,
     	formData: {
-			price: 11.11,
-			total_price: 7777.56,
-			product_name: "Super LED Industrial",
-			remarks: "Nice light",
-			description: "Last multiple years!",
+			// price: 11.11,
+			// total_price: 7777.56,
+			// product_name: "Super LED Industrial",
+			// remarks: "Nice light",
+			// description: "Last multiple years!",
+
+			price: null,
+			total_price: null,
+			product_name: null,
+			remarks: null,
+			description: null,			
     	},
 
     }),
@@ -233,11 +251,30 @@ export default {
                 "description": this.formData.description,
             };
 
+            var action = "";
+            var data = {};
+            if(this.editQuote) {            	
+	            action = 'spplrInq/editInquiryBid_a';
+				data = {
+				    formData: formData,
+				    inq_id: this.inquiry.id,
+				    bid_ref: this.bid.reference,
+				}
+            }
+        	else {
+	            action = 'spplrInq/addInquiryBid_a';        		
+				data = {
+				    formData: formData,
+				    inq_id: this.inquiry.id,
+				}	            
+        	}
 
-            this.$store.dispatch('spplrInq/addInquiryBid_a',{
-                formData: formData,
-                inq_id: this.inquiry.id,
-            })
+        	// alert("action = "+action);
+        	// alert("this.editQuote = "+this.editQuote);
+        	// alert("this.inquiry.id = "+this.inquiry.id);
+        	// alert("this.bid.reference = "+this.bid.reference);
+
+            this.$store.dispatch(action,data)
             .then((response) => {
                 this.loading = false;
                 inqEvntBs.emitBidFormSubmitted();
@@ -246,14 +283,39 @@ export default {
             }).catch((e) => {
                 this.loading = false;
                 console.log('Error: '+e);
+	        	alert("ERROR!!");
+
             }).finally(()=>{
                 this.loading = false;
             });
+    	},
 
-
-
+    	resetForm(){
+	    	this.formData = {
+				price: null,
+				total_price: null,
+				product_name: null,
+				remarks: null,
+				description: null,
+	    	};
     	},
     },
+
+    watch: {
+
+    	editQuote(nVal,oVal){
+    		this.formData = this.bid;
+    	},
+
+    	// when openQuoteDialog set as false, editQuote will be set to false also
+    	openQuoteDialog(nVal,oVal){
+            if(!nVal)
+            this.$emit('update:editQuote', false);
+    	},
+
+    },
+
+
 }
 
 </script>

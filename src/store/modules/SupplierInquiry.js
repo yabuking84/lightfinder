@@ -25,6 +25,11 @@ const state = {
             url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
             url2: 'bids',
         },
+        editInquiryBid: {
+            method: 'patch',
+            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url2: 'bids',
+        },
         getInquiryBids: {
             method: 'get',
             url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
@@ -175,6 +180,39 @@ const actions = {
         return new Promise((resolve, reject) => {
             var method = state.api.addInquiryBid.method;
             var url = state.api.addInquiryBid.url+"/"+data.inq_id+"/"+state.api.addInquiryBid.url2;
+            var headers = {
+                token:localStorage.access_token,
+                "content-type": "application/json",
+            };
+            axios({
+                method: method,
+                url: url,
+                headers: headers,
+                data: JSON.stringify(data.formData),
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+
+                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+                    console.log("EXPIRED");
+                    router.push({'name': 'Logout'})
+                }
+                else {
+                    console.log("normal error!");
+                    reject(error);
+                }
+
+            });
+
+        });
+    },
+
+    editInquiryBid_a(context,data){
+        return new Promise((resolve, reject) => {
+            var method = state.api.editInquiryBid.method;
+            var url = state.api.editInquiryBid.url+"/"+data.inq_id+"/"+state.api.editInquiryBid.url2+"/"+data.bid_ref;
             var headers = {
                 token:localStorage.access_token,
                 "content-type": "application/json",

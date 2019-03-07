@@ -15,7 +15,7 @@
              	
              	<v-btn 
              		v-if="hasBid"
-             		@click="openQuoteDialog = true" 
+             		@click="openEditQuote()" 
              		class="font-weight-light" 
              		color="blue" 
              		dark 
@@ -111,7 +111,7 @@
 	    </v-card>
 		
 		<span>
-			<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :inquiry="inquiry"></quote-dialog>
+			<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
 		</span>
 
 </div>
@@ -148,6 +148,7 @@ export default {
 		editButton: false,
 		hasBid: false,
 		bidAdded: false,
+		editQuote: false,
 	}),
 
 	methods:{
@@ -168,6 +169,11 @@ export default {
 			});
 
 		},
+
+		openEditQuote(){
+			this.openQuoteDialog = true;
+			this.editQuote = true;
+		}
 	},
 
 	watch: {
