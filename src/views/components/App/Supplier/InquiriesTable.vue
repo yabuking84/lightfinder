@@ -44,17 +44,49 @@
         </v-layout>
 
         <v-card-title>
-            <v-flex xs3 offset-xs9>
-                <v-text-field 
-                    label="Search" 
-                    v-model="search" 
-                    placeholder="Search" 
-                    prepend-inner-icon="search" 
-                    solo 
-                    clearable
-                    ma-0>
-                </v-text-field>
-            </v-flex>
+            <v-layout row wrap>
+
+                <v-flex xs7>
+                    <v-autocomplete 
+                        v-model="categories" 
+                        :items="categoryItems" 
+                        item-text="name"
+                        item-value="name"
+                        ref="categorySelect" 
+                        cache-items 
+                        chips
+                        multiple
+                        hide-no-data 
+                        clearable
+                        hide-details 
+                        label="select categories..">
+                              <template v-slot:selection="slotData">
+                                <v-chip
+                                  :selected="slotData.selected"
+                                  close
+                                  class="chip--select-multi"
+                                  @input="removeFromCategories(slotData.item)">
+                                  {{ slotData.item.name }}
+                                </v-chip>
+                              </template>
+                    </v-autocomplete>
+                </v-flex>
+
+                <v-spacer></v-spacer>
+
+                <v-flex xs4>
+                    <v-text-field 
+                        label="Search" 
+                        v-model="search" 
+                        placeholder="Search" 
+                        prepend-inner-icon="search" 
+                        solo 
+                        clearable>
+                    </v-text-field>
+                </v-flex>
+
+
+            </v-layout>
         </v-card-title>
 
         <v-divider></v-divider>
@@ -210,6 +242,8 @@ import main from "@/config/main"
         inquiryStatus: [],
         allInquiries: [],
         tableItems: [],
+        categories: [],
+        categoryItems: [],
 
         openInquiry: false,
         inquiry: null,
@@ -271,26 +305,65 @@ import main from "@/config/main"
         },
 
         refresh(){
-            this.fillTable();
             this.inquiryStatus = [];
+            this.categories = [];
+            this.search = "";
         },
 
         filterTable(){
-            if(!this.inquiryStatus.length) {
-                this.tableItems = this.allInquiries;
-            } else {
-                this.tableItems = this.allInquiries.filter(inq=>this.inquiryStatus.includes(inq.status));
+
+            var items = this.allInquiries;
+            if(this.inquiryStatus.length || this.categories.length) {
+
+                // filter for statuses only
+                var isBuff = this.inquiryStatus;
+                function callBackStat(inq){
+                    return (isBuff.length)?isBuff.includes(inq.status):true;
+                };
+                items = items.filter(callBackStat);
+                
+
+                // filter for categories
+                isBuff = this.categories;
+                function callBackCat(inq){
+                    return (isBuff.length)?isBuff.includes(inq.categories.trim()):true;
+                };
+                items = items.filter(callBackCat);
             }
+
+            this.tableItems = items;
         },
+
+        removeFromCategories (item) {
+            const index = this.categories.indexOf(item.name);            
+            if (index >= 0) 
+            this.categories.splice(index, 1)
+        }        
 
     },
 
+
     created(){
         this.fillTable();
+
+        // get categories for category select box
+        this.$store.dispatch('cat/getCategories_a')
+        .then((data)=>{
+            this.categoryItems = data;
+            // console.log(this.categoryItems);
+        })
+        .catch((e) => {
+            console.log('Error: ');
+            console.log(e);
+        });        
     },
 
     watch: {
         inquiryStatus(nVal,oVal){
+            this.filterTable();
+        },
+
+        categories(nVal,oVal){
             this.filterTable();
         },
     },    

@@ -19,7 +19,7 @@ const state = {
 
         getInquiryStatuses: {
             method: 'get',
-            url: "http://192.168.1.200:8000/v1/inquiry-statuses",
+            url: "http://192.168.1.200:8000/v1/inquiry-stages",
         },
 
 
@@ -199,7 +199,8 @@ const actions = {
 
     loginSuccess_a(context,response){
 
-        console.log(response.data.user.role);
+        // console.log(response.data);
+        // console.log(response.data.user.role);
         
         if(response.data.user.role == config.auth.role.admin.id) 
         router.push({name:'AdminHome'});

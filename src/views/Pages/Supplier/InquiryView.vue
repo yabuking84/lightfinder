@@ -47,11 +47,11 @@
 
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider ></v-divider>
 
-        <v-card-actions>
+        <v-card-actions >
             <v-spacer></v-spacer>
-            <v-btn color="black" flat @click="closeOpenInquiry()">
+            <v-btn color="primary" dark @click="closeOpenInquiry()">
                 close
             </v-btn>
         </v-card-actions>
