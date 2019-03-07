@@ -11,17 +11,24 @@ const state =  {
 
 	api: {
 		
-		/*
-			get single buyer
-		*/
 		
 		get: {
+
+			/*
+				get all buyer
+			*/
 
 			method:  'get',
 			getAllBuyer: {
 				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
 			
 			},
+
+
+			/*
+				get single buyer
+			*/
+		
 
 			getBuyer: {
 				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
@@ -33,14 +40,16 @@ const state =  {
 		},
 
 		
-		/*
-		    post single buyer
-		*/
 		
 		post: {
 
 
 			method:  'post',
+
+
+			/*
+			    post single buyer
+			*/
 
 			addBuyer: {
 				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
@@ -49,11 +58,35 @@ const state =  {
 
 		},
 
+
+		/* PATCH */
+
 		patch: {
 
 			method: 'patch',
+
+			/* patch single buyer */
+
 			editBuyer: {
 				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
+			}
+		},
+
+
+
+		/* DELETE */
+
+
+		delete: {
+
+
+			method: 'delete',
+
+			/* delete single buyer */
+
+			deleteBuyer: {
+
+				url 	 : 'http://192.168.1.200:8000/v1/admin/buyers'
 
 			}
 		}
@@ -103,7 +136,7 @@ const actions = {
 			axios({
 
 				method	: state.api.get.method,
-				url 	: state.api.get.getBuyer.url + '/' + data.user_id ,
+				url 	: state.api.get.getBuyer.url + '/' + data.data.id ,
 				headers : headers
 
 			})
@@ -188,7 +221,7 @@ const actions = {
 				method	: state.api.post.method,
 				url     : state.api.post.addBuyer.url,
 				headers : headers,
-				data 	: JSON.stringify(data)
+				data 	: JSON.stringify(data.data)
 				
 			})
 			.then(response => {	
@@ -209,6 +242,47 @@ const actions = {
 		});
 
 	},
+
+
+	/* PATCH */
+
+
+   updateBuyer_a(context, data) {
+
+   		return new Promise((resoleve, reject) => {
+
+	   			var headers = {
+					token:localStorage.access_token,
+	              	"content-type": "application/json",
+				};
+
+				axios({
+
+					method	: state.api.patch.method,
+					url     : state.api.patch.editBuyer.url + "/" + data.id,
+					headers : headers,
+					data 	: JSON.stringify(data.data)
+					
+				})
+				.then(response => {	
+					resolve(response.data);
+				})
+				.catch(error => {
+					  
+					  if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+		                    console.log("EXPIRED")
+		                    router.push({'name': 'Logout'})
+		                } else {
+		                    console.log("normal error!")
+		                    reject(error)
+		                }
+
+				});
+
+   		})
+
+   },
+
 
 
 

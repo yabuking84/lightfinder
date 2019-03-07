@@ -9,7 +9,8 @@
 					
 			<v-card-text>
 
-				  <v-card class="mb-1" v-for="item in items" >
+				<div v-for="item in items">
+				  <v-card class="mb-1"  >
 
 							<v-card-title primary-title>
 
@@ -59,6 +60,7 @@
 
 					   	 </v-card-actions>
 		   	 	</v-card>
+		   	 	</div>
 			  
 			</v-card-text>
 
@@ -86,7 +88,6 @@
 				dialog: false,
 				img: `/static/examples/Logo-Samples2-08-min.jpg`,
 			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
-
 				items: [
 				  {
 					product_name: 'LED STRIP Light',

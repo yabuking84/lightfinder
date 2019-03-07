@@ -11,12 +11,11 @@
 		        	<v-toolbar height="49px" dark color="grey darken-4">
 							<h1 class="font-weight-light title">Add Buyer</h1>	
 						 <v-spacer></v-spacer>
+
 					    <v-btn icon @click="Sort('desc')">
-					      <v-icon>sort</v-icon>
+					      <v-icon>close</v-icon>
 					    </v-btn>
-					    <v-btn icon @click="Refresh('refresh')">
-					      <v-icon>refresh</v-icon>
-					    </v-btn>
+					 
 					</v-toolbar>
 
 					<v-container>
@@ -130,7 +129,8 @@
 </template>
 
 <script>
-
+	
+	import AdminBuyerBus from "@/bus/admin-buyer";
 	import helpers from "@/mixins/helpers";
 	import { required, email, maxLength } from 'vuelidate/lib/validators'
 	import validationMixin from '@/mixins/validationMixin'
@@ -268,9 +268,8 @@
 
 					// create a event bus 
 					this.$emit('update:dialog', false);
-					/*
-						inqEvent.emifornsubmitted()
-					*/
+					AdminBuyerBus.emitFormSubmitted()
+					
 					
 				})
 				.catch((e) => {
@@ -283,7 +282,17 @@
 
 
 				// console.log(this.form);
+			},
+
+
+			deleteBuyer(buyer_id) {
+
+				console.log(buyer_id)
 			}
+
+
+
+
 		}
 	} 
 

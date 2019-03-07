@@ -5,10 +5,7 @@
           <v-toolbar dark color="grey darken-4">
             <h1 class="font-weight-light title">Buyer</h1>  
            <v-spacer></v-spacer>
-            <v-btn icon @click="Sort('desc')">
-              <v-icon>sort</v-icon>
-            </v-btn>
-            <v-btn icon @click="Refresh('refresh')">
+            <v-btn icon @click="Refresh()">
               <v-icon>refresh</v-icon>
             </v-btn>
           </v-toolbar>
@@ -36,12 +33,18 @@
                               <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.id" primary hide-details  ></v-checkbox></td>
                               <td class="font-weight-medium"> 
 
+
                                 <v-avatar size="40px">
                                     <img
                                       v-if="props.item.avatar"
                                       :src="props.item.avatar"
                                       alt="Avatar"
-                                    > </v-avatar>
+                                  >
+
+                                <v-icon v-else color="grey darken-4" dark>account_circle</v-icon>
+
+
+                                   </v-avatar>
 
                               </td>
                               <td class="font-weight-medium">{{ props.item.first_name }}</td>
@@ -57,13 +60,13 @@
                                  <v-icon
                                     small
                                     class="mr-2"
-                                    @click="editItem(props.item)"
+                                    @click="editBuyer(props.item.id)"
                                   >
                                     edit
                                   </v-icon>
                                   <v-icon
                                     small
-                                    @click="deleteItem(props.item)"
+                                    @click="deleteBuyer(props.item.id)"
                                   >
                                     delete
                                   </v-icon>
@@ -83,16 +86,26 @@
 
         </v-card>
 
+          <!-- buyer dialog -->
+          <!-- <buyer-dialogs :dialog.sync="dialog"> </buyer-dialogs> -->
+          <!-- buyer dialog -->
+
  </div>
 </template>
 
 <script>
-import inqEvntBs from "@/bus/inquiry";
-import helpers from "@/mixins/helpers";
 
-import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+// import BuyerDialogs from '@/views/components/app/Admin/BuyerDialog'
+import adminBuyerBus from "@/bus/admin-buyer"
+import helpers from "@/mixins/helpers"
+
+import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
 
   export default {
+
+    components: {
+      
+    },
     mixins: [
         helpers,
     ],
@@ -206,13 +219,56 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
             });
 
         },
+
+        editBuyer(buyer_id) {
+
+          let data = {
+            "id" : buyer_id
+          }
+
+          this.$store.dispatch('adminBuyer/getBuyer_a', {
+
+             data:data
+
+          })
+          .then((response) => {
+
+              console.log(response);
+              this.dialog = true
+
+          })
+          .catch((e) => {
+
+              console.log(e);
+              this.loading = false;
+
+          })
+          .finally(() => {
+
+             this.loading = false;
+
+          })
+
+        },
+
+
+        deleteBuyer(buyer_id) {
+          alert(nothing);
+        },
+
+        Refresh() {
+
+          this.fillTable();
+          
+        }
+
     },
 
     created(){
 
         this.fillTable();
         
-        inqEvntBs.$on('inquiry-form-submitted',()=>{
+        adminBuyerBus.$on('buyer-form-submitted',()=>{
             this.fillTable();
         });
 

@@ -1,79 +1,116 @@
 <template>
+
  <div>
 
-  <v-card>
 
-    <v-toolbar dark color="grey darken-4">
-            <h1 class="font-weight-light title">Inquiry</h1>  
-           <v-spacer></v-spacer>
-            <v-btn icon @click="Sort('desc')">
-              <v-icon>sort</v-icon>
-            </v-btn>
-            <v-btn icon @click="Refresh('refresh')">
+        <v-toolbar dark color="grey darken-4">
+
+           <v-btn-toggle multiple v-model="inquiryStatus">
+                <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
+                      <v-btn flat value="left" :value="status.id" :title="status.name" >
+                        <i class="white--text" :class="status.icon"></i> 
+                        <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
+                    </v-btn>  
+                </span>
+            </v-btn-toggle>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="refresh()">
               <v-icon>refresh</v-icon>
             </v-btn>
-          </v-toolbar>
-    
-      <v-flex xs3 offset-xs9 mr-2 ml3 mt-4>
-             <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
-             </v-text-field>   
-    </v-flex>
-    <v-divider></v-divider>
 
-    <v-data-table
-          :headers="headers"
-          :items="dataItems"
-          :loading="loading"
-          :search="search">
-        <template slot="items" slot-scope="props">
-            <tr class="th-heading"  @click="click(props.item.name)">
+        </v-toolbar>
 
-                <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details  ></v-checkbox></td>
-                <td class="text-xs-center font-weight-medium">{{ props.item.keywords }}</td>
-                <td class="text-xs-center font-weight-medium">{{ props.item.message }}</td>
-                <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
-                <td class="text-xs-center">{{ props.item.quantity }}</td>
+           <v-card>
 
-                <td class="text-xs-center">{{ props.item.shipping_date }}</td>
-                <td class="text-xs-center">{{ props.item.created_at }}</td>
-                <td class="text-xs-center">
-                       <inquiry-status-buttons :status-id="props.item.status"/>
-                </td>
-                <td class="text-xs-center">
-                  <!-- <v-btn small flat @click="dialog = true" value="left" class="v-btn--active grey darken-1  -->
-                     <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">  
-                        <router-link :to="{ name: 'BuyerInquiryView', params: { userId: 123 }}">
-                           <i class="fas fa-eye white--text"></i>             
-                          <span class="ml-1 white--text font-weight-light ">View</span>
-                      </router-link>
-                    </v-btn>
-                </td>
-            </tr>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-            Your search for "{{ search }}" found no results.
-        </v-alert>
-    </v-data-table>
+                    <v-flex xs3 offset-xs9 pt-4>
+                         <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
+                         </v-text-field>   
+                    </v-flex>
+                  
+                  <v-divider></v-divider>
+                 
+                  <v-data-table
+                  
+                        :headers="headers"
+                        :items="tableItems"
+                        :loading="loading"
+                        :search="search">
 
-  </v-card>
+                      <template slot="items" slot-scope="props">
 
+                          <tr class="th-heading">
 
- </div>
+                              <td>
+                                <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details ></v-checkbox>
+                              </td>
+
+                              <td class="text-xs-left font-weight-medium">
+                                  <h4 class="mt-3"># {{ props.item.inq_id }}</h4>
+                                  <h3 class="mb-1">{{ props.item.keywords }}</h3>
+                                  <p class="mb-3">{{ props.item.message }}</p>
+                              </td>
+
+                              <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
+                              
+                              <td class="text-xs-center">{{ props.item.quantity }}</td>
+
+                              <td class="text-xs-left">
+                                  <div class="dateCellWidth">
+                                      {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
+                                  </div>
+                              </td>
+                              
+                              <td class="text-xs-center">
+                                  <div class="dateCellWidth">
+                                      {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
+                                  </div>
+                              </td>
+                              
+                              <td class="text-xs-center">
+                                     <inquiry-status-buttons :status-id="props.item.status"/>
+                              </td>
+                              
+                              <td class="text-xs-center">
+                                     <router-link :to="{ name: 'BuyerInquiryView', params: { inq_id: props.item.inq_id }}">
+                                      <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                                          <i class="fas fa-eye white--text"></i>
+                                          <span class="ml-1 white--text font-weight-light ">View</span>
+                                      </v-btn>
+                                  </router-link>
+                              </td>
+
+                          </tr>
+
+                      </template>
+
+                        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                            Your search for "{{ search }}" found no results.
+                        </v-alert>
+
+                  </v-data-table>
+                
+            </v-card>
+
+  </div>
 </template>
 
 <script>
+
 import inqEvntBs from "@/bus/inquiry";
     
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+import main from "@/config/main"
 
-  export default {
+export default {
+
     mixins: [
         helpers,
     ],
     data: function () {
     return {
 
+        statuses: main.inquiry_statuses.default,
         search: '',
         dialog: false,
         loading: false,
@@ -86,51 +123,44 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
             },
            
             {
-              text: 'Keywords',
-              align: 'center',  
-              sortable: false,
-              value: 'keywords'
-            },
-           
-            {
-              text: 'Message',
-              align: 'center',  
-              sortable: false,
-              value: 'message'
+              text: 'Keywords & Message',
+              align: 'left',  
+              sortable: true,
+              value: 'keywordsAndMessage'
             },
 
             {
               text: 'Categories',
-              align: 'center',  
-              sortable: false,
+              align: 'left',  
+              sortable: true,
               value: 'categories'
             },
             
             {
               text: 'Quantity',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'quantity'
             },
             
             {
               text: 'Preferred Shipping Date',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'shipping_date'
             },
             
             {
               text: 'Date',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'created_at'
             },
 
             {
               text: 'Status',
-              align: 'center',
-              sortable: false,
+              align: 'left',
+              sortable: true,
               value: 'status'
             },
 
@@ -141,23 +171,26 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
             },
         ],
 
-        dataItems: []
+        inquiryStatus: [],
+        allInquiries: [],
+        tableItems: [],
+
       }
     },
     components: {
+
       InquiryStatusButtons,
+
     },
     methods: {
-        click: function(name) {
-            // window.location.href = '/buyer/view'
-        },
 
         fillTable() {
 
             this.loading = true;
-            this.dataItems = [];
-            this.$store.dispatch('byrInq/getInquiries_a')
+            this.allInquiries = [];
+            this.$store.dispatch('adminInquiries/getAllInquiries_a')
             .then((response) => {
+
                 for (var i = response.length - 1; i >= 0; i--) {
                     var item = {};
                     item.inq_id = response[i].id;
@@ -168,9 +201,10 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
                     item.shipping_date = response[i].desired_shipping_date;
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
-                    this.dataItems.push(item);
+                    this.allInquiries.push(item);
                 }
 
+                this.tableItems = this.allInquiries;
                 this.loading = false;
 
             })
@@ -183,7 +217,22 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
             });
 
         },
+
+        refresh(){
+            this.fillTable();
+            this.inquiryStatus = [];
+        },
+
+        filterTable(){
+              if(!this.inquiryStatus.length) {
+                  this.tableItems = this.allInquiries;
+              } else {
+                  this.tableItems = this.allInquiries.filter(inq=>this.inquiryStatus.includes(inq.status));
+              }
+        },
     },
+ 
+
 
     created(){
 
@@ -191,8 +240,18 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
         inqEvntBs.onFormSubmitted(this.fillTable);
 
     },
+
+    watch: {
+
+        inquiryStatus(nVal,oVal){
+            this.filterTable();
+         },
+
+    }
+
   }
 </script>
+
 
 
 <style scoped lang="stylus">
@@ -207,5 +266,19 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
        text-decoration: none;
     .th-heading a 
        text-decoration:none;
+
+</style>
+
+<style scoped lang="scss">
+
+  .theme--light.v-datatable thead th.column.sortable.active .v-icon,
+  .v-datatable thead th.column.sortable:focus .v-icon, 
+  .v-datatable thead th.column.sortable:hover .v-icon {
+      // margin-right: 5px;
+  }
+
+  .dateCellWidth {
+      min-width: 110px;
+  }
 
 </style>

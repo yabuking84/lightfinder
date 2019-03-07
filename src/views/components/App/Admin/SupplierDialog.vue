@@ -131,9 +131,9 @@
 					  			</v-flex>
 					  			<v-flex xs9 offset-xs1>
 					  		    	<v-text-field 
-					  		    	v-model="form.telephone"
-					  		    	:error-messages="fieldErrors('form.telephone')"
-					  		    	@blur="$v.form.telephone.$touch()"
+					  		    	v-model="form.phone"
+					  		    	:error-messages="fieldErrors('form.phone')"
+					  		    	@blur="$v.form.phone.$touch()"
 					  		    	 color="black"
 					  		    	  label="Telephone Number" required></v-text-field>
 					  			</v-flex>
@@ -151,7 +151,7 @@
 
 		             <v-card-actions>
 			                <v-spacer></v-spacer>
-			               <v-btn color="grey darken-4" dark @click="submit()">
+			               <v-btn color="grey darken-4" dark @click="submit()" :loading="formloading">
 			                    Submit
 			                </v-btn> 
 			             </v-card-actions>
@@ -164,25 +164,28 @@
 </template>
 
 <script>
-
+	
+	import adminSupplierBus from "@/bus/admin-supplier";
 	import { required, email, maxLength } from 'vuelidate/lib/validators'
 	import helpers from "@/mixins/helpers"
 	import validationMixin from '@/mixins/validationMixin'
 
+
 	const dform = {
 
-		brand_name: '',
-		factory_name: '',
-		address: '',
-		country: '',
-		no_employee: '',
-		company_description: '',
-		owner_firstname: '',
-		owner_lastname: '',
-		contact_person: '',
-		job_title: '',
-		telephone: '',
-		fax: ''
+		brand_name 		 	: '',
+		factory_name	 	: '',
+		address 		 	: '',
+		country 		 	: '',
+		no_employee 		: '',
+		company_description : '',
+		owner_firstname 	: '',
+		owner_lastname 		: '',
+		contact_person	 	: '',
+		job_title 			: '',
+		phone 				: '',
+		fax 				: '',
+		password 			: '',
 
 	}
 
@@ -194,19 +197,19 @@
 
 			form: {
 
-				brand_name: { required },
-				factory_name: { required },
-				address: { required },
-				country:  { required },
-				no_employee: { required },
-				company_description: { required },
-				owner_firstname: { required },
-				owner_lastname: { required },
-				contact_person: { required },
-				job_title: { required },
-				telephone: { required },
-				fax: { required },
-				email: { required, email }, 
+				brand_name 			: { required },
+				factory_name		: { required },
+				address 			: { required },
+				country 			: { required },
+				no_employee			: { required },
+				company_description : { required },
+				owner_firstname 	: { required },
+				owner_lastname		: { required },
+				contact_person 		: { required },
+				job_title 			: { required },
+				phone 				: { required },
+				fax 				: { required },
+				email 				: { required, email }, 
 
 			}
 
@@ -216,19 +219,19 @@
 
 			form: {
 
-				brand_name: { required: 'Brand Name is Required' },
-				factory_name: { required: 'Factory nane is Required' },
-				address: { required: 'Address is Required' },
-				country:  { required: 'Country is Required' },
-				no_employee: { required: 'No. of Employee is Required' },
-				company_description: { required: 'Company Description is Required' },
-				owner_firstname: { required: 'Owner First Name is Required' },
-				owner_lastname: { required: 'Owner Last Name is Required' },
-				contact_person: { required: 'Contact Person is Required' },
-				job_title: { required: 'Job Title is Required' },
-				telephone: { required: 'Telephone is Required' },
-				fax: { required: ' Fax is Required' },
-				email: { required: 'Email is Required', email: 'Email is Invalid' }, 
+				brand_name 			: { required: 'Brand Name is Required' },
+				factory_name 		: { required: 'Factory nane is Required' },
+				address 			: { required: 'Address is Required' },
+				country 			: { required: 'Country is Required' },
+				no_employee 	 	: { required: 'No. of Employee is Required' },
+				company_description : { required: 'Company Description is Required' },
+				owner_firstname 	: { required: 'Owner First Name is Required' },
+				owner_lastname	 	: { required: 'Owner Last Name is Required' },
+				contact_person		: { required: 'Contact Person is Required' },
+				job_title			: { required: 'Job Title is Required' },
+				phone 				: { required: 'Telephone is Required' },
+				fax 				: { required: ' Fax is Required' },
+				email 				: { required: 'Email is Required', email: 'Email is Invalid' }, 
 
 			}
 		},
@@ -239,7 +242,7 @@
 				form: Object.assign({}, dform ),
 				countries: [],
 				search: null,
-				loading: false
+				formloading: false
 			}
 
 		},
@@ -254,14 +257,11 @@
 		},
 
 		created: function () {
-			// this.$store.dispath('/cat')	
 
-
-
-			
 			/*
 				get countries
 			*/
+
 			this.$store.dispatch('adminHelper/getCountries')
 	        .then((response)=>{
 				this.countries = response
@@ -285,7 +285,50 @@
 
 			submit() {
 
-				console.log(this.form);
+
+				this.formloading = true
+
+				let data = {
+
+					'email'	 	   			: this.form.email,
+					'password' 	   			: this.form.password,
+					'first_name'   			: this.form.first_name,
+					'last_name'    			: this.form.last_name,
+					'job_title'    			: this.form.job_title,
+					'phone'	  	   			: this.form.phone,
+					'fax'		   			: this.form.fax,
+					'address'	   			: this.form.address,
+					'country_id'  			: this.form.country,
+					'brand_name'   			: this.form.brand_name,
+					'factory_name' 			: this.form.factory_name,
+					'no_employee'  			: this.form.no_employee,
+					'company_description' 	: this.form.company_description,
+					'contact_person' 		: this.form.contact_person
+
+				}
+
+				this.$store.dispatch('adminSupplier/addSupplier_a', {
+					data:data
+				})
+				.then((response) => {
+
+					this.formloading = false
+					console.log(response)
+
+					this.$emit('update:dialog', false);
+					AdminBuyerBus.emitFormSubmitted()
+
+				})
+				.catch((e) => {
+					console.log(e);
+					this.formloading = false
+				})
+				.finally(() => {
+					this.formloading = false
+				})
+
+
+
 				 this.snackbar = true
 				 this.loading = true
 		         // this.resetForm()
