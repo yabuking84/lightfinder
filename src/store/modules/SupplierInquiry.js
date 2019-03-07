@@ -33,7 +33,7 @@ const state = {
         getInquiryBid: {
             method: 'get',
             url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
-            url2: 'bids',
+            url2: 'bids/own-bid',
         },
 
     },
@@ -110,7 +110,7 @@ const actions = {
     },
 
 
-    getInquiryBids_a(context,data){
+    getAllInquiryBids_a(context,data){
         return new Promise((resolve, reject) => {
             var method = state.api.getInquiryBids.method; 
             var url = state.api.getInquiryBids.url+"/"+data.inq_id+"/"+state.api.getInquiryBids.url2; 
@@ -151,7 +151,7 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
-                resolve(response.data[0]);
+                resolve(response.data);
             })
             .catch(error => {
 

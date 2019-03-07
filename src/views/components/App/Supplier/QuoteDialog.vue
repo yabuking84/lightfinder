@@ -226,7 +226,7 @@ export default {
             this.loading = true;
 
             var formData = {
-                "price": this.formData.total_price,
+                "price": this.formData.price,
                 "total_price": this.formData.total_price,
                 "product_name": this.formData.product_name,
                 "remarks": this.formData.remarks,
