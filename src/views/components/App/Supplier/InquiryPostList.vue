@@ -20,39 +20,21 @@
       	<v-card class="minh-500" color="grey lighten-5">
 			<v-container fluid grid-list-md>
 
-				<div v-for="item in items">
-					
+				<div v-for="bidItem in bidItems">					
 					<v-card class="mb-2 pa-2" >
-
 			   	 	   <v-layout row wrap class="pa-2">
-
-
-							<!-- section image -->
-			   	 	     	<!-- <v-flex xs1 class="justify-center text-xs-center row column">
-								<img class="pa-0" width="160px;" :src="img">
-			   	 	     	</v-flex> -->
-							<!-- section image -->
-
-					
-							<!-- section list -->
-			   	 	     	<!-- <v-flex xs9 pl-5 pr-5>
-		   	 	     			<h2 class="ml-2 ml-5">{{ item.supplier_name }}</h2>
-		   	 	     			<h5 class="ml-2 ml-5 font-weight-light">China Lightings Labs</h5>
-		   	 	     			<h5 class="ml-2 ml-5 font-weight-light">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-								</h5>
-			   	 	     	</v-flex> -->
-			   	 	     	<!-- section list -->
-
-			   	 	     	<v-flex xs6>
-			   	 	     		{{ item.supplier_name }}
-			   	 	     	</v-flex> 
-
-
-							<!-- section pricing  -->
-			   	 	     	<v-flex xs6>
-								<h3 class="text-xs-center">${{ item.price_piece }} / piece</h3>
+			   	 	     	<v-flex xs6>			   	 	     		
+			   	 	     		<h3 class="text-xs-left ml-3">
+			   	 	     			<span class="font-weight-light">Overall: </span>
+			   	 	     			${{ bidItem.total_price}}
+			   	 	     		</h3>
 			   	 	     	</v-flex>
-							<!-- section pricing  -->
+							
+			   	 	     	<v-flex xs6>			   	 	     		
+								<h3 class="font-weight-light text-xs-left ml-3">
+									${{ bidItem.price }} / piece
+								</h3>
+			   	 	     	</v-flex>							
 			   	 	   </v-layout>
 			   	 	</v-card>
 				</div>
@@ -82,6 +64,12 @@
 			BidDialog
 		},
 
+		props: {
+			inquiry:{
+				type:Object,
+			}
+		},
+
 	    data: function () {
 
 			return {
@@ -89,50 +77,41 @@
 				img: `/static/examples/Logo-Samples2-08-min.jpg`,
 			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
 
-				items: [
-				{
-					supplier_name: 'China Lighting',
-					supplier_status: 'Verified Badge',
-					price_piece: '15.69',
-				},
-
-				{
-					supplier_name: 'Up Shine Labs',
-					supplier_status: 'Verified Badge',
-					price_piece: '17.69',
-				},
-
-				{
-					supplier_name: 'Almani Ligthing',
-					supplier_status: 'Verified Badge',				  	
-					price_piece: '14.19',
-				},
-
-				{
-					supplier_name: 'Go Light',
-					supplier_status: 'Verified Badge',
-					price_piece: '18.29',
-				},
-
-				{
-					supplier_name: 'Lighting Labs',
-					supplier_status: 'Verified Badge',									  	
-					price_piece: '12.29',
-				},
-
-				{
-					supplier_name: 'Binve Strip Lights',
-					supplier_status: 'Verified Badge',
-					price_piece: '10.33',
-				},
-
-				]
+				bidItems: [],
 			}
 		},
 
-	    created(){
+		methods: {
+			fillBidTable(){
 
-	        // inqEvntBs.onBidFormSubmitted(this.fillTable);
+				this.$store.dispatch('spplrInq/getAllInquiryBids_a',{inq_id:this.inquiry.id})
+				.then(response=>{
+					// console.log(response);
+					this.bidItems = response;
+					this.bidItems.sort((a,b)=>{
+						// return b.total_price - a.total_price;
+						return a.total_price - b.total_price;
+					});
+				})
+				.catch(error=>{
+                    console.log(error);					
+				});
+			},
+		},
+
+	    created(){
+	    	this.fillBidTable();
+	        inqEvntBs.onBidFormSubmitted(this.fillBidTable);
+	    },
+
+	    mounted(){
+
+		    this.$nextTick(function () {
+		      //   window.setInterval(() => {
+			    	// this.fillBidTable();
+		      //   },5000);
+			    console.log("nexttick");
+		    })
 
 	    },
 	}

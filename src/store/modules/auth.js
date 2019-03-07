@@ -131,9 +131,13 @@ const actions = {
                 // set user details 
 
                 
+                // set inquiry statuses
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 context.dispatch('retrieveInquiryStatuses_a').then(function(){                    
                     resolve(response);
                 });
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // set inquiry statuses
 
 
 
