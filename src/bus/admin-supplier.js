@@ -9,11 +9,11 @@ const InquiryEventBus = new Vue({
 
 
 		emitFormSubmitted(){
-			this.$emit('buyer-form-submitted');
+			this.$emit('supplier-form-submitted');
 			// console.log('emitFormSubmitted');
 		},
 		onFormSubmitted(func){
-			this.$on('buyer-form-submitted',()=>{
+			this.$on('supplier-form-submitted',()=>{
 				func();
 				// console.log('onFormSubmitted');
 	        });

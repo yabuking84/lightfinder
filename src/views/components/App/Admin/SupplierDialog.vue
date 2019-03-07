@@ -3,6 +3,7 @@
 	    <v-dialog :value="dialog" 
 	        @input="$emit('update:dialog', false)" 
 	        scrollable 
+	        :persistent=true
 	        max-width="50%">
 	        <v-card>
 
@@ -11,35 +12,102 @@
 		        	<v-toolbar height="49px" dark color="grey darken-4">
 							<h1 class="font-weight-light title">Add Supplier</h1>	
 						 <v-spacer></v-spacer>
-					    <v-btn icon @click="Sort('desc')">
-					      <v-icon>sort</v-icon>
+					    <v-btn icon @click="closeDialog()">
+					      <v-icon>close</v-icon>
 					    </v-btn>
-					    <v-btn icon @click="Refresh('refresh')">
-					      <v-icon>refresh</v-icon>
-					    </v-btn>
+					
 					</v-toolbar>
 
 
 					<v-layout row wrap mt-4>
+
 						<v-flex xs6>
 
-					  		<v-flex xs9 offset-xs1>
-					  			<v-text-field color="black"
-					  			v-model="form.brand_name" 
-					  			:error-messages="fieldErrors('form.brand_name')"
-                			    @blur="$v.form.brand_name.$touch()" 
-					  			label="Brand Name" required></v-text-field>  
-					  		</v-flex>
+								<v-flex xs9 offset-xs1>
+									<v-layout row wrap>
 
-					  		<v-flex xs9 offset-xs1>
-					  		    <v-text-field  color="black" 
-					  		    v-model="form.factory_name" 
-					  		   :error-messages="fieldErrors('form.factory_name')"
-                			    @blur="$v.form.factory_name.$touch()" 
-					  		    label="Factory Name" required></v-text-field>
-					  		</v-flex>
+							  	  		<v-flex xs6 pr-1>
+							  	  		  <v-text-field   color="black"
+	 									 	 v-model="form.first_name"
+							  	  			 :error-messages="fieldErrors('form.first_name')"
+		                   			 		 @blur="$v.form.first_name.$touch()"
+							  	  		    label="First Name" required></v-text-field>  
+										</v-flex>	
 
-					  		<v-flex xs9 offset-xs1>
+										<v-flex xs6>
+											<v-text-field 
+											v-model="form.last_name"
+											:error-messages="fieldErrors('form.last_name')"
+		                   			 		@blur="$v.form.last_name.$touch()"
+		                   			 		color="black" label="Last Name" required></v-text-field>  
+										</v-flex>	
+
+									</v-layout>
+					  			</v-flex>
+
+
+					  			 <v-flex xs9 offset-xs1>
+					  		    	<v-text-field 
+					  		    	v-model="form.owner_name"
+					  		    	:error-messages="fieldErrors('form.owner_name')"
+	                   			 	@blur="$v.form.owner_name.$touch()"
+					  		    	 color="black" label="Owner Name" required></v-text-field>
+					  			</v-flex>
+
+
+					  			 <v-flex xs9 offset-xs1>
+					  		    	<v-text-field 
+					  		    	v-model="form.email"
+					  		    	:error-messages="fieldErrors('form.email')"
+					  		    	@blur="$v.form.email.$touch()"
+					  		    	 color="black" label="Email" required></v-text-field>
+					  			</v-flex>
+
+					  			 <v-flex xs9 offset-xs1>
+							  			 <v-text-field
+									  		     v-model="form.password"
+									            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+									            :type="showPassword ? 'text' : 'password'"
+									            name="input-10-2"
+									            :error-messages="fieldErrors('form.password')"
+				                			    @blur="$v.form.password.$touch()" 
+									            label="Password"
+									            hint="At least 8 characters"
+									            @click:append="showPassword = !showPassword"
+							          ></v-text-field>
+					          	</v-flex>
+
+
+					          	
+
+
+<v-flex xs9 offset-xs1>
+
+					  		<v-layout row wrap>
+					  		 	<v-flex xs6 pr-1>
+					  		    	<v-text-field 
+					  		    	v-model="form.phone"
+					  		    	:error-messages="fieldErrors('form.phone')"
+					  		    	@blur="$v.form.phone.$touch()"
+					  		    	 color="black"
+					  		    	  label="Telephone Number" required></v-text-field>
+					  			</v-flex>
+
+					  				<v-flex xs6 >
+					  		    	<v-text-field 
+					  		    	v-model="form.fax"
+					  		    	:error-messages="fieldErrors('form.fax')"
+					  		    	@blur="$v.form.fax.$touch()"
+					  		    	 color="black" label="Fax" required></v-text-field>
+					  			</v-flex>
+					  		</v-layout>
+
+
+					  		
+
+					  	</v-flex>
+
+					  			<v-flex xs9 offset-xs1>
 					  		    <v-text-field  
 					  		    color="black" 
 					  		    v-model="form.address"
@@ -48,11 +116,10 @@
 					  		     label="Address" required></v-text-field>
 					  		</v-flex>
 
+
 					  		<v-flex xs9 offset-xs1>
 
-							<v-layout row wrap>
-					  	  		<v-flex xs6 pr-1>
-					  	  		   <v-select color="black" 
+					  			 <v-select color="black" 
 					  	  		    v-model="form.country" 
 					  	  		    :items="countries"
 					  	  		    :search-input.sync="search"
@@ -63,6 +130,19 @@
 	                   			    @blur="$v.form.country.$touch()" 
 					  	  		    label="Country" 
 					  	  		    data-vv-name="Country" required ></v-select>  
+					  		  
+					  		</v-flex>
+
+
+<v-flex xs9 offset-xs1>
+
+							<v-layout row wrap>
+					  	  		<v-flex xs6 pr-1>
+					  	  		   	<v-text-field  
+					  		    	v-model="form.job_title"
+					  		    	:error-messages="fieldErrors('form.job_title')"
+					  		    	@blur="$v.form.job_title.$touch()"
+					  		    	 color="black" label="Job Title" required></v-text-field>
 								</v-flex>	
 
 								<v-flex xs6>
@@ -76,75 +156,40 @@
 
 					  		</v-flex>
 
-					  		<v-flex xs9 offset-xs1>
+
+					  	</v-flex>
+
+					  	<v-flex xs6>
+
+
+					  		<v-flex xs11 >
+					  			<v-text-field color="black"
+					  			v-model="form.brand_name" 
+					  			:error-messages="fieldErrors('form.brand_name')"
+                			    @blur="$v.form.brand_name.$touch()" 
+					  			label="Brand Name" required></v-text-field>  
+					  		</v-flex>
+
+
+					  			<v-flex xs11>
+					  		    <v-text-field  color="black" 
+					  		    v-model="form.factory_name" 
+					  		   :error-messages="fieldErrors('form.factory_name')"
+                			    @blur="$v.form.factory_name.$touch()" 
+					  		    label="Factory Name" required></v-text-field>
+					  		</v-flex>
+
+					  		  		<v-flex xs11>
 					  		     <v-textarea color="black" 
 					  		      v-model="form.company_description"
 					  		      :error-messages="fieldErrors('form.company_description')"
 	                   			  @blur="$v.form.company_description.$touch()" 
 					  		      name="input-7-4" label="Company Description" value="" ></v-textarea>
 					  		</v-flex>
+
 					  	</v-flex>
 
-					  	<v-flex xs6>
-					  	  		<v-flex xs9 offset-xs1>
-								<v-layout row wrap>
 
-						  	  		<v-flex xs6 pr-1>
-						  	  		  <v-text-field   color="black"
- 									 	 v-model="form.owner_firstname"
-						  	  			 :error-messages="fieldErrors('form.owner_firstname')"
-	                   			 		 @blur="$v.form.owner_firstname.$touch()"
-						  	  		    label="Owner First Name" required></v-text-field>  
-									</v-flex>	
-
-									<v-flex xs6>
-										<v-text-field 
-										v-model="form.owner_lastname"
-										:error-messages="fieldErrors('form.owner_lastname')"
-	                   			 		@blur="$v.form.owner_lastname.$touch()"
-	                   			 		color="black" label="Owner Last Name" required></v-text-field>  
-									</v-flex>	
-
-								</v-layout>
-					  			</v-flex>
-
-					  		  	 <v-flex xs9 offset-xs1>
-					  		    	<v-text-field 
-					  		    	v-model="form.contact_person"
-					  		    	:error-messages="fieldErrors('form.contact_person')"
-	                   			 	@blur="$v.form.contact_person.$touch()"
-					  		    	 color="black" label="Contact Person" required></v-text-field>
-					  			</v-flex>
-					  			 <v-flex xs9 offset-xs1>
-					  		    	<v-text-field 
-					  		    	v-model="form.email"
-					  		    	:error-messages="fieldErrors('form.email')"
-					  		    	@blur="$v.form.email.$touch()"
-					  		    	 color="black" label="Email" required></v-text-field>
-					  			</v-flex>
-					  			 <v-flex xs9 offset-xs1>
-					  		    	<v-text-field  
-					  		    	v-model="form.job_title"
-					  		    	:error-messages="fieldErrors('form.job_title')"
-					  		    	@blur="$v.form.job_title.$touch()"
-					  		    	 color="black" label="Job Title" required></v-text-field>
-					  			</v-flex>
-					  			<v-flex xs9 offset-xs1>
-					  		    	<v-text-field 
-					  		    	v-model="form.phone"
-					  		    	:error-messages="fieldErrors('form.phone')"
-					  		    	@blur="$v.form.phone.$touch()"
-					  		    	 color="black"
-					  		    	  label="Telephone Number" required></v-text-field>
-					  			</v-flex>
-					  			<v-flex xs9 offset-xs1>
-					  		    	<v-text-field 
-					  		    	v-model="form.fax"
-					  		    	:error-messages="fieldErrors('form.fax')"
-					  		    	@blur="$v.form.fax.$touch()"
-					  		    	 color="black" label="Fax" required></v-text-field>
-					  			</v-flex>
-					  	</v-flex>
 					</v-layout>
 
 	           		 <v-divider></v-divider>
@@ -181,7 +226,7 @@
 		company_description : '',
 		owner_firstname 	: '',
 		owner_lastname 		: '',
-		contact_person	 	: '',
+		owner_name	 		: '',
 		job_title 			: '',
 		phone 				: '',
 		fax 				: '',
@@ -203,13 +248,14 @@
 				country 			: { required },
 				no_employee			: { required },
 				company_description : { required },
-				owner_firstname 	: { required },
-				owner_lastname		: { required },
-				contact_person 		: { required },
+				first_name 			: { required },
+				last_name			: { required },
+				owner_name 			: { required },
 				job_title 			: { required },
 				phone 				: { required },
 				fax 				: { required },
-				email 				: { required, email }, 
+				email 				: { required, email },
+				password 			: { required } 
 
 			}
 
@@ -225,9 +271,9 @@
 				country 			: { required: 'Country is Required' },
 				no_employee 	 	: { required: 'No. of Employee is Required' },
 				company_description : { required: 'Company Description is Required' },
-				owner_firstname 	: { required: 'Owner First Name is Required' },
-				owner_lastname	 	: { required: 'Owner Last Name is Required' },
-				contact_person		: { required: 'Contact Person is Required' },
+				first_namee 		: { required: 'Owner First Name is Required' },
+				last_name	 		: { required: 'Owner Last Name is Required' },
+				owner_name			: { required: 'Owner is Required' },
 				job_title			: { required: 'Job Title is Required' },
 				phone 				: { required: 'Telephone is Required' },
 				fax 				: { required: ' Fax is Required' },
@@ -239,20 +285,50 @@
 		data () {
 
 			return {
-				form: Object.assign({}, dform ),
+				form: {
+
+					brand_name 		 	: '',
+					factory_name	 	: '',
+					address 		 	: '',
+					country 		 	: '',
+					no_employee 		: '',
+					company_description : '',
+					owner_firstname 	: '',
+					owner_lastname 		: '',
+					owner_name	 		: '',
+					job_title 			: '',
+					phone 				: '',
+					fax 				: '',
+					password 			: '',
+
+				 },
 				countries: [],
 				search: null,
-				formloading: false
+				formloading: false,
+				showPassword: false
 			}
 
 		},
 
-		props: {
+		props: [
 
-			dialog: {
-				type: Boolean,
-				default: false,
-			},
+			'dialog',
+			'supplier_id',
+			'is_new',
+			'supplierData'
+
+		],
+
+
+		watch: {
+
+			supplierData: {
+
+				handler(nval,oval) {
+					this.fillForm();
+				}
+
+			}
 
 		},
 
@@ -277,6 +353,39 @@
 
 		methods: {
 
+
+			fillForm() {
+
+
+
+				 this.form.email,
+				 this.form.password,
+				 this.form.first_name,
+				 this.form.last_name,
+				 this.form.job_title,
+				 this.form.phone,
+				 this.form.fax,
+				 this.form.address,
+				 this.form.country,
+				 this.form.brand_name,
+				 this.form.factory_name,
+				 this.form.company_description,
+				 this.form.owner_name,
+				 this.form.no_employee
+
+
+
+			},
+
+			closeDialog() {
+
+				this.$emit('update:dialog', false);
+				this.$emit('update:is_new', false);
+				this.$emit('update:supplier_id', null);
+
+				this.resetForm();
+			},	
+
 			resetFrom() {
 				this.form = Object.assign({}, dform)
 				this.$refs.form.reset();
@@ -285,6 +394,7 @@
 
 			submit() {
 
+				console.log(this.form);
 
 				this.formloading = true
 
@@ -301,9 +411,9 @@
 					'country_id'  			: this.form.country,
 					'brand_name'   			: this.form.brand_name,
 					'factory_name' 			: this.form.factory_name,
-					'no_employee'  			: this.form.no_employee,
 					'company_description' 	: this.form.company_description,
-					'contact_person' 		: this.form.contact_person
+					'owner_name' 			: this.form.owner_name,
+					'no_of_employees'		: this.form.no_employee
 
 				}
 
@@ -316,7 +426,7 @@
 					console.log(response)
 
 					this.$emit('update:dialog', false);
-					AdminBuyerBus.emitFormSubmitted()
+					adminSupplierBus.emitFormSubmitted()
 
 				})
 				.catch((e) => {
@@ -326,13 +436,7 @@
 				.finally(() => {
 					this.formloading = false
 				})
-
-
-
-				 this.snackbar = true
-				 this.loading = true
-		         // this.resetForm()
-		         // this.$v.$reset()
+		    
 			}
 		}
 	} 

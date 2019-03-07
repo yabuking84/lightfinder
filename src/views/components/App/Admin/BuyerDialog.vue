@@ -1,18 +1,21 @@
 <template>
 	<div>
 	    <v-dialog :value="dialog" 
-	        @input="$emit('update:dialog', false)" 
+	        @input="$emit('update:dialog', false)"
 	        scrollable 
+	        :persistent=true
 	        max-width="25%">
 	        <v-card>
 
 		         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
 
 		        	<v-toolbar height="49px" dark color="grey darken-4">
-							<h1 class="font-weight-light title">Add Buyer</h1>	
+							<h1 v-if="is_new" class="font-weight-light title">Add </h1>	
+							<h1 v-else class="font-weight-light title">Edit </h1>
+				
 						 <v-spacer></v-spacer>
 
-					    <v-btn icon @click="Sort('desc')">
+					    <v-btn icon @click="closeDialog()">
 					      <v-icon>close</v-icon>
 					    </v-btn>
 					 
@@ -23,17 +26,20 @@
 
 					  		<v-flex xs10 offset-xs1>
 					  			<v-text-field  color="black"
-					  			 v-model="form.firstname" 
-					  			 :error-messages="fieldErrors('form.firstname')"
-                			    @blur="$v.form.firstname.$touch()" 
-					  			 label="First Name" required></v-text-field>  
+					  			 v-model="form.first_name" 
+					  			 :error-messages="fieldErrors('form.first_name')"
+                			    @blur="$v.form.first_name.$touch()" 
+					  			 label="First Name"
+					  			 required
+					  			 ></v-text-field>  
+
 					  		</v-flex>
 
 					  		<v-flex xs10 offset-xs1>
 					  		    <v-text-field  color="black"
-					  		     v-model="form.lastname"
-					  		     :error-messages="fieldErrors('form.lastname')"
-                			    @blur="$v.form.lastname.$touch()" 
+					  		     v-model="form.last_name"
+					  		     :error-messages="fieldErrors('form.last_name')"
+                			    @blur="$v.form.last_name.$touch()" 
 					  		      label="Last Name" required></v-text-field>
 					  		</v-flex>
 
@@ -45,9 +51,10 @@
                 			    @blur="$v.form.email.$touch()" 
 					  		      label="Email Address" required></v-text-field>
 					  		</v-flex>
+							
 
-					  		<v-flex xs10 offset-xs1>
 
+					  		<v-flex v-if="is_new" xs10 offset-xs1>
 					  		    <v-text-field
 					  		     v-model="form.password"
 					            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
@@ -57,6 +64,7 @@
                 			    @blur="$v.form.password.$touch()" 
 					            label="Password"
 					            hint="At least 8 characters"
+					            
 					            @click:append="showPassword = !showPassword"
 					          ></v-text-field>
 
@@ -139,8 +147,8 @@
 
 		email 	  : '',
 		password  : '',
-		firstname : '',
-		lastname  : '',
+		first_name : '',
+		last_name  : '',
 		job_title : '',
 		phone 	  : '',
 		fax 	  : '',
@@ -159,8 +167,8 @@
 
 				email    	 : { required, email },
 				password 	 : { required },
-				firstname 	 : { required },
-				lastname     : { required },
+				first_name 	 : { required },
+				last_name     : { required },
 				job_title	 : { required },
 				phone     	 : { required },
 				fax 		 : { required },
@@ -177,8 +185,8 @@
 
 				email     	: { required: 'Email is Required ', email: 'Email is Invalid' },
 				password  	: { required: 'Password is Required' },
-				firstname 	: { required: 'First Name is Required' },
-				lastname  	: { required: 'Last Name is Required'},
+				first_name 	: { required: 'First Name is Required' },
+				last_name  	: { required: 'Last Name is Required'},
 				job_title 	: { required: 'Job Title is Required'},
 				phone     	: { required: 'Phone is Required.' },
 				fax     	: { required: 'fax is Required.' },
@@ -192,7 +200,20 @@
 
 			return {
 
-				form: Object.assign({}, dform ),
+				form: {
+
+					email 	   : '',
+					password   : '',
+					first_name : '',
+					last_name  : '',
+					job_title  : '',
+					phone 	   : '',
+					fax 	   : '',
+					address    : '',
+					country_id : '',
+
+				},
+
 				countries: [],
 				search: '',
 				formloading: false,
@@ -202,12 +223,30 @@
 
 		},
 
-		props: {
 
-			dialog: {
-				type: Boolean,
-				default: false,
-			},
+		watch: {
+
+			buyerData:{		
+
+				handler(nVal,oVal){
+
+					this.fillForm();
+					
+				},
+
+				deep: true,
+			}
+
+
+
+
+		},
+
+
+		props: ['dialog' , 'buyerData', 'is_new', 'buyer_id' ],
+
+		computed: {
+
 
 		},
 
@@ -216,7 +255,9 @@
 			/*
 				get countries
 			*/
+
 			this.$store.dispatch('adminHelper/getCountries')
+
 	        .then((response)=>{
 
 				this.countries = response
@@ -231,6 +272,23 @@
 
 		methods: {
 
+
+			fillForm() {
+
+					this.form.email  		= this.buyerData.email
+					this.form.password  	= this.buyerData.password
+					this.form.first_name 	= this.buyerData.first_name
+					this.form.last_name  	= this.buyerData.last_name
+					this.form.job_title 	= this.buyerData.job_title
+					this.form.phone 		= this.buyerData.phone
+					this.form.fax 			= this.buyerData.fax
+					this.form.address 		= this.buyerData.address
+					this.form.country_id 	= this.buyerData.country_id
+
+					console.log(this.form);
+
+			},
+
 			resetForm() {
 				
 				this.form = Object.assign({}, dform)
@@ -241,14 +299,26 @@
 
 			submitData() {
 
+				if(this.is_new) {
+					this.addBuyer()
+				} else {
+					this.updateBuyer();
+				}
+
+			},
+
+
+			addBuyer() {
+
+
 				this.formloading = true
 
 				let data = {
 
 					"email"			: this.form.email,
 					"password" 		: this.form.password,
-					"first_name"  	: this.form.firstname,
-					"last_name"   	: this.form.lastname,
+					"first_name"  	: this.form.first_name,
+					"last_name"   	: this.form.last_name,
 					"job_title"  	: this.form.job_title,
 					"phone"		 	: this.form.phone,
 					"fax"			: this.form.fax,
@@ -270,6 +340,8 @@
 					this.$emit('update:dialog', false);
 					AdminBuyerBus.emitFormSubmitted()
 					
+					this.resetForm();
+
 					
 				})
 				.catch((e) => {
@@ -280,15 +352,69 @@
 					this.formloading = false
 				})			
 
-
-				// console.log(this.form);
 			},
 
 
-			deleteBuyer(buyer_id) {
+			updateBuyer() {
 
-				console.log(buyer_id)
+
+				this.formloading = true
+
+				let data = {
+
+					"email"			: this.form.email,
+					"password" 		: this.form.password,
+					"first_name"  	: this.form.first_name,
+					"last_name"   	: this.form.last_name,
+					"job_title"  	: this.form.job_title,
+					"phone"		 	: this.form.phone,
+					"fax"			: this.form.fax,
+					"address"		: this.form.address,
+					"country_id"	: this.form.country_id,
+					"id"			: this.buyer_id
+
+				}
+
+				this.$store.dispatch('adminBuyer/updateBuyer_a', {
+
+					data:data,
+
+				})
+				.then((response) => {
+
+					this.formloading = false
+
+					// create a event bus 
+					this.$emit('update:dialog', false);
+					AdminBuyerBus.emitFormSubmitted()
+					
+					this.resetForm();
+
+					
+				})
+				.catch((e) => {
+					console.log(e);
+					this.formloading = false
+				})
+				.finally(() => {
+					this.formloading = false
+				})		
+
+
+
+			},
+
+			closeDialog() {
+
+				this.$emit('update:dialog', false);
+				this.$emit('update:is_new', false);
+				this.$emit('update:buyer_id', null);
+
+
+				this.resetForm();
 			}
+
+
 
 
 

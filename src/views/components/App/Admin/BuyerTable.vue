@@ -1,6 +1,11 @@
 <template>
  <div>
 
+         <v-layout row wrap>
+          <v-spacer></v-spacer>
+            <div> <v-btn @click="openDialog()" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-user-plus white--text"></i>&nbsp Add Buyer </v-btn> </div>
+        </v-layout>
+
    <v-card>
           <v-toolbar dark color="grey darken-4">
             <h1 class="font-weight-light title">Buyer</h1>  
@@ -64,12 +69,6 @@
                                   >
                                     edit
                                   </v-icon>
-                                  <v-icon
-                                    small
-                                    @click="deleteBuyer(props.item.id)"
-                                  >
-                                    delete
-                                  </v-icon>
                                 </td>
                           </tr>
 
@@ -83,28 +82,28 @@
   
             </div>
             <!-- component  -->
-
         </v-card>
 
-          <!-- buyer dialog -->
-          <!-- <buyer-dialogs :dialog.sync="dialog"> </buyer-dialogs> -->
-          <!-- buyer dialog -->
+
+
+        <!-- buyer dialog -->
+        <buyer-dialog :buyerData="buyerData" :buyer_id.sync="buyer_id" :dialog.sync="dialog" :is_new.sync="is_new"> </buyer-dialog>
+        <!-- buyer dialog -->
 
  </div>
+
 </template>
 
 <script>
 
-// import BuyerDialogs from '@/views/components/app/Admin/BuyerDialog'
 import adminBuyerBus from "@/bus/admin-buyer"
 import helpers from "@/mixins/helpers"
-
-import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
+import BuyerDialog from '@/views/components/app/Admin/BuyerDialog'
 
   export default {
 
     components: {
-      
+      BuyerDialog
     },
     mixins: [
         helpers,
@@ -171,13 +170,12 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
               sortable: false,
             },
         ],
-        dataItems: []
+        dataItems: [],
+        buyerData:null,
+        is_new: false,
+        buyer_id: null
+
       }
-    },
-    components: {
-
-      InquiryStatusButtons,
-
     },
     methods: {
 
@@ -233,13 +231,15 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
           })
           .then((response) => {
 
-              console.log(response);
+              this.buyerData = response
               this.dialog = true
+              this.buyer_id = buyer_id
+
+              console.log(buyer_id)
 
           })
           .catch((e) => {
 
-              console.log(e);
               this.loading = false;
 
           })
@@ -252,15 +252,16 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
         },
 
 
-        deleteBuyer(buyer_id) {
-          alert(nothing);
-        },
-
         Refresh() {
 
           this.fillTable();
           
-        }
+        },
+
+        openDialog() {
+          this.dialog=true
+          this.is_new=true
+        },
 
     },
 

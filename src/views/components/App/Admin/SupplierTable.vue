@@ -1,14 +1,16 @@
 <template>
  <div>
 
-   <v-card>
+      <v-layout row wrap>
+        <v-spacer></v-spacer>
+          <div> <v-btn @click="openDialog()" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-user-plus white--text"></i>&nbsp Add Supplier </v-btn> </div>
+      </v-layout>
+
+     <v-card>
           <v-toolbar dark color="grey darken-4">
             <h1 class="font-weight-light title">Supplier</h1>  
            <v-spacer></v-spacer>
-            <v-btn icon @click="Sort('desc')">
-              <v-icon>sort</v-icon>
-            </v-btn>
-            <v-btn icon @click="Refresh('refresh')">
+            <v-btn icon @click="refresh()">
               <v-icon>refresh</v-icon>
             </v-btn>
           </v-toolbar>
@@ -63,15 +65,9 @@
                                  <v-icon
                                     small
                                     class="mr-2"
-                                    @click="editBuyer(props.item.id)"
+                                    @click="editSupplier(props.item.id)"
                                   >
                                     edit
-                                  </v-icon>
-                                  <v-icon
-                                    small
-                                    @click="deleteBuyer(props.item.id)"
-                                  >
-                                    delete
                                   </v-icon>
                                 </td>
                           </tr>
@@ -89,14 +85,21 @@
 
         </v-card>
 
+
+          <!-- supplier dialog -->
+          <supplier-dialog :dialog.sync="dialog"   :supplierData="supplierData" :supplier_id.sync="supplier_id" :is_new.sync="is_new"> </supplier-dialog>
+          <!-- supplier dialog -->
+
  </div>
 </template>
 
 <script>
-import inqEvntBs from "@/bus/inquiry";
-    
-import helpers from "@/mixins/helpers";
-import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+
+import adminSupplierBus from "@/bus/admin-supplier"
+import helpers from "@/mixins/helpers"
+import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
+import SupplierDialog from '@/views/components/app/Admin/SupplierDialog'
+
 
   export default {
     mixins: [
@@ -164,12 +167,18 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
               sortable: false,
             },
         ],
+        
         dataItems: [],
+        supplierData: null,
+        is_new: false,
+        supplier_id: null
+
       }
     },
-    
+
     components: {
       InquiryStatusButtons,
+      SupplierDialog
     },
     methods: {
 
@@ -211,13 +220,52 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
             });
 
         },
+
+
+
+        editSupplier(supplier_id) {
+
+            let data = {
+              id: supplier_id
+            }
+
+            this.$store.dispatch('adminSupplier/getSupplier_a', {
+              data:data
+            })
+            .then((response) => {
+                
+                this.dialog = true
+                this.supplierData = response
+                this.supplier_id = supplier_id
+
+            })
+            .catch((e) => {
+                this.dialog = true
+            })
+            .finally(() => {
+                this.dialog = true
+            })
+
+        }, 
+
+        refresh() {
+
+            this.fillTable();
+
+        },
+
+
+        openDialog() {
+          this.dialog = true
+          this.is_new = true
+        }
     },
 
     created(){
 
         this.fillTable();
         
-        inqEvntBs.$on('inquiry-form-submitted',()=>{
+        adminSupplierBus.$on('supplier-form-submitted',()=>{
             this.fillTable();
         });
 

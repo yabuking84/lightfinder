@@ -48,6 +48,8 @@ export default [
             footer: AppFooter,
         },
         meta: meta,
+         props: { default:true },
+
     },
     {
         name: 'AdminInquiry',
@@ -59,6 +61,8 @@ export default [
             footer: AppFooter,
         },
         meta: meta,
+        props: { default:true },
+
     },
     {
         name: 'AdminBuyer',
@@ -69,7 +73,9 @@ export default [
             header: AppToolbar,
             footer: AppFooter
         },
-        meta: meta
+        meta: meta,
+        props: { default:true },
+
     },
     {
         name: 'AdminSupplier',
@@ -80,7 +86,10 @@ export default [
             header: AppToolbar,
             footer: AppFooter
         },
-        meta: meta
+        meta: meta,
+         props: { default:true },
+
+
     }    
 ]
 

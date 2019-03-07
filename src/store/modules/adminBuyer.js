@@ -7,6 +7,9 @@ import router from '@/router';
 
 import config from '@/config/index';
 
+
+let base_url = 'http://192.168.1.200:8000';
+
 const state =  {
 
 	api: {
@@ -20,7 +23,7 @@ const state =  {
 
 			method:  'get',
 			getAllBuyer: {
-				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
+				url 	: base_url + `/v1/admin/buyers`
 			
 			},
 
@@ -31,7 +34,7 @@ const state =  {
 		
 
 			getBuyer: {
-				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
+				url 	: base_url + `/v1/admin/buyers`
 
 			},
 
@@ -52,7 +55,7 @@ const state =  {
 			*/
 
 			addBuyer: {
-				url 	: 'http://192.168.1.200:8000/v1/admin/buyers'
+				url 	: base_url + `/v1/admin/buyers`
 
 			}
 
@@ -249,7 +252,7 @@ const actions = {
 
    updateBuyer_a(context, data) {
 
-   		return new Promise((resoleve, reject) => {
+   		return new Promise((resolve, reject) => {
 
 	   			var headers = {
 					token:localStorage.access_token,
@@ -259,7 +262,7 @@ const actions = {
 				axios({
 
 					method	: state.api.patch.method,
-					url     : state.api.patch.editBuyer.url + "/" + data.id,
+					url     : state.api.patch.editBuyer.url + "/" + data.data.id,
 					headers : headers,
 					data 	: JSON.stringify(data.data)
 					
