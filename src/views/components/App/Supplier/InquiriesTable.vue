@@ -181,7 +181,7 @@ import main from "@/config/main"
 
         statuses: main.inquiry_statuses.default,
         statusesSupplier: main.inquiry_statuses.suppliers,
-        search: '',
+        search: '1551612312798',
         headers: [
             {
               text: 'Select',
