@@ -3,7 +3,7 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 
 import BuyerHome from '@/views/Pages/Buyer/Home'
-import BuyerInquiryView from '@/views/Pages/Buyer/InquiryView'
+// import BuyerInquiryView from '@/views/Pages/Buyer/InquiryView'
 
 
 
@@ -44,20 +44,20 @@ export default [
         },
         meta: meta,
     },
-    {
-        name: 'BuyerInquiryView',
-        path: '/buyer/inquiry/:inq_id',
-        components: { 
-            default: BuyerInquiryView, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            testview: test, 
-        },
-        meta: meta,
-        props: { default:true },
+    // {
+    //     name: 'BuyerInquiryView',
+    //     path: '/buyer/inquiry/:inq_id',
+    //     components: { 
+    //         default: BuyerInquiryView, 
+    //         sidebar: AppSidebar, 
+    //         header: AppToolbar, 
+    //         footer: AppFooter,
+    //         testview: test, 
+    //     },
+    //     meta: meta,
+    //     props: { default:true },
 
-    },    
+    // },    
 
 
 

@@ -127,30 +127,29 @@
 
 						<v-layout row wrap mt-4>
 
-								  <v-flex xs8 mt-3>
+								<v-flex xs5 mt-3>
 									<h4 class="font-weight-light">Quantity</h4>						  
 								</v-flex>
 								
-								<v-flex xs4>
-								   <v-text-field
-						    		  label="00"
-						     	 required
-						     	 solo
-						    ></v-text-field>
+								<v-flex xs7>
+								   	<v-text-field
+								   		value="102.33"
+										readonly
+							     		solo>
+							     	</v-text-field>
 								</v-flex>
 
 						</v-layout>
 
 						<v-layout row wrap pa-0>
 							
-								<v-flex xs8 mt-3>
+								<v-flex xs5 mt-3>
 									<h4 class="font-weight-light">Unit</h4>						  
 								</v-flex>
 								
-								<v-flex xs4>
+								<v-flex xs7>
 								   <v-text-field
-						    		  label="00"
-						     		  required
+						     		  readonly
 						     		  prefix="$"
 						     	      solo>
 						     	    </v-text-field>
@@ -179,7 +178,7 @@
 									  <v-btn flat value="left" block class="v-btn--active green">
 									  	<i class=""></i>
 					                	<i class="ml-1 white--text font-weight-light subheading far fa-check-circle white--text"></i>
-					                	<span class="ml-1 white--text font-weight-light subheading">Continue</span>
+					                	<span class="ml-1 white--text font-weight-light subheading">SUBMIT</span>
 					             	</v-btn>
 								</v-flex>
 						</v-layout>

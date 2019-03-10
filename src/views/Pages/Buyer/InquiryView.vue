@@ -1,27 +1,47 @@
 <template>
-	<div>
-		<v-container fluid grid-list-xl >
-				
-				
-				<v-layout row wrap>
-					
-					<!-- inquiry details card -->
-					<v-flex xs5>
-						<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
-					</v-flex>
-					<!-- end of detils  -->
+<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
+<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
+    <v-card>
+        <!-- <v-card-title class="headline grey lighten-2" primary-title>
+            Privacy Policy
+        </v-card-title> -->
 
+        <v-card-text>	
+	
+			<v-container fluid grid-list-xl >
 					
-					<!-- supplier quote / bids -->
-					<v-flex xs7>
-						<inquiry-post-list> </inquiry-post-list>
-					</v-flex>  
-					<!-- supplier quote -->
-				
+					
+					<v-layout row wrap>
+						
+						<!-- inquiry details card -->
+						<v-flex xs5>
+							<inquiry-details-card :inquiry="inquiry"> </inquiry-details-card>
+						</v-flex>
+						<!-- end of detils  -->
 
-				</v-layout>
-		</v-container>
-	</div>
+						
+						<!-- supplier quote / bids -->
+						<v-flex xs7>
+							<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
+						</v-flex>  
+						<!-- supplier quote -->
+					
+
+					</v-layout>
+			</v-container>
+
+        </v-card-text>
+
+        <v-divider ></v-divider>
+
+        <v-card-actions >
+            <v-spacer></v-spacer>
+            <v-btn color="primary" dark @click="closeOpenInquiry()">
+                close
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>   	
 </template>
 
 <script>
@@ -42,15 +62,13 @@ export default {
 
 	},
 
-	props: ['inq_id'],
+	props: ['inquiry','openInquiry'],
 
 	data: () => ({
 
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
-		inquiry: false,
-
 	}),
 
 	computed: {
@@ -69,19 +87,15 @@ export default {
 
 	methods: {
 
+		closeOpenInquiry(){
+            this.$emit('update:openInquiry', false);
+		},
 
 	},
 
 	created() {
 
 
-		this.$store.dispatch('byrInq/getInquiry_a',{inq_id:this.inq_id})
-		.then((data)=>{
-			this.inquiry = data;
-		})
-		.catch((error)=>{
-			console.log(error);
-		});
 
 	},
 }
