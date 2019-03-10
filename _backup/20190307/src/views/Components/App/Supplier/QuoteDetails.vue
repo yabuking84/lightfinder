@@ -45,12 +45,11 @@
 
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-				<template v-if="hasBid">
-				<v-flex xs5>
+				<v-flex xs5 v-if="hasBid">
 					<image-gallery-small></image-gallery-small>
 				</v-flex>
 
-				<v-flex xs7>
+				<v-flex xs7 v-if="hasBid">
 		  	  		<v-container>
 			  	  		<v-flex xs12>
 			  	  			<h5 class="font-weight-thin">Product name</h5>
@@ -90,8 +89,6 @@
 		  	  		</v-container>
 
 				</v-flex>
-				</template>
-
 
 				<v-flex xs12 v-if="!hasBid">
 					<v-alert 

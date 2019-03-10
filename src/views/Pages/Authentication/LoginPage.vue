@@ -117,8 +117,8 @@
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
   const defaultForm = {
-    // email: 'buyer@bal.com',
-    email: 'info@bal.com',
+    email: 'buyer@bal.com',
+    // email: 'info@bal.com',
     // email: 'supplier@bal.com',
     password: '123456',
     rememberme: false

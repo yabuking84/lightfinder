@@ -1,6 +1,5 @@
 <template>
-
- <div>
+<div>
 
 
         <v-toolbar dark color="grey darken-4">
@@ -9,7 +8,7 @@
                 <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
                       <v-btn flat value="left" :value="status.id" :title="status.name" >
                         <i class="white--text" :class="status.icon"></i> 
-                        <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
+                        <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }} </span> -->
                     </v-btn>  
                 </span>
             </v-btn-toggle>
@@ -29,8 +28,7 @@
                   
                   <v-divider></v-divider>
                  
-                  <v-data-table
-                  
+                  <v-data-table                  
                         :headers="headers"
                         :items="tableItems"
                         :loading="loading"
@@ -50,9 +48,9 @@
                                   <p class="mb-3">{{ props.item.message }}</p>
                               </td>
 
-                              <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
+                              <td class="text-xs-left font-weight-medium">{{ props.item.categories }}</td>
                               
-                              <td class="text-xs-center">{{ props.item.quantity }}</td>
+                              <td class="text-xs-left">{{ props.item.quantity }}</td>
 
                               <td class="text-xs-left">
                                   <div class="dateCellWidth">
@@ -71,12 +69,17 @@
                               </td>
                               
                               <td class="text-xs-center">
-                                     <router-link :to="{ name: 'BuyerInquiryView', params: { inq_id: props.item.inq_id }}">
-                                      <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
-                                          <i class="fas fa-eye white--text"></i>
-                                          <span class="ml-1 white--text font-weight-light ">View</span>
-                                      </v-btn>
-                                  </router-link>
+                                    <v-btn 
+                                        @click="viewInquiry(props.item.inq_id)"
+                                        small 
+                                        flat 
+                                        value="left" 
+                                        class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                                        <i class="fas fa-eye white--text"></i>
+                                        <span class="ml-1 white--text font-weight-light ">View</span>
+                                    </v-btn>
+                                    
+                                    <!-- <router-link :to="{ name: 'BuyerInquiryView', params: { inq_id: props.item.inq_id }}"></router-link> -->
                               </td>
 
                           </tr>
@@ -91,6 +94,10 @@
                 
             </v-card>
 
+            
+            <span>
+                <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>     
+            </span>
   </div>
 </template>
 
@@ -102,16 +109,23 @@ import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import main from "@/config/main"
 
+import InquiryView from "@/views/Pages/Buyer/InquiryView";
+
 export default {
 
     mixins: [
         helpers,
     ],
-    data: function () {
-    return {
+
+    components: {
+      InquiryStatusButtons,
+      InquiryView,
+    },
+    
+    data: ()=>({
 
         statuses: main.inquiry_statuses.default,
-        search: '',
+        search: '1551612312798',
         dialog: false,
         loading: false,
         headers: [
@@ -171,17 +185,16 @@ export default {
             },
         ],
 
+
         inquiryStatus: [],
         allInquiries: [],
         tableItems: [],
 
-      }
-    },
-    components: {
+        openInquiry: false,
+        inquiry: null,
 
-      InquiryStatusButtons,
+    }),
 
-    },
     methods: {
 
         fillTable() {
@@ -217,6 +230,18 @@ export default {
             });
 
         },
+
+        viewInquiry(inq_id){            
+            this.$store.dispatch('byrInq/getInquiry_a',{inq_id:inq_id})
+            .then((data)=>{
+
+                this.inquiry = data;
+                this.openInquiry = true;
+            })
+            .catch((error)=>{
+                console.log(error);
+            });
+        },        
 
         refresh(){
             this.fillTable();

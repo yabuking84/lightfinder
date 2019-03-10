@@ -1,4 +1,5 @@
 <template>
+<span>
 <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
 <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
@@ -7,28 +8,42 @@
         </v-card-title> -->
 
         <v-card-text>	
-	
-			<v-container fluid grid-list-xl >
-					
-					
-					<v-layout row wrap>
-						
-						<!-- inquiry details card -->
-						<v-flex xs5>
-							<inquiry-details-card :inquiry="inquiry"> </inquiry-details-card>
-						</v-flex>
-						<!-- end of detils  -->
 
-						
-						<!-- supplier quote / bids -->
-						<v-flex xs7>
-							<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
-						</v-flex>  
-						<!-- supplier quote -->
-					
 
-					</v-layout>
-			</v-container>
+
+
+
+
+	<div class="scopedcontainer">
+		<v-container fluid grid-list-xl >				
+				<v-layout row wrap>
+
+					<!-- Inquiry Details  -->
+					<v-flex xs12>
+						<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>						
+					</v-flex>
+					<!-- Inquiry Details  -->
+
+					
+					<!-- supplier QuoteDetails -->
+					<v-flex xs8>
+						<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
+					</v-flex>  
+					<!-- supplier QuoteDetails -->
+
+
+					<!-- proposal list -->
+					<v-flex xs4>
+					  	<inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
+					</v-flex>
+					<!-- proposal list -->
+
+				</v-layout>
+		</v-container>
+	</div>
+
+
+
 
         </v-card-text>
 
@@ -41,34 +56,44 @@
             </v-btn>
         </v-card-actions>
     </v-card>
-</v-dialog>   	
+</v-dialog>   
+</span>	
 </template>
 
 <script>
 
-import InquiryPostList from "@/views/Components/App/Buyer/InquiryPostList"
-import InquiryDetailsCard from "@/views/Components/App/Buyer/InquiryDetailsCard"
-import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
-
-import inqEvntBs from "@/bus/inquiry";
+import QuoteDetails from "@/views/Components/App/Supplier/QuoteDetails"
+import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
+import InquiryDetailsCard from "@/views/Components/App/Supplier/InquiryDetailsCard"
+import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 
 export default {
 
+
 	components: {
 
+		QuoteDetails,
 	    InquiryPostList,
 	    InquiryDetailsCard,
-	    InquiryAwardCard
+	    BidDialog,
 
 	},
 
 	props: ['inquiry','openInquiry'],
+
+	// props: {
+	// 	inq_id: {
+	// 		type: String,
+	// 	},
+	// },
 
 	data: () => ({
 
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
+		bids: false,
+
 	}),
 
 	computed: {
@@ -87,15 +112,29 @@ export default {
 
 	methods: {
 
+		Refresh: () => {
+
+			alert('Refresh')
+
+		},
+
+		Sort: () => {
+
+			alert('SOrt')
+
+		},
+
 		closeOpenInquiry(){
             this.$emit('update:openInquiry', false);
 		},
 
 	},
 
+	watch: {
+
+	},
+
 	created() {
-
-
 
 	},
 }
