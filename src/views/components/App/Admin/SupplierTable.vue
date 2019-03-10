@@ -238,6 +238,8 @@ import SupplierDialog from '@/views/components/app/Admin/SupplierDialog'
                 this.supplierData = response
                 this.supplier_id = supplier_id
 
+                console.log(this.supplierData);
+
             })
             .catch((e) => {
                 this.dialog = true
