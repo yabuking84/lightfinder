@@ -1,8 +1,13 @@
 <template>
-<span>
-<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
-<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
-    <v-card>
+<div class="text-xs-center">
+<v-dialog 
+	:value="openInquiry" 
+	@input="$emit('update:openInquiry', false)" 
+	@keydown="keyPress"
+	width="90%"
+	scrollable>
+
+    <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
@@ -15,7 +20,7 @@
 
 
 	<div class="scopedcontainer">
-		<v-container fluid grid-list-xl >				
+		<v-container fluid grid-list-xl>				
 				<v-layout row wrap>
 
 					<!-- Inquiry Details  -->
@@ -34,7 +39,7 @@
 
 					<!-- proposal list -->
 					<v-flex xs4>
-					  	<inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
+					  	<inquiry-post-list v-if="inquiry" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
 					</v-flex>
 					<!-- proposal list -->
 
@@ -57,7 +62,7 @@
         </v-card-actions>
     </v-card>
 </v-dialog>   
-</span>	
+</div>	
 </template>
 
 <script>
@@ -128,6 +133,14 @@ export default {
             this.$emit('update:openInquiry', false);
 		},
 
+    	keyPress(e){
+
+    		if(e.target.querySelector("#InquiryView"))
+    		this.$emit('update:openInquiry', false)
+    		
+    		// console.log(e.target);
+
+    	},
 	},
 
 	watch: {
@@ -137,6 +150,12 @@ export default {
 	created() {
 
 	},
+
+    mounted() {
+
+
+    },
+
 }
 	
 </script>

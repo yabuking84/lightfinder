@@ -52,10 +52,9 @@
 			</v-container>
 	    </v-card>
 		
-		<div>
-			<bid-dialog :bidDialog.sync="bidDialog"> </bid-dialog>
+		
+		<!-- <bid-dialog :bidDialog.sync="bidDialog"> </bid-dialog> -->
 
-		</div>
 
 </div>
 </template>
@@ -66,7 +65,19 @@
 	import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 	import inqEvntBs from "@/bus/inquiry";
 
+	// import crono from 'vue-crono';
+	import VueTimers from 'vue-timers/mixin'
+
+
 	export default {
+		mixins: [VueTimers],
+		timers: [			
+			{ 
+				name: 'fillBidTable',
+				time: 1000, 
+				repeat: true,
+			}			
+		],
 
 		components: {
 			InquiryDialog,
@@ -76,6 +87,9 @@
 		props: {
 			inquiry:{
 				type:Object,
+			},
+			openInquiry : {
+				type:Boolean,
 			}
 		},
 
@@ -91,6 +105,7 @@
 		},
 
 		methods: {
+
 			fillBidTable(){
 
 				this.$store.dispatch('spplrInq/getAllInquiryBids_a',{inq_id:this.inquiry.id})
@@ -105,33 +120,49 @@
 				.catch(error=>{
                     console.log(error);					
 				});
+
+				console.log('fillBidTable');
 			},
+
+			testTimer(){
+				console.log('testTimer');
+			},
+
+
+			updateTime: function () {
+				setInterval(function () {
+					this.displayTime = moment().format()
+				}.bind(this), 1000);
+			}
 
 		},
 
 	    created(){
 	    	this.fillBidTable();
 	        inqEvntBs.onBidFormSubmitted(this.fillBidTable);
+	       		this.$timer.start('fillBidTable');
 	    },
 
 	    mounted(){
 
-		    this.$nextTick(function () {
-		        window.setInterval(() => {
-			    	this.fillBidTable();
-			    	console.log("nexttick");
-		        },10000);
-		    })
 	    },
 
 	    watch: {
 	    	inquiry: {
 	    		handler(nVal,oVal){
-			    	this.fillBidTable();	    			
+			    	this.fillBidTable();
 	    		},
 	    		deep: true,
+	    	},
+
+	    	openInquiry(nVal) {
+	    		if(nVal)
+	       		this.$timer.start('fillBidTable');
+	       		else
+	       		this.$timer.stop('fillBidTable');
 	    	}
 	    },
+
 	}
 </script>
 

@@ -164,6 +164,16 @@ created(){
 	this.fillBidTable();
 },
 
+watch: {
+
+	inquiry: {
+		handler(nVal,oVal){
+	    	this.fillBidTable();
+		},
+		deep: true,
+	},
+
+},
 
 }
 </script>

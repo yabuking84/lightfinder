@@ -113,9 +113,7 @@
 			</v-container>
 	    </v-card>
 		
-		<span>
-			<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
-		</span>
+		<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
 
 </div>
 </template>

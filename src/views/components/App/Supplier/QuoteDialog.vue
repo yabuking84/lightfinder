@@ -2,9 +2,14 @@
 
   <div class="text-xs-center">
 
-    <v-dialog :value="openQuoteDialog" @input="$emit('update:openQuoteDialog', false)" width="80%" scrollable>
+    <v-dialog 
+    	:value="openQuoteDialog" 
+    	@input="$emit('update:openQuoteDialog', false)" 
+		@keydown="keyPress"
+    	width="80%" 
+    	scrollable>
     	
-      <v-card>
+      <v-card id="QuoteDialog">
 
       	<v-card-title class="black white--text">
 			<h2 class="font-weight-light">Add Quote</h2>
@@ -299,6 +304,19 @@ export default {
 				description: null,
 	    	};
     	},
+
+    	keyPress(e){
+    		
+    		if(e.target.querySelector("#QuoteDialog"))
+    		this.$emit('update:openQuoteDialog', false)
+
+			// console.log(e.target);
+    	},
+    },
+
+    mounted() {
+
+
     },
 
     watch: {
