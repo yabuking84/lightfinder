@@ -68,7 +68,7 @@
 		                            	</span>
                                     </v-chip>
 
-                                    <v-alert :value="!inquiry.specifications.length" type="warning" style="width: 100%;" class="ma-4" outline>
+                                    <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ml-0 mt-4" outline>
                                         No specifications..
                                     </v-alert>
 

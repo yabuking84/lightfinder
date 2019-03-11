@@ -88,9 +88,9 @@
 
 									<v-alert 
 										:value="!inquiry.specifications.length" 
-										type="warning" 
+										type="info" 
 										style="width: 100%;"
-										class="ma-4"
+										class="mt-4 ml-0"
 										outline>
 										No specifications..
 									</v-alert>									

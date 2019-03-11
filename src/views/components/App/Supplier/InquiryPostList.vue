@@ -42,7 +42,7 @@
 
 				<v-alert 
 					:value="!bidItems.length"
-					type="warning" 
+					type="info" 
 					style="width: auto;"
 					class="ma-4"
 					outline>

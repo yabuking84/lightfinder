@@ -96,7 +96,7 @@
 				<v-flex xs12 v-if="!hasBid">
 					<v-alert 
 						:value="true"
-						type="warning" 
+						type="info" 
 						style="width: auto;"
 						class="ma-4"
 						outline>
@@ -113,7 +113,7 @@
 			</v-container>
 	    </v-card>
 		
-		<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
+		<quote-dialog v-if="bid" :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
 
 </div>
 </template>

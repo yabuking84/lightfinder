@@ -92,7 +92,7 @@
 						<v-flex xs12>
 							<v-alert 
 								:value="true"
-								type="warning" 
+								type="info" 
 								style="width: auto;"
 								class="ma-4"
 								outline>
