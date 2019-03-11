@@ -251,7 +251,7 @@ const actions = {
 
 
 
-	declinedInquir_a(context, data) {
+	declinedInquiry_a(context, data) {
 
 		return new Promise((resolve, reject) => {
 

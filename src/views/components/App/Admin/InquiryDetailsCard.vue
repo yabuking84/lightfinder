@@ -154,29 +154,40 @@
             approvedInquiry(inquiry_id) {
 
                 this.$store.dispatch('adminInquiries/approvedInquiry_a', {
-
                     inquiry_id: inquiry_id
-
                 })
                 .then((response) => {
-
                     // create a event bus 
                     this.$emit('update:dialog', false);
-                    
                 })
                 .catch((e) => {
                     console.log(e);
                 })
                 .finally(() => {
 
-                    
-                })      
+                });      
 
             },
 
 
             rejectInquiry(inquiry_id) {
-                console.log(inquiry_id)                
+
+                this.$store.dispatch('adminInquiries/declinedInquiry_a', {
+                    inquiry_id: inquiry_id
+                })
+                .then((response) => {
+                    // create a event bus 
+                    this.$emit('update:dialog', false);
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+                .finally(() => {
+
+                });      
+
+
+
             }
 
         },
