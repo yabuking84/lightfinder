@@ -33,6 +33,18 @@ const InquiryEventBus = new Vue({
 		},
 
 
+
+		/* on the buyer award */
+		emitAwardSubmitted(){
+			this.$emit('award-bid-form-submitted');
+		},
+		onAwardSubmitted(func) {
+			this.$on('award-bid-form-submitted', () => {
+				func();
+			});
+		},
+
+
 	},
 
 });

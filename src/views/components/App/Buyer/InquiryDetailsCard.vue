@@ -11,10 +11,21 @@
             <v-toolbar-title class="body-2 font-weight-light">Inquiry# {{ inquiry.id }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-title class="body-2 font-weight-light"> Posted: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
+
         </v-toolbar>
         <v-card>
 
             <v-container>
+
+               <v-alert
+              :value="true"
+              type="success"
+              color="light-blue"
+              v-if="inquiry.awarded"
+            >
+                You have awarded a bid on this inquiry.
+            </v-alert>
+    
 
                 <v-layout row wrap>
                     <v-flex xs12>
