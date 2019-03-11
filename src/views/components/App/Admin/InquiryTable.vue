@@ -71,7 +71,11 @@
                               </td>
                               
                               <td class="text-xs-center">
-                                      <v-btn small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                                      <v-btn 
+                                        @click="viewInquiry(props.item.inq_id)"
+                                        small 
+                                        class="grey darken-1 font-weight-light">
+
                                           <i class="fas fa-eye white--text"></i>
                                           <span class="ml-1 white--text font-weight-light ">View</span>
                                       </v-btn>
@@ -89,6 +93,11 @@
                 
             </v-card>
 
+
+            <span>
+               <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>     
+            </span>
+
   </div>
 </template>
 
@@ -99,6 +108,11 @@ import inqEvntBs from "@/bus/inquiry";
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import main from "@/config/main"
+
+
+import InquiryView from "@/views/Components/App/admin/InquiryView";
+
+
 
 export default {
 
@@ -172,12 +186,15 @@ export default {
         inquiryStatus: [],
         allInquiries: [],
         tableItems: [],
+        inquiry:null,
+        openInquiry:false,
 
       }
     },
     components: {
 
       InquiryStatusButtons,
+      InquiryView
 
     },
     methods: {
@@ -228,9 +245,24 @@ export default {
                   this.tableItems = this.allInquiries.filter(inq=>this.inquiryStatus.includes(inq.status));
               }
         },
+
+        viewInquiry(inq_id) {
+
+            this.$store.dispatch('adminInquiries/getInquiry_a',{inq_id:inq_id})
+
+           .then((response) => {
+
+                this.inquiry = response
+                console.log(this.inquiry);
+                this.openInquiry = true
+           })
+           .catch((error) => {
+              console.log(error);
+        
+           })
+        }
     },
  
-
 
     created(){
 

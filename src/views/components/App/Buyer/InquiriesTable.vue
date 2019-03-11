@@ -79,7 +79,6 @@
                                         <span class="ml-1 white--text font-weight-light ">View</span>
                                     </v-btn>
                                     
-                                    <!-- <router-link :to="{ name: 'BuyerInquiryView', params: { inq_id: props.item.inq_id }}"></router-link> -->
                               </td>
 
                           </tr>
