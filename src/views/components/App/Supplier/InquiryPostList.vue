@@ -73,11 +73,18 @@
 
 	export default {
 		mixins: [VueTimers],
+
 		timers: [			
 			{ 
-				name: 'fillBidTable',
-				time: config.polling.time, 
+				name: 'BidTableTimer',
+				time: config.polling.bidTable.time, 
+				immediate: true, 
 				repeat: true,
+				autostart: true,
+	            callback: function(){
+	                console.log("BidTableTimer");
+	                this.fillBidTable();
+	            },
 			}			
 		],
 
@@ -99,9 +106,6 @@
 
 			return {
 				bidDialog:false,
-				img: `/static/examples/Logo-Samples2-08-min.jpg`,
-			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
-
 				bidItems: [],
 			}
 		},
@@ -115,7 +119,6 @@
 					// console.log(response);
 					this.bidItems = response;
 					this.bidItems.sort((a,b)=>{
-						// return b.total_price - a.total_price;
 						return a.total_price - b.total_price;
 					});
 				})
@@ -142,7 +145,6 @@
 	    created(){
 	    	this.fillBidTable();
 	        inqEvntBs.onBidFormSubmitted(this.fillBidTable);
-	       		this.$timer.start('fillBidTable');
 	    },
 
 	    mounted(){
@@ -159,9 +161,9 @@
 
 	    	openInquiry(nVal) {
 	    		if(nVal)
-	       		this.$timer.start('fillBidTable');
+	       		this.$timer.start('BidTableTimer');
 	       		else
-	       		this.$timer.stop('fillBidTable');
+	       		this.$timer.stop('BidTableTimer');
 	    	}
 	    },
 

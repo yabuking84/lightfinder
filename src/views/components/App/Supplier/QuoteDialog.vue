@@ -12,7 +12,7 @@
       <v-card id="QuoteDialog">
 
       	<v-card-title class="black white--text">
-			<h2 class="font-weight-light">Add Quote</h2>
+			<h2 class="font-weight-light">{{ quoteAction }} Quote</h2>
       	</v-card-title>
 		
 
@@ -241,6 +241,16 @@ export default {
 			description: null,			
     	},
 
+    	quoteAction: "Add",
+
+    	initBid: {
+			price: null,
+			total_price: null,
+			product_name: null,
+			remarks: null,
+			description: null,
+    	},
+
     }),
 
     methods: {
@@ -296,13 +306,7 @@ export default {
     	},
 
     	resetForm(){
-	    	this.formData = {
-				price: null,
-				total_price: null,
-				product_name: null,
-				remarks: null,
-				description: null,
-	    	};
+	    	this.formData = this.initBid;
     	},
 
     	keyPress(e){
@@ -322,7 +326,15 @@ export default {
     watch: {
 
     	editQuote(nVal,oVal){
-    		this.formData = this.bid;
+
+    		if(nVal){
+	    		this.quoteAction = "Edit";
+    			this.formData = this.bid;
+    		}
+    		else{
+	    		this.quoteAction = "Add";    			
+    			this.formData = this.initBid;
+    		}
     	},
 
     	// when openQuoteDialog set as false, editQuote will be set to false also

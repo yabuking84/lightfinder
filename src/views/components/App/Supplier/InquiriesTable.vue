@@ -92,7 +92,7 @@
         <v-divider></v-divider>
 
         <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
-            <template slot="items" slot-scope="props">
+            <template v-slot:items="props">
                 <tr class="th-heading">
 
                     <td>
@@ -127,9 +127,10 @@
                                 flat 
                                 value="left" 
                                 @click="viewInquiry(props.item.inq_id)"
-                                class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
-                                <i class="fas fa-eye white--text"></i>
-                                <span class="ml-1 white--text font-weight-light ">View</span>
+                                class="v-btn--active grey darken-1 font-weight-light text-decoration-none"
+                                :loading="props.item.loading">
+                                    <i class="fas fa-eye white--text"></i>
+                                    <span class="ml-1 white--text font-weight-light ">View</span>
                             </v-btn>
                         <!-- <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
                         </router-link> -->
@@ -162,7 +163,9 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
 import InquiryView from "@/views/Pages/Supplier/InquiryView";
 
-import main from "@/config/main"
+import config from "@/config/main"
+
+import VueTimers from 'vue-timers/mixin'
 
   export default {
     components: {
@@ -173,14 +176,16 @@ import main from "@/config/main"
 
     mixins: [
         helpers,
+        VueTimers,
     ],    
+
     props: {
     },
-    data: function () {
-    return {
 
-        statuses: main.inquiry_statuses.default,
-        statusesSupplier: main.inquiry_statuses.suppliers,
+    data: ()=>({
+
+        statuses: config.inquiry_statuses.default,
+        statusesSupplier: config.inquiry_statuses.suppliers,
         search: '1551612312798',
         headers: [
             {
@@ -248,8 +253,21 @@ import main from "@/config/main"
         openInquiry: false,
         inquiry: null,
 
-      }
-    },
+    }),
+
+    timers: [     
+        { 
+            name: 'InquiryTableTimer',
+            time: config.polling.inquiryTable.time, 
+            repeat: true,
+            autostart: true,
+            callback: function(){
+                console.log("InquiryTableTimer");
+                this.fillTable();
+            },
+
+        }           
+    ],
 
     methods: {
 
@@ -268,7 +286,9 @@ import main from "@/config/main"
 
         },
 
+
         fillTable() {
+            console.log("fillTable");
             this.loading = true;
             this.allInquiries = [];
             this.$store.dispatch('spplrInq/getInquiries_a')
@@ -288,10 +308,12 @@ import main from "@/config/main"
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
                     item.inquiry = response[i];
+                    item.loading = false;
                     this.allInquiries.push(item);
                 }
-                this.tableItems = this.allInquiries;
-                this.loading = false;
+                // this.tableItems = this.allInquiries;
+                this.filterTable();
+                // this.loading = false;
 
             })
             .catch((e) => {
@@ -316,11 +338,10 @@ import main from "@/config/main"
             if(this.inquiryStatus.length || this.categories.length) {
 
                 // filter for statuses only
-                var isBuff = this.inquiryStatus;
-                function callBackStat(inq){
+                var isBuff = this.inquiryStatus;                
+                items = items.filter(function(inq){
                     return (isBuff.length)?isBuff.includes(inq.status):true;
-                };
-                items = items.filter(callBackStat);
+                });
                 
 
                 // filter for categories
@@ -355,7 +376,8 @@ import main from "@/config/main"
         .catch((e) => {
             console.log('Error: ');
             console.log(e);
-        });        
+        });
+
     },
 
     watch: {
@@ -366,6 +388,15 @@ import main from "@/config/main"
         categories(nVal,oVal){
             this.filterTable();
         },
+
+        openInquiry(nVal){
+
+            if(nVal)            
+            this.$timer.stop('InquiryTableTimer');
+            else
+            this.$timer.start('InquiryTableTimer');
+        }, 
+
     },    
     
   }

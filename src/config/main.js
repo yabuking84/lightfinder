@@ -199,7 +199,12 @@ export default {
 	},
 
 	polling: {
-		time: 3000,
+		bidTable:{
+			time: 5000,			
+		},
+		inquiryTable: {
+			time: 10000,
+		}
 	}
 
     
