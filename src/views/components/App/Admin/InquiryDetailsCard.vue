@@ -44,15 +44,6 @@
                                    
                 </v-layout>
 
-    <!--            <v-alert
-              :value="true"
-              type="success"
-              color="light-blue"
-              v-if="inquiry.awarded"
-            >
-                You have awarded a bid on this inquiry.
-            </v-alert>
-     -->
 
                 <v-layout row wrap>
                     <v-flex xs12>
@@ -127,17 +118,10 @@
 </template>
 <script>
 
-    import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry";
 
     export default {
-
-        components: {
-
-            InquiryAwardCard
-
-        },
 
         mixins: [
             helpers,
@@ -145,6 +129,7 @@
 
         props: [
             'inquiry',
+            'openInquiry'
         ],
 
         data: () => ({}),
@@ -158,7 +143,8 @@
                 })
                 .then((response) => {
                     // create a event bus 
-                    this.$emit('update:dialog', false);
+                    this.$emit('update:openInquiry', false);
+                    inqEvntBs.emitApproved();
                 })
                 .catch((e) => {
                     console.log(e);
@@ -177,7 +163,8 @@
                 })
                 .then((response) => {
                     // create a event bus 
-                    this.$emit('update:dialog', false);
+                    this.$emit('update:openInquiry', false);
+                    inqEvntBs.emitApproved();
                 })
                 .catch((e) => {
                     console.log(e);
@@ -185,8 +172,6 @@
                 .finally(() => {
 
                 });      
-
-
 
             }
 
@@ -197,7 +182,9 @@
         },
 
         created() {
+
             // console.log(this.inquiry);
+
         },
 
     }

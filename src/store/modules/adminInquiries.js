@@ -111,7 +111,10 @@ const actions = {
 
 			return new Promise((resolve, reject) => {
 
-				var headers = { token: localStorage.access_token }
+					var headers = {
+						token:localStorage.access_token,
+		              	"content-type": "application/json",
+					};
 
 					axios({
 
@@ -152,7 +155,10 @@ const actions = {
 
 			return new Promise((resolve, reject) => {
 
-				var headers = { token: localStorage.access_token }
+					var headers = {
+						token:localStorage.access_token,
+		              	"content-type": "application/json",
+					};
 
 
 					axios({
@@ -212,8 +218,10 @@ const actions = {
 
 			return new Promise((resolve, reject) => {
 
-				var headers = { token: localStorage.access_token }
-
+					var headers = {
+						token:localStorage.access_token,
+		              	"content-type": "application/json",
+					};
 
 					axios({
 
@@ -255,13 +263,15 @@ const actions = {
 
 		return new Promise((resolve, reject) => {
 
-				var headers = { token: localStorage.access_token }
-
+					var headers = {
+						token:localStorage.access_token,
+		              	"content-type": "application/json",
+					};
 
 					axios({
 
 						method	: state.api.put.method,
-						url 	: state.api.put.declinedInquiry.url +'/'+ data.id + '/evaluation',
+						url 	: state.api.put.declinedInquiry.url +'/'+ data.inquiry_id + '/evaluation',
 						headers : headers,
 						data 	: JSON.stringify({'approve':0})
 

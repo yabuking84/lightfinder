@@ -15,7 +15,7 @@
 						
 						<!-- inquiry details card -->
 						<v-flex xs5>
-							<inquiry-details-card :inquiry="inquiry"> </inquiry-details-card>
+							<inquiry-details-card :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
 						</v-flex>
 						<!-- end of detils  -->
 

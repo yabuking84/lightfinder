@@ -2,7 +2,6 @@
 
  <div>
 
-
         <v-toolbar dark color="grey darken-4">
 
            <v-btn-toggle multiple v-model="inquiryStatus">
@@ -267,7 +266,7 @@ export default {
     created(){
 
         this.fillTable();
-        inqEvntBs.onFormSubmitted(this.fillTable);
+        inqEvntBs.OnApproved(this.fillTable);
 
     },
 

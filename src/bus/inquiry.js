@@ -45,6 +45,16 @@ const InquiryEventBus = new Vue({
 		},
 
 
+		// on admin approved inquiry
+		emitApproved() {
+			this.$emit('approved-submitted');
+		},
+		OnApproved(func) {
+			this.$on('approved-submitted', () => {
+				func();
+			});
+		}
+
 	},
 
 });
