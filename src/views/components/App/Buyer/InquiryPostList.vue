@@ -11,32 +11,39 @@
 
       	<v-card color="grey lighten-5">
 
-				<v-flex xs12 v-if="inquiry.stage_id == 1001">
-					<v-alert 
-						:value="true"
-						type="warning" 
-						style="width: auto;"
-						class="ma-4"
-						outline>
-						Waiting for Verification
-					</v-alert>
-				</v-flex>
-		
+			<v-flex xs12 v-if="inquiry.stage_id == 1001">
+				<v-alert 
+				:value="true"
+				type="warning" 
+				style="width: auto;"
+				class="ma-4"
+				outline>
+					Waiting for Verification
+				</v-alert>
+			</v-flex>
+	
 
-				<v-flex xs12 v-else-if="inquiry.stage_id == 1003">
-					<v-alert 
-						:value="true"
-						type="error" 
-						style="width: auto;"
-						class="ma-4"
-						outline>
-						Inquiry is Rejected
-					</v-alert>
-				</v-flex>
+			<v-flex xs12 v-else-if="inquiry.stage_id == 1003">
+				<v-alert 
+				:value="true"
+				type="error" 
+				style="width: auto;"
+				class="ma-4"
+				outline>
+					Inquiry is Rejected
+				</v-alert>
+			</v-flex>
 
 			<v-card-text v-else>
 				
-				 	<v-card class="mb-3"  :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' "    v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i"  >
+				 	<v-card 
+			 		class="mb-3"  
+			 		style="cursor: default;"
+			 		:hover="true" 
+			 		:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
+			 		v-for="(bidItem, i) in bidItems" 
+			 		:key="'bidItem_'+i">
+
 						<v-card-text>
 							<v-layout row wrap>
 
