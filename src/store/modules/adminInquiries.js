@@ -108,15 +108,15 @@ const actions = {
 
 	getInquiry_a(context, data) {
 
+
 			return new Promise((resolve, reject) => {
 
 				var headers = { token: localStorage.access_token }
 
-
 					axios({
 
 						method	: state.api.get.method,
-						url 	: state.api.get.getInquiry.url + '/' + data.data.id ,
+						url 	: state.api.get.getInquiry.url + '/' + data.inq_id,
 						headers : headers
 
 					})
@@ -205,8 +205,10 @@ const actions = {
 
 
 
-	approvedInquiry_a() {
+	approvedInquiry_a(context, data) {
 
+
+			console.log(data.inquiry_id);
 
 			return new Promise((resolve, reject) => {
 
@@ -216,8 +218,9 @@ const actions = {
 					axios({
 
 						method	: state.api.put.method,
-						url 	: state.api.put.approvedInquiry.url + '/' + data.id + '/evaluation',
-						headers : headers
+						url 	: state.api.put.approvedInquiry.url + '/' + data.inquiry_id + '/evaluation',
+						headers : headers,
+						data 	: JSON.stringify({'approve':1})
 
 					})
 					.then(response => {
@@ -248,7 +251,7 @@ const actions = {
 
 
 
-	declinedInquir_a() {
+	declinedInquiry_a(context, data) {
 
 		return new Promise((resolve, reject) => {
 
@@ -259,7 +262,8 @@ const actions = {
 
 						method	: state.api.put.method,
 						url 	: state.api.put.declinedInquiry.url +'/'+ data.id + '/evaluation',
-						headers : headers
+						headers : headers,
+						data 	: JSON.stringify({'approve':0})
 
 					})
 					.then(response => {
