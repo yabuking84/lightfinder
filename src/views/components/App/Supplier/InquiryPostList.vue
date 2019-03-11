@@ -65,6 +65,8 @@
 	import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 	import inqEvntBs from "@/bus/inquiry";
 
+	import config from "@/config/main";
+
 	// import crono from 'vue-crono';
 	import VueTimers from 'vue-timers/mixin'
 
@@ -74,7 +76,7 @@
 		timers: [			
 			{ 
 				name: 'fillBidTable',
-				time: 1000, 
+				time: config.polling.time, 
 				repeat: true,
 			}			
 		],
