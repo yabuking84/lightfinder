@@ -275,10 +275,10 @@ const actions = {
 
 	/* PATCH */
 
-	updateSUpplier_a() {
+	updateSUpplier_a(context, data) {
 
 
-		 		return new Promise((resoleve, reject) => {
+		 		return new Promise((resolve, reject) => {
 
 		   			var headers = {
 						token:localStorage.access_token,
@@ -288,7 +288,7 @@ const actions = {
 					axios({
 
 						method	: state.api.patch.method,
-						url     : state.api.patch.editSupplier.url + "/" + data.id,
+						url     : state.api.patch.editSupplier.url + "/" + data.data.id,
 						headers : headers,
 						data 	: JSON.stringify(data.data)
 						

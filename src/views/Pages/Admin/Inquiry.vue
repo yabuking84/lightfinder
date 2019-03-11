@@ -3,10 +3,10 @@
 		<v-layout row wrap>
 			<v-container fluid>
 
-				<v-layout row wrap>
+				<!-- <v-layout row wrap>
 					<v-spacer></v-spacer>
 				    <div> <v-btn @click="dialog=true" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-search white--text"></i>&nbsp Add Inquiry </v-btn> </div>
-				</v-layout>
+				</v-layout> -->
 
 				<!-- inquiry table -->
 					<inquiry-table> </inquiry-table>

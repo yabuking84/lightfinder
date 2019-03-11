@@ -34,7 +34,7 @@ const state = {
             url2: 'bids/own-bid',
         },
         awardBid: {
-            method: 'post',
+            method: 'put',
             url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
             url2: 'bids',
             url3: 'award',
@@ -152,10 +152,16 @@ const actions = {
 
 
     getAllInquiryBids_a(context,data){
+        
         return new Promise((resolve, reject) => {
+
             var method = state.api.getInquiryBids.method; 
-            var url = state.api.getInquiryBids.url+"/"+data.inq_id+"/"+state.api.getInquiryBids.url2; 
-            var headers = {token:localStorage.access_token};
+            var url = state.api.getInquiryBids.url + "/" + data.inq_id + "/" + state.api.getInquiryBids.url2; 
+            
+            var headers = {
+                                 token:localStorage.access_token,
+                                 "content-type": "application/json",
+                           };
             axios({
                 method: method,
                 url: url,
@@ -183,9 +189,12 @@ const actions = {
 
     getInquiryBid_a(context,data){
         return new Promise((resolve, reject) => {
+
             var method = state.api.getInquiryBid.method; 
             var url = state.api.getInquiryBid.url+"/"+data.inq_id+"/"+state.api.getInquiryBid.url2; 
-            var headers = {token:localStorage.access_token};
+            var headers = {token:localStorage.access_token,
+                            "content-type": "application/json",
+                             };
             axios({
                 method: method,
                 url: url,
@@ -214,14 +223,24 @@ const actions = {
 
     awardBid_a(context,data){
         return new Promise((resolve, reject) => {
+
             var method = state.api.awardBid.method; 
-            var url = state.api.getInquiryBid.url+"/"+data.inq_id+"/"+state.api.getInquiryBid.url2; 
-            var headers = {token:localStorage.access_token};
+            var url = state.api.awardBid.url+"/"+data.inquiry_id+"/"+state.api.awardBid.url2+"/"+data.bid_id+"/"+state.api.awardBid.url3; 
+
+            var headers = {
+                token:localStorage.access_token,
+                "content-type": "application/json",
+            };
+            
             axios({
+
                 method: method,
                 url: url,
                 headers: headers,
+                data    : JSON.stringify(data)
+
             })
+
             .then(response => {
                 resolve(response.data);
             })

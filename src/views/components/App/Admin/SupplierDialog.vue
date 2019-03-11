@@ -10,7 +10,8 @@
 		          <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
 
 		        	<v-toolbar height="49px" dark color="grey darken-4">
-							<h1 class="font-weight-light title">Add Supplier</h1>	
+						<h1 v-if="is_new" class="font-weight-light title">Add </h1>	
+						<h1 v-else class="font-weight-light title">Edit </h1>
 						 <v-spacer></v-spacer>
 					    <v-btn icon @click="closeDialog()">
 					      <v-icon>close</v-icon>
@@ -63,19 +64,20 @@
 					  		    	 color="black" label="Email" required></v-text-field>
 					  			</v-flex>
 
-					  			 <v-flex xs9 offset-xs1>
-							  			 <v-text-field
-									  		     v-model="form.password"
-									            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-									            :type="showPassword ? 'text' : 'password'"
-									            name="input-10-2"
-									            :error-messages="fieldErrors('form.password')"
-				                			    @blur="$v.form.password.$touch()" 
-									            label="Password"
-									            hint="At least 8 characters"
-									            @click:append="showPassword = !showPassword"
-							          ></v-text-field>
-					          	</v-flex>
+					  			<v-flex v-if="is_new" xs10 offset-xs1>
+						  		    <v-text-field
+						  		     v-model="form.password"
+						            :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+						            :type="showPassword ? 'text' : 'password'"
+						            name="input-10-2"
+						            :error-messages="fieldErrors('form.password')"
+	                			    @blur="$v.form.password.$touch()" 
+						            label="Password"
+						            hint="At least 8 characters"
+						            
+						            @click:append="showPassword = !showPassword"
+						          ></v-text-field>
+					  		</v-flex>
 
 
 					          	
@@ -120,14 +122,14 @@
 					  		<v-flex xs9 offset-xs1>
 
 					  			 <v-select color="black" 
-					  	  		    v-model="form.country" 
+					  	  		    v-model="form.country_id" 
 					  	  		    :items="countries"
 					  	  		    :search-input.sync="search"
 					  	  		    cache-items
 					  	  		    item-text="name"
 								  	item-value="id"
-	   					  		    :error-messages="fieldErrors('form.country')"
-	                   			    @blur="$v.form.country.$touch()" 
+	   					  		    :error-messages="fieldErrors('form.country_id')"
+	                   			    @blur="$v.form.country_id.$touch()" 
 					  	  		    label="Country" 
 					  	  		    data-vv-name="Country" required ></v-select>  
 					  		  
@@ -221,7 +223,7 @@
 		brand_name 		 	: '',
 		factory_name	 	: '',
 		address 		 	: '',
-		country 		 	: '',
+		country_id 		 	: '',
 		no_employee 		: '',
 		company_description : '',
 		owner_firstname 	: '',
@@ -245,7 +247,7 @@
 				brand_name 			: { required },
 				factory_name		: { required },
 				address 			: { required },
-				country 			: { required },
+				country_id 			: { required },
 				no_employee			: { required },
 				company_description : { required },
 				first_name 			: { required },
@@ -268,7 +270,7 @@
 				brand_name 			: { required: 'Brand Name is Required' },
 				factory_name 		: { required: 'Factory nane is Required' },
 				address 			: { required: 'Address is Required' },
-				country 			: { required: 'Country is Required' },
+				country_id 			: { required: 'Country is Required' },
 				no_employee 	 	: { required: 'No. of Employee is Required' },
 				company_description : { required: 'Company Description is Required' },
 				first_namee 		: { required: 'Owner First Name is Required' },
@@ -285,12 +287,13 @@
 		data () {
 
 			return {
+
 				form: {
 
 					brand_name 		 	: '',
 					factory_name	 	: '',
 					address 		 	: '',
-					country 		 	: '',
+					country_id 		 	: '',
 					no_employee 		: '',
 					company_description : '',
 					owner_firstname 	: '',
@@ -302,10 +305,12 @@
 					password 			: '',
 
 				 },
+
 				countries: [],
 				search: null,
 				formloading: false,
 				showPassword: false
+
 			}
 
 		},
@@ -358,22 +363,20 @@
 
 
 
-				 this.form.email,
-				 this.form.password,
-				 this.form.first_name,
-				 this.form.last_name,
-				 this.form.job_title,
-				 this.form.phone,
-				 this.form.fax,
-				 this.form.address,
-				 this.form.country,
-				 this.form.brand_name,
-				 this.form.factory_name,
-				 this.form.company_description,
-				 this.form.owner_name,
-				 this.form.no_employee
-
-
+				 this.form.email				=  this.supplierData.email
+				 this.form.password				=  this.supplierData.password  
+				 this.form.first_name			=  this.supplierData.first_name
+				 this.form.last_name			=  this.supplierData.last_name
+				 this.form.job_title			=  this.supplierData.job_title
+				 this.form.phone				=  this.supplierData.phone
+				 this.form.fax					=  this.supplierData.fax
+				 this.form.address				=  this.supplierData.address
+				 this.form.country_id			=  this.supplierData.country_id
+				 this.form.brand_name			=  this.supplierData.brand_name
+				 this.form.factory_name			=  this.supplierData.factory_name
+				 this.form.company_description	=  this.supplierData.company_description
+				 this.form.owner_name			=  this.supplierData.owner_name
+				 this.form.no_employee			=  this.supplierData.no_of_employees
 
 			},
 
@@ -386,15 +389,30 @@
 				this.resetForm();
 			},	
 
-			resetFrom() {
+			resetForm() {
+
 				this.form = Object.assign({}, dform)
 				this.$refs.form.reset();
 				this.$v.$reset()
+
 			},
 
 			submit() {
 
-				console.log(this.form);
+				// console.log(this.form);
+
+				if(this.is_new) {
+					this.addSupplier();
+				} else {
+					this.editSupplier();
+				}
+				
+		    
+			},
+
+
+			addSupplier() {
+
 
 				this.formloading = true
 
@@ -408,7 +426,7 @@
 					'phone'	  	   			: this.form.phone,
 					'fax'		   			: this.form.fax,
 					'address'	   			: this.form.address,
-					'country_id'  			: this.form.country,
+					'country_id'  			: this.form.country_id,
 					'brand_name'   			: this.form.brand_name,
 					'factory_name' 			: this.form.factory_name,
 					'company_description' 	: this.form.company_description,
@@ -436,8 +454,65 @@
 				.finally(() => {
 					this.formloading = false
 				})
-		    
+
+
+			},
+
+
+			editSupplier() {
+
+				this.formloading = true
+
+				let data = {
+
+					'email'	 	   			: this.form.email,
+					'password' 	   			: this.form.password,
+					'first_name'   			: this.form.first_name,
+					'last_name'    			: this.form.last_name,
+					'job_title'    			: this.form.job_title,
+					'phone'	  	   			: this.form.phone,
+					'fax'		   			: this.form.fax,
+					'address'	   			: this.form.address,
+					'country_id'  			: this.form.country_id,
+					'brand_name'   			: this.form.brand_name,
+					'factory_name' 			: this.form.factory_name,
+					'company_description' 	: this.form.company_description,
+					'owner_name' 			: this.form.owner_name,
+					'no_of_employees'		: this.form.no_employee,
+					'id'					: this.supplier_id
+
+				}
+
+				this.$store.dispatch('adminSupplier/updateSUpplier_a', {
+
+					data:data
+
+				})
+				.then((response) => {
+
+					this.formloading = false
+					console.log(response)
+
+					this.$emit('update:dialog', false);
+					adminSupplierBus.emitFormSubmitted()
+
+				})
+				.catch((e) => {
+					console.log(e);
+					this.formloading = false
+				})
+				.finally(() => {
+					this.formloading = false
+				})
+
+
 			}
+
+
+
+
+
+
 		}
 	} 
 
