@@ -26,7 +26,7 @@
 
              	<v-btn 
              		v-else 
-             		@click="openQuoteDialog = true" 
+             		@click="openCreateQuote()" 
              		class="font-weight-light" 
              		color="green" 
              		dark 
@@ -96,7 +96,7 @@
 				<v-flex xs12 v-if="!hasBid">
 					<v-alert 
 						:value="true"
-						type="warning" 
+						type="info" 
 						style="width: auto;"
 						class="ma-4"
 						outline>
@@ -113,9 +113,7 @@
 			</v-container>
 	    </v-card>
 		
-		<span>
-			<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
-		</span>
+		<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
 
 </div>
 </template>
@@ -158,7 +156,7 @@ export default {
 		reloadBid(){
 			this.$store.dispatch('spplrInq/getInquiryBid_a',{inq_id:this.inquiry.id})
 			.then((data)=>{
-				this.bid = data;
+				this.bid = (data)?data:null;
 
 				// console.log("this.bid");
 				// console.log(this.bid);
@@ -176,7 +174,12 @@ export default {
 		openEditQuote(){
 			this.openQuoteDialog = true;
 			this.editQuote = true;
-		}
+		},
+
+		openCreateQuote(){
+			this.openQuoteDialog = true;
+			this.editQuote = false;
+		},
 	},
 
 	watch: {

@@ -58,6 +58,7 @@ const VueScrollToOptn = {
 Vue.use(VueScrollTo,VueScrollToOptn)
 
 
+
 Vue.use(Vuebar)
 Vue.use(Trend)
 

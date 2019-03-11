@@ -42,7 +42,7 @@
 
 				<v-alert 
 					:value="!bidItems.length"
-					type="warning" 
+					type="info" 
 					style="width: auto;"
 					class="ma-4"
 					outline>
@@ -52,10 +52,9 @@
 			</v-container>
 	    </v-card>
 		
-		<div>
-			<bid-dialog :bidDialog.sync="bidDialog"> </bid-dialog>
+		
+		<!-- <bid-dialog :bidDialog.sync="bidDialog"> </bid-dialog> -->
 
-		</div>
 
 </div>
 </template>
@@ -66,7 +65,28 @@
 	import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 	import inqEvntBs from "@/bus/inquiry";
 
+	import config from "@/config/main";
+
+	// import crono from 'vue-crono';
+	import VueTimers from 'vue-timers/mixin'
+
+
 	export default {
+		mixins: [VueTimers],
+
+		timers: [			
+			{ 
+				name: 'BidTableTimer',
+				time: config.polling.bidTable.time, 
+				immediate: true, 
+				repeat: true,
+				autostart: true,
+	            callback: function(){
+	                console.log("BidTableTimer");
+	                this.fillBidTable();
+	            },
+			}			
+		],
 
 		components: {
 			InquiryDialog,
@@ -76,6 +96,9 @@
 		props: {
 			inquiry:{
 				type:Object,
+			},
+			openInquiry : {
+				type:Boolean,
 			}
 		},
 
@@ -83,14 +106,12 @@
 
 			return {
 				bidDialog:false,
-				img: `/static/examples/Logo-Samples2-08-min.jpg`,
-			    dummy: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishingrelease of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishin`,
-
 				bidItems: [],
 			}
 		},
 
 		methods: {
+
 			fillBidTable(){
 
 				this.$store.dispatch('spplrInq/getAllInquiryBids_a',{inq_id:this.inquiry.id})
@@ -98,14 +119,26 @@
 					// console.log(response);
 					this.bidItems = response;
 					this.bidItems.sort((a,b)=>{
-						// return b.total_price - a.total_price;
 						return a.total_price - b.total_price;
 					});
 				})
 				.catch(error=>{
                     console.log(error);					
 				});
+
+				console.log('fillBidTable');
 			},
+
+			testTimer(){
+				console.log('testTimer');
+			},
+
+
+			updateTime: function () {
+				setInterval(function () {
+					this.displayTime = moment().format()
+				}.bind(this), 1000);
+			}
 
 		},
 
@@ -116,22 +149,24 @@
 
 	    mounted(){
 
-		    this.$nextTick(function () {
-		        window.setInterval(() => {
-			    	this.fillBidTable();
-			    	console.log("nexttick");
-		        },10000);
-		    })
 	    },
 
 	    watch: {
 	    	inquiry: {
 	    		handler(nVal,oVal){
-			    	this.fillBidTable();	    			
+			    	this.fillBidTable();
 	    		},
 	    		deep: true,
+	    	},
+
+	    	openInquiry(nVal) {
+	    		if(nVal)
+	       		this.$timer.start('BidTableTimer');
+	       		else
+	       		this.$timer.stop('BidTableTimer');
 	    	}
 	    },
+
 	}
 </script>
 

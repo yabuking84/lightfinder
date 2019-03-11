@@ -7,8 +7,8 @@
 export default {
   sidebar: {
     show: null,
-    miniview: false,
-    miniVariant: false,
+    miniview: true,
+    miniVariant: true,
     clipped: false,
     position: 'left'
   },
