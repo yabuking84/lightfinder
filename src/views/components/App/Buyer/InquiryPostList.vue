@@ -204,8 +204,8 @@ data: function () {
 
 },
 
-timers: [			
-	{ 
+timers: [
+	{
 		name: 'BidTableTimer',
 		time: config.polling.bidTable.time, 
 		immediate: true, 
@@ -215,7 +215,7 @@ timers: [
             console.log("BidTableTimer");
             this.fillBidTable();
         },
-	}			
+	}
 ],
 
 watch: {

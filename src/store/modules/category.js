@@ -28,6 +28,11 @@ const actions = {
                 url: url,
             })
             .then(response => {
+                
+                response.data.map(function(d){
+                    d.name = d.name.trim();
+                    return d;
+                });
                 resolve(response.data);
             })
             .catch(error => {

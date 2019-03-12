@@ -126,7 +126,6 @@
                     console.log(error);					
 				});
 
-				console.log('fillBidTable');
 			},
 
 			testTimer(){

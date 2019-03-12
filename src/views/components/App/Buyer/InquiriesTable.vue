@@ -1,7 +1,8 @@
 <template>
 <div>
+    <v-card>
 
-
+        <v-layout row wrap mb-3>
         <v-toolbar dark color="grey darken-4">
 
            <v-btn-toggle multiple v-model="inquiryStatus">
@@ -18,14 +19,46 @@
             </v-btn>
 
         </v-toolbar>
+        </v-layout>
 
-           <v-card>
+        <v-card-title>
+            <v-layout row wrap>
+                <v-flex xs7>
+                    <v-autocomplete 
+                        v-model="categories" 
+                        :items="categoryItems" 
+                        item-text="name"
+                        item-value="name"
+                        ref="categorySelect" 
+                        cache-items 
+                        chips
+                        multiple
+                        hide-no-data 
+                        clearable
+                        hide-details 
+                        label="select categories..">
+                              <template v-slot:selection="slotData">
+                                <v-chip
+                                  :selected="slotData.selected"
+                                  close
+                                  class="chip--select-multi"
+                                  @input="removeFromCategories(slotData.item)">
+                                  {{ slotData.item.name }}
+                                </v-chip>
+                              </template>
+                    </v-autocomplete>
+                </v-flex>
 
-                    <v-flex xs3 offset-xs9 pt-4>
-                         <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
-                         </v-text-field>   
-                    </v-flex>
-                  
+                <v-spacer></v-spacer>
+
+                <v-flex xs3 pt-4>
+                     <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
+                     </v-text-field>   
+                </v-flex>
+              
+            </v-layout>
+        </v-card-title>
+
                   <v-divider></v-divider>
                  
                   <v-data-table                  
@@ -92,13 +125,13 @@
 
                   </v-data-table>
                 
-            </v-card>
+    </v-card>
 
-            
-            <span>
-                <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>     
-            </span>
-  </div>
+    
+    <span>
+        <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>     
+    </span>
+</div>
 </template>
 
 <script>
@@ -193,6 +226,9 @@ export default {
         allInquiries: [],
         tableItems: [],
 
+        categories: [],
+        categoryItems: [],
+
         openInquiry: false,
         inquiry: null,
 
@@ -206,16 +242,18 @@ export default {
             autostart: true,
             callback: function(){
                 console.log("InquiryTableTimer");
-                this.fillTable();
+                this.fillTable(false);
             },
         }
     ],
 
     methods: {
 
-        fillTable() {
+        fillTable(withLoading=true) {
 
+            if(withLoading)
             this.loading = true;
+
             this.allInquiries = [];
             this.$store.dispatch('byrInq/getInquiries_a')
             .then((response) => {
@@ -236,6 +274,8 @@ export default {
 
                 // this.tableItems = this.allInquiries;
                 this.filterTable();
+                
+                if(withLoading)
                 this.loading = false;
 
             })
@@ -271,17 +311,30 @@ export default {
         filterTable(){
             
             var items = this.allInquiries;
-
-            if(this.inquiryStatus.length) {
+            if(this.inquiryStatus.length || this.categories.length) {
                 // filter for statuses only
                 var buff = this.inquiryStatus;                
                 items = items.filter(function(inq){
                     return (buff.length)?buff.includes(inq.status):true;
                 });
+
+                // filter for categories
+                buff = this.categories;                
+                items = items.filter(function(inq){
+                    return (buff.length)?buff.includes(inq.categories.trim()):true;
+                });                
             }
             this.tableItems = items;
 
         },
+
+
+        removeFromCategories (item) {
+            const index = this.categories.indexOf(item.name);            
+            if (index >= 0) 
+            this.categories.splice(index, 1)
+        },
+
     },
  
 
@@ -291,6 +344,18 @@ export default {
         this.fillTable();
         inqEvntBs.onFormSubmitted(this.fillTable);
 
+
+        // get categories for category select box
+        this.$store.dispatch('cat/getCategories_a')
+        .then((data)=>{
+            this.categoryItems = data;
+            // console.log(this.categoryItems);
+        })
+        .catch((e) => {
+            console.log('Error: ');
+            console.log(e);
+        });
+
     },
 
     watch: {
@@ -298,6 +363,10 @@ export default {
         inquiryStatus(nVal,oVal){
             this.filterTable();
          },
+
+        categories(nVal,oVal){
+            this.filterTable();
+        },
 
         openInquiry(nVal){
 
