@@ -23,7 +23,7 @@
                     <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
                         <v-btn flat :value="status.id" :title="status.name">
                             <i class="white--text" :class="status.icon"></i> 
-                            <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
+                            <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
                         </v-btn>
                     </span>
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -126,7 +126,7 @@
                                 small 
                                 flat 
                                 value="left" 
-                                @click="viewInquiry(props.item.inq_id)"
+                                @click="viewInquiry(props.item)"
                                 class="v-btn--active grey darken-1 font-weight-light text-decoration-none"
                                 :loading="props.item.loading">
                                     <i class="fas fa-eye white--text"></i>
@@ -265,17 +265,18 @@ import VueTimers from 'vue-timers/mixin'
                 console.log("InquiryTableTimer");
                 this.fillTable();
             },
-
-        }           
+        }
     ],
 
     methods: {
 
 
-        viewInquiry(inq_id){            
+        viewInquiry(inq){
 
-            this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:inq_id})
+            inq.loading = true;
+            this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:inq.inq_id})
             .then((data)=>{
+                inq.loading = false;
                 this.inquiry = data;
                 this.openInquiry = true;
             })
@@ -313,7 +314,7 @@ import VueTimers from 'vue-timers/mixin'
                 }
                 // this.tableItems = this.allInquiries;
                 this.filterTable();
-                // this.loading = false;
+                this.loading = false;
 
             })
             .catch((e) => {
