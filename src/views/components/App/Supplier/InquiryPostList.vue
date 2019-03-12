@@ -31,11 +31,18 @@
 			   	 	     		</h3>
 			   	 	     	</v-flex>
 							
-			   	 	     	<v-flex xs6>
+			   	 	     	<v-flex xs5>
 								<h3 class="font-weight-light text-xs-left ml-3">
 									${{ bidItem.price }} / piece
 								</h3>
-			   	 	     	</v-flex>							
+			   	 	     	</v-flex>						
+			   	 	     	<v-flex xs1>
+								<v-icon 
+								v-if="bidItem.awarded"
+								class="awarded orange--text">
+									fas fa-award
+								</v-icon>
+			   	 	     	</v-flex>
 			   	 	   </v-layout>
 			   	 	</v-card>
 				</div>
@@ -116,7 +123,7 @@
 
 				this.$store.dispatch('spplrInq/getAllInquiryBids_a',{inq_id:this.inquiry.id})
 				.then(response=>{
-					// console.log(response);
+					console.log(response);
 					this.bidItems = response;
 					this.bidItems.sort((a,b)=>{
 						return a.total_price - b.total_price;

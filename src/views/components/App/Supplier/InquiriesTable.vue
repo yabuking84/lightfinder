@@ -81,7 +81,7 @@
         :search="search">
 
             <template v-slot:items="props">
-                <tr class="th-heading">
+                <tr class="">
 
                     <td>
                     <v-layout align-start justify-start column fill-height pt-3>
@@ -198,7 +198,6 @@ import inqEvntBs from "@/bus/inquiry";
 
         statuses: config.inquiry_statuses.default,
         statusesSupplier: config.inquiry_statuses.suppliers,
-        search: '1551612312798',
         headers: [
             {
               text: '',
@@ -255,6 +254,9 @@ import inqEvntBs from "@/bus/inquiry";
               sortable: false,
             },
         ],
+
+        search: '1551612312798',
+        // search: null,
 
         inquiryStatus: [],
         allInquiries: [],
@@ -424,22 +426,24 @@ import inqEvntBs from "@/bus/inquiry";
 </script>
 
 
-<style scoped lang="stylus">
-    .theme--light.v-table thead tr
-      background:#000000;
-      color:#fff;
-    .fix-width
-      width:198px;
-    .th-heading 
-       cursor: pointer; 
-    .text-decoration-none
-       text-decoration: none;
-    .th-heading a 
-       text-decoration:none;
-
-</style>
-
 <style scoped lang="scss">
+.theme--light.v-table thead tr {
+    background:#000000;
+    color:#fff;
+}
+.fix-width {
+  width:198px;
+}
+.th-heading {
+   cursor: pointer; 
+}
+.text-decoration-none {
+   text-decoration: none;
+}
+.th-heading a {
+   text-decoration:none;
+}
+
 
 .theme--light.v-datatable thead th.column.sortable.active .v-icon,
 .v-datatable thead th.column.sortable:focus .v-icon, 

@@ -4,9 +4,9 @@
 		<!-- <v-btn  small flat @click="dialog = true" value="left" class="v-btn--active" :class="status.class">
 		    <span class="ml-1 white--text font-weight-light ">{{ status.name }}</span>
 		</v-btn> -->
-		<h4 :class="status.class">
-			{{ status.name }}
-		</h4>
+		<h3 class="statuses white--text py-1 px-3 ma-2 font-weight-regular" :class="status.class">
+			{{ status.name.trim() }}
+		</h3>
 
 	</div>  
 </span>
@@ -59,3 +59,12 @@
 		}
 	}
 </script> 
+
+
+<style scoped lang="scss">
+
+.statuses {
+	white-space: nowrap;
+}
+	
+</style>
