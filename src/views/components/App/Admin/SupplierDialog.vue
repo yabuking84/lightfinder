@@ -96,7 +96,7 @@
           <v-tab-item :value="'mobile-tabs-5-2' ">
             <v-card flat height="529px">
               <v-layout row wrap pa-2>
-                <v-autocomplete v-model="categories" multiple="" :items="categoryItems" item-text="name" item-value="id" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
+                <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="id" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
                   <template v-slot:selection="slotData">
                     <v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
                       {{ slotData.item.name }}
@@ -105,6 +105,13 @@
                 </v-autocomplete>
               </v-layout>
             </v-card>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="grey darken-4" dark @click="submit()" :loading="formloading">
+                Submit
+              </v-btn>
+            </v-card-actions>
           </v-tab-item>
         </v-tabs>
       </v-card>
@@ -242,7 +249,7 @@ export default {
   created: function() {
 
     /*
-    	get countries
+      get countries
     */
 
     this.$store.dispatch('adminHelper/getCountries')
@@ -319,6 +326,12 @@ export default {
         this.editSupplier();
       }
 
+
+    },
+
+
+
+    submitCategories() {
 
     },
 
