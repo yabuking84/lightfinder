@@ -96,7 +96,7 @@
           <v-tab-item :value="'mobile-tabs-5-2' ">
             <v-card flat height="529px">
               <v-layout row wrap pa-2>
-                <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
+                <v-autocomplete v-model="categories" multiple="" :items="categoryItems" item-text="name" item-value="id" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
                   <template v-slot:selection="slotData">
                     <v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
                       {{ slotData.item.name }}
