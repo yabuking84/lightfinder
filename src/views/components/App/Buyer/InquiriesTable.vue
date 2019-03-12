@@ -5,17 +5,20 @@
         <v-layout row wrap mb-3>
         <v-toolbar dark color="grey darken-4">
 
-           <v-btn-toggle multiple v-model="inquiryStatus">
+
+            <v-btn-toggle multiple v-model="inquiryStatus">
                 <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
-                      <v-btn flat value="left" :value="status.id" :title="status.name" >
+                    <v-btn flat :value="status.id" :title="status.name">
                         <i class="white--text" :class="status.icon"></i> 
-                        <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
-                    </v-btn>  
+                        <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
+                    </v-btn>
                 </span>
             </v-btn-toggle>
+            
             <v-spacer></v-spacer>
+
             <v-btn icon @click="refresh()">
-              <v-icon>refresh</v-icon>
+                <v-icon>refresh</v-icon>
             </v-btn>
 
         </v-toolbar>
@@ -59,71 +62,71 @@
             </v-layout>
         </v-card-title>
 
-                  <v-divider></v-divider>
+        <v-divider></v-divider>
                  
-                  <v-data-table                  
-                        :headers="headers"
-                        :items="tableItems"
-                        :loading="loading"
-                        :search="search">
+        <v-data-table                  
+        :headers="headers"
+        :items="tableItems"
+        :loading="loading"
+        :search="search">
 
-                      <template slot="items" slot-scope="props">
+            <template v-slot:items="props">
 
-                          <tr class="th-heading">
+              <tr class="th-heading">
 
-                              <td>
-                                <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details ></v-checkbox>
-                              </td>
+                  <td>
+                    <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details ></v-checkbox>
+                  </td>
 
-                              <td class="text-xs-left font-weight-medium">
-                                  <h4 class="mt-3">Inquiry# {{ props.item.inq_id }}</h4>
-                                  <h3 class="mb-1">{{ props.item.keywords }}</h3>
-                                  <p class="mb-3">{{ props.item.message }}</p>
-                              </td>
+                  <td class="text-xs-left font-weight-medium">
+                      <h4 class="mt-3">Inquiry# {{ props.item.inq_id }}</h4>
+                      <h3 class="mb-1">{{ props.item.keywords }}</h3>
+                      <p class="mb-3">{{ props.item.message }}</p>
+                  </td>
 
-                              <td class="text-xs-left font-weight-medium">{{ props.item.categories }}</td>
-                              
-                              <td class="text-xs-left">{{ props.item.quantity }}</td>
+                  <td class="text-xs-left font-weight-medium">{{ props.item.categories }}</td>
+                  
+                  <td class="text-xs-left">{{ props.item.quantity }}</td>
 
-                              <td class="text-xs-left">
-                                  <div class="dateCellWidth">
-                                      {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
-                                  </div>
-                              </td>
-                              
-                              <td class="text-xs-center">
-                                  <div class="dateCellWidth">
-                                      {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
-                                  </div>
-                              </td>
-                              
-                              <td class="text-xs-center">
-                                     <inquiry-status-buttons :status-id="props.item.status"/>
-                              </td>
-                              
-                              <td class="text-xs-center">
-                                    <v-btn 
-                                    @click="viewInquiry(props.item)"
-                                    :loading="props.item.loading"
-                                    small 
-                                    flat 
-                                    value="left" 
-                                    class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
-                                        <i class="fas fa-eye white--text"></i>
-                                        <span class="ml-1 white--text font-weight-light ">View</span>
-                                    </v-btn>
-                                    
-                              </td>
+                  <td class="text-xs-left">
+                      <div class="dateCellWidth">
+                          {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
+                      </div>
+                  </td>
+                  
+                  <td class="text-xs-center">
+                      <div class="dateCellWidth">
+                          {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
+                      </div>
+                  </td>
+                  
+                  <td class="text-xs-center">
+                         <inquiry-status-buttons :status-id="props.item.status"/>
+                  </td>
+                  
+                  <td class="text-xs-center">
+                        <v-btn 
+                        @click="viewInquiry(props.item)"
+                        :loading="props.item.loading"
+                        small 
+                        flat 
+                        value="left" 
+                        class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                            <i class="fas fa-eye white--text"></i>
+                            <span class="ml-1 white--text font-weight-light ">View</span>
+                        </v-btn>
+                        
+                  </td>
 
-                          </tr>
+              </tr>
 
-                      </template>
+          </template>
 
-                        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                            Your search for "{{ search }}" found no results.
-                        </v-alert>
+            <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                Your search for "{{ search }}" found no results.
+            </v-alert>
 
-                  </v-data-table>
+        </v-data-table>
                 
     </v-card>
 

@@ -1,49 +1,64 @@
 <template>
 	<div>
-		<v-container fluid grid-list-xl>
-			<v-layout row wrap>
+		<v-container fluid>
+
+
+			<!-- <v-layout row wrap ml-5>
+ 		   		<v-flex xs2 pa-1 >
+			  		<v-card>
+			  	  	   <h1 class="pa-3 title text-xs-center font-weight-light">Total Earnings: <span class="font-weight-bold subheading"> $100.00 </span> </h1>
+			  	  	</v-card>  
+							
+
+		  		</v-flex>
+		  	</v-layout> -->
+
+		  	<v-layout row wrap>
 				<v-flex>
-					<!-- <AddInquiry></AddInquiry> -->
-					<router-view></router-view>
+			  		<inquiries-table></inquiries-table>
 				</v-flex>
-			</v-layout>
+		  	</v-layout>
+
+
 		</v-container>
 	</div>
 </template>
 
-
-
-
 <script>
 
-// import AddInquiry from "@/views/Components/App/Buyer/AddInquiry";
 
-export default {
-	data: () => ({
-		
-	}),
 
-	components: {
-		// AddInquiry,
-	},
+import InquiriesTable from "@/views/Components/App/Supplier/InquiriesTable"
 
-	computed: {
+	// import OpenInquiry from '@/views/'
+	export default {
 
-	},
-}
-	
+		components: {
+			InquiriesTable,
+		},
+
+		data: () => ({
+			component: InquiriesTable,
+		}),
+
+		created() {
+
+		},
+
+		methods: {
+
+			Sort: () => {
+
+			},
+
+			Refresh: () => {
+
+			}
+		},
+
+
+
+
+	}
+
 </script>
-
-<style scoped lang="stylus">
-	.proposed_quote
-		height: 82vh;
-		max-height: 82vh;
-		overflow-y: auto;
-	.propposed_field
-		height: 82vh;	
-		max-height: 82vh;
-		overflow-y: auto;
-</style>
-
-
-
