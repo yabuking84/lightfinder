@@ -1,9 +1,13 @@
 <template>
 <span>
 	<div>
-		 <v-btn  small flat @click="dialog = true" value="left" class="v-btn--active" :class="status.class">
+		<!-- <v-btn  small flat @click="dialog = true" value="left" class="v-btn--active" :class="status.class">
 		    <span class="ml-1 white--text font-weight-light ">{{ status.name }}</span>
-		</v-btn>
+		</v-btn> -->
+		<h4 :class="status.class">
+			{{ status.name }}
+		</h4>
+
 	</div>  
 </span>
 </template>

@@ -205,7 +205,7 @@ import VueTimers from 'vue-timers/mixin'
             },
            
             {
-              text: 'Categories',
+              text: 'Inquiry & Categories',
               align: 'left',  
               sortable: true,
               value: 'categories'
