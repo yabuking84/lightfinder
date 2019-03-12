@@ -2,9 +2,6 @@
 <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
 <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
-        <!-- <v-card-title class="headline grey lighten-2" primary-title>
-            Privacy Policy
-        </v-card-title> -->
 
         <v-card-text>	
 	
@@ -15,11 +12,11 @@
 						
 						<!-- inquiry details card -->
 						<v-flex xs5>
-							<inquiry-details-card :inquiry="inquiry"> </inquiry-details-card>
+							<inquiry-details-card :isClosed.sync="isClosed" :openInquiry="openInquiry"  :inquiry="inquiry"> </inquiry-details-card>
 						</v-flex>
 						<!-- end of detils  -->
 
-						
+								
 						<!-- supplier quote / bids -->
 						<v-flex xs7>
 							<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
@@ -66,7 +63,8 @@ export default {
 
 		title: 'Inquiry Details',
 		icon: null,
-		bidDialog:false,
+		isClosed:false
+
 	}),
 
 	computed: {
@@ -96,6 +94,33 @@ export default {
 		console.log(this.inquiry);
 
 	},
+
+	watch: {
+
+		  isClosed: {
+
+                handler(nVal,oVal) {
+
+                	if(nVal) {
+                		 this.$emit('update:openInquiry', false);
+                	}
+
+                	console.log('-----watch in the second---------')
+                	console.log(nVal);
+                	console.log('-----watch in second---------')
+
+                },
+
+                deep: true
+          }
+
+	},
+
+
+
+
+
+
 }
 	
 </script>

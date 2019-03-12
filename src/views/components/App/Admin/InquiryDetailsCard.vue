@@ -11,8 +11,8 @@
             <v-toolbar-title class="body-2 font-weight-light">Inquiry# {{ inquiry.id }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-title class="body-2 font-weight-light"> Posted: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
-
         </v-toolbar>
+
         <v-card>
 
             <v-container>
@@ -28,6 +28,7 @@
                             <i class="fas fa-thumbs-up white--text"></i>
                             <span class="ml-1 white--text font-weight-light ">Approved</span>
                         </v-btn>
+
                     </v-flex>
 
                     <v-flex xs6>
@@ -128,11 +129,16 @@
         ],
 
         props: [
+
             'inquiry',
-            'openInquiry'
+            'openInquiry',
+            'isClosed'
+
         ],
 
-        data: () => ({}),
+        data: () => ({
+
+        }),
 
         methods: {
 
@@ -142,15 +148,18 @@
                     inquiry_id: inquiry_id
                 })
                 .then((response) => {
+
                     // create a event bus 
-                    this.$emit('update:openInquiry', false);
+                    // this.$emit('update:isClosed', true);
                     inqEvntBs.emitApproved();
+
                 })
                 .catch((e) => {
                     console.log(e);
+                    // this.$emit('update:isClosed', true);
                 })
                 .finally(() => {
-
+                    // this.$emit('update:isClosed', true);
                 });      
 
             },
@@ -163,10 +172,11 @@
                 })
                 .then((response) => {
                     // create a event bus 
-                    this.$emit('update:openInquiry', false);
+                    // this.$emit('update:isClosed', true);
                     inqEvntBs.emitApproved();
                 })
                 .catch((e) => {
+                    // this.$emit('update:isClosed', true);
                     console.log(e);
                 })
                 .finally(() => {
@@ -177,17 +187,8 @@
 
         },
 
-        watch: {
-
-        },
-
-        created() {
-
-            // console.log(this.inquiry);
-
-        },
-
     }
+
 </script>
 
 <style scoped lang="scss">

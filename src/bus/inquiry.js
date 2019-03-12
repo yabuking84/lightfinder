@@ -49,9 +49,10 @@ const InquiryEventBus = new Vue({
 		emitApproved() {
 			this.$emit('approved-submitted');
 		},
-		OnApproved(func) {
+		OnApproved(func, isOpen) {
 			this.$on('approved-submitted', () => {
 				func();
+				this.$on('update:openInquiry', false);
 			});
 		}
 

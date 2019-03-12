@@ -3,7 +3,6 @@
  <div>
 
         <v-toolbar dark color="grey darken-4">
-
            <v-btn-toggle multiple v-model="inquiryStatus">
                 <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
                       <v-btn flat value="left" :value="status.id" :title="status.name" >
@@ -16,17 +15,16 @@
             <v-btn icon @click="refresh()">
               <v-icon>refresh</v-icon>
             </v-btn>
-
         </v-toolbar>
 
            <v-card>
 
-                    <v-flex xs3 offset-xs9 pt-4>
-                         <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
-                         </v-text-field>   
-                    </v-flex>
-                  
-                  <v-divider></v-divider>
+                  <v-flex xs3 offset-xs9 pt-4>
+                       <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
+                       </v-text-field>   
+                  </v-flex>
+                
+                <v-divider></v-divider>
                  
                   <v-data-table
                   
@@ -108,9 +106,7 @@ import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import main from "@/config/main"
 
-
 import InquiryView from "@/views/Components/App/admin/InquiryView";
-
 
 
 export default {
@@ -266,7 +262,7 @@ export default {
     created(){
 
         this.fillTable();
-        inqEvntBs.OnApproved(this.fillTable);
+        inqEvntBs.OnApproved(this.fillTable, this.openInquiry);
 
     },
 
