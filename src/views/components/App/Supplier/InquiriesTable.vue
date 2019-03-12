@@ -96,7 +96,9 @@
                 <tr class="th-heading">
 
                     <td>
+                    <v-layout align-start justify-start column fill-height pt-3>
                         <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
+                    </v-layout>
                     </td>
 
                     <td class="text-xs-left font-weight-medium ">
@@ -225,7 +227,7 @@ import VueTimers from 'vue-timers/mixin'
               text: 'Keywords & Message',
               align: 'left',  
               sortable: true,
-              value: 'idKeywordsMessage'
+              value: 'keywordsMessage'
             },
             
             {
@@ -266,6 +268,7 @@ import VueTimers from 'vue-timers/mixin'
         inquiryStatus: [],
         allInquiries: [],
         tableItems: [],
+
         categories: [],
         categoryItems: [],
 
@@ -282,7 +285,7 @@ import VueTimers from 'vue-timers/mixin'
             autostart: true,
             callback: function(){
                 console.log("InquiryTableTimer");
-                this.fillTable();
+                this.fillTable(false);
             },
         }
     ],
@@ -306,9 +309,12 @@ import VueTimers from 'vue-timers/mixin'
         },
 
 
-        fillTable() {
+        fillTable(withLoading=true) {
             // console.log("fillTable");
+            
+            if(withLoading)
             this.loading = true;
+
             this.allInquiries = [];
             this.$store.dispatch('spplrInq/getInquiries_a')
             .then((response) => {
@@ -320,7 +326,7 @@ import VueTimers from 'vue-timers/mixin'
                     item.inq_id = response[i].id;
                     item.keywords = this.ucwords(response[i].keyword);
                     item.message = response[i].message;
-                    item.idKeywordsMessage = response[i].id+" "+response[i].keyword+" "+response[i].message;
+                    item.keywordsMessage = response[i].keyword+" "+response[i].message;
                     item.categories = response[i].categories.join(', ');
                     item.quantity = response[i].quantity;
                     item.shipping_date = response[i].desired_shipping_date;
@@ -332,6 +338,8 @@ import VueTimers from 'vue-timers/mixin'
                 }
                 // this.tableItems = this.allInquiries;
                 this.filterTable();
+
+                if(withLoading)
                 this.loading = false;
 
             })
@@ -353,6 +361,7 @@ import VueTimers from 'vue-timers/mixin'
 
         filterTable(){
 
+
             var items = this.allInquiries;
             if(this.inquiryStatus.length || this.categories.length) {
 
@@ -362,13 +371,11 @@ import VueTimers from 'vue-timers/mixin'
                     return (isBuff.length)?isBuff.includes(inq.status):true;
                 });
                 
-
                 // filter for categories
                 isBuff = this.categories;
-                function callBackCat(inq){
+                items = items.filter(function(inq){
                     return (isBuff.length)?isBuff.includes(inq.categories.trim()):true;
-                };
-                items = items.filter(callBackCat);
+                });
             }
 
             this.tableItems = items;
@@ -376,8 +383,9 @@ import VueTimers from 'vue-timers/mixin'
 
         removeFromCategories (item) {
             const index = this.categories.indexOf(item.name);            
-            if (index >= 0) 
-            this.categories.splice(index, 1)
+            if (index >= 0) {
+                this.categories.splice(index, 1);
+            }
         }        
 
     },
@@ -390,7 +398,6 @@ import VueTimers from 'vue-timers/mixin'
         this.$store.dispatch('cat/getCategories_a')
         .then((data)=>{
             this.categoryItems = data;
-            // console.log(this.categoryItems);
         })
         .catch((e) => {
             console.log('Error: ');
