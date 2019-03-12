@@ -95,33 +95,51 @@
             <template v-slot:items="props">
                 <tr class="th-heading">
 
-                    <!-- <td>
+                    <td>
                         <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
-                    </td> -->
+                    </td>
+
+                    <td class="text-xs-left font-weight-medium ">
+                    <v-layout align-start justify-start column fill-height pt-3>
+                        <h3 class="mb-2" style="min-width:190px;">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
+                        {{ props.item.categories }}
+                    </v-layout>
+                    </td>
 
                     <td class="text-xs-left font-weight-medium">
-                        <h3 class="mt-3 mb-0">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
-                        <h3 class="mt-1 mb-1">{{ props.item.keywords }}</h3>
+                    <v-layout align-start justify-start column fill-height pt-3>
+                        <h3 class="mb-1">{{ props.item.keywords }}</h3>
                         <p class="mb-3">{{ props.item.message }}</p>
+                    </v-layout>
                     </td>
 
-                    <td class="text-xs-left font-weight-medium">{{ props.item.categories }}</td>
-
-                    <td class="text-xs-left">{{ props.item.quantity }}</td>
 
                     <td class="text-xs-left">
+                    <v-layout align-start justify-start column fill-height pt-3>
+                        {{ props.item.quantity }}
+                    </v-layout>
+                    </td>
+
+                    <td class="text-xs-left">
+                    <v-layout align-start justify-start column fill-height pt-3>
                         <div class="dateCellWidth">{{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}</div>
+                    </v-layout>
                     </td>
 
                     <td class="text-xs-left">
+                    <v-layout align-start justify-start column fill-height pt-3>
                         <div class="dateCellWidth">{{ getDateTime('mmm dd, yyyy hh:mm',props.item.created_at) }}</div>
+                    </v-layout>
                     </td>
 
                     <td class="text-xs-left">
-                        <inquiry-status-buttons :status-id="props.item.status" />
+                    <v-layout align-start justify-start column fill-height pt-2>
+                        <inquiry-status-buttons :status-id="props.item.status"></inquiry-status-buttons>
+                    </v-layout>
                     </td>
 
                     <td class="text-xs-center">
+                    <v-layout align-start justify-start column fill-height pt-2>
                             <v-btn 
                                 small 
                                 flat 
@@ -134,6 +152,7 @@
                             </v-btn>
                         <!-- <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
                         </router-link> -->
+                    </v-layout>
                     </td>
 
                 </tr>
@@ -188,18 +207,11 @@ import VueTimers from 'vue-timers/mixin'
         statusesSupplier: config.inquiry_statuses.suppliers,
         search: '1551612312798',
         headers: [
-            // {
-            //   text: 'Select',
-            //   align: 'left',
-            //   sortable: false,
-            //   value: 'inq_id'
-            // },
-           
             {
-              text: 'Keywords & Message',
-              align: 'left',  
-              sortable: true,
-              value: 'keywordsMessage'
+              text: '',
+              align: 'left',
+              sortable: false,
+              value: 'inq_id'
             },
            
             {
@@ -207,6 +219,13 @@ import VueTimers from 'vue-timers/mixin'
               align: 'left',  
               sortable: true,
               value: 'categories'
+            },
+           
+            {
+              text: 'Keywords & Message',
+              align: 'left',  
+              sortable: true,
+              value: 'idKeywordsMessage'
             },
             
             {
@@ -288,7 +307,7 @@ import VueTimers from 'vue-timers/mixin'
 
 
         fillTable() {
-            console.log("fillTable");
+            // console.log("fillTable");
             this.loading = true;
             this.allInquiries = [];
             this.$store.dispatch('spplrInq/getInquiries_a')
@@ -301,7 +320,7 @@ import VueTimers from 'vue-timers/mixin'
                     item.inq_id = response[i].id;
                     item.keywords = this.ucwords(response[i].keyword);
                     item.message = response[i].message;
-                    item.keywordsMessage = response[i].id+" "+response[i].keyword+" "+response[i].message;
+                    item.idKeywordsMessage = response[i].id+" "+response[i].keyword+" "+response[i].message;
                     item.categories = response[i].categories.join(', ');
                     item.quantity = response[i].quantity;
                     item.shipping_date = response[i].desired_shipping_date;
