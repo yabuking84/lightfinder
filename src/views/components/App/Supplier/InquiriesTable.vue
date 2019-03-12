@@ -2,45 +2,28 @@
  <div>
     <v-card>
         <v-layout row wrap mb-3>
-            <!-- toolbar -->
-            <v-toolbar dark color="grey darken-4">
+        <v-toolbar dark color="grey darken-4">
 
 
-                <v-btn-toggle multiple v-model="inquiryStatus">
-                    <!-- for loop -->
-                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                    <!-- <span v-for="(status, index) in statusesSupplier" class="grey darken-4 pa-2">
-                        <v-btn flat @click="inquiryStatus=status.id+''" :value="status.id+''" :title="status.name">
-                            <i class="white--text" :class="status.icon"></i> 
-                            <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
-                        </v-btn>
-                    </span> -->
-                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                    <!-- for loop -->
+            <v-btn-toggle multiple v-model="inquiryStatus">
+                <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
+                    <v-btn flat :value="status.id" :title="status.name">
+                        <i class="white--text" :class="status.icon"></i> 
+                        <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
+                    </v-btn>
+                </span>
+            </v-btn-toggle>
+            
+            <v-spacer></v-spacer>
 
-                    <!-- for loop -->
-                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                    <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
-                        <v-btn flat :value="status.id" :title="status.name">
-                            <i class="white--text" :class="status.icon"></i> 
-                            <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
-                        </v-btn>
-                    </span>
-                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                    <!-- for loop -->
-                </v-btn-toggle>
-                
-                <v-spacer></v-spacer>
-
-                <v-btn icon @click="refresh()">
-                    <v-icon>refresh</v-icon>
-                </v-btn>
+            <v-btn icon @click="refresh()">
+                <v-icon>refresh</v-icon>
+            </v-btn>
 
 
 
 
-            </v-toolbar>
-            <!--/ toolbar -->
+        </v-toolbar>
         </v-layout>
 
         <v-card-title>
@@ -91,7 +74,12 @@
 
         <v-divider></v-divider>
 
-        <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
+        <v-data-table 
+        :headers="headers" 
+        :items="tableItems" 
+        :loading="loading" 
+        :search="search">
+
             <template v-slot:items="props">
                 <tr class="th-heading">
 

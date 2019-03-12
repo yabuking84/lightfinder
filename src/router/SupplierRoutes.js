@@ -9,6 +9,7 @@ import config from '@/config/index'
 // SUPPLIER
 
 import SupplierHome from '@/views/Pages/Supplier/Home'
+import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
 import SupplierInquiryView from '@/views/Pages/Supplier/InquiryView'
 
 import Register from '@/views/Pages/Supplier/Register'
@@ -26,9 +27,13 @@ const meta = {
             name: 'SupplierHome',
             icon: 'fas fa-th-large',
         },            
+        {
+            title: 'Inquiries',
+            name: 'SupplierInquiry',
+            icon: 'fas fa-clipboard',
+        },            
     ],        
 }
-
 
 export default [
     {
@@ -36,6 +41,18 @@ export default [
         path: '/supplier/dashboard',
         components: {
             default:SupplierHome,
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+        },
+        meta: meta
+    },
+
+    {
+        name: 'SupplierInquiry',
+        path: '/supplier/inquiry',
+        components: {
+            default:SupplierInquiry,
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,

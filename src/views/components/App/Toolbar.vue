@@ -29,11 +29,19 @@
     </v-btn> -->
 
 
-    <v-btn icon :to="{name: 'Contacts'}" flat>
+    <!-- <v-btn icon :to="{name: 'Contacts'}" flat>
       <v-icon>contacts</v-icon>
     </v-btn>
     
     <v-btn icon :to="{name: 'Chat'}" flat>
+      <v-icon>chat</v-icon>
+    </v-btn>  -->
+   
+    <v-btn icon flat>
+      <v-icon>contacts</v-icon>
+    </v-btn>
+    
+    <v-btn icon flat>
       <v-icon>chat</v-icon>
     </v-btn> 
    

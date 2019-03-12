@@ -5,7 +5,7 @@
     persistent
     fixed
     width="260"
-    :mini-variant.sync="navMiniVarient"
+    :mini-variant="navMiniVarient"
     :clipped="clipped"
     v-model="drawer"
     :left="navDrawerPosition === 'left'"
@@ -14,7 +14,6 @@
     floating
     id="app-drawer"
     app>
-
 
 
 
@@ -209,6 +208,16 @@
                 showFooter: 'showFooter',
                 miniview: 'miniview'
             }),
+
+            // navMiniVarient:{
+            //     get() {
+            //         return this.$store.getters['navMiniVarient'];
+            //     },
+            //     set(val) {
+            //         this.$store.dispatch('toggleMiniVarient');                    
+            //     }
+            // },
+
             activemenu() {
                 return this.$vuetify.theme.activemenu
             },
@@ -226,6 +235,8 @@
             toggleMiniVariantMode () {
                 this.$store.dispatch('toggleMiniVariantMode')
                 this.$store.dispatch('toggleMiniVarient')
+
+                console.log(this.navMiniVarient);
             },
 
             // miniEnterVariantHandler() {

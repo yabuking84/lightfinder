@@ -1,64 +1,65 @@
 <template>
+	
+	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+
 	<div>
-		<v-container fluid>
+		<v-container fluid grid-list-xl>
+			<v-layout row wrap>
 
+		        <v-flex xs12>
+		             <bar-card> </bar-card>
+		        </v-flex>
 
-			<!-- <v-layout row wrap ml-5>
- 		   		<v-flex xs2 pa-1 >
-			  		<v-card>
-			  	  	   <h1 class="pa-3 title text-xs-center font-weight-light">Total Earnings: <span class="font-weight-bold subheading"> $100.00 </span> </h1>
-			  	  	</v-card>  
-							
+				<v-flex xs12 md3>
+			           <notification-list> </notification-list>
+			    </v-flex>
 
-		  		</v-flex>
-		  	</v-layout> -->
+	            <v-flex xs12 md9>
+	           			<notification-table> </notification-table>
+	            </v-flex>
 
-		  	<v-layout row wrap>
-		  	  		<v-container fluid>
-						  	<inquiries-table></inquiries-table>
-					</v-container>
-		  	</v-layout>
-
+			</v-layout>
 
 		</v-container>
 	</div>
+
 </template>
 
 <script>
 
+import NotificationList from '@/views/components/App/Admin/NotificationList'
+import BarCard from '@/views/components/App/Admin/BarCard'
+import NotificationTable from '@/views/components/App/Admin/NotificationTable'
 
+export default {
+	
+	data: () => ({
+		title: 'Home',
+	}),
 
-import InquiriesTable from "@/views/Components/App/Supplier/InquiriesTable"
+	components: {
 
-	// import OpenInquiry from '@/views/'
-	export default {
+		NotificationList,
+	    BarCard,
+	    NotificationTable
+	    
+	},
 
-		components: {
-			InquiriesTable,
-		},
-
-		data: () => ({
-			component: InquiriesTable,
-		}),
-
-		created() {
-
-		},
-
-		methods: {
-
-			Sort: () => {
-
+	computed: {
+		broker: {
+			set(data){
+				this.$store.commit('auth/CHANGE_TEST_M',data);
 			},
-
-			Refresh: () => {
-
-			}
+			get(){				
+        		return this.$store.state.auth.auth_user.name;
+			},			
 		},
-
-
-
-
-	}
-
+	},
+}
+	
 </script>
+
+
+

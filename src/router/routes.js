@@ -6,8 +6,8 @@ import config from '@/config/index'
 import { store } from '@/store'
 
 
-import Contacts from '@/views/Applications/Contacts'
-import Chat from '@/views/Applications/Chat'
+// import Contacts from '@/views/Applications/Contacts'
+// import Chat from '@/views/Applications/Chat'
 
 // Pages
 import RegisterPage from '@/views/Pages/Authentication/RegisterPage'

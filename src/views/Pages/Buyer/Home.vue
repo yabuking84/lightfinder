@@ -1,121 +1,65 @@
 <template>
+	
+	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+
 	<div>
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 
-				<v-flex>
-						<v-container fluid>
-							<v-layout row wrap>
-							  <v-spacer></v-spacer>
-							</v-layout>
-							<v-layout row wrap>
-								<span class="grey darken-4 pa-1">									
-							    	<v-btn flat value="left" class="v-btn--active" @click="openInquiryCreate=true">
-					                	<i class="ml-1 white--text font-weight-light subheading far fa-edit white--text"></i>
-					                	<span class="ml-1 white--text font-weight-light subheading">					                	
-						                	Compose Inquiry
-						                </span>
-					             	</v-btn>						            
-							  	</span>  
+		        <v-flex xs12>
+		             <bar-card> </bar-card>
+		        </v-flex>
 
-							  	<v-spacer></v-spacer>
+				<v-flex xs12 md3>
+			           <notification-list> </notification-list>
+			    </v-flex>
 
-								<span class="red accent-4 pa-0">
-							    	<v-btn red accent-4 flat value="left" class="">
-					                	<span class="ml-1 white--text font-weight-light subheading">1 Inquiry Remaining </span>
-					             	</v-btn>	
-							  	</span>
-
-							</v-layout>
-						</v-container>
-						<v-divider></v-divider>	
-
-						<v-container fluid>
-								<inquiries-table> </inquiries-table>
-						</v-container>
-
-				</v-flex>
+	            <v-flex xs12 md9>
+	           			<notification-table> </notification-table>
+	            </v-flex>
 
 			</v-layout>
-			
-		</v-container>
-		<inquiry-create :dialog.sync="openInquiryCreate"></inquiry-create>
-	</div>
-</template>
 
+		</v-container>
+	</div>
+
+</template>
 
 <script>
 
-
-import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
-import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
+import NotificationList from '@/views/components/App/Admin/NotificationList'
+import BarCard from '@/views/components/App/Admin/BarCard'
+import NotificationTable from '@/views/components/App/Admin/NotificationTable'
 
 export default {
+	
+	data: () => ({
+		title: 'Home',
+	}),
 
 	components: {
 
-	    InquiriesTable,
-	    InquiryCreate,
-
+		NotificationList,
+	    BarCard,
+	    NotificationTable
+	    
 	},
 
-	data: () => ({
-
-		search:'',
-		title: 'Home',
-		icon: null,
-		packageLink: '/buyer/packages',
-		isActive: false,
-		component: 'InquiriesTable',
-		openInquiryCreate: false,
-
-	}),
-
 	computed: {
-
-		buyer: {
-
+		broker: {
 			set(data){
 				this.$store.commit('auth/CHANGE_TEST_M',data);
 			},
-			
 			get(){				
         		return this.$store.state.auth.auth_user.name;
 			},			
 		},
-
-	},
-
-	methods: {
-
-		
-
-		Search: () => {
-
-		},
-
-		Refresh: () => {
-
-			alert('Refresh')
-
-		},
-		Sort: () => {
-
-			alert('SOrt')
-
-		},
-
-	},
-
-
-	created: function() {
-
 	},
 }
 	
 </script>
 
-<style scoped lang="stylus">
-	
-</style>
+
 
