@@ -1,150 +1,86 @@
 <template>
-
- <div>
-
-
-
-        <v-toolbar dark color="grey darken-4">
-           <v-btn-toggle multiple v-model="inquiryStatus">
-                <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
-                      <v-btn flat value="left" :value="status.id" :title="status.name" >
-                        <i class="white--text" :class="status.icon"></i> 
-                        <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
-                    </v-btn>  
-                </span>
-            </v-btn-toggle>
-            <v-spacer></v-spacer>
-            <v-btn icon @click="refresh()">
-              <v-icon>refresh</v-icon>
-            </v-btn>
-        </v-toolbar>
-
-           <v-card>
-
-                  <v-card-title>
-            <v-layout row wrap>
-
-                <v-flex xs7>
-                    <v-autocomplete 
-                        v-model="categories" 
-                        :items="categoryItems" 
-                        item-text="name"
-                        item-value="name"
-                        ref="categorySelect" 
-                        cache-items 
-                        chips
-                        multiple
-                        hide-no-data 
-                        clearable
-                        hide-details 
-                        label="select categories..">
-                              <template v-slot:selection="slotData">
-                                <v-chip
-                                  :selected="slotData.selected"
-                                  close
-                                  class="chip--select-multi"
-                                  @input="removeFromCategories(slotData.item)">
-                                  {{ slotData.item.name }}
-                                </v-chip>
-                              </template>
-                    </v-autocomplete>
-                </v-flex>
-
-                <v-spacer></v-spacer>
-
-                <v-flex xs4>
-                    <v-text-field 
-                        label="Search" 
-                        v-model="search" 
-                        placeholder="Search" 
-                        prepend-inner-icon="search" 
-                        solo 
-                        clearable>
-                    </v-text-field>
-                </v-flex>
-
-
-            </v-layout>
-        </v-card-title>
-                
-                <v-divider></v-divider>
-                 
-                  <v-data-table
-                  
-                        :headers="headers"
-                        :items="tableItems"
-                        :loading="loading"
-                        :search="search">
-
-                      <template slot="items" slot-scope="props">
-
-                          <tr class="th-heading">
-
-                              <td>
-                                <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details ></v-checkbox>
-                              </td>
-
-                              <td class="text-xs-left font-weight-medium">
-                                  <h4 class="mt-3"># {{ props.item.inq_id }}</h4>
-                                  <h3 class="mb-1">{{ props.item.keywords }}</h3>
-                                  <p class="mb-3">{{ props.item.message }}</p>
-                              </td>
-
-                              <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
-                              
-                              <td class="text-xs-center">{{ props.item.quantity }}</td>
-
-                              <td class="text-xs-left">
-                                  <div class="dateCellWidth">
-                                      {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
-                                  </div>
-                              </td>
-                              
-                              <td class="text-xs-center">
-                                  <div class="dateCellWidth">
-                                      {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
-                                  </div>
-                              </td>
-                              
-                              <td class="text-xs-center">
-                                     <inquiry-status-buttons :status-id="props.item.status"/>
-                              </td>
-                              
-                              <td class="text-xs-center">
-                                      <v-btn 
-                                        @click="viewInquiry(props.item.inq_id)"
-                                        small 
-                                        class="grey darken-1 font-weight-light">
-
-                                          <i class="fas fa-eye white--text"></i>
-                                          <span class="ml-1 white--text font-weight-light ">View</span>
-                                      </v-btn>
-                              </td>
-
-                          </tr>
-
-                      </template>
-
-                        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                            Your search for "{{ search }}" found no results.
-                        </v-alert>
-
-                  </v-data-table>
-                
-            </v-card>
-
-
-            <span>
-               <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>     
-            </span>
-
+  <div>
+    <v-toolbar dark color="grey darken-4">
+      <v-btn-toggle multiple v-model="inquiryStatus">
+        <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
+          <v-btn flat value="left" :value="status.id" :title="status.name">
+            <i class="white--text" :class="status.icon"></i>
+            <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
+          </v-btn>
+        </span>
+      </v-btn-toggle>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="refresh()">
+        <v-icon>refresh</v-icon>
+      </v-btn>
+    </v-toolbar>
+    <v-card>
+      <v-card-title>
+        <v-layout row wrap>
+          <v-flex xs7>
+            <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
+              <template v-slot:selection="slotData">
+                <v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
+                  {{ slotData.item.name }}
+                </v-chip>
+              </template>
+            </v-autocomplete>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex xs4>
+            <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
+            </v-text-field>
+          </v-flex>
+        </v-layout>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
+        <template slot="items" slot-scope="props">
+          <tr class="th-heading">
+            <td>
+              <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
+            </td>
+            <td class="text-xs-left font-weight-medium">
+              <h4 class="mt-3"># {{ props.item.inq_id }}</h4>
+              <h3 class="mb-1">{{ props.item.keywords }}</h3>
+              <p class="mb-3">{{ props.item.message }}</p>
+            </td>
+            <td class="text-xs-center font-weight-medium">{{ props.item.categories }}</td>
+            <td class="text-xs-center">{{ props.item.quantity }}</td>
+            <td class="text-xs-left">
+              <div class="dateCellWidth">
+                {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
+              </div>
+            </td>
+            <td class="text-xs-center">
+              <div class="dateCellWidth">
+                {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
+              </div>
+            </td>
+            <td class="text-xs-center">
+              <inquiry-status-buttons :status-id="props.item.status" />
+            </td>
+            <td class="text-xs-center">
+              <v-btn @click="viewInquiry(props.item.inq_id)" small class="grey darken-1 font-weight-light">
+                <i class="fas fa-eye white--text"></i>
+                <span class="ml-1 white--text font-weight-light ">View</span>
+              </v-btn>
+            </td>
+          </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+      </v-data-table>
+    </v-card>
+    <span>
+      <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>
+    </span>
   </div>
 </template>
-
 <script>
-
 import inqEvntBs from "@/bus/inquiry";
-    
+
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
@@ -159,273 +95,278 @@ import InquiryView from "@/views/Components/App/admin/InquiryView";
 
 export default {
 
-    mixins: [
-        helpers,
-        VueTimers,
+  mixins: [
+    helpers,
+    VueTimers,
 
-    ],
-    data: function () {
+  ],
+  data: function() {
     return {
 
-        statuses: main.inquiry_statuses.default,
-        search: '',
-        dialog: false,
-        loading: false,
-        headers: [
-            {
-              text: 'Select',
-              align: 'left',
-              sortable: false,
-              value: 'inq_id'
-            },
-           
-            {
-              text: 'Keywords & Message',
-              align: 'left',  
-              sortable: true,
-              value: 'keywordsAndMessage'
-            },
-
-            {
-              text: 'Categories',
-              align: 'left',  
-              sortable: true,
-              value: 'categories'
-            },
-            
-            {
-              text: 'Quantity',
-              align: 'left',
-              sortable: true,
-              value: 'quantity'
-            },
-            
-            {
-              text: 'Preferred Shipping Date',
-              align: 'left',
-              sortable: true,
-              value: 'shipping_date'
-            },
-            
-            {
-              text: 'Date',
-              align: 'left',
-              sortable: true,
-              value: 'created_at'
-            },
-
-            {
-              text: 'Status',
-              align: 'left',
-              sortable: true,
-              value: 'status'
-            },
-
-            {
-              text: 'Action',
-              align: 'center',
-              sortable: false,
-            },
-        ],
-
-        inquiryStatus: [],
-        allInquiries: [],
-        tableItems: [],
-        categories: [],
-        categoryItems: [],
-
-        openInquiry: false,
-        inquiry: null,
-        snackbar:true
-
-      }
-    },
-    components: {
-
-      InquiryStatusButtons,
-      InquiryView
-
-    },
-
-    timers: [     
-        { 
-            name: 'InquiryTableTimer',
-            time: config.polling.inquiryTable.time, 
-            repeat: true,
-            autostart: true,
-            callback: function(){
-                console.log("InquiryTableTimer");
-                this.fillTable();
-            },
-        }
-    ],
-
-
-    methods: {
-
-        fillTable() {
-
-            this.loading = true;
-            this.allInquiries = [];
-            this.$store.dispatch('adminInquiries/getAllInquiries_a')
-            .then((response) => {
-
-                 for (var i = response.length - 1; i >= 0; i--) {
-                    var item = {};
-                    item.inq_id = response[i].id;
-                    item.keywords = this.ucwords(response[i].keyword);
-                    item.message = response[i].message;
-                    item.keywordsMessage = response[i].keyword+" "+response[i].message;
-                    item.categories = response[i].categories.join(', ');
-                    item.quantity = response[i].quantity;
-                    item.shipping_date = response[i].desired_shipping_date;
-                    item.created_at = response[i].created_at;
-                    item.status = response[i].stage_id;
-                    item.inquiry = response[i];
-                    item.loading = false;
-                    this.allInquiries.push(item);
-                }
-
-                this.filterTable();
-                this.loading = false;
-
-            })
-            .catch((e) => {
-                console.log('Error: '+e);
-                this.loading = false;
-            })
-            .finally(()=>{
-                this.loading = false;
-            });
-
+      statuses: main.inquiry_statuses.default,
+      search: '',
+      dialog: false,
+      loading: false,
+      headers: [{
+          text: 'Select',
+          align: 'left',
+          sortable: false,
+          value: 'inq_id'
         },
 
-        refresh(){
-            
-            this.inquiryStatus = [];
-            this.categories = [];
-            this.search = "";
+        {
+          text: 'Keywords & Message',
+          align: 'left',
+          sortable: true,
+          value: 'keywordsAndMessage'
         },
 
-        filterTable(){
-
-                var items = this.allInquiries;
-                if(this.inquiryStatus.length || this.categories.length) {
-
-                    // filter for statuses only
-                    var isBuff = this.inquiryStatus;                
-                    items = items.filter(function(inq){
-                        return (isBuff.length)?isBuff.includes(inq.status):true;
-                    });
-                    
-
-                    // filter for categories
-                    isBuff = this.categories;
-                    function callBackCat(inq){
-                        return (isBuff.length)?isBuff.includes(inq.categories.trim()):true;
-                    };
-                    items = items.filter(callBackCat);
-                }
-
-                this.tableItems = items;
-
+        {
+          text: 'Categories',
+          align: 'left',
+          sortable: true,
+          value: 'categories'
         },
 
+        {
+          text: 'Quantity',
+          align: 'left',
+          sortable: true,
+          value: 'quantity'
+        },
 
-        removeFromCategories (item) {
-            const index = this.categories.indexOf(item.name);            
-            if (index >= 0) 
-            this.categories.splice(index, 1)
-        },        
+        {
+          text: 'Preferred Shipping Date',
+          align: 'left',
+          sortable: true,
+          value: 'shipping_date'
+        },
 
-        viewInquiry(inq_id) {
+        {
+          text: 'Date',
+          align: 'left',
+          sortable: true,
+          value: 'created_at'
+        },
 
-            this.$store.dispatch('adminInquiries/getInquiry_a',{inq_id:inq_id})
+        {
+          text: 'Status',
+          align: 'left',
+          sortable: true,
+          value: 'status'
+        },
 
-           .then((response) => {
+        {
+          text: 'Action',
+          align: 'center',
+          sortable: false,
+        },
+      ],
 
-                this.inquiry = response
-                console.log(this.inquiry);
-                this.openInquiry = true
-           })
-           .catch((error) => {
-              console.log(error);
-        
-           })
-        }
+      inquiryStatus: [],
+      allInquiries: [],
+      tableItems: [],
+      categories: [],
+      categoryItems: [],
+
+      openInquiry: false,
+      inquiry: null,
+      snackbar: true
+
+    }
+  },
+  components: {
+
+    InquiryStatusButtons,
+    InquiryView
+
+  },
+
+  timers: [{
+    name: 'InquiryTableTimer',
+    time: config.polling.inquiryTable.time,
+    repeat: true,
+    autostart: true,
+    callback: function() {
+      console.log("InquiryTableTimer");
+      this.fillTable(false);
     },
- 
-
-    created(){
-
-        this.fillTable();
-        inqEvntBs.OnApproved(this.fillTable, this.openInquiry);
+  }],
 
 
-          // get categories for category select box
-        this.$store.dispatch('cat/getCategories_a')
-        .then((data)=>{
-            this.categoryItems = data;
-            // console.log(this.categoryItems);
+  methods: {
+
+    fillTable(withLoading = true) {
+
+      if (withLoading)
+        this.loading = true;
+
+      this.loading = true;
+      this.allInquiries = [];
+      this.$store.dispatch('adminInquiries/getAllInquiries_a')
+        .then((response) => {
+
+          for (var i = response.length - 1; i >= 0; i--) {
+            var item = {};
+            item.inq_id = response[i].id;
+            item.keywords = this.ucwords(response[i].keyword);
+            item.message = response[i].message;
+            item.keywordsMessage = response[i].keyword + " " + response[i].message;
+            item.categories = response[i].categories.join(', ');
+            item.quantity = response[i].quantity;
+            item.shipping_date = response[i].desired_shipping_date;
+            item.created_at = response[i].created_at;
+            item.status = response[i].stage_id;
+            item.inquiry = response[i];
+            item.loading = false;
+            this.allInquiries.push(item);
+          }
+
+          this.filterTable();
+
+          if (withLoading)
+            this.loading = false;
+
         })
         .catch((e) => {
-            console.log('Error: ');
-            console.log(e);
+          console.log('Error: ' + e);
+          this.loading = false;
+        })
+        .finally(() => {
+          this.loading = false;
         });
 
     },
 
-    watch: {
+    refresh() {
 
-        inquiryStatus(nVal,oVal){
-            this.filterTable();
-        },
+      this.inquiryStatus = [];
+      this.categories = [];
+      this.search = "";
+    },
 
-        categories(nVal,oVal){
-            this.filterTable();
-        },
+    filterTable() {
 
-        openInquiry(nVal){
+      var items = this.allInquiries;
+      if (this.inquiryStatus.length || this.categories.length) {
 
-            if(nVal)            
-            this.$timer.stop('InquiryTableTimer');
-            else
-            this.$timer.start('InquiryTableTimer');
-        }, 
+        // filter for statuses only
+        var isBuff = this.inquiryStatus;
+        items = items.filter(function(inq) {
+          return (isBuff.length) ? isBuff.includes(inq.status) : true;
+        });
 
 
+        // filter for categories
+        isBuff = this.categories;
+
+        function callBackCat(inq) {
+          return (isBuff.length) ? isBuff.includes(inq.categories.trim()) : true;
+        };
+        items = items.filter(callBackCat);
+      }
+
+      this.tableItems = items;
+
+    },
+
+
+    removeFromCategories(item) {
+      const index = this.categories.indexOf(item.name);
+      if (index >= 0)
+        this.categories.splice(index, 1)
+    },
+
+    viewInquiry(inq_id) {
+
+      this.$store.dispatch('adminInquiries/getInquiry_a', { inq_id: inq_id })
+
+        .then((response) => {
+
+          this.inquiry = response
+          console.log(this.inquiry);
+          this.openInquiry = true
+        })
+        .catch((error) => {
+          console.log(error);
+
+        })
     }
+  },
+
+
+  created() {
+
+    this.fillTable();
+    inqEvntBs.OnApproved(this.fillTable());
+
+
+    // get categories for category select box
+    this.$store.dispatch('cat/getCategories_a')
+      .then((data) => {
+        this.categoryItems = data;
+        // console.log(this.categoryItems);
+      })
+      .catch((e) => {
+        console.log('Error: ');
+        console.log(e);
+      });
+
+  },
+
+  watch: {
+
+    inquiryStatus(nVal, oVal) {
+      this.filterTable();
+    },
+
+    categories(nVal, oVal) {
+      this.filterTable();
+    },
+
+    openInquiry(nVal) {
+
+      if (nVal)
+        this.$timer.stop('InquiryTableTimer');
+      else
+        this.$timer.start('InquiryTableTimer');
+    },
+
 
   }
+
+}
+
 </script>
+<style scoped lang="scss">
+.theme--light.v-table thead tr {
+  background: #000000;
+  color: #fff;
+}
+.fix-width {
+  width: 198px;
+}
+.th-heading {
+  cursor: pointer;
+}
+.text-decoration-none {
+  text-decoration: none;
+}
 
-
-
-<style scoped lang="stylus">
-    .theme--light.v-table thead tr
-      background:#000000;
-      color:#fff;
-    .fix-width
-      width:198px;
-    .th-heading 
-       cursor: pointer; 
-    .text-decoration-none
-       text-decoration: none;
-    .th-heading a 
-       text-decoration:none;
+.th-heading a {
+  text-decoration: none;
+}
 
 </style>
-
 <style scoped lang="scss">
+.theme--light.v-datatable thead th.column.sortable.active .v-icon,
+.v-datatable thead th.column.sortable:focus .v-icon,
+.v-datatable thead th.column.sortable:hover .v-icon {
+  // margin-right: 5px;
+}
 
-  .theme--light.v-datatable thead th.column.sortable.active .v-icon,
-  .v-datatable thead th.column.sortable:focus .v-icon, 
-  .v-datatable thead th.column.sortable:hover .v-icon {
-      // margin-right: 5px;
-  }
-
-  .dateCellWidth {
-      min-width: 110px;
-  }
+.dateCellWidth {
+  min-width: 110px;
+}
 
 </style>

@@ -1,53 +1,34 @@
 <template>
-
-<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
-<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
+  <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
+    <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
-
-        <v-card-text>	
-	
-			<v-container fluid grid-list-xl >
-					
-					
-					<v-layout row wrap>
-						
-						<!-- inquiry details card -->
-						<v-flex xs5>
-							<inquiry-details-card :isClosed.sync="isClosed" :openInquiry="openInquiry"  :inquiry="inquiry"> </inquiry-details-card>
-						</v-flex>
-						<!-- end of detils  -->
-
-								
-						<!-- supplier quote / bids -->
-						<v-flex xs7>
-							<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
-						</v-flex>  
-						<!-- supplier quote -->
-					
-
-					</v-layout>
-			</v-container>
-
-        </v-card-text>
-
-        <v-divider ></v-divider>
-
-        <v-card-actions >
-            <v-spacer></v-spacer>
-            <v-btn color="primary" dark @click="closeOpenInquiry()">
-                close
-            </v-btn>
-        </v-card-actions>
+      <v-card-text>
+        <v-container fluid grid-list-xl>
+          <v-layout row wrap>
+            <!-- inquiry details card -->
+            <v-flex xs5>
+              <inquiry-details-card :isClosed.sync="isClosed" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
+            </v-flex>
+            <!-- end of detils  -->
+            <!-- supplier quote / bids -->
+            <v-flex xs7>
+              <inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
+            </v-flex>
+            <!-- supplier quote -->
+          </v-layout>
+        </v-container>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" dark @click="closeOpenInquiry()">
+          close
+        </v-btn>
+      </v-card-actions>
     </v-card>
-
-
-
-</v-dialog>  
-
+  </v-dialog>
 </template>
-
 <script>
-
 import InquiryPostList from "@/views/Components/App/Admin/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Admin/InquiryDetailsCard"
 
@@ -55,68 +36,68 @@ import inqEvntBs from "@/bus/inquiry";
 
 export default {
 
-	components: {
+  components: {
 
-	    InquiryPostList,
-	    InquiryDetailsCard,
+    InquiryPostList,
+    InquiryDetailsCard,
 
-	},
+  },
 
-	props: ['inquiry','openInquiry'],
+  props: ['inquiry', 'openInquiry'],
 
-	data: () => ({
+  data: () => ({
 
-		title: 'Inquiry Details',
-		icon: null,
-		isClosed:false,
+    title: 'Inquiry Details',
+    icon: null,
+    isClosed: false,
 
-	}),
+  }),
 
-	computed: {
+  computed: {
 
-		buyer: {
+    buyer: {
 
-			set(data){
-				this.$store.commit('auth/CHANGE_TEST_M',data);
-			},
+      set(data) {
+        this.$store.commit('auth/CHANGE_TEST_M', data);
+      },
 
-			get(){				
-        		return this.$store.state.auth.auth_user.name;
-			},			
-		},
-	},
+      get() {
+        return this.$store.state.auth.auth_user.name;
+      },
+    },
+  },
 
-	methods: {
+  methods: {
 
-		closeOpenInquiry(){
-            this.$emit('update:openInquiry', false);
-		},
+    closeOpenInquiry() {
+      this.$emit('update:openInquiry', false);
+    },
 
-	},
+  },
 
-	created() {
+  created() {
 
-		console.log(this.inquiry);
+    console.log(this.inquiry);
 
-	},
+  },
 
-	watch: {
+  watch: {
 
-		  isClosed: {
+    isClosed: {
 
-                handler(nVal,oVal) {
+      handler(nVal, oVal) {
 
-                	if(nVal) {
-                		this.isClosed=false
- 						this.$emit('update:openInquiry', false);
-                	}
+        if (nVal) {
+          this.isClosed = false
+          this.$emit('update:openInquiry', false);
+        }
 
-                },
+      },
 
-                deep: true
-          }
+      deep: true
+    }
 
-	},
+  },
 
 
 
@@ -124,13 +105,11 @@ export default {
 
 
 }
-	
-</script>
 
+</script>
 <style scoped lang="scss">
-	.scopedcontainer a {
-	  	text-decoration:none;
-	}
+.scopedcontainer a {
+  text-decoration: none;
+}
 
 </style>
-

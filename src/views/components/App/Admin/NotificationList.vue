@@ -1,15 +1,17 @@
 <template>
   <v-card class="elevation-0">
     <v-toolbar card dense color="transparent">
-      <v-toolbar-title><h4>BAL Notifications</h4></v-toolbar-title>
+      <v-toolbar-title>
+        <h4>BAL Notifications</h4>
+      </v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
       <v-list two-line class="pa-0">
         <template v-for="(item, index) in items">
-          <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-          <v-divider v-else-if="item.divider" :key="index"></v-divider>
-          <v-list-tile avatar v-else :key="item.title" @click="handleClick">
+          <v-subheader v-if="item.header" :key="item.header+'_'+index">{{ item.header }}</v-subheader>
+          <v-divider v-else-if="item.divider" :key="item.divider+'_'+index"></v-divider>
+          <v-list-tile avatar v-else :key="item.title+'_'+index" @click="handleClick">
             <v-list-tile-avatar :color="item.color">
               <v-icon dark>{{item.icon}}</v-icon>
             </v-list-tile-avatar>
@@ -28,7 +30,6 @@
     </v-card-text>
   </v-card>
 </template>
-
 <script>
 import notes from '@/data/widgets/notification'
 export default {
@@ -42,4 +43,5 @@ export default {
     }
   }
 }
+
 </script>

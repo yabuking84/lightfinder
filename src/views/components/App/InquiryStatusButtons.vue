@@ -26,16 +26,20 @@
 		},
 
 		computed: {
+
 			status: function(){
 				var inquiry_statuses = JSON.parse(localStorage.getItem('inquiry_statuses'));
 
 				var status = inquiry_statuses.find(valObj => valObj.id+"" == this.statusId+"");
+
 				if(typeof status === "undefined" || status === "undefined") {
 					// if status does not exist from database
 					status = {};
 					status.name = "";
 					status.class = "";
+
 				} else {
+					
 					var statusClass = main.inquiry_statuses.default.find(valObj => valObj.id+"" == this.statusId+"");
 					// if status not listed in main config inquiry_statuses.default
 					if(typeof statusClass === "undefined" || statusClass === "undefined") {
