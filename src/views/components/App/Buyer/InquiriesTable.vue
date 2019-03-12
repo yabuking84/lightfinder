@@ -8,7 +8,7 @@
                 <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
                       <v-btn flat value="left" :value="status.id" :title="status.name" >
                         <i class="white--text" :class="status.icon"></i> 
-                        <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }} </span> -->
+                        <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
                     </v-btn>  
                 </span>
             </v-btn-toggle>
@@ -43,7 +43,7 @@
                               </td>
 
                               <td class="text-xs-left font-weight-medium">
-                                  <h4 class="mt-3"># {{ props.item.inq_id }}</h4>
+                                  <h4 class="mt-3">Inquiry# {{ props.item.inq_id }}</h4>
                                   <h3 class="mb-1">{{ props.item.keywords }}</h3>
                                   <p class="mb-3">{{ props.item.message }}</p>
                               </td>
@@ -70,11 +70,12 @@
                               
                               <td class="text-xs-center">
                                     <v-btn 
-                                        @click="viewInquiry(props.item.inq_id)"
-                                        small 
-                                        flat 
-                                        value="left" 
-                                        class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+                                    @click="viewInquiry(props.item)"
+                                    :loading="props.item.loading"
+                                    small 
+                                    flat 
+                                    value="left" 
+                                    class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
                                         <i class="fas fa-eye white--text"></i>
                                         <span class="ml-1 white--text font-weight-light ">View</span>
                                     </v-btn>
@@ -106,14 +107,17 @@ import inqEvntBs from "@/bus/inquiry";
     
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
-import main from "@/config/main"
+import config from "@/config/main"
 
 import InquiryView from "@/views/Pages/Buyer/InquiryView";
+
+import VueTimers from 'vue-timers/mixin'
 
 export default {
 
     mixins: [
         helpers,
+        VueTimers,
     ],
 
     components: {
@@ -123,7 +127,7 @@ export default {
     
     data: ()=>({
 
-        statuses: main.inquiry_statuses.default,
+        statuses: config.inquiry_statuses.default,
         search: '1551612312798',
         dialog: false,
         loading: false,
@@ -194,6 +198,19 @@ export default {
 
     }),
 
+    timers: [     
+        { 
+            name: 'InquiryTableTimer',
+            time: config.polling.inquiryTable.time, 
+            repeat: true,
+            autostart: true,
+            callback: function(){
+                console.log("InquiryTableTimer");
+                this.fillTable();
+            },
+        }
+    ],
+
     methods: {
 
         fillTable() {
@@ -213,10 +230,12 @@ export default {
                     item.shipping_date = response[i].desired_shipping_date;
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
+                    item.loading = false;
                     this.allInquiries.push(item);
                 }
 
-                this.tableItems = this.allInquiries;
+                // this.tableItems = this.allInquiries;
+                this.filterTable();
                 this.loading = false;
 
             })
@@ -230,12 +249,14 @@ export default {
 
         },
 
-        viewInquiry(inq_id){            
-            this.$store.dispatch('byrInq/getInquiry_a',{inq_id:inq_id})
+        viewInquiry(inq){            
+            inq.loading = true;
+            this.$store.dispatch('byrInq/getInquiry_a',{inq_id:inq.inq_id})
             .then((data)=>{
 
                 this.inquiry = data;
                 this.openInquiry = true;
+                inq.loading = false;
             })
             .catch((error)=>{
                 console.log(error);
@@ -248,11 +269,18 @@ export default {
         },
 
         filterTable(){
-              if(!this.inquiryStatus.length) {
-                  this.tableItems = this.allInquiries;
-              } else {
-                  this.tableItems = this.allInquiries.filter(inq=>this.inquiryStatus.includes(inq.status));
-              }
+            
+            var items = this.allInquiries;
+
+            if(this.inquiryStatus.length) {
+                // filter for statuses only
+                var buff = this.inquiryStatus;                
+                items = items.filter(function(inq){
+                    return (buff.length)?buff.includes(inq.status):true;
+                });
+            }
+            this.tableItems = items;
+
         },
     },
  
@@ -271,6 +299,13 @@ export default {
             this.filterTable();
          },
 
+        openInquiry(nVal){
+
+            if(nVal)            
+            this.$timer.stop('InquiryTableTimer');
+            else
+            this.$timer.start('InquiryTableTimer');
+        }, 
     }
 
   }

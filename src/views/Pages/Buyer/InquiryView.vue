@@ -22,7 +22,7 @@
 						
 						<!-- supplier quote / bids -->
 						<v-flex xs7>
-							<inquiry-post-list :inquiry="inquiry"> </inquiry-post-list>
+							<inquiry-post-list :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
 						</v-flex>  
 						<!-- supplier quote -->
 					
@@ -95,7 +95,7 @@ export default {
 
 	created() {
 
-		console.log(this.inquiry);
+		// console.log(this.inquiry);
 
 	},
 }

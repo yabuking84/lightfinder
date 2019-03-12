@@ -71,14 +71,10 @@ const actions = {
 
                 // console.log(error);
 
-                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                    console.log("EXPIRED");
-                    router.push({'name': 'Logout'})
-                }
-                else {
-                    // console.log("normal error!");
+                if(actions.checkToken(error)) {
                     reject(error);
                 }
+                
 
             })
         });
@@ -102,13 +98,10 @@ const actions = {
             })
             .catch(error => {
 
-              if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                    console.log("EXPIRED");
-                    router.push({'name': 'Logout'})
-                }
-                else {
+                if(actions.checkToken(error)) {
                     reject(error);
                 }
+                
 
             })
 
@@ -136,15 +129,10 @@ const actions = {
             })
             .catch(error => {
 
-                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                    console.log("EXPIRED");
-                    router.push({'name': 'Logout'})
-                }
-                else {
-                    console.log("normal error!");
+                if(actions.checkToken(error)) {
                     reject(error);
                 }
-
+                
             });
 
         });
@@ -173,16 +161,10 @@ const actions = {
             .catch(error => {
 
                 // console.log(error);
-
-                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                    console.log("EXPIRED");
-                    router.push({'name': 'Logout'})
-                }
-                else {
-                    // console.log("normal error!");
+                if(actions.checkToken(error)) {
                     reject(error);
                 }
-
+                
             })
         });
     },
@@ -206,15 +188,10 @@ const actions = {
             .catch(error => {
 
                 // console.log(error);
-
-                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                    console.log("EXPIRED");
-                    router.push({'name': 'Logout'})
-                }
-                else {
-                    // console.log("normal error!");
+                if(actions.checkToken(error)) {
                     reject(error);
                 }
+                
 
             })
         });
@@ -247,19 +224,28 @@ const actions = {
             .catch(error => {
 
                 // console.log(error);
-
-                if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                    console.log("EXPIRED");
-                    router.push({'name': 'Logout'})
-                }
-                else {
-                    // console.log("normal error!");
+                if(actions.checkToken(error)) {
                     reject(error);
                 }
-
+                
             })
         });
     },
+
+
+    checkToken(error){
+
+        if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+            console.log("EXPIRED");
+            router.push({'name': 'Logout'})
+        }
+        else {
+            // reject(error);
+            return true;
+        }
+
+    },
+
 
 }
 
