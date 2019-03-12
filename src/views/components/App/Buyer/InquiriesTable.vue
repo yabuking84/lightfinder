@@ -109,7 +109,7 @@
                   </td>
                   
                   <td class="text-xs-center">
-                         <inquiry-status-buttons :status-id="props.item.status"/>
+                         <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
                   </td>
                   
                   <td class="text-xs-center">
@@ -171,7 +171,10 @@ export default {
     
     data: ()=>({
 
-        statuses: config.inquiry_statuses.default,
+        statuses: [
+          ...config.inquiry_statuses.default,
+          ...config.inquiry_statuses.buyers,
+        ],
         search: '1551765400596',
         dialog: false,
         loading: false,

@@ -93,7 +93,7 @@ export default {
 			},
 		],		
 
-		suppliers: [
+		buyers: [
 			{
 				id: 1001, 
 				name: "Verifying",

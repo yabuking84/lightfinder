@@ -21,6 +21,9 @@
 			statusId: {
 				type: Number,
 				required:true
+			},
+			statuses: {
+				type: Array,				
 			}
 		},
 		data: function () {
@@ -44,7 +47,7 @@
 
 				} else {
 					
-					var statusClass = main.inquiry_statuses.default.find(valObj => valObj.id+"" == this.statusId+"");
+					var statusClass = this.statuses.find(valObj => valObj.id+"" == this.statusId+"");
 					// if status not listed in main config inquiry_statuses.default
 					if(typeof statusClass === "undefined" || statusClass === "undefined") {
 						status.class = "";
