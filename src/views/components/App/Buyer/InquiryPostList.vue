@@ -63,12 +63,19 @@
 								  	  			<h2>{{ bidItem.product_name }}</h2>
 
 
-								  	  			 <v-img
-											      v-if="bidItem.awarded"
-										          src="/static/images/award.png"
-										          class="awarded"
-										        >
-										        </v-img>
+								  	  			<!--
+								  	  			<v-img
+											    v-if="bidItem.awarded"
+										        src="/static/images/award.png"
+										        class="awarded">
+										        </v-img> 
+										    	-->
+
+										        <v-icon 
+										        v-if="bidItem.awarded"
+										        class="awarded">
+										    		fas fa-award
+										    	</v-icon>
 
 									        </v-flex>
 
@@ -152,7 +159,7 @@
 
 	    </v-card>
 	    
-		<inquiry-confirm :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </inquiry-confirm>
+		<inquiry-confirm v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </inquiry-confirm>
 
 	</div>
 
@@ -165,12 +172,15 @@ import InquiryConfirm from "@/views/Components/App/Buyer/InquiryConfirm"
 import helpers from "@/mixins/helpers";
 import inqEvntBs from "@/bus/inquiry"
 
+import VueTimers from 'vue-timers/mixin'
+import config from "@/config/main";
 
 export default {
 
-  mixins: [
-            helpers,
-        ],
+mixins: [
+    helpers,
+	VueTimers,
+],
 
 components: {
 
@@ -179,38 +189,53 @@ components: {
 
 },
 
-props: ['inquiry'],
+props: ['inquiry','openInquiry'],
 
 data: function () {
 
 	return {
-
 		openAwardDialog: false,
 		bidItems: [],
 		hasBid: true,
 		bidToAward: null,
 		bidinquiry: null,
 		has_awarded:true
-
 	}
 
 },
 
+timers: [			
+	{ 
+		name: 'BidTableTimer',
+		time: config.polling.bidTable.time, 
+		immediate: true, 
+		repeat: true,
+		autostart: true,
+        callback: function(){
+            console.log("BidTableTimer");
+            this.fillBidTable();
+        },
+	}			
+],
 
 watch: {
 
 	inquiry: {
-
 		handler(nVal, oVal) {
 
 			this.fillBidTable();
 
 		},
-
 		deep: true,
+	},
 
-	}
 
+	openInquiry(nVal) {
+		if(nVal)
+   		this.$timer.start('BidTableTimer');
+   		else
+   		this.$timer.stop('BidTableTimer');
+	},
 },
 
 
@@ -225,10 +250,9 @@ methods: {
 	fillBidTable(){
 
 		this.$store.dispatch('byrInq/getAllInquiryBids_a',{ inq_id: this.inquiry.id })
-
 		.then(response=> {
 
-			console.log(this.inquiry.id);
+			// console.log(this.inquiry.id);
 
 			this.bidItems = response;
 
@@ -258,8 +282,8 @@ methods: {
 
 		let is_awarded = false;
 
-		console.log(typeof awarded);
-		console.log(typeof this.inquiry.awarded)
+		// console.log(typeof awarded);
+		// console.log(typeof this.inquiry.awarded)
 
 		if(this.inquiry.awarded == 1) {
 				
@@ -279,17 +303,17 @@ methods: {
 
 },
 
-	created(){
+created(){
 
-		console.log(this.inquiry)
+	// console.log(this.inquiry)
 
-		this.fillBidTable();
-		 inqEvntBs.$on('award-bid-form-submitted',()=>{
-            this.fillBidTable();
-            this.inquiry.awarded = 1
-        });
+	this.fillBidTable();
+	inqEvntBs.$on('award-bid-form-submitted',()=>{
+        this.fillBidTable();
+        this.inquiry.awarded = 1
+    });
 
-	},
+},
 
 }
 </script>
@@ -311,8 +335,11 @@ methods: {
 		position: absolute;
 		height: 50px;
 		width: 50px;
-		top:2px;
-		right: 0px;
+		top:10px;
+		right: 5px;
+
+	    font-size: 50px;
+	    color: gold;		
 
 	}
 

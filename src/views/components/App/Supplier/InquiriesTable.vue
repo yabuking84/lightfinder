@@ -95,9 +95,9 @@
             <template v-slot:items="props">
                 <tr class="th-heading">
 
-                    <td>
+                    <!-- <td>
                         <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
-                    </td>
+                    </td> -->
 
                     <td class="text-xs-left font-weight-medium">
                         <h3 class="mt-3 mb-0">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
@@ -188,16 +188,16 @@ import VueTimers from 'vue-timers/mixin'
         statusesSupplier: config.inquiry_statuses.suppliers,
         search: '1551612312798',
         headers: [
-            {
-              text: 'Select',
-              align: 'left',
-              sortable: false,
-              value: 'inq_id'
-            },
+            // {
+            //   text: 'Select',
+            //   align: 'left',
+            //   sortable: false,
+            //   value: 'inq_id'
+            // },
            
             {
               text: 'Keywords & Message',
-              align: 'center',  
+              align: 'left',  
               sortable: true,
               value: 'keywordsMessage'
             },
@@ -276,14 +276,13 @@ import VueTimers from 'vue-timers/mixin'
             inq.loading = true;
             this.$store.dispatch('spplrInq/getInquiry_a',{inq_id:inq.inq_id})
             .then((data)=>{
-                inq.loading = false;
                 this.inquiry = data;
                 this.openInquiry = true;
+                inq.loading = false;
             })
             .catch((error)=>{
                 console.log(error);
             });
-
 
         },
 
@@ -302,7 +301,7 @@ import VueTimers from 'vue-timers/mixin'
                     item.inq_id = response[i].id;
                     item.keywords = this.ucwords(response[i].keyword);
                     item.message = response[i].message;
-                    item.keywordsMessage = response[i].keyword+" "+response[i].message;
+                    item.keywordsMessage = response[i].id+" "+response[i].keyword+" "+response[i].message;
                     item.categories = response[i].categories.join(', ');
                     item.quantity = response[i].quantity;
                     item.shipping_date = response[i].desired_shipping_date;

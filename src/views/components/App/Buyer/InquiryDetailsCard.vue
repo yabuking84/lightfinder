@@ -2,11 +2,11 @@
     <div>
 
         <v-toolbar color="grey darken-4" class="white--text" height="40px">
-            <router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
+            <!-- <router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
                 <v-btn class="blue-grey" small style="min-width: 50px;">
                     <i class="fas fa-arrow-left white--text"></i>
                 </v-btn>
-            </router-link>
+            </router-link> -->
 
             <v-toolbar-title class="body-2 font-weight-light">Inquiry# {{ inquiry.id }}</v-toolbar-title>
             <v-spacer></v-spacer>
