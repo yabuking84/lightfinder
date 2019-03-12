@@ -73,7 +73,7 @@
 
 										        <v-icon 
 										        v-if="bidItem.awarded"
-										        class="awarded">
+										        class="awarded orange--text">
 										    		fas fa-award
 										    	</v-icon>
 
@@ -339,7 +339,7 @@ created(){
 		right: 5px;
 
 	    font-size: 50px;
-	    color: gold;		
+	    // color: gold;
 
 	}
 

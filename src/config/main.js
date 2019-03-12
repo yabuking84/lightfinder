@@ -40,20 +40,8 @@ export default {
 			{
 				id: 1002, 
 				name: "Open",
-				class: "pink lighten-1 font-weight-light",
+				class: "pink lighten-1",
 				icon: "far fa-envelope-open",
-			},
-			{
-				id: 1001, 
-				name: "Verifying",
-				class: "orange darken-3",
-				icon: "fas fa-hourglass-half",
-			},
-			{
-				id: 1003, 
-				name: "Rejected",
-				class: "blue darken-4",
-				icon: "far fa-times-circle",
 			},
 			{
 				id: 1004, 
@@ -104,6 +92,21 @@ export default {
 				icon: "fas fa-ban",
 			},
 		],		
+
+		suppliers: [
+			{
+				id: 1001, 
+				name: "Verifying",
+				class: "orange darken-3",
+				icon: "fas fa-hourglass-half",
+			},
+			{
+				id: 1003, 
+				name: "Rejected",
+				class: "blue darken-4",
+				icon: "far fa-times-circle",
+			},
+		],
 
 		suppliers: [
 			// {
