@@ -150,16 +150,16 @@
                 .then((response) => {
 
                     // create a event bus 
-                    // this.$emit('update:isClosed', true);
+                    this.$emit('update:isClosed', true);
                     inqEvntBs.emitApproved();
 
                 })
                 .catch((e) => {
                     console.log(e);
-                    // this.$emit('update:isClosed', true);
+                    this.$emit('update:isClosed', true);
                 })
                 .finally(() => {
-                    // this.$emit('update:isClosed', true);
+                    this.$emit('update:isClosed', true);
                 });      
 
             },
@@ -172,11 +172,11 @@
                 })
                 .then((response) => {
                     // create a event bus 
-                    // this.$emit('update:isClosed', true);
+                    this.$emit('update:isClosed', true);
                     inqEvntBs.emitApproved();
                 })
                 .catch((e) => {
-                    // this.$emit('update:isClosed', true);
+                    this.$emit('update:isClosed', true);
                     console.log(e);
                 })
                 .finally(() => {

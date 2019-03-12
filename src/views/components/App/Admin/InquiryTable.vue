@@ -19,10 +19,51 @@
 
            <v-card>
 
-                  <v-flex xs3 offset-xs9 pt-4>
-                       <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable >
-                       </v-text-field>   
-                  </v-flex>
+                  <v-card-title>
+            <v-layout row wrap>
+
+                <v-flex xs7>
+                    <v-autocomplete 
+                        v-model="categories" 
+                        :items="categoryItems" 
+                        item-text="name"
+                        item-value="name"
+                        ref="categorySelect" 
+                        cache-items 
+                        chips
+                        multiple
+                        hide-no-data 
+                        clearable
+                        hide-details 
+                        label="select categories..">
+                              <template v-slot:selection="slotData">
+                                <v-chip
+                                  :selected="slotData.selected"
+                                  close
+                                  class="chip--select-multi"
+                                  @input="removeFromCategories(slotData.item)">
+                                  {{ slotData.item.name }}
+                                </v-chip>
+                              </template>
+                    </v-autocomplete>
+                </v-flex>
+
+                <v-spacer></v-spacer>
+
+                <v-flex xs4>
+                    <v-text-field 
+                        label="Search" 
+                        v-model="search" 
+                        placeholder="Search" 
+                        prepend-inner-icon="search" 
+                        solo 
+                        clearable>
+                    </v-text-field>
+                </v-flex>
+
+
+            </v-layout>
+        </v-card-title>
                 
                 <v-divider></v-divider>
                  
@@ -104,7 +145,12 @@ import inqEvntBs from "@/bus/inquiry";
     
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+
 import main from "@/config/main"
+import config from "@/config/main"
+
+import VueTimers from 'vue-timers/mixin'
+
 
 import InquiryView from "@/views/Components/App/admin/InquiryView";
 
@@ -113,6 +159,8 @@ export default {
 
     mixins: [
         helpers,
+        VueTimers,
+
     ],
     data: function () {
     return {
@@ -181,8 +229,11 @@ export default {
         inquiryStatus: [],
         allInquiries: [],
         tableItems: [],
-        inquiry:null,
-        openInquiry:false,
+        categories: [],
+        categoryItems: [],
+
+        openInquiry: false,
+        inquiry: null,
 
       }
     },
@@ -192,6 +243,21 @@ export default {
       InquiryView
 
     },
+
+    timers: [     
+        { 
+            name: 'InquiryTableTimer',
+            time: config.polling.inquiryTable.time, 
+            repeat: true,
+            autostart: true,
+            callback: function(){
+                console.log("InquiryTableTimer");
+                this.fillTable();
+            },
+        }
+    ],
+
+
     methods: {
 
         fillTable() {
@@ -201,20 +267,23 @@ export default {
             this.$store.dispatch('adminInquiries/getAllInquiries_a')
             .then((response) => {
 
-                for (var i = response.length - 1; i >= 0; i--) {
+                 for (var i = response.length - 1; i >= 0; i--) {
                     var item = {};
                     item.inq_id = response[i].id;
                     item.keywords = this.ucwords(response[i].keyword);
                     item.message = response[i].message;
+                    item.keywordsMessage = response[i].keyword+" "+response[i].message;
                     item.categories = response[i].categories.join(', ');
                     item.quantity = response[i].quantity;
                     item.shipping_date = response[i].desired_shipping_date;
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
+                    item.inquiry = response[i];
+                    item.loading = false;
                     this.allInquiries.push(item);
                 }
 
-                this.tableItems = this.allInquiries;
+                this.filterTable();
                 this.loading = false;
 
             })
@@ -229,17 +298,42 @@ export default {
         },
 
         refresh(){
-            this.fillTable();
+            
             this.inquiryStatus = [];
+            this.categories = [];
+            this.search = "";
         },
 
         filterTable(){
-              if(!this.inquiryStatus.length) {
-                  this.tableItems = this.allInquiries;
-              } else {
-                  this.tableItems = this.allInquiries.filter(inq=>this.inquiryStatus.includes(inq.status));
-              }
+
+                var items = this.allInquiries;
+                if(this.inquiryStatus.length || this.categories.length) {
+
+                    // filter for statuses only
+                    var isBuff = this.inquiryStatus;                
+                    items = items.filter(function(inq){
+                        return (isBuff.length)?isBuff.includes(inq.status):true;
+                    });
+                    
+
+                    // filter for categories
+                    isBuff = this.categories;
+                    function callBackCat(inq){
+                        return (isBuff.length)?isBuff.includes(inq.categories.trim()):true;
+                    };
+                    items = items.filter(callBackCat);
+                }
+
+                this.tableItems = items;
+
         },
+
+
+        removeFromCategories (item) {
+            const index = this.categories.indexOf(item.name);            
+            if (index >= 0) 
+            this.categories.splice(index, 1)
+        },        
 
         viewInquiry(inq_id) {
 
@@ -264,13 +358,38 @@ export default {
         this.fillTable();
         inqEvntBs.OnApproved(this.fillTable, this.openInquiry);
 
+
+          // get categories for category select box
+        this.$store.dispatch('cat/getCategories_a')
+        .then((data)=>{
+            this.categoryItems = data;
+            // console.log(this.categoryItems);
+        })
+        .catch((e) => {
+            console.log('Error: ');
+            console.log(e);
+        });
+
     },
 
     watch: {
 
         inquiryStatus(nVal,oVal){
             this.filterTable();
-         },
+        },
+
+        categories(nVal,oVal){
+            this.filterTable();
+        },
+
+        openInquiry(nVal){
+
+            if(nVal)            
+            this.$timer.stop('InquiryTableTimer');
+            else
+            this.$timer.start('InquiryTableTimer');
+        }, 
+
 
     }
 

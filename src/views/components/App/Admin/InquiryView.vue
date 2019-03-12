@@ -102,12 +102,9 @@ export default {
                 handler(nVal,oVal) {
 
                 	if(nVal) {
-                		 this.$emit('update:openInquiry', false);
+                		this.isClosed=false
+ 						this.$emit('update:openInquiry', false);
                 	}
-
-                	console.log('-----watch in the second---------')
-                	console.log(nVal);
-                	console.log('-----watch in second---------')
 
                 },
 
