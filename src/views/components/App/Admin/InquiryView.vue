@@ -1,4 +1,5 @@
 <template>
+
 <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
 <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
@@ -38,7 +39,11 @@
             </v-btn>
         </v-card-actions>
     </v-card>
-</v-dialog>   	
+
+
+
+</v-dialog>  
+
 </template>
 
 <script>
@@ -63,7 +68,7 @@ export default {
 
 		title: 'Inquiry Details',
 		icon: null,
-		isClosed:false
+		isClosed:false,
 
 	}),
 

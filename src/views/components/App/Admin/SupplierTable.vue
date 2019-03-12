@@ -61,14 +61,16 @@
                               </td>
 
                                 <td> 
+                            
 
-                                 <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="editSupplier(props.item.id)"
-                                  >
-                                    edit
-                                  </v-icon>
+                                       <v-btn 
+                                        @click="editSupplier(props.item.id)"
+                                        small 
+                                        class="red darken-1 font-weight-light">
+
+                                          <i class="fas fa-edit white--text"></i>
+                                          <span class="ml-1 white--text font-weight-light ">Edit</span>
+                                      </v-btn>
                                 </td>
                           </tr>
 
@@ -162,9 +164,12 @@ import SupplierDialog from '@/views/components/app/Admin/SupplierDialog'
             },
             
             {
+
               text: 'Action',
-              align: 'left',
+              align: 'center',
               sortable: false,
+              width: '150'
+
             },
         ],
         

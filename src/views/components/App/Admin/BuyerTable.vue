@@ -35,8 +35,8 @@
 
                           <tr class="th-heading">
 
-                              <td> <v-checkbox  v-model="props.item.select" :inq-id="props.item.id" primary hide-details  ></v-checkbox></td>
-                              <td class="font-weight-medium"> 
+                              <td class="text-xs-left"> <v-checkbox  v-model="props.item.select" :inq-id="props.item.id" primary hide-details  ></v-checkbox></td>
+                              <td class="text-xs-left font-weight-medium"> 
 
 
                                 <v-avatar size="40px">
@@ -52,23 +52,24 @@
                                    </v-avatar>
 
                               </td>
-                              <td class="font-weight-medium">{{ props.item.first_name }}</td>
-                              <td class="font-weight-medium">{{ props.item.last_name }}</td>
-                              <td class="">{{ props.item.email }}</td>
-                              <td class="">{{ props.item.job_title }}</td>
-                              <td class="">
+                              <td class="text-xs-left font-weight-medium">{{ props.item.first_name }}</td>
+                              <td class="text-xs-left font-weight-medium">{{ props.item.last_name }}</td>
+                              <td class="text-xs-left">{{ props.item.email }}</td>
+                              <td class="text-xs-left">{{ props.item.job_title }}</td>
+                              <td class="text-xs-left">
                                      {{ props.item.date_created }}
                               </td>
 
-                                <td> 
+                                <td class="text-xs-left"> 
 
-                                 <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="editBuyer(props.item.id)"
-                                  >
-                                    edit
-                                  </v-icon>
+                                   <v-btn 
+                                        @click="editBuyer(props.item.id)"
+                                        small 
+                                        class="red darken-1 font-weight-light">
+
+                                          <i class="fas fa-edit white--text"></i>
+                                          <span class="ml-1 white--text font-weight-light ">Edit</span>
+                                      </v-btn>
                                 </td>
                           </tr>
 
@@ -166,8 +167,10 @@ import BuyerDialog from '@/views/components/app/Admin/BuyerDialog'
             
             {
               text: 'Action',
-              align: 'left',
+              align: 'center',
               sortable: false,
+              width: '150'
+
             },
         ],
         dataItems: [],

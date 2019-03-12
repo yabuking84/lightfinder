@@ -2,6 +2,8 @@
 
  <div>
 
+
+
         <v-toolbar dark color="grey darken-4">
            <v-btn-toggle multiple v-model="inquiryStatus">
                 <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
@@ -234,6 +236,7 @@ export default {
 
         openInquiry: false,
         inquiry: null,
+        snackbar:true
 
       }
     },

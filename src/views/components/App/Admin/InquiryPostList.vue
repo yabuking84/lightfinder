@@ -133,7 +133,7 @@
 						<v-flex xs12>
 							<v-alert 
 								:value="true"
-								type="warning" 
+								type="info" 
 								style="width: auto;"
 								class="ma-4"
 								outline>
@@ -156,18 +156,34 @@ import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
 import helpers from "@/mixins/helpers";
 import inqEvntBs from "@/bus/inquiry"
 
+import config from "@/config/main"
+import VueTimers from 'vue-timers/mixin'
+
+
 
 export default {
 
   mixins: [
-            helpers,
-        ],
+    helpers,
+    VueTimers,
+  ],
 
 components: {
-
 	ImageGallerySmall,
-
 },
+
+ timers: [     
+        { 
+            name: 'InquiryTableTimer',
+            time: config.polling.inquiryTable.time, 
+            repeat: true,
+            autostart: true,
+            callback: function(){
+                this.fillBidTable();
+            },
+        }
+    ],
+
 
 props: ['inquiry'],
 
