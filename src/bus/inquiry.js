@@ -53,6 +53,17 @@ const InquiryEventBus = new Vue({
 			this.$on('approved-submitted', () => {
 				func();
 			});
+		},
+
+
+		// on dialog close both buyer and supplier
+		EmitClosed() {
+			this.$emit('closed-submitted');
+		},
+		onClosed(func) {
+			this.$on('closed-submitted', () => {
+				func();
+			});
 		}
 
 	},

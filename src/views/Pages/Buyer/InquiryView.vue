@@ -89,6 +89,7 @@ export default {
 
 		closeOpenInquiry(){
             this.$emit('update:openInquiry', false);
+            inqEvntBs.EmitClosed()
 		},
 
 	},

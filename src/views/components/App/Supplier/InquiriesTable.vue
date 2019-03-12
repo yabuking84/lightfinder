@@ -176,6 +176,9 @@ import config from "@/config/main"
 
 import VueTimers from 'vue-timers/mixin'
 
+import inqEvntBs from "@/bus/inquiry";
+
+
   export default {
     components: {
       InquiryStatusButtons,
@@ -381,6 +384,10 @@ import VueTimers from 'vue-timers/mixin'
 
     created(){
         this.fillTable();
+
+        inqEvntBs.$on('closed-submitted',()=>{
+            this.fillTable(false);
+        });
 
         // get categories for category select box
         this.$store.dispatch('cat/getCategories_a')

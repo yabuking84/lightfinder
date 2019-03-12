@@ -18,13 +18,13 @@
 					  	</span>  
 
 					  	<v-spacer></v-spacer>
-
+<!-- 
 						<span class="red accent-4 pa-0">
 					    	<v-btn red accent-4 flat value="left" class="">
 			                	<span class="ml-1 white--text font-weight-light subheading">1 Inquiry Remaining </span>
 			             	</v-btn>	
 					  	</span>
-
+ -->
 					</v-layout>
 				</v-flex>
 			</v-layout>

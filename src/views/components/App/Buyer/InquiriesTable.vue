@@ -78,14 +78,22 @@
                     <v-checkbox  v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details ></v-checkbox>
                   </td>
 
+
+                    <td class="text-xs-left font-weight-medium ">
+                    <v-layout align-start justify-start column fill-height pt-3>
+                        <h3 class="mb-2" style="min-width:190px;">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
+                        {{ props.item.categories }}
+                    </v-layout>
+                    </td>
+                  
+
                   <td class="text-xs-left font-weight-medium">
                       <h4 class="mt-3">Inquiry# {{ props.item.inq_id }}</h4>
                       <h3 class="mb-1">{{ props.item.keywords }}</h3>
                       <p class="mb-3">{{ props.item.message }}</p>
                   </td>
 
-                  <td class="text-xs-left font-weight-medium">{{ props.item.categories }}</td>
-                  
+
                   <td class="text-xs-left">{{ props.item.quantity }}</td>
 
                   <td class="text-xs-left">
@@ -164,7 +172,7 @@ export default {
     data: ()=>({
 
         statuses: config.inquiry_statuses.default,
-        search: '1551612312798',
+        search: '1551765400596',
         dialog: false,
         loading: false,
         headers: [
@@ -174,6 +182,13 @@ export default {
               sortable: false,
               value: 'inq_id'
             },
+
+               {
+              text: 'Inquiry & Categories',
+              align: 'left',  
+              sortable: true,
+              value: 'categories'
+            },
            
             {
               text: 'Keywords & Message',
@@ -181,13 +196,7 @@ export default {
               sortable: true,
               value: 'keywordsAndMessage'
             },
-
-            {
-              text: 'Categories',
-              align: 'left',  
-              sortable: true,
-              value: 'categories'
-            },
+         
             
             {
               text: 'Quantity',
@@ -307,7 +316,7 @@ export default {
         },        
 
         refresh(){
-            this.fillTable();
+            this.fillTable(false);
             this.inquiryStatus = [];
         },
 
@@ -347,6 +356,9 @@ export default {
         this.fillTable();
         inqEvntBs.onFormSubmitted(this.fillTable);
 
+        inqEvntBs.$on('closed-submitted',()=>{
+            this.fillTable(false);
+        });
 
         // get categories for category select box
         this.$store.dispatch('cat/getCategories_a')

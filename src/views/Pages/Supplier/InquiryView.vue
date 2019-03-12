@@ -72,6 +72,8 @@ import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Supplier/InquiryDetailsCard"
 import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 
+import inqEvntBs from "@/bus/inquiry";
+
 export default {
 
 
@@ -131,6 +133,7 @@ export default {
 
 		closeOpenInquiry(){
             this.$emit('update:openInquiry', false);
+             inqEvntBs.EmitClosed()
 		},
 
     	keyPress(e){
