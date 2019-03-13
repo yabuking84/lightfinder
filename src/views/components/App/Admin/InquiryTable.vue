@@ -58,7 +58,7 @@
               </div>
             </td>
             <td class="text-xs-center">
-              <inquiry-status-buttons :status-id="props.item.status" />
+              <inquiry-status-buttons :statuses="statuses" :status-id="props.item.status" />
             </td>
             <td class="text-xs-center">
               <v-btn @click="viewInquiry(props.item.inq_id)" small class="grey darken-1 font-weight-light">
@@ -103,7 +103,10 @@ export default {
   data: function() {
     return {
 
-      statuses: main.inquiry_statuses.default,
+      statuses: [
+        ...config.inquiry_statuses.default,
+        ...config.inquiry_statuses.buyers,
+      ],
       search: '',
       dialog: false,
       loading: false,
@@ -199,7 +202,7 @@ export default {
     fillTable(withLoading = true) {
 
       if (withLoading)
-        this.loading = true;
+      this.loading = true;
 
       this.loading = true;
       this.allInquiries = [];
@@ -225,7 +228,7 @@ export default {
           this.filterTable();
 
           if (withLoading)
-            this.loading = false;
+          this.loading = false;
 
         })
         .catch((e) => {
@@ -255,7 +258,6 @@ export default {
         items = items.filter(function(inq) {
           return (isBuff.length) ? isBuff.includes(inq.status) : true;
         });
-
 
         // filter for categories
         isBuff = this.categories;
@@ -298,7 +300,10 @@ export default {
   created() {
 
     this.fillTable();
-    inqEvntBs.OnApproved(this.fillTable());
+
+    inqEvntBs.$on('approved-submitted', () => {
+      this.fillTable(false);
+    });
 
 
     // get categories for category select box
@@ -339,26 +344,6 @@ export default {
 
 </script>
 <style scoped lang="scss">
-.theme--light.v-table thead tr {
-  background: #000000;
-  color: #fff;
-}
-.fix-width {
-  width: 198px;
-}
-.th-heading {
-  cursor: pointer;
-}
-.text-decoration-none {
-  text-decoration: none;
-}
-
-.th-heading a {
-  text-decoration: none;
-}
-
-</style>
-<style scoped lang="scss">
 .theme--light.v-datatable thead th.column.sortable.active .v-icon,
 .v-datatable thead th.column.sortable:focus .v-icon,
 .v-datatable thead th.column.sortable:hover .v-icon {
@@ -367,6 +352,23 @@ export default {
 
 .dateCellWidth {
   min-width: 110px;
+}
+
+.theme--light.v-table thead tr {
+  background: #000000;
+  color: #fff;
+}
+
+.th-heading {
+  cursor: pointer;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.th-heading a {
+  text-decoration: none;
 }
 
 </style>
