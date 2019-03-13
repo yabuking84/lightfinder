@@ -14,31 +14,92 @@
           <v-container>
             <v-flex xs12>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.first_name" :error-messages="fieldErrors('form.first_name')" @blur="$v.form.first_name.$touch()" label="First Name" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.first_name" 
+                :error-messages="fieldErrors('form.first_name')" 
+                @blur="$v.form.first_name.$touch()" 
+                label="First Name" 
+                required></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.last_name" :error-messages="fieldErrors('form.last_name')" @blur="$v.form.last_name.$touch()" label="Last Name" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.last_name" 
+                :error-messages="fieldErrors('form.last_name')" 
+                @blur="$v.form.last_name.$touch()" 
+                label="Last Name" 
+                required></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.email" :error-messages="fieldErrors('form.email')" @blur="$v.form.email.$touch()" label="Email Address" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.email" 
+                :error-messages="fieldErrors('form.email')" 
+                @blur="$v.form.email.$touch()" 
+                label="Email Address" 
+                required></v-text-field>
               </v-flex>
               <v-flex v-if="is_new" xs10 offset-xs1>
-                <v-text-field v-model="form.password" :append-icon="showPassword ? 'visibility' : 'visibility_off'" :type="showPassword ? 'text' : 'password'" name="input-10-2" :error-messages="fieldErrors('form.password')" @blur="$v.form.password.$touch()" label="Password" hint="At least 8 characters" @click:append="showPassword = !showPassword"></v-text-field>
+                <v-text-field 
+                v-model="form.password" 
+                :append-icon="showPassword ? 'visibility' : 'visibility_off'" 
+                :type="showPassword ? 'text' : 'password'" 
+                name="input-10-2" 
+                :error-messages="fieldErrors('form.password')" 
+                @blur="$v.form.password.$touch()" 
+                label="Password" 
+                hint="At least 8 characters"
+                @click:append="showPassword = !showPassword"></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.job_title" :error-messages="fieldErrors('form.job_title')" @blur="$v.form.job_title.$touch()" label="Job Title" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.job_title" 
+                :error-messages="fieldErrors('form.job_title')" 
+                @blur="$v.form.job_title.$touch()" 
+                label="Job Title" 
+                required></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.phone" :error-messages="fieldErrors('form.phone')" @blur="$v.form.phone.$touch()" label="Phone" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.phone" 
+                :error-messages="fieldErrors('form.phone')" 
+                @blur="$v.form.phone.$touch()" 
+                label="Phone" 
+                required></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.fax" :error-messages="fieldErrors('form.fax')" @blur="$v.form.fax.$touch()" label="Fax" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.fax" 
+                :error-messages="fieldErrors('form.fax')" 
+                @blur="$v.form.fax.$touch()" 
+                label="Fax"
+                required></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field color="black" v-model="form.address" :error-messages="fieldErrors('form.address')" @blur="$v.form.address.$touch()" label="Address" required></v-text-field>
+                <v-text-field 
+                color="black" 
+                v-model="form.address" 
+                :error-messages="fieldErrors('form.address')" 
+                @blur="$v.form.address.$touch()" 
+                label="Address" 
+                required></v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-select v-model="form.country_id" :items="countries" item-text="name" item-value="id" :search-input.sync="search" :error-messages="fieldErrors('form.country_id')" @blur="$v.form.country_id.$touch()" color="black" label="Country" data-vv-name="Country" required>
+                <v-select 
+                v-model="form.country_id" 
+                :items="countries"
+                 item-text="name" 
+                 item-value="id" 
+                 :search-input.sync="search" 
+                 :error-messages="fieldErrors('form.country_id')" 
+                 @blur="$v.form.country_id.$touch()" 
+                 color="black" 
+                 label="Country" 
+                 data-vv-name="Country" required>
                 </v-select>
               </v-flex>
             </v-flex>
