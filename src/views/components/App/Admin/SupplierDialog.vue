@@ -106,12 +106,12 @@
               </v-layout>
             </v-card>
             <v-divider></v-divider>
-            <v-card-actions>
+         <!--    <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="grey darken-4" dark @click="submit()" :loading="formloading">
+              <v-btn color="grey darken-4" dark @click="addCategories()" :loading="formloading">
                 Submit
               </v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
           </v-tab-item>
         </v-tabs>
       </v-card>
@@ -229,7 +229,8 @@ export default {
     'dialog',
     'supplier_id',
     'is_new',
-    'supplierData'
+    'supplierData',
+    'supplierCategories'
 
   ],
 
@@ -242,7 +243,20 @@ export default {
         this.fillForm();
       }
 
+    },
+
+    supplierCategories: {
+
+      handler(nVal, oVal) {
+
+        this.categories = Object.keys(this.supplierCategories).map((k) => this.supplierCategories[k])
+
+      }
+
     }
+
+
+
 
   },
 
@@ -304,7 +318,7 @@ export default {
       this.$emit('update:dialog', false);
       this.$emit('update:is_new', false);
       this.$emit('update:supplier_id', null);
-
+      this.categories = [];
       this.resetForm();
     },
 
@@ -319,22 +333,58 @@ export default {
     submit() {
 
       // console.log(this.form);
-
       if (this.is_new) {
         this.addSupplier();
       } else {
         this.editSupplier();
       }
 
+      if(this.categories.length)
+      this.addCategories();
+
+
+
+      this.closeDialog();
 
     },
 
 
+    addCategories() {
 
-    submitCategories() {
+      let data = {
+        'categories':this.categories,
+        'id':this.supplier_id
+      }
+
+      this.$store.dispatch('adminSupplier/addSupplierCat_a', {
+          data: data
+        })
+        .then((response) => {
+
+          this.formloading = false
+          console.log(response)
+
+          // this.$emit('update:dialog', false);
+          // adminSupplierBus.emitFormSubmitted()
+
+        })
+        .catch((e) => {
+          console.log(e);
+          this.formloading = false
+        })
+        .finally(() => {
+          this.formloading = false
+        })
 
     },
 
+
+    removeFromCategories(item) {
+      const index = this.categories.indexOf(item.id);
+      if (index >= 0)
+        this.categories.splice(index, 1)
+ 
+    },
 
     addSupplier() {
 
@@ -408,6 +458,7 @@ export default {
 
       }
 
+
       this.$store.dispatch('adminSupplier/updateSUpplier_a', {
 
           data: data
@@ -432,10 +483,6 @@ export default {
 
 
     },
-
-
-
-
 
 
   }
