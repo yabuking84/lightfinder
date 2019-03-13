@@ -3,8 +3,12 @@
 	<div>
 		<!-- <v-btn  small flat @click="dialog = true" value="left" class="v-btn--active" :class="status.class">
 		    <span class="ml-1 white--text font-weight-light ">{{ status.name }}</span>
-		</v-btn> -->
-		<h3 class="statuses white--text py-1 px-3 ma-2 font-weight-regular" :class="status.class">
+		</v-btn> 
+		:class="status.class"
+		-->
+		<h3 
+		class="statuses py-1 px-0 ml-0 mr-0 my-2" 
+		:class="status.class+'--text'">
 			{{ status.name.trim() }}			
 		</h3>
 
@@ -68,6 +72,9 @@
 
 .statuses {
 	white-space: nowrap;
+	font-size:20px;
+	// text-decoration:underline;	
+	border-bottom: 1px solid;
 }
 	
 </style>
