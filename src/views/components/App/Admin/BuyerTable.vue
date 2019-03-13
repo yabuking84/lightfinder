@@ -247,12 +247,3 @@ export default {
 }
 
 </script>
-<style scoped lang="stylus">
-.theme--light.v-table thead tr background:#000000;
-color:#fff;
-.fix-width width:198px;
-.th-heading cursor: pointer;
-.text-decoration-none text-decoration: none;
-.th-heading a text-decoration:none;
-
-</style>
