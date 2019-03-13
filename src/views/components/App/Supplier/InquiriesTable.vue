@@ -123,22 +123,39 @@
                     </td>
 
                     <td class="text-xs-left">
-                    <v-layout align-start justify-start column fill-height pt-2>
-                        <inquiry-status-buttons :status-id="props.item.status"></inquiry-status-buttons>
+                    <v-layout align-start justify-start column fill-height pt-2 style="position:relative;">
+                        <v-flex>
+                            <inquiry-status-buttons :status-id="props.item.status"></inquiry-status-buttons>
+                        </v-flex>
+
+                        <div style="position:absolute; top:20px; right:-20px;">
+                            <v-icon 
+                            v-if="props.item.inquiry.awarded && props.item.inquiry.awarded_to_me"
+                            class="awarded orange--text">
+                                fas fa-award
+                            </v-icon>
+
+                            <v-icon 
+                            v-else-if="props.item.inquiry.awarded"
+                            class="awarded red--text">
+                                fas fa-ban
+                            </v-icon>
+                        </div>
+
                     </v-layout>
                     </td>
 
                     <td class="text-xs-center">
                     <v-layout align-start justify-start column fill-height pt-2>
                             <v-btn 
-                                small 
-                                flat 
-                                value="left" 
-                                @click="viewInquiry(props.item)"
-                                class="v-btn--active grey darken-1 font-weight-light text-decoration-none"
-                                :loading="props.item.loading">
-                                    <i class="fas fa-eye white--text"></i>
-                                    <span class="ml-1 white--text font-weight-light ">View</span>
+                            small 
+                            flat 
+                            value="left" 
+                            @click="viewInquiry(props.item)"
+                            class="v-btn--active grey darken-1 font-weight-light text-decoration-none"
+                            :loading="props.item.loading">
+                                <i class="fas fa-eye white--text"></i>
+                                <span class="ml-1 white--text font-weight-light ">View</span>
                             </v-btn>
                         <!-- <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
                         </router-link> -->
@@ -325,8 +342,8 @@ import inqEvntBs from "@/bus/inquiry";
                     item.shipping_date = response[i].desired_shipping_date;
                     item.created_at = response[i].created_at;
                     item.status = response[i].stage_id;
-                    item.inquiry = response[i];
                     item.loading = false;
+                    item.inquiry = response[i];
                     this.allInquiries.push(item);
                 }
                 // this.tableItems = this.allInquiries;

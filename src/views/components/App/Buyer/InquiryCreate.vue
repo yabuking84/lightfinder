@@ -434,7 +434,6 @@ export default {
             quantity: null,
             desired_price: null,
             shipping_date: null,
-            shipping_method: null,
             payment_method: null,
             message: null,
 
