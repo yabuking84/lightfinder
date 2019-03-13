@@ -407,9 +407,9 @@ import inqEvntBs from "@/bus/inquiry";
     created(){
         this.fillTable();
 
-        inqEvntBs.$on('closed-submitted',()=>{
-            this.fillTable(false);
-        });
+        // inqEvntBs.$on('closed-submitted',()=>{
+        //     this.fillTable(false);
+        // });
 
         // get categories for category select box
         this.$store.dispatch('cat/getCategories_a')

@@ -261,9 +261,9 @@ export default {
 
     this.fillTable();
 
-    adminSupplierBus.$on('supplier-form-submitted', () => {
-      this.fillTable();
-    });
+    // adminSupplierBus.$on('supplier-form-submitted', () => {
+    //   this.fillTable();
+    // });
 
   },
 }
