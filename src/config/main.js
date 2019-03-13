@@ -97,13 +97,13 @@ export default {
 			{
 				id: 1001, 
 				name: "Verifying",
-				class: "orange darken-3",
+				class: "orange",
 				icon: "fas fa-hourglass-half",
 			},
 			{
 				id: 1003, 
 				name: "Rejected",
-				class: "blue darken-4",
+				class: "blue",
 				icon: "far fa-times-circle",
 			},
 		],
