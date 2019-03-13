@@ -7,10 +7,8 @@
 		:class="status.class"
 		-->
 		<h3 
-		class="statuses py-1 px-0 ml-0 mr-0 my-2" 
-		:class="status.class+'--text'">
-			{{ status.name.trim() }}			
-		</h3>
+		class="statuses py-1 px-0 mx-0 my-2" 
+		:class="status.class+'--text'">{{ status.name.trim() }}</h3>
 
 	</div>  
 </span>
