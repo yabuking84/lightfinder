@@ -125,10 +125,10 @@
                     <td class="text-xs-left">
                     <v-layout align-start justify-start column fill-height pt-2 style="position:relative;">
                         <v-flex>
-                            <inquiry-status-buttons :status-id="props.item.status"></inquiry-status-buttons>
+                            <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
                         </v-flex>
 
-                        <div style="position:absolute; top:20px; right:-20px;">
+                        <div style="position:absolute; top:20px; right:-20px;" v-if="props.item.status==1004">
                             <v-icon 
                             v-if="props.item.inquiry.awarded && props.item.inquiry.awarded_to_me"
                             class="awarded orange--text">
@@ -212,8 +212,11 @@ import inqEvntBs from "@/bus/inquiry";
     },
 
     data: ()=>({
-
-        statuses: config.inquiry_statuses.default,
+        
+        statuses: [
+          ...config.inquiry_statuses.default,
+          ...config.inquiry_statuses.suppliers,
+        ],        
         statusesSupplier: config.inquiry_statuses.suppliers,
         headers: [
             {
@@ -272,8 +275,8 @@ import inqEvntBs from "@/bus/inquiry";
             },
         ],
 
-        search: '1551612312798',
-        // search: null,
+        // search: '1551612312798',
+        search: null,
 
         inquiryStatus: [],
         allInquiries: [],
@@ -430,11 +433,15 @@ import inqEvntBs from "@/bus/inquiry";
         },
 
         openInquiry(nVal){
+            
 
-            if(nVal)            
-            this.$timer.stop('InquiryTableTimer');
-            else
-            this.$timer.start('InquiryTableTimer');
+            if(nVal) {
+                this.$timer.stop('InquiryTableTimer');                
+            }
+            else {                
+                this.fillTable(false);
+                this.$timer.start('InquiryTableTimer');
+            }
         }, 
 
     },    

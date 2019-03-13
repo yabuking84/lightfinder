@@ -114,11 +114,11 @@ export default {
 			// 	name: "All",
 			// 	icon: "fas fa-envelope-open-text",
 			// },
-			{
-				id: 'priority', 
-				name: "Priority",
-				icon: "fas fa-exclamation-circle",
-			},
+			// {
+			// 	id: 'priority', 
+			// 	name: "Priority",
+			// 	icon: "fas fa-exclamation-circle",
+			// },
 			{
 				id: 'closed', 
 				name: "Closed",
@@ -126,79 +126,6 @@ export default {
 			},
 		],
 
-		buyer: [
-
-			{
-		        "id": 1,
-		        "name": "Open",
-		        "icon": "fas fa-envelope-open",
-		        'status': [
-	        			{
-							id: 1002, 
-							name: "Open"
-						},
-						{
-							id: 1001, 
-							name: "Verifying"
-						},
-						{
-							id: 1003, 
-							name: "Rejected"
-						},
-						{
-							id: 1004, 
-							name: "Confirmation"
-						},
-						{
-							id: 1005, 
-							name: "Pending Payment"
-						},
-
-		        ]
-
-		    },
-		    {
-		        "id": 2,
-		        "name": "In-Progress",
-		        "icon": "fas fa-tasks",
-		        "status": [
-
-					{
-						id: 2001, 
-						name: "Production"
-					},
-					{
-						id: 2002, 
-						name: "Shipment"
-					},
-					{
-						id: 2003, 
-						name: "Receiving"
-					},
-					{
-						id: 2004, 
-						name: "Return"
-					},
-		        ]
-		    },
-		    {
-		        "id": 3,
-		        "name": "Closed",
-		        "icon": "fas fa-envelope",
-		        "status": 
-		        	[
-	        			{
-							id: 3001, 
-							name: "Success"
-						},
-						{
-							id: 3002, 
-							name: "Cancelled"
-						},
-		      		]
-
-		    }
-		]
 	},
 
 	polling: {

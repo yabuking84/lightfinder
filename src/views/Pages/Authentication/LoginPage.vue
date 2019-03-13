@@ -119,7 +119,8 @@
   const defaultForm = {
     // email: 'info@bal.com',
     // email: 'buyer@bal.com',
-    email: 'supplier@bal.com',
+    // email: 'supplier@bal.com',
+    email: 'm.ozil@philips.com',
     password: '123456',
     rememberme: false
   }
