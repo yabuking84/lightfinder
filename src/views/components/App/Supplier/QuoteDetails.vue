@@ -14,7 +14,7 @@
 			<v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2">
              	
              	<v-btn 
-             		v-if="hasBid"
+             		v-if="hasBid && !inquiry.awarded"
              		@click="openEditQuote()" 
              		class="font-weight-light" 
              		color="blue" 
@@ -25,7 +25,7 @@
 				</v-btn>
 
              	<v-btn 
-             		v-else 
+             		v-else-if="!inquiry.awarded"
              		@click="openCreateQuote()" 
              		class="font-weight-light" 
              		color="green" 
