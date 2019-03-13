@@ -215,6 +215,7 @@
 	    },
 
 	    watch: {
+	    	
 	    	inquiry: {
 	    		handler(nVal,oVal){
 			    	this.fillBidTable();

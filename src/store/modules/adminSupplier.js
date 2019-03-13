@@ -1,6 +1,3 @@
-/*
-	
-*/
 
 import axios from 'axios'
 import router from '@/router'
@@ -9,92 +6,89 @@ import config from '@/config/index'
 
 const state = {
 
-	api: {
+  api: {
 
-	
-
-		get: {
+    get: {
 
 
-			method: 'get',
+      method: 'get',
 
+      /*
+      	get all supplier
+      */
+      getAllSupplier: {
 
-			/*
-				get all supplier
-			*/
-			getAllSupplier: {
+        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
 
-				url: 	'http://192.168.1.200:8000/v1/admin/suppliers'
-
-			},
+      },
 
 
 
-			/*
-				get single supplier
-			*/
-			getSupplier: {
+      /*
+      	get single supplier
+      */
+      getSupplier: {
 
-				url: 	'http://192.168.1.200:8000/v1/admin/suppliers'	
-			
-			}
+        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
 
-
-			
-		},
-
-		/*
-			post single supplier
-		*/
-
-		post: {
-
-			method: 'post',
-
-			addSupplier: {
-
-				url: 	'http://192.168.1.200:8000/v1/admin/suppliers'	
-
-			}
-
-		},
+      }
 
 
-		/*
 
-			update single supplier
+    },
 
-		*/
+    /*
+    	post single supplier
+    */
+
+    post: {
+
+      method: 'post',
+
+      addSupplier: {
+
+        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
+
+      }
+
+    },
 
 
-		patch: {
+    /*
 
-			method: 'patch',
+    	update single supplier
 
-			editSupplier: {
-
-				url: 	'http://192.168.1.200:8000/v1/admin/suppliers'	
-		
-			}
-		},
+    */
 
 
-		
+    patch: {
+
+      method: 'patch',
+
+      editSupplier: {
+
+        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
+
+      }
+    },
 
 
 
 
 
-	},
-	
-	token: localStorage.getItem('access_token') || null,
-	
-	axios: {
 
-		config: {
-			headers: {'Authorization': "bearer" + (localStorage.getItem('access_token') || null ) }
-		}
-	},
+
+
+  },
+
+  token: localStorage.getItem('access_token') || null,
+
+  axios: {
+
+    config: {
+      headers: { 'Authorization': "bearer" + (localStorage.getItem('access_token') || null) }
+    }
+  },
 
 
 }
@@ -122,47 +116,46 @@ const actions = {
 
 
 
-	/* GET */
+  /* GET */
 
 
-	getSupplier_a(context, data) {
+  getSupplier_a(context, data) {
 
-			return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-				var headers = { token: localStorage.access_token }
+      var headers = { token: localStorage.access_token }
 
 
-					axios({
+      axios({
 
-						method	: state.api.get.method,
-						url 	: state.api.get.getSupplier.url + '/' + data.data.id ,
-						headers : headers
+          method: state.api.get.method,
+          url: state.api.get.getSupplier.url + '/' + data.data.id,
+          headers: headers
 
-					})
-					.then(response => {
+        })
+        .then(response => {
 
-						resolve(response.data);
+          resolve(response.data);
 
-					})
-					.catch(error => {
+        })
+        .catch(error => {
 
-						if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
 
-		                    console.log("EXPIRED");
-		                    router.push({'name': 'Logout'})
-		                    
-		                } else {
+            console.log("EXPIRED");
+            router.push({ 'name': 'Logout' })
 
-		                    reject(error);
+          } else {
 
-		                }
+            reject(error);
 
-					})
+          }
 
-			});
+        })
 
-	},
+    });
 
+  },
 
 
 
@@ -179,47 +172,47 @@ const actions = {
 
 
 
-	getAllSupplier_a() {
 
+  getAllSupplier_a() {
 
 
-			return new Promise((resolve, reject) => {
 
-				var headers = { token: localStorage.access_token }
+    return new Promise((resolve, reject) => {
 
-				axios({
+      var headers = { token: localStorage.access_token }
 
-					method	: state.api.get.method,
-					url 	: state.api.get.getAllSupplier.url,
-					headers : headers
+      axios({
 
-				})
-				.then(response => {
+          method: state.api.get.method,
+          url: state.api.get.getAllSupplier.url,
+          headers: headers
 
-					resolve(response.data);
+        })
+        .then(response => {
 
-				})
-				.catch(error => {
+          resolve(response.data);
 
-					if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+        })
+        .catch(error => {
 
-	                    console.log("EXPIRED");
-	                    router.push({'name': 'Logout'})
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
 
-	                } else {
+            console.log("EXPIRED");
+            router.push({ 'name': 'Logout' })
 
-	                    reject(error);
+          } else {
 
-	                }
+            reject(error);
 
-				})
+          }
 
+        })
 
-			});
 
+    });
 
-	},
 
+  },
 
 
 
@@ -231,97 +224,96 @@ const actions = {
 
 
 
-	/* POST */
 
-	addSupplier_a(context, data) {
+  /* POST */
 
-	
-		return new Promise((resolve, reject) => {
+  addSupplier_a(context, data) {
 
-			var headers = {
-				token:localStorage.access_token,
-              	"content-type": "application/json",
-			};
 
-			axios({
+    return new Promise((resolve, reject) => {
 
-				method	: state.api.post.method,
-				url     : state.api.post.addSupplier.url,
-				headers : headers,
-				data 	: JSON.stringify(data.data)
-				
-			})
-			.then(response => {	
-				resolve(response.data);
-			})
-			.catch(error => {
-				  
-				  if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-	                    console.log("EXPIRED")
-	                    router.push({'name': 'Logout'})
-	                } else {
-	                    console.log("normal error!")
-	                    reject(error)
-	                }
+      var headers = {
+        token: localStorage.access_token,
+        "content-type": "application/json",
+      };
 
-			});
+      axios({
 
-		});
+          method: state.api.post.method,
+          url: state.api.post.addSupplier.url,
+          headers: headers,
+          data: JSON.stringify(data.data)
 
-	},
+        })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
 
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+            console.log("EXPIRED")
+            router.push({ 'name': 'Logout' })
+          } else {
+            console.log("normal error!")
+            reject(error)
+          }
 
+        });
 
+    });
 
-	/* PATCH */
+  },
 
-	updateSUpplier_a(context, data) {
 
 
-		 		return new Promise((resolve, reject) => {
 
-		   			var headers = {
-						token:localStorage.access_token,
-		              	"content-type": "application/json",
-					};
+  /* PATCH */
 
-					axios({
+  updateSUpplier_a(context, data) {
 
-						method	: state.api.patch.method,
-						url     : state.api.patch.editSupplier.url + "/" + data.data.id,
-						headers : headers,
-						data 	: JSON.stringify(data.data)
-						
-					})
-					.then(response => {	
-						resolve(response.data);
-					})
-					.catch(error => {
-						  
-						  if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-			                    console.log("EXPIRED")	
-			                    router.push({'name': 'Logout'})
-			                } else {
-			                    console.log("normal error!")
-			                    reject(error)
-			                }
 
-					});
+    return new Promise((resolve, reject) => {
 
-	   		})
+      var headers = {
+        token: localStorage.access_token,
+        "content-type": "application/json",
+      };
 
-	}
+      axios({
+
+          method: state.api.patch.method,
+          url: state.api.patch.editSupplier.url + "/" + data.data.id,
+          headers: headers,
+          data: JSON.stringify(data.data)
+
+        })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+            console.log("EXPIRED")
+            router.push({ 'name': 'Logout' })
+          } else {
+            console.log("normal error!")
+            reject(error)
+          }
+
+        });
+
+    })
+
+  }
 
 
 }
 
 
 export default {
-	namespaced: true,
-	state,
-	getters,
-	mutations,
-	actions	
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 }
-
-

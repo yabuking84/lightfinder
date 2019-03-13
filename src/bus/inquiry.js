@@ -45,6 +45,27 @@ const InquiryEventBus = new Vue({
 		},
 
 
+		// on admin approved inquiry
+		emitApproved() {
+			this.$emit('approved-submitted');
+		},
+		OnApproved(func) {
+			this.$on('approved-submitted', () => {
+				func();
+			});
+		},
+
+
+		// on dialog close both buyer and supplier
+		EmitClosed() {
+			this.$emit('closed-submitted');
+		},
+		onClosed(func) {
+			this.$on('closed-submitted', () => {
+				func();
+			});
+		}
+
 	},
 
 });

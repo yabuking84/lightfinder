@@ -3,33 +3,33 @@ import router from '@/router'
 
 import config from '@/config/index'
 
-const state =  {
+const state = {
 
-	api: {
-		
-		/*
-			get countries
-		*/
-		
-		get: {
-			
-				getCountries: {
-					url: 'http://192.168.1.200:8000/v1/countries'
-				}
+  api: {
 
-		},
+    /*
+    	get countries
+    */
 
-	},
+    get: {
 
-	token: localStorage.getItem('access_token') || null,
-	axios: {
+      getCountries: {
+        url: 'http://192.168.1.200:8000/v1/countries'
+      }
 
-		config: {
+    },
 
-			headers: { 'Authorization': "bearer" + (localStorage.getItem('access_token') || null) }
+  },
 
-		}
-	}
+  token: localStorage.getItem('access_token') || null,
+  axios: {
+
+    config: {
+
+      headers: { 'Authorization': "bearer" + (localStorage.getItem('access_token') || null) }
+
+    }
+  }
 }
 
 
@@ -43,32 +43,32 @@ const mutations = {
 
 const actions = {
 
-	getCountries(context) {
+  getCountries(context) {
 
-		return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-				axios({
-					method  : 'GET',
-					url 	: state.api.get.getCountries.url
-				})
-				.then(response => {
-					resolve(response.data);
-				})
-				.catch(error => {
-					reject(error);
-				})
+      axios({
+          method: 'GET',
+          url: state.api.get.getCountries.url
+        })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        })
 
-	 	});
-    }
+    });
+  }
 
 }
 
 
 
 export default {
-	namespaced: true,
-	state,
-	getters,
-	mutations,
-	actions	
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 }

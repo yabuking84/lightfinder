@@ -1,7 +1,9 @@
 <template>
   <v-card class="elevation-0">
     <v-toolbar card dense color="transparent">
-      <v-toolbar-title><h4>BAL Notifications</h4></v-toolbar-title>
+      <v-toolbar-title>
+        <h4>BAL Notifications</h4>
+      </v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>
     <v-card-text class="pa-0">
@@ -28,7 +30,6 @@
     </v-card-text>
   </v-card>
 </template>
-
 <script>
 import notes from '@/data/widgets/notification'
 export default {
@@ -42,4 +43,5 @@ export default {
     }
   }
 }
+
 </script>
