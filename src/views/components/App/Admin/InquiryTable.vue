@@ -86,7 +86,7 @@
                 </td>
 
                 <td class="text-xs-left">
-                <v-layout align-start justify-start column fill-height pt-3>
+                <v-layout align-start justify-start column fill-height pt-0>
                     <inquiry-status-buttons :statuses="statuses" :status-id="props.item.status" />
                 </v-layout>
                 </td>
