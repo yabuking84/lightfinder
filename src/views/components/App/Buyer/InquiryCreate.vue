@@ -249,7 +249,7 @@ Create Inquiry
                 <v-container>
                     <v-layout row>
                         <v-flex xs3>
-                            <v-text-field v-model="formData.desired_price" @keyup.enter="stepUp()" :value="formData.desired_price" suffix="USD" mask="#######">
+                            <v-text-field v-model="formData.desired_price" @keyup.enter="stepUp()" :value="formData.desired_price" suffix="USD">
                             </v-text-field>
                         </v-flex>
                     </v-layout>
@@ -597,7 +597,7 @@ export default {
             var formData = {
                 "subject": " ",
                 "keyword": this.formData.keywords,
-                "warranty": this.formData.warranty,
+                "warranty": this.formData.warranty ? this.formData.warranty : 0 ,
                 "quantity": this.formData.quantity,
                 "desired_price": this.formData.desired_price,
                 "desired_shipping_date": this.formData.shipping_date,

@@ -229,7 +229,6 @@ export default {
     repeat: true,
     autostart: true,
     callback: function() {
-      console.log("InquiryTableTimer");
       this.fillTable(false);
     },
   }],
@@ -324,11 +323,11 @@ export default {
         .then((response) => {
 
           this.inquiry = response
-          console.log(this.inquiry);
+          
           this.openInquiry = true
         })
         .catch((error) => {
-          console.log(error);
+          
 
         })
     }
@@ -340,7 +339,9 @@ export default {
     this.fillTable();
 
     inqEvntBs.$on('approved-submitted', () => {
-      this.fillTable(false);
+
+      this.fillTable();
+
     });
 
 
@@ -352,7 +353,6 @@ export default {
       })
       .catch((e) => {
         console.log('Error: ');
-        console.log(e);
       });
 
   },

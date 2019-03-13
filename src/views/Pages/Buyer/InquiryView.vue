@@ -1,6 +1,6 @@
 <template>
-<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable> -->
-<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable>
+<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
+<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy

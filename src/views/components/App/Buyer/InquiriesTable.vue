@@ -296,9 +296,11 @@ export default {
     this.fillTable();
     inqEvntBs.onFormSubmitted(this.fillTable);
 
-    inqEvntBs.$on('closed-submitted', () => {
-      this.fillTable(false);
-    });
+    // inqEvntBs.onClosed(this.fillTable);
+
+    // $on('closed-submitted', () => {
+    //   this.fillTable(false);
+    // });
 
     // get categories for category select box
     this.$store.dispatch('cat/getCategories_a')
