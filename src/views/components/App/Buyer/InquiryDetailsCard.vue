@@ -17,15 +17,23 @@
 
             <v-container>
 
-               <v-alert
-              :value="true"
-              type="success"
-              color="light-blue"
-              v-if="inquiry.awarded"
-            >
-                You have awarded a bid on this inquiry.
-            </v-alert>
-    
+				<v-alert 
+				:value="(inquiry.stage_id==1005)?1:0"
+				color="error" 
+				style="width: auto; text-align:center; font-size:20px;"
+				class="mb-2">
+					Pending Payment!
+				</v-alert>
+
+				<v-alert
+				:value="(inquiry.stage_id==1004)?1:0"
+				type="success"
+				color="light-blue"
+				style="font-size:20px;"
+				v-if="inquiry.awarded">
+	                You have awarded a bid on this inquiry.
+	            </v-alert>
+	    
 
                 <v-layout row wrap>
                     <v-flex xs12>

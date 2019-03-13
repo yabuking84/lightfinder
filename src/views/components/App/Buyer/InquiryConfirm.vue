@@ -46,7 +46,7 @@
 							    
 						</v-layout>  
 
-							<v-layout row>
+						<v-layout row>
 
 							   <v-flex xs4 mt-3>
 						      		<h4 class="font-weight-light">Shipping Address</h4>						  
@@ -64,7 +64,7 @@
 						</v-layout>  
 
 
-							<v-layout row>
+						<v-layout row>
 
 							   <v-flex xs4 mt-3>
 						      		<h4 class="font-weight-light">Shipping Method</h4>						  
@@ -86,26 +86,26 @@
 						</v-layout>  
 
 
-							<v-layout row>
+						<!-- <v-layout row>
 
-							   <v-flex xs4 mt-3>
+							   	<v-flex xs4 mt-3>
 						      		<h4 class="font-weight-light">Shipment Date</h4>						  
-						      </v-flex>
+						      	</v-flex>
 
-						      <v-flex xs7>
+						     <v-flex xs7>
 
-							 <v-menu v-model="calendar_menu"  :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
+							<v-menu v-model="calendar_menu"  :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
 
                             <v-text-field slot="activator" v-model="form.shipping_date" label="Shipment Date" prepend-icon="event" readonly></v-text-field>
                             <v-date-picker v-model="form.shipping_date" header-color="black" :min="minDate" @input="calendar_menu = false">
 
                             </v-date-picker>
 
-                        </v-menu>
+                       		</v-menu>
 
 						      </v-flex>
 
-						</v-layout>  
+						</v-layout>   -->
 
 					</v-flex>	
 
@@ -122,7 +122,7 @@
 								</v-flex>
 								
 								<v-flex xs7>
-								  		<h3 class="font-weight-bold">{{ this.bidinquiry.quantity  }}</h3>		
+								  	<h3 class="font-weight-bold">{{ this.bidinquiry.quantity  }}</h3>		
 								</v-flex>
 
 
@@ -202,7 +202,7 @@
 
 				shipping_method_id : { required },
        			payment_method_id  : { required },
-       			shipping_date 	   : { required },
+       			// shipping_date 	   : { required },
        			shipping_address   : { required },
 
 	    	}
@@ -217,7 +217,7 @@
 
 	    		shipping_method_id : { required: 'Please select shipping method.' },
 	   			payment_method_id  : { required: 'Please select payment method.' },
-	   			shipping_date 	   : { required: 'Please select your desire shipment date.' },
+	   			// shipping_date 	   : { required: 'Please select your desire shipment date.' },
 	   			shipping_address   : { required: 'Please put your shipping address' },
 	    	}
 
@@ -234,7 +234,7 @@
 
        			shipping_method_id : '',
        			payment_method_id  : '',
-       			shipping_date 	   : '',
+       			// shipping_date 	   : '',
        			shipping_address   : '',
 
        		},
@@ -265,7 +265,7 @@
 
 						'payment_method_id'  : this.form.payment_method_id,
 						'shipping_method_id' : this.form.shipping_method_id,
-						'shipping_date'		 : this.form.shipping_date,
+						// 'shipping_date'		 : this.form.shipping_date,
 						'shipping_address' 	 : this.form.shipping_address,
 						'bid_id'			 : this.bid.id,
 						'inquiry_id'		 : this.bidinquiry.id,
@@ -300,7 +300,7 @@
 
 				this.form.shipping_method_id = this.bidinquiry.shipping_method_id
 				this.form.payment_method_id  = this.bidinquiry.payment_method_id
-				this.form.shipping_date 	 = this.bidinquiry.shipping_date;
+				// this.form.shipping_date 	 = this.bidinquiry.shipping_date;
 
 				// this.odQuantity = this.bidinquiry.quantity
 				// this.odUnitprice = this.bid.price
@@ -336,8 +336,8 @@
 
 		created: function() {
 
-			    this.form.shipping_date = this.getDateTime();
-			    this.minDate = this.form.shipping_date;
+			    // this.form.shipping_date = this.getDateTime();
+			    // this.minDate = this.form.shipping_date;
 
 		}
 	}

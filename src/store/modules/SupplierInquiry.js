@@ -40,6 +40,11 @@ const state = {
             url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
             url2: 'bids/own-bid',
         },
+        confirmAward: {
+            method: 'put',
+            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url2: 'confirm-award',
+        },
 
     },
     inquiries: [],
@@ -69,17 +74,6 @@ const actions = {
             })
             .catch(error => {
 
-                // console.log(error);
-
-                // if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                //     console.log("EXPIRED");
-                //     router.push({'name': 'Logout'})
-                // }
-                // else {
-                //     // console.log("normal error!");
-                //     reject(error);
-                // }
-
                 if(actions.checkToken(error)) {
                     reject(error);
                 }
@@ -102,17 +96,6 @@ const actions = {
                 resolve(response.data);
             })
             .catch(error => {
-
-                // console.log(error);
-
-                // if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                //     console.log("EXPIRED");
-                //     router.push({'name': 'Logout'})
-                // }
-                // else {
-                //     reject(error);
-                // }
-
 
                 if(actions.checkToken(error)) {
                     reject(error);
@@ -139,16 +122,6 @@ const actions = {
             })
             .catch(error => {
 
-                // console.log(error);
-
-                // if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                //     console.log("EXPIRED");
-                //     router.push({'name': 'Logout'})
-                // }
-                // else {
-                //     reject(error);
-                // }
-
                 if(actions.checkToken(error)) {
                     reject(error);
                 }
@@ -171,16 +144,6 @@ const actions = {
                 resolve(response.data);
             })
             .catch(error => {
-
-                // console.log(error);
-
-                // if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                //     console.log("EXPIRED");
-                //     router.push({'name': 'Logout'})
-                // }
-                // else {
-                //     reject(error);
-                // }
 
                 if(actions.checkToken(error)) {
                     reject(error);
@@ -210,14 +173,6 @@ const actions = {
             })
             .catch(error => {
 
-                // if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                //     console.log("EXPIRED");
-                //     router.push({'name': 'Logout'})
-                // }
-                // else {
-                //     reject(error);
-                // }
-
                 if(actions.checkToken(error)) {
                     reject(error);
                 }
@@ -246,18 +201,39 @@ const actions = {
             })
             .catch(error => {
 
-                // if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-                //     console.log("EXPIRED");
-                //     router.push({'name': 'Logout'})
-                // }
-                // else {
-                //     reject(error);
-                // }
-
                 if(actions.checkToken(error)) {
                     reject(error);
                 }
                 
+            });
+
+        });
+    },
+
+    confirmAward_a(context,data){
+        return new Promise((resolve, reject) => {
+            var method = state.api.confirmAward.method;
+            var url = state.api.confirmAward.url+"/"+data.inq_id+"/"+state.api.confirmAward.url2;
+            console.log(data.formData);
+            var headers = {
+                token:localStorage.access_token,
+                "content-type": "application/json",
+            };
+            axios({
+                method: method,
+                url: url,
+                headers: headers,
+                data: JSON.stringify(data.formData),
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+
+                if(actions.checkToken(error)) {
+                    reject(error);
+                }
+
             });
 
         });

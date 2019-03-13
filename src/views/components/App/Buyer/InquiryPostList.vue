@@ -105,7 +105,7 @@
 									         <v-flex xs12 pt-0>
 									  	  		<h5 class="font-weight-thin">Remarks</h5>
 									  	  		<h4>
-									  	  			<p class="mb-0">{{ bidItem.remarks }}</p>
+									  	  			<p class="mb-0" style="white-space: pre-line;">{{ bidItem.remarks }}</p>
 									  	  		</h4>
 									      	 </v-flex>
 							  	  		<!-- </v-container> -->
@@ -332,14 +332,19 @@ created(){
 
 	.awarded {
 
-		position: absolute;
-		height: 50px;
-		width: 50px;
-		top:10px;
-		right: 5px;
-
-	    font-size: 50px;
-	    // color: gold;
+		// position: absolute;
+		// height: 50px;
+		// width: 50px;
+		// top:10px;
+		// right: 5px;
+		// font-size: 50px;
+		
+	    position: absolute;
+	    height: 50px;
+	    width: 50px;
+	    top: 0px;
+	    right: -20px;
+	    font-size: 70px;	    
 
 	}
 

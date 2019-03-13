@@ -10,21 +10,23 @@
 		
 		<v-card-text>
 			
-			<template v-if="inquiry.awarded && inquiry.awarded_to_me">
+			<!-- confirm awarded -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
                 <v-layout row wrap pa-0 mb-4>
 
-                    <v-flex xs6>
-
+                    <v-flex xs12>
                         <v-btn 
-                            @click=""
-                            block 
-                            class="green darken-1 font-weight-light ">
-                            <i class="fas fa-thumbs-up white--text"></i>
-                            <span class="ml-1 white--text font-weight-light ">Confirm</span>
+                            @click="confirmQuote()"
+                            large 
+                            block
+                            color="success">
+                            <i class="fas fa-thumbs-up"></i> 
+                            Confirm
                         </v-btn>
                     </v-flex>
 
-                    <v-flex xs6>
+                    <!-- <v-flex xs6>
                        <v-btn 
                             @click=""
                             block 
@@ -32,7 +34,7 @@
                             <i class="fas fa-thumbs-down white--text"></i>
                             <span class="ml-1 white--text font-weight-light ">Deny</span>
                         </v-btn>
-                    </v-flex>
+                    </v-flex> -->
                     <v-flex xs12>
                 		<v-layout row wrap>
 		                    <v-flex xs4>
@@ -62,10 +64,28 @@
 		                    <v-flex xs4>
 			                    <h5 class="font-weight-thin">Shipment Date</h5>
 			                    <h4 class="font-weight-bold">
-									<h2 class="mb-0">									
+									<!-- <h2 class="mb-0">									
 										{{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+									</h2> -->
 
-									</h2>
+			                        <v-menu 
+			                        v-model="calendar_menu" 
+			                        :close-on-content-click="false" 
+			                        :nudge-right="40" 
+			                        lazy 
+			                        transition="scale-transition" 
+			                        offset-y 
+			                        full-width 
+			                        min-width="290px"
+			                        class="">
+
+			                            <v-text-field slot="activator" v-model="formData.shipping_date" label="" prepend-icon="event" readonly></v-text-field>
+			                            <v-date-picker v-model="formData.shipping_date" header-color="black" :min="minDate" @input="calendar_menu = false">
+
+			                            </v-date-picker>
+
+			                        </v-menu>
+
 						      	</h4>
 		                    </v-flex>
 		                </v-layout>                    	
@@ -74,6 +94,37 @@
                 </v-layout>
 
 			</template>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- confirm awarded -->
+
+			<!-- pending payment -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<template>
+                <v-layout row wrap pa-0 mb-4>
+			        <v-flex xs12>
+					<v-alert 
+					:value="(inquiry.stage_id==1005)?1:0"
+					color="error" 
+					style="width: auto; text-align:center; font-size:20px;"
+					class="mb-2">
+						Pending Payment!
+					</v-alert>
+					</v-flex>
+
+			        <v-flex xs4>
+	                    <h5 class="font-weight-thin">Expected Shipment Date</h5>
+	                    <h4 class="font-weight-bold">
+							<h2 class="mb-0">									
+								{{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+							</h2>
+						</h4>
+					</v-flex>
+                </v-layout>
+
+			</template>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- pending payment -->
+
 
 			<div v-for="bidItem in bidItems">
 				<v-card class="mb-2 pa-2" :class="(bidItem.owned)?'blue lighten-5':''">
@@ -172,6 +223,15 @@
 			bidItems: [],
 			payment_methods: config.payment_methods, 
 			shipping_methods: config.shipping_methods, 
+        	calendar_menu: false,
+	        minDate: null,
+			
+			formData: {
+				shipping_date: null, 
+				confirm: 1,
+			},
+
+
 		}),
 
 		methods: {
@@ -192,8 +252,20 @@
 
 			},
 
-			testTimer(){
-				console.log('testTimer');
+			confirmQuote(){
+				console.log("confirm");
+
+				this.$store.dispatch('spplrInq/confirmAward_a',
+				{
+					inq_id:this.inquiry.id,
+					formData:this.formData,
+				})
+				.catch(error=>{
+                    console.log(error);					
+				});
+
+
+
 			},
 
 
@@ -208,6 +280,10 @@
 	    created(){
 	    	this.fillBidTable();
 	        inqEvntBs.onBidFormSubmitted(this.fillBidTable);
+
+	        this.formData.shipping_date =  null;
+	        this.minDate = this.getDateTime();
+
 	    },
 
 	    mounted(){

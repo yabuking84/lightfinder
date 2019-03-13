@@ -5,7 +5,7 @@
 		    <span class="ml-1 white--text font-weight-light ">{{ status.name }}</span>
 		</v-btn> -->
 		<h3 class="statuses white--text py-1 px-3 ma-2 font-weight-regular" :class="status.class">
-			{{ status.name.trim() }}
+			{{ status.name.trim() }}			
 		</h3>
 
 	</div>  

@@ -100,7 +100,7 @@ Create Inquiry
             <v-stepper-content step="6" ref="step_6">
                 <v-container>
                     <v-layout row class="digits_4">
-                        <v-text-field v-model="formData.power" @keyup.enter="stepUp()" :value="formData.power" suffix="watts" mask="####">
+                        <v-text-field v-model="formData.power" @keyup.enter="stepUp()" :value="formData.power" suffix="watts" mask="######">
                         </v-text-field>
                     </v-layout>
                 </v-container>
@@ -114,7 +114,7 @@ Create Inquiry
             <v-stepper-content step="7" ref="step_7">
                 <v-container>
                     <v-layout row class="digits_4">
-                        <v-text-field v-model="formData.lumen" @keyup.enter="stepUp()" :value="formData.lumen" suffix="lm" mask="####">
+                        <v-text-field v-model="formData.lumen" @keyup.enter="stepUp()" :value="formData.lumen" suffix="lm" mask="######">
                         </v-text-field>
                     </v-layout>
                 </v-container>
@@ -128,7 +128,7 @@ Create Inquiry
             <v-stepper-content step="8" ref="step_8">
                 <v-container>
                     <v-layout row class="digits_4">
-                        <v-text-field v-model="formData.efficiency" @keyup.enter="stepUp()" :value="formData.efficiency" suffix="lm/w" mask="####">
+                        <v-text-field v-model="formData.efficiency" @keyup.enter="stepUp()" :value="formData.efficiency" suffix="lm/w" mask="######">
                         </v-text-field>
                     </v-layout>
                 </v-container>
@@ -156,7 +156,7 @@ Create Inquiry
             <v-stepper-content step="10" ref="step_10">
                 <v-container>
                     <v-layout row class="digits_4">
-                        <v-text-field v-model="formData.cct" @keyup.enter="stepUp()" :value="formData.cct" suffix="lm" mask="####">
+                        <v-text-field v-model="formData.cct" @keyup.enter="stepUp()" :value="formData.cct" suffix="lm" mask="######">
                         </v-text-field>
                     </v-layout>
                 </v-container>
@@ -170,7 +170,7 @@ Create Inquiry
             <v-stepper-content step="11" ref="step_11">
                 <v-container>
                     <v-layout row class="digits_4">
-                        <v-text-field v-model="formData.ip" @keyup.enter="stepUp()" :value="formData.ip" mask="####">
+                        <v-text-field v-model="formData.ip" @keyup.enter="stepUp()" :value="formData.ip" mask="######">
                         </v-text-field>
                     </v-layout>
                 </v-container>
@@ -234,7 +234,7 @@ Create Inquiry
             <v-stepper-content step="15" ref="step_15">
                 <v-container>
                     <v-layout row class="digits_4">
-                        <v-text-field v-model="formData.quantity" @keyup.enter="stepUp()" :value="formData.quantity" suffix="pc/s" mask="####">
+                        <v-text-field v-model="formData.quantity" @keyup.enter="stepUp()" :value="formData.quantity" suffix="pc/s" mask="######">
                         </v-text-field>
                     </v-layout>
                 </v-container>
