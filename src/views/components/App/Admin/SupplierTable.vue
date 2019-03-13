@@ -207,6 +207,7 @@ export default {
           this.supplierData = response
           this.supplier_id = supplier_id
 
+          
           this.getSupplierCategories(supplier_id)
 
         })

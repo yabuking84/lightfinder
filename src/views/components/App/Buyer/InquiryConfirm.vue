@@ -302,10 +302,9 @@
 				this.form.payment_method_id  = this.bidinquiry.payment_method_id
 				this.form.shipping_date 	 = this.bidinquiry.shipping_date;
 
-
-				this.odQuantity = this.bidinquiry.quantity
-				this.odUnitprice = this.bid.price
-				this.odTotalprice = this.bid.total_price
+				// this.odQuantity = this.bidinquiry.quantity
+				// this.odUnitprice = this.bid.price
+				// this.odTotalprice = this.bid.total_price
 
 			},
 
@@ -323,9 +322,9 @@
 			bidinquiry: {
 
 				handler(nVal, oVal) {
-
+					
 					this.fillData();
-
+					
 				},
 
 				deep: true,
