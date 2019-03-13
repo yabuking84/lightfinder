@@ -70,7 +70,7 @@
 
 .statuses {
 	white-space: nowrap;
-	font-size:20px;
+	font-size:17px;
 	// text-decoration:underline;	
 	border-bottom: 1px solid;
 }
