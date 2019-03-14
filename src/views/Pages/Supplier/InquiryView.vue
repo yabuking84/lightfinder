@@ -4,13 +4,22 @@
 	:value="openInquiry" 
 	@input="$emit('update:openInquiry', false)" 
 	@keydown="keyPress"
-	width="90%"
+	fullscreen
 	scrollable>
 
     <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
+        <v-toolbar dark color="primary">         
+            <v-toolbar-title v-if="inquiry">Inquiry # {{ inquiry.id }} </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn dark flat @click="closeOpenInquiry()">
+                    <v-icon>close</v-icon>
+                </v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
 
         <v-card-text>	
 
@@ -52,14 +61,13 @@
 
         </v-card-text>
 
-        <v-divider ></v-divider>
 
-        <v-card-actions >
+        <!-- <v-card-actions >
             <v-spacer></v-spacer>
             <v-btn color="primary" dark @click="closeOpenInquiry()">
                 close
             </v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
     </v-card>
 </v-dialog>   
 </div>	

@@ -17,6 +17,7 @@
           </v-btn>
         </v-toolbar>
       </v-layout>
+
       <v-card-title>
         <v-layout row wrap>
           <v-flex xs7>
@@ -35,7 +36,9 @@
           </v-flex>
         </v-layout>
       </v-card-title>
+
       <v-divider></v-divider>
+      
       <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
         <template v-slot:items="props">
           <tr class="th-heading">

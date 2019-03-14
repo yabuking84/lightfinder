@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar color="grey darken-4" class="white--text" height="40px">
-      <v-toolbar-title class="font-weight-thin body-2">Inquiry #: {{ inquiry.id }}</v-toolbar-title>
+      <v-toolbar-title class="font-weight-thin body-2">Inquiry Details</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-title class="font-weight-thin body-2"> Posted on: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
     </v-toolbar>

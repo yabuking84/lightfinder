@@ -8,7 +8,7 @@
                 </v-btn>
             </router-link> -->
 
-            <v-toolbar-title class="body-2 font-weight-light">Inquiry# {{ inquiry.id }}</v-toolbar-title>
+            <v-toolbar-title class="body-2 font-weight-light">Inquiry Details</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-title class="body-2 font-weight-light"> Posted: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
 

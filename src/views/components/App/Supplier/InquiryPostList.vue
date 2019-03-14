@@ -99,11 +99,11 @@
 
 			<!-- pending payment -->
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-			<template>
+			<template v-if="(inquiry.stage_id==1005)">
                 <v-layout row wrap pa-0 mb-4>
 			        <v-flex xs12>
 					<v-alert 
-					:value="(inquiry.stage_id==1005)?1:0"
+					:value="1"
 					color="error" 
 					style="width: auto; text-align:center; font-size:20px;"
 					class="mb-2">
@@ -242,6 +242,7 @@
 				.then(response=>{
 					// console.log(response);
 					this.bidItems = response;
+
 					this.bidItems.sort((a,b)=>{
 						return a.total_price - b.total_price;
 					});
@@ -253,7 +254,7 @@
 			},
 
 			confirmQuote(){
-				console.log("confirm");
+				// console.log("confirm");
 
 				this.$store.dispatch('spplrInq/confirmAward_a',
 				{

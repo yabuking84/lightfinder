@@ -1,7 +1,24 @@
 <template>
-   <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" width="90%" scrollable>
+  <v-dialog 
+  :value="openInquiry" 
+  @input="$emit('update:openInquiry', false)" 
+  @keydown="keyPress"
+  fullscreen
+  scrollable>
     <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
-    <v-card>
+    <v-card id="InquiryView">
+
+        <v-toolbar dark color="primary">         
+            <v-toolbar-title>Inquiry # {{ inquiry.id }} </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+                <v-btn dark flat @click="closeOpenInquiry()">
+                    <v-icon>close</v-icon>
+                </v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+
+
       <v-card-text>
         <v-container fluid grid-list-xl>
           <v-layout row wrap>
@@ -18,13 +35,14 @@
           </v-layout>
         </v-container>
       </v-card-text>
-      <v-divider></v-divider>
-      <v-card-actions>
+      
+      <!-- <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" dark @click="closeOpenInquiry()">
           close
         </v-btn>
-      </v-card-actions>
+      </v-card-actions> -->
+
     </v-card>
   </v-dialog>
 </template>
@@ -67,13 +85,21 @@ export default {
     },
   },
 
-  methods: {
+    methods: {
 
-    closeOpenInquiry() {
-      this.$emit('update:openInquiry', false);
+        closeOpenInquiry() {
+          this.$emit('update:openInquiry', false);
+        },
+
+        keyPress(e){
+
+            if(e.target.querySelector("#InquiryView"))
+            this.$emit('update:openInquiry', false)
+            
+            // console.log(e.target);
+
+        },
     },
-
-  },
 
   created() {
 
