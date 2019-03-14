@@ -127,7 +127,6 @@ import config from "@/config/main"
 
 import VueTimers from 'vue-timers/mixin'
 
-
 import InquiryView from "@/views/Components/App/admin/InquiryView";
 
 
@@ -230,6 +229,7 @@ export default {
     autostart: true,
     callback: function() {
       this.fillTable(false);
+      console.log('caleed inq_id')
     },
   }],
 
@@ -241,7 +241,6 @@ export default {
       if (withLoading)
       this.loading = true;
 
-      this.loading = true;
       this.allInquiries = [];
       this.$store.dispatch('adminInquiries/getAllInquiries_a')
         .then((response) => {
@@ -323,7 +322,6 @@ export default {
         .then((response) => {
 
           this.inquiry = response
-          
           this.openInquiry = true
         })
         .catch((error) => {

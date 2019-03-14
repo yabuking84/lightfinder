@@ -17,11 +17,7 @@
       <!-- component  -->
       <div class="mt-4">
         <v-flex xs3 offset-xs9 mr-2 ml3>
-          <v-text-field 
-          label="Search" 
-          v-model="search" 
-          placeholder="Search"
-          prepend-inner-icon="search" solo clearable>
+          <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
           </v-text-field>
         </v-flex>
         <v-divider></v-divider>
@@ -69,6 +65,10 @@ import adminBuyerBus from "@/bus/admin-buyer"
 import helpers from "@/mixins/helpers"
 import BuyerDialog from '@/views/components/app/Admin/BuyerDialog'
 
+
+import config from "@/config/main"
+import VueTimers from 'vue-timers/mixin'
+
 export default {
 
   components: {
@@ -76,6 +76,7 @@ export default {
   },
   mixins: [
     helpers,
+    VueTimers
   ],
   data: function() {
     return {
@@ -147,18 +148,32 @@ export default {
 
     }
   },
+
+  timers: [{
+    name: 'BuyerTableTimer',
+    time: config.polling.inquiryTable.time,
+    repeat: true,
+    autostart: true,
+    callback: function() {
+      this.fillTable(false);
+      console.log('called')
+    },
+  }],
+
+
   methods: {
 
 
-    fillTable() {
+    fillTable(withloading = true) {
 
-      this.loading = true;
+      if(withloading) {
+        this.loading = false;
+      }
+
       this.dataItems = [];
       this.$store.dispatch('adminBuyer/getAllBuyer_a')
 
         .then((response) => {
-
-          console.log(response);
 
           for (var i = response.length - 1; i >= 0; i--) {
 
@@ -171,11 +186,12 @@ export default {
             item.email = response[i].email;
             item.job_title = response[i].job_title;
             item.date_created = response[i].created_at;
-
             this.dataItems.push(item);
           }
 
-          this.loading = false;
+          if(withloading) {
+            this.loading = false;
+          }
 
         })
         .catch((e) => {
@@ -205,16 +221,12 @@ export default {
           this.dialog = true
           this.buyer_id = buyer_id
 
-          console.log(buyer_id)
-
         })
         .catch((e) => {
-
           this.loading = false;
 
         })
         .finally(() => {
-
           this.loading = false;
 
         })
@@ -223,9 +235,7 @@ export default {
 
 
     Refresh() {
-
       this.fillTable();
-
     },
 
     openDialog() {

@@ -280,7 +280,6 @@ export default {
     this.$store.dispatch('cat/getCategories_a')
       .then((data) => {
         this.categoryItems = data;
-        console.log(this.categoryItems);
       })
       .catch((e) => {
         console.log('Error: ');
@@ -362,8 +361,6 @@ export default {
         .then((response) => {
 
           this.formloading = false
-          console.log(response)
-
           // this.$emit('update:dialog', false);
           // adminSupplierBus.emitFormSubmitted()
 
@@ -416,7 +413,6 @@ export default {
         .then((response) => {
 
           this.formloading = false
-          console.log(response)
 
           this.$emit('update:dialog', false);
           adminSupplierBus.emitFormSubmitted()
@@ -467,7 +463,6 @@ export default {
         .then((response) => {
 
           this.formloading = false
-          console.log(response)
 
           this.$emit('update:dialog', false);
           adminSupplierBus.emitFormSubmitted()
