@@ -52,7 +52,7 @@ export default {
 			{
 				id: 1005, 
 				name: "Pending Payment",
-				class: "red",
+				class: "blue",
 				icon: "far fa-credit-card",
 			},
 			{
@@ -103,7 +103,7 @@ export default {
 			{
 				id: 1003, 
 				name: "Rejected",
-				class: "blue",
+				class: "red",
 				icon: "far fa-times-circle",
 			},
 		],
