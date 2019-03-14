@@ -424,6 +424,7 @@ import inqEvntBs from "@/bus/inquiry";
     },
 
     watch: {
+        
         inquiryStatus(nVal,oVal){
             this.filterTable();
         },
