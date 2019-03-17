@@ -145,7 +145,7 @@
                     </v-layout>
                     </td>
 
-                    <td class="text-xs-center">
+                    <td class="text-xs-left hey">
                     <v-layout align-start justify-start column fill-height pt-2>
                             <v-btn 
                             small 
@@ -272,6 +272,7 @@ import inqEvntBs from "@/bus/inquiry";
               text: 'Action',
               align: 'center',
               sortable: false,
+              value: 'inq_id',              
             },
         ],
 
@@ -469,14 +470,17 @@ import inqEvntBs from "@/bus/inquiry";
 }
 
 
-.theme--light.v-datatable thead th.column.sortable.active .v-icon,
-.v-datatable thead th.column.sortable:focus .v-icon, 
-.v-datatable thead th.column.sortable:hover .v-icon {
-    // margin-right: 5px;
-}
-
 .dateCellWidth {
     min-width: 110px;
 }
 
+table.v-table tbody td, 
+table.v-table tbody th {
+    vertical-align:top;
+}
+
+.hey {
+    color: red;
+    background-color: red;
+}
 </style>
