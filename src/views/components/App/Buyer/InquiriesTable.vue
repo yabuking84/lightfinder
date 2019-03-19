@@ -39,8 +39,9 @@
 
       <v-divider></v-divider>
       
-      <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
-        <template v-slot:items="props">
+      <v-data-table    :rows-per-page-items="rowsPerPageItems"
+    :pagination.sync="pagination" :headers="headers" :items="tableItems" :loading="loading" :search="search">
+        <template  v-slot:items="props">
           <tr class="th-heading">
             <td>
               <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
@@ -52,9 +53,11 @@
               </v-layout>
             </td>
             <td class="text-xs-left font-weight-medium">
-              <h4 class="mt-3">Inquiry# {{ props.item.inq_id }}</h4>
-              <h3 class="mb-1">{{ props.item.keywords }}</h3>
-              <p class="mb-3">{{ props.item.message }}</p>
+                 <v-layout align-start justify-start column fill-height pt-3>
+                <h3 class="mb-2" style="min-width:190px;">
+                  Inquiry # <span>{{ props.item.keywords }}</span></h3>
+                   <p class="mb-3">{{ props.item.message }}</p>
+              </v-layout>
             </td>
             <td class="text-xs-left">{{ props.item.quantity }}</td>
             <td class="text-xs-left">
@@ -187,6 +190,10 @@ export default {
 
     openInquiry: false,
     inquiry: null,
+    rowsPerPageItems: [10, 15, 20, 30, 40],
+    pagination: {
+        rowsPerPage: 15
+    },
 
   }),
 
@@ -280,7 +287,6 @@ export default {
         });
       }
       this.tableItems = items;
-
     },
 
 

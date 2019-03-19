@@ -59,7 +59,8 @@
                 :error-messages="fieldErrors('form.job_title')" 
                 @blur="$v.form.job_title.$touch()" 
                 label="Job Title" 
-                required></v-text-field>
+                required>
+                </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
                 <v-text-field 
@@ -68,7 +69,8 @@
                 :error-messages="fieldErrors('form.phone')" 
                 @blur="$v.form.phone.$touch()" 
                 label="Phone" 
-                required></v-text-field>
+                required>
+                </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
                 <v-text-field 
@@ -77,7 +79,8 @@
                 :error-messages="fieldErrors('form.fax')" 
                 @blur="$v.form.fax.$touch()" 
                 label="Fax"
-                required></v-text-field>
+                required>
+                </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
                 <v-text-field 
@@ -86,12 +89,13 @@
                 :error-messages="fieldErrors('form.address')" 
                 @blur="$v.form.address.$touch()" 
                 label="Address" 
-                required></v-text-field>
+                required>
+                </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
                 <v-select 
-                v-model="form.country_id" 
-                :items="countries"
+                 v-model="form.country_id" 
+                 :items="countries"
                  item-text="name" 
                  item-value="id" 
                  :search-input.sync="search" 
@@ -238,9 +242,7 @@ export default {
     this.$store.dispatch('adminHelper/getCountries')
 
       .then((response) => {
-
         this.countries = response
-
       })
       .catch((e) => {
         console.log('Error: ')

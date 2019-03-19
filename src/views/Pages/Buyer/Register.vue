@@ -42,7 +42,6 @@
 
 <script>
 
-  
 
   import HeadingMessage from '@/views/components/App/Registration/HeadingMessage'
   import SocialButtons from '@/views/components/App/Registration/SocialButtons'

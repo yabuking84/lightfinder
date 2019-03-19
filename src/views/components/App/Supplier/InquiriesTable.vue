@@ -480,4 +480,9 @@ import inqEvntBs from "@/bus/inquiry";
     min-width: 110px;
 }
 
+table.v-table tbody td, table.v-table tbody td {
+   height: auto;
+   vertical-align: top;
+}
+
 </style>

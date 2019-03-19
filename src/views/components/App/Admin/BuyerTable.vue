@@ -156,7 +156,6 @@ export default {
     autostart: true,
     callback: function() {
       this.fillTable(false);
-      console.log('called')
     },
   }],
 

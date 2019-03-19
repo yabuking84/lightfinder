@@ -152,7 +152,7 @@
         // backgroundImg: '/static/doc-images/HexesisMaterial01.png'
         // backgroundImg: '/static/background-img/dubai-waters-blue-1.jpg'
         // backgroundImg: '/static/boats/boats-uploaded/boat4.jpg',
-        backgroundImg: '/static/login_bg.jpg',
+        backgroundImg: '/static/background/buyer-background.jpg',
         loading: false,
         test: 'testes',
         test2: 'testes2',

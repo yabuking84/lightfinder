@@ -40,7 +40,7 @@
 
     <v-divider></v-divider>
 
-    <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
+    <v-data-table :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination"  :headers="headers" :items="tableItems" :loading="loading" :search="search">
         <template slot="items" slot-scope="props">
             <tr class="th-heading">
                 <td>
@@ -211,7 +211,11 @@ export default {
 
       openInquiry: false,
       inquiry: null,
-      snackbar: true
+      snackbar: true,
+      rowsPerPageItems: [10, 15, 20, 30, 40],
+      pagination: {
+        rowsPerPage: 15
+    },
 
     }
   },
@@ -229,7 +233,6 @@ export default {
     autostart: true,
     callback: function() {
       this.fillTable(false);
-      console.log('caleed inq_id')
     },
   }],
 
