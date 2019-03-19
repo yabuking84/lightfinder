@@ -48,7 +48,7 @@
               <v-stepper-content step="3" ref="step_3" no-focus>
                 <v-container>
                   <v-layout row wrap>
-                    <v-combobox 
+                 <!--    <v-combobox 
                     v-model="formData.category" 
                     :items="categories" 
                     item-text="name" 
@@ -58,7 +58,28 @@
                     :search-input.sync="search" 
                     ref="category" 
                     label="Type here the category..">
-                    </v-combobox>
+                    </v-combobox> -->
+
+                      <v-layout row wrap>
+                        <v-autocomplete 
+                            v-model="formData.category" 
+                            :items="categories" 
+                            item-text="name"
+                            item-value="id"
+                            :error-messages="fieldErrors('formData.category')" 
+                            @blur="$v.formData.category.$touch()" 
+                            :search-input.sync="search" 
+                            ref="categorySelect" 
+                            cache-items 
+                            class="mx-3" 
+                            flat 
+                            hide-no-data 
+                            hide-details 
+                            label="Type here the category.." 
+                            solo-inverted>
+                        </v-autocomplete>
+                    </v-layout>
+
                   </v-layout>
                 </v-container>
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
