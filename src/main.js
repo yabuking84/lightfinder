@@ -34,6 +34,23 @@ import VueScrollTo from 'vue-scrollto'
 
 
 
+// Vue socket.io
+///////////////////////////////
+
+// on https://alligator.io/vuejs/vue-socketio/ it says this but has error so we added -client
+// import socketio from 'socket.io'; 
+
+import io from 'socket.io-client';
+import VueSocketIO from 'vue-socket.io';
+const SocketInstance = io('http://192.168.1.202:4113');
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: SocketInstance
+}));
+///////////////////////////////
+// Vue socket.io
+
+
 Vue.config.productionTip = false
 Vue.config.debug = true
 Vue.config.devtools = true
@@ -56,7 +73,6 @@ const VueScrollToOptn = {
 };
 
 Vue.use(VueScrollTo,VueScrollToOptn)
-
 
 
 Vue.use(Vuebar)

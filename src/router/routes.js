@@ -35,11 +35,19 @@ import LoginPage from '@/views/Pages/Authentication/LoginPage'
 import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
 
 
+import SuperChat from '@/views/Pages/SuperChat'
 
 
 const routes = 
 [
     // so that when logged out and / is accessed it will got to logout.
+    {
+        path: '/superchat',
+        name: 'SuperChat',
+        components: { 
+            default: SuperChat,             
+        },        
+    },
     {
         path: '/',
         name: 'Home',

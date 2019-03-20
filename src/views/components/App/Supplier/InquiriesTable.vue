@@ -291,12 +291,12 @@ import inqEvntBs from "@/bus/inquiry";
 
     }),
 
-    timers: [     
+    timers: [
         { 
             name: 'InquiryTableTimer',
             time: config.polling.inquiryTable.time, 
             repeat: true,
-            autostart: true,
+            // autostart: true,
             callback: function(){
                 console.log("InquiryTableTimer");
                 this.fillTable(false);
@@ -437,11 +437,11 @@ import inqEvntBs from "@/bus/inquiry";
             
 
             if(nVal) {
-                this.$timer.stop('InquiryTableTimer');                
+                // this.$timer.stop('InquiryTableTimer');                
             }
             else {                
                 this.fillTable(false);
-                this.$timer.start('InquiryTableTimer');
+                // this.$timer.start('InquiryTableTimer');
             }
         }, 
 
