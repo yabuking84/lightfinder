@@ -40,7 +40,7 @@
 
     <v-divider></v-divider>
 
-    <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
+    <v-data-table :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination"  :headers="headers" :items="tableItems" :loading="loading" :search="search">
         <template slot="items" slot-scope="props">
             <tr class="th-heading">
                 <td>
@@ -127,7 +127,6 @@ import config from "@/config/main"
 
 import VueTimers from 'vue-timers/mixin'
 
-
 import InquiryView from "@/views/Components/App/admin/InquiryView";
 
 
@@ -212,7 +211,11 @@ export default {
 
       openInquiry: false,
       inquiry: null,
-      snackbar: true
+      snackbar: true,
+      rowsPerPageItems: [10, 15, 20, 30, 40],
+      pagination: {
+        rowsPerPage: 15
+    },
 
     }
   },
@@ -229,7 +232,6 @@ export default {
     repeat: true,
     autostart: true,
     callback: function() {
-      console.log("InquiryTableTimer");
       this.fillTable(false);
     },
   }],
@@ -242,7 +244,6 @@ export default {
       if (withLoading)
       this.loading = true;
 
-      this.loading = true;
       this.allInquiries = [];
       this.$store.dispatch('adminInquiries/getAllInquiries_a')
         .then((response) => {
@@ -324,11 +325,10 @@ export default {
         .then((response) => {
 
           this.inquiry = response
-          console.log(this.inquiry);
           this.openInquiry = true
         })
         .catch((error) => {
-          console.log(error);
+          
 
         })
     }
@@ -340,7 +340,9 @@ export default {
     this.fillTable();
 
     inqEvntBs.$on('approved-submitted', () => {
-      this.fillTable(false);
+
+      this.fillTable();
+
     });
 
 
@@ -352,7 +354,6 @@ export default {
       })
       .catch((e) => {
         console.log('Error: ');
-        console.log(e);
       });
 
   },

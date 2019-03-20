@@ -56,7 +56,7 @@
       <!-- component  -->
     </v-card>
     <!-- supplier dialog -->
-    <supplier-dialog :dialog.sync="dialog" :supplierData="supplierData" :supplier_id.sync="supplier_id" :is_new.sync="is_new"> </supplier-dialog>
+    <supplier-dialog :dialog.sync="dialog" :supplierCategories="supplierCategories" :supplierData="supplierData" :supplier_id.sync="supplier_id" :is_new.sync="is_new"> </supplier-dialog>
     <!-- supplier dialog -->
   </div>
 </template>
@@ -138,6 +138,7 @@ export default {
 
       dataItems: [],
       supplierData: null,
+      supplierCategories: [],
       is_new: false,
       supplier_id: null
 
@@ -206,7 +207,8 @@ export default {
           this.supplierData = response
           this.supplier_id = supplier_id
 
-          console.log(this.supplierData);
+          
+          this.getSupplierCategories(supplier_id)
 
         })
         .catch((e) => {
@@ -217,6 +219,30 @@ export default {
         })
 
     },
+
+
+    getSupplierCategories(supplier_id) {
+
+      let data = {
+        id: supplier_id
+      }
+
+      this.$store.dispatch('adminSupplier/getSupplierCat_a', {
+          data: data
+        })
+        .then((response) => {
+          this.supplierCategories = response
+        })
+        .catch((e) => {
+          this.dialog = true
+        })
+        .finally(() => {
+          this.dialog = true
+        });
+
+    },
+
+
 
     refresh() {
 
@@ -235,25 +261,21 @@ export default {
 
     this.fillTable();
 
-    adminSupplierBus.$on('supplier-form-submitted', () => {
-      this.fillTable();
-    });
+    // adminSupplierBus.$on('supplier-form-submitted', () => {
+    //   this.fillTable();
+    // });
 
   },
 }
 
 </script>
-<style scoped lang="stylus">
-.theme--light.v-table thead tr 
-  background:#000000;
-  color:#fff;
-.fix-width
-   width:198px;
-.th-heading 
-  cursor: pointer;
-.text-decoration-none
-   text-decoration: none;
-.th-heading a 
-  text-decoration:none;
+<!-- <style scoped lang="stylus">
+.theme--light.v-table thead tr background:#000000;
+color:#fff;
+.fix-width width:198px;
+.th-heading cursor: pointer;
+.text-decoration-none text-decoration: none;
+.th-heading a text-decoration:none;
 
 </style>
+ -->

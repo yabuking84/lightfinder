@@ -1,8 +1,10 @@
-
 import axios from 'axios'
 import router from '@/router'
 
 import config from '@/config/index'
+
+let base_url = 'http://192.168.1.200:8000';
+
 
 const state = {
 
@@ -14,22 +16,31 @@ const state = {
       method: 'get',
 
       /*
-      	get all supplier
+        get all supplier
       */
       getAllSupplier: {
 
-        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
+        url: base_url + '/v1/admin/suppliers'
 
       },
 
 
 
       /*
-      	get single supplier
+        get single supplier
       */
       getSupplier: {
 
-        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
+        url: base_url + '/v1/admin/suppliers'
+
+      },
+
+
+      /*get supplier categories*/
+
+      getSupplierCategories: {
+
+        url: base_url + '/v1/admin/suppliers'
 
       }
 
@@ -38,7 +49,7 @@ const state = {
     },
 
     /*
-    	post single supplier
+      post single supplier
     */
 
     post: {
@@ -46,8 +57,11 @@ const state = {
       method: 'post',
 
       addSupplier: {
+        url: base_url + '/v1/admin/suppliers',
+      },
 
-        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
+      addSupplierCategories: {
+        url: base_url + '/v1/admin/suppliers'
 
       }
 
@@ -56,7 +70,7 @@ const state = {
 
     /*
 
-    	update single supplier
+      update single supplier
 
     */
 
@@ -67,10 +81,30 @@ const state = {
 
       editSupplier: {
 
-        url: 'http://192.168.1.200:8000/v1/admin/suppliers'
+        url: base_url + '/v1/admin/suppliers'
 
       }
     },
+
+
+
+
+    /*
+      delete an id
+    */
+
+    delete: {
+
+
+      method: 'delete',
+      deleteCategories: {
+
+        url: base_url + '/v1/admin/suppliers'
+
+      }
+
+    },
+
 
 
 
@@ -116,6 +150,12 @@ const actions = {
 
 
 
+
+
+
+
+
+
   /* GET */
 
 
@@ -156,6 +196,60 @@ const actions = {
     });
 
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getSupplierCat_a(context, data) {
+
+
+    return new Promise((resolve, reject) => {
+
+      var headers = { token: localStorage.access_token }
+
+      axios({
+
+          method: state.api.get.method,
+          url: state.api.get.getSupplierCategories.url + '/' + data.data.id + '/categories',
+          headers: headers
+
+        })
+        .then(response => {
+
+          resolve(response.data);
+
+        })
+        .catch(error => {
+
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+
+            console.log("EXPIRED");
+            router.push({ 'name': 'Logout' })
+
+          } else {
+
+            reject(error);
+
+          }
+
+        })
+
+
+    });
+
+  },
+
+
 
 
 
@@ -225,6 +319,26 @@ const actions = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* POST */
 
   addSupplier_a(context, data) {
@@ -266,6 +380,46 @@ const actions = {
 
 
 
+  addSupplierCat_a(context, data) {
+
+    return new Promise((resolve, reject) => {
+
+      var headers = {
+
+        token: localStorage.access_token,
+        "content-type": "application/json",
+      }
+
+      axios({
+
+          method: state.api.post.method,
+          url: state.api.post.addSupplierCategories.url + '/' + data.data.id + '/categories',
+          headers: headers,
+          data: JSON.stringify(data.data)
+
+        })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+            console.log("EXPIRED")
+            router.push({ 'name': 'Logout' })
+          } else {
+            console.log("normal error!")
+            reject(error)
+          }
+
+        });
+
+    });
+
+
+  },
+
+
+
 
   /* PATCH */
 
@@ -283,6 +437,59 @@ const actions = {
 
           method: state.api.patch.method,
           url: state.api.patch.editSupplier.url + "/" + data.data.id,
+          headers: headers,
+          data: JSON.stringify(data.data)
+        })
+
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+
+          if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+            console.log("EXPIRED")
+            router.push({ 'name': 'Logout' })
+          } else {
+            console.log("normal error!")
+            reject(error)
+          }
+
+        });
+
+    })
+
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* DELETE */
+
+
+  deleteCat_a(context, data) {
+
+    return new Promise((resolve, reject) => {
+
+      var headers = {
+        token: localStorage.access_token,
+        "content-type": "application/json",
+      };
+
+      axios({
+
+          method: state.api.delete.method,
+          url: state.api.delete.addSupplierCategories.url + '/' + data.data.id + '/categories',
           headers: headers,
           data: JSON.stringify(data.data)
 
@@ -305,6 +512,7 @@ const actions = {
     })
 
   }
+
 
 
 }

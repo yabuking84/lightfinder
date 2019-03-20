@@ -140,7 +140,7 @@
         },
 
         avatarBgImage() {
-
+          
           if(!this.$store.state.auth.auth_user.avatar)
           // default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
           this.$store.state.auth.auth_user.avatar = 'https://image.flaticon.com/icons/svg/149/149071.svg'

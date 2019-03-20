@@ -408,9 +408,9 @@ import inqEvntBs from "@/bus/inquiry";
     created(){
         this.fillTable();
 
-        inqEvntBs.$on('closed-submitted',()=>{
-            this.fillTable(false);
-        });
+        // inqEvntBs.$on('closed-submitted',()=>{
+        //     this.fillTable(false);
+        // });
 
         // get categories for category select box
         this.$store.dispatch('cat/getCategories_a')
@@ -425,6 +425,7 @@ import inqEvntBs from "@/bus/inquiry";
     },
 
     watch: {
+        
         inquiryStatus(nVal,oVal){
             this.filterTable();
         },
@@ -474,9 +475,9 @@ import inqEvntBs from "@/bus/inquiry";
     min-width: 110px;
 }
 
-table.v-table tbody td, 
-table.v-table tbody th {
-    vertical-align:top;
+table.v-table tbody td, table.v-table tbody td {
+   height: auto;
+   vertical-align: top;
 }
 
 .hey {
