@@ -30,8 +30,8 @@
             </v-autocomplete>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex xs3 pt-4>
-            <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
+          <v-flex xs3 pt-2>
+            <v-text-field label="Search" v-model="search"  prepend-inner-icon="search" clearable>
             </v-text-field>
           </v-flex>
         </v-layout>
@@ -52,13 +52,12 @@
                 {{ props.item.categories }}
               </v-layout>
             </td>
-            <td class="text-xs-left font-weight-medium">
-                 <v-layout align-start justify-start column fill-height pt-3>
-                <h3 class="mb-2" style="min-width:190px;">
-                  Inquiry # <span>{{ props.item.keywords }}</span></h3>
-                   <p class="mb-3">{{ props.item.message }}</p>
-              </v-layout>
-            </td>
+                <td class="text-xs-left font-weight-medium">
+                    <v-layout align-start justify-start column fill-height pt-3>
+                        <h3 class="mb-1">{{ props.item.keywords }}</h3>
+                        <p class="mb-3">{{ props.item.message }}</p>
+                    </v-layout>
+                    </td>
             <td class="text-xs-left">{{ props.item.quantity }}</td>
             <td class="text-xs-left">
               <div class="dateCellWidth">
