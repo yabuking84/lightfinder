@@ -1,80 +1,54 @@
 <template>
-<div class="text-xs-center">
-<v-dialog 
-	:value="openInquiry" 
-	@input="$emit('update:openInquiry', false)" 
-	@keydown="keyPress"
-	fullscreen
-	scrollable>
-
-    <v-card id="InquiryView">
+  <div class="text-xs-center">
+    <v-dialog  :value="openInquiry" @input="$emit('update:openInquiry', false)" @keydown="keyPress" fullscreen >
+      <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
-        <v-toolbar dark color="primary">         
-            <v-toolbar-title v-if="inquiry">Inquiry # {{ inquiry.id }} </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click="closeOpenInquiry()">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-toolbar-items>
+        <v-toolbar dark color="blue-grey darken-4">
+           <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2> 
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click="closeOpenInquiry()">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
         </v-toolbar>
 
-        <v-card-text>	
-
-
-
-
-
-
-	<div class="scopedcontainer">
-		<v-container fluid grid-list-xl>				
-				<v-layout row wrap>
-
-					<!-- Inquiry Details  -->
-					<v-flex xs12>
-						<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>						
-					</v-flex>
-					<!-- Inquiry Details  -->
-
-					
-					<!-- supplier QuoteDetails -->
-					<v-flex xs8>
-						<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
-					</v-flex>  
-					<!-- supplier QuoteDetails -->
-
-
-					<!-- proposal list -->
-					<v-flex xs4>
-					  	<inquiry-post-list v-if="inquiry" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
-					</v-flex>
-					<!-- proposal list -->
-
-				</v-layout>
-		</v-container>
-	</div>
-
-
-
-
-        </v-card-text>
-
-
+        <!-- <v-card-text> -->
+          <div class="scopedcontainer">
+            <v-container fluid grid-list-xl>
+              <v-layout row wrap>
+                <!-- Inquiry Details  -->
+                <v-flex xs5>
+                  <inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
+                </v-flex>
+                <!-- Inquiry Details  -->
+                <!-- supplier QuoteDetails -->
+                <v-flex xs7>
+                  <quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
+                </v-flex>
+                <!-- supplier QuoteDetails -->
+                <!-- proposal list -->
+                <!-- <v-flex xs4>
+                  <inquiry-post-list v-if="inquiry" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
+                </v-flex> -->
+                <!-- proposal list -->
+              </v-layout>
+            </v-container>
+          </div>
+        <!-- </v-card-text> -->
         <!-- <v-card-actions >
             <v-spacer></v-spacer>
             <v-btn color="primary" dark @click="closeOpenInquiry()">
                 close
             </v-btn>
         </v-card-actions> -->
-    </v-card>
-</v-dialog>   
-</div>	
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
-
 <script>
-
 import QuoteDetails from "@/views/Components/App/Supplier/QuoteDetails"
 import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Supplier/InquiryDetailsCard"
@@ -85,96 +59,94 @@ import inqEvntBs from "@/bus/inquiry";
 export default {
 
 
-	components: {
+  components: {
 
-		QuoteDetails,
-	    InquiryPostList,
-	    InquiryDetailsCard,
-	    BidDialog,
+    QuoteDetails,
+    InquiryPostList,
+    InquiryDetailsCard,
+    BidDialog,
 
-	},
+  },
 
-	props: ['inquiry','openInquiry'],
+  props: ['inquiry', 'openInquiry'],
 
-	// props: {
-	// 	inq_id: {
-	// 		type: String,
-	// 	},
-	// },
+  // props: {
+  // 	inq_id: {
+  // 		type: String,
+  // 	},
+  // },
 
-	data: () => ({
+  data: () => ({
 
-		title: 'Inquiry Details',
-		icon: null,
-		bidDialog:false,
-		bids: false,
+    title: 'Inquiry Details',
+    icon: null,
+    bidDialog: false,
+    bids: false,
 
-	}),
+  }),
 
-	computed: {
+  computed: {
 
-		buyer: {
+    buyer: {
 
-			set(data){
-				this.$store.commit('auth/CHANGE_TEST_M',data);
-			},
+      set(data) {
+        this.$store.commit('auth/CHANGE_TEST_M', data);
+      },
 
-			get(){				
-        		return this.$store.state.auth.auth_user.name;
-			},			
-		},
-	},
+      get() {
+        return this.$store.state.auth.auth_user.name;
+      },
+    },
+  },
 
-	methods: {
+  methods: {
 
-		Refresh: () => {
+    Refresh: () => {
 
-			alert('Refresh')
-
-		},
-
-		Sort: () => {
-
-			alert('SOrt')
-
-		},
-
-		closeOpenInquiry(){
-            this.$emit('update:openInquiry', false);
-             inqEvntBs.EmitClosed()
-		},
-
-    	keyPress(e){
-
-    		if(e.target.querySelector("#InquiryView"))
-    		this.$emit('update:openInquiry', false)
-    		
-    		// console.log(e.target);
-
-    	},
-	},
-
-	watch: {
-
-	},
-
-	created() {
-
-	},
-
-    mounted() {
-
+      alert('Refresh')
 
     },
 
-}
-	
-</script>
+    Sort: () => {
 
+      alert('SOrt')
+
+    },
+
+    closeOpenInquiry() {
+      this.$emit('update:openInquiry', false);
+      inqEvntBs.EmitClosed()
+    },
+
+    keyPress(e) {
+
+      if (e.target.querySelector("#InquiryView"))
+        this.$emit('update:openInquiry', false)
+
+      // console.log(e.target);
+
+    },
+  },
+
+  watch: {
+
+  },
+
+  created() {
+
+  },
+
+  mounted() {
+
+
+  },
+
+}
+
+</script>
 <style scoped lang="scss">
-	.scopedcontainer a {
-	  	text-decoration:none;
-	}
+.scopedcontainer a {
+  text-decoration: none;
+}
 
 </style>
-

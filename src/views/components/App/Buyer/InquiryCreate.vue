@@ -95,20 +95,20 @@
               <!-- Sub category here if there is -->
               <v-stepper-step step="3" :rules="[() => !$v.formData.quantity.$error &&  !$v.formData.desired_price.$error ]" editable>
                 Quantity & Price
-                <small v-show="$v.formData.quantity.$error">Quantity is required</small>
-                <small v-show="$v.formData.desired_price.$error">Target Price is required</small>
+                <small v-show="$v.formData.quantity.$error">Quantity is required.</small>
+                <small v-show="$v.formData.desired_price.$error">Preffered Price is required.</small>
               </v-stepper-step>
               <v-stepper-content step="3" ref="step_3">
                 <v-container>
                   <v-layout row>
                     <v-flex xs5>
-                      <v-text-field v-model="formData.quantity" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.quantity')" @blur="$v.formData.quantity.$touch()" :value="formData.quantity" suffix="pc/s" mask="######">
+                      <v-text-field v-model="formData.quantity" label="Quantity" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.quantity')" @blur="$v.formData.quantity.$touch()" :value="formData.quantity" suffix="pc/s" mask="######">
                       </v-text-field>
                     </v-flex>
                     <v-flex xs1>
                     </v-flex>
                     <v-flex xs5>
-                      <v-text-field class="mr-1" label="Price Per Piece" :error-messages="fieldErrors('formData.desired_price')" @blur="$v.formData.desired_price.$touch()" v-model="formData.desired_price" @keyup.enter="stepUp()" :value="formData.desired_price" suffix="USD">
+                      <v-text-field class="mr-1" label="Preferred price" :error-messages="fieldErrors('formData.desired_price')" @blur="$v.formData.desired_price.$touch()" v-model="formData.desired_price" @keyup.enter="stepUp()" :value="formData.desired_price" suffix="USD">
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -150,19 +150,6 @@
                   <v-layout row wrap>
                     <v-flex xs6>
                       <v-layout row class="custom_digits">
-                        <v-flex xs4>
-                          <h5>Want to include warranty ?</h5>
-                          <v-radio-group v-model="is_warranty" row>
-                            <v-radio label="Yes" :value="1"></v-radio>
-                            <v-radio label="No" :value="0"></v-radio>
-                          </v-radio-group>
-                        </v-flex>
-                        <v-flex xs8 v-show="is_warranty">
-                          <v-text-field label="Warranty" v-model="formData.warranty" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.warranty')" @blur="$v.formData.warranty.$touch()" :value="formData.warranty" suffix="yr/s" mask="#">
-                          </v-text-field>
-                        </v-flex>
-                      </v-layout>
-                      <v-layout row class="custom_digits">
                         <v-text-field label="Power" v-model="formData.power" @keyup.enter="stepUp()" :value="formData.power" suffix="watts" mask="######">
                         </v-text-field>
                       </v-layout>
@@ -177,6 +164,19 @@
                       <v-layout row class="custom_digits">
                         <v-text-field label="Beam Angle" v-model="formData.beam_angle" @keyup.enter="stepUp()" :value="formData.beam_angle" suffix="degrees" mask="###">
                         </v-text-field>
+                      </v-layout>
+                      <v-layout row wrap>
+                        <v-flex xs3>
+                          <h5 class="font-weight-light"> <strong> Want to include warranty ? </strong> </h5>
+                          <v-radio-group v-model="is_warranty" row>
+                            <v-radio label="Yes" :value="1"></v-radio>
+                            <v-radio label="No" :value="0"></v-radio>
+                          </v-radio-group>
+                        </v-flex>
+                        <v-flex xs6 mr-3 v-show="is_warranty">
+                          <v-text-field label="Warranty" v-model="formData.warranty" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.warranty')" @blur="$v.formData.warranty.$touch()" :value="formData.warranty" suffix="yr/s" mask="#">
+                          </v-text-field>
+                        </v-flex>
                       </v-layout>
                     </v-flex>
                     <v-flex xs6>
@@ -594,7 +594,7 @@ export default {
       keywords: { required: 'Please enter an Subject' },
       category: { required: 'Please enter an category.' },
       quantity: { required: 'Please enter an Quantity.' },
-      desired_price: { required: 'Please enter your Desired Price.' },
+      desired_price: { required: 'Please enter your Preferred Price.' },
       message: { required: 'Please enter a Message' },
       warranty: { required: 'Please enter a Warranty' },
       quantity_of_sample: { required: 'Please enter an Quantity of an Sample' },
@@ -614,9 +614,7 @@ export default {
         country: { required: 'Please enter a Country.' },
         city: { required: 'Please enter City.' },
       }
-
     }
-
   },
 
   props: {
