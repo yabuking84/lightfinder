@@ -1,16 +1,16 @@
 <template>
     <div>
 
-        <v-toolbar color="grey darken-4" class="white--text" height="40px">
+        <v-toolbar color="blue-grey darken-4" class="white--text" height="50px">
             <!-- <router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
                 <v-btn class="blue-grey" small style="min-width: 50px;">
                     <i class="fas fa-arrow-left white--text"></i>
                 </v-btn>
             </router-link> -->
 
-            <v-toolbar-title class="body-2 font-weight-light">Inquiry Details</v-toolbar-title>
+            <v-toolbar-title class="subheading font-weight-light">Inquiry Details</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-title class="body-2 font-weight-light"> Posted: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
+            <v-toolbar-title class="subheading font-weight-light"> Posted: <i class="body-2"> {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}  </i> </v-toolbar-title>
 
         </v-toolbar>
         <v-card>
@@ -71,6 +71,11 @@
                                 <v-icon large>far fa-file-excel</v-icon>
                                 <v-icon large>far fa-file-archive</v-icon>
                             </v-flex>
+
+                            
+                            
+
+
                         </v-layout>
                     </v-flex>
 
@@ -115,7 +120,7 @@
 
         components: {
 
-            InquiryAwardCard
+            InquiryAwardCard,
 
         },
 

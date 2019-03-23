@@ -1,6 +1,6 @@
 <template>
 	<div>
-	<v-dialog :value="openAwardDialog" @input="$emit('update:openAwardDialog',false)" max-width="700px">
+	<v-dialog :value="openAwardDialog" @input="$emit('update:openAwardDialog',false)" max-width="1000px">
 		
 	     <v-toolbar dark color="dark" height="45px">
             <v-toolbar-title class="font-weight-light subheading">

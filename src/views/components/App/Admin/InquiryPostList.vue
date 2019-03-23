@@ -221,8 +221,12 @@ watch: {
 
 
 computed: {
-
-
+	
+	// sortArray: function() {
+	// 	if(a.name < b.name) {
+	// 		return < b
+	// 	}
+	// }
 
 },
 
