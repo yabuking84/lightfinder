@@ -200,7 +200,7 @@ export default {
     name: 'InquiryTableTimer',
     time: config.polling.inquiryTable.time,
     repeat: true,
-    autostart: true,
+    autostart: false,
     // immediate: true,
     callback: function() {
       console.log("InquiryTableTimer");
@@ -336,14 +336,16 @@ export default {
     openInquiry(nVal) {
 
       if (nVal) {        
-        this.$timer.stop('InquiryTableTimer');
+        // this.$timer.stop('InquiryTableTimer');
       }
       else {
         this.fillTable(false);
-        this.$timer.start('InquiryTableTimer');
+        // this.$timer.start('InquiryTableTimer');
       }
     },
-  }
+  },
+
+
 
 }
 

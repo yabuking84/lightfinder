@@ -39,13 +39,17 @@ import VueScrollTo from 'vue-scrollto'
 
 // on https://alligator.io/vuejs/vue-socketio/ it says this but has error so we added -client
 // import socketio from 'socket.io'; 
-
 import io from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 const SocketInstance = io('http://192.168.1.202:4113');
 Vue.use(new VueSocketIO({
     debug: true,
-    connection: SocketInstance
+    connection: SocketInstance,
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_',
+    },    
 }));
 ///////////////////////////////
 // Vue socket.io

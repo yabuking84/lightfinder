@@ -38,6 +38,8 @@ const state = {
         avatar:    localStorage.getItem('avatar') || null,
         role:      localStorage.getItem('role') || null,
     },
+
+
 }
 
 
