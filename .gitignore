@@ -10,7 +10,8 @@ selenium-debug.log
 
 _backup/
 /build/
-/config/
+/config/*
+/config/index.js
 /test/
 package.json
 
@@ -29,3 +30,5 @@ package-lock\.json
 
 package\.json
 
+
+config/
