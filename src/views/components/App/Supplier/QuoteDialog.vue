@@ -5,7 +5,8 @@
         <!--   <v-card-title class="black white--text" height="20px">
           <h3 class="font-weight-light">{{ quoteAction }} Quote</h3>
         </v-card-title> -->
-        <v-toolbar card color="blue-grey" dark height="45px">
+        <!-- #69779b blue-grey darken-4 -->
+        <v-toolbar card color="blue-grey darken-4" dark height="50px">
           <v-toolbar-title> <span class="font-weight-bold">Add Quotation</span> </v-toolbar-title>
           <v-spacer></v-spacer>
           <h2 class="font-weight-bold">INQUIRY # <span class="font-weight-thin">{{ inquiry.id }}</span> </h2>
@@ -13,11 +14,11 @@
         <v-divider></v-divider>
         <v-card-text style="max-height: 100%;">
           <!-- 
-		    <v-flex xs12 mb-3>
-	            <h2 class="font-weight-bold">INQUIRY # <span class="font-weight-thin">{{ inquiry.id }}</span> </h2>
-	             <v-divider></v-divider>
-	        </v-flex> 
-    	-->
+        <v-flex xs12 mb-3>
+              <h2 class="font-weight-bold">INQUIRY # <span class="font-weight-thin">{{ inquiry.id }}</span> </h2>
+               <v-divider></v-divider>
+          </v-flex> 
+      -->
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
             <v-layout row wrap>
               <v-flex xs5>
@@ -73,7 +74,8 @@
                   </v-layout>
                 </v-container>
               </v-flex>
-              <v-flex xs5 pa-2>
+              <!--  -->
+              <v-flex xs7 pa-2>
                 <h4>Product Details</h4>
                 <v-layout row wrap>
                   <v-flex xs12>
@@ -87,20 +89,44 @@
                         <v-textarea label="Product Details" v-model="formData.description">
                         </v-textarea>
                       </v-flex> -->
-                      <v-layout row wrap>
-                        <v-flex xs4 pa-1>
-                          <v-text-field label="Quantity" placeholder="0" readonly :value="inquiry.quantity" style="color: #000;" suffix="pcs">
-                          </v-text-field>
-                        </v-flex>
-                        <v-flex xs4 pa-1>
-                          <v-text-field label="Unit Price" v-model="formData.price" :error-messages="fieldErrors('formData.price')" @blur="$v.formData.price.$touch()" placeholder="0.00" type="number" min="0" step="0.01" prefix="$">
-                          </v-text-field>
-                        </v-flex>
-                        <v-flex xs4 pa-1>
-                          <v-text-field label="Total Price" v-model="formData.total_price" placeholder="0.00" :error-messages="fieldErrors('formData.total_price')" @blur="$v.formData.total_price.$touch()" type="number" min="0" step="0.01" prefix="$">
-                          </v-text-field>
+                      <v-flex xs4 pa-1>
+                        <v-text-field label="Quantity" placeholder="0" readonly :value="inquiry.quantity" style="color: #000;" suffix="pcs">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4 pa-1>
+                        <v-text-field label="Unit Price" v-model="formData.price" :error-messages="fieldErrors('formData.price')" @blur="$v.formData.price.$touch()" placeholder="0.00" type="number" min="0" step="0.01" prefix="$">
+                        </v-text-field>
+                      </v-flex>
+                      <v-flex xs4 pa-1>
+                        <v-text-field label="Total Price" v-model="formData.total_price" placeholder="0.00" :error-messages="fieldErrors('formData.total_price')" @blur="$v.formData.total_price.$touch()" type="number" min="0" step="0.01" prefix="$">
+                        </v-text-field>
+                      </v-flex>
+                      <!-- specification -->
+                      <h4 class="mb-2">Product Specifications</h4>&nbsp&nbsp
+                      <v-layout row wrap mb-3 v-show="inquiry.specifications.length">
+                        <v-flex xs12>
+                          <v-layout row wrap>
+                            <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" :v-model="specification.name" :prefix="specification.name == 'Beam Angle' ? 'Angle:' : specification.name  + ':'"></v-text-field>
+                            </v-flex>
+                            <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="mt-4 ml-0" outline>
+                              No specifications..
+                            </v-alert>
+                          </v-layout>
                         </v-flex>
                       </v-layout>
+                      <h4 class="mb-2">Product Sample Details</h4>&nbsp&nbsp
+                      <small>Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
+                      <v-flex xs12>
+                        <v-layout row wrap>
+                          <v-flex xs5 mr-5>
+                            <v-text-field label="Sample Cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
+                          </v-flex>
+                          <v-flex xs6 ml-3>
+                            <v-text-field label="Sample Shipment Cost" style="color: #000;"> </v-text-field>
+                          </v-flex>
+                        </v-layout>
+                      </v-flex>
                       <v-flex xs12>
                         <v-textarea label="Message" placeholder="Enter Remarks Here" v-model="formData.remarks">
                         </v-textarea>
@@ -117,17 +143,6 @@
                       </v-flex>
                     </v-layout>
                   </v-flex>
-                </v-layout>
-              </v-flex>
-              <v-flex xs2 pa-2>
-                <v-layout row wrap>
-                  <h4>Specifications</h4>
-                  <v-flex xs12 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                    <v-text-field v-if="specification.name && specification.value" :label="specification.name" :value="specification.value" style="color: #000;"></v-text-field>
-                  </v-flex>
-                  <!--      <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="mt-4 ml-0" outline>
-		                        No specifications..
-		                     </v-alert> -->
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -342,12 +357,15 @@ watch: {
 }
 
 </script>
+<style lang="scss">
+.border-textfield .v-input__slot {
+  border: 1px solid black;
+  margin-bottom: -17px;
+}
+
+</style>
 <style scoped lang="scss">
 .dropzone-custom-content {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
   text-align: center;
 }
 
