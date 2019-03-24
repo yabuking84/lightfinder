@@ -5,7 +5,7 @@
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
-        <v-toolbar dark color="blue-grey darken-4">         
+        <v-toolbar dark color="black darken-4">         
             <v-toolbar-title>Inquiry # {{ inquiry.id }} </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>

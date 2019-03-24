@@ -7,7 +7,7 @@
         <div class="body-2 nolabel--text py-3">
           <v-icon left color="nolabel">comment</v-icon> Message
         </div>
-        
+
         <!-- Commnets Layouts -->
         <v-layout align-center row spacer>
           <template>
@@ -64,7 +64,7 @@
             <v-textarea auto-grow :row-height="16" flat outline auto-grow v-model="comment" class="clean-textarea no-details white py-0 pl-5" placeholder="Your Message"></v-textarea>
             <v-layout row wrap>
               <v-spacer></v-spacer>
-              <v-btn color="green" dark class="ml-0" @click.stop="submit"> <i class="fas fa-paper-plane"></i>&nbsp&nbsp Add Message</v-btn>
+              <v-btn color="blue-grey" dark class="ml-0" @click.stop="submit"> <i class="fas fa-paper-plane"></i>&nbsp&nbsp Add Message</v-btn>
             </v-layout>
           </v-flex>
         </v-layout>

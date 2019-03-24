@@ -18,7 +18,7 @@
         </v-toolbar>
       </v-layout>
 
-      <v-card-title>
+  <!--     <v-card-title>
         <v-layout row wrap>
           <v-flex xs7>
             <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
@@ -37,21 +37,29 @@
         </v-layout>
       </v-card-title>
 
-      <v-divider></v-divider>
+      <v-divider></v-divider> -->
       
-      <v-data-table    :rows-per-page-items="rowsPerPageItems"
-    :pagination.sync="pagination" :headers="headers" :items="tableItems" :loading="loading" :search="search">
+      <v-data-table   
+        :rows-per-page-items="rowsPerPageItems"
+        :pagination.sync="pagination" 
+        :headers="headers" 
+        :items="tableItems" 
+        :loading="loading" 
+        :search="search">
         <template  v-slot:items="props">
           <tr class="th-heading">
+            
             <td>
               <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
             </td>
+
             <td class="text-xs-left font-weight-medium ">
               <v-layout align-start justify-start column fill-height pt-3>
                 <h3 class="mb-2" style="min-width:190px;">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
                 {{ props.item.categories }}
               </v-layout>
             </td>
+
                 <td class="text-xs-left font-weight-medium">
                     <v-layout align-start justify-start column fill-height pt-3>
                         <h3 class="mb-1">{{ props.item.keywords }}</h3>
@@ -59,25 +67,30 @@
                     </v-layout>
                     </td>
             <td class="text-xs-left">{{ props.item.quantity }}</td>
+
             <td class="text-xs-left">
               <div class="dateCellWidth">
                 {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
               </div>
             </td>
+
             <td class="text-xs-center">
               <div class="dateCellWidth">
                 {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
               </div>
             </td>
+
             <td class="text-xs-center">
               <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
             </td>
+
             <td class="text-xs-center">
-              <v-btn @click="viewInquiry(props.item)" :loading="props.item.loading" small flat value="left" class="v-btn--active grey darken-1 font-weight-light text-decoration-none">
+              <v-btn @click="viewInquiry(props.item)" :loading="props.item.loading" small flat value="left" class="v-btn--active blue-grey darken-4 font-weight-light text-decoration-none">
                 <i class="fas fa-eye white--text"></i>
                 <span class="ml-1 white--text font-weight-light ">View</span>
               </v-btn>
             </td>
+
           </tr>
         </template>
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -85,6 +98,62 @@
         </v-alert>
       </v-data-table>
     </v-card>
+
+
+<!--   <v-card class="post-card">
+  <v-toolbar color="transparent" flat dense card>
+    <v-toolbar-title class="subheading ft-200">Recent Posts</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn icon>
+      <v-icon class="text--secondary">more_vert</v-icon>
+    </v-btn>
+  </v-toolbar>
+  <v-divider></v-divider>
+  <v-card-text class="pa-0">
+    <ul class="post--list flex-list vertical">
+      <li class="post--item" v-for="(item, key) in tableItems" :key="key">
+        <a href="#" class=" post--link pa-4 layout row ma-0 text--primary">
+          <div class="post--media">
+            <img :src="item.featuredImage" alt="" height="100" class="image-scale">
+          </div>
+          <div class="post--content ml-3">
+            <h3 class="title post--title">
+              {{item.inq_id}}
+            </h3>
+{{ item.message | truncate({length: 150}) }}
+
+            <div class="post--desc py-2 text--secondary">
+              {{ item.message }}
+            </div>
+            <div class="post--meta o-flex justify-space-between">
+              <div class="post--author caption grey--text text--darken-1">
+                <span>{{item.quantity}}</span>
+                <time class="px-2">{{item.created_at}}</time>
+              </div>
+              <div class="social">
+                <a @click="handleThumb" class="grey--text text--darken-1">
+                  <v-icon small>thumb_up</v-icon>
+                  <small>100+</small>
+                </a>
+                <a @click="handleComment" class="grey--text text--darken-1 mx-3">
+                  <v-icon small>mode_comment</v-icon>
+                  <small>12+</small>
+                </a>
+                <a @click="handleFavorite" class="grey--text text--darken-1">
+                  <v-icon small>favorite</v-icon>
+                  <small>50+</small>
+                </a>
+              </div>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </v-card-text>
+</v-card>
+ -->
+
+
     <span>
       <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>
     </span>
@@ -287,7 +356,6 @@ export default {
       }
       this.tableItems = items;
     },
-
 
     removeFromCategories(item) {
       const index = this.categories.indexOf(item.name);

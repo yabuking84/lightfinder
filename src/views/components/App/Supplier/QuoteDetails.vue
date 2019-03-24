@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="blue-grey darken-4" class="white--text" height="50px">
+    <v-toolbar color="black darken-4" class="white--text" height="50px">
       <v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
         Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span>
       </v-toolbar-title>
@@ -16,6 +16,7 @@
         </v-btn>
       </v-toolbar-title>
     </v-toolbar>
+
     <v-card class="minh-500" color="grey lighten-5">
       <v-container fluid grid-list-md>
         <v-layout row wrap>
