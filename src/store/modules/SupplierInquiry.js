@@ -49,6 +49,8 @@ const state = {
     },
     inquiries: [],
 
+    notifications:[],
+
 }
 
 
@@ -212,6 +214,7 @@ const actions = {
 
     confirmAward_a(context,data){
         return new Promise((resolve, reject) => {
+            
             var method = state.api.confirmAward.method;
             var url = state.api.confirmAward.url+"/"+data.inq_id+"/"+state.api.confirmAward.url2;
             console.log(data.formData);

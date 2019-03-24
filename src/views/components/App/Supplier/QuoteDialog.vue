@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog :value="openQuoteDialog" @input="$emit('update:openQuoteDialog', false)" @keydown="keyPress" fullscreen width="80%" scrollable>
+    <v-dialog :value="openQuoteDialog" @input="$emit('update:openQuoteDialog', false)" @keydown.escape="keyPress" width="80%" scrollable>
       <v-card id="QuoteDialog">
         <!--   <v-card-title class="black white--text" height="20px">
           <h3 class="font-weight-light">{{ quoteAction }} Quote</h3>
@@ -152,6 +152,13 @@
         <v-card-actions class="">
           <v-spacer></v-spacer>
           <v-btn color="primary" :loading="loading" @click="submitForm()"> Submit </v-btn>
+
+
+            <v-btn 
+            @click="triggerTestEvent()">
+                Trigger Create Inquiry Event
+            </v-btn>
+
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -169,213 +176,182 @@ import { required, email, maxLength, requiredIf, requiredUnless } from 'vuelidat
 import validationMixin from '@/mixins/validationMixin'
 
 export default {
-  mixins: [
+mixins: [
+  helpers,
+  validationMixin
+],
 
-    helpers,
-    validationMixin
 
-  ],
+validations: {
+  formData: {
+    price: { required },
+    total_price: { required },
+  }
+},
+validationMessages: {
+  formData: {
+    price: { required: 'Please enter a price.' },
+    total_price: { required: 'Please enter a total price.' }
+  }
+},
 
-  validations: {
 
-    formData: {
+components: {
+  UploadFile,
+  vueDropzone: vue2Dropzone
+},
 
-      price: { required },
-      total_price: { required },
-    }
 
+
+props: {
+  openQuoteDialog: {
+    type: Boolean,
+    default: false,
   },
-
-  validationMessages: {
-
-    formData: {
-      price: { required: 'Please enter a price.' },
-      total_price: { required: 'Please enter a total price.' }
-    }
-
+  inquiry: {
+    type: Object,
   },
-
-  components: {
-    UploadFile,
-    vueDropzone: vue2Dropzone
+  bid: {
+    type: Object,
   },
-
-  props: {
-    openQuoteDialog: {
-      type: Boolean,
-      default: false,
-    },
-    inquiry: {
-      type: Object,
-    },
-    bid: {
-      type: Object,
-    },
-    editQuote: {
-      type: Boolean,
-    },
-
+  editQuote: {
+    type: Boolean,
   },
-
-  data: () => ({
-
-    loading: false,
-    formData: {
-      // price: 11.11,
-      // total_price: 7777.56,
-      // product_name: "Super LED Industrial",
-      // remarks: "Nice light",
-      // description: "Last multiple years!",
-      price: null,
-      total_price: null,
-      product_name: null,
-      remarks: null,
-      description: null,
-
-    },
-
-    lumen: '123',
-    power: null,
-    angle: null,
-    ip: null,
-    size: null,
-    dimmable: null,
-    finish: null,
-    cct: null,
-    efficiency: null,
-    power: null,
-
-    quoteAction: "Add",
-
-    initBid: {
-      price: null,
-      total_price: null,
-      product_name: null,
-      remarks: null,
-      description: null,
-    },
+},
 
 
-    /* DROPZONE FOR AWS 3*/
 
-    dropzoneOptions: {
-      url: 'https://httpbin.org/post',
-      thumbnailWidth: 200,
-      maxFilesize: 0.5,
-      headers: { "My-Awesome-Header": "header value" },
-      addRemoveLinks: true,
-      dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME"
-    }
+data: () => ({
+  loading: false,
+  formData: {
+    // price: 11.11,
+    // total_price: 7777.56,
+    // product_name: "Super LED Industrial",
+    // remarks: "Nice light",
+    // description: "Last multiple years!",
+    price: null,
+    total_price: null,
+    product_name: null,
+    remarks: null,
+    description: null,
+  },
+  quoteAction: "Add",
+  initBid: {
+    price: null,
+    total_price: null,
+    product_name: null,
+    remarks: null,
+    description: null,
+  },
+  /* DROPZONE FOR AWS 3*/
+  dropzoneOptions: {
+    url: 'https://httpbin.org/post',
+    thumbnailWidth: 200,
+    maxFilesize: 0.5,
+    headers: { "My-Awesome-Header": "header value" },
+    addRemoveLinks: true,
+    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME"
+  }
+  /* DROPZONE FOR AWS 3*/
+}),
 
-    /* DROPZONE FOR AWS 3*/
 
 
-  }),
 
-  methods: {
+
+
+methods: {
     submitForm() {
-
-
-      var formData = {
-        "price": this.formData.price,
-        "total_price": this.formData.total_price,
-        "product_name": this.formData.product_name,
-        "remarks": this.formData.remarks,
-        "description": 'test data',
-      };
-
-      var action = "";
-      var data = {};
-
-      if (this.editQuote) {
-        action = 'spplrInq/editInquiryBid_a';
-        data = {
-          formData: formData,
-          inq_id: this.inquiry.id,
-          bid_ref: this.bid.reference,
-        }
-      } else {
-        action = 'spplrInq/addInquiryBid_a';
-        data = {
-          formData: formData,
-          inq_id: this.inquiry.id,
-        }
+    var formData = {
+      "price": this.formData.price,
+      "total_price": this.formData.total_price,
+      "product_name": this.formData.product_name,
+      "remarks": this.formData.remarks,
+      "description": 'test data',
+    };
+    var action = "";
+    var data = {};
+    if (this.editQuote) {
+      action = 'spplrInq/editInquiryBid_a';
+      data = {
+        formData: formData,
+        inq_id: this.inquiry.id,
+        bid_ref: this.bid.reference,
       }
-
-
-      if (this.$v.$invalid) {
-
-        this.$v.$touch()
-
-      } else {
-
-        this.loading = true;
-
-        this.$store.dispatch(action, data)
-          .then((response) => {
-            this.loading = false;
-            inqEvntBs.emitBidFormSubmitted();
-            this.$emit('update:openQuoteDialog', false);
-
-          }).catch((e) => {
-            this.loading = false;
-            console.log('Error: ' + e);
-            alert("ERROR!!");
-
-          }).finally(() => {
-            this.loading = false;
-          });
-
+    } else {
+      action = 'spplrInq/addInquiryBid_a';
+      data = {
+        formData: formData,
+        inq_id: this.inquiry.id,
       }
-
-
-
-      // alert("action = "+action);
-      // alert("this.editQuote = "+this.editQuote);
-      // alert("this.inquiry.id = "+this.inquiry.id);
-      // alert("this.bid.reference = "+this.bid.reference);
-
-
+    }
+    if (this.$v.$invalid) {
+         this.$v.$touch()
+    } else {
+    	this.loading = true;
+      this.$store.dispatch(action, data)
+        .then((response) => {
+          this.loading = false;
+          // this.$socket.emit('Supplier_NewQuoteCreated', {inq_id:this.inquiry.id});
+          inqEvntBs.emitBidFormSubmitted();
+          this.$emit('update:openQuoteDialog', false);
+        }).catch((e) => {
+          this.loading = false;
+          console.log('Error: ' + e);
+          alert("ERROR!!");
+        }).finally(() => {
+          this.loading = false;
+        });
+    }
+    // alert("action = "+action);
+    // alert("this.editQuote = "+this.editQuote);
+    // alert("this.inquiry.id = "+this.inquiry.id);
+    // alert("this.bid.reference = "+this.bid.reference);
     },
-
     resetForm() {
-      this.formData = this.initBid;
+    this.formData = this.initBid;
     },
-
     keyPress(e) {
-
-      if (e.target.querySelector("#QuoteDialog"))
-        this.$emit('update:openQuoteDialog', false)
-
-      // console.log(e.target);
-    },
-  },
-
-  mounted() {
-
-
-  },
-
-  watch: {
-
-    editQuote(nVal, oVal) {
-
-      if (nVal) {
-        this.quoteAction = "Edit";
-        this.formData = this.bid;
-      } else {
-        this.quoteAction = "Add";
-        this.formData = this.initBid;
-      }
+    if (e.target.querySelector("#QuoteDialog"))
+      this.$emit('update:openQuoteDialog', false)
+    // console.log(e.target);
     },
 
-    // when openQuoteDialog set as false, editQuote will be set to false also
-    openQuoteDialog(nVal, oVal) {
-      if (!nVal)
-        this.$emit('update:editQuote', false);
+
+    triggerTestEvent() {
+        this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
+        this.$socket.emit('sendMessageSuperChat', {message:'ohlala', name:"name"});
+
     },
 
+
+},
+
+
+
+
+mounted() {
+
+},
+
+
+
+watch: {
+  editQuote(nVal, oVal) {
+    if (nVal) {
+      this.quoteAction = "Edit";
+      this.formData = this.bid;
+    } else {
+      this.quoteAction = "Add";
+      this.formData = this.initBid;
+    }
   },
+  // when openQuoteDialog set as false, editQuote will be set to false also
+  openQuoteDialog(nVal, oVal) {
+    if (!nVal)
+      this.$emit('update:editQuote', false);
+  },
+},
 
 
 }

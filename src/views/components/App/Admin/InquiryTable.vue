@@ -370,10 +370,10 @@ export default {
 
     openInquiry(nVal) {
 
-      if (nVal)
-        this.$timer.stop('InquiryTableTimer');
-      else
-        this.$timer.start('InquiryTableTimer');
+      // if (nVal)
+      //   this.$timer.stop('InquiryTableTimer');
+      // else
+      //   this.$timer.start('InquiryTableTimer');
     },
 
 

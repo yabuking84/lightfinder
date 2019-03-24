@@ -36,15 +36,34 @@
     <v-btn icon :to="{name: 'Chat'}" flat>
       <v-icon>chat</v-icon>
     </v-btn>  -->
-   
-    <v-btn icon flat>
-      <v-icon>contacts</v-icon>
-    </v-btn>
-    
-    <v-btn icon flat>
-      <v-icon>chat</v-icon>
-    </v-btn> 
-   
+
+
+                <!-- <v-icon>far fa-bell</v-icon> -->
+
+    <v-menu offset-y transition="scale-transition">
+        <template v-slot:activator="{ on }">
+            <v-btn flat v-on="on">
+                <v-badge color="red">
+                    <template v-slot:badge>
+                        <span>{{ notifications.length }}</span>
+                    </template>
+                    <v-icon>far fa-bell</v-icon>
+                </v-badge>
+            </v-btn>
+
+        </template>
+        <v-list v-if="notifications && notifications.length">
+            <v-list-tile v-for="(notification, i) in notifications" :key="i" @click="">
+                <v-list-tile-title>{{ notification.title }}</v-list-tile-title>
+            </v-list-tile>
+        </v-list>
+    </v-menu>
+
+
+
+
+
+
 
     <v-spacer></v-spacer>
     
@@ -112,55 +131,96 @@
     </v-menu>
   </v-toolbar>
 </template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
-  
-  import { mapGetters } from 'vuex'
-  import config from '@/config/index'
 
-  // console.log(config);
+import { mapGetters } from 'vuex'
+import config from '@/config/index'
 
-  export default {
-    data: () => ({
-        title: 'BuyAnyLight.com',
-        roles: config.auth.role,
+// console.log(config);
+
+export default {
+data: () => ({
+    title: 'BuyAnyLight.com',
+    roles: config.auth.role,
+}),
+
+
+computed: {
+    ...mapGetters({
+        navDrawer: 'navDrawer',
+        toolbarClippedLeft: 'toolbarClippedLeft',
+        fixedToolbar: 'fixedToolbar',
+        toolbar: 'toolbarVisibility',
+        navToolbarScheme: 'navToolbarScheme',
+        navMiniVarient: 'navMiniVarient'
     }),
-
-
-    computed: {
-        ...mapGetters({
-            navDrawer: 'navDrawer',
-            toolbarClippedLeft: 'toolbarClippedLeft',
-            fixedToolbar: 'fixedToolbar',
-            toolbar: 'toolbarVisibility',
-            navToolbarScheme: 'navToolbarScheme',
-            navMiniVarient: 'navMiniVarient'
-        }),
-        authUser () {        
-            return this.$store.state.auth.auth_user;
-        },
-
-        avatarBgImage() {
-          
-          if(!this.$store.state.auth.auth_user.avatar)
-          // default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
-          this.$store.state.auth.auth_user.avatar = 'https://image.flaticon.com/icons/svg/149/149071.svg'
-
-            return {
-                backgroundImage:'url('+this.$store.state.auth.auth_user.avatar+')',
-            };
-        },
+    authUser () {        
+        return this.$store.state.auth.auth_user;
     },
-    methods: {
-        toggleMiniVariantMode () {
-          this.$store.dispatch('toggleMiniVariantMode')
-          this.$store.dispatch('toggleMiniVarient')
-        },
-        logout() {
-            this.$router.push({name:'Logout'});                
-        },
 
-    }
-  }
+    testVuex () {        
+        return this.$store.state.auth.test_vuex;
+    },
+
+    avatarBgImage() {
+      
+      if(!this.$store.state.auth.auth_user.avatar)
+      // default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
+      this.$store.state.auth.auth_user.avatar = 'https://image.flaticon.com/icons/svg/149/149071.svg'
+
+        return {
+            backgroundImage:'url('+this.$store.state.auth.auth_user.avatar+')',
+        };
+    },
+
+    notifications(){
+        var retVal = null;
+        var auth_user_role = this.$store.state.auth.auth_user.role;
+
+        if(auth_user_role==config.auth.role.buyer.id) {
+            retVal = this.$store.state.byrInq.notifications;
+        }
+        else if(auth_user_role==config.auth.role.supplier.id) {
+            retVal = this.$store.state.spplrInq.notifications;
+        }
+        else {
+            retVal = [];
+        }
+
+        return retVal;
+
+    },
+},
+
+
+methods: {
+    toggleMiniVariantMode () {
+      this.$store.dispatch('toggleMiniVariantMode')
+      this.$store.dispatch('toggleMiniVarient')
+    },
+    logout() {
+        this.$router.push({name:'Logout'});                
+    },
+
+},
+
+
+
+}
 </script>
 
 

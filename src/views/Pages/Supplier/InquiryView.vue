@@ -1,7 +1,13 @@
 <template>
-  <div class="text-xs-center">
-    <v-dialog  :value="openInquiry" @input="$emit('update:openInquiry', false)" @keydown="keyPress" fullscreen >
-      <v-card id="InquiryView">
+<div class="text-xs-center">
+<v-dialog 
+	:value="openInquiry" 
+	@input="$emit('update:openInquiry', false)" 
+	@keydown.escape="keyPress"
+	fullscreen
+	scrollable>
+
+    <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->

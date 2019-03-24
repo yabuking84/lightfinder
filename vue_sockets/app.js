@@ -54,11 +54,38 @@ var io = require('socket.io').listen(server);
 io.sockets.on('connection', function(socket){
 
     
-	
+
     socket.on('sendMessageSuperChat', function(data){
     	// io.emit('messageChannel',{message:data});
-    	socket.broadcast.emit('messageChannelSuperChat',{message:data.message, name:data.name});
+    	socket.broadcast.emit('sendMessageSuperChat',{message:data.message, name:data.name});
     });
+
+
+
+	// Suppliers
+	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    socket.on('supplierNewQuoteCreated', function(data){
+    	console.log('supplierNewQuoteCreated');
+    	socket.broadcast.emit('supplierNewQuoteCreated',data);
+    });
+	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	// Suppliers
+
+
+
+	// Buyers
+	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	// Buyers
+
+
+
+	// Administrators
+	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	// Suppliers
 
 
 

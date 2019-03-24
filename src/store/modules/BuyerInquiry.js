@@ -43,16 +43,57 @@ const state = {
     },
     inquiries: [],
 
+    // sockets
+    /////////////////////////////////
+    test_vuex: "",
+    isConnected: false,
+    socketMessage: '',
+    notifications: [],
+    /////////////////////////////////
+    // sockets
 }
 
 
 
 const mutations = {
+    SOCKET_CONNECT(state) {
+      state.isConnected = true;
+    },
 
+    SOCKET_DISCONNECT(state) {
+      state.isConnected = false;
+    },
+
+    UPDATE_NOTIFICATIONS_M(state, data) {
+
+        state.notifications.push({
+            title: "test",
+        });
+
+    }
 }
-
     
 const actions = {
+
+
+    // supplierNewQuoteCreated
+    SOCKET_SUPPLIER_NEW_QUOTE_CREATED(context, data) {
+
+        console.log('socket_supplier_NewQuoteCreated');
+
+        context.commit('UPDATE_NOTIFICATIONS_M',data);
+
+        // var inq_id = data.inq_id;
+
+        // actions.dispatch('getInquiry_a').then(function(data){
+        //     console.log(data);
+        //     state.notifications.push({
+        //         title: data.keyword,
+        //     });
+        // });        
+
+    },
+
     getInquiries_a(context){
         return new Promise((resolve, reject) => {
             var headers = {token:localStorage.access_token};
