@@ -2,7 +2,7 @@
 	<div>
 	<v-dialog :value="openAwardDialog" @input="$emit('update:openAwardDialog',false)" max-width="1000px">
 		
-	     <v-toolbar dark color="dark" height="45px">
+	     <v-toolbar dark color="grey darken-4" height="50px">
             <v-toolbar-title class="font-weight-light subheading">
            	 <i class="fas fa-award white--text"></i>
           	  Award This Supplier
