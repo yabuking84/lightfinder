@@ -1,25 +1,23 @@
 <template>
-<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable>
+<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen>
 <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
-        <v-toolbar dark color="blue-grey darken-4">         
-            <v-toolbar-title>Inquiry # {{ inquiry.id }} </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click="closeOpenInquiry()">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-toolbar-items>
+       <v-toolbar dark color="grey darken-4 ">
+           <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2> 
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click="closeOpenInquiry()">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
         </v-toolbar>
 
-
-        <v-card-text>	
+        <!-- <v-card-text>	 -->
 	
 			<v-container fluid grid-list-xl >
-					
 					
 					<v-layout row wrap>
 						
@@ -40,7 +38,7 @@
 					</v-layout>
 			</v-container>
 
-        </v-card-text>
+        <!-- </v-card-text> -->
 
 
         <!-- <v-card-actions >

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="blue-grey darken-4" class="white--text" height="50px">
+    <v-toolbar color="grey darken-4" class="white--text" height="50px">
       <v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
         Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span>
       </v-toolbar-title>
@@ -16,6 +16,7 @@
         </v-btn>
       </v-toolbar-title>
     </v-toolbar>
+
     <v-card class="minh-500" color="grey lighten-5">
       <v-container fluid grid-list-md>
         <v-layout row wrap>
@@ -57,12 +58,12 @@
                 <h5 class="font-weight-thin">Specifications</h5>
                 <v-layout row wrap class="specifications">
                   <v-flex xs12>
-                      <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                        {{ specification.name }}: &nbsp;
-                        <span class="font-weight-bold">
-                          {{ specification.value.split(',').join(', ') }}
-                        </span>
-                      </v-chip>
+                    <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                      {{ specification.name }}: &nbsp;
+                      <span class="font-weight-bold">
+                        {{ specification.value.split(',').join(', ') }}
+                      </span>
+                    </v-chip>
                   </v-flex>
                   <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                     No specifications..
@@ -70,22 +71,11 @@
                 </v-layout>
               </v-flex>
             </v-flex>
-            <v-layout row wrap justify-end>
-              <v-flex xs12>
-                <v-card>
-                  <v-card-text>
-                    <v-textarea maxlength="120" auto-grow :row-height="10" outline color="black" flat label="Enter your message here"></v-textarea>
-                  </v-card-text>
-                </v-card>
-                <!--   <v-card>
-         
-              <v-form>
-                <v-textarea outline pa-2 v-model="title" label="Message" counter :row-height="15" maxlength="120" auto-grow full-width single-line></v-textarea>
-              </v-form>
-            </v-card> -->
-                <CommentBox> </CommentBox>
-              </v-flex>
-            </v-layout>
+            
+            <!-- message box -->
+				<comment-box> </comment-box>
+            <!-- message box -->
+
           </template>
           <v-flex xs12 v-if="!hasBid">
             <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
@@ -201,4 +191,5 @@ export default {
     width: 180px;
   }
 }
+
 </style>

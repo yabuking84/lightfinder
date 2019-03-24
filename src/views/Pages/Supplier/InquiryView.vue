@@ -5,13 +5,13 @@
 	@input="$emit('update:openInquiry', false)" 
 	@keydown.escape="keyPress"
 	fullscreen
-	scrollable>
+	>
 
     <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
-        <v-toolbar dark color="blue-grey darken-4">
+        <v-toolbar dark color="grey darken-4 ">
            <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2> 
           <v-spacer></v-spacer>
           <v-toolbar-items>
