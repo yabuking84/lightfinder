@@ -5,16 +5,15 @@
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
             Privacy Policy
         </v-card-title> -->
-        <v-toolbar dark color="black darken-4">         
-            <v-toolbar-title>Inquiry # {{ inquiry.id }} </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click="closeOpenInquiry()">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-toolbar-items>
+       <v-toolbar dark color="grey darken-4 ">
+           <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2> 
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click="closeOpenInquiry()">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-toolbar-items>
         </v-toolbar>
-
 
         <!-- <v-card-text>	 -->
 	

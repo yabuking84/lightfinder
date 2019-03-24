@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="black darken-4" class="white--text" height="50px">
+    <v-toolbar color="grey darken-4" class="white--text" height="50px">
       <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
     </v-toolbar>
     <v-card color="grey lighten-5">
@@ -20,24 +20,14 @@
             <v-layout row wrap>
               <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
               <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-              <v-flex xs5>
-                <image-gallery-small no-thumbnails height="349px"></image-gallery-small>
-              </v-flex>
+           
               <v-flex xs7>
                 <v-layout row wrap>
                   <!-- <v-container> -->
-                  <!--             <v-flex xs12>
-                  <v-layout row wrap>
-                    <v-btn block :disabled="inquiry.awarded ? true : false" class="mx-1 deep-orange" @click="openAwardBid(bidItem)">
-                      <i class="fas fa-award white--text"></i>
-                      <span class="font-weight-light ml-1 white--text">Request Sample</span>
-                    </v-btn>
-                    <v-btn block :disabled="inquiry.awarded ? true : false" class="green mx-1" @click="openAwardBid(bidItem)">
-                      <i class="fas fa-award white--text"></i>
-                      <span class="font-weight-light ml-1 white--text">Award</span>
-                    </v-btn>
-                  </v-layout>
-                </v-flex> -->
+        
+
+
+
                   <v-flex xs12 pl-2>
                     <h5 class="font-weight-thin">Product name</h5>
                     <h2>{{ bidItem.product_name }}</h2>
@@ -52,9 +42,9 @@
                       fas fa-award
                     </v-icon>
                   </v-flex>
-                  <v-flex xs12 pt-0 pl-2>
+          <!--         <v-flex xs12 pt-0 pl-2>
                     <h3 class="font-weight-regular">{{ bidItem.description }}</h3>
-                  </v-flex>
+                  </v-flex> -->
                   <v-flex xs12>
                     <v-layout row wrap>
                       <v-flex xs4 pa-2>
@@ -77,49 +67,83 @@
                       <p class="mb-0" style="white-space: pre-line;">{{ bidItem.remarks }}</p>
                     </h4>
                   </v-flex>
-                  <v-flex xs12>
-                    <h5 class="font-weight-thin">Specifications</h5>
-                    <v-layout row wrap class="specifications">
-                      <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                        {{ specification.name }}: &nbsp;
-                        <span class="font-weight-bold">
-                          {{ specification.value.split(',').join(', ') }}
-                        </span>
-                      </v-chip>
-                      <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
-                        No specifications..
-                      </v-alert>
-                    </v-layout>
-                  </v-flex>
-                  <!-- </v-container> -->
+                <v-flex xs12>
+                  <h5 class="font-weight-thin">Specifications</h5>
+                  <v-layout row wrap class="specifications">
+                    <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                      {{ specification.name }}: &nbsp;
+                      <span class="font-weight-bold">
+                        {{ specification.value.split(',').join(', ') }}
+                      </span>
+                    </v-chip>
+                    <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
+                      No specifications..
+                    </v-alert>
+                  </v-layout>
+                </v-flex>
+
+
+                <!-- </v-container> -->
                 </v-layout>
+
+          
+          </v-flex>
+
+
+             <v-flex xs5>
+                <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
               </v-flex>
-              <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-              <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+   <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+     <v-flex xs12>
+            <!-- <v-card-actions> -->
+            <!-- <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
+            <v-layout row wrap>
+              <v-flex xs6>
+                <v-btn flat block :disabled="inquiry.awarded ? true : false" large class="orange darken-2 " @click="openAwardBid(bidItem)">
+                  <i class="fas fa-lightbulb white--text "></i>
+                  <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
+                </v-btn>
+              </v-flex>
+              <v-flex xs6>
+                <v-btn flat block dark :disabled="inquiry.awarded ? true : false" large class="green darken-2" @click="openAwardBid(bidItem)">
+                  <i class="fas fa-award white--text"></i>
+                  <span class="font-weight-bold ml-1 white--text">Award</span>
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+
+             
+
+
+
               <v-flex xs12>
                 <!-- message box -->
                 <comment-box> </comment-box>
                 <!-- message box -->
               </v-flex>
+
             </v-layout>
           </v-card-text>
           <v-divider></v-divider>
-          <v-card-actions>
-            <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5>
-            <v-spacer></v-spacer>
-            <v-btn :disabled="inquiry.awarded ? true : false" large class="deep-orange " @click="openAwardBid(bidItem)">
-              <i class="fas fa-award white--text"></i>
-              <span class="font-weight-bold ml-1 white--text">Request Sample</span>
-            </v-btn>
-            <v-btn :disabled="inquiry.awarded ? true : false" large class="green" @click="openAwardBid(bidItem)">
-              <i class="fas fa-award white--text"></i>
-              <span class="font-weight-bold ml-1 white--text">Award</span>
-            </v-btn>
-            <!-- <v-btn class="orange darken-3" @click="dialog = true">
-                      <i class="fas fa-tasks white--text"></i>
-                      <span class="font-weight-light ml-1 white--text" >Request Sample</span>
-                    </v-btn>  -->
-          </v-card-actions>
+    <!--       <v-card-actions>
+      <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5>
+      <v-spacer></v-spacer>
+      <v-btn :disabled="inquiry.awarded ? true : false" large class="deep-orange " @click="openAwardBid(bidItem)">
+        <i class="fas fa-award white--text"></i>
+        <span class="font-weight-bold ml-1 white--text">Request Sample</span>
+      </v-btn>
+      <v-btn :disabled="inquiry.awarded ? true : false" large class="green" @click="openAwardBid(bidItem)">
+        <i class="fas fa-award white--text"></i>
+        <span class="font-weight-bold ml-1 white--text">Award</span>
+      </v-btn>
+      <v-btn class="orange darken-3" @click="dialog = true">
+                <i class="fas fa-tasks white--text"></i>
+                <span class="font-weight-light ml-1 white--text" >Request Sample</span>
+              </v-btn>
+    </v-card-actions> -->
         </v-card>
         <!-- <v-layout row wrap> -->
         <v-layout align-center justify-center row fill-height v-if="!bidItems.length">

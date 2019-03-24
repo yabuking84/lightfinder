@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="blue-grey darken-4" class="white--text" height="50px">
+    <v-toolbar color="grey darken-4" class="white--text" height="50px">
       <!-- <router-link :to="{ name: 'SupplierHome' }" style="text-decoration: none;">
                 <v-btn class="blue-grey" small style="min-width: 50px;">
                     <i class="fas fa-arrow-left white--text"></i>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="black darken-4" class="white--text" height="50px">
+    <v-toolbar color="grey darken-4" class="white--text" height="50px">
       <v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
         Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span>
       </v-toolbar-title>

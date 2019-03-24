@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <v-card class="minh-500" color="grey lighten-5"> -->
-      <v-toolbar color="blue-grey darken-4" class="white--text" height="50px">
+      <v-toolbar color="grey darken-4" class="white--text" height="50px">
         <!-- <v-toolbar-title class="subheading font-weight-light">Proposal List</v-toolbar-title> -->
         <v-toolbar-title class="subheading font-weight-light">Quotation List</v-toolbar-title>
         <v-spacer></v-spacer>

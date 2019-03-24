@@ -2,7 +2,7 @@
 	<div>
 
 
-		<v-toolbar color="grey darken-4" class="white--text" height="40px">
+		<v-toolbar color="black darken-4" class="white--text" height="40px">
         	<v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
       	</v-toolbar>
 

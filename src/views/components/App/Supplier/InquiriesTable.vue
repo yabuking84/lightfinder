@@ -2,9 +2,9 @@
   <div>
     <v-card>
       <v-layout row wrap mb-3>
-        <v-toolbar dark color="blue-grey darken-4">
+        <v-toolbar dark color="grey darken-4">
           <v-btn-toggle multiple v-model="inquiryStatus">
-            <span v-for="(status, index) in statuses" class="blue-grey darken-4 pa-2">
+            <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
               <v-btn flat :value="status.id" :title="status.name">
                 <i class="white--text" :class="status.icon"></i>
                 <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
@@ -127,7 +127,7 @@
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
           Your search for "{{ search }}" found no results.
         </v-alert>
-        
+
       </v-data-table>
     </v-card>
 

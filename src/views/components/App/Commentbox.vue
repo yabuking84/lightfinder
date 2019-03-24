@@ -1,9 +1,9 @@
 <template>
-  <v-layout row wrap justify-end class="grey lighten-3">
+  <v-layout row wrap justify-end class="  lighten-5">
     <v-flex xs12>
       <!-- User info -->
       <!-- Comments -->
-      <v-card-text class="py-0 grey lighten-3">
+      <v-card-text class="py-0  lighten-5">
         <div class="body-2 nolabel--text py-3">
           <v-icon left color="nolabel">comment</v-icon> Message
         </div>
@@ -64,7 +64,7 @@
             <v-textarea auto-grow :row-height="16" flat outline auto-grow v-model="comment" class="clean-textarea no-details white py-0 pl-5" placeholder="Your Message"></v-textarea>
             <v-layout row wrap>
               <v-spacer></v-spacer>
-              <v-btn color="blue-grey" dark class="ml-0" @click.stop="submit"> <i class="fas fa-paper-plane"></i>&nbsp&nbsp Add Message</v-btn>
+              <v-btn color="blue-grey" dark class="ml-0 mt-3 mb-3" @click.stop="submit"> <i class="fas fa-paper-plane"></i>&nbsp&nbsp Add Message</v-btn>
             </v-layout>
           </v-flex>
         </v-layout>

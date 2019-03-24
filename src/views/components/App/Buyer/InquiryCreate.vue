@@ -12,33 +12,57 @@
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
             <v-stepper v-model="stepCnt" class="stepperClass" vertical>
               <v-stepper-step step="1" editable class="step_1">
+
                 <h2>Hello {{ $store.state.auth.auth_user.name }}! Tell us what you want.</h2>
                 <small>The more data you provide the better we can choose suppliers for you.</small>
               </v-stepper-step>
+
               <v-stepper-content step="1">
                 <v-btn color="primary" @click="stepUp()">Start</v-btn>
                 <v-btn color="primary" @click=""> <span>use existing Inquiry ?</span> </v-btn>
               </v-stepper-content>
-              <v-stepper-step :rules="[() => !$v.formData.keywords.$error && !$v.formData.category.$error ]" step="2" editable>
+
+              <v-stepper-step :rules="[() => 
+              !$v.formData.keywords.$error && !$v.formData.category.$error ]" 
+              step="2" 
+              editable>
                 <!-- Specific keyword for your Quotation -->
                 Subject & Category
-                <small v-show="$v.formData.keywords.$error">Subject is required</small>
-                <small v-show="$v.formData.category.$error">Category is required</small>
+                <small 
+                v-show="$v.formData.keywords.$error">Subject is required</small>
+                <small 
+                v-show="$v.formData.category.$error">Category is required</small>
               </v-stepper-step>
+
               <v-stepper-content step="2" ref="step_2">
                 <v-container>
                   <v-flex xs12>
                     <v-layout row wrap>
                       <v-flex xs5>
                         <h4>Your Subject</h4>
-                        <v-text-field v-model="formData.keywords" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.keywords')" @blur="$v.formData.keywords.$touch()" label="Subject">
+                        <v-text-field 
+                        v-model="formData.keywords" 
+                        @keyup.enter="stepUp()" 
+                        :error-messages="fieldErrors('formData.keywords')" 
+                        @blur="$v.formData.keywords.$touch()" 
+                        label="Subject">
                         </v-text-field>
                       </v-flex>
                       <v-flex xs1>
                       </v-flex>
                       <v-flex xs5>
                         <h4>Your Chosen Category</h4>
-                        <v-autocomplete v-model="formData.category" :items="categories" item-text="name" item-value="id" :error-messages="fieldErrors('formData.category')" @blur="$v.formData.category.$touch()" :search-input.sync="search" ref="categorySelect" cache-items flat hide-no-data hide-details label="Type here the category.." solo-inverted>
+                        <v-autocomplete 
+                        v-model="formData.category" 
+                        :items="categories" 
+                        item-text="name"
+                        item-value="id"
+                        :error-messages="fieldErrors('formData.category')"
+                        @blur="$v.formData.category.$touch()" 
+                        :search-input.sync="search" 
+                        ref="categorySelect" 
+                        ache-items flat hide-no-data hide-details label="Type here the category.."
+                         solo-inverted>
                         </v-autocomplete>
                       </v-flex>
                     </v-layout>
@@ -102,13 +126,29 @@
                 <v-container>
                   <v-layout row>
                     <v-flex xs5>
-                      <v-text-field v-model="formData.quantity" label="Quantity" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.quantity')" @blur="$v.formData.quantity.$touch()" :value="formData.quantity" suffix="pc/s" mask="######">
+                      <v-text-field 
+                      v-model="formData.quantity" 
+                      label="Quantity" 
+                      @keyup.enter="stepUp()" 
+                      :error-messages="fieldErrors('formData.quantity')" 
+                      @blur="$v.formData.quantity.$touch()" 
+                      :value="formData.quantity" 
+                      suffix="pc/s" 
+                      mask="######">
                       </v-text-field>
                     </v-flex>
                     <v-flex xs1>
                     </v-flex>
                     <v-flex xs5>
-                      <v-text-field class="mr-1" label="Preferred price" :error-messages="fieldErrors('formData.desired_price')" @blur="$v.formData.desired_price.$touch()" v-model="formData.desired_price" @keyup.enter="stepUp()" :value="formData.desired_price" suffix="USD">
+                      <v-text-field 
+                      class="mr-1" 
+                      label="Preferred price" 
+                      :error-messages="fieldErrors('formData.desired_price')" 
+                      @blur="$v.formData.desired_price.$touch()" 
+                      v-model="formData.desired_price" 
+                      @keyup.enter="stepUp()" 
+                      :value="formData.desired_price" 
+                      suffix="USD">
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -150,19 +190,41 @@
                   <v-layout row wrap>
                     <v-flex xs6>
                       <v-layout row class="custom_digits">
-                        <v-text-field label="Power" v-model="formData.power" @keyup.enter="stepUp()" :value="formData.power" suffix="watts" mask="######">
+                        <v-text-field 
+                        label="Power" 
+                        v-model="formData.power" 
+                        @keyup.enter="stepUp()" 
+                        :value="formData.power" 
+                        suffix="watts" 
+                        mask="######">
                         </v-text-field>
                       </v-layout>
                       <v-layout row class="custom_digits">
-                        <v-text-field label="Lumen" v-model="formData.lumen" @keyup.enter="stepUp()" :value="formData.lumen" suffix="lm" mask="######">
+                        <v-text-field 
+                        label="Lumen" 
+                        v-model="formData.lumen"
+                        @keyup.enter="stepUp()" 
+                        :value="formData.lumen" 
+                        suffix="lm" 
+                        mask="######">
                         </v-text-field>
                       </v-layout>
                       <v-layout row class="custom_digits">
-                        <v-text-field label="Efficiency" v-model="formData.efficiency" @keyup.enter="stepUp()" :value="formData.efficiency" suffix="lm/w" mask="######">
+                        <v-text-field 
+                        label="Efficiency" 
+                        v-model="formData.efficiency" 
+                        @keyup.enter="stepUp()" 
+                        :value="formData.efficiency" 
+                        suffix="lm/w" mask="######">
                         </v-text-field>
                       </v-layout>
                       <v-layout row class="custom_digits">
-                        <v-text-field label="Beam Angle" v-model="formData.beam_angle" @keyup.enter="stepUp()" :value="formData.beam_angle" suffix="degrees" mask="###">
+                        <v-text-field 
+                        label="Beam Angle" 
+                        v-model="formData.beam_angle" 
+                        @keyup.enter="stepUp()" 
+                        :value="formData.beam_angle" 
+                        suffix="degrees" mask="###">
                         </v-text-field>
                       </v-layout>
                       <v-layout row wrap>
@@ -181,35 +243,68 @@
                     </v-flex>
                     <v-flex xs6>
                       <v-layout row class="custom_digits">
-                        <v-text-field label="CCT" v-model="formData.cct" @keyup.enter="stepUp()" :value="formData.cct" suffix="lm" mask="######">
+                        <v-text-field label="CCT" 
+                        v-model="formData.cct" 
+                        @keyup.enter="stepUp()" 
+                        :value="formData.cct" 
+                        suffix="lm" 
+                        mask="######">
                         </v-text-field>
                       </v-layout>
                       <v-layout row class="custom_digits">
-                        <v-text-field label="IP Rating" v-model="formData.ip" @keyup.enter="stepUp()" :value="formData.ip" mask="######">
+                        <v-text-field 
+                        label="IP Rating" 
+                        v-model="formData.ip"
+                        @keyup.enter="stepUp()" 
+                        :value="formData.ip" 
+                        mask="######">
                         </v-text-field>
                       </v-layout>
                       <v-layout row wrap class="custom_digits">
-                        <v-text-field v-model="formData.size" @keyup.enter="stepUp()" label="Size">
+                        <v-text-field 
+                        v-model="formData.size" 
+                        @keyup.enter="stepUp()" 
+                        label="Size">
                         </v-text-field>
                       </v-layout>
                       <v-layout row wrap class="custom_digits">
-                        <v-text-field v-model="formData.finish" @keyup.enter="stepUp()" label="Finish">
+                        <v-text-field 
+                        v-model="formData.finish" 
+                        @keyup.enter="stepUp()" 
+                        label="Finish">
                         </v-text-field>
                       </v-layout>
                       <v-layout row wrap class="">
                         <v-flex xs3>
-                          <v-switch color="black" v-model="formData.dimmable" label="Non-Dim" value="Non-Dim"></v-switch>
+                          <v-switch 
+                          color="black" 
+                          v-model="formData.dimmable" 
+                          label="Non-Dim"
+                           value="Non-Dim"
+                           ></v-switch>
                         </v-flex>
                         <v-flex xs3>
-                          <v-switch color="black" v-model="formData.dimmable" label="TRIAC" value="TRIAC">
+                          <v-switch 
+                          color="black" 
+                          v-model="formData.dimmable" 
+                          label="TRIAC" 
+                          value="TRIAC">
                           </v-switch>
                         </v-flex>
                         <v-flex xs3>
-                          <v-switch color="black" v-model="formData.dimmable" label="0-10V" value="0-10V">
+                          <v-switch 
+                          color="black" 
+                          v-model="formData.dimmable" 
+                          label="0-10V" 
+                          value="0-10V">
                           </v-switch>
                         </v-flex>
                         <v-flex xs3>
-                          <v-switch color="black" v-model="formData.dimmable" label="DALI" value="DALI">
+                          <v-switch 
+                          color="black" 
+                          v-model="formData.dimmable"
+                          label="DALI" 
+                          value="DALI">
                           </v-switch>
                         </v-flex>
                       </v-layout>
@@ -297,41 +392,76 @@
               <v-stepper-content step="5" ref="step_5" no-focus>
                 <v-container>
                   <v-layout row wrap>
-                    <v-flex xs12>
+
+
+                    <v-flex xs4>
                       <!-- <v-text-field v-model="formData.street" @keyup.enter="stepUp()" label="Street Name/No.">  </v-text-field>  -->
-                      <h3>Do you want to purchase a sample order ?</h3>
+                      <h3 class="font-weight-light">Do you want to purchase a sample order ?</h3>
                       <v-radio-group v-model="is_sample" row>
                         <v-radio label="Yes" :value="1"></v-radio>
                         <v-radio label="No" :value="0"></v-radio>
                       </v-radio-group>
                     </v-flex>
-                    <v-flex xs7 v-show="is_sample">
+
+                    <v-flex xs6 v-show="is_sample">
+                       <h3 class="font-weight-light">Enter your desired quantity.</h3>
                       <v-layout row wrap>
                         <v-flex xs7 class="custom_digits">
-                          <v-text-field v-model="formData.quantity_of_sample" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.quantity_of_sample')" @blur="$v.formData.quantity_of_sample.$touch()" label="Quantity" hint="Note: Quantity can't be change later on. so please be accurate.">
+                          <v-text-field 
+                          v-model="formData.quantity_of_sample" 
+                          @keyup.enter="stepUp()" 
+                          :error-messages="fieldErrors('formData.quantity_of_sample')" 
+                          @blur="$v.formData.quantity_of_sample.$touch()" 
+                          label="Quantity" 
+                          hint="Note: Quantity can't be change later on. so please be accurate.">
                           </v-text-field>
                         </v-flex>
                       </v-layout>
-                      <h3 class="mt-2">Specify your shipping Address for sample order's.</h3>
+
+                      <h3 class="mt-2 font-weight-light">Specify your shipping Address for sample order's.</h3>
                       <v-layout row wrap>
-                        <v-flex xs7>
-                          <v-select v-model="formData.shipping_of_sample.country" :items="countries" item-text="name" item-value="id" :error-messages="fieldErrors('formData.shipping_of_sample.country')" @blur="$v.formData.shipping_of_sample.country.$touch()" :search-input.sync="search" ref="countrySampleCountry" label="Countries">
+                        <v-flex xs6 pa-1>
+                          <v-select 
+                          v-model="formData.shipping_of_sample.country" 
+                          :items="countries" 
+                          item-text="name" 
+                          item-value="id" 
+                          :error-messages="fieldErrors('formData.shipping_of_sample.country')" 
+                          @blur="$v.formData.shipping_of_sample.country.$touch()" 
+                          :search-input.sync="search" 
+                          ref="countrySampleCountry" 
+                          label="Countries">
                           </v-select>
                         </v-flex>
-                        <v-flex xs7>
-                          <v-text-field v-model="formData.shipping_of_sample.address" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.shipping_of_sample.address')" @blur="$v.formData.shipping_of_sample.address.$touch()" label="Street Name/No.">
+                        <v-flex xs6 pa-1>
+                          <v-text-field 
+                          v-model="formData.shipping_of_sample.address" 
+                          @keyup.enter="stepUp()" 
+                          :error-messages="fieldErrors('formData.shipping_of_sample.address')" 
+                          @blur="$v.formData.shipping_of_sample.address.$touch()" 
+                          label="Street Name/No.">
                           </v-text-field>
                         </v-flex>
-                        <v-flex xs7>
-                          <v-text-field v-model="formData.shipping_of_sample.city" :error-messages="fieldErrors('formData.shipping_of_sample.city')" @blur="$v.formData.shipping_of_sample.city.$touch()" @keyup.enter="stepUp()" label="City">
+                        <v-flex xs6 pa-1>
+                          <v-text-field 
+                          v-model="formData.shipping_of_sample.city" 
+                          :error-messages="fieldErrors('formData.shipping_of_sample.city')"
+                           @blur="$v.formData.shipping_of_sample.city.$touch()" 
+                           @keyup.enter="stepUp()"
+                            label="City">
                           </v-text-field>
                         </v-flex>
-                        <v-flex xs7>
-                          <v-text-field v-model="formData.shipping_of_sample.state" @keyup.enter="stepUp()" label="State">
+                        <v-flex xs6 pa-1>
+                          <v-text-field 
+                          v-model="formData.shipping_of_sample.state" 
+                          @keyup.enter="stepUp()" 
+                          label="State">
                           </v-text-field>
                         </v-flex>
                       </v-layout>
                     </v-flex>
+
+
                   </v-layout>
                 </v-container>
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -343,29 +473,51 @@
               <v-stepper-content step="6" ref="step_6" no-focus>
                 <v-container>
                   <v-layout row wrap>
-                    <v-flex xs12>
-                      <h3>Do you require OEM ?</h3>
+                    <v-flex xs3>
+                      <h3 class="font-weight-light">Do you require OEM ?</h3>
                       <v-radio-group v-model="is_oem" row>
                         <v-radio label="Yes" :value="1"></v-radio>
                         <v-radio label="No" :value="0"></v-radio>
                       </v-radio-group>
                     </v-flex>
-                    <v-flex xs7 class="custom_digits" v-show="is_oem">
-                      <v-text-field v-model="formData.oem_service" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.oem_service')" @blur="$v.formData.oem_service.$touch()" label="What kind of Original Equipment Manufacturer (OEM) Service ?">
-                      </v-text-field>
-                    </v-flex>
-                    <v-flex xs7 class="custom_digits" v-show="is_oem">
-                      <v-textarea label="Description" :error-messages="fieldErrors('formData.oem_description')" @blur="$v.formData.oem_description.$touch()" v-model="formData.oem_description">
-                      </v-textarea>
-                    </v-flex>
-                    <v-flex xs7 v-show="is_oem">
-                      <vue-dropzone id="dropzone-oem" :options="dropzoneOptions" :useCustomSlot=true>
-                        <div class="dropzone-custom-content">
-                          <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
-                          <div class="subtitle">...or click to select a file from your computer</div>
-                        </div>
-                      </vue-dropzone>
-                    </v-flex>
+
+                      <v-flex xs7>
+
+                    <v-layout row wrap v-show="is_oem">
+                            <h3 class="font-weight-light">Please be accurate as possible.</h3>
+
+                              <v-flex xs12 class="custom_digits" >
+                          <v-text-field 
+                          v-model="formData.oem_service" 
+                          @keyup.enter="stepUp()" 
+                          :error-messages="fieldErrors('formData.oem_service')" 
+                          @blur="$v.formData.oem_service.$touch()" 
+                          label="What kind of Original Equipment Manufacturer (OEM) Service ?">
+                          </v-text-field>
+                      </v-flex>
+                      <v-flex xs12 class="custom_digits" >
+                          <v-textarea 
+                          label="Description" 
+                          :error-messages="fieldErrors('formData.oem_description')" 
+                          @blur="$v.formData.oem_description.$touch()" 
+                          v-model="formData.oem_description">
+                          </v-textarea>
+                      </v-flex>
+                      <v-flex xs12 >
+                        <vue-dropzone id="dropzone-oem" :options="dropzoneOptions" :useCustomSlot=true>
+                          <div class="dropzone-custom-content">
+                            <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
+                            <div class="subtitle">...or click to select a file from your computer</div>
+                          </div>
+                        </vue-dropzone>
+                      </v-flex>
+                    </v-layout>
+                        </v-flex>
+
+                   
+
+
+
                   </v-layout>
                 </v-container>
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -381,19 +533,40 @@
                 <v-container>
                   <v-layout row wrap>
                     <v-flex xs7>
-                      <v-select v-model="formData.shipping_of_mass.country" :items="countries" item-text="name" item-value="id" :error-messages="fieldErrors('formData.shipping_of_mass.country')" @blur="$v.formData.shipping_of_mass.country.$touch()" :search-input.sync="search" ref="countryMassShipping" label="Countries">
+                      <v-select 
+                      v-model="formData.shipping_of_mass.country" 
+                      :items="countries" 
+                      item-text="name" item-value="id" 
+                      :error-messages="fieldErrors('formData.shipping_of_mass.country')" 
+                      @blur="$v.formData.shipping_of_mass.country.$touch()" 
+                      :search-input.sync="search" 
+                      ref="countryMassShipping" 
+                      label="Countries">
                       </v-select>
                     </v-flex>
                     <v-flex xs7>
-                      <v-text-field v-model="formData.shipping_of_mass.address" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.shipping_of_mass.address')" @blur="$v.formData.shipping_of_mass.address.$touch()" label="Street Address">
+                      <v-text-field 
+                      v-model="formData.shipping_of_mass.address" 
+                      @keyup.enter="stepUp()" 
+                      :error-messages="fieldErrors('formData.shipping_of_mass.address')" 
+                      @blur="$v.formData.shipping_of_mass.address.$touch()" 
+                      label="Street Address">
                       </v-text-field>
                     </v-flex>
                     <v-flex xs7>
-                      <v-text-field v-model="formData.shipping_of_mass.city" :error-messages="fieldErrors('formData.shipping_of_mass.city')" @blur="$v.formData.shipping_of_mass.city.$touch()" @keyup.enter="stepUp()" label="City">
+                      <v-text-field 
+                      v-model="formData.shipping_of_mass.city" 
+                      :error-messages="fieldErrors('formData.shipping_of_mass.city')" 
+                      @blur="$v.formData.shipping_of_mass.city.$touch()" 
+                      @keyup.enter="stepUp()" 
+                      label="City">
                       </v-text-field>
                     </v-flex>
                     <v-flex xs7>
-                      <v-text-field v-model="formData.state" @keyup.enter="stepUp()" label="Zip/Postal Code">
+                      <v-text-field 
+                      v-model="formData.state"
+                       @keyup.enter="stepUp()" 
+                       label="Zip/Postal Code">
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -407,6 +580,7 @@
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
                 <v-btn flat @click="stepDown()">back</v-btn>
               </v-stepper-content>
+
               <v-stepper-step step="8" editable>
                 Files to attach
               </v-stepper-step>
@@ -426,6 +600,7 @@
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
                 <v-btn flat @click="stepDown()">back</v-btn>
               </v-stepper-content>
+
               <v-stepper-step step="9" :rules="[() => !$v.formData.message.$error ]" editable>
                 Message
                 <small v-show="$v.formData.message.$error">Message is required</small>
