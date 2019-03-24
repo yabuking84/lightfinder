@@ -48,6 +48,7 @@ const state = {
     test_vuex: "",
     isConnected: false,
     socketMessage: '',
+    // notifications: [ {title:'ertet'} ],
     notifications: [],
     /////////////////////////////////
     // sockets
@@ -65,33 +66,36 @@ const mutations = {
     },
 
     UPDATE_NOTIFICATIONS_M(state, data) {
+        state.notifications.push(data);
+    },
 
-        state.notifications.push({
-            title: "test",
-        });
-
-    }
+    RESET_NOTIFICATIONS_M(state) {
+        state.notifications = [];
+    },
 }
     
 const actions = {
 
 
-    // supplierNewQuoteCreated
-    SOCKET_SUPPLIER_NEW_QUOTE_CREATED(context, data) {
+    // sockets
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    SOCKET_supplierNewQuoteCreated(context, data){
+        context.dispatch('getInquiry_a',data).then(response=>{
 
-        console.log('socket_supplier_NewQuoteCreated');
+            // console.log("VUEX");
+            // console.log(response);
 
-        context.commit('UPDATE_NOTIFICATIONS_M',data);
+            var notf = {};
+            notf.title = response.keyword;
+            if(response)
+            context.commit('UPDATE_NOTIFICATIONS_M',notf);
+        });
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // sockets
 
-        // var inq_id = data.inq_id;
-
-        // actions.dispatch('getInquiry_a').then(function(data){
-        //     console.log(data);
-        //     state.notifications.push({
-        //         title: data.keyword,
-        //     });
-        // });        
-
+    resetNotification_a(context){
+        context.commit('RESET_NOTIFICATIONS_M');
     },
 
     getInquiries_a(context){

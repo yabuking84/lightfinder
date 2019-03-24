@@ -142,6 +142,11 @@ const actions = {
                 // set inquiry statuses
 
 
+                // reset things
+                // resetresetresetresetresetresetresetresetreset
+                context.dispatch('resetThings_a');
+                // resetresetresetresetresetresetresetresetreset
+                // reset things
 
             })
             .catch(error => {
@@ -191,6 +196,14 @@ const actions = {
                     localStorage.clear();
                     context.commit('DESTROY_TOKEN_M');
                     context.commit('DESTROY_AUTHUSER_M');
+
+                    // reset things
+                    // resetresetresetresetresetresetresetresetreset
+                    context.dispatch('resetThings_a');
+                    // resetresetresetresetresetresetresetresetreset
+                    // reset things
+
+
                     resolve(response);
                 })
                 .catch(error => {
@@ -201,6 +214,12 @@ const actions = {
                 })
             });
         }
+    },
+
+    resetThings_a(context){
+        alert('byrInq/resetNotification_a');
+        console.log('byrInq/resetNotification_a');
+        context.dispatch('byrInq/resetNotification_a', null, { root: true });
     },
 
     loginSuccess_a(context,response){

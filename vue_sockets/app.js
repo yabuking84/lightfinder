@@ -67,6 +67,7 @@ io.sockets.on('connection', function(socket){
     socket.on('supplierNewQuoteCreated', function(data){
     	console.log('supplierNewQuoteCreated');
     	socket.broadcast.emit('supplierNewQuoteCreated',data);
+    	// io.emit('supplierNewQuoteCreated',data);
     });
 	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 	// Suppliers
