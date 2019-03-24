@@ -17,7 +17,7 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-card class="minh-500" color="grey lighten-5">
+    <v-card class="minh-500" color=" lighten-5">
       <v-container fluid grid-list-md>
         <v-layout row wrap>
           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

@@ -480,7 +480,7 @@
                         <v-radio label="No" :value="0"></v-radio>
                       </v-radio-group>
                     </v-flex>
-
+                      
                       <v-flex xs7>
 
                     <v-layout row wrap v-show="is_oem">
@@ -532,7 +532,7 @@
               <v-stepper-content step="7" ref="step_7" no-focus>
                 <v-container>
                   <v-layout row wrap>
-                    <v-flex xs7>
+                    <v-flex xs5 ml-2>
                       <v-select 
                       v-model="formData.shipping_of_mass.country" 
                       :items="countries" 
@@ -544,7 +544,7 @@
                       label="Countries">
                       </v-select>
                     </v-flex>
-                    <v-flex xs7>
+                    <v-flex xs5 ml-2>
                       <v-text-field 
                       v-model="formData.shipping_of_mass.address" 
                       @keyup.enter="stepUp()" 
@@ -553,7 +553,7 @@
                       label="Street Address">
                       </v-text-field>
                     </v-flex>
-                    <v-flex xs7>
+                    <v-flex xs5 ml-2>
                       <v-text-field 
                       v-model="formData.shipping_of_mass.city" 
                       :error-messages="fieldErrors('formData.shipping_of_mass.city')" 
@@ -562,7 +562,7 @@
                       label="City">
                       </v-text-field>
                     </v-flex>
-                    <v-flex xs7>
+                    <v-flex xs5 ml-2>
                       <v-text-field 
                       v-model="formData.state"
                        @keyup.enter="stepUp()" 
@@ -735,7 +735,7 @@ export default {
       oem_service: {
 
         required: requiredIf(function() {
-          if (this.is_sample == 1) {
+          if (this.is_oem == 1) {
             return true;
           }
         })
@@ -745,7 +745,7 @@ export default {
       oem_description: {
 
         required: requiredIf(function() {
-          if (this.is_sample == 1) {
+          if (this.is_oem == 1) {
             return true;
           }
         })
@@ -779,10 +779,10 @@ export default {
         city: { required: 'Please enter a city' },
       },
       oem_service: {
-        required: { required: 'Please enter an OEM service.' }
+        required:  'Please enter an OEM service.' 
       },
       oem_description: {
-        required: { required: 'Please enter an OEM Description ' }
+        required: 'Please enter an OEM Description ' 
       },
       shipping_of_mass: {
         address: { required: 'Please enter an Address.' },

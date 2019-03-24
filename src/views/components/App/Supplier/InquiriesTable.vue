@@ -111,7 +111,7 @@
                                flat 
                                value="left" 
                                @click="viewInquiry(props.item)"
-                               class="v-btn--active grey darken-1 font-weight-light text-decoration-none"
+                               class="v-btn--active blue-grey darken-4 font-weight-light text-decoration-none"
                                :loading="props.item.loading">
                                    <i class="fas fa-eye white--text"></i>
                                    <span class="ml-1 white--text font-weight-light ">View</span>

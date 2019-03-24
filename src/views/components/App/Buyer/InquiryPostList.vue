@@ -20,17 +20,21 @@
             <v-layout row wrap>
               <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
               <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-           
+              <v-flex xs5>
+                <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
+              </v-flex>
+
               <v-flex xs7>
                 <v-layout row wrap>
                   <!-- <v-container> -->
         
-
-
+                  <!-- <h5 class="font-weight-light text-xs-right"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
 
                   <v-flex xs12 pl-2>
-                    <h5 class="font-weight-thin">Product name</h5>
+                        <h5 class="font-weight-thin">Product name</h5>    
+                        <v-spacer></v-spacer> 
                     <h2>{{ bidItem.product_name }}</h2>
+
                     <!--
                             <v-img
                           v-if="bidItem.awarded"
@@ -90,14 +94,11 @@
           </v-flex>
 
 
-             <v-flex xs5>
-                <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
-              </v-flex>
+          
    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
      <v-flex xs12>
-            <!-- <v-card-actions> -->
             <!-- <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
             <v-layout row wrap>
               <v-flex xs6>
@@ -115,9 +116,7 @@
             </v-layout>
           </v-flex>
 
-             
-
-
+          <v-divider></v-divider>
 
               <v-flex xs12>
                 <!-- message box -->
@@ -127,23 +126,7 @@
 
             </v-layout>
           </v-card-text>
-          <v-divider></v-divider>
-    <!--       <v-card-actions>
-      <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5>
-      <v-spacer></v-spacer>
-      <v-btn :disabled="inquiry.awarded ? true : false" large class="deep-orange " @click="openAwardBid(bidItem)">
-        <i class="fas fa-award white--text"></i>
-        <span class="font-weight-bold ml-1 white--text">Request Sample</span>
-      </v-btn>
-      <v-btn :disabled="inquiry.awarded ? true : false" large class="green" @click="openAwardBid(bidItem)">
-        <i class="fas fa-award white--text"></i>
-        <span class="font-weight-bold ml-1 white--text">Award</span>
-      </v-btn>
-      <v-btn class="orange darken-3" @click="dialog = true">
-                <i class="fas fa-tasks white--text"></i>
-                <span class="font-weight-light ml-1 white--text" >Request Sample</span>
-              </v-btn>
-    </v-card-actions> -->
+    
         </v-card>
         <!-- <v-layout row wrap> -->
         <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
