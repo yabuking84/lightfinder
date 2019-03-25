@@ -223,12 +223,6 @@ export default {
     },
 
 
-    openInquiry(nVal) {
-      if (nVal)
-        this.$timer.start('BidTableTimer');
-      else
-        this.$timer.stop('BidTableTimer');
-    },
   },
 
 
