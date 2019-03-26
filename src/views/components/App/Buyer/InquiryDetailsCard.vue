@@ -22,7 +22,7 @@
 				color="error" 
 				style="width: auto; text-align:center; font-size:20px;"
 				class="mb-2">
-					Pending Payment!
+				Pending Payment!
 				</v-alert>
 
 				<v-alert
@@ -71,9 +71,6 @@
                                 <v-icon large>far fa-file-excel</v-icon>
                                 <v-icon large>far fa-file-archive</v-icon>
                             </v-flex>
-
-                            
-                            
 
 
                         </v-layout>

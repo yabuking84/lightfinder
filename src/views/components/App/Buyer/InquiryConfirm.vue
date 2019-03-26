@@ -1,8 +1,8 @@
 <template>
 	<div>
-	<v-dialog :value="openAwardDialog" @input="$emit('update:openAwardDialog',false)" max-width="1000px">
+	<v-dialog :value="openAwardDialog" @input="$emit('update:openAwardDialog',false)" width="1200px">
 		
-	     <v-toolbar dark color="grey darken-4" height="50px">
+	     <v-toolbar dark color="grey darken-4" height="60px">
             <v-toolbar-title class="font-weight-light subheading">
            	 <i class="fas fa-award white--text"></i>
           	  Award This Supplier
@@ -19,6 +19,21 @@
         <v-card>
 			<v-card-text>
 				<v-layout row wrap>
+
+
+					<v-flex xs12 pa-2 mb-3>
+
+						   <v-alert
+						   value="true"
+					      color="info"
+					      icon="check_circle"
+					      outline
+					      
+					    >
+					      This is a success alert.
+					    </v-alert>
+
+					</v-flex>
 
 					<v-flex xs8 >
 						<h1 class="font-weight-light subheading">Payment Information</h1>
@@ -39,7 +54,6 @@
 						          label="Select Payment Method"
 						          :error-messages="fieldErrors('form.payment_method_id')"
                 			   	   @blur="$v.form.payment_method_id.$touch()" 
-						          
 						        ></v-select>
 
 						      </v-flex>
@@ -106,13 +120,12 @@
 						      </v-flex>
 
 						</v-layout>   -->
-
 					</v-flex>	
-
-					
 					<!-- order details -->
 					<v-flex xs4>
+
 						<h1 class="font-weight-light subheading">Order Details</h1>
+
 						<v-divider></v-divider>
 
 						<v-layout row wrap mt-4 >
@@ -124,7 +137,6 @@
 								<v-flex xs7>
 								  	<h3 class="font-weight-bold">{{ this.bidinquiry.quantity  }}</h3>		
 								</v-flex>
-
 
 						</v-layout>
 
@@ -164,8 +176,9 @@
 					                	<span  class="ml-1 white--text font-weight-light">submit</span>
 					             	</v-btn>
 								</v-flex>
-						</v-layout>
+						</v-layout>						
 					</v-flex>
+
 				</v-layout>
 			</v-card-text>
         </v-card>

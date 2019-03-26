@@ -104,7 +104,7 @@
                        </v-layout>
                    </td>
                
-                   <td class="text-xs-left hey">
+                   <td class="text-xs-left">
                        <v-layout align-start justify-start column fill-height pt-2>
                                <v-btn 
                                small 

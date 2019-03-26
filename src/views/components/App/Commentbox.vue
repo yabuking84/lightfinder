@@ -1,92 +1,136 @@
 <template>
-  <v-layout row wrap justify-end class="grey lighten-5">
-    <v-flex xs12>
-      <!-- User info -->
-      <!-- Comments -->
-      <v-card-text class="py-0 grey lighten-5">
-        <div class="body-2 nolabel--text py-3">
-          <v-icon left color="nolabel">comment</v-icon> Message
-        </div>
 
-        <!-- Commnets Layouts -->
-        <v-layout align-center row spacer>
-      <template>
-        <v-flex xs12 class="py-0">
-          <v-avatar size="36px" slot="activator">
-            <img src="http://i.pravatar.cc/64" alt="">
-          </v-avatar>
-          <span class="pl-2">
-            <strong>Larry Parba</strong>
-            <span class="body-1 grey--text">June 10, 2015</span>
-          </span>
-          <div class="pl-5">
-            <p>Thank you for joining our community and for using Vuetify in your projects. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </v-flex>
-      </template>
-    </v-layout>
-    
-    <v-layout align-center row spacer>
-      <template>
-        <v-flex xs12 class="py-0">
-          <v-avatar size="36px" slot="activator">
-            <img src="http://i.pravatar.cc/64" alt="">
-          </v-avatar>
-          <span class="pl-2">
-            <strong>Larry Parba</strong>
-            <span class="body-1 grey--text">June 10, 2015</span>
-          </span>
-          <div class="pl-5">
-            <p>Thank you for joining our community and for using Vuetify in your projects. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </v-flex>
-      </template>
-    </v-layout>
+    <div>
+        <v-card color="transparent" style="max-height: 300px; overflow-y: scroll;" :class="'chatscroll-statesetter_'+this.biditem"  :id="'chatscrollstatesetter_'+this.biditem" ref="chatscrollstatesetter">
+            <v-card-text class="transparent" id="chatscroll-thread">  
+
+                <v-layout row wrap class="pa-0">
+                    <v-flex xs12 v-for="(comment, key) in commentData" :key="key">
+                        <v-card flat class="overflow-hidden transparent">
+                            <v-container fluid grid-list-xs class="pa-0">
+                                <div class="chat-thread" :class="[authUser.id === comment.user_id ? 'end' :'start']">
+                                    <div class="user-avatar">
+                                        <v-avatar size="40px" color="grey lighten-4">
+                                            <img :src="[authUser.id === comment.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="avatar">
+                                        </v-avatar>
+                                    </div>
+                                    <div class="chat-message pa-2 border-radius6">
+                                        <div class="body-2">{{ comment.name }}</div>
+                                        <div class="chat-thread-message dont-break-out"> {{ comment.message }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </v-container>
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+
+                <v-layout row wrap v-if="!commentData.length">
+                    <v-flex xs12>
+                        <h2 class="font-weight-medium grey--text mt-4 mb-4 text-xs-center">Start A Conversation Now</h2>
+                    </v-flex>
+                </v-layout>
+
+            </v-card-text>
+        </v-card>
 
         <!-- Add Comment -->
-        <v-layout row wrap class="add-comment">
-          <v-flex xs12 class="pos-relative pl-5">
-            <v-avatar size="36px" class="pos-absolute">
-              <img src="http://i.pravatar.cc/64">
-            </v-avatar>
-            <v-textarea auto-grow :row-height="16" flat outline auto-grow v-model="comment" class="clean-textarea no-details white py-0 pl-5" placeholder="Your Message"></v-textarea>
-            <v-layout row wrap>
-              <v-spacer></v-spacer>
-              <v-btn color="blue-grey" dark class="ml-0 mt-3 mb-3" @click.stop="submit"> <i class="fas fa-paper-plane"></i>&nbsp&nbsp Add Message</v-btn>
-            </v-layout>
-          </v-flex>
+        <v-layout row wrap class="no-mrpd">
+            <v-flex xs12 class="no-mrpd">
+                <div class="pos-relative vuse-chat-message-container">
+                    <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage(biditem)" placeholder="Type you message .."></chat-editable>
+                    <v-btn color="green" @click="sendMessage(biditem)" class="ma-0 send-message-btn pa-0" :disabled="chatMessageEditor === null || chatMessageEditor === ''">
+                        <v-icon color="white">fa-paper-plane</v-icon>
+                    </v-btn>
+                </div>
+            </v-flex>
         </v-layout>
         <!-- Add Comment -->
+    </div>
 
-
-      </v-card-text>
-    </v-flex>
-  </v-layout>
 </template>
+
 <script>
-import { authUser } from '@/data/dummyData'
-export default {
-  data() {
-    return {
-      authUser,
-      comment: null
-    }
-  },
-  methods: {
-    submit() {
+
+    import ChatEditable from '@/views/Components/Editable/ChatEditable'
+
+    export default {
+
+        components: {
+
+            ChatEditable
+
+        },
+
+        props: {
+
+            commentData: {
+                type: Array
+            },
+
+            bidinquiry: {
+                type: Object
+            },
+
+            biditem: {
+                type: String
+            }
+
+        },
+
+        data() {
+            return {
+                chatMessageEditor: null,
+            }
+        },
+
+        beforeDestroy() {
+
+            this.$eventBus.$off('resetChatEditor')
+
+        },
+
+        methods: {
+
+            sendMessage(biditem, key) {
+
+                if (this.chatMessageEditor) 
+
+                    this.commentData.push({
+
+                       user_id: this.authUser.id,
+                       name: this.authUser.name,
+                       message: this.chatMessageEditor
+
+                    });
+
+                     this.chatMessageEditor = null
+                     this.$eventBus.$emit('resetChatEditor')
+
+                     var div_id = '#chatscrollstatesetter_' + this.biditem
+                     this.$nextTick(() => {
+                      const container = document.querySelector(div_id)
+                      container.scrollTop = container.scrollHeight
+                    })
+
+            },
+
+        },
+
+        computed: {
+
+             authUser () {        
+                return this.$store.state.auth.auth_user;
+            },
+
+        },
 
     }
-  }
-}
-
 </script>
+
+<style scoped lang="scss">
+    #chatscroll-thread {
+        // max-height: 400px;
+        // overflow: scroll;
+    }
+</style>

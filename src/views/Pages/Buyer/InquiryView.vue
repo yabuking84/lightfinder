@@ -2,51 +2,35 @@
 <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen>
 <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
-        <!-- <v-card-title class="headline grey lighten-2" primary-title>
-            Privacy Policy
-        </v-card-title> -->
-       <v-toolbar dark color="grey darken-4 ">
-           <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2> 
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click="closeOpenInquiry()">
-              <v-icon>close</v-icon>
-            </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
+		<v-toolbar dark color="grey darken-4 ">
+		    <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2>
+		    <v-spacer></v-spacer>
+		    <v-toolbar-items>
+		        <v-btn dark flat @click="closeOpenInquiry()">
+		            <v-icon>close</v-icon>
+		        </v-btn>
+		    </v-toolbar-items>
+		</v-toolbar>
 
-        <!-- <v-card-text>	 -->
+		<v-container fluid grid-list-xl>
+
+		    <v-layout row wrap>
+
+		        <!-- inquiry details card -->
+		        <v-flex xs5>
+		            <inquiry-details-card :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
+		        </v-flex>
+		        <!-- end of detils  -->
+
+		        <!-- supplier quote / bids -->
+		        <v-flex xs7>
+		            <inquiry-post-list :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
+		        </v-flex>
+		        <!-- supplier quote -->
+
+		    </v-layout>
+		</v-container>	
 	
-			<v-container fluid grid-list-xl >
-					
-					<v-layout row wrap>
-						
-						<!-- inquiry details card -->
-						<v-flex xs5>
-							<inquiry-details-card :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
-						</v-flex>
-						<!-- end of detils  -->
-
-						
-						<!-- supplier quote / bids -->
-						<v-flex xs7>
-							<inquiry-post-list :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
-						</v-flex>  
-						<!-- supplier quote -->
-					
-
-					</v-layout>
-			</v-container>
-
-        <!-- </v-card-text> -->
-
-
-        <!-- <v-card-actions >
-            <v-spacer></v-spacer>
-            <v-btn color="primary" dark @click="closeOpenInquiry()">
-                close
-            </v-btn>
-        </v-card-actions> -->
     </v-card>
 </v-dialog>   	
 </template>
