@@ -65,9 +65,11 @@ io.sockets.on('connection', function(socket){
 	// Suppliers
 	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     socket.on('supplierNewQuoteCreated', function(data){
-    	console.log('supplierNewQuoteCreated');
     	socket.broadcast.emit('supplierNewQuoteCreated',data);
-    	// io.emit('supplierNewQuoteCreated',data);
+    });
+
+    socket.on('buyerNewInquiryCreated', function(data){
+        socket.broadcast.emit('buyerNewInquiryCreated',data);
     });
 	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 	// Suppliers

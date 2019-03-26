@@ -295,7 +295,7 @@ export default {
     this.fillBidTable();
     inqEvntBs.$on('award-bid-form-submitted', () => {
       this.fillBidTable();
-      this.inquiry.awarded = 1
+      // this.inquiry.awarded = 1
     });
 
   },

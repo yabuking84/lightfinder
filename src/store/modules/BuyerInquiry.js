@@ -57,11 +57,11 @@ const state = {
 
 
 const mutations = {
-    SOCKET_CONNECT(state) {
+    CONNECTED_M(state) {
       state.isConnected = true;
     },
 
-    SOCKET_DISCONNECT(state) {
+    DISCONNECTED_M(state) {
       state.isConnected = false;
     },
 
@@ -79,6 +79,15 @@ const actions = {
 
     // sockets
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    SOCKET_connect(context){
+        // console.log("byrInqr connect");
+        context.commit('CONNECTED_M')
+    },
+    SOCKET_disconnect(context){
+        // console.log("byrInqr disconnect");
+        context.commit('DISCONNECTED_M')
+    },
+
     SOCKET_supplierNewQuoteCreated(context, data){
         context.dispatch('getInquiry_a',data).then(response=>{
 

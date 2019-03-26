@@ -265,17 +265,20 @@ export default {
 
   }),
 
-  timers: [{
-    name: 'InquiryTableTimer',
-    time: config.polling.inquiryTable.time,
-    repeat: true,
-    autostart: false,
-    // immediate: true,
-    callback: function() {
-      console.log("InquiryTableTimer");
-      this.fillTable(false);
-    },
-  }],
+  // timers: [{
+  //   name: 'InquiryTableTimer',
+  //   time: config.polling.inquiryTable.time,
+  //   repeat: true,
+  //   autostart: false,
+  //   callback: function() {
+  //     console.log("InquiryTableTimer");
+  //     this.fillTable(false);
+  //   },
+  // }],
+  // to execute timer
+  // this.$timer.stop('InquiryTableTimer');
+
+
 
   methods: {
 
