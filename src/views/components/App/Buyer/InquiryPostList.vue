@@ -15,9 +15,6 @@
 
                       <v-flex xs7>
                           <v-layout row wrap>
-                              <!-- <v-container> -->
-
-                              <!-- <h5 class="font-weight-light text-xs-right"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
 
                               <v-flex xs12 pl-2>
                                   <h5 class="font-weight-thin">Product name</h5>
@@ -25,20 +22,11 @@
 
                                   <h2>{{ bidItem.product_name }}</h2>
 
-                                  <!--
-                                      <v-img
-                                    v-if="bidItem.awarded"
-                                      src="/static/images/award.png"
-                                      class="awarded">
-                                      </v-img> 
-                                    -->
                                   <v-icon v-if="bidItem.awarded" class="awarded orange--text">
                                       fas fa-award
                                   </v-icon>
                               </v-flex>
-                              <!--         <v-flex xs12 pt-0 pl-2>
-                              <h3 class="font-weight-regular">{{ bidItem.description }}</h3>
-                            </v-flex> -->
+                          
                               <v-flex xs12>
                                   <v-layout row wrap>
                                       <v-flex xs4 pa-2>
@@ -76,7 +64,6 @@
                                   </v-layout>
                               </v-flex>
 
-                              <!-- </v-container> -->
                           </v-layout>
 
                       </v-flex>
@@ -85,7 +72,7 @@
                       <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
                       <v-flex xs12>
-                          <!-- <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
+                        
                           <v-layout row wrap>
                               <v-flex xs6>
                                   <v-btn flat block :disabled="inquiry.awarded ? true : false" large class="red darken-2 " @click="openSample(bidItem)">
@@ -247,8 +234,6 @@ export default {
         },
     }],
 
-  },
-
     computed: {
 
     },
@@ -332,6 +317,8 @@ export default {
       this.fillBidTable();
       this.inquiry.awarded = 1
     });
+
+}
 
 }
 </script>
