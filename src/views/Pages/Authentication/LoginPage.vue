@@ -120,7 +120,8 @@
     // email: 'info@bal.com',
     // email: 'buyer@bal.com',
     // email: 'supplier@bal.com',
-    email: 'm.ozil@philips.com',
+    // email: 'm.ozil@philips.com',
+    email: 'z.abdin@almani.ae',
     password: '123456',
     rememberme: false
   }

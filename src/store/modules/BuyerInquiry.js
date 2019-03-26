@@ -48,6 +48,7 @@ const state = {
     test_vuex: "",
     isConnected: false,
     socketMessage: '',
+    // notifications: [ {title:'ertet'} ],
     notifications: [],
     /////////////////////////////////
     // sockets
@@ -56,42 +57,54 @@ const state = {
 
 
 const mutations = {
-    SOCKET_CONNECT(state) {
+    CONNECTED_M(state) {
       state.isConnected = true;
     },
 
-    SOCKET_DISCONNECT(state) {
+    DISCONNECTED_M(state) {
       state.isConnected = false;
     },
 
     UPDATE_NOTIFICATIONS_M(state, data) {
+        state.notifications.push(data);
+    },
 
-        state.notifications.push({
-            title: "test",
-        });
-
-    }
+    RESET_NOTIFICATIONS_M(state) {
+        state.notifications = [];
+    },
 }
     
 const actions = {
 
 
-    // supplierNewQuoteCreated
-    SOCKET_SUPPLIER_NEW_QUOTE_CREATED(context, data) {
+    // sockets
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    SOCKET_connect(context){
+        // console.log("byrInqr connect");
+        context.commit('CONNECTED_M')
+    },
+    SOCKET_disconnect(context){
+        // console.log("byrInqr disconnect");
+        context.commit('DISCONNECTED_M')
+    },
 
-        console.log('socket_supplier_NewQuoteCreated');
+    SOCKET_supplierNewQuoteCreated(context, data){
+        context.dispatch('getInquiry_a',data).then(response=>{
 
-        context.commit('UPDATE_NOTIFICATIONS_M',data);
+            // console.log("VUEX");
+            // console.log(response);
 
-        // var inq_id = data.inq_id;
+            var notf = {};
+            notf.title = response.keyword;
+            if(response)
+            context.commit('UPDATE_NOTIFICATIONS_M',notf);
+        });
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // sockets
 
-        // actions.dispatch('getInquiry_a').then(function(data){
-        //     console.log(data);
-        //     state.notifications.push({
-        //         title: data.keyword,
-        //     });
-        // });        
-
+    resetNotification_a(context){
+        context.commit('RESET_NOTIFICATIONS_M');
     },
 
     getInquiries_a(context){

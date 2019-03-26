@@ -55,6 +55,7 @@
                           <v-icon large>far fa-file-excel</v-icon>
                           <v-icon large>far fa-file-archive</v-icon>
                         </v-flex>
+
                         <v-flex xs12>
                           <h5 class="font-weight-thin">Specifications</h5>
                           <v-layout row wrap class="specifications">
@@ -69,6 +70,8 @@
                             </v-alert>
                           </v-layout>
                         </v-flex>
+
+
                       </v-layout>
                     </v-flex>
                   </v-layout>
@@ -291,16 +294,16 @@ methods: {
     	this.loading = true;
       this.$store.dispatch(action, data)
         .then((response) => {
-          this.loading = false;
-          // this.$socket.emit('Supplier_NewQuoteCreated', {inq_id:this.inquiry.id});
-          inqEvntBs.emitBidFormSubmitted();
-          this.$emit('update:openQuoteDialog', false);
+            this.loading = false;
+            this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
+            inqEvntBs.emitBidFormSubmitted();
+            this.$emit('update:openQuoteDialog', false);
         }).catch((e) => {
-          this.loading = false;
-          console.log('Error: ' + e);
-          alert("ERROR!!");
+            this.loading = false;
+            console.log('Error: ' + e);
+            alert("ERROR!!");
         }).finally(() => {
-          this.loading = false;
+            this.loading = false;
         });
     }
     // alert("action = "+action);
@@ -320,8 +323,6 @@ methods: {
 
     triggerTestEvent() {
         this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
-        this.$socket.emit('sendMessageSuperChat', {message:'ohlala', name:"name"});
-
     },
 
 

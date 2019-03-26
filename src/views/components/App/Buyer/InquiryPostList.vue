@@ -247,24 +247,7 @@ export default {
         },
     }],
 
-    watch: {
-
-        inquiry: {
-            handler(nVal, oVal) {
-
-                    this.fillBidTable();
-
-                },
-                deep: true,
-        },
-
-        openInquiry(nVal) {
-            if (nVal)
-                this.$timer.start('BidTableTimer');
-            else
-                this.$timer.stop('BidTableTimer');
-        },
-    },
+  },
 
     computed: {
 
@@ -344,7 +327,11 @@ export default {
             this.inquiry.awarded = 1
         });
 
-    },
+    this.fillBidTable();
+    inqEvntBs.$on('award-bid-form-submitted', () => {
+      this.fillBidTable();
+      this.inquiry.awarded = 1
+    });
 
 }
 </script>

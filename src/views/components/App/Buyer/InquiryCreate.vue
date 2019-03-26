@@ -1041,9 +1041,9 @@ export default {
         "oem_description": this.formData.oem_description
       }
 
-      console.log(this.formData);
-      console.log('--------------------------')
-      console.log(formData);
+      // console.log(this.formData);
+      // console.log('--------------------------')
+      // console.log(formData);
 
       if (this.$v.$invalid) {
 
@@ -1059,6 +1059,7 @@ export default {
             this.formLoading = false;
             this.$emit('update:dialog', false);
 
+            // emit on bus that Inquiry form is submitted
             inqEvntBs.emitFormSubmitted();
 
           }).catch((e) => {

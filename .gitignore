@@ -9,10 +9,9 @@ yarn-error.log*
 selenium-debug.log
 
 _backup/
-/build/
-/config/*
-/config/index.js
-/test/
+build/
+config/
+test/
 package.json
 
 
