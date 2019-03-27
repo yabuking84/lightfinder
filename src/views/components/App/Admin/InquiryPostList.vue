@@ -1,7 +1,8 @@
 <template>
 	<div>
 
-    <v-toolbar color="black darken-4" class="white--text" height="40px">
+    <v-toolbar color="grey
+     darken-4" class="white--text" height="60px">
         <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
     </v-toolbar>
 
@@ -14,15 +15,19 @@
         </v-flex>
 
         <v-flex xs12 v-else-if="inquiry.stage_id == 1003">
+        	
             <v-alert :value="true" type="error" style="width: auto;" class="ma-4" outline>
                 Inquiry is Rejected
             </v-alert>
+
+
         </v-flex>
 
         <v-card-text v-else>
 
             <v-card class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
                 <v-card-text>
+
                     <v-layout row wrap>
 
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -167,17 +172,7 @@ data: function () {
 		bidToAward: null,
 		bidinquiry: null,
 		has_awarded:true,
-		CommentData: [
-
-			{
-
-			},
-			
-			{
-
-			}
-
-		]
+	
 
 	}
 

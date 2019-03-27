@@ -1,4 +1,5 @@
 <template>
+  
   <v-dialog 
   :value="openInquiry" 
   @input="$emit('update:openInquiry', false)" 

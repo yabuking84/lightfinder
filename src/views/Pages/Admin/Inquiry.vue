@@ -1,15 +1,10 @@
 <template>
 	<div>
 		<v-layout row wrap>
-			<v-container fluid>
-
-				<!-- <v-layout row wrap>
-					<v-spacer></v-spacer>
-				    <div> <v-btn @click="dialog=true" class="font-weight-light" dark color="grey darken-4"><i class="fas fa-search white--text"></i>&nbsp Add Inquiry </v-btn> </div>
-				</v-layout> -->
+			<v-container fluid>	
 
 				<!-- inquiry table -->
-					<inquiry-table> </inquiry-table>
+					<inquiries-table> </inquiries-table>
 				<!-- inquiry table -->
 				
 			</v-container>	
@@ -20,7 +15,7 @@
 
 <script>
 	
-	import InquiryTable from '@/views/components/app/Admin/InquiryTable'
+	import InquiriesTable from '@/views/components/app/Admin/InquiriesTable'
 
 	export default {
 
@@ -49,8 +44,7 @@
 
 		components: {
 
-			InquiryTable,
-			
+			InquiriesTable,
 
 		},
 		methods: {

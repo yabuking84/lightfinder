@@ -109,7 +109,9 @@
     </div>
 
 </template>
+
 <script>
+
     import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry";
