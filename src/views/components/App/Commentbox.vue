@@ -78,9 +78,13 @@
         },
 
         data() {
+
             return {
+
                 chatMessageEditor: null,
+
             }
+            
         },
 
         beforeDestroy() {

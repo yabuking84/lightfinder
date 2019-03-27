@@ -18,13 +18,15 @@
 
 		        <!-- inquiry details card -->
 		        <v-flex xs5>
-		            <inquiry-details-card :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
+		        	<!-- :openInquiry="openInquiry" -->
+		            <inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
 		        </v-flex>
 		        <!-- end of detils  -->
 
 		        <!-- supplier quote / bids -->
 		        <v-flex xs7>
-		            <inquiry-post-list :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
+		        	<!-- :openInquiry="openInquiry" -->
+		            <inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
 		        </v-flex>
 		        <!-- supplier quote -->
 

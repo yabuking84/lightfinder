@@ -15,6 +15,7 @@
             </v-btn>
           </v-flex>
           <v-flex xs6>
+            <!-- rejectInquiry(inquiry.id) -->
             <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 font-weight-light ">
               <i class="fas fa-thumbs-down white--text"></i>
               <span class="ml-1 white--text font-weight-light ">Reject</span>
@@ -40,7 +41,7 @@
                 <h5 class="font-weight-thin">Quantity</h5>
                 <h4 class="font-weight-bold">
                   <span>{{ inquiry.quantity }} pcs</span>
-                </h4>
+                </h4> 
               </v-flex>
               <v-flex xs12>
                 <h5 class="font-weight-thin">Message </h5>
@@ -76,11 +77,16 @@
         </v-layout>
       </v-container>
     </v-card>
+
+    <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
+
   </div>
 </template>
 <script>
-import helpers from "@/mixins/helpers";
-import inqEvntBs from "@/bus/inquiry";
+
+import helpers from "@/mixins/helpers"
+import inqEvntBs from "@/bus/inquiry"
+import MessageBox from '@/views/Components/App/Admin/MessageDialog'
 
 export default {
 
@@ -88,19 +94,39 @@ export default {
     helpers,
   ],
 
-  props: [
+    // 'inquiry',
+    // 'openInquiry',
+    // 'isClosed'
 
-    'inquiry',
-    'openInquiry',
-    'isClosed'
+  props: {
+    
+    inquiry: {
+      type: Object
+    },
 
-  ],
+    openInquiry: {
+      type:Boolean
+    },
+
+    isClosed: {
+      type: Boolean
+    }      
+
+  },
 
   data: () => ({
 
     onVerification: 1001,
+    openMessageDialog: false,
+    CommentData: [
+
+    ]
 
   }),
+
+  components: {
+    MessageBox
+  },
 
   methods: {
 
@@ -134,8 +160,10 @@ export default {
         })
         .then((response) => {
           // create a event bus 
-          this.$emit('update:isClosed', true);
+          this.openMessageDialog=true
+          // this.$emit('update:isClosed', true);
           inqEvntBs.emitApproved();
+
         })
         .catch((e) => {
           this.$emit('update:isClosed', true);
@@ -145,7 +173,12 @@ export default {
 
         });
 
-    }
+    },
+
+    // if query selected is set to true
+    openMessageBox(inquiry_id) {
+
+    },
 
   },
 

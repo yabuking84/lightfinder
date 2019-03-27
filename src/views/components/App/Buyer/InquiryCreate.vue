@@ -125,7 +125,7 @@
               <v-stepper-content step="3" ref="step_3">
                 <v-container>
                   <v-layout row>
-                    <v-flex xs5>
+                    <v-flex xs4>
                       <v-text-field 
                       v-model="formData.quantity" 
                       label="Quantity" 
@@ -133,16 +133,16 @@
                       :error-messages="fieldErrors('formData.quantity')" 
                       @blur="$v.formData.quantity.$touch()" 
                       :value="formData.quantity" 
-                      suffix="pc/s" 
+                      suffix="pcs" 
                       mask="######">
                       </v-text-field>
                     </v-flex>
                     <v-flex xs1>
                     </v-flex>
-                    <v-flex xs5>
+                    <v-flex xs4>
                       <v-text-field 
                       class="mr-1" 
-                      label="Preferred price" 
+                      label="Price Per Piece" 
                       :error-messages="fieldErrors('formData.desired_price')" 
                       @blur="$v.formData.desired_price.$touch()" 
                       v-model="formData.desired_price" 
@@ -151,6 +151,18 @@
                       suffix="USD">
                       </v-text-field>
                     </v-flex>
+                  <v-flex xs1>
+                    </v-flex>
+                          <v-flex xs4>
+                      <v-text-field 
+                      class="mr-1" 
+                      label="Total Price" 
+                      @keyup.enter="stepUp()" 
+                      :value="formData.quantity * formData.desired_price" 
+                      suffix="USD">
+                      </v-text-field>
+                    </v-flex>
+
                   </v-layout>
                 </v-container>
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -235,7 +247,7 @@
                             <v-radio label="No" :value="0"></v-radio>
                           </v-radio-group>
                         </v-flex>
-                        <v-flex xs6 mr-3 v-show="is_warranty">
+                        <v-flex xs2 mt-2 mr-3 v-show="is_warranty">
                           <v-text-field label="Warranty" v-model="formData.warranty" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.warranty')" @blur="$v.formData.warranty.$touch()" :value="formData.warranty" suffix="yr/s" mask="#">
                           </v-text-field>
                         </v-flex>
@@ -602,8 +614,8 @@
               </v-stepper-content>
 
               <v-stepper-step step="9" :rules="[() => !$v.formData.message.$error ]" editable>
-                Message
-                <small v-show="$v.formData.message.$error">Message is required</small>
+                Additional Details
+                <small v-show="$v.formData.message.$error">Additional details is required</small>
               </v-stepper-step>
               <v-stepper-content step="9" ref="step_9">
                 <v-container>
@@ -770,7 +782,7 @@ export default {
       category: { required: 'Please enter an category.' },
       quantity: { required: 'Please enter an Quantity.' },
       desired_price: { required: 'Please enter your Preferred Price.' },
-      message: { required: 'Please enter a Message' },
+      message: { required: 'Please enter an Additional Details.' },
       warranty: { required: 'Please enter a Warranty' },
       quantity_of_sample: { required: 'Please enter an Quantity of an Sample' },
       shipping_of_sample: {
@@ -778,7 +790,7 @@ export default {
         country: { required: 'Please enter a Country' },
         city: { required: 'Please enter a city' },
       },
-      oem_service: {
+      oem_service: {  
         required:  'Please enter an OEM service.' 
       },
       oem_description: {

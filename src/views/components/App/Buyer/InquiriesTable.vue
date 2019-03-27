@@ -18,7 +18,7 @@
         </v-toolbar>
       </v-layout>
 
-  <!--     <v-card-title>
+      <v-card-title>
         <v-layout row wrap>
           <v-flex xs7>
             <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
@@ -37,7 +37,7 @@
         </v-layout>
       </v-card-title>
 
-      <v-divider></v-divider> -->
+      <v-divider></v-divider>
       
       <v-data-table   
         :rows-per-page-items="rowsPerPageItems"
@@ -330,6 +330,7 @@ export default {
           this.inquiry = data;
           this.openInquiry = true;
           inq.loading = false;
+          
         })
         .catch((error) => {
           console.log(error);
