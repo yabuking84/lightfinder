@@ -14,7 +14,8 @@
                 </v-btn>
             </v-toolbar-title>
         </v-toolbar>
-        <v-card class="minh-500" color=" lighten-5">
+        <!-- minh-500 -->
+        <v-card class="" color=" lighten-5">
             <v-container fluid grid-list-md>
                 <v-layout row wrap>
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -28,9 +29,7 @@
                                 <h5 class="font-weight-thin">Product code</h5>
                                 <h2>{{ bid.product_name }}</h2>
                             </v-flex>
-                            <!--       <v-flex xs12 pt-0>
-                  <h3 class="font-weight-regular">{{ bid.description }}</h3>
-                </v-flex> -->
+                          
                             <v-flex xs12>
                                 <v-layout row wrap>
                                     <v-flex xs4 pa-2>
@@ -79,9 +78,26 @@
                         <!-- message box -->
                     </template>
                     <v-flex xs12 v-if="!hasBid">
-                        <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
-                            No Quote yet..
-                        </v-alert>
+
+
+                                    <v-layout justify-center row fill-height>
+                                                            
+                                              <v-flex xs2 my-4>
+                                                  <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
+                                              </v-flex>
+
+                                              <v-flex xs10 my-4>
+                                                  <v-card-title primary-title>
+                                                      <div>
+                                                          <div class="headline font-weight-bold darken-3" color="#BF4653">You haven't Quoted Yet</div>
+                                                          <div class="blue-grey--text" style="font-style: italic;">Be the first one to give a Quote for this Inquiry.</b> 
+                                                          </div>
+
+                                                      </div>
+                                                  </v-card-title>
+                                              </v-flex>
+                                    </v-layout>
+
                     </v-flex>
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

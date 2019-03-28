@@ -189,7 +189,7 @@ export default {
       ...config.inquiry_statuses.buyers,
     ],
     search: null,
-    dialog: false,
+    // dialog: false,
     loading: false,
     headers: [{
         text: 'Select',
@@ -330,7 +330,7 @@ export default {
           this.inquiry = data;
           this.openInquiry = true;
           inq.loading = false;
-          
+
         })
         .catch((error) => {
           console.log(error);

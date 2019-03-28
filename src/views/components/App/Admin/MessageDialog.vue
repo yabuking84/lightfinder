@@ -3,7 +3,7 @@
 
 	    <v-dialog :value="openMessageDialog" @input="$emit('update:openMessageDialog',false)" width="35%">
 	       
-	        <v-toolbar dark color="green" height="40px">
+	        <v-toolbar dark color="red" height="40px">
 	            <v-toolbar-title class="font-weight-light subheading">
 	                Conversation Box
 	            </v-toolbar-title>
@@ -20,24 +20,31 @@
 		                <v-card-text class="transparent" id="chatscroll-thread">
 		                    <v-layout row wrap>
 		                        <v-flex xs12>
-		                            <h3 class="font-weight-medium grey--text mt-4 mb-4 text-xs-center">Hi! please tell us why you reject the Inquiry ?</h3>
+		                            <h3 class="font-weight-medium grey--text mt-4 mb-4 text-xs-center">Please tell us why you reject the Inquiry ?</h3>
 		                        </v-flex>
 		                    </v-layout>
 		                </v-card-text>
 		            </v-card>
 	        	</v-flex>
+					
 
+				<v-flex xs12>
+					<v-card>
+						<v-layout row wrap class="no-mrpd">
+			                <v-flex xs12 class="no-mrpd white">
+			                    <div class="pos-relative vuse-chat-message-container">
+			                        <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage()" placeholder="Type you message .."></chat-editable>
+			                        <v-btn color="green" @click="sendMessage()" class="ma-0 send-message-btn pa-0" :disabled="chatMessageEditor === null || chatMessageEditor === ''">
+			                            <v-icon color="white">fa-paper-plane</v-icon>
+			                        </v-btn>
+			                    </div>
+			                </v-flex>
+			            </v-layout>  
+					</v-card>
+					
+				</v-flex>	
 	            <!-- Add Comment -->
-	            <v-layout row wrap class="no-mrpd">
-	                <v-flex xs12 class="no-mrpd white">
-	                    <div class="pos-relative vuse-chat-message-container">
-	                        <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage()" placeholder="Type you message .."></chat-editable>
-	                        <v-btn color="green" @click="sendMessage()" class="ma-0 send-message-btn pa-0" :disabled="chatMessageEditor === null || chatMessageEditor === ''">
-	                            <v-icon color="white">fa-paper-plane</v-icon>
-	                        </v-btn>
-	                    </div>
-	                </v-flex>
-	            </v-layout>
+	            
 	            <!-- Add Comment -->
 	        </v-layout>
 

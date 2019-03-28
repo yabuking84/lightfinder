@@ -93,7 +93,7 @@
         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
         <!-- pending payment -->
         <div v-for="bidItem in bidItems">
-          <v-card class="mb-2 pa-2" dark :class="(bidItem.owned)?'md-green-500': '#33313b'">
+          <v-card class="mb-2 pa-2" :class="(bidItem.owned)?'md-green-500': ''">
             <v-layout row wrap class="pa-2">
               <v-flex xs6>
                 <h3 class="text-xs-left ml-3">

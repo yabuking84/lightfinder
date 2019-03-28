@@ -9,25 +9,109 @@
     <v-card color="grey lighten-5">
 
         <v-flex xs12 v-if="inquiry.stage_id == 1001">
-            <v-alert :value="true" type="warning" style="width: auto;" class="ma-4" outline>
+           <!--  <v-alert :value="true" type="warning" style="width: auto;" class="ma-4" outline>
                 Waiting for Verification
-            </v-alert>
+            </v-alert> -->
+
+                      <v-layout row wrap>
+                          <v-flex xs2 my-4>
+                              <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
+                          </v-flex>
+
+                          <v-flex xs10 my-4>
+                              <v-card-title primary-title>
+                                  <div>
+                                      <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
+                                      <div class="blue-grey--text" style="font-style: italic;">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+                                      </div>
+                                  </div>
+                              </v-card-title>
+                          </v-flex> 
+                      </v-layout>
+
+		           <v-layout row wrap pa-0 v-if="inquiry.stage_id == 1001">
+				          <v-flex xs6>
+				            <v-btn @click="approvedInquiry(inquiry.id)" block class="green darken-1 large font-weight-light ">
+				              <i class="fas fa-thumbs-up white--text"></i>
+				              <span class="ml-1 white--text font-weight-light ">Approved</span>
+				            </v-btn>
+				          </v-flex>
+				          <v-flex xs6>
+				            <!-- rejectInquiry(inquiry.id) -->
+				            <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 large font-weight-light ">
+				              <i class="fas fa-thumbs-down white--text"></i>
+				              <span class="ml-1 white--text font-weight-light ">Reject</span>
+				            </v-btn>
+				          </v-flex>
+		        </v-layout>
         </v-flex>
 
         <v-flex xs12 v-else-if="inquiry.stage_id == 1003">
-        	
-            <v-alert :value="true" type="error" style="width: auto;" class="ma-4" outline>
-                Inquiry is Rejected
-            </v-alert>
+           <!--  <v-alert :value="true" type="warning" style="width: auto;" class="ma-4" outline>
+                Waiting for Verification
+            </v-alert> -->
 
+                      <v-layout row wrap>
+                          <v-flex xs2 mt-4>
+                                <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
+                            </v-flex>
 
+                            <v-flex xs10 mt-4>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
+                                        <div class="blue-grey--text" style="font-style: italic;">the INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
+                                        </div>
+                                    </div>
+                                </v-card-title>
+                            </v-flex>
+ 
+					<v-flex xs12>
+					<v-layout row wrap>
+					  <v-flex xs6 offset-xs3>
+				            <v-btn @click="approvedInquiry(inquiry.id)" block class="green darken-1 large font-weight-light ">
+				              <i class="fas fa-thumbs-up white--text"></i>
+				              <span class="ml-1 white--text font-weight-light ">Approved</span>
+				            </v-btn>
+				          </v-flex>
+
+				        <!--   <v-flex xs6>
+				          rejectInquiry(inquiry.id)
+				          <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 large font-weight-light ">
+				            <i class="fas fa-thumbs-down white--text"></i>
+				            <span class="ml-1 white--text font-weight-light ">Reject</span>
+				          </v-btn>
+				        </v-flex> -->
+
+					</v-layout>
+							     <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box>
+							</v-flex>
+
+                      </v-layout>
         </v-flex>
 
         <v-card-text v-else>
 
-            <v-card class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
-                <v-card-text>
+        	 <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
+                            <v-flex xs2 my-4>
+                                <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
+                            </v-flex>
 
+                            <v-flex xs10 my-4>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
+                                        <div class="blue-grey--text" style="font-style: italic;">INQUIRY <b>#{{ inquiry.id }}</b> 
+                                        </div>
+
+                                    </div>
+                                </v-card-title>
+                            </v-flex>
+            </v-layout>
+
+            <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
+              
+                <v-card-text>
                     <v-layout row wrap>
 
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -85,9 +169,7 @@
 
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
                     </v-layout>
-
                 </v-card-text>
                 <v-divider></v-divider>
 
@@ -95,41 +177,24 @@
 
                     <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at)  }}</h5>
                     <v-spacer></v-spacer>
-                    <!-- 
-				   	 	     		<v-btn 
-				   	 	     			:disabled="inquiry.awarded ? true : false"
-				   	 	     			class="black" 
-				   	 	     			@click="openAwardBid(bidItem)"> 
-				   	 	     			<i class="fas fa-award white--text"></i>
-				   	 	     			<span class="font-weight-light ml-1 white--text" >Award</span>
-								    </v-btn> 
- -->
-                    <!-- <v-btn class="orange darken-3" @click="dialog = true">
-									    <i class="fas fa-tasks white--text"></i>
-									    <span class="font-weight-light ml-1 white--text" >Request Sample</span>
-								    </v-btn>  -->
-
                 </v-card-actions>
             </v-card>
 
-            <!-- <v-layout row wrap> -->
-            <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
-                <v-flex xs12>
-                    <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
-                        No Quote yet..
-                    </v-alert>
-                </v-flex>
-            </v-layout>
         </v-card-text>
 
     </v-card>
+ <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
 
 </div>
 </template>
 
+
 <script>
 
 import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+import CommentBox from "@/views/Components/App/CommentBox"
+import MessageBox from '@/views/Components/App/Admin/MessageDialog'
+
 import helpers from "@/mixins/helpers";
 import inqEvntBs from "@/bus/inquiry"
 
@@ -145,6 +210,8 @@ export default {
 
 components: {
 	ImageGallerySmall,
+	CommentBox,
+	MessageBox
 },
 
  // timers: [     
@@ -172,7 +239,8 @@ data: function () {
 		bidToAward: null,
 		bidinquiry: null,
 		has_awarded:true,
-	
+		commentData: [],
+		openMessageDialog: true,
 
 	}
 
@@ -230,6 +298,59 @@ methods: {
 		});
 
 	},
+
+
+	  approvedInquiry(inquiry_id) {
+
+      this.$store.dispatch('adminInquiries/approvedInquiry_a', {
+          inquiry_id: inquiry_id
+        })
+        .then((response) => {
+
+          // create a event bus 
+          this.$emit('update:isClosed', true);
+          inqEvntBs.emitApproved();
+
+        })
+        .catch((e) => {
+          console.log(e);
+          this.$emit('update:isClosed', true);
+        })
+        .finally(() => {
+          this.$emit('update:isClosed', true);
+        });
+
+    },
+
+
+    rejectInquiry(inquiry_id) {
+
+    	console.log('--------------tae-----------------')
+    		this.openMessageDialog=true
+    	console.log('--------------tae-----------------')
+
+    	console.log(inquiry_id);
+
+
+      // this.$store.dispatch('adminInquiries/declinedInquiry_a', {
+      //     inquiry_id: inquiry_id
+      //   })
+      //   .then((response) => {
+      //     // create a event bus 
+      //     this.openMessageDialog=true
+      //     // this.$emit('update:isClosed', true);
+      //     inqEvntBs.emitApproved();
+
+      //   })
+      //   .catch((e) => {
+      //     this.$emit('update:isClosed', true);
+      //     console.log(e);
+      //   })
+      //   .finally(() => {
+
+      //   });
+
+    },
 
 	// for the blurring
 	checkIfawarded: function (awarded, btn) {

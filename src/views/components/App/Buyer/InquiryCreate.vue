@@ -2,9 +2,17 @@
   <div>
     <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%">
       <v-card>
-        <v-card-title class="headline grey darken-4 white--text" primary-title height="45px">
-          Create Inquiry
+        
+        <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
+          Edit
+          <v-spacer></v-spacer>
+          <span class="font-weight-bold">INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
         </v-card-title>
+
+        <v-card-title v-else class="headline grey darken-4 white--text" primary-title height="45px">
+           Create Inquiry
+        </v-card-title>
+
         <v-card-text id="inquiryCreate_scrollable_cont">
           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -18,58 +26,78 @@
               </v-stepper-step>
 
               <v-stepper-content step="1">
-                <v-btn color="primary" @click="stepUp()">Start</v-btn>
-                <v-btn color="primary" @click=""> <span>use existing Inquiry ?</span> </v-btn>
+                
+                <!-- when is the inquiry is rejected show this -->
+                <div v-if="isEdit">
+                    <v-layout row wrap>
+                      <v-flex xs1>
+                         <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="50px" contain></v-img>  
+                      </v-flex>
+                      <v-flex xs10 mt-3>
+                          <h3 class="font-weight-medium red--text" style="font-style: italic;">
+                            Your INQUIRY #1553753471283 is decline by our verifier, please refer on the message box if you have concerns. thanks!
+                          </h3>                    
+                      </v-flex>
+                    </v-layout>
+                </div>
+
+                <div v-else>
+                  <v-btn color="primary" @click="stepUp()">Start</v-btn>
+                  <v-btn color="primary" @click=""> <span>use existing Inquiry ?</span> </v-btn>
+                </div>
+
+                
+
               </v-stepper-content>
 
               <v-stepper-step :rules="[() => 
-              !$v.formData.keywords.$error && !$v.formData.category.$error ]" 
-              step="2" 
-              editable>
-                <!-- Specific keyword for your Quotation -->
-                Subject & Category
-                <small 
-                v-show="$v.formData.keywords.$error">Subject is required</small>
-                <small 
-                v-show="$v.formData.category.$error">Category is required</small>
+                !$v.formData.keywords.$error && !$v.formData.category.$error ]" 
+                step="2" 
+                editable>
+                  <!-- Specific keyword for your Quotation -->
+                  Subject & Category
+                  <small 
+                  v-show="$v.formData.keywords.$error">Subject is required</small>
+                  <small 
+                  v-show="$v.formData.category.$error">Category is required</small>
               </v-stepper-step>
 
               <v-stepper-content step="2" ref="step_2">
-                <v-container>
-                  <v-flex xs12>
-                    <v-layout row wrap>
-                      <v-flex xs5>
-                        <h4>Your Subject</h4>
-                        <v-text-field 
-                        v-model="formData.keywords" 
-                        @keyup.enter="stepUp()" 
-                        :error-messages="fieldErrors('formData.keywords')" 
-                        @blur="$v.formData.keywords.$touch()" 
-                        label="Subject">
-                        </v-text-field>
-                      </v-flex>
-                      <v-flex xs1>
-                      </v-flex>
-                      <v-flex xs5>
-                        <h4>Your Chosen Category</h4>
-                        <v-autocomplete 
-                        v-model="formData.category" 
-                        :items="categories" 
-                        item-text="name"
-                        item-value="id"
-                        :error-messages="fieldErrors('formData.category')"
-                        @blur="$v.formData.category.$touch()" 
-                        :search-input.sync="search" 
-                        ref="categorySelect" 
-                        ache-items flat hide-no-data hide-details label="Type here the category.."
-                         solo-inverted>
-                        </v-autocomplete>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-container>
-                <v-btn color="primary" @click="stepUp()">next</v-btn>
-                <v-btn flat @click="stepDown()">back</v-btn>
+                  <v-container>
+                    <v-flex xs12>
+                      <v-layout row wrap>
+                        <v-flex xs5>
+                          <h4>Your Subject</h4>
+                          <v-text-field 
+                          v-model="formData.keywords" 
+                          @keyup.enter="stepUp()" 
+                          :error-messages="fieldErrors('formData.keywords')" 
+                          @blur="$v.formData.keywords.$touch()" 
+                          label="Subject">
+                          </v-text-field>
+                        </v-flex>
+                        <v-flex xs1>
+                        </v-flex>
+                        <v-flex xs5>
+                          <h4>Your Chosen Category</h4>
+                          <v-autocomplete 
+                          v-model="formData.category" 
+                          :items="categories" 
+                          item-text="name"
+                          item-value="id"
+                          :error-messages="fieldErrors('formData.category')"
+                          @blur="$v.formData.category.$touch()" 
+                          :search-input.sync="search" 
+                          ref="categorySelect" 
+                          ache-items flat hide-no-data hide-details label="Type here the category.."
+                           solo-inverted>
+                          </v-autocomplete>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                  </v-container>
+                  <v-btn color="primary" @click="stepUp()">next</v-btn>
+                  <v-btn flat @click="stepDown()">back</v-btn>
               </v-stepper-content>
               <!--         <v-stepper-step step="3" :rules="[() => !$v.formData.category.$error ]" editable>
         Choose a category
@@ -805,10 +833,26 @@ export default {
   },
 
   props: {
+
     dialog: {
       type: Boolean,
       default: false,
     },
+
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+
+    isNew: {
+      type: Boolean,
+      default: false
+    },
+
+    inquiry: {
+      type: Object
+    }
+
   },
 
   data() {
@@ -816,6 +860,7 @@ export default {
 
       cnt: 0,
       stepCnt: 1,
+
       formData: {
 
         keywords: null,
@@ -889,7 +934,6 @@ export default {
 
       /*  --------------------------  end of dropzone  --------------------------  */
 
-
     }
   },
 
@@ -903,7 +947,6 @@ export default {
     // for shipping_date field
     this.formData.shipping_date = this.getDateTime();
     this.minDate = this.formData.shipping_date;
-
 
     // -----------------------GET CATEGORIES-------------------------------------
 
@@ -934,6 +977,7 @@ export default {
   },
 
   watch: {
+
     search(val) {
       // return val && val !== this.select && this.querySelections(val)
       return val && val !== this.select
@@ -953,10 +997,88 @@ export default {
 
         }
       }
-    }
+    },
+
+    inquiry() {
+
+       this.fillFormData();
+
+    },
+
+    dialog(nVal, oVal) {
+        if(!nVal) {
+           // this.$emit('update:isEdit', false);
+            this.$emit('update:isEdit', false)
+
+        }
+    },
+
+    isEdit(nVal, oVal) {
+      if(!nVal) {
+        this.$emit('update:isEdit', false)
+      }
+    },
+
+    deep: true
+
   },
 
   methods: {
+
+    /* use for editing or updating the inquiry
+     when it's rejected from the verificator */
+
+    fillFormData() {
+
+            console.log(this.inquiry.categories)
+
+            this.formData.keywords = this.inquiry.keyword
+            this.formData.category = this.inquiry.categories.join(', ') 
+            this.formData.warranty = this.inquiry.warranty
+
+            this.formData.quantity = this.inquiry.quantity
+            this.formData.desired_price = this.inquiry.desired_price
+
+            this.formData.shipping_date = this.inquiry.desired_shipping_date
+            this.formData.payment_method = this.inquiry.payment_method_id
+            this.formData.message = this.inquiry.message
+
+            // loop spefications
+            this.formData.power = this.getSpefications('Power')
+            this.formData.lumen = this.getSpefications('Lumen')
+            this.formData.efficiency = this.getSpefications('Efficiency')
+            this.formData.beam_angle = this.getSpefications('Beam Angle');
+            this.formData.cct = this.getSpefications('CCT')
+            this.formData.ip = this.getSpefications('IP')
+            this.formData.finish = this.getSpefications('Finish')
+            this.formData.size = this.getSpefications('Size')
+            this.formData.dimmable = this.getSpefications('Dimmable')
+
+            console.log(this.formData.category)
+
+
+            // this.formData.oem_service = this.inquiry.keyword
+            // this.formData.oem_description = this.inquiry.keyword
+            // this.formData.quantity_of_sample = this.inquiry.keyword
+            // this.formData.shipping_of_sample.address = this.inquiry.keyword
+            // this.formData.shipping_of_sample.country = this.inquiry.keyword
+            // this.formData.shipping_of_sample.city = this.inquiry.keyword
+            // this.formData.shipping_of_sample.state = this.inquiry.keyword
+            // this.formData.shipping_of_sample.zipcode= this.inquiry.keyword
+            // this.formData.shipping_of_mass.address = this.inquiry.keyword
+            // this.formData.shipping_of_mass.country = this.inquiry.keyword
+            // this.formData.shipping_of_mass.city = this.inquiry.keyword
+            // this.formData.shipping_of_mass.state = this.inquiry.keyword
+            // this.formData.shipping_of_mass.zipcode = this.inquiry.keyword
+
+      },
+
+
+    getSpefications(key) {
+      var objectHolder = this.inquiry.specifications.find( specifications => specifications.name === key)
+      console.log(objectHolder.name +'='+ objectHolder.value)
+      return objectHolder.value;
+    },
 
     clearForm() {
 

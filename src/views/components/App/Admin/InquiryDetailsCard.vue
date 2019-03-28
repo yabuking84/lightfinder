@@ -7,21 +7,21 @@
     </v-toolbar>
     <v-card>
       <v-container>
-        <v-layout row wrap pa-0 v-if="inquiry.stage_id == onVerification">
-          <v-flex xs6>
-            <v-btn @click="approvedInquiry(inquiry.id)" block class="green darken-1 font-weight-light ">
-              <i class="fas fa-thumbs-up white--text"></i>
-              <span class="ml-1 white--text font-weight-light ">Approved</span>
-            </v-btn>
-          </v-flex>
-          <v-flex xs6>
-            <!-- rejectInquiry(inquiry.id) -->
-            <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 font-weight-light ">
-              <i class="fas fa-thumbs-down white--text"></i>
-              <span class="ml-1 white--text font-weight-light ">Reject</span>
-            </v-btn>
-          </v-flex>
-        </v-layout>
+     <!--    <v-layout row wrap pa-0 v-if="inquiry.stage_id == onVerification">
+       <v-flex xs6>
+         <v-btn @click="approvedInquiry(inquiry.id)" block class="green darken-1 font-weight-light ">
+           <i class="fas fa-thumbs-up white--text"></i>
+           <span class="ml-1 white--text font-weight-light ">Approved</span>
+         </v-btn>
+       </v-flex>
+       <v-flex xs6>
+         rejectInquiry(inquiry.id)
+         <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 font-weight-light ">
+           <i class="fas fa-thumbs-down white--text"></i>
+           <span class="ml-1 white--text font-weight-light ">Reject</span>
+         </v-btn>
+       </v-flex>
+     </v-layout> -->
         <v-layout row wrap>
           <v-flex xs12>
             <v-layout row wrap>
@@ -77,9 +77,7 @@
         </v-layout>
       </v-container>
     </v-card>
-
-    <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
-
+      <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
   </div>
 </template>
 <script>
@@ -118,9 +116,7 @@ export default {
 
     onVerification: 1001,
     openMessageDialog: false,
-    CommentData: [
-
-    ]
+    CommentData: [],
 
   }),
 
@@ -129,51 +125,6 @@ export default {
   },
 
   methods: {
-
-    approvedInquiry(inquiry_id) {
-
-      this.$store.dispatch('adminInquiries/approvedInquiry_a', {
-          inquiry_id: inquiry_id
-        })
-        .then((response) => {
-
-          // create a event bus 
-          this.$emit('update:isClosed', true);
-          inqEvntBs.emitApproved();
-
-        })
-        .catch((e) => {
-          console.log(e);
-          this.$emit('update:isClosed', true);
-        })
-        .finally(() => {
-          this.$emit('update:isClosed', true);
-        });
-
-    },
-
-
-    rejectInquiry(inquiry_id) {
-
-      this.$store.dispatch('adminInquiries/declinedInquiry_a', {
-          inquiry_id: inquiry_id
-        })
-        .then((response) => {
-          // create a event bus 
-          this.openMessageDialog=true
-          // this.$emit('update:isClosed', true);
-          inqEvntBs.emitApproved();
-
-        })
-        .catch((e) => {
-          this.$emit('update:isClosed', true);
-          console.log(e);
-        })
-        .finally(() => {
-
-        });
-
-    },
 
     // if query selected is set to true
     openMessageBox(inquiry_id) {

@@ -1,7 +1,6 @@
 <template>
 <div>
 
-
 <v-card>
 
     <v-toolbar dark color="grey darken-4">
