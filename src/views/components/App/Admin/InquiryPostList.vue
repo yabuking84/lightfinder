@@ -268,17 +268,17 @@
 
         props: ['inquiry'],
 
- timers: [     
-        { 
+        timers: [{
             name: 'InquiryTableTimer',
-            time: config.polling.inquiryTable.time, 
+            time: config.polling.inquiryTable.time,
             repeat: true,
             autostart: false,
-            callback: function(){
+            callback: function() {
                 this.fillBidTable();
             },
-        }
-    ],
+        }],
+
+        data() {
 
             return {
 
@@ -331,17 +331,19 @@
 
                     .then(response => {
 
-                            console.log(this.inquiry.id);
+                        console.log(this.inquiry.id);
 
-                            this.bidItems = response;
+                        this.bidItems = response;
 
-                            this.bidItems.sort((a, b) => {
-                                // return b.total_price - a.total_price;
-                                return a.total_price - b.total_price;
+                        this.bidItems.sort((a, b) => {
+                            // return b.total_price - a.total_price;
+                            return a.total_price - b.total_price;
 
-                            });
+                        });
 
-			// console.log(this.inquiry.id);
+                        // console.log(this.inquiry.id);
+
+                    })
 
                 },
 
@@ -400,7 +402,7 @@
 
                     let is_awarded = false;
 
-		// console.log(this.inquiry)
+                    // console.log(this.inquiry)
 
                     if (this.inquiry.awarded == 1) {
 
