@@ -145,7 +145,10 @@ const dform = {
 
 export default {
 
-  mixins: [validationMixin],
+  mixins: [ 
+    validationMixin,
+    helpers,
+  ],
 
   validations: {
 
@@ -266,14 +269,14 @@ export default {
       get countries
     */
 
-    this.$store.dispatch('adminHelper/getCountries')
-      .then((response) => {
+    this.getCountries()
+    .then((response) => {
         this.countries = response
-      })
-      .catch((e) => {
+    })
+    .catch((e) => {
         console.log('Error: ')
         console.log(e);
-      });
+    });
 
 
     // get categories for category select box
@@ -355,7 +358,7 @@ export default {
         'id':this.supplier_id
       }
 
-      this.$store.dispatch('adminSupplier/addSupplierCat_a', {
+      this.$store.dispatch('admnSpplr/addSupplierCat_a', {
           data: data
         })
         .then((response) => {
@@ -407,7 +410,7 @@ export default {
 
       }
 
-      this.$store.dispatch('adminSupplier/addSupplier_a', {
+      this.$store.dispatch('admnSpplr/addSupplier_a', {
           data: data
         })
         .then((response) => {
@@ -455,7 +458,7 @@ export default {
       }
 
 
-      this.$store.dispatch('adminSupplier/updateSUpplier_a', {
+      this.$store.dispatch('admnSpplr/updateSUpplier_a', {
 
           data: data
 

@@ -86,9 +86,12 @@ io.sockets.on('connection', function(socket){
 
 	// Administrators
 	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+    socket.on('adminInquiryApprove', function(data){
+        socket.broadcast.emit('adminInquiryApprove',data);
+    });
 	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	// Suppliers
+    // Administrators
+
 
 
 

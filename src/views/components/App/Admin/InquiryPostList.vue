@@ -268,7 +268,17 @@
 
         props: ['inquiry'],
 
-        data: function() {
+ timers: [     
+        { 
+            name: 'InquiryTableTimer',
+            time: config.polling.inquiryTable.time, 
+            repeat: true,
+            autostart: false,
+            callback: function(){
+                this.fillBidTable();
+            },
+        }
+    ],
 
             return {
 
@@ -331,10 +341,7 @@
 
                             });
 
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
+			// console.log(this.inquiry.id);
 
                 },
 
@@ -393,8 +400,7 @@
 
                     let is_awarded = false;
 
-                    console.log(typeof awarded);
-                    console.log(typeof this.inquiry.awarded)
+		// console.log(this.inquiry)
 
                     if (this.inquiry.awarded == 1) {
 

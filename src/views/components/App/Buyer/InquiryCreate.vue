@@ -880,7 +880,6 @@
 import axios from 'axios';
 
 import inqEvntBs from "@/bus/inquiry"
-import helpers from "@/mixins/helpers"
 import config from '@/config/index'
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
@@ -889,13 +888,15 @@ import vue2Dropzone from 'vue2-dropzone'
 import { required, email, maxLength, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
+import helpers from "@/mixins/helpers"
+
 import InquiryLookupDialog from '@/views/Components/App/Buyer/inquirylookup'
 
 export default {
 
   mixins: [
+    validationMixin,
     helpers,
-    validationMixin
   ],
 
 
@@ -1163,19 +1164,14 @@ export default {
     //     console.log(e);
     //   });
 
-        // this.countries = this.getCountries_a();
-        // console.log(this.getCountries_a());
-        
-      axios({
-        method: 'GET',
-        url: 'http://192.168.1.200:8000/v1/countries'
-      })
-      .then(response => {
-        this.countries = response.data;
-      })
-      .catch(error => {
-        reject(error);
-      })
+    this.getCountries()
+    .then((response) => {
+        this.countries = response
+    })
+    .catch((e) => {
+        console.log('Error: ')
+        console.log(e);
+    });
 
   },
 

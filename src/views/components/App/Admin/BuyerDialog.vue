@@ -142,7 +142,10 @@ const dform = {
 
 export default {
 
-  mixins: [validationMixin],
+  mixins: [
+    validationMixin,
+    helpers,
+  ],
 
   validations: {
 
@@ -239,15 +242,15 @@ export default {
     	get countries
     */
 
-    this.$store.dispatch('adminHelper/getCountries')
 
-      .then((response) => {
+    this.getCountries()
+    .then((response) => {
         this.countries = response
-      })
-      .catch((e) => {
+    })
+    .catch((e) => {
         console.log('Error: ')
         console.log(e);
-      });
+    });
 
   },
 
@@ -309,7 +312,7 @@ export default {
 
       console.log(data);
 
-      this.$store.dispatch('adminBuyer/postBuyer_a', {
+      this.$store.dispatch('admnByr/postBuyer_a', {
           data: data,
         })
         .then((response) => {
@@ -356,7 +359,7 @@ export default {
 
       }
 
-      this.$store.dispatch('adminBuyer/updateBuyer_a', {
+      this.$store.dispatch('admnByr/updateBuyer_a', {
 
           data: data,
 

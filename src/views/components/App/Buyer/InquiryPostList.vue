@@ -273,38 +273,47 @@ export default {
 
     openInquiry: {
 
-      type: Boolean
-    }
+    data: ()=>({
+        openAwardDialog: false,
+        openSampleDialog: false,
+        bidItems: [],
+        hasBid: true,
+        bidToAward: null,
+        bidinquiry: null,
+        has_awarded: true,
 
-  },
+        // comment Data composed of the comment useridid and inquiry
+        commentData: [
 
-  data: function() {
+            // {
+            //     id: 1,
+            //     user_id: 1,
+            //     name: 'Jonh Doe',
+            //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
 
-    return {
+            // },
 
-      openAwardDialog: false,
-      openSampleDialog: false,
-      bidItems: [],
-      hasBid: true,
-      bidToAward: null,
-      bidinquiry: null,
-      has_awarded: true,
+        ],
 
-      // comment Data composed of the comment useridid and inquiry
-      commentData: [
+                // },
+                //   {
+                //     id: 1,
+                //     user_id: 1,
+                //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
 
-      ],
+    timers: [{
+        name: 'BidTableTimer',
+        time: config.polling.bidTable.time,
+        immediate: true,
+        repeat: true,
+        autostart: false,
+        callback: function() {
+            console.log("BidTableTimer");
+            this.fillBidTable();
+        },
+    }],
 
-      dialog: false,
-      isEdit: false
-
-    }
-
-  },
-
-  computed: {
-
-  },
+  
 
   methods: {
 
@@ -318,55 +327,63 @@ export default {
           // console.log(this.inquiry.id);
           this.bidItems = response;
 
-          console.log(this.bidItems);
+            this.$store.dispatch('byrInq/getAllInquiryBids_a', {
+                    inq_id: this.inquiry.id
+                })
+                .then(response => {
 
-          this.bidItems.sort((a, b) => {
-            // return b.total_price - a.total_price;
-            return a.total_price - b.total_price;
-          });
+                    // console.log(this.inquiry.id);
 
+                    this.bidItems = response;
 
-        })
-        .catch(error => {
+                    this.bidItems.sort((a, b) => {
+                        // return b.total_price - a.total_price;
+                        return a.total_price - b.total_price;
 
-          console.log(error);
+                    });
 
-        });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
 
-    },
+        },
 
+        openAwardBid(bid) {
 
+            this.bidToAward = bid;
+            this.bidinquiry = this.inquiry;
+            this.openAwardDialog = true;
 
-    openAwardBid(bid) {
+        },
 
-      this.bidToAward = bid;
-      this.bidinquiry = this.inquiry;
-      this.openAwardDialog = true;
+        openSample(bid) {
+            this.bidToAward = bid;
+            this.bidinquiry = this.inquiry
+            this.openSampleDialog = true
+        },
 
-    },
+        // for the blurring
+        checkIfawarded: function(awarded, btn) {
 
-    openSample(bid) {
-      this.bidToAward = bid;
-      this.bidinquiry = this.inquiry
-      this.openSampleDialog = true
-    },
+            let is_awarded = false;
 
-    // for the blurring
-    checkIfawarded: function(awarded, btn) {
+            // console.log(typeof awarded);
+            // console.log(typeof this.inquiry.awarded)
 
-      let is_awarded = false;
+            if (this.inquiry.awarded == 1) {
 
-      if (this.inquiry.awarded == 1) {
+                if (awarded == 1) {
+                    is_awarded = true;
+                }
 
-          if (awarded == 1) {
-            is_awarded = true;
-          }
+            } else {
+                // trick here if its not awarded yet i will set it to true
+                is_awarded = true;
+            }
 
-      } else {
-           is_awarded = true;
-      }
-
-      return is_awarded;
+            return is_awarded;
+        },
 
     },
 
@@ -378,17 +395,12 @@ export default {
 
     }
 
-  },
-
-  created() {
-
-    // console.log(this.inquiry)
-
-    this.fillBidTable();
-    inqEvntBs.$on('award-bid-form-submitted', () => {
-      this.fillBidTable();
-      this.inquiry.awarded = 1
-    });
+        this.fillBidTable();
+        inqEvntBs.$on('award-bid-form-submitted', () => {
+          this.fillBidTable();
+          this.inquiry.awarded = 1
+        });
+    },
 
   },
 

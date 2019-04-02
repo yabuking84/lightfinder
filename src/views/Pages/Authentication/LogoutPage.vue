@@ -3,6 +3,7 @@
 
 
 <script>
+import config from '@/config/index'
 
 export default {
 
@@ -15,13 +16,19 @@ export default {
 	},
 
 	created: function() {
-        this.$store.dispatch('auth/destroyToken_a')
+        this.$store.dispatch('auth/logout_a')
         .then(response=>{
+
+            // console.log("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
+            // alert("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
+                        
             this.$router.push({name:'Login'});
         })
         .catch(error=>{
-            this.$router.push({name:'Login'});
+            console.log(error);           
+            // this.$router.push({name:'Login'});
         });
+        
 	},
 };
 

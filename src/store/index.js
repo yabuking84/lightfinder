@@ -11,10 +11,13 @@ import auth from './modules/auth'
 import cat from './modules/category'
 import byrInq from './modules/BuyerInquiry'
 import spplrInq from './modules/SupplierInquiry'
-import adminHelper from './modules/adminHelper'
-import adminBuyer from './modules/adminBuyer'
-import adminSupplier from './modules/adminSupplier'
-import adminInquiries from './modules/adminInquiries'
+// import adminHelper from './modules/adminHelper'
+import admnByr from './modules/adminBuyer'
+import admnSpplr from './modules/adminSupplier'
+import admnInq from './modules/adminInquiries'
+
+import sckts from './modules/Sockets'
+import ntfctns from './modules/Notifications'
  
 Vue.use(Vuex)
 
@@ -27,13 +30,14 @@ export const store = new Vuex.Store({
     navigation,
     swatch,
     auth,
+    sckts,
+    ntfctns,
     cat,
     byrInq,
     spplrInq,
-    adminHelper,
-    adminBuyer,
-    adminSupplier,
-    adminInquiries
+    admnByr,
+    admnSpplr,
+    admnInq
 
   }
 })

@@ -156,8 +156,10 @@
 
 
     <span>
-      <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>
+      <inquiry-view></inquiry-view>
     </span>
+
+
   </div>
 </template>
 <script>
@@ -165,263 +167,277 @@ import inqEvntBs from "@/bus/inquiry";
 
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+import InquiryView from "@/views/Components/App/Buyer/InquiryView";
 import config from "@/config/main"
 
-import InquiryView from "@/views/Pages/Buyer/InquiryView";
 
 import VueTimers from 'vue-timers/mixin'
 
 export default {
 
-  mixins: [
-    helpers,
-    VueTimers,
-  ],
-
-  components: {
-    InquiryStatusButtons,
-    InquiryView,
-  },
-
-  data: () => ({
-
-    statuses: [
-      ...config.inquiry_statuses.default,
-      ...config.inquiry_statuses.buyers,
-    ],
-    search: null,
-    // dialog: false,
-    loading: false,
-    
-    headers: [{
-        text: 'Select',
-        align: 'left',
-        sortable: false,
-        value: 'inq_id'
-      },
-
-      {
-        text: 'Inquiry & Categories',
-        align: 'left',
-        sortable: true,
-        value: 'categories'
-      },
-
-      {
-        text: 'Keywords & Message',
-        align: 'left',
-        sortable: true,
-        value: 'keywordsAndMessage'
-      },
-
-
-      {
-        text: 'Quantity',
-        align: 'left',
-        sortable: true,
-        value: 'quantity'
-      },
-
-      {
-        text: 'Preferred Shipping Date',
-        align: 'left',
-        sortable: true,
-        value: 'shipping_date'
-      },
-
-      {
-        text: 'Date',
-        align: 'left',
-        sortable: true,
-        value: 'created_at'
-      },
-
-      {
-        text: 'Status',
-        align: 'left',
-        sortable: true,
-        value: 'status'
-      },
-
-      {
-        text: 'Action',
-        align: 'center',
-        sortable: false,
-      },
+    mixins: [
+        helpers,
+        VueTimers,
     ],
 
-
-    inquiryStatus: [],
-    allInquiries: [],
-    tableItems: [],
-
-    categories: [],
-    categoryItems: [],
-
-    openInquiry: false,
-    inquiry: null,
-    rowsPerPageItems: [10, 15, 20, 30, 40],
-    pagination: {
-        rowsPerPage: 15
+    components: {
+        InquiryStatusButtons,
+        InquiryView,
     },
 
-  }),
+    data: () => ({
 
-  // timers: [{
-  //   name: 'InquiryTableTimer',
-  //   time: config.polling.inquiryTable.time,
-  //   repeat: true,
-  //   autostart: false,
-  //   callback: function() {
-  //     console.log("InquiryTableTimer");
-  //     this.fillTable(false);
-  //   },
-  // }],
-  // to execute timer
-  // this.$timer.stop('InquiryTableTimer');
+        statuses: [
+            ...config.inquiry_statuses.default,
+            ...config.inquiry_statuses.buyers,
+        ],
+        search: null,
+        dialog: false,
+        loading: false,
+        headers: [
+            {
+                text: 'Select',
+                align: 'left',
+                sortable: false,
+                value: 'inq_id'
+            },
 
+            {
+                text: 'Inquiry & Categories',
+                align: 'left',
+                sortable: true,
+                value: 'categories'
+            },
 
+            {
+                text: 'Keywords & Message',
+                align: 'left',
+                sortable: true,
+                value: 'keywordsAndMessage'
+            },
 
-  methods: {
+            {
+                text: 'Quantity',
+                align: 'left',
+                sortable: true,
+                value: 'quantity'
+            },
 
-    fillTable(withLoading = true) {
+            {
+                text: 'Preferred Shipping Date',
+                align: 'left',
+                sortable: true,
+                value: 'shipping_date'
+            },
 
-      if (withLoading)
-        this.loading = true;
+            {
+                text: 'Date',
+                align: 'left',
+                sortable: true,
+                value: 'created_at'
+            },
 
-      this.allInquiries = [];
-      this.$store.dispatch('byrInq/getInquiries_a')
-        .then((response) => {
+            {
+                text: 'Status',
+                align: 'left',
+                sortable: true,
+                value: 'status'
+            },
 
-          for (var i = response.length - 1; i >= 0; i--) {
-            var item = {};
-            item.inq_id = response[i].id;
-            item.keywords = this.ucwords(response[i].keyword);
-            item.message = response[i].message;
-            item.categories = response[i].categories.join(', ');
-            item.quantity = response[i].quantity;
-            item.shipping_date = response[i].desired_shipping_date;
-            item.created_at = response[i].created_at;
-            item.status = response[i].stage_id;
-            item.loading = false;
-            this.allInquiries.push(item);
-          }
+            {
+                text: 'Action',
+                align: 'center',
+                sortable: false,
+            },
+        ],
 
-          // this.tableItems = this.allInquiries;
-          this.filterTable();
+        inquiryStatus: [],
+        allInquiries: [],
+        tableItems: [],
 
-          if (withLoading)
-            this.loading = false;
+        categories: [],
+        categoryItems: [],
 
-        })
-        .catch((e) => {
-          console.log('Error: ' + e);
-          this.loading = false;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+        rowsPerPageItems: [10, 15, 20, 30, 40],
+        pagination: {
+            rowsPerPage: 15
+        },
+
+    }),
+
+    // timers: [{
+    //   name: 'InquiryTableTimer',
+    //   time: config.polling.inquiryTable.time,
+    //   repeat: true,
+    //   autostart: false,
+    //   callback: function() {
+    //     console.log("InquiryTableTimer");
+    //     this.fillTable(false);
+    //   },
+    // }],
+    // to execute timer
+    // this.$timer.stop('InquiryTableTimer');
+
+    methods: {
+
+        fillTable(withLoading = true) {
+
+                if (withLoading)
+                    this.loading = true;
+
+                this.allInquiries = [];
+                this.$store.dispatch('byrInq/getInquiries_a')
+                    .then((response) => {
+
+                        for (var i = response.length - 1; i >= 0; i--) {
+                            var item = {};
+                            item.inq_id = response[i].id;
+                            item.keywords = this.ucwords(response[i].keyword);
+                            item.message = response[i].message;
+                            item.categories = response[i].categories.join(', ');
+                            item.quantity = response[i].quantity;
+                            item.shipping_date = response[i].desired_shipping_date;
+                            item.created_at = response[i].created_at;
+                            item.status = response[i].stage_id;
+                            item.loading = false;
+                            this.allInquiries.push(item);
+                        }
+
+                        // this.tableItems = this.allInquiries;
+                        this.filterTable();
+
+                        if (withLoading)
+                            this.loading = false;
+
+                    })
+                    .catch((e) => {
+                        console.log('Error: ' + e);
+                        this.loading = false;
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+
+            },
+
+            viewInquiry(inq) {
+                inq.loading = true;
+                this.$store.dispatch('byrInq/getInquiry_a', {
+                        inq_id: inq.inq_id
+                    })
+                    .then((data) => {
+                        this.inquiry = data;
+                        this.openInquiry = true;
+                        inq.loading = false;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+
+            refresh() {
+                // this.inquiryStatus = [];
+                // this.categories = [];
+                // this.search = "";
+                this.fillTable();
+            },
+
+            filterTable() {
+
+                var items = this.allInquiries;
+                if (this.inquiryStatus.length || this.categories.length) {
+                    // filter for statuses only
+                    var buff = this.inquiryStatus;
+                    items = items.filter(function(inq) {
+                        return (buff.length) ? buff.includes(inq.status) : true;
+                    });
+
+                    // filter for categories
+                    buff = this.categories;
+                    items = items.filter(function(inq) {
+                        return (buff.length) ? buff.includes(inq.categories.trim()) : true;
+                    });
+                }
+                this.tableItems = items;
+            },
+
+            removeFromCategories(item) {
+                const index = this.categories.indexOf(item.name);
+                if (index >= 0)
+                    this.categories.splice(index, 1)
+            },
 
     },
 
-    viewInquiry(inq) {
-      inq.loading = true;
-      this.$store.dispatch('byrInq/getInquiry_a', { inq_id: inq.inq_id })
-        .then((data) => {
+    created() {
 
-          this.inquiry = data;
-          this.openInquiry = true;
-          inq.loading = false;
+        this.fillTable();
+        inqEvntBs.onFormSubmitted(this.fillTable);
 
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // inqEvntBs.onClosed(this.fillTable);
+
+        // $on('closed-submitted', () => {
+        //   this.fillTable(false);
+        // });
+
+        // get categories for category select box
+        this.$store.dispatch('cat/getCategories_a')
+            .then((data) => {
+                this.categoryItems = data;
+                // console.log(this.categoryItems);
+            })
+            .catch((e) => {
+                console.log('Error: ');
+                console.log(e);
+            });
+
     },
 
-    refresh() {
-      this.fillTable(false);
-      this.inquiryStatus = [];
+    watch: {
+
+        inquiryStatus(nVal, oVal) {
+                this.filterTable();
+            },
+
+            categories(nVal, oVal) {
+                this.filterTable();
+            },
+
+            openInquiry(nVal) {
+
+                // if (!nVal) {
+                //     this.fillTable(false);
+                // }
+            },
     },
 
-    filterTable() {
+    computed: {
+        openInquiry: {
+            get() {
+                return this.$store.state.byrInq.openInquiryView;
+            },
+            set(nVal){
+                if(nVal)
+                this.$store.commit('byrInq/SHOW_OPENINQUIRYVIEW_M');
+                else
+                this.$store.commit('byrInq/HIDE_OPENINQUIRYVIEW_M');
+            },
+        },
 
-      var items = this.allInquiries;
-      if (this.inquiryStatus.length || this.categories.length) {
-        // filter for statuses only
-        var buff = this.inquiryStatus;
-        items = items.filter(function(inq) {
-          return (buff.length) ? buff.includes(inq.status) : true;
-        });
-
-        // filter for categories
-        buff = this.categories;
-        items = items.filter(function(inq) {
-          return (buff.length) ? buff.includes(inq.categories.trim()) : true;
-        });
-      }
-      this.tableItems = items;
+        inquiry: {
+            get() {
+                return this.$store.state.byrInq.inquiry;
+            },
+            set(nVal) {
+                // console.log('setVal');
+                // console.log(nVal);
+                this.$store.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
+            },
+        },
     },
-
-    removeFromCategories(item) {
-      const index = this.categories.indexOf(item.name);
-      if (index >= 0)
-        this.categories.splice(index, 1)
-    },
-
-  },
-
-
-
-  created() {
-
-    this.fillTable();
-    inqEvntBs.onFormSubmitted(this.fillTable);
-
-    // inqEvntBs.onClosed(this.fillTable);
-
-    // $on('closed-submitted', () => {
-    //   this.fillTable(false);
-    // });
-
-    // get categories for category select box
-    this.$store.dispatch('cat/getCategories_a')
-      .then((data) => {
-        this.categoryItems = data;
-        // console.log(this.categoryItems);
-      })
-      .catch((e) => {
-        console.log('Error: ');
-        console.log(e);
-      });
-
-  },
-
-  watch: {
-
-    inquiryStatus(nVal, oVal) {
-      this.filterTable();
-    },
-
-    categories(nVal, oVal) {
-      this.filterTable();
-    },
-
-    openInquiry(nVal) {
-
-      if (nVal) {        
-        // this.$timer.stop('InquiryTableTimer');
-      }
-      else {
-        this.fillTable(false);
-        // this.$timer.start('InquiryTableTimer');
-      }
-    },
-  },
-
-
 
 }
+
 
 </script>
 

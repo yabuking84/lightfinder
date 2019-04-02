@@ -10,7 +10,6 @@ import config from '@/config/index'
 
 import SupplierHome from '@/views/Pages/Supplier/Home'
 import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
-import SupplierInquiryView from '@/views/Pages/Supplier/InquiryView'
 
 import Register from '@/views/Pages/Supplier/Register'
 import RegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
@@ -60,18 +59,6 @@ export default [
         meta: meta
     },
 
-    {
-        name: 'SupplierInquiryView',
-        path: '/supplier/inquiry/view/:inq_id',
-        components: {
-            default:SupplierInquiryView,
-            sidebar: AppSidebar,
-            header: AppToolbar,
-            footer:AppFooter
-        },
-        meta: meta,
-        props: { default:true },
-    },
 
     {
         name: 'SupplierRegistration' ,

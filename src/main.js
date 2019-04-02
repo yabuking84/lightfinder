@@ -24,6 +24,7 @@ import Vuebar from 'vuebars'
 import Trend from 'vuetrend'
 import {truncate} from 'lodash'
 
+import helpers from "@/mixins/helpers"
 
 
 
@@ -41,7 +42,8 @@ import VueScrollTo from 'vue-scrollto'
 // import socketio from 'socket.io'; 
 import io from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
-const SocketInstance = io('http://192.168.1.202:4113');
+// const SocketInstance = io('http://192.168.1.202:4113');
+const SocketInstance = io('http://192.168.1.200:3000');
 Vue.use(new VueSocketIO({
     debug: true,
     connection: SocketInstance,
@@ -215,12 +217,12 @@ router.beforeEach(middleware)
 
 
 
-
+// Vue.mixin(helpers);
 
 
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({  
   el: '#app',
   router,
   store,

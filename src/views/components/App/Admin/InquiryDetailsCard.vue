@@ -129,7 +129,46 @@ export default {
     // if query selected is set to true
     openMessageBox(inquiry_id) {
 
+      this.$store.dispatch('admnInq/approvedInquiry_a', {
+          inquiry_id: inquiry_id
+        })
+        .then((response) => {
+
+          // create a event bus 
+          this.$emit('update:isClosed', true);
+          // inqEvntBs.emitApproved();
+
+        })
+        .catch((e) => {
+          console.log(e);
+          this.$emit('update:isClosed', true);
+        })
+        .finally(() => {
+          this.$emit('update:isClosed', true);
+        });
+
     },
+
+
+    rejectInquiry(inquiry_id) {
+
+      this.$store.dispatch('admnInq/declinedInquiry_a', {
+          inquiry_id: inquiry_id
+        })
+        .then((response) => {
+          // create a event bus 
+          this.$emit('update:isClosed', true);
+          // inqEvntBs.emitApproved();
+        })
+        .catch((e) => {
+          this.$emit('update:isClosed', true);
+          console.log(e);
+        })
+        .finally(() => {
+
+        });
+
+    }
 
   },
 
