@@ -274,6 +274,7 @@ export default {
     openInquiry: {
 
     data: ()=>({
+
         openAwardDialog: false,
         openSampleDialog: false,
         bidItems: [],
@@ -292,7 +293,6 @@ export default {
             //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
 
             // },
-
         ],
 
                 // },
@@ -300,6 +300,8 @@ export default {
                 //     id: 1,
                 //     user_id: 1,
                 //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
+
+    }),
 
     timers: [{
         name: 'BidTableTimer',
@@ -317,15 +319,7 @@ export default {
 
   methods: {
 
-    fillBidTable() {
-
-      this.$store.dispatch('byrInq/getAllInquiryBids_a', {
-          inq_id: this.inquiry.id
-        })
-        .then(response => {
-
-          // console.log(this.inquiry.id);
-          this.bidItems = response;
+       fillBidTable() {
 
             this.$store.dispatch('byrInq/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
@@ -395,11 +389,7 @@ export default {
 
     }
 
-        this.fillBidTable();
-        inqEvntBs.$on('award-bid-form-submitted', () => {
-          this.fillBidTable();
-          this.inquiry.awarded = 1
-        });
+     
     },
 
   },
@@ -416,6 +406,14 @@ export default {
 
 
 
+  },
+  created() {
+    
+       this.fillBidTable();
+        inqEvntBs.$on('award-bid-form-submitted', () => {
+          this.fillBidTable();
+          this.inquiry.awarded = 1
+        });
   }
 
 
