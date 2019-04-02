@@ -213,7 +213,7 @@ const actions = {
   approvedInquiry_a(context, data) {
 
 
-    console.log(data.inquiry_id);
+    // console.log(data.inquiry_id);
 
     return new Promise((resolve, reject) => {
 

@@ -169,85 +169,43 @@ export default {
 
     props: ['inquiry', 'openInquiry'],
 
-    data: function() {
+    data: ()=>({
+        openAwardDialog: false,
+        openSampleDialog: false,
+        bidItems: [],
+        hasBid: true,
+        bidToAward: null,
+        bidinquiry: null,
+        has_awarded: true,
 
-        return {
-            openAwardDialog: false,
-            openSampleDialog: false,
-            bidItems: [],
-            hasBid: true,
-            bidToAward: null,
-            bidinquiry: null,
-            has_awarded: true,
+        // comment Data composed of the comment useridid and inquiry
+        commentData: [
 
-            // comment Data composed of the comment useridid and inquiry
-            commentData: [
+            // {
+            //     id: 1,
+            //     user_id: 1,
+            //     name: 'Jonh Doe',
+            //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
 
-                // {
-                //     id: 1,
-                //     user_id: 1,
-                //     name: 'Jonh Doe',
-                //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
+            // },
 
-                // },
-             
-                // {
-                //     id: 3,
-                //     user_id: 2,
-                //     message: 'Orsssssiginal Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-                // },
-                //     {
-                //     id: 3,
-                //     user_id: 2,
-                //     message: 'Orsssssiginal Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-                // },
-                //     {
-                //     id: 3,
-                //     user_id: 2,
-                //     message: 'Orsssssiginal Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-                // },
-                //     {
-                //     id: 3,
-                //     user_id: 2,
-                //     message: 'Orsssssiginal Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-                // },
-                //     {
-                //     id: 3,
-                //     user_id: 2,
-                //     message: 'Orsssssiginal Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-                // },
-                //   {
-                //     id: 1,
-                //     user_id: 1,
-                //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
+        ],
 
-                // },
-                //   {
-                //     id: 1,
-                //     user_id: 1,
-                //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-
-                // },
-
-            ],
-
-        }
-
-    },
+    }),
 
     timers: [{
         name: 'BidTableTimer',
         time: config.polling.bidTable.time,
         immediate: true,
         repeat: true,
-        autostart: true,
+        autostart: false,
         callback: function() {
             console.log("BidTableTimer");
             this.fillBidTable();
         },
     }],
 
-  },
+  
 
     computed: {
 
@@ -257,63 +215,63 @@ export default {
 
         fillBidTable() {
 
-                this.$store.dispatch('byrInq/getAllInquiryBids_a', {
-                        inq_id: this.inquiry.id
-                    })
-                    .then(response => {
+            this.$store.dispatch('byrInq/getAllInquiryBids_a', {
+                    inq_id: this.inquiry.id
+                })
+                .then(response => {
 
-                        // console.log(this.inquiry.id);
+                    // console.log(this.inquiry.id);
 
-                        this.bidItems = response;
+                    this.bidItems = response;
 
-                        this.bidItems.sort((a, b) => {
-                            // return b.total_price - a.total_price;
-                            return a.total_price - b.total_price;
+                    this.bidItems.sort((a, b) => {
+                        // return b.total_price - a.total_price;
+                        return a.total_price - b.total_price;
 
-                        });
-
-                    })
-                    .catch(error => {
-                        console.log(error);
                     });
 
-            },
+                })
+                .catch(error => {
+                    console.log(error);
+                });
 
-            openAwardBid(bid) {
+        },
 
-                this.bidToAward = bid;
-                this.bidinquiry = this.inquiry;
-                this.openAwardDialog = true;
+        openAwardBid(bid) {
 
-            },
+            this.bidToAward = bid;
+            this.bidinquiry = this.inquiry;
+            this.openAwardDialog = true;
 
-            openSample(bid) {
-                this.bidToAward = bid;
-                this.bidinquiry = this.inquiry
-                this.openSampleDialog = true
-            },
+        },
 
-            // for the blurring
-            checkIfawarded: function(awarded, btn) {
+        openSample(bid) {
+            this.bidToAward = bid;
+            this.bidinquiry = this.inquiry
+            this.openSampleDialog = true
+        },
 
-                let is_awarded = false;
+        // for the blurring
+        checkIfawarded: function(awarded, btn) {
 
-                // console.log(typeof awarded);
-                // console.log(typeof this.inquiry.awarded)
+            let is_awarded = false;
 
-                if (this.inquiry.awarded == 1) {
+            // console.log(typeof awarded);
+            // console.log(typeof this.inquiry.awarded)
 
-                    if (awarded == 1) {
-                        is_awarded = true;
-                    }
+            if (this.inquiry.awarded == 1) {
 
-                } else {
-                    // trick here if its not awarded yet i will set it to true
+                if (awarded == 1) {
                     is_awarded = true;
                 }
 
-                return is_awarded;
-            },
+            } else {
+                // trick here if its not awarded yet i will set it to true
+                is_awarded = true;
+            }
+
+            return is_awarded;
+        },
 
     },
 
@@ -327,11 +285,12 @@ export default {
             this.inquiry.awarded = 1
         });
 
-    this.fillBidTable();
-    inqEvntBs.$on('award-bid-form-submitted', () => {
-      this.fillBidTable();
-      this.inquiry.awarded = 1
-    });
+        this.fillBidTable();
+        inqEvntBs.$on('award-bid-form-submitted', () => {
+          this.fillBidTable();
+          this.inquiry.awarded = 1
+        });
+    },
 
 }
 </script>

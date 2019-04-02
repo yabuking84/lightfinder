@@ -265,64 +265,66 @@ data: () => ({
 
 methods: {
     submitForm() {
-    var formData = {
-      "price": this.formData.price,
-      "total_price": this.formData.total_price,
-      "product_name": this.formData.product_name,
-      "remarks": this.formData.remarks,
-      "description": 'test data',
-    };
-    var action = "";
-    var data = {};
-    if (this.editQuote) {
-      action = 'spplrInq/editInquiryBid_a';
-      data = {
-        formData: formData,
-        inq_id: this.inquiry.id,
-        bid_ref: this.bid.reference,
-      }
-    } else {
-      action = 'spplrInq/addInquiryBid_a';
-      data = {
-        formData: formData,
-        inq_id: this.inquiry.id,
-      }
-    }
-    if (this.$v.$invalid) {
-         this.$v.$touch()
-    } else {
-    	this.loading = true;
-      this.$store.dispatch(action, data)
-        .then((response) => {
-            this.loading = false;
-            this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
-            inqEvntBs.emitBidFormSubmitted();
-            this.$emit('update:openQuoteDialog', false);
-        }).catch((e) => {
-            this.loading = false;
-            console.log('Error: ' + e);
-            alert("ERROR!!");
-        }).finally(() => {
-            this.loading = false;
-        });
-    }
-    // alert("action = "+action);
-    // alert("this.editQuote = "+this.editQuote);
-    // alert("this.inquiry.id = "+this.inquiry.id);
-    // alert("this.bid.reference = "+this.bid.reference);
+        var formData = {
+          "price": this.formData.price,
+          "total_price": this.formData.total_price,
+          "product_name": this.formData.product_name,
+          "remarks": this.formData.remarks,
+          "description": 'test data',
+        };
+        var action = "";
+        var data = {};
+        if (this.editQuote) {
+          action = 'spplrInq/editInquiryBid_a';
+          data = {
+            formData: formData,
+            inq_id: this.inquiry.id,
+            bid_ref: this.bid.reference,
+          }
+        } else {
+          action = 'spplrInq/addInquiryBid_a';
+          data = {
+            formData: formData,
+            inq_id: this.inquiry.id,
+          }
+        }
+        if (this.$v.$invalid) {
+             this.$v.$touch()
+        } else {
+        	this.loading = true;
+          this.$store.dispatch(action, data)
+            .then((response) => {
+                this.loading = false;
+                this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
+                inqEvntBs.emitBidFormSubmitted();
+                this.$emit('update:openQuoteDialog', false);
+            }).catch((e) => {
+                this.loading = false;
+                console.log('Error: ' + e);
+                alert("ERROR!!");
+            }).finally(() => {
+                this.loading = false;
+            });
+        }
+        // alert("action = "+action);
+        // alert("this.editQuote = "+this.editQuote);
+        // alert("this.inquiry.id = "+this.inquiry.id);
+        // alert("this.bid.reference = "+this.bid.reference);
     },
+    
     resetForm() {
-    this.formData = this.initBid;
+        this.formData = this.initBid;
     },
+
     keyPress(e) {
     if (e.target.querySelector("#QuoteDialog"))
-      this.$emit('update:openQuoteDialog', false)
-    // console.log(e.target);
+        this.$emit('update:openQuoteDialog', false)
+        // console.log(e.target);
     },
 
 
     triggerTestEvent() {
-        this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
+        this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});        
     },
 
 
@@ -338,20 +340,20 @@ mounted() {
 
 
 watch: {
-  editQuote(nVal, oVal) {
-    if (nVal) {
-      this.quoteAction = "Edit";
-      this.formData = this.bid;
-    } else {
-      this.quoteAction = "Add";
-      this.formData = this.initBid;
-    }
-  },
-  // when openQuoteDialog set as false, editQuote will be set to false also
-  openQuoteDialog(nVal, oVal) {
-    if (!nVal)
-      this.$emit('update:editQuote', false);
-  },
+    editQuote(nVal, oVal) {
+        if (nVal) {
+            this.quoteAction = "Edit";
+            this.formData = this.bid;
+        } else {
+            this.quoteAction = "Add";
+            this.formData = this.initBid;
+        }
+    },
+    // when openQuoteDialog set as false, editQuote will be set to false also
+    openQuoteDialog(nVal, oVal) {
+        if (!nVal)
+        this.$emit('update:editQuote', false);
+    },
 },
 
 

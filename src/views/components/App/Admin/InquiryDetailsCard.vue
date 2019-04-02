@@ -106,14 +106,14 @@ export default {
 
     approvedInquiry(inquiry_id) {
 
-      this.$store.dispatch('adminInquiries/approvedInquiry_a', {
+      this.$store.dispatch('admnInq/approvedInquiry_a', {
           inquiry_id: inquiry_id
         })
         .then((response) => {
 
           // create a event bus 
           this.$emit('update:isClosed', true);
-          inqEvntBs.emitApproved();
+          // inqEvntBs.emitApproved();
 
         })
         .catch((e) => {
@@ -129,13 +129,13 @@ export default {
 
     rejectInquiry(inquiry_id) {
 
-      this.$store.dispatch('adminInquiries/declinedInquiry_a', {
+      this.$store.dispatch('admnInq/declinedInquiry_a', {
           inquiry_id: inquiry_id
         })
         .then((response) => {
           // create a event bus 
           this.$emit('update:isClosed', true);
-          inqEvntBs.emitApproved();
+          // inqEvntBs.emitApproved();
         })
         .catch((e) => {
           this.$emit('update:isClosed', true);

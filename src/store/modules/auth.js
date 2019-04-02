@@ -5,6 +5,7 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+import vm from '@/main.js';
 
 const state = {
     api: {
@@ -13,7 +14,7 @@ const state = {
             url: "http://192.168.1.200:8000/v1/login",  
         },
         logout: {
-            method: 'get',
+            method: 'post',
             url: "http://192.168.1.200:8000/v1/logout",
         },
 
@@ -37,6 +38,7 @@ const state = {
         email:     localStorage.getItem('email') || null,
         avatar:    localStorage.getItem('avatar') || null,
         role:      localStorage.getItem('role') || null,
+        uuid:      localStorage.getItem('uuid') || null,
     },
 
 
@@ -45,6 +47,17 @@ const state = {
 
 
 const mutations = {
+
+    CONNECTED_M(state) {
+        // console.log("CONNECTED_M auth,js");
+        state.isConnected = true;
+    },
+
+    DISCONNECTED_M(state) {
+        // console.log("DISCONNECTED_M auth,js");
+        state.isConnected = false;
+    },
+
 
     SET_TOKEN_M(state, token){
         state.token = token;
@@ -62,6 +75,7 @@ const mutations = {
         state.auth_user.email      = user.email;
         state.auth_user.avatar     = user.avatar;
         state.auth_user.role       = user.role;
+        state.auth_user.uuid       = user.uuid;
     },
 
     DESTROY_AUTHUSER_M(state) {
@@ -71,6 +85,7 @@ const mutations = {
         state.auth_user.email      = null;
         state.auth_user.avatar     = null;
         state.auth_user.role       = null;
+        state.auth_user.uuid       = null;
     },
 
 
@@ -83,10 +98,8 @@ const mutations = {
     
 const actions = {
 
-    retrieveToken_a(context,data){
-        // alert(data.username+" "+data.password);
-        // alert(state.api_url.login);
 
+    retrieveToken_a(context,data){
         return new Promise((resolve, reject) => {
 
             var payload = {
@@ -103,11 +116,12 @@ const actions = {
 
                 // console.log('dfatadfatadfatadfatadfata');
                 // console.log(response.data);
+                // console.log(response.data.user);
                 // console.log('dfatadfatadfatadfatadfata');
                 
                 var token = response.data.token;
                 var user = response.data.user;
-                var uuid = response.data.uuid;
+                user.uuid = response.data.uuid;
 
 
                 // set token
@@ -121,7 +135,7 @@ const actions = {
 
                 // set user details                
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                localStorage.setItem('uuid'       ,uuid); // change this later to the real uuid
+                localStorage.setItem('uuid'       ,user.uuid); // change this later to the real uuid
                 localStorage.setItem('name'       ,user.firstname+" "+user.lastname);
                 localStorage.setItem('firstname'  ,user.firstname);
                 localStorage.setItem('lastname'   ,user.lastname);
@@ -142,11 +156,18 @@ const actions = {
                 // set inquiry statuses
 
 
-                // reset things
-                // resetresetresetresetresetresetresetresetreset
-                context.dispatch('resetThings_a');
-                // resetresetresetresetresetresetresetresetreset
-                // reset things
+                // reset notifications
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                context.dispatch('ntfctns/resetNotification_a', null, { root: true });
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // reset notifications
+
+
+                // set socket user
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                context.dispatch('sckts/joinRoom_a', null, { root: true });
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // set socket user
 
             })
             .catch(error => {
@@ -183,43 +204,36 @@ const actions = {
     },
 
 
-    destroyToken_a(context){
-        if(context.getters.isLoggedIn_g) {
+    logout_a(context){
+        // if(context.getters.isLoggedIn_g) {
             return new Promise((resolve, reject) => {
                 axios({
-                    method: state.api_url.logout.method,
-                    url: state.api_url.logout.url,
+                    method: state.api.logout.method,
+                    url: state.api.logout.url,
                     headers: state.axios.config.headers,
                 })
-                .then(response => {                        
+                .then(response => {
                     // localStorage.removeItem('access_token');
                     localStorage.clear();
                     context.commit('DESTROY_TOKEN_M');
                     context.commit('DESTROY_AUTHUSER_M');
 
-                    // reset things
-                    // resetresetresetresetresetresetresetresetreset
-                    context.dispatch('resetThings_a');
-                    // resetresetresetresetresetresetresetresetreset
-                    // reset things
+
+
+                    // reset notifications
+                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    context.dispatch('ntfctns/resetNotification_a', null, { root: true });
+                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    // reset notifications
 
 
                     resolve(response);
                 })
                 .catch(error => {
-                    localStorage.clear();
-                    context.commit('DESTROY_TOKEN_M');
-                    context.commit('DESTROY_AUTHUSER_M');
                     reject(error)
                 })
             });
-        }
-    },
-
-    resetThings_a(context){
-        alert('byrInq/resetNotification_a');
-        console.log('byrInq/resetNotification_a');
-        context.dispatch('byrInq/resetNotification_a', null, { root: true });
+        // }
     },
 
     loginSuccess_a(context,response){

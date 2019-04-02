@@ -115,9 +115,7 @@
                                :loading="props.item.loading">
                                    <i class="fas fa-eye white--text"></i>
                                    <span class="ml-1 white--text font-weight-light ">View</span>
-                               </v-btn>
-                           <router-link :to="{ name: 'SupplierInquiryView', params: { inq_id: props.item.inq_id }}">
-                           </router-link>
+                               </v-btn>                           
                        </v-layout>
                    </td>
                </tr>
@@ -132,7 +130,7 @@
     </v-card>
 
     <span>
-      <inquiry-view :openInquiry.sync="openInquiry" :inquiry="inquiry"></inquiry-view>
+      <inquiry-view></inquiry-view>
     </span>
 
   </div>
@@ -141,261 +139,201 @@
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
-import InquiryView from "@/views/Pages/Supplier/InquiryView";
+import InquiryView from "@/views/Components/App/Supplier/InquiryView";
 
 import config from "@/config/main"
 
-import VueTimers from 'vue-timers/mixin'
-
-import inqEvntBs from "@/bus/inquiry";
 
 
 export default {
-  components: {
-    InquiryStatusButtons,
-    InquiryView,
-
-  },
-
-  mixins: [
-    helpers,
-    VueTimers,
-  ],
-
-  props: {},
-
-  data: () => ({
-
-    statuses: [
-      ...config.inquiry_statuses.default,
-      ...config.inquiry_statuses.suppliers,
-    ],
-    statusesSupplier: config.inquiry_statuses.suppliers,
-    headers: [{
-        text: '',
-        align: 'left',
-        sortable: false,
-        value: 'inq_id'
-      },
-
-      {
-        text: 'Inquiry & Categories',
-        align: 'left',
-        sortable: true,
-        value: 'categories'
-      },
-
-      {
-        text: 'Keywords & Message',
-        align: 'left',
-        sortable: true,
-        value: 'keywordsMessage'
-      },
-
-      {
-        text: 'Quantity',
-        align: 'left',
-        sortable: true,
-        value: 'quantity'
-      },
-
-      {
-        text: 'Preferred Shipping Date',
-        align: 'left',
-        sortable: true,
-        value: 'shipping_date'
-      },
-
-      {
-        text: 'Date',
-        align: 'left',
-        sortable: true,
-        value: 'created_at'
-      },
-
-      {
-        text: 'Status',
-        align: 'left',
-        sortable: true,
-        value: 'status'
-      },
-
-      {
-        text: 'Action',
-        align: 'center',
-        sortable: false,
-        value: 'inq_id',
-      },
-    ],
-
-    // search: '1551612312798',
-    search: null,
-
-    inquiryStatus: [],
-    allInquiries: [],
-    tableItems: [],
-
-    categories: [],
-    categoryItems: [],
-
-    openInquiry: false,
-    inquiry: null,
-
-  }),
-
-  timers: [{
-    name: 'InquiryTableTimer',
-    time: config.polling.inquiryTable.time,
-    repeat: true,
-    // autostart: true,
-    callback: function() {
-      console.log("InquiryTableTimer");
-      this.fillTable(false);
+    components: {
+        InquiryStatusButtons,
+        InquiryView,
     },
-  }],
 
-  methods: {
+    mixins: [ 
+        helpers,
+    ],
 
 
-    viewInquiry(inq) {
+    data: ()=> ({
+        statuses: [ 
+            ...config.inquiry_statuses.default, 
+            ...config.inquiry_statuses.suppliers, 
+        ], 
 
-      inq.loading = true;
-      this.$store.dispatch('spplrInq/getInquiry_a', { inq_id: inq.inq_id })
+        statusesSupplier: config.inquiry_statuses.suppliers, 
+        headers: [ 
+            { text: '', align: 'left', sortable: false, value: 'inq_id' },
+            { text: 'Inquiry & Categories', align: 'left', sortable: true, value: 'categories' },
+            { text: 'Keywords & Message', align: 'left', sortable: true, value: 'keywordsMessage' },
+            { text: 'Quantity', align: 'left', sortable: true, value: 'quantity' },
+            { text: 'Preferred Shipping Date', align: 'left', sortable: true, value: 'shipping_date' }, 
+            { text: 'Date', align: 'left', sortable: true, value: 'created_at' }, 
+            { text: 'Status', align: 'left', sortable: true, value: 'status' }, 
+            { text: 'Action', align: 'center', sortable: false, value: 'inq_id', }, 
+        ], 
+        // search: '1551612312798',
+        search: null, 
+        inquiryStatus: [], 
+        allInquiries: [], 
+        tableItems: [], 
+        categories: [], 
+        categoryItems: [], 
+    }),
+
+    // timers: [ {
+    //     name: 'InquiryTableTimer',
+    //     time: config.polling.inquiryTable.time,
+    //     repeat: true, // autostart: true,
+    //     callback: function() {
+    //         console.log("InquiryTableTimer");
+    //         this.fillTable(false);
+    //     }
+    //     ,
+    // }],
+
+    methods: {
+        viewInquiry(inq) {
+            inq.loading=true;
+            this.$store.dispatch('spplrInq/getInquiry_a', {inq_id: inq.inq_id})
+            .then((data)=> {
+                this.inquiry=data;
+                this.openInquiry=true;
+                inq.loading=false;
+            })
+            .catch((error)=> {
+                console.log(error);
+            });
+        },
+
+        fillTable(withLoading=true) {
+            // console.log("fillTable");
+            this.loading=withLoading;
+            this.allInquiries=[];
+            this.$store.dispatch('spplrInq/getInquiries_a')
+            .then((response)=> {
+                // console.log(response);
+                for (var i=response.length - 1; i >=0; i--) {
+                    var item= {};
+                    item.inq_id=response[i].id;
+                    item.keywords=this.ucwords(response[i].keyword);
+                    item.message=response[i].message;
+                    item.keywordsMessage=response[i].keyword + " " + response[i].message;
+                    item.categories=response[i].categories.join(', ');
+                    item.quantity=response[i].quantity;
+                    item.shipping_date=response[i].desired_shipping_date;
+                    item.created_at=response[i].created_at;
+                    item.status=response[i].stage_id;
+                    item.loading=false;
+                    item.inquiry=response[i];
+                    this.allInquiries.push(item);
+                }
+                // this.tableItems = this.allInquiries;
+                this.filterTable();
+                this.loading=false;
+            })
+            .catch((e)=> {
+                console.log('Error: ' + e);
+                this.loading=false;
+            })
+            .finally(()=> {
+                this.loading=false;
+            });
+        },
+
+        refresh() {
+            // this.inquiryStatus = [];
+            // this.categories = [];
+            // this.search = "";
+            this.fillTable();
+        },
+
+        filterTable() {
+            var items=this.allInquiries;
+            if (this.inquiryStatus.length || this.categories.length) {
+                // filter for statuses only
+                var isBuff=this.inquiryStatus;
+                items=items.filter(function(inq) {
+                    return (isBuff.length) ? isBuff.includes(inq.status): true;
+                }
+                );
+                // filter for categories
+                isBuff=this.categories;
+                items=items.filter(function(inq) {
+                    return (isBuff.length) ? isBuff.includes(inq.categories.trim()): true;
+                }
+                );
+            }
+            this.tableItems=items;
+        },
+
+        removeFromCategories(item) {
+            const index=this.categories.indexOf(item.name);
+            if (index >=0) {
+                this.categories.splice(index, 1);
+            }
+        },
+    },
+
+
+    created() {
+        this.fillTable();
+
+        // inqEvntBs.$on('closed-submitted',()=>{
+        //     this.fillTable(false);
+        // });
+
+        // get categories for category select box
+        this.$store.dispatch('cat/getCategories_a')
         .then((data) => {
-          this.inquiry = data;
-          this.openInquiry = true;
-          inq.loading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-    },
-
-
-    fillTable(withLoading = true) {
-      // console.log("fillTable");
-
-      if (withLoading)
-        this.loading = true;
-
-      this.allInquiries = [];
-      this.$store.dispatch('spplrInq/getInquiries_a')
-        .then((response) => {
-
-          // console.log(response);
-
-          for (var i = response.length - 1; i >= 0; i--) {
-            var item = {};
-            item.inq_id = response[i].id;
-            item.keywords = this.ucwords(response[i].keyword);
-            item.message = response[i].message;
-            item.keywordsMessage = response[i].keyword + " " + response[i].message;
-            item.categories = response[i].categories.join(', ');
-            item.quantity = response[i].quantity;
-            item.shipping_date = response[i].desired_shipping_date;
-            item.created_at = response[i].created_at;
-            item.status = response[i].stage_id;
-            item.loading = false;
-            item.inquiry = response[i];
-            this.allInquiries.push(item);
-          }
-          // this.tableItems = this.allInquiries;
-          this.filterTable();
-
-          if (withLoading)
-            this.loading = false;
-
+            this.categoryItems = data;
         })
         .catch((e) => {
-          console.log('Error: ' + e);
-          this.loading = false;
-        })
-        .finally(() => {
-          this.loading = false;
+            console.log('Error: ');
+            console.log(e);
         });
 
     },
 
-    refresh() {
-      this.inquiryStatus = [];
-      this.categories = [];
-      this.search = "";
+    watch: {
+
+        inquiryStatus(nVal, oVal) {
+            this.filterTable();
+        },
+
+        categories(nVal, oVal) {
+            this.filterTable();
+        },
+
     },
 
-    filterTable() {
 
+    computed: {
+        openInquiry: {
+            get() {
+                return this.$store.state.spplrInq.openInquiryView;
+            },
+            set(nVal){
+                if(nVal)
+                this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
+                else
+                this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+            },
+        },
 
-      var items = this.allInquiries;
-      if (this.inquiryStatus.length || this.categories.length) {
-
-        // filter for statuses only
-        var isBuff = this.inquiryStatus;
-        items = items.filter(function(inq) {
-          return (isBuff.length) ? isBuff.includes(inq.status) : true;
-        });
-
-        // filter for categories
-        isBuff = this.categories;
-        items = items.filter(function(inq) {
-          return (isBuff.length) ? isBuff.includes(inq.categories.trim()) : true;
-        });
-      }
-
-      this.tableItems = items;
+        inquiry: {
+            get() {
+                return this.$store.state.spplrInq.inquiry;
+            },
+            set(nVal) {
+                // console.log('setVal');
+                // console.log(nVal);
+                this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
+            },
+        },
     },
 
-    removeFromCategories(item) {
-      const index = this.categories.indexOf(item.name);
-      if (index >= 0) {
-        this.categories.splice(index, 1);
-      }
-    }
-
-  },
-
-
-  created() {
-    this.fillTable();
-
-    // inqEvntBs.$on('closed-submitted',()=>{
-    //     this.fillTable(false);
-    // });
-
-    // get categories for category select box
-    this.$store.dispatch('cat/getCategories_a')
-      .then((data) => {
-        this.categoryItems = data;
-      })
-      .catch((e) => {
-        console.log('Error: ');
-        console.log(e);
-      });
-
-  },
-
-  watch: {
-
-    inquiryStatus(nVal, oVal) {
-      this.filterTable();
-    },
-
-    categories(nVal, oVal) {
-      this.filterTable();
-    },
-
-    openInquiry(nVal) {
-
-
-      if (nVal) {
-        // this.$timer.stop('InquiryTableTimer');                
-      } else {
-        this.fillTable(false);
-        // this.$timer.start('InquiryTableTimer');
-      }
-    },
-
-  },
 
 }
 

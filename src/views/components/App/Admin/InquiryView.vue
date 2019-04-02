@@ -2,7 +2,7 @@
   <v-dialog 
   :value="openInquiry" 
   @input="$emit('update:openInquiry', false)" 
-  @keydown="keyPress"
+  @keydown.escape="keyPress"
   fullscreen
   scrollable>
     <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->

@@ -177,7 +177,7 @@ components: {
             name: 'InquiryTableTimer',
             time: config.polling.inquiryTable.time, 
             repeat: true,
-            autostart: true,
+            autostart: false,
             callback: function(){
                 this.fillBidTable();
             },
@@ -238,7 +238,7 @@ methods: {
 
 		.then(response=> {
 
-			console.log(this.inquiry.id);
+			// console.log(this.inquiry.id);
 
 			this.bidItems = response;
 
@@ -283,7 +283,7 @@ methods: {
 
 	created(){
 
-		console.log(this.inquiry)
+		// console.log(this.inquiry)
 
 		this.fillBidTable();
 		 inqEvntBs.$on('award-bid-form-submitted',()=>{

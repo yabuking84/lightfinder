@@ -1,13 +1,16 @@
 <template>
-  <v-toolbar
-    :fixed="fixedToolbar"
-    v-if="toolbar"
-    :class="navToolbarScheme"
-    :clipped-left="toolbarClippedLeft"
-    app
-    flat>
+<div>
 
-    
+<v-toolbar 
+:fixed="fixedToolbar" 
+v-if="toolbar" 
+:class="navToolbarScheme" 
+:clipped-left="toolbarClippedLeft" 
+background-color="red"
+:style="style"
+app 
+flat>
+
     <!-- <v-toolbar-side-icon
       class="hidden-lg-and-up"
       @click.stop="$store.dispatch('toggleDrawer', ! navDrawer)"></v-toolbar-side-icon>
@@ -28,17 +31,15 @@
       </v-tooltip>
     </v-btn> -->
 
-
     <!-- <v-btn icon :to="{name: 'Contacts'}" flat>
       <v-icon>contacts</v-icon>
     </v-btn>
-    
+
     <v-btn icon :to="{name: 'Chat'}" flat>
       <v-icon>chat</v-icon>
     </v-btn>  -->
 
-
-                <!-- <v-icon>far fa-bell</v-icon> -->
+    <!-- <v-icon>far fa-bell</v-icon> -->
 
     <v-menu offset-y transition="scale-transition">
         <template v-slot:activator="{ on }">
@@ -59,77 +60,96 @@
         </v-list>
     </v-menu>
 
-
-
-
-
-
-
     <v-spacer></v-spacer>
-    
+
+    <v-btn>
+        <h3>{{ authUser.email }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h3>{{ authUser.name }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h3>{{ authUser.uuid }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h3 v-if="authUser.role==roles.admin.id">ADMIN</h3>
+        <h3 v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
+        <h3 v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
+    </v-btn>
+
     <v-menu offset-x>
-      <v-avatar slot="activator" size="40">
-        <div :style="avatarBgImage">
-            <!-- <img :src="authUser.avatar" :alt="authUser.name"> -->
-        </div>
-      </v-avatar>
-      
-      <v-list dense>
-
-        <v-list-tile avatar>
-          <v-list-tile-avatar>
-                <div :style="avatarBgImage">
-                </div>
+        <v-avatar slot="activator" size="40">
+            <div :style="avatarBgImage">
                 <!-- <img :src="authUser.avatar" :alt="authUser.name"> -->
-          </v-list-tile-avatar>
+            </div>
+        </v-avatar>
 
-          <v-list-tile-content>
-            <v-list-tile-title v-text="authUser.name"></v-list-tile-title>
-            <v-list-tile-sub-title v-if="authUser.role==roles.admin.id">Administrator</v-list-tile-sub-title>
-            <v-list-tile-sub-title v-else-if="authUser.role==roles.buyer.id">Buyer</v-list-tile-sub-title>
+        <v-list dense>
 
-            <v-list-tile-sub-title v-else-if="authUser.role==roles.supplier.id">Supplier</v-list-tile-sub-title>
+            <v-list-tile avatar>
+                <v-list-tile-avatar>
+                    <div :style="avatarBgImage">
+                    </div>
+                    <!-- <img :src="authUser.avatar" :alt="authUser.name"> -->
+                </v-list-tile-avatar>
 
-            <v-list-tile-sub-title v-else>Unknown</v-list-tile-sub-title>
-          </v-list-tile-content>
+                <v-list-tile-content>
+                    <v-list-tile-title v-text="authUser.name"></v-list-tile-title>
 
-        </v-list-tile>
+                    <v-list-tile-sub-title v-if="authUser.role==roles.admin.id">Administrator</v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-else-if="authUser.role==roles.buyer.id">Buyer</v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-else-if="authUser.role==roles.supplier.id">Supplier</v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-else>Unknown</v-list-tile-sub-title>
 
-        <br>
-        
-        <v-divider></v-divider>
+                </v-list-tile-content>
 
-        <v-list-tile @click="() => {}">
-          <v-list-tile-avatar>
-            <v-icon>person</v-icon>
-          </v-list-tile-avatar>
-          <v-list-tile-title>Edit Profile</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="() => {}">
-          <v-list-tile-avatar>
-            <v-icon>settings_applications</v-icon>
-          </v-list-tile-avatar>
-          <v-list-tile-title>Settings</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="() => {}">
-          <v-list-tile-avatar>
-            <v-icon>mail</v-icon>
-          </v-list-tile-avatar>
-          <v-list-tile-title>Inbox</v-list-tile-title>
-        </v-list-tile>
+            </v-list-tile>
 
-        <v-divider></v-divider>
+            <br>
 
-        <v-list-tile @click="logout()">
-          <v-list-tile-avatar>
-            <v-icon>power_settings_new</v-icon>
-          </v-list-tile-avatar>
-          <v-list-tile-title>Sign Out</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
+            <v-divider></v-divider>
+
+            <v-list-tile @click="() => {}">
+                <v-list-tile-avatar>
+                    <v-icon>person</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-title>Edit Profile</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="() => {}">
+                <v-list-tile-avatar>
+                    <v-icon>settings_applications</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-title>Settings</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="() => {}">
+                <v-list-tile-avatar>
+                    <v-icon>mail</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-title>Inbox</v-list-tile-title>
+            </v-list-tile>
+
+            <v-divider></v-divider>
+
+            <v-list-tile @click="logout()">
+                <v-list-tile-avatar>
+                    <v-icon>power_settings_new</v-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-title>Sign Out</v-list-tile-title>
+            </v-list-tile>
+        </v-list>
 
     </v-menu>
-  </v-toolbar>
+</v-toolbar>
+
+<v-snackbar 
+:value="showSnackbar" 
+:timeout="timeoutSnackbar"
+right
+top
+multi-line>
+    {{ textSnackbar }}
+    <v-btn color="pink" flat @click="showSnackbar = false">
+        Close
+    </v-btn>
+</v-snackbar>
+
+
+
+</div>
 </template>
 
 
@@ -156,6 +176,7 @@ export default {
 data: () => ({
     title: 'BuyAnyLight.com',
     roles: config.auth.role,
+    timeoutSnackbar: 60000,
 }),
 
 
@@ -168,6 +189,7 @@ computed: {
         navToolbarScheme: 'navToolbarScheme',
         navMiniVarient: 'navMiniVarient'
     }),
+
     authUser () {        
         return this.$store.state.auth.auth_user;
     },
@@ -188,21 +210,36 @@ computed: {
     },
 
     notifications(){
-        var retVal = null;
-        var auth_user_role = this.$store.state.auth.auth_user.role;
+        return this.$store.state.ntfctns.notifications;
+    },
 
-        if(auth_user_role==config.auth.role.buyer.id) {
-            retVal = this.$store.state.byrInq.notifications;
-        }
-        else if(auth_user_role==config.auth.role.supplier.id) {
-            retVal = this.$store.state.spplrInq.notifications;
-        }
-        else {
-            retVal = [];
-        }
+    showSnackbar:{
+        get(){
+            return this.$store.state.ntfctns.showSnackbar;
+        },
+        set(nVal){
+            if(nVal)
+            this.$store.commit('ntfctns/SHOW_SNACKBAR_M');
+            else
+            this.$store.commit('ntfctns/HIDE_SNACKBAR_M');
+        },
+    },
 
-        return retVal;
+    textSnackbar(){
+        return this.$store.state.ntfctns.textSnackbar;
+    },
 
+    style(){
+        var style = '';
+        
+        if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) 
+        style = 'background-color:yellow !important;';
+        else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) 
+        style = 'background-color:blue !important;';
+        else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) 
+        style = 'background-color:red !important;';
+        
+        return style;
     },
 },
 

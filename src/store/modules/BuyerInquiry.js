@@ -43,69 +43,30 @@ const state = {
     },
     inquiries: [],
 
-    // sockets
-    /////////////////////////////////
-    test_vuex: "",
-    isConnected: false,
-    socketMessage: '',
-    // notifications: [ {title:'ertet'} ],
-    notifications: [],
-    /////////////////////////////////
-    // sockets
+    inquiry: null,
+    openInquiryView: false,
+
 }
 
 
 
 const mutations = {
-    CONNECTED_M(state) {
-      state.isConnected = true;
+
+    SHOW_OPENINQUIRYVIEW_M(state){
+        state.openInquiryView = true;
     },
 
-    DISCONNECTED_M(state) {
-      state.isConnected = false;
+    HIDE_OPENINQUIRYVIEW_M(state){
+        state.openInquiryView = false;
     },
 
-    UPDATE_NOTIFICATIONS_M(state, data) {
-        state.notifications.push(data);
+    UPDATE_INQUIRY_M(state,data){
+        state.inquiry = data.inquiry;
     },
 
-    RESET_NOTIFICATIONS_M(state) {
-        state.notifications = [];
-    },
 }
     
 const actions = {
-
-
-    // sockets
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    SOCKET_connect(context){
-        // console.log("byrInqr connect");
-        context.commit('CONNECTED_M')
-    },
-    SOCKET_disconnect(context){
-        // console.log("byrInqr disconnect");
-        context.commit('DISCONNECTED_M')
-    },
-
-    SOCKET_supplierNewQuoteCreated(context, data){
-        context.dispatch('getInquiry_a',data).then(response=>{
-
-            // console.log("VUEX");
-            // console.log(response);
-
-            var notf = {};
-            notf.title = response.keyword;
-            if(response)
-            context.commit('UPDATE_NOTIFICATIONS_M',notf);
-        });
-    },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // sockets
-
-    resetNotification_a(context){
-        context.commit('RESET_NOTIFICATIONS_M');
-    },
 
     getInquiries_a(context){
         return new Promise((resolve, reject) => {
@@ -122,14 +83,10 @@ const actions = {
                 resolve(response.data);
             })
             .catch(error => {
-
                 // console.log(error);
-
                 if(actions.checkToken(error)) {
                     reject(error);
                 }
-                
-
             })
         });
     },

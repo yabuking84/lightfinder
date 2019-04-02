@@ -170,7 +170,7 @@ export default {
       }
 
       this.dataItems = [];
-      this.$store.dispatch('adminBuyer/getAllBuyer_a')
+      this.$store.dispatch('admnByr/getAllBuyer_a')
 
         .then((response) => {
 
@@ -209,7 +209,7 @@ export default {
         "id": buyer_id
       }
 
-      this.$store.dispatch('adminBuyer/getBuyer_a', {
+      this.$store.dispatch('admnByr/getBuyer_a', {
 
           data: data
 

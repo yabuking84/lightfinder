@@ -4,7 +4,6 @@ import AppFooter from '@/views/Components/App/Footer'
 
 import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
-// import BuyerInquiryView from '@/views/Pages/Buyer/InquiryView'
 
 
 

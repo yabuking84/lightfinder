@@ -49,13 +49,27 @@ const state = {
     },
     inquiries: [],
 
-    notifications:[],
+    inquiry: null,
+    openInquiryView: false,
+
 
 }
 
 
 
 const mutations = {
+    
+    SHOW_OPENINQUIRYVIEW_M(state){
+        state.openInquiryView = true;
+    },
+
+    HIDE_OPENINQUIRYVIEW_M(state){
+        state.openInquiryView = false;
+    },
+
+    UPDATE_INQUIRY_M(state,data){
+        state.inquiry = data.inquiry;
+    },
 
 }
 

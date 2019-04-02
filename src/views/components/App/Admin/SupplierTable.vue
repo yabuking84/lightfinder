@@ -156,7 +156,7 @@ export default {
 
       this.loading = true;
       this.dataItems = [];
-      this.$store.dispatch('adminSupplier/getAllSupplier_a')
+      this.$store.dispatch('admnSpplr/getAllSupplier_a')
 
         .then((response) => {
 
@@ -198,7 +198,7 @@ export default {
         id: supplier_id
       }
 
-      this.$store.dispatch('adminSupplier/getSupplier_a', {
+      this.$store.dispatch('admnSpplr/getSupplier_a', {
           data: data
         })
         .then((response) => {
@@ -227,7 +227,7 @@ export default {
         id: supplier_id
       }
 
-      this.$store.dispatch('adminSupplier/getSupplierCat_a', {
+      this.$store.dispatch('admnSpplr/getSupplierCat_a', {
           data: data
         })
         .then((response) => {

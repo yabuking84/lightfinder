@@ -230,7 +230,7 @@ export default {
     name: 'InquiryTableTimer',
     time: config.polling.inquiryTable.time,
     repeat: true,
-    autostart: true,
+    autostart: false,
     callback: function() {
       this.fillTable(false);
     },
@@ -241,11 +241,10 @@ export default {
 
     fillTable(withLoading = true) {
 
-      if (withLoading)
-      this.loading = true;
+      this.loading = withLoading;
 
       this.allInquiries = [];
-      this.$store.dispatch('adminInquiries/getAllInquiries_a')
+      this.$store.dispatch('admnInq/getAllInquiries_a')
         .then((response) => {
 
           for (var i = response.length - 1; i >= 0; i--) {
@@ -266,7 +265,6 @@ export default {
 
           this.filterTable();
 
-          if (withLoading)
           this.loading = false;
 
         })
@@ -282,9 +280,10 @@ export default {
 
     refresh() {
 
-      this.inquiryStatus = [];
-      this.categories = [];
-      this.search = "";
+      // this.inquiryStatus = [];
+      // this.categories = [];
+      // this.search = "";
+      this.fillTable();
     },
 
     filterTable() {
@@ -320,7 +319,7 @@ export default {
 
     viewInquiry(inq_id) {
 
-      this.$store.dispatch('adminInquiries/getInquiry_a', { inq_id: inq_id })
+      this.$store.dispatch('admnInq/getInquiry_a', { inq_id: inq_id })
 
         .then((response) => {
 

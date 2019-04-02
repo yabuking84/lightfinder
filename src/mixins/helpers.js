@@ -1,3 +1,6 @@
+import axios from 'axios'
+
+
 export default {
   methods: {
 
@@ -47,6 +50,23 @@ export default {
         if(string!="")
         return string.replace(/^./, string[0].toUpperCase());
     },
+
+
+    getCountries(context) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'GET',
+                url:  'http://192.168.1.200:8000/v1/countries',
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+                reject(error);
+            })
+        });
+    },
+
 
   },
 

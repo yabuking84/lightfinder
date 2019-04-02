@@ -649,7 +649,6 @@
 </template>
 <script>
 import inqEvntBs from "@/bus/inquiry"
-import helpers from "@/mixins/helpers"
 import config from '@/config/index'
 
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
@@ -658,11 +657,13 @@ import vue2Dropzone from 'vue2-dropzone'
 import { required, email, maxLength, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
+import helpers from "@/mixins/helpers"
+
 export default {
 
   mixins: [
+    validationMixin,
     helpers,
-    validationMixin
   ],
 
 
@@ -909,15 +910,14 @@ export default {
     // -----------------------GET COUNTRY-------------------------------------
 
 
-    this.$store.dispatch('adminHelper/getCountries')
-
-      .then((response) => {
+    this.getCountries()
+    .then((response) => {
         this.countries = response
-      })
-      .catch((e) => {
+    })
+    .catch((e) => {
         console.log('Error: ')
         console.log(e);
-      });
+    });
 
   },
 
