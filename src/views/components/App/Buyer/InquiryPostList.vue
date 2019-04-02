@@ -10,6 +10,7 @@
         <!-- <h1 class="font-weight-light subheading">Layout</h1> -->
   
       <v-divider></v-divider>
+
         <!-- waiting for verification -->
         <v-layout v-if="inquiry.stage_id == 1001" align-center justify-center row fill-height>
                       
@@ -32,7 +33,6 @@
                                </v-layout>
 
                           </v-flex> 
-                     
         </v-layout>
         
         <!-- rejected inquiry -->
@@ -74,10 +74,12 @@
                   <v-flex xs12 mx-2>
                         <comment-box :commentData="commentData"> </comment-box>
                   </v-flex>
-
         </v-layout>
 
         <div v-else>
+
+
+          <h1>  {{ bidItems }}</h1>
 
             <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
 
@@ -99,14 +101,7 @@
                             </v-flex>
 
                        </v-layout>
-
                   </v-flex> 
-
-
-
-
-
-
             </v-layout>
 
             <v-card v-else class="mb-5" color="grey lighten-4" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
@@ -212,14 +207,15 @@
                                   </v-flex>
                     </v-layout>
                 </v-card-text>
+
                 <v-divider></v-divider>
 
                 <v-card-actions>
-
                     <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at)  }}</h5>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
+
         </div>
 
     </v-card>
@@ -272,6 +268,12 @@ export default {
     },
 
     openInquiry: {
+        type: Boolean
+  
+    }
+
+  },
+    
 
     data: ()=>({
 
@@ -282,26 +284,22 @@ export default {
         bidToAward: null,
         bidinquiry: null,
         has_awarded: true,
-
+        isEdit:false,
+        dialog:false,
         // comment Data composed of the comment useridid and inquiry
         commentData: [
 
             // {
             //     id: 1,
-            //     user_id: 1,
+            //     user_id: 1,fillBidTable 
             //     name: 'Jonh Doe',
             //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
 
             // },
         ],
 
-                // },
-                //   {
-                //     id: 1,
-                //     user_id: 1,
-                //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-
     }),
+
 
     timers: [{
         name: 'BidTableTimer',
@@ -314,33 +312,32 @@ export default {
             this.fillBidTable();
         },
     }],
-
   
 
   methods: {
 
-       fillBidTable() {
+        fillBidTable() {
+
+           console.log('-----------------------------------')
 
             this.$store.dispatch('byrInq/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
-                })
-                .then(response => {
+             })
+            .then(response => {
 
-                    // console.log(this.inquiry.id);
+               console.log(this.bidItems)
+               this.bidItems = response;
 
-                    this.bidItems = response;
-
-                    this.bidItems.sort((a, b) => {
+               this.bidItems.sort((a, b) => {
                         // return b.total_price - a.total_price;
-                        return a.total_price - b.total_price;
+                return a.total_price - b.total_price;
 
-                    });
-
-                })
-                .catch(error => {
-                    console.log(error);
                 });
 
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
 
         openAwardBid(bid) {
@@ -348,7 +345,6 @@ export default {
             this.bidToAward = bid;
             this.bidinquiry = this.inquiry;
             this.openAwardDialog = true;
-
         },
 
         openSample(bid) {
@@ -379,40 +375,38 @@ export default {
             return is_awarded;
         },
 
-    },
+        EditInquiry() {
 
-    EditInquiry() {
-
-       this.bidinquiry = this.inquiry;
-       this.dialog=true 
-       this.isEdit=true
-
-    }
-
-     
-    },
-
-  },
-
-  watch: {
-
-    inquiry(nVal, oVal) {
-
-      this.fillBidTable();
+             this.bidinquiry = this.inquiry;
+             this.dialog=true 
+             this.isEdit=true
+         }
 
     },
 
-    deep: true
+   
+    watch: {
+
+      inquiry(nVal, oVal) {
+
+        this.fillBidTable();
+
+      },
+
+      deep: true
 
 
+    },
 
-  },
   created() {
-    
-       this.fillBidTable();
-        inqEvntBs.$on('award-bid-form-submitted', () => {
+
+          console.log('------------')
           this.fillBidTable();
-          this.inquiry.awarded = 1
+          console.log('------------')
+
+          inqEvntBs.$on('award-bid-form-submitted', () => {
+            this.fillBidTable();
+            $emit('update:inquiry.awarded', 1)
         });
   }
 
@@ -421,7 +415,9 @@ export default {
 }
 
 </script>
+
 <style scoped lang="scss">
+
 .proposal-section {
   max-height: 80vh;
   overflow-y: auto;

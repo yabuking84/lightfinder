@@ -53,28 +53,20 @@ export default {
     },
 
 
-    getCountries_a() {
-
-          // var res;
-
-          // axios({
-          //     method: 'GET',
-          //     url: 'http://192.168.1.200:8000/v1/countries'
-          //   })
-          //   .then(response => {
-          //     resolve(response.data);
-          //     // return 
-          //     // res = response.data;
-          //   })
-          //   .catch(error => {
-          //     reject(error);
-          // })
-
-            // console.log(res);
-          // return res;
-
-  }
-
+    getCountries(context) {
+          return new Promise((resolve, reject) => {
+              axios({
+                  method: 'GET',
+                  url:  'http://192.168.1.200:8000/v1/countries',
+              })
+              .then(response => {
+                  resolve(response.data);
+              })
+              .catch(error => {
+                  reject(error);
+              })
+          });
+      },
 
 
 
