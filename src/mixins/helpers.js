@@ -53,23 +53,26 @@ export default {
     },
 
 
-    getCountries_a(context) {
+    getCountries_a() {
 
-        return new Promise((resolve, reject) => {
+          // var res;
 
-            axios({
-                method: 'GET',
-                url: 'http://192.168.1.200:8000/v1/countries'
-              })
-              .then(response => {
-                resolve(response.data);
-              })
-              .catch(error => {
-                reject(error);
-              })
+          // axios({
+          //     method: 'GET',
+          //     url: 'http://192.168.1.200:8000/v1/countries'
+          //   })
+          //   .then(response => {
+          //     resolve(response.data);
+          //     // return 
+          //     // res = response.data;
+          //   })
+          //   .catch(error => {
+          //     reject(error);
+          // })
 
-        });
-        
+            // console.log(res);
+          // return res;
+
   }
 
 
@@ -79,8 +82,6 @@ export default {
 
 
   actions: {
-
- 
 
 
   }

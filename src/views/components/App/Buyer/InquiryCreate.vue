@@ -1142,7 +1142,6 @@ export default {
 
     // -----------------------GET CATEGORIES-------------------------------------
 
-
     this.$store.dispatch('cat/getCategories_a')
       .then((data) => {
         this.categories = data;
@@ -1164,17 +1163,19 @@ export default {
     //     console.log(e);
     //   });
 
-
-          axios({
-            method: 'GET',
-            url: 'http://192.168.1.200:8000/v1/countries'
-          })
-          .then(response => {
-            this.countries = response.data;
-          })
-          .catch(error => {
-            reject(error);
-          })
+        // this.countries = this.getCountries_a();
+        // console.log(this.getCountries_a());
+        
+      axios({
+        method: 'GET',
+        url: 'http://192.168.1.200:8000/v1/countries'
+      })
+      .then(response => {
+        this.countries = response.data;
+      })
+      .catch(error => {
+        reject(error);
+      })
 
   },
 

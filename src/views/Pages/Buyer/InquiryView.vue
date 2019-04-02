@@ -19,6 +19,7 @@
 		        <!-- inquiry details card -->
 		        <v-flex xs5>
 		        	<!-- :openInquiry="openInquiry" -->
+		        	<h1>{{ inquiry }}</h1>
 		            <inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
 		        </v-flex>
 		        <!-- end of detils  -->
