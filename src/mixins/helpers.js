@@ -1,3 +1,7 @@
+import axios from 'axios';
+import router from '@/router';
+import config from '@/config/index';
+
 export default {
   methods: {
 
@@ -48,6 +52,37 @@ export default {
         return string.replace(/^./, string[0].toUpperCase());
     },
 
+
+    getCountries_a(context) {
+
+        return new Promise((resolve, reject) => {
+
+            axios({
+                method: 'GET',
+                url: 'http://192.168.1.200:8000/v1/countries'
+              })
+              .then(response => {
+                resolve(response.data);
+              })
+              .catch(error => {
+                reject(error);
+              })
+
+        });
+        
+  }
+
+
+
+
   },
+
+
+  actions: {
+
+ 
+
+
+  }
 
 }

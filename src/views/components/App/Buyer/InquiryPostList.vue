@@ -1,57 +1,65 @@
 <template>
   <div>
 
-    <v-toolbar color="grey darken-4" class="white--text" height="54px">
+    <v-toolbar color="white darken-4" dark class="black--text" height="55px">
         <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
     </v-toolbar>
 
     <v-card>
+        
+        <!-- <h1 class="font-weight-light subheading">Layout</h1> -->
+  
+      <v-divider></v-divider>
         <!-- waiting for verification -->
         <v-layout v-if="inquiry.stage_id == 1001" align-center justify-center row fill-height>
+                      
+                          <v-flex xs12 mx-5 mt-3 mb-3>
 
-          <v-flex xs12>
-                      <v-layout row>
-                          <v-flex xs2 my-4>
-                              <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
-                          </v-flex>
+                               <v-layout row justify-center mx-5>  
 
-                          <v-flex xs10 my-4>
-                              <v-card-title primary-title>
-                                  <div>
-                                      <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-                                      <div class="blue-grey--text" style="font-style: italic;">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
-                                      </div>
-                                  </div>
-                              </v-card-title>
+                                    <v-flex xs2>
+                                        <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>  
+                                    </v-flex>
+                                    
+                                    <v-flex xs10>
+                                         <div>
+                                            <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
+                                            <div class="blue-grey--text" style="font-style: italic;">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+                                            </div>
+                                        </div>  
+                                    </v-flex>
+
+                               </v-layout>
 
                           </v-flex> 
-
-                      </v-layout>
-          </v-flex>
+                     
         </v-layout>
         
         <!-- rejected inquiry -->
-        <v-layout v-else-if="inquiry.stage_id == 1003" align-center justify-center row fill-height>
+        <v-layout v-else-if="inquiry.stage_id == 1003" align-center justify-center row wrap fill-height>
+            
 
-            <v-flex xs12>
+                <v-flex xs12 mx-5 mt-3 mb-3>
 
-                <v-layout row wrap>
+                     <v-layout row justify-center mx-5>  
 
-                            <v-flex xs2 mt-4>
-                                <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
-                            </v-flex>
-
-                            <v-flex xs10 mt-4>
-                                <v-card-title primary-title>
-                                    <div>
-                                        <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                        <div class="blue-grey--text" style="font-style: italic;">Your INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
-                                        </div>
+                          <v-flex xs2>
+                               <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
+                          </v-flex>
+                          
+                          <v-flex xs10>
+                                <div>
+                                    <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
+                                    <div class="blue-grey--text" style="font-style: italic;">Your INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
                                     </div>
-                                </v-card-title>
-                            </v-flex>
+                                </div>
+                          </v-flex>
 
-                            <v-flex xs10 offset-xs1>
+                      
+
+                     </v-layout>
+
+                          <v-flex xs10 offset-xs1>
                               <v-layout row wrap justif>
                                   <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
                                         <span class="font-weight-bold ml-1 white--text">Edit Now</span>
@@ -59,40 +67,53 @@
                               </v-layout>
                                    
                             </v-flex>
-                </v-layout>
 
-                  <v-flex xs12>
+                </v-flex> 
+
+
+                  <v-flex xs12 mx-2>
                         <comment-box :commentData="commentData"> </comment-box>
                   </v-flex>
 
-            </v-flex>
         </v-layout>
 
         <div v-else>
 
             <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
 
-                      <v-flex xs2 my-4>
-                          <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                      </v-flex>
+                  <v-flex xs12 mx-5 mt-3 mb-3>
 
-                      <v-flex xs10 my-4>
-                          <v-card-title primary-title>
-                              <div>
-                                  <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
-                                  <div class="blue-grey--text" style="font-style: italic;">INQUIRY <b>#{{ inquiry.id }}</b> 
-                                  </div>
+                       <v-layout row justify-center mx-5>  
 
-                              </div>
-                          </v-card-title>
-                      </v-flex>
+                            <v-flex xs2>
+                                  <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
+                            </v-flex>
+                            
+                            <v-flex xs10 mt-4>
+                                        <div>
+                                          <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
+                                          <div class="blue-grey--text" style="font-style: italic;">INQUIRY <b>#{{ inquiry.id }}</b> 
+                                          </div>
+
+                                      </div>
+                            </v-flex>
+
+                       </v-layout>
+
+                  </v-flex> 
+
+
+
+
+
+
             </v-layout>
 
-            <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
+            <v-card v-else class="mb-5" color="grey lighten-4" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
               
                 <v-card-text>
-                    <v-layout row wrap>
 
+                    <v-layout row wrap>
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
@@ -169,13 +190,13 @@
                            <v-flex xs12>
                                       <v-layout row wrap>
                                           <v-flex xs6>
-                                              <v-btn flat block :disabled="inquiry.awarded ? true : false" large class="red darken-2 " @click="openSample(bidItem)">
+                                              <v-btn flat block :disabled="inquiry.awarded ? true : false" large class="green darken-2 " @click="openSample(bidItem)">
                                                   <i class="fas fa-lightbulb white--text "></i>
                                                   <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
                                               </v-btn>
                                           </v-flex>
                                           <v-flex xs6>
-                                              <v-btn flat block dark :disabled="inquiry.awarded ? true : false" large class="green darken-2" @click="openAwardBid(bidItem)">
+                                              <v-btn flat block dark :disabled="inquiry.awarded ? true : false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
                                                   <i class="fas fa-award white--text"></i>
                                                   <span class="font-weight-bold ml-1 white--text">Award</span>
                                               </v-btn>
@@ -199,7 +220,6 @@
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
-
         </div>
 
     </v-card>
@@ -355,7 +375,6 @@ export default {
        this.bidinquiry = this.inquiry;
        this.dialog=true 
        this.isEdit=true
-
 
     }
 

@@ -83,8 +83,14 @@
 			                <v-flex xs12 mt-3 px-4 py-3>
 			                    <h1 class="font-weight-thick black--text subheading">Shipping Method</h1>
 			                    <h5 class="font-weight-light black--text darken-4">Select your Shipping method so supplier can quote</h5>
-			                    <v-select v-model="form.shipping_method_id" :items="shipping_methods" :error-messages="fieldErrors('form.shipping_method_id')" @blur="$v.form.shipping_method_id.$touch()" item-text="name" item-value="id" flat class="mt-2">
-
+			                    <v-select 
+			                    v-model="form.shipping_method_id" 
+			                    :items="shipping_methods" 
+			                    :error-messages="fieldErrors('form.shipping_method_id')" 
+			                    @blur="$v.form.shipping_method_id.$touch()" 
+			                    item-text="name" 
+			                    item-value="id" 
+			                    flat class="mt-2">
 			                    </v-select>
 			                </v-flex>
 			            </v-card>
@@ -163,7 +169,7 @@
 			            </v-card>
 			            <v-layout row wrap mt-2>
 			                <v-flex xs12>
-			                    <v-btn large :disabled="$v.$invalid" :loading="formLoading" @click="submit()" flat block class="red darken-1">
+			                    <v-btn large :loading="formLoading" @click="submit()" flat block class="red darken-1">
 			                        <span class="ml-1 white--text font-weight-bold">Award</span>
 			                        <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
 			                    </v-btn>
@@ -179,6 +185,7 @@
   </div>	
 </template>
 <script>
+
 import { required, email, maxLength } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 import helpers from "@/mixins/helpers"
@@ -214,6 +221,7 @@ export default {
     form: {
 
       shipping_method_id: { required: 'Please select shipping method.' },
+
     }
 
 
@@ -227,7 +235,7 @@ export default {
 
     form: {
 
-      shipping_method_id: '',
+      shipping_method_id: null,
 
     },
 
@@ -252,14 +260,19 @@ export default {
     submit() {
 
 
-      this.formLoading = true
+     if (this.$v.$invalid) {
+     	
+ 		this.$v.$touch()
 
+     } else {
+
+      this.formLoading = true
       this.$store.dispatch('byrInq/awardBid_a', {
 
-          'payment_method_id': this.form.payment_method_id,
+          'payment_method_id': "1",
           'shipping_method_id': this.form.shipping_method_id,
           // 'shipping_date'		 : this.form.shipping_date,
-          'shipping_address': this.form.shipping_address,
+          'shipping_address': "1",
           'bid_id': this.bid.id,
           'inquiry_id': this.bidinquiry.id,
 
@@ -278,6 +291,14 @@ export default {
         .finally(() => {
           this.formLoading = false;
         });
+
+     }
+
+     
+
+
+
+   
 
     },
 

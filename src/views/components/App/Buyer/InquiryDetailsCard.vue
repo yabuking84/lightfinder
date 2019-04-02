@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <v-toolbar color="grey darken-4" class="white--text" height="50px">
+    <v-toolbar color="white darken-4" dark class="black--text" height="55px">
             
             <!-- <router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
                 <v-btn class="blue-grey" small style="min-width: 50px;">
@@ -14,7 +14,10 @@
             <v-toolbar-title class="subheading font-weight-light"> Posted: <i class="body-2"> {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}  </i> </v-toolbar-title>
 
         </v-toolbar>
+
         <v-card>
+
+            <v-divider></v-divider>
 
             <v-container>
 

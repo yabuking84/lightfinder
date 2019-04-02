@@ -97,6 +97,7 @@
           Your search for "{{ search }}" found no results.
         </v-alert>
       </v-data-table>
+
     </v-card>
 
 
@@ -191,6 +192,7 @@ export default {
     search: null,
     // dialog: false,
     loading: false,
+    
     headers: [{
         text: 'Select',
         align: 'left',

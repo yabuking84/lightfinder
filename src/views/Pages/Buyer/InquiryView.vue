@@ -1,7 +1,7 @@
 <template>
 <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen>
 <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
-    <v-card>
+    <v-card color="grey lighten-3">
 		<v-toolbar dark color="grey darken-4 ">
 		    <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2>
 		    <v-spacer></v-spacer>

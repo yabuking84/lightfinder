@@ -2,9 +2,11 @@
   <div class="text-xs-center">
     <v-dialog :value="openQuoteDialog" @input="$emit('update:openQuoteDialog', false)" @keydown.escape="keyPress" width="80%" scrollable>
       <v-card id="QuoteDialog">
+        
         <!--   <v-card-title class="black white--text" height="20px">
           <h3 class="font-weight-light">{{ quoteAction }} Quote</h3>
         </v-card-title> -->
+
         <!-- #69779b blue-grey darken-4 -->
         <v-toolbar card color="blue-grey darken-4" dark height="50px">
           <v-toolbar-title> <span class="font-weight-bold">Add Quotation</span> </v-toolbar-title>

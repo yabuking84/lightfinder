@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="grey darken-4" class="white--text" height="50px">
+    <v-toolbar color="white darken-4" class="black--text" height="50px">
       <!-- <router-link :to="{ name: 'SupplierHome' }" style="text-decoration: none;">
                 <v-btn class="blue-grey" small style="min-width: 50px;">
                     <i class="fas fa-arrow-left white--text"></i>
@@ -10,7 +10,12 @@
       <v-spacer></v-spacer>
       <v-toolbar-title class="body-2 font-weight-light"> Posted: <i> {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }} </i> </v-toolbar-title>
     </v-toolbar>
+
+
     <v-card>
+
+                  <v-divider></v-divider>
+
       <v-container fluid>
         <v-layout row wrap>
           <v-flex xs12>
