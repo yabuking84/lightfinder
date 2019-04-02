@@ -1,9 +1,17 @@
 <template>
   <div>
-
-    <v-toolbar color="white darken-4" dark class="black--text" height="55px">
-        <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
+    <v-toolbar color="grey darken-4" class="white--text">
+      <v-toolbar-title class="subheading font-weight-light">Bids {{ inquiry.id }}</v-toolbar-title>
     </v-toolbar>
+    <v-card color="grey lighten-5">
+          <v-card class="mb-3" style="cursor: default;" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
+              <v-card-text>
+                  <v-layout row wrap>
+                      <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                      <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                      <v-flex xs5>
+                          <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
+                      </v-flex>
 
     <v-card>
         
@@ -384,31 +392,22 @@ export default {
 
     },
 
-   
-    watch: {
+    created() {
 
       inquiry(nVal, oVal) {
 
         this.fillBidTable();
-
-      },
-
-      deep: true
-
-
-    },
-
-  created() {
-
-          console.log('------------')
-          this.fillBidTable();
-          console.log('------------')
-
-          inqEvntBs.$on('award-bid-form-submitted', () => {
+        inqEvntBs.$on('award-bid-form-submitted', () => {
             this.fillBidTable();
-            $emit('update:inquiry.awarded', 1)
+            this.inquiry.awarded = 1
         });
-  }
+
+        this.fillBidTable();
+        inqEvntBs.$on('award-bid-form-submitted', () => {
+          this.fillBidTable();
+          this.inquiry.awarded = 1
+        });
+    },
 
 
 

@@ -1,8 +1,7 @@
 <template>
     <div>
 
-    <v-toolbar color="white darken-4" dark class="black--text" height="55px">
-            
+        <v-toolbar color="grey darken-4" class="white--text">
             <!-- <router-link :to="{ name: 'BuyerHome' }" style="text-decoration: none;">
                 <v-btn class="blue-grey" small style="min-width: 50px;">
                     <i class="fas fa-arrow-left white--text"></i>
