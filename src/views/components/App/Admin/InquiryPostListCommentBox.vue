@@ -5,7 +5,7 @@
             <v-card-text class="transparent" id="chatscroll-thread">  
 
                 <v-layout row wrap class="pa-0">
-                    <v-flex xs12 v-for="(comment, key) in commentData" :key="key">
+                    <v-flex xs12 v-for="(comment, key) in comments" :key="key">
                         <v-card flat class="overflow-hidden transparent">
                             <v-container fluid grid-list-xs class="pa-0">
                                 <div class="chat-thread" :class="[authUser.id === comment.user_id ? 'end' :'start']">
@@ -25,7 +25,7 @@
                     </v-flex>
                 </v-layout>
 
-                <v-layout row wrap v-if="!commentData.length">
+                <v-layout row wrap v-if="!comments.length">
                     <v-flex xs12>
                         <h2 class="font-weight-medium grey--text mt-4 mb-4 text-xs-center">Start A Conversation Now</h2>
                     </v-flex>
@@ -63,24 +63,13 @@
         },
 
         props: {
-
-            commentData: {
-                type: Array
-            },
-
-            bidinquiry: {
-                type: Object
-            },
-
-            biditem: {
-                type: String
-            }
-
+            biditemId: {},
         },
 
         data() {
             return {
                 chatMessageEditor: null,
+                comments: [],
             }
         },
 
@@ -95,7 +84,7 @@
             sendMessage(biditem, key) {
 
                 if (this.chatMessageEditor) 
-                this.commentData.push({
+                this.comments.push({
 
                     user_id: this.authUser.id,
                     name: this.authUser.name,
@@ -118,9 +107,9 @@
 
         computed: {
 
-             authUser () {        
+            authUser () {        
                 return this.$store.state.auth.auth_user;
-            },
+            },           
 
         },
 

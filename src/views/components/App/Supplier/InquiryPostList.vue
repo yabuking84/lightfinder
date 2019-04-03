@@ -124,7 +124,6 @@
 </template>
 <script>
 
-import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
 import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 import inqEvntBs from "@/bus/inquiry";
 import helpers from "@/mixins/helpers";
@@ -154,7 +153,6 @@ export default {
   }],
 
   components: {
-    InquiryDialog,
     BidDialog
   },
 

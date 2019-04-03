@@ -36,7 +36,12 @@
 
 			<v-card-text v-else>
 				
-				 	<v-card class="mb-3"  :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' "    v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i"  >
+				 	<v-card 
+				 	v-for="(bidItem, i) in bidItems" 
+				 	:key="'bidItem_'+i"
+				 	class="mb-3"  
+				 	:hover="true" 
+				 	:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' ">
 						<v-card-text>
 							<v-layout row wrap>
 
@@ -98,6 +103,11 @@
 										</v-layout>
 									</v-flex>
 
+			                        <v-flex xs12>
+			                            <v-divider></v-divider>
+			                            <comment-box :biditemId="bidItem.id"> </comment-box>
+
+			                        </v-flex>
 
 								<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 								<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -156,6 +166,8 @@ import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
 import helpers from "@/mixins/helpers";
 import inqEvntBs from "@/bus/inquiry"
 
+import CommentBox from "@/views/Components/App/Admin/InquiryPostListCommentbox"
+
 import config from "@/config/main"
 import VueTimers from 'vue-timers/mixin'
 
@@ -163,26 +175,15 @@ import VueTimers from 'vue-timers/mixin'
 
 export default {
 
-  mixins: [
-    helpers,
-    VueTimers,
-  ],
+mixins: [
+	helpers,
+	VueTimers,
+],
 
 components: {
 	ImageGallerySmall,
+	CommentBox,
 },
-
- timers: [     
-        { 
-            name: 'InquiryTableTimer',
-            time: config.polling.inquiryTable.time, 
-            repeat: true,
-            autostart: false,
-            callback: function(){
-                this.fillBidTable();
-            },
-        }
-    ],
 
 
 props: ['inquiry'],
@@ -196,8 +197,7 @@ data: function () {
 		hasBid: true,
 		bidToAward: null,
 		bidinquiry: null,
-		has_awarded:true
-
+		has_awarded:true,
 	}
 
 },
@@ -260,8 +260,8 @@ methods: {
 
 		let is_awarded = false;
 
-		console.log(typeof awarded);
-		console.log(typeof this.inquiry.awarded)
+		// console.log(typeof awarded);
+		// console.log(typeof this.inquiry.awarded)
 
 		if(this.inquiry.awarded == 1) {
 				
@@ -281,17 +281,20 @@ methods: {
 
 },
 
-	created(){
+created(){
 
-		// console.log(this.inquiry)
+	// console.log(this.inquiry)
 
-		this.fillBidTable();
-		 inqEvntBs.$on('award-bid-form-submitted',()=>{
-            this.fillBidTable();
-            this.inquiry.awarded = 1
-        });
+	this.fillBidTable();
+	 inqEvntBs.$on('award-bid-form-submitted',()=>{
+        this.fillBidTable();
+        this.inquiry.awarded = 1
+    });
 
-	},
+},
+
+
+
 
 }
 </script>

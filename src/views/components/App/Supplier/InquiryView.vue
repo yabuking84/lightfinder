@@ -65,14 +65,14 @@ import inqEvntBs from "@/bus/inquiry";
 export default {
 
 
-  components: {
+components: {
 
     QuoteDetails,
     InquiryPostList,
     InquiryDetailsCard,
     BidDialog,
 
-  },
+},
 
   // props: ['inquiry', 'openInquiry'],
 
@@ -82,16 +82,16 @@ export default {
   // 	},
   // },
 
-  data: () => ({
+data: () => ({
 
     title: 'Inquiry Details',
     icon: null,
     bidDialog: false,
     bids: false,
 
-  }),
+}),
 
-  computed: {
+computed: {
 
     buyer: {
 
@@ -127,9 +127,9 @@ export default {
         },
     },       
 
-  },
+},
 
-  methods: {
+methods: {
 
     Refresh: () => {
 
@@ -151,7 +151,7 @@ export default {
         if (e.target.querySelector("#InquiryView"))
         this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
     },
-  },
+},
 
 
 

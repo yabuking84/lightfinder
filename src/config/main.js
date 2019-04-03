@@ -135,8 +135,7 @@ export default {
 		inquiryTable: {
 			time: 10000,
 		}
-	}
+	},
 
-    
 }
 

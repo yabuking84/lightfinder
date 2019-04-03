@@ -52,6 +52,10 @@
                       </v-flex>
                       <v-flex xs5>
                         <h4>Your Chosen Category</h4>
+
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
                         <v-autocomplete 
                         v-model="formData.category" 
                         :items="categories" 
@@ -59,11 +63,13 @@
                         item-value="id"
                         :error-messages="fieldErrors('formData.category')"
                         @blur="$v.formData.category.$touch()" 
-                        :search-input.sync="search" 
                         ref="categorySelect" 
-                        ache-items flat hide-no-data hide-details label="Type here the category.."
-                         solo-inverted>
+                        ache-items flat hide-no-data hide-details label="Type here the category..">
                         </v-autocomplete>
+
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -421,17 +427,25 @@
                       <h3 class="mt-2 font-weight-light">Specify your shipping Address for sample order's.</h3>
                       <v-layout row wrap>
                         <v-flex xs6 pa-1>
-                          <v-select 
-                          v-model="formData.shipping_of_sample.country" 
-                          :items="countries" 
-                          item-text="name" 
-                          item-value="id" 
-                          :error-messages="fieldErrors('formData.shipping_of_sample.country')" 
-                          @blur="$v.formData.shipping_of_sample.country.$touch()" 
-                          :search-input.sync="search" 
-                          ref="countrySampleCountry" 
-                          label="Countries">
-                          </v-select>
+
+                        
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->                          
+
+                            <v-autocomplete
+                            v-model="formData.shipping_of_sample.country" 
+                            :items="countries"
+                            item-text="name" 
+                            item-value="id"                            
+                            class=""                            
+                            ref="countrySampleCountry" 
+                            :error-messages="fieldErrors('formData.shipping_of_sample.country')" 
+                            @blur="$v.formData.shipping_of_sample.country.$touch()" 
+                            label="Countries"></v-autocomplete>                          
+
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
                         </v-flex>
                         <v-flex xs6 pa-1>
                           <v-text-field 
@@ -533,16 +547,17 @@
                 <v-container>
                   <v-layout row wrap>
                     <v-flex xs5 ml-2>
-                      <v-select 
-                      v-model="formData.shipping_of_mass.country" 
-                      :items="countries" 
-                      item-text="name" item-value="id" 
-                      :error-messages="fieldErrors('formData.shipping_of_mass.country')" 
-                      @blur="$v.formData.shipping_of_mass.country.$touch()" 
-                      :search-input.sync="search" 
-                      ref="countryMassShipping" 
-                      label="Countries">
-                      </v-select>
+                        <v-autocomplete
+                        :items="countries"
+                        item-text="name" 
+                        item-value="id"
+                        class=""
+                        v-model="formData.shipping_of_mass.country" 
+                        :error-messages="fieldErrors('formData.shipping_of_mass.country')" 
+                        @blur="$v.formData.shipping_of_mass.country.$touch()" 
+                        :search-input.sync="search"                             
+                        label="Countries"></v-autocomplete>                          
+
                     </v-flex>
                     <v-flex xs5 ml-2>
                       <v-text-field 
@@ -856,7 +871,7 @@ export default {
       dimmables: null,
       formLoading: false,
       calendar_menu: false,
-      countries: [],
+      // countries: [],
 
       // new update 
       is_sample: 0,
@@ -910,14 +925,15 @@ export default {
     // -----------------------GET COUNTRY-------------------------------------
 
 
-    this.getCountries()
-    .then((response) => {
-        this.countries = response
-    })
-    .catch((e) => {
-        console.log('Error: ')
-        console.log(e);
-    });
+    // this.getCountries()
+    // .then((response) => {
+    //     console.log(response)
+    //     this.countries = response
+    // })
+    // .catch((e) => {
+    //     console.log('Error: ')
+    //     console.log(e);
+    // });
 
   },
 
@@ -943,6 +959,21 @@ export default {
       }
     }
   },
+
+  
+
+
+
+
+    computed: {
+        countries(){
+            return config.countries;
+        },        
+    },
+
+
+
+
 
   methods: {
 

@@ -36,8 +36,14 @@
 			                            <!--   <h4 class=""> Almani Lighting L.L.C. Showroom 10, Dubai Investment Park 1,</h4>
 			                        <h4 class=""> Dubai, United Arab Emirates</h4> -->
 			                            <v-flex xs12 ml-2>
-			                                <v-select ref="countryMassShipping" label="Countries">
-			                                </v-select>
+											<v-autocomplete
+											:items="countries"
+											item-text="name" 
+											item-value="id"
+											class="mb-4"
+											hide-no-data
+											hide-details
+											label="Countries"></v-autocomplete>
 			                            </v-flex>
 			                            <v-flex xs12 ml-2>
 			                                <v-text-field label="Street Address">
@@ -308,6 +314,14 @@ export default {
     },
 
   },
+
+
+    computed: {
+        countries(){
+            return config.countries;
+        },        
+    },
+
 
   watch: {
 

@@ -5,7 +5,14 @@
     </v-toolbar>
 
     <v-card color="grey lighten-5">
-          <v-card class="mb-3" style="cursor: default;" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
+
+        <template v-if="!loading">
+        <v-card 
+        class="mb-3" 
+        style="cursor: default;" 
+        :hover="true" 
+        :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
+        v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
               <v-card-text>
                   <v-layout row wrap>
                       <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -107,25 +114,43 @@
 
                           <v-divider></v-divider>
                           <!-- message box -->
-                            <comment-box :commentData="commentData"  :biditem="bidItem.id"> </comment-box>
+                            <!-- <comment-box :commentData="commentData"  :biditem="bidItem.id"> </comment-box> -->
                           <!-- message box -->
                       </v-flex>
 
                   </v-layout>
               </v-card-text>
 
-          </v-card>
-<!-- <v-layout row wrap> -->
-<v-layout align-center justify-center row fill-height v-if="!bidItems.length">
-    <v-flex xs12>
-        <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
-            No Quote yet..
-        </v-alert>
-    </v-flex>
-</v-layout>
+        </v-card>
+
+
+        <!-- <v-layout row wrap> -->
+        <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
+            <v-flex xs12>
+                <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
+                    No Quote yet..
+                </v-alert>
+            </v-flex>
+        </v-layout>
+        </template>
+
+
+        <!-- <v-layout row wrap> -->
+        <v-layout align-center justify-center row fill-height v-if="loading">
+            <v-flex xs12 text-xs-center>
+                <v-progress-circular
+                :size="70"
+                :width="7"
+                color="black"
+                style="margin:150px 50px;"
+                indeterminate></v-progress-circular>
+            </v-flex>
+        </v-layout>
 
 
     </v-card>
+
+
     <!-- <inquiry-confirm v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </inquiry-confirm> -->
     <award-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
     <request-sample-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
@@ -143,7 +168,7 @@ import InquiryConfirm from "@/views/Components/App/Buyer/InquiryConfirm"
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"
 import RequestSampleDialog from "@/views/Components/App/Buyer/RequestSampleDialog"
 
-import CommentBox from "@/views/Components/App/CommentBox"
+import CommentBox from "@/views/Components/App/Buyer/InquiryPostListCommentBox"
 
 import helpers from "@/mixins/helpers"
 import inqEvntBs from "@/bus/inquiry"
@@ -168,7 +193,10 @@ export default {
 
     },
 
-    props: ['inquiry', 'openInquiry'],
+    props: [
+        'inquiry', 
+        'openInquiry',
+    ],
 
     data: ()=>({
         openAwardDialog: false,
@@ -178,6 +206,9 @@ export default {
         bidToAward: null,
         bidinquiry: null,
         has_awarded: true,
+        
+        loading: true,
+
 
         // comment Data composed of the comment useridid and inquiry
         commentData: [
@@ -194,19 +225,7 @@ export default {
 
     }),
 
-    timers: [{
-        name: 'BidTableTimer',
-        time: config.polling.bidTable.time,
-        immediate: true,
-        repeat: true,
-        autostart: false,
-        callback: function() {
-            console.log("BidTableTimer");
-            this.fillBidTable();
-        },
-    }],
 
-  
 
     computed: {
 
@@ -230,6 +249,8 @@ export default {
                         return a.total_price - b.total_price;
 
                     });
+
+                    this.loading = false;
 
                 })
                 .catch(error => {
@@ -259,13 +280,9 @@ export default {
 
             // console.log(typeof awarded);
             // console.log(typeof this.inquiry.awarded)
-
             if (this.inquiry.awarded == 1) {
-
-                if (awarded == 1) {
-                    is_awarded = true;
-                }
-
+                if (awarded == 1)
+                is_awarded = true;
             } else {
                 // trick here if its not awarded yet i will set it to true
                 is_awarded = true;
@@ -277,11 +294,9 @@ export default {
     },
 
     watch:{
-        inquiry:{
-            handler(nVal, oVal) {
-                this.fillBidTable();
-            },
-            deep: true,            
+        
+        inquiry(nVal) {
+            this.fillBidTable();
         },
 
     },
@@ -290,9 +305,10 @@ export default {
 
         // console.log(this.inquiry)
 
-        inqEvntBs.$on('award-bid-form-submitted', () => {
-            this.fillBidTable();
-        });
+        this.fillBidTable();
+        // inqEvntBs.$on('award-bid-form-submitted', () => {
+        //     this.fillBidTable();
+        // });
     },
 
 }
