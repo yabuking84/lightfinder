@@ -30,14 +30,15 @@
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex xs4>
-            <v-text-field label="Search" v-model="search" placeholder="Search" prepend-inner-icon="search" solo clearable>
+            <v-text-field label="Search" v-model="search"  prepend-inner-icon="search"  clearable>
             </v-text-field>
           </v-flex>
         </v-layout>
       </v-card-title>
       <v-divider></v-divider>
       <!-- :headers="headers"  -->
-      <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
+
+    <!--   <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
     
         <template v-slot:items="props">
 
@@ -85,6 +86,12 @@
                    <td class="text-xs-left">
                        <v-layout align-start justify-start column fill-height pt-2 style="position:relative;">
                            <v-flex>
+                               <div v-if="props.item.inquiry.status == 1002 || props.item.inquiry.has_bid == false">
+                                  <small class="red--text font-weight-medium">Haven't quoted</small>
+                              </div>
+                              <div v-else>
+                                 <small class="green--text">Already quoted </small>
+                              </div>
                                <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
                            </v-flex>
                    
@@ -101,6 +108,9 @@
                                    fas fa-ban
                                </v-icon>
                            </div>
+
+                        
+
                        </v-layout>
                    </td>
                
@@ -125,8 +135,155 @@
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
           Your search for "{{ search }}" found no results.
         </v-alert>
-
       </v-data-table>
+ -->
+
+
+       <v-layout row wrap class="grey lighten-4">
+<!--  @filter="filterOption=arguments[0]" @sort="sortOption=arguments[0]" :options='getOptions()' -->
+            
+            
+              <v-flex  style="min-height: 200px;" xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries":key="'inquiry'+index" >
+                
+                   <!--  <pre>                   
+                    {{ filterInquiries }}
+                    </pre> -->
+
+                    <v-card class="pa-3 mx-2 my-3 rounded-card" :hover="true">
+
+                        <v-layout row wrap >
+
+                                <v-flex xs6>
+
+                                  <h3>Inquiry</h3>
+                                  <h4 class="mt-2 font-weight-medium grey--text lighten-4">#{{ inquiry.inq_id }}</h4>
+
+                                </v-flex>
+
+                                <v-flex xs6>
+                                   <h3>Date</h3>
+                                   <h4 class="mt-2 font-weight-medium grey--text ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
+                                </v-flex>   
+
+                        </v-layout>
+
+                        <v-layout  row wrap mt-2>
+                  
+
+                                 <v-flex xs6>
+                                      <h3>Quantity</h3>
+                                      <h4 class="mt-3  font-weight-medium grey--text lighten-4">{{ inquiry.quantity }} pcs</h4>
+                                </v-flex>
+
+                                <v-flex xs6>
+                                  <h3>Status</h3>
+
+                                    <!-- -------- -->
+                                    
+                                    <v-layout row wrap>
+
+
+                                        <v-flex xs12>
+                                                   <!-- check if the supplier is already quoted when the inquiry status is still open  -->
+                                                  <v-flex pa-0 v-if="inquiry.status == 1002">
+                                                        <div v-if=" inquiry.inquiry.has_bid">
+                                                            <small class="green--text">You already quoted</small>
+                                                        </div>
+                                                        <div v-else>
+                                                            <small class="red--text font-weight-medium">You haven't quoted</small>
+                                                        </div>
+                                                   </v-flex>
+                                                  <!-- check if the status is has been awarded to you or to someone -->
+                                                  <div v-if="inquiry.status == 1004">
+
+                                                      <div v-if="inquiry.inquiry.awarded && inquiry.inquiry.awarded_to_me">
+                                                          <small class="green--text">You have awarded, please confirm</small>
+                                                      </div>
+
+                                                      <div v-else>
+                                                          <small class="red--text">Inquiry has been awarded</small>
+                                                      </div>
+
+                                            <!--          <v-icon 
+                                                     v-if="inquiry.awarded && inquiry.awarded_to_me"
+                                                     class="awarded orange--text">
+                                                         fas fa-award
+                                                     </v-icon>
+                                         
+                                                     <v-icon 
+                                                     v-else-if="inquiry.awarded"
+                                                     class="awarded red--text">
+                                                         fas fa-ban
+                                                     </v-icon> -->
+
+                                                 </div>
+                                                 <div v-if="inquiry.status == 1005">
+                                              
+                                                    <div v-if="inquiry.inquiry.awarded_to_me">
+                                                        <small class="green--text">Waiting for the buyer to pay</small>
+                                                    </div>
+                                                    <div v-else>
+                                                        <small class="red--text font-weight-medium">The inquiry has been awarded</small>
+                                                    </div>
+                                                 </div>
+
+
+                                                    <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
+                                        </v-flex>
+
+                                      
+
+                                    </v-layout> 
+                            
+
+                                   <!-- ------------------------------------------ -->
+
+
+
+
+                                </v-flex>   
+
+                        </v-layout>
+
+
+                        <v-layout row wrap mt-2>
+                               <v-flex xs12>
+                                   <h3 class="mt-2 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
+                              </v-flex>
+                        </v-layout>
+
+                        <v-layout row wrap mt-2 class="tnt-height">
+                                 <v-flex xs12>
+                                      <h4 class="font-weight-medium black--text lighten-4">Details</h4>
+                                      <h5 class="mt-2 black--text font-weight-light">
+                                          {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,210) + '...' : inquiry.message   }}
+                                      </h5>
+                                </v-flex>
+                        </v-layout>
+
+                         <v-layout row wrap mt-4 >
+                                 <v-flex xs12 class="text-xs-center">
+                                      <v-btn @click="viewInquiry(inquiry)" block :loading="inquiry.loading" small  class="blue-grey darken-1">
+                                          <i class="fas fa-eye white--text"></i>
+                                          <span class="ml-1 white--text font-weight-light ">Manage</span>
+                                      </v-btn>
+                                </v-flex>
+                        </v-layout>
+
+                  </v-card>
+              </v-flex>
+
+        </v-layout>
+           
+
+
+
+
+
+
+
+
+
     </v-card>
 
     <span>
@@ -140,6 +297,7 @@ import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
 import InquiryView from "@/views/Components/App/Supplier/InquiryView";
+import isotope from 'vueisotope'
 
 import config from "@/config/main"
 
@@ -149,6 +307,7 @@ export default {
     components: {
         InquiryStatusButtons,
         InquiryView,
+        isotope
     },
 
     mixins: [ 
@@ -174,13 +333,19 @@ export default {
             { text: 'Action', align: 'center', sortable: false, value: 'inq_id', }, 
         ], 
         // search: '1551612312798',
-        search: null, 
+        search: '', 
         inquiryStatus: [], 
         allInquiries: [], 
         tableItems: [], 
         categories: [], 
         categoryItems: [], 
-    }),
+        option: {
+            getSortData: {
+              inq_id: "inq_id"
+            },
+            sortBy : "inq_id"
+          }
+         }),
 
     // timers: [ {
     //     name: 'InquiryTableTimer',
@@ -194,17 +359,23 @@ export default {
     // }],
 
     methods: {
+
         viewInquiry(inq) {
+
             inq.loading=true;
             this.$store.dispatch('spplrInq/getInquiry_a', {inq_id: inq.inq_id})
             .then((data)=> {
+
                 this.inquiry=data;
                 this.openInquiry=true;
                 inq.loading=false;
+                  
             })
             .catch((error)=> {
                 console.log(error);
             });
+
+
         },
 
         fillTable(withLoading=true) {
@@ -229,6 +400,7 @@ export default {
                     item.inquiry=response[i];
                     this.allInquiries.push(item);
                 }
+
                 // this.tableItems = this.allInquiries;
                 this.filterTable();
                 this.loading=false;
@@ -310,6 +482,46 @@ export default {
 
 
     computed: {
+
+       // create a computed property from 
+
+           // for searching 
+        filterInquiries() {
+
+                var items = this.allInquiries
+
+                items.sort(function (a, b) {
+                    return a.value - b.value
+                })
+
+                items = items.filter(inquiry => {
+
+                        // add key to search in the dom
+                        return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
+
+                        // for(let key in items) {
+                        //     if(inquiry) {
+
+                        //     }
+                        // }
+
+                })
+
+
+                var buff = this.categories;
+                items = items.filter(function(inquiry) {
+                        return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
+                });
+
+                var buff = this.inquiryStatus;
+                items = items.filter(function(inquiry) {
+                    // return (buff.length) ? buff.includes(inquiry.status) : true;
+                    return (buff.length) ? buff.includes(inquiry.status) : true
+                });
+
+                return items;
+        },
+
         openInquiry: {
             get() {
                 return this.$store.state.spplrInq.openInquiryView;
@@ -327,8 +539,6 @@ export default {
                 return this.$store.state.spplrInq.inquiry;
             },
             set(nVal) {
-                // console.log('setVal');
-                // console.log(nVal);
                 this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
             },
         },
@@ -374,5 +584,52 @@ table.v-table tbody th {
   color: red;
   background-color: red;
 }
+
+.tnt-height {
+    height: 70px;
+}
+
+.rounded-card{
+    border-radius:10px;
+    border-bottom: 5px solid #dedede ;
+
+}
+
+  #root_isotope {
+    margin: 0.5em -0.5em;
+
+    .item {
+      padding: 1em;
+      margin: 0.5em;
+      width: calc(33.3% - 1em);
+      min-width: 100px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      transition: box-shadow 0.2s;
+
+      @media(max-width: 767px) {
+        width: calc(50% - 1em);
+      }
+
+      @media(max-width: 500px) {
+        width: calc(100% - 1em);
+      }
+
+      &:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      }
+      
+      i {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        cursor: pointer;
+      }
+    }
+  }
+
+
+
 
 </style>

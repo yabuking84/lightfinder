@@ -99,8 +99,8 @@
 			                    @blur="$v.form.shipping_method_id.$touch()" 
 			                    item-text="name" 
 			                    item-value="id" 
-			                    flat 
-			                    class="mt-2"></v-select>
+			                    flat class="mt-2">
+			                    </v-select>
 			                </v-flex>
 			            </v-card>
 			        </v-flex>
@@ -178,7 +178,7 @@
 			            </v-card>
 			            <v-layout row wrap mt-2>
 			                <v-flex xs12>
-			                    <v-btn large :disabled="$v.$invalid" :loading="formLoading" @click="submit()" flat block class="red darken-1">
+			                    <v-btn large :loading="formLoading" @click="submit()" flat block class="red darken-1">
 			                        <span class="ml-1 white--text font-weight-bold">Award</span>
 			                        <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
 			                    </v-btn>
@@ -194,6 +194,7 @@
   </div>	
 </template>
 <script>
+
 import { required, email, maxLength } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 import helpers from "@/mixins/helpers"
@@ -229,6 +230,7 @@ export default {
     form: {
 
       shipping_method_id: { required: 'Please select shipping method.' },
+
     }
 
 
@@ -304,6 +306,14 @@ export default {
         .finally(() => {
          	this.formLoading = false;
         });
+
+     }
+
+     
+
+
+
+   
 
     },
 

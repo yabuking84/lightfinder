@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <v-card color="transparent" style="max-height: 300px; overflow-y: scroll;" :class="'chatscroll-statesetter_'+this.biditem"  :id="'chatscrollstatesetter_'+this.biditem" ref="chatscrollstatesetter">
+        <v-card color="transparent" style="" class="chat-container" :class="'chatscroll-statesetter_'+this.biditem"  :id="'chatscrollstatesetter_'+this.biditem" ref="chatscrollstatesetter">
             <v-card-text class="transparent" id="chatscroll-thread">  
 
                 <v-layout row wrap class="pa-0">
@@ -16,8 +16,7 @@
                                     </div>
                                     <div class="chat-message pa-2 border-radius6">
                                         <div class="body-2">{{ comment.name }}</div>
-                                        <div class="chat-thread-message dont-break-out"> {{ comment.message }}
-                                        </div>
+                                             <div v-html="comment.message" class="chat-thread-message dont-break-out"></div>
                                     </div>
                                 </div>
                             </v-container>
@@ -79,9 +78,13 @@
         },
 
         data() {
+
             return {
+
                 chatMessageEditor: null,
+
             }
+            
         },
 
         beforeDestroy() {
@@ -131,5 +134,10 @@
     #chatscroll-thread {
         // max-height: 400px;
         // overflow: scroll;
+    }
+
+    .chat-container {
+      height: 250px; 
+      overflow-y: scroll;
     }
 </style>

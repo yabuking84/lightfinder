@@ -1,20 +1,33 @@
 <template>
     <div>
-        <v-toolbar color="grey darken-4" class="white--text" height="50px">
+
+        <v-toolbar color="white darken-4" dark class="black--text" >
+
             <v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
                 Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span>
             </v-toolbar-title>
+
             <v-spacer></v-spacer>
+
             <v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2">
-                <v-btn v-if="hasBid && !inquiry.awarded" @click="openEditQuote()" class="font-weight-light" color="blue" dark small>
-                    <i class="fas fa-edit  white--text ma-2"> </i> Edit Quote
-                </v-btn>
-                <v-btn v-else-if="!inquiry.awarded" @click="openCreateQuote()" class="font-weight-light" color="green" dark small>
-                    <i class="fas fa-plus  white--text ma-2"> </i> Create Quote
-                </v-btn>
+
+                    <v-btn v-if="hasBid && !inquiry.awarded" @click="openEditQuote()" class="font-weight-light" color="light-blue lighten-1" dark small >
+                        <i class="fas fa-edit  white--text ma-2"> </i> Edit Quote
+                    </v-btn>
+
+                    <v-btn v-else-if="!inquiry.awarded" @click="openCreateQuote()" class="font-weight-light" color="green" dark small >
+                        <i class="fas fa-plus  white--text ma-2"> </i> Create Quote
+                    </v-btn>
+
             </v-toolbar-title>
+
         </v-toolbar>
-        <v-card class="minh-500" color=" lighten-5">
+
+        <!-- minh-500 -->
+        <v-card class="" color=" lighten-5">
+
+            <v-divider></v-divider>
+
             <v-container fluid grid-list-md>
                 <v-layout row wrap>
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -24,14 +37,12 @@
                             <image-gallery-small></image-gallery-small>
                         </v-flex>
                         <v-flex xs7>
-                            <v-flex xs12>
+                             <v-flex xs12>
                                 <h5 class="font-weight-thin">Product code</h5>
                                 <h2>{{ bid.product_name }}</h2>
                             </v-flex>
-                            <!--       <v-flex xs12 pt-0>
-                  <h3 class="font-weight-regular">{{ bid.description }}</h3>
-                </v-flex> -->
                             <v-flex xs12>
+                            
                                 <v-layout row wrap>
                                     <v-flex xs4 pa-2>
                                         <h5 class="font-weight-thin">Quantity</h5>
@@ -45,38 +56,78 @@
                                         <h5 class="font-weight-thin">Total Price</h5>
                                         <h2>${{ bid.total_price }}</h2>
                                     </v-flex>
+
+                                    <v-flex xs4 pa-2 v-show="bid.sample_cost">
+                                        <h5 class="font-weight-thin">Sample Quantity</h5>
+                                        <h2>${{ bid.sample_cost }}</h2>
+                                    </v-flex>
+
+                                    <v-flex xs4 pa-2 v-if="bid.sample_shipment_cost">
+                                        <h5 class="font-weight-thin">Sample Shipping Cost</h5>
+                                        <h2>${{ bid.sample_shipment_cost }}</h2>
+                                    </v-flex>
+
                                 </v-layout>
                             </v-flex>
                             <v-flex xs12>
-                                <h5 class="font-weight-thin">Remarks</h5>
-                                <h4 class="font-weight-bold">
-                  <p>{{ bid.remarks }}</p>
-                </h4>
+                                <h5 v-show="bid.remarks" class="font-weight-thin">Remarks</h5>
+                                <h4 v-show="bid.remarks" class="font-weight-bold">
+                                  <p>{{ bid.remarks }}</p>
+                                </h4>
                                 <h5 class="font-weight-thin">Specifications</h5>
                                 <v-layout row wrap class="specifications">
                                     <v-flex xs12>
-                                        <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                                            {{ specification.name }}: &nbsp;
-                                            <span class="font-weight-bold">
-                        {{ specification.value.split(',').join(', ') }}
-                      </span>
-                                        </v-chip>
+                                            <span v-for="(specification, index) in bid.specifications" :key="specification+'_'+index">
+                                                  <v-chip label dark outline text-color="black" v-if="specification.value">
+                                                      {{ specification.name }}: &nbsp;
+                                                      <span class="font-weight-bold">
+                                                        {{ specification.value.split(',').join(', ') }}
+                                                      </span>
+                                                  </v-chip>
+                                            </span>
                                     </v-flex>
-                                    <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
+                                    <v-alert :value="!bid.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
                                 </v-layout>
                             </v-flex>
                         </v-flex>
                         <!-- message box -->
-
-
+                    
                         <!-- message box -->
                     </template>
+
                     <v-flex xs12 v-if="!hasBid">
-                        <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
-                            No Quote yet..
-                        </v-alert>
+
+                        <v-layout justify-center row fill-height>
+
+                                <v-flex xs12 mx-5 mt-2 mb-2>
+
+                                     <v-layout row justify-center mx-5>  
+
+                                          <v-flex xs2>
+
+                                               <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
+                                               
+                                          </v-flex>
+                                          
+                                          <v-flex xs10 mt-3>
+                                                <div>
+                                                    <div class="headline font-weight-bold darken-3" color="#BF4653">You have not quoted yet</div>
+                                                    <div class="blue-grey--text" style="font-style: italic;">Be the one to quote this inquiry.</b>
+                                                    </div>
+                                                </div>
+                                          </v-flex>
+
+                                     </v-layout>
+
+                            </v-flex> 
+
+                        </v-layout>
+
+
+                        
+
                     </v-flex>
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

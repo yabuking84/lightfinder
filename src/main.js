@@ -44,6 +44,7 @@ import io from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 // const SocketInstance = io('http://192.168.1.202:4113');
 const SocketInstance = io('http://192.168.1.200:3000');
+
 Vue.use(new VueSocketIO({
     debug: true,
     connection: SocketInstance,

@@ -1,11 +1,11 @@
 <template>
 <div class="text-xs-center">
 <v-dialog 
-	:value="openInquiry" 
-	@input="$emit('update:openInquiry', false)" 
-	@keydown.escape="keyPress"
-	fullscreen
-	>
+  :value="openInquiry" 
+  @keydown.escape="keyPress"
+  fullscreen
+  transition="dialog-bottom-transition"
+  >
 
     <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
@@ -74,12 +74,11 @@ components: {
 
 },
 
-  // props: ['inquiry', 'openInquiry'],
 
   // props: {
-  // 	inq_id: {
-  // 		type: String,
-  // 	},
+  //  inq_id: {
+  //    type: String,
+  //  },
   // },
 
 data: () => ({
@@ -95,65 +94,61 @@ computed: {
 
     buyer: {
 
-        set(data) {
-            this.$store.commit('auth/CHANGE_TEST_M', data);
-        },
+      set(data) {
+        this.$store.commit('auth/CHANGE_TEST_M', data);
+      },
 
-        get() {
-            return this.$store.state.auth.auth_user.name;
-        },
+      get() {
+        return this.$store.state.auth.auth_user.name;
+      },
     },
 
-    openInquiry: {
-        get() {
-            return this.$store.state.spplrInq.openInquiryView;
-        },
-        set(nVal){
-            if(nVal)
-            this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
-            else
-            this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
-        },
-    },
+      openInquiry: {
 
-    inquiry: {
-        get() {
-            return this.$store.state.spplrInq.inquiry;
-        },
-        set(nVal) {
-            // console.log('setVal');
-            // console.log(nVal);
-            this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
-        },
-    },       
+          get() {
+              return this.$store.state.spplrInq.openInquiryView;
+          },
+          set(nVal){
+              console.log('computed openInquiry');
+              if(nVal)
+              this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
+              else
+              this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+          },
 
-},
+  },
 
 methods: {
 
-    Refresh: () => {
-
-      alert('Refresh')
-
-    },
-
-    Sort: () => {
-
-      alert('SOrt')
-
-    },
-
     closeOpenInquiry() {
-        this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+      this.openInquiry = false
+      inqEvntBs.EmitClosed()
     },
+
+    keyPress(e) {
+
+      if (e.target.querySelector("#InquiryView"))
+      this.openInquiry = false
+
+      // console.log(e.target);
+
+    },
+  },
 
     keyPress(e) {
         if (e.target.querySelector("#InquiryView"))
         this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
     },
-},
+  },
+
+  created() {
+
+  },
+
+  mounted() {
 
 
+  },
 
 }
 

@@ -1,10 +1,11 @@
 <template>
+  
   <v-dialog 
   :value="openInquiry" 
   @input="$emit('update:openInquiry', false)" 
   @keydown.escape="keyPress"
   fullscreen
-  scrollable>
+  >
     <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card id="InquiryView">
 
@@ -19,34 +20,24 @@
         </v-toolbar>
 
 
-      <v-card-text>
         <v-container fluid grid-list-xl>
           <v-layout row wrap>
+
             <!-- inquiry details card -->
             <v-flex xs5>
-                <inquiry-details-card 
-                v-if="inquiry" 
-                :inquiry="inquiry"
-                :isClosed.sync="isClosed" 
-                :openInquiry="openInquiry"></inquiry-details-card>
+              <inquiry-details-card v-if="inquiry" :isClosed.sync="isClosed" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
             </v-flex>
             <!-- end of detils  -->
+
             <!-- supplier quote / bids -->
             <v-flex xs7>
               <inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
             </v-flex>
             <!-- supplier quote -->
+
           </v-layout>
         </v-container>
-      </v-card-text>
       
-      <!-- <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" dark @click="closeOpenInquiry()">
-          close
-        </v-btn>
-      </v-card-actions> -->
-
     </v-card>
   </v-dialog>
 </template>

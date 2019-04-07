@@ -1,7 +1,6 @@
 <template>
 <div>
 
-
 <v-card>
 
     <v-toolbar dark color="grey darken-4">
@@ -410,6 +409,46 @@ export default {
 
 .th-heading a {
   text-decoration: none;
+}
+
+</style>
+
+
+<style scoped lang="scss">
+.theme--light.v-table thead tr {
+  background: #000000;
+  color: #fff;
+}
+
+.fix-width {
+  width: 198px;
+}
+
+.th-heading {
+  cursor: pointer;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.th-heading a {
+  text-decoration: none;
+}
+
+
+.dateCellWidth {
+  min-width: 110px;
+}
+
+table.v-table tbody td,
+table.v-table tbody th {
+  vertical-align: top;
+}
+
+.hey {
+  color: red;
+  background-color: red;
 }
 
 </style>

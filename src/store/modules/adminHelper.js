@@ -43,23 +43,6 @@ const mutations = {
 
 const actions = {
 
-  getCountries(context) {
-
-    return new Promise((resolve, reject) => {
-
-      axios({
-          method: 'GET',
-          url: state.api.get.getCountries.url
-        })
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        })
-
-    });
-  }
 
 }
 
