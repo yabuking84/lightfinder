@@ -2,9 +2,9 @@
 <div class="text-xs-center">
 <v-dialog 
   :value="openInquiry" 
+  @input="$emit('update:openInquiry', false)" 
   @keydown.escape="keyPress"
   fullscreen
-  transition="dialog-bottom-transition"
   >
 
     <v-card id="InquiryView">
@@ -74,6 +74,7 @@ components: {
 
 },
 
+  // props: ['inquiry', 'openInquiry'],
 
   // props: {
   //  inq_id: {
@@ -94,61 +95,65 @@ computed: {
 
     buyer: {
 
-      set(data) {
-        this.$store.commit('auth/CHANGE_TEST_M', data);
-      },
+        set(data) {
+            this.$store.commit('auth/CHANGE_TEST_M', data);
+        },
 
-      get() {
-        return this.$store.state.auth.auth_user.name;
-      },
+        get() {
+            return this.$store.state.auth.auth_user.name;
+        },
     },
 
-      openInquiry: {
+    openInquiry: {
+        get() {
+            return this.$store.state.spplrInq.openInquiryView;
+        },
+        set(nVal){
+            if(nVal)
+            this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
+            else
+            this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+        },
+    },
 
-          get() {
-              return this.$store.state.spplrInq.openInquiryView;
-          },
-          set(nVal){
-              console.log('computed openInquiry');
-              if(nVal)
-              this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
-              else
-              this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
-          },
+    inquiry: {
+        get() {
+            return this.$store.state.spplrInq.inquiry;
+        },
+        set(nVal) {
+            // console.log('setVal');
+            // console.log(nVal);
+            this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
+        },
+    },       
 
-  },
+},
 
 methods: {
 
+    Refresh: () => {
+
+      alert('Refresh')
+
+    },
+
+    Sort: () => {
+
+      alert('SOrt')
+
+    },
+
     closeOpenInquiry() {
-      this.openInquiry = false
-      inqEvntBs.EmitClosed()
+        this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
     },
-
-    keyPress(e) {
-
-      if (e.target.querySelector("#InquiryView"))
-      this.openInquiry = false
-
-      // console.log(e.target);
-
-    },
-  },
 
     keyPress(e) {
         if (e.target.querySelector("#InquiryView"))
         this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
     },
-  },
-
-  created() {
-
-  },
-
-  mounted() {
+},
 
 
-  },
 
 }
 
