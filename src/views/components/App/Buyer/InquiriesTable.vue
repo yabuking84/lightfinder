@@ -111,7 +111,7 @@
             </v-alert>
       </v-data-table> -->
 
-        <v-layout v-if="filterInquiries" class="grey lighten-5" row wrap >
+        <v-layout class="grey lighten-5" row wrap >
                   <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'inquiry'+index">
                           <!-- {{ allInquiries }} -->
                         <v-card class="rounded-card pa-3 mx-2 my-3" :hover="true">
@@ -497,31 +497,35 @@ export default {
         // for searching 
         filterInquiries() {
 
-                var items = this.allInquiries
+                var items = this.allInquiries;
 
 
                 items.sort(function (a, b) {
                     return a.value - b.value
                 })
 
-                items = items.filter(inquiry => {
-                        // add key to search in the dom
-                        return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search) )
 
-                })
+                if(this.search) {
+
+                    items = items.filter(inquiry => {
+                            // add key to search in the dom
+                            return ( inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search) )
+                    })
 
 
-                var buff = this.categories;
-                items = items.filter(function(inquiry) {
-                        return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
-                });
+                    var buff = this.categories;
+                    items = items.filter(function(inquiry) {
+                            return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
+                    });
 
-                var buff = this.inquiryStatus;
-                items = items.filter(function(inquiry) {
-                    // return (buff.length) ? buff.includes(inquiry.status) : true;
-                    return (buff.length) ? buff.includes(inquiry.status) : true
-                });
+                    var buff = this.inquiryStatus;
+                    items = items.filter(function(inquiry) {
+                        // return (buff.length) ? buff.includes(inquiry.status) : true;
+                        return (buff.length) ? buff.includes(inquiry.status) : true
+                    });
 
+                }
+                
                 
                 return items;
         },

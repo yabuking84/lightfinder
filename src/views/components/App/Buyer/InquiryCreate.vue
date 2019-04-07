@@ -1280,9 +1280,9 @@ export default {
                 
                 this.inquiryHolder = data
 
-                console.log('-----------------')
-                console.log(this.inquiryHolder)
-                console.log('-----------------')
+                // console.log('-----------------')
+                // console.log(this.inquiryHolder)
+                // console.log('-----------------')
 
                 this.fillFormData()
             })
@@ -1308,7 +1308,7 @@ export default {
 
     fillFormData() {
 
-            console.log(this.inquiryHolder.shipping_address)
+            // console.log(this.inquiryHolder.shipping_address)
 
             this.formData.keywords = this.inquiryHolder.keyword
             this.formData.category = this.inquiryHolder.categories.join(', ') 

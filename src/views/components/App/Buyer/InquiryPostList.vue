@@ -77,7 +77,7 @@
         <div v-else>
 
 
-          <h1>  {{ bidItems }}</h1>
+            <!-- <pre>{{ bidItems }}</pre> -->
 
             <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
 
@@ -102,7 +102,14 @@
                   </v-flex> 
             </v-layout>
 
-            <v-card v-else class="mb-5" color="grey lighten-4" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
+            <v-card 
+            v-else 
+            class="mb-5 ma-3" 
+            color="grey lighten-4" 
+            :hover="true" 
+            :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
+            v-for="(bidItem, i) in bidItems" 
+            :key="'bidItem_'+i">
               
                 <v-card-text>
 
@@ -218,9 +225,9 @@
 
     </v-card>
     
-    <inquiry-create :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="bidinquiry"> </inquiry-create>
-    <award-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
-    <request-sample-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
+    <inquiry-create :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="inquiry"> </inquiry-create>    
+    <award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
+    <request-sample-dialog v-if="bidToAward" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
 
 </div>
 </template>
@@ -324,9 +331,9 @@ export default {
           
                this.bidItems = response;
 
-               console.log('============================================')
-               console.log(this.bidItems);
-               console.log('============================================')
+               // console.log('============================================')
+               // console.log(this.bidItems);
+               // console.log('============================================')
 
                this.bidItems.sort((a, b) => {
                         // return b.total_price - a.total_price;
@@ -372,7 +379,6 @@ export default {
 
         EditInquiry() {
 
-             this.bidinquiry = this.inquiry;
              this.dialog=true 
              this.isEdit=true
 

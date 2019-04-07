@@ -41,9 +41,7 @@
 
                     <v-layout row wrap>
 
-                        <pre>
-                            <h4>{{ inquiry }}</h4>
-                        </pre>
+                        <!-- <pre>{{ inquiry }}</pre> -->
 
                         <v-flex xs12>
 
