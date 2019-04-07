@@ -28,22 +28,22 @@
                     </v-flex> -->
                     <v-flex xs12>
                         <v-layout row wrap>
-                            <v-flex xs4>
+                      <!--       <v-flex xs4>
                                 <h5 class="font-weight-thin">Payment Method</h5>
                                 <h4 class="font-weight-bold">
-                    <h2 class="mb-0">
-                      {{ payment_methods.filter(obj=>obj.id==inquiry.payment_method_id)[0].name }}
-                    </h2>
-                  </h4>
-                            </v-flex>
+                                <h2 class="mb-0">
+                                  {{ payment_methods.filter(obj=>obj.id==inquiry.payment_method_id)[0].name }}
+                                </h2>
+                              </h4>
+                            </v-flex> -->
                             <!--   <v-flex xs4>
-                  <h5 class="font-weight-thin">Shipping Address</h5>
-                  <h4 class="font-weight-bold">
-                    <h2 class="mb-0">
-                      {{ inquiry.shipping_address }}
-                    </h2>
-                  </h4>
-                </v-flex> -->
+                              <h5 class="font-weight-thin">Shipping Address</h5>
+                              <h4 class="font-weight-bold">
+                                <h2 class="mb-0">
+                                  {{ inquiry.shipping_address }}
+                                </h2>
+                              </h4>
+                            </v-flex> -->
                             <v-flex xs4>
                                 <h5 class="font-weight-thin">Shipping Method</h5>
                                 <h4 class="font-weight-bold">
@@ -55,18 +55,19 @@
                             <v-flex xs4>
                                 <h5 class="font-weight-thin">Shipment Date</h5>
                                 <h4 class="font-weight-bold">
-                    <!-- <h2 class="mb-0">                  
-                    {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
-                  </h2> -->
-                    <v-menu v-model="calendar_menu" :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px" class="">
-                      <v-text-field slot="activator" v-model="formData.shipping_date" label="" prepend-icon="event" readonly></v-text-field>
-                      <v-date-picker v-model="formData.shipping_date" header-color="black" :min="minDate" @input="calendar_menu = false">
-                      </v-date-picker>
-                    </v-menu>
-                  </h4>
+                                <!-- <h2 class="mb-0">                  
+                                {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+                              </h2> -->
+                                <v-menu v-model="calendar_menu" :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px" class="">
+                                  <v-text-field slot="activator" v-model="formData.shipping_date" label="" prepend-icon="event" readonly></v-text-field>
+                                  <v-date-picker v-model="formData.shipping_date" header-color="black" :min="minDate" @input="calendar_menu = false">
+                                  </v-date-picker>
+                                </v-menu>
+                              </h4>
                             </v-flex>
                         </v-layout>
                     </v-flex>
+                    
                 </v-layout>
             </template>
             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

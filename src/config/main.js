@@ -40,19 +40,19 @@ export default {
 			{
 				id: 1002, 
 				name: "Open",
-				class: "pink",
+				class: "green",
 				icon: "far fa-envelope-open",
 			},
 			{
 				id: 1004, 
 				name: "Confirmation",
-				class: "orange",
+				class: "teal",
 				icon: "fas fa-handshake",
 			},
 			{
 				id: 1005, 
 				name: "Pending Payment",
-				class: "blue",
+				class: "deep-orange",
 				icon: "far fa-credit-card",
 			},
 			{
@@ -64,14 +64,16 @@ export default {
 			{
 				id: 2002, 
 				name: "Shipment",
-				class: "green",
+				class: "light-green",
 				icon: "fas fa-truck",
+
 			},
 			{
 				id: 2003, 
 				name: "Receiving",
 				class: "orange",
 				icon: "fas fa-sign-in-alt",
+
 			},
 			{
 				id: 2004, 
@@ -82,13 +84,14 @@ export default {
 			{
 				id: 3001, 
 				name: "Success",
-				class: "red",
+				class: "light-blue ",
 				icon: "far fa-check-circle",
+
 			},
 			{
 				id: 3002, 
 				name: "Cancelled",
-				class: "teal",
+				class: "red red darken-2",
 				icon: "fas fa-ban",
 			},
 		],		
@@ -99,6 +102,7 @@ export default {
 				name: "Verifying",
 				class: "orange",
 				icon: "fas fa-hourglass-half",
+
 			},
 			{
 				id: 1003, 

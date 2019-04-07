@@ -24,6 +24,7 @@
           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
+
                 <v-stepper v-model="stepCnt" class="stepperClass" vertical>
                   <v-stepper-step step="1" editable class="step_1">
 
@@ -39,10 +40,10 @@
                           <v-flex xs1>
                              <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="50px" contain></v-img>  
                           </v-flex>
-                          <v-flex xs10 mt-3>
-                              <h3 class="font-weight-medium red--text" style="font-style: italic;">
-                                Your INQUIRY #1553753471283 is decline by our verifier, please refer on the message box if you have concerns. thanks!
-                              </h3>                    
+                          <v-flex xs11 mt-2>
+                              <h4 class="font-weight-medium red--text" style="font-style: italic;">
+                                Your INQUIRY {{ inquiry.id }} is decline by our verifier, please refer on the message box if you have concerns. thanks!
+                              </h4>                    
                           </v-flex>
                         </v-layout>
                     </div>
@@ -51,8 +52,6 @@
                       <v-btn color="primary" @click="stepUp()">Start</v-btn>
                       <v-btn color="primary" @click="inquirylookup=true"> <span>use existing Inquiry ?</span> </v-btn>
                     </div>
-
-                    
 
                   </v-stepper-content>
 
@@ -573,7 +572,7 @@
                   <v-stepper-step step="7" :rules="[() => !$v.formData.shipping_country_id.$error && !$v.formData.shipping_address.$error && !$v.formData.shipping_city.$error  ]" editable>
                     Your Mass Shipping Address
                     <small v-show="$v.formData.shipping_address.$error">Address is required</small>
-                    <small v-show="$v.formData.shipping_address.$error">Country is required</small>
+                    <small v-show="$v.formData.shipping_country_id.$error">Country is required</small>
                     <small v-show="$v.formData.shipping_city.$error">City is required</small>
                   </v-stepper-step>
                   <v-stepper-content step="7" ref="step_7" no-focus>
@@ -872,7 +871,8 @@
       </v-card>
     </v-dialog>
 
-    <inquiry-lookup-dialog :inquirylookup.sync="inquirylookup"> </inquiry-lookup-dialog>
+    <inquiry-lookup-dialog :useInquiry.sync="useInquiry" :inquirylookup.sync="inquirylookup"> </inquiry-lookup-dialog>
+
   </div>
 </template>
 <script>
@@ -931,6 +931,7 @@ export default {
             return true;
           }
         })
+
       },
 
       sample_quantity: {
@@ -1025,7 +1026,7 @@ export default {
       },
       shipping_address: { required: 'Please enter an Address.' },
       shipping_country_id: { required: 'Please enter a Country.' },
-    shipping_city: { required: 'Please enter City.' },
+      shipping_city: { required: 'Please enter City.' },
       
     }
   },
@@ -1050,7 +1051,7 @@ export default {
     inquiry: {
       type: Object
     }
-
+  
   },
 
   data() {
@@ -1112,6 +1113,8 @@ export default {
       snackbar: false,
       subject_error: false,
       inquirylookup:false,
+      useInquiry: null, // for inquiry lookup then use inquiry
+      inquiryHolder:null, // object holder
 
       /* -------------------------- dropzone -------------------------- */
 
@@ -1198,24 +1201,49 @@ export default {
       }
     },
 
-    inquiry() {
+    inquiry(nVal, oVal) {
 
-       this.fillFormData();
+        if(nVal) {
+
+           this.inquiryHolder = this.inquiry
+           this.fillFormData();  
+   
+        }
 
     },
+
+  
 
     dialog(nVal, oVal) {
-        if(!nVal) {
-           // this.$emit('update:isEdit', false);
-            this.$emit('update:isEdit', false)
 
+        if(!nVal) {
+          // this.$emit('update:isEdit', false);
+          this.$emit('update:isEdit', false)
+          this.clearData();
         }
+
+
     },
 
+    // if edit inquiry is click perform code below
+    // assign props inquiry to data (inquiryHolder) to prefill formData
     isEdit(nVal, oVal) {
-      if(!nVal) {
-        this.$emit('update:isEdit', false)
-      }
+
+        if(!nVal) {
+              this.$emit('update:isEdit', false)
+              this.inquiryHolder = this.inquiry
+              this.fillFormData();  
+        }
+        
+    },
+    // if inquiry lookup is click then useInquiry
+    useInquiry(nVal, oVal) {
+
+       if(nVal) {
+          this.getInquiry(this.useInquiry);
+       }
+
+
     },
 
     deep: true
@@ -1227,22 +1255,70 @@ export default {
     /* use for editing or updating the inquiry
      when it's rejected from the verificator */
 
+
+    getInquiry(inquiry_id) {
+
+          this.$store.dispatch('byrInq/getInquiry_a', {
+                  inq_id: inquiry_id
+            })
+            .then((data) => {
+                
+                this.inquiryHolder = data
+
+                console.log('-----------------')
+                console.log(this.inquiryHolder)
+                console.log('-----------------')
+
+                this.fillFormData()
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    },
+
+
+      // clear existing object
+    clearData() {
+          
+          for (const prop of Object.keys(this.formData)) {
+            delete this.formData[prop];
+          }
+
+          this.is_sample = false
+          this.is_oem = false
+          this.$v.$reset()
+
+    },
+
     fillFormData() {
 
-            console.log(this.inquiry.categories)
+            console.log(this.inquiryHolder.shipping_address)
 
-            this.formData.keywords = this.inquiry.keyword
-            this.formData.category = this.inquiry.categories.join(', ') 
-            this.formData.warranty = this.inquiry.warranty
+            this.formData.keywords = this.inquiryHolder.keyword
+            this.formData.category = this.inquiryHolder.categories.join(', ') 
+            this.formData.warranty = this.inquiryHolder.warranty
 
-            this.formData.quantity = this.inquiry.quantity
-            this.formData.desired_price = this.inquiry.desired_price
+            this.formData.quantity = this.inquiryHolder.quantity
+            this.formData.desired_price = this.inquiryHolder.desired_price
 
-            this.formData.shipping_date = this.inquiry.desired_shipping_date
-            this.formData.payment_method = this.inquiry.payment_method_id
-            this.formData.message = this.inquiry.message
+            this.formData.shipping_date = this.inquiryHolder.desired_shipping_date
+            this.formData.payment_method = this.inquiryHolder.payment_method_id
+            this.formData.message = this.inquiryHolder.message
 
-            // loop spefications
+            this.is_oem = this.inquiryHolder.oem
+            this.formData.oem_service = this.inquiryHolder.oem_service
+            this.formData.oem_description = this.inquiryHolder.oem_description
+            this.formData.sample_quantity = this.inquiryHolder.sample_quantity
+            this.formData.sample_shipping_address = this.inquiryHolder.sample_shipping_address
+            this.formData.sample_shipping_city = this.inquiryHolder.sample_shipping_city
+            this.formData.sample_shipping_country_id = this.inquiryHolder.sample_shipping_country_id
+            this.formData.shipping_postal = this.inquiryHolder.shipping_postal
+            this.formData.shipping_address = this.inquiryHolder.shipping_address
+            this.formData.shipping_country_id = this.inquiryHolder.shipping_country_id
+            this.formData.shipping_city = this.inquiryHolder.shipping_city
+            this.formData.shipping_postal = this.inquiryHolder.shipping_postal
+
             this.formData.power = this.getSpefications('Power')
             this.formData.lumen = this.getSpefications('Lumen')
             this.formData.efficiency = this.getSpefications('Efficiency')
@@ -1252,31 +1328,24 @@ export default {
             this.formData.finish = this.getSpefications('Finish')
             this.formData.size = this.getSpefications('Size')
             this.formData.dimmable = this.getSpefications('Dimmable')
-
-            console.log(this.formData.category)
-
-
-            // this.formData.oem_service = this.inquiry.keyword
-            // this.formData.oem_description = this.inquiry.keyword
-            // this.formData.sample_quantity = this.inquiry.keyword
-            // this.formData.shipping_of_sample.address = this.inquiry.keyword
-            // this.formData.shipping_of_sample.country = this.inquiry.keyword
-            // this.formData.shipping_of_sample.city = this.inquiry.keyword
-            // this.formData.shipping_of_sample.state = this.inquiry.keyword
-            // this.formData.shipping_of_sample.zipcode= this.inquiry.keyword
-            // this.formData.shipping_of_mass.address = this.inquiry.keyword
-            // this.formData.shipping_of_mass.country = this.inquiry.keyword
-            // this.formData.shipping_of_mass.city = this.inquiry.keyword
-            // this.formData.shipping_of_mass.state = this.inquiry.keyword
-            // this.formData.shipping_of_mass.zipcode = this.inquiry.keyword
+          
 
       },
 
 
     getSpefications(key) {
-      var objectHolder = this.inquiry.specifications.find( specifications => specifications.name === key)
-      console.log(objectHolder.name +'='+ objectHolder.value)
-      return objectHolder.value;
+
+         var specsValue = null;
+
+         if(this.inquiryHolder.specifications.length > 0) {
+               let objectHolder = this.inquiryHolder.specifications.find( specifications => specifications.name === key)
+              specsValue = objectHolder.value
+         }
+
+          // console.log(objectHolder.name +'='+ objectHolder.value)
+          return specsValue;
+
+
     },
 
     clearForm() {
@@ -1350,7 +1419,7 @@ export default {
         "oem": this.is_oem,
         "oem_service": this.formData.oem_service,
         "oem_description": this.formData.oem_description,
-        "sample_quantity": this.formData.sample_quantity,
+        "sample_quantity": this.formData.sample_quantity ?  this.formData.sample_quantity : 0,
         "sample_shipping_address": this.formData.sample_shipping_address,
         "sample_shipping_city": this.formData.sample_shipping_city,
         "sample_shipping_country_id": this.formData.sample_shipping_country_id,
@@ -1362,6 +1431,7 @@ export default {
 
         "shipping_method_id": 1,
         "payment_method_id": 1,
+        "desired_shipping_date": this.getDateTime(),
         "message": this.formData.message,
         "categories": [
           this.formData.category
@@ -1371,30 +1441,27 @@ export default {
           "cdn link here later later 2"
         ],
         "specifications": {
-          power: !this.formData.power ? '00' : this.formData.power,
-          lumen: !this.formData.lumen ? '00' : this.formData.lumen,
-          efficiency: !this.formData.efficiency ? '00' : this.formData.efficiency,
-          beam_angle: !this.formData.beam_angle ? '00' : this.formData.beam_angle,
-          cct: !this.formData.cct ? '00' : this.formData.cct,
-          ip: !this.formData.ip ? '00' : this.formData.ip,
-          finish: !this.formData.finish ? '00' : this.formData.finish,
-          size: !this.formData.size ? '00' : this.formData.size,
-          dimmable: !this.formData.dimmable ? '00' : this.formData.dimmable,
+          power: this.formData.power,
+          lumen: this.formData.lumen,
+          efficiency: this.formData.efficiency,
+          beam_angle: this.formData.beam_angle,
+          cct: this.formData.cct,
+          ip: this.formData.ip,
+          finish: this.formData.finish,
+          size:  this.formData.size,
+          dimmable: this.formData.dimmable,
         },
-        "sample_quantity": this.formData.sample_quantity,
-        "shipping_of_sample": this.formData.shipping_of_sample,
-        "shipping_of_mass": this.formData.shipping_of_mass,
-        "oem_service": this.formData.oem_service,
-        "oem_description": this.formData.oem_description
+    
       }
 
-      // console.log(this.formData);
       // console.log('--------------------------')
       // console.log(formData);
+      // console.log('--------------------------')
 
       if (this.$v.$invalid) {
 
         this.$v.$touch()
+
 
       } else {
 
@@ -1408,6 +1475,7 @@ export default {
 
             // emit on bus that Inquiry form is submitted
             inqEvntBs.emitFormSubmitted();
+            this.clearData();
 
           }).catch((e) => {
             this.formLoading = false;

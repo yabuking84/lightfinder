@@ -50,7 +50,7 @@
 						            </td> -->
 
 						            <td class="text-xs-center">
-						              <v-btn @click="viewInquiry(props.item)" :loading="props.item.loading" small flat value="left" class="red darken-2 v-btn--active font-weight-light text-decoration-none">
+						              <v-btn @click="setuseInquiry(props.item.inq_id)" :loading="props.item.loading" small flat value="left" class="red darken-2 v-btn--active font-weight-light text-decoration-none">
 						                <i class="fas fa-eye white--text"></i>
 						                <span class="ml-1 white--text font-weight-light ">Use</span>
 						              </v-btn>
@@ -76,20 +76,13 @@
 
 <script>
 
-
-	import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
-
 	export default {
 
-		components: {
-			
-			InquiryStatusButtons
-		
-		},
 
 		data() {
 
 			return {
+
 				search: '',
 			    headers: [
 
@@ -106,21 +99,7 @@
 			        sortable: true,
 			        value: 'keywordsAndMessage'
 			      },
-
-
-			      // {
-			      //   text: 'Quantity',
-			      //   align: 'left',
-			      //   sortable: true,
-			      //   value: 'quantity'
-			      // },
-
-			      // {
-			      //   text: 'Status',
-			      //   align: 'left',
-			      //   sortable: true,
-			      //   value: 'status'
-			      // },
+			    
 
 			      {
 			        text: 'Action',
@@ -151,6 +130,11 @@
 			inquirylookup: {
 				type: Boolean
 			},
+
+
+			useInquiry: {
+				type: String
+			}
 		},
 
         methods: {
@@ -160,13 +144,15 @@
               this.tableItems = [];
 
 		      if (withLoading)
-		        this.loading = true;
+		          
+		          this.loading = true;
 
 			      this.allInquiries = [];
 			      this.$store.dispatch('byrInq/getInquiries_a')
 			        .then((response) => {
 
 			          for (var i = response.length - 1; i >= 0; i--) {
+
 			            var item = {};
 			            item.inq_id = response[i].id;
 			            item.keywords = response[i].keyword;
@@ -178,6 +164,7 @@
 			            item.status = response[i].stage_id;
 			            item.loading = false;
 			            this.tableItems.push(item);
+
 			          }
 
      				  // this.tableItems = items;
@@ -191,6 +178,13 @@
 			        .finally(() => {
 			          this.loading = false;
 			        });
+
+		    },
+
+		    setuseInquiry(inquiry) {
+
+		    	this.$emit('update:useInquiry', inquiry)
+		    	this.$emit('update:inquirylookup',false)
 
 		    },
 
@@ -210,9 +204,13 @@
 
          	inquirylookup(nVal, oVal) {
          		if(nVal) {
+
          			this.fillTable();
+
          		}
          	},
+
+     
 
          	deep: true
 

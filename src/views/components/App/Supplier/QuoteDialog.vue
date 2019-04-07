@@ -16,11 +16,11 @@
         <v-divider></v-divider>
         <v-card-text style="max-height: 100%;">
           <!-- 
-        <v-flex xs12 mb-3>
-              <h2 class="font-weight-bold">INQUIRY # <span class="font-weight-thin">{{ inquiry.id }}</span> </h2>
-               <v-divider></v-divider>
-          </v-flex> 
-      -->
+            <v-flex xs12 mb-3>
+                  <h2 class="font-weight-bold">INQUIRY # <span class="font-weight-thin">{{ inquiry.id }}</span> </h2>
+                   <v-divider></v-divider>
+              </v-flex> 
+          -->
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
             <v-layout row wrap>
               <v-flex xs5>
@@ -46,6 +46,56 @@
                             <span>{{ inquiry.quantity }} pcs</span>
                           </h4>
                         </v-flex>
+
+                            <!-- shipping address -->
+                            
+                            <v-flex mr-4 mb-3 xs12 v-show="inquiry.shipping_country_id">
+                                <h5 class="font-weight-thin">Shipping Address</h5>
+                                <h4 class="font-weight-bold">
+                                  <span>{{ inquiry.shipping_country_id }} </span>
+                                  <span>{{ inquiry.shipping_address }} </span>
+                                  <span>{{ inquiry.shipping_city }} </span>
+                                  <span>{{ inquiry.shipping_postal }} </span>
+                                </h4>
+                            </v-flex>
+
+                            <!-- shipping address -->
+
+      
+                         <!-- sample orders -->
+                              <v-flex mr-4 mb-3 xs6 v-show="inquiry.sample_quantity">
+                                  <h5 class="font-weight-thin">Sample Orders Quantity</h5>
+                                  <h4 class="font-weight-bold">
+                                  <span>{{ inquiry.sample_quantity }} </span>
+                                 </h4>
+
+                                 <h5 class="font-weight-thin">Sample Shipping Address</h5>
+                                  <small></small>
+                                  <h4 class="font-weight-bold">
+                                     <span>{{ inquiry.sample_shipping_country_id }} </span>
+                                     <span>{{ inquiry.sample_shipping_address }}</span>
+                                  </h4>
+                                  <h4>
+                                     <span>{{ inquiry.sample_shipping_city }} </span>
+                                     <span>{{ inquiry.sample_shipping_postal }} </span>
+                                  </h4>
+                              </v-flex>
+                         <!-- sample orders -->
+
+                         <!-- oem -->
+                             <v-flex mr-4 mb-3 xs6 v-show="inquiry.oem">
+                                  <h5 class="font-weight-thin">Original Equipment Manufacture</h5>
+                                  <h4 class="font-weight-bold">
+                                     What kind of Original Equipment Manufacture
+                                  </h4>
+                                  <h5>{{ inquiry.oem_service }}</h5>
+                                  <h4 class="font-weight-bold">
+                                     Description
+                                  </h4>
+                                  <h5>{{ inquiry.oem_description }}</h5>
+                              </v-flex>
+                         <!-- oem -->
+
                         <v-flex xs12 mr-4 mb-3>
                           <h5 class="font-weight-thin">Message </h5>
                           <h4 class="font-weight-bold">
@@ -61,12 +111,18 @@
                         <v-flex xs12>
                           <h5 class="font-weight-thin">Specifications</h5>
                           <v-layout row wrap class="specifications">
-                            <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                              {{ specification.name }}: &nbsp;
-                              <span class="font-weight-bold">
-                                {{ specification.value.split(',').join(', ') }}
-                              </span>
-                            </v-chip>
+                   
+                             <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
+                                    <v-chip label dark outline text-color="black" v-if="specification.value" >
+                                           {{ specification.name }}: &nbsp;
+                                       <span class="font-weight-bold">
+                                          {{ specification.value.split(',').join(', ') }}
+                                       </span>
+                                      </v-chip>
+                                  </span>
+
+
+
                             <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="mt-4 ml-0" outline>
                               No specifications..
                             </v-alert>
@@ -106,32 +162,74 @@
                         <v-text-field label="Total Price" v-model="formData.total_price" placeholder="0.00" :error-messages="fieldErrors('formData.total_price')" @blur="$v.formData.total_price.$touch()" type="number" min="0" step="0.01" prefix="$">
                         </v-text-field>
                       </v-flex>
+
                       <!-- specification -->
                       <h4 class="mb-2">Product Specifications</h4>&nbsp&nbsp
                       <v-layout row wrap mb-3 v-show="inquiry.specifications.length">
                         <v-flex xs12>
                           <v-layout row wrap>
-                            <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+
+                           <!--    <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
                               <v-text-field solo flat class="ml-1 pa-1 border-textfield" :v-model="specification.name" :prefix="specification.name == 'Beam Angle' ? 'Angle:' : specification.name  + ':'"></v-text-field>
                             </v-flex>
-                            <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="mt-4 ml-0" outline>
-                              No specifications..
-                            </v-alert>
+                            -->
+                            <!-- new --------------------------------------------------------- -->
+
+                             <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.power" prefix="Power:" suffix="watts"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.efficiency" prefix="Efficiency:" suffix="lm/w"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.beam_angle" prefix="Beam Angle:" suffix="degress"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.cct" prefix="CCT:" suffix="lm"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.ip" prefix="IP:"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.finish" prefix="Finish:"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.size" prefix="Size:"></v-text-field>
+                            </v-flex>
+
+                            <v-flex xs4>
+                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.dimmable" prefix="Dimmable:"></v-text-field>
+                            </v-flex>
+
+
                           </v-layout>
                         </v-flex>
                       </v-layout>
-                      <h4 class="mb-2">Product Sample Details</h4>&nbsp&nbsp
-                      <small>Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
-                      <v-flex xs12>
-                        <v-layout row wrap>
-                          <v-flex xs5 mr-5>
-                            <v-text-field label="Sample Cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
-                          </v-flex>
-                          <v-flex xs6 ml-3>
-                            <v-text-field label="Sample Shipment Cost" style="color: #000;"> </v-text-field>
-                          </v-flex>
-                        </v-layout>
-                      </v-flex>
+
+                        <!-- optional data  -->
+                        <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
+                          <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
+                          <v-flex xs12 v-show="is_sample">
+                            <v-layout row wrap>
+                              <v-flex xs5 mr-5>
+                                <v-text-field label="Sample Cost" :error-messages="fieldErrors('formData.sample_cost')" @blur="$v.formData.sample_cost.$touch()" v-model="formData.sample_cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
+                              </v-flex>
+                              <v-flex xs6 ml-3>
+                                <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
+                              </v-flex>
+                            </v-layout>
+                        </v-flex>
+
                       <v-flex xs12>
                         <v-textarea label="Message" placeholder="Enter Remarks Here" v-model="formData.remarks">
                         </v-textarea>
@@ -188,15 +286,48 @@ mixins: [
 
 
 validations: {
+
   formData: {
     price: { required },
     total_price: { required },
+
+    sample_cost: {
+
+        required: requiredIf(function() {
+       
+          if (this.is_sample) {
+            return true;
+          }
+
+        })
+        
+      },
+
+       sample_shipment_cost: {
+
+        required: requiredIf(function() {
+       
+          if (this.is_sample) {
+            return true;
+          }
+
+        })
+        
+      },
+
+
   }
+
 },
+
 validationMessages: {
   formData: {
+    
     price: { required: 'Please enter a price.' },
-    total_price: { required: 'Please enter a total price.' }
+    total_price: { required: 'Please enter a total price.' },
+    sample_cost: { required: 'Please enter a sample cost' },
+    sample_shipment_cost: { required: 'Please enter a sample shipment cost' },
+
   }
 },
 
@@ -206,22 +337,25 @@ components: {
   vueDropzone: vue2Dropzone
 },
 
-
-
 props: {
+
   openQuoteDialog: {
     type: Boolean,
     default: false,
   },
+
   inquiry: {
     type: Object,
   },
+
   bid: {
     type: Object,
   },
+
   editQuote: {
     type: Boolean,
   },
+
 },
 
 
@@ -239,8 +373,28 @@ data: () => ({
     product_name: null,
     remarks: null,
     description: null,
+
+    sample_cost:null,
+    sample_shipment_cost:null,
+
+     lumen:null,
+     power:null,
+     efficiency:null,
+     beam_angle: null,
+     cct: null,
+      ip: null,
+     finish: null,
+     size: null,
+     dimmable: null,
+
+    
+    
+
   },
+
+  is_sample:false, // i set lang true if naa na ang data sa sample sa inquiry - ongoing pa
   quoteAction: "Add",
+  
   initBid: {
     price: null,
     total_price: null,
@@ -262,20 +416,38 @@ data: () => ({
 
 
 
-
-
-
 methods: {
+
     submitForm() {
+
         var formData = {
+
           "price": this.formData.price,
           "total_price": this.formData.total_price,
           "product_name": this.formData.product_name,
           "remarks": this.formData.remarks,
           "description": 'test data',
+          
+          "specifications": {
+                power: this.formData.power,
+                lumen: this.formData.lumen,
+                efficiency:  this.formData.efficiency,
+                beam_angle:  this.formData.beam_angle,
+                cct: this.formData.cct,
+                ip: this.formData.ip,
+                finish:  this.formData.finish,
+                size: this.formData.size,
+                dimmable: this.formData.dimmable,
+          },
+
+          "sample_cost": this.formData.sample_cost ? this.formData.sample_cost : null,
+          "sample_shipment_cost": this.formData.sample_shipment_cost ? this.formData.sample_shipment_cost : null
+
         };
+
         var action = "";
         var data = {};
+
         if (this.editQuote) {
           action = 'spplrInq/editInquiryBid_a';
           data = {
@@ -290,28 +462,33 @@ methods: {
             inq_id: this.inquiry.id,
           }
         }
+
         if (this.$v.$invalid) {
              this.$v.$touch()
+
         } else {
-        	this.loading = true;
-          this.$store.dispatch(action, data)
-            .then((response) => {
-                this.loading = false;
-                this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
-                inqEvntBs.emitBidFormSubmitted();
-                this.$emit('update:openQuoteDialog', false);
-            }).catch((e) => {
-                this.loading = false;
-                console.log('Error: ' + e);
-                alert("ERROR!!");
-            }).finally(() => {
-                this.loading = false;
-            });
+
+          	this.loading = true;
+            this.$store.dispatch(action, data)
+              .then((response) => {
+                  this.loading = false;
+                  this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
+                  inqEvntBs.emitBidFormSubmitted();
+                  this.$emit('update:openQuoteDialog', false);
+              }).catch((e) => {
+                  this.loading = false;
+                  console.log('Error: ' + e);
+                  alert("ERROR!!");
+              }).finally(() => {
+                  this.loading = false;
+              });
+
         }
+
         // alert("action = "+action);
         // alert("this.editQuote = "+this.editQuote);
         // alert("this.inquiry.id = "+this.inquiry.id);
-        // alert("this.bid.reference = "+this.bid.reference);
+        // alert("this.bid.reference = "+this.bid.reference); 
     },
     
     resetForm() {
@@ -319,9 +496,10 @@ methods: {
     },
 
     keyPress(e) {
-    if (e.target.querySelector("#QuoteDialog"))
-        this.$emit('update:openQuoteDialog', false)
-        // console.log(e.target);
+
+      if (e.target.querySelector("#QuoteDialog"))
+          this.$emit('update:openQuoteDialog', false)
+          // console.log(e.target);
     },
 
 
@@ -329,9 +507,50 @@ methods: {
         this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});        
     },
 
+    getSpefications(key) {
+
+         var specsValue = null;
+
+         if(this.bid.specifications.length > 0) {
+               let objectHolder = this.bid.specifications.find( specifications => specifications.name === key)
+              specsValue = objectHolder.value
+         }
+
+         return specsValue;
+
+    },
+
+      // clear existing object
+    clearData() {
+           for (const prop of Object.keys(this.formData)) {
+              delete this.formData[prop];
+            }
+    },
+
+    fillFormData() {
+
+          this.formData.price = this.bid.price
+          this.formData.total_price = this.bid.total_price
+          this.formData.product_name = this.bid.product_name
+          this.formData.remarks = this.bid.remarks
+          this.formData.description = this.bid.description
+          this.formData.sample_cost = this.bid.sample_cost
+          this.formData.sample_shipment_cost = this.bid.sample_shipment_cost
+
+          this.formData.lumen = this.getSpefications('Lumen')
+          this.formData.power = this.getSpefications('Power')
+          this.formData.efficiency = this.getSpefications('Efficiency')
+          this.formData.beam_angle = this.getSpefications('Beam Angle')
+          this.formData.cct = this.getSpefications('CCT')
+          this.formData.ip = this.getSpefications('IP')
+          this.formData.finish = this.getSpefications('Finish')
+          this.formData.size = this.getSpefications('Size')
+          this.formData.dimmable = this.getSpefications('Dimmable')
+
+    },
+
 
 },
-
 
 
 
@@ -340,22 +559,51 @@ mounted() {
 },
 
 
-
 watch: {
+
     editQuote(nVal, oVal) {
+
         if (nVal) {
+
             this.quoteAction = "Edit";
-            this.formData = this.bid;
+            this.fillFormData()
+          
         } else {
             this.quoteAction = "Add";
-            this.formData = this.initBid;
+            // this.formData = this.initBid;
+            this.clearData();
         }
+
     },
+
     // when openQuoteDialog set as false, editQuote will be set to false also
     openQuoteDialog(nVal, oVal) {
         if (!nVal)
         this.$emit('update:editQuote', false);
     },
+
+    // check if inquiry has required to put sample cost
+    inquiry(nVal, oVal) {
+
+  
+
+       if(nVal) {
+           // check if sample cost && and sample shipment cost is 
+            if(this.inquiry.sample_quantity > 0) {
+              this.is_sample = true
+            } else {
+              this.is_sample = false
+            }
+
+       }
+     
+
+
+        
+
+
+    },
+
 },
 
 
