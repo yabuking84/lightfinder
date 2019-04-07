@@ -56,14 +56,9 @@
 
                     <v-layout justify-center row fill-height>
 
-			                        <v-flex xs12>
-			                            <v-divider></v-divider>
-			                            <comment-box :biditemId="bidItem.id"> </comment-box>
+                        <v-flex xs12 mx-5 mt-2 mb-2>
 
-			                        </v-flex>
-
-								<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-								<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                            <v-layout row justify-center mx-5>
 
                                 <v-flex xs2>
                                     <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
@@ -243,10 +238,8 @@
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry"
 
-import CommentBox from "@/views/Components/App/Admin/InquiryPostListCommentbox"
-
-import config from "@/config/main"
-import VueTimers from 'vue-timers/mixin'
+    import config from "@/config/main"
+    import VueTimers from 'vue-timers/mixin'
 
     export default {
 
@@ -261,18 +254,33 @@ import VueTimers from 'vue-timers/mixin'
             MessageBox
         },
 
-mixins: [
-	helpers,
-	VueTimers,
-],
+        // timers: [     
+        //        { 
+        //            name: 'InquiryTableTimer',
+        //            time: config.polling.inquiryTable.time, 
+        //            repeat: true,
+        //            autostart: true,
+        //            callback: function(){
+        //                this.fillBidTable();
+        //            },
+        //        }
+        //    ],
 
-components: {
-	ImageGallerySmall,
-	CommentBox,
-},
+        props: ['inquiry'],
 
+        timers: [{
+            name: 'InquiryTableTimer',
+            time: config.polling.inquiryTable.time,
+            repeat: true,
+            autostart: false,
+            callback: function() {
+                this.fillBidTable();
+            },
+        }],
 
         data() {
+
+            return {
 
                 openAwardDialog: false,
                 bidItems: [],
@@ -389,8 +397,8 @@ components: {
 
                 },
 
-}
-</script>
+                // for the blurring
+                checkIfawarded: function(awarded, btn) {
 
                     let is_awarded = false;
 

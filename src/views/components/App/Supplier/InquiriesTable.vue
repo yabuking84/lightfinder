@@ -139,141 +139,138 @@
  -->
 
 
-       <v-layout row wrap class="grey lighten-4">
-<!--  @filter="filterOption=arguments[0]" @sort="sortOption=arguments[0]" :options='getOptions()' -->
-            
-            
-              <v-flex  style="min-height: 200px;" xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries":key="'inquiry'+index" >
-                
-                   <!--  <pre>                   
-                    {{ filterInquiries }}
-                    </pre> -->
+     <v-layout row wrap class="grey lighten-4" justify-center v-if="filterInquiries.length > 0">
+            <!--  @filter="filterOption=arguments[0]" @sort="sortOption=arguments[0]" :options='getOptions()' -->
+
+            <isotope :options='null' :list="filterInquiries" id="root_isotope">
+
+                <v-flex xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
+
+                    <!--  <pre>                   
+                                {{ filterInquiries }}
+                                </pre> -->
 
                     <v-card class="pa-3 mx-2 my-3 rounded-card" :hover="true">
 
-                        <v-layout row wrap >
+                        <v-layout row wrap>
 
-                                <v-flex xs6>
+                            <v-flex xs6>
 
-                                  <h3>Inquiry</h3>
-                                  <h4 class="mt-2 font-weight-medium grey--text lighten-4">#{{ inquiry.inq_id }}</h4>
+                                <h3 class="grey--text lighten-4">Inquiry</h3>
+                                <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
 
-                                </v-flex>
+                            </v-flex>
 
-                                <v-flex xs6>
-                                   <h3>Date</h3>
-                                   <h4 class="mt-2 font-weight-medium grey--text ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
-                                </v-flex>   
-
-                        </v-layout>
-
-                        <v-layout  row wrap mt-2>
-                  
-
-                                 <v-flex xs6>
-                                      <h3>Quantity</h3>
-                                      <h4 class="mt-3  font-weight-medium grey--text lighten-4">{{ inquiry.quantity }} pcs</h4>
-                                </v-flex>
-
-                                <v-flex xs6>
-                                  <h3>Status</h3>
-
-                                    <!-- -------- -->
-                                    
-                                    <v-layout row wrap>
-
-
-                                        <v-flex xs12>
-                                                   <!-- check if the supplier is already quoted when the inquiry status is still open  -->
-                                                  <v-flex pa-0 v-if="inquiry.status == 1002">
-                                                        <div v-if=" inquiry.inquiry.has_bid">
-                                                            <small class="green--text">You already quoted</small>
-                                                        </div>
-                                                        <div v-else>
-                                                            <small class="red--text font-weight-medium">You haven't quoted</small>
-                                                        </div>
-                                                   </v-flex>
-                                                  <!-- check if the status is has been awarded to you or to someone -->
-                                                  <div v-if="inquiry.status == 1004">
-
-                                                      <div v-if="inquiry.inquiry.awarded && inquiry.inquiry.awarded_to_me">
-                                                          <small class="green--text">You have awarded, please confirm</small>
-                                                      </div>
-
-                                                      <div v-else>
-                                                          <small class="red--text">Inquiry has been awarded</small>
-                                                      </div>
-
-                                            <!--          <v-icon 
-                                                     v-if="inquiry.awarded && inquiry.awarded_to_me"
-                                                     class="awarded orange--text">
-                                                         fas fa-award
-                                                     </v-icon>
-                                         
-                                                     <v-icon 
-                                                     v-else-if="inquiry.awarded"
-                                                     class="awarded red--text">
-                                                         fas fa-ban
-                                                     </v-icon> -->
-
-                                                 </div>
-                                                 <div v-if="inquiry.status == 1005">
-                                              
-                                                    <div v-if="inquiry.inquiry.awarded_to_me">
-                                                        <small class="green--text">Waiting for the buyer to pay</small>
-                                                    </div>
-                                                    <div v-else>
-                                                        <small class="red--text font-weight-medium">The inquiry has been awarded</small>
-                                                    </div>
-                                                 </div>
-
-
-                                                    <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
-                                        </v-flex>
-
-                                      
-
-                                    </v-layout> 
-                            
-
-                                   <!-- ------------------------------------------ -->
-
-
-
-
-                                </v-flex>   
+                            <v-flex xs6>
+                                <h3 class="grey--text">Date</h3>
+                                <h4 class="mt-2 font-weight-medium">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
+                            </v-flex>
 
                         </v-layout>
-
 
                         <v-layout row wrap mt-2>
-                               <v-flex xs12>
-                                   <h3 class="mt-2 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
-                              </v-flex>
+
+                            <v-flex xs6>
+                                <h3 class="grey--text lighten-4">Quantity</h3>
+                                <h4 class="mt-3 font-weight-medium">{{ inquiry.quantity }} pcs</h4>
+                            </v-flex>
+
+                            <v-flex xs6>
+                                <h3 class="grey--text">Status</h3>
+
+                                <!-- -------- -->
+
+                                <v-layout row wrap>
+
+                                    <v-flex xs12>
+                                        <!-- check if the supplier is already quoted when the inquiry status is still open  -->
+                                        <v-flex pa-0 v-if="inquiry.status == 1002">
+                                            <div v-if=" inquiry.inquiry.has_bid">
+                                                <small class="green--text">You already quoted.</small>
+                                            </div>
+                                            <div v-else>
+                                                <small class="red--text font-weight-medium">You haven't quoted.</small>
+                                            </div>
+                                        </v-flex>
+
+                                        <!-- check if the status is has been awarded to you or to someone -->
+                                        <div v-if="inquiry.status == 1004">
+
+                                            <div v-if="inquiry.inquiry.awarded && inquiry.inquiry.awarded_to_me">
+                                                <small class="green--text">You have awarded, please confirm.</small>
+                                            </div>
+
+                                            <div v-else>
+                                                <small class="red--text">Inquiry has been awarded.</small>
+                                            </div>
+
+                                        </div>
+
+                                        <div v-if="inquiry.status == 1005">
+
+                                            <div v-if="inquiry.inquiry.awarded_to_me">
+                                                <small class="green--text">Waiting for the buyer to pay.</small>
+                                            </div>
+                                            <div v-else>
+                                                <small class="red--text font-weight-medium">The inquiry has been awarded.</small>
+                                            </div>
+                                        </div>
+
+                                        <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
+                                    </v-flex>
+
+                                </v-layout>
+
+                                <!-- ------------------------------------------ -->
+
+                            </v-flex>
+
+                        </v-layout>
+
+                        <v-layout row wrap mt-2>
+                            <v-flex xs12>
+                                <h3 class="mt-2 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
+                            </v-flex>
                         </v-layout>
 
                         <v-layout row wrap mt-2 class="tnt-height">
-                                 <v-flex xs12>
-                                      <h4 class="font-weight-medium black--text lighten-4">Details</h4>
-                                      <h5 class="mt-2 black--text font-weight-light">
-                                          {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,210) + '...' : inquiry.message   }}
-                                      </h5>
-                                </v-flex>
+                            <v-flex xs12>
+                                <!-- <h4 class="font-weight-medium black--text lighten-4">Details</h4> -->
+                                <h5 class="mt-2 black--text font-weight-light">
+                                                      {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
+                                                  </h5>
+                            </v-flex>
                         </v-layout>
 
-                         <v-layout row wrap mt-4 >
-                                 <v-flex xs12 class="text-xs-center">
-                                      <v-btn @click="viewInquiry(inquiry)" block :loading="inquiry.loading" small  class="blue-grey darken-1">
-                                          <i class="fas fa-eye white--text"></i>
-                                          <span class="ml-1 white--text font-weight-light ">Manage</span>
-                                      </v-btn>
-                                </v-flex>
+                        <v-layout row wrap mt-4>
+                            <v-flex xs12 class="text-xs-center">
+                                <v-btn @click="viewInquiry(inquiry)" block :loading="inquiry.loading" small class="blue-grey darken-1">
+                                    <i class="fas fa-eye white--text"></i>
+                                    <span class="ml-1 white--text font-weight-light ">Manage</span>
+                                </v-btn>
+                            </v-flex>
                         </v-layout>
 
-                  </v-card>
-              </v-flex>
+                    </v-card>
+                </v-flex>
+            </isotope>
 
-        </v-layout>
+          
+                   </v-layout>
+
+
+                     <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
+
+                     <v-flex xs2>
+                                <v-img src="https://image.flaticon.com/icons/svg/751/751381.svg" height="90px" contain></v-img>  
+                      </v-flex>
+
+                      <v-flex xs12 mt-4>
+                              <h1 class="text-xs-center">Nothing Found on "{{ search }}"</h1>
+                       </v-flex>
+
+                     </v-layout>
+              
            
 
 
@@ -495,16 +492,8 @@ export default {
                 })
 
                 items = items.filter(inquiry => {
-
                         // add key to search in the dom
                         return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
-
-                        // for(let key in items) {
-                        //     if(inquiry) {
-
-                        //     }
-                        // }
-
                 })
 
 
@@ -515,11 +504,14 @@ export default {
 
                 var buff = this.inquiryStatus;
                 items = items.filter(function(inquiry) {
-                    // return (buff.length) ? buff.includes(inquiry.status) : true;
                     return (buff.length) ? buff.includes(inquiry.status) : true
                 });
 
+                console.log(items);
+
                 return items;
+
+
         },
 
         openInquiry: {
@@ -595,17 +587,19 @@ table.v-table tbody th {
 
 }
 
-  #root_isotope {
+
+#root_isotope {
+
+    width: 100%;
     margin: 0.5em -0.5em;
 
     .item {
       padding: 1em;
       margin: 0.5em;
-      width: calc(33.3% - 1em);
+      width: calc(25% - 1em);
       min-width: 100px;
-      text-align: center;
+      // text-align: center;
       color: white;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
       transition: box-shadow 0.2s;
 
       @media(max-width: 767px) {
@@ -616,17 +610,8 @@ table.v-table tbody th {
         width: calc(100% - 1em);
       }
 
-      &:hover {
-        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-      }
-      
-      i {
-        position: absolute;
-        top: 0.5em;
-        right: 0.5em;
-        cursor: pointer;
-      }
     }
+
   }
 
 

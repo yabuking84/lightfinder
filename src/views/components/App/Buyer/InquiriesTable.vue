@@ -117,8 +117,11 @@
             </v-alert>
       </v-data-table> -->
 
-        <v-layout v-if="filterInquiries" class="grey lighten-5" row wrap >
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'inquiry'+index">
+        <v-layout v-if="filterInquiries.length > 0" class="grey lighten-5" row wrap >
+
+            <isotope :options='null' :list="filterInquiries" id="root_isotope">
+
+                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
                           <!-- {{ allInquiries }} -->
                         <v-card class="rounded-card pa-3 mx-2 my-3" :hover="true">
                         
@@ -126,14 +129,14 @@
 
                                      <v-flex xs6>
 
-                                      <h3>Inquiry</h3>
-                                      <h4 class="mt-2 font-weight-medium grey--text lighten-4">#{{ inquiry.inq_id }}</h4>
+                                      <h3 class="grey--text lighten-4">Inquiry</h3>
+                                      <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
 
                                     </v-flex>
 
                                     <v-flex xs6>
-                                      <h3>Date</h3>
-                                      <h4 class="mt-2 font-weight-medium grey--text ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
+                                      <h3 class="grey--text">Date</h3>
+                                      <h4 class="mt-2 font-weight-medium ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
                                     </v-flex>   
 
                             </v-layout>
@@ -141,12 +144,12 @@
                             <v-layout  row wrap mt-2>
 
                                      <v-flex xs6>
-                                          <h3>Quantity</h3>
-                                          <h4 class="mt-3  font-weight-medium grey--text lighten-4">{{ inquiry.quantity }} pcs</h4>
+                                          <h3 class="grey--text lighten-4">Quantity</h3>
+                                          <h4 class="mt-3  font-weight-medium ">{{ inquiry.quantity }} pcs</h4>
                                     </v-flex>
                                     <!-- {{ inquiry }} -->
                                     <v-flex xs6>
-                                      <h3>Status</h3>
+                                      <h3 class="grey--text lighten-4">Status</h3>
                                       <!-- verifying -->
                                        <div v-if="inquiry.status==1001">
                                             <small class="orange--text">Inquiry sent for BAL approval</small>
@@ -209,9 +212,9 @@
                             <v-layout row wrap mt-2 class="tnt-height">
                       
                                      <v-flex xs12>
-                                          <h4 class="font-weight-medium black--text lighten-4">Details</h4>
+                                          <!-- <h4 class="font-weight-medium black--text lighten-4">Details</h4> -->
                                           <h5 class="mt-2 black--text font-weight-light">
-                                              {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,210) + '...' : inquiry.message   }}
+                                              {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
                                           </h5>
                                     </v-flex>
 
@@ -232,7 +235,25 @@
                         </v-card>
 
                   </v-flex>
+                 </isotope>
         </v-layout>
+
+         <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
+
+           <v-flex xs2>
+                  <v-img src="https://image.flaticon.com/icons/svg/751/751381.svg" height="90px" contain></v-img>  
+            </v-flex>
+
+            <v-flex xs12 mt-4>
+                    <span v-if="search">
+                        <h1 class="text-xs-center red--text">Nothing Found on "{{ search }}"</h1>  
+                    </span>
+             </v-flex>
+
+           </v-layout>
+        
+           
+
 
         
            
@@ -258,6 +279,7 @@ import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryView from "@/views/Components/App/Buyer/InquiryView";
 import config from "@/config/main"
 
+import isotope from 'vueisotope'
 
 import VueTimers from 'vue-timers/mixin'
 
@@ -271,6 +293,7 @@ export default {
     components: {
         InquiryStatusButtons,
         InquiryView,
+        isotope
     },
 
     data: () => ({
@@ -606,6 +629,32 @@ export default {
     border-bottom: 5px solid #dedede ;
 }
 
+
+#root_isotope {
+  
+    width: 100%;
+    margin: 0.5em -0.5em;
+
+    .item {
+      padding: 1em;
+      margin: 0.5em;
+      width: calc(25% - 1em);
+      min-width: 100px;
+      // text-align: center;
+      color: white;
+      transition: box-shadow 0.2s;
+
+      @media(max-width: 767px) {
+        width: calc(50% - 1em);
+      }
+
+      @media(max-width: 500px) {
+        width: calc(100% - 1em);
+      }
+
+    }
+
+  }
 
 
 </style>

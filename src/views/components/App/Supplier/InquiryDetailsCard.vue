@@ -19,10 +19,10 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                       
-                      <pre>
+                 <!--      <pre>
                       <h4>{{ inquiry }}</h4>
                       </pre>
-
+ -->
                         <v-layout row wrap>
 
                             <v-flex xs4>
