@@ -256,7 +256,7 @@
         </v-layout>
 
 
-        <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
+        <v-layout v-else class="grey lighten-4" justify-center row wrap pa-5>
 
                <v-flex xs2>
                     <!-- will download this later when going live -->
@@ -265,9 +265,12 @@
                </v-flex>
 
                 <v-flex xs12 mt-4>
-
-                    <h1 class="text-xs-center">Nothing Found on "{{ search }}"</h1>
-
+                    <span v-if="search">
+                     <h1 class="text-xs-center red--text">Nothing Found on "{{ search }}"</h1>
+                   </span>
+                   <span v-else>
+                     <h1 class="text-xs-center red--text">Haven't Found Something</h1>
+                   </span>
                 </v-flex>
 
          </v-layout>

@@ -241,6 +241,7 @@
          <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
 
            <v-flex xs2>
+                  <!-- will download this later when going live -->
                   <v-img src="https://image.flaticon.com/icons/svg/751/751381.svg" height="90px" contain></v-img>  
             </v-flex>
 
@@ -248,6 +249,9 @@
                     <span v-if="search">
                         <h1 class="text-xs-center red--text">Nothing Found on "{{ search }}"</h1>  
                     </span>
+                    <span v-else>
+                     <h1 class="text-xs-center red--text">Haven't Found Something</h1>
+                   </span>
              </v-flex>
          </v-layout>
         
