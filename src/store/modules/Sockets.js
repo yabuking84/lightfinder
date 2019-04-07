@@ -103,6 +103,9 @@ const actions = {
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_buyerCreatedInquiry(context, data){
     },
+    
+    SOCKET_buyerAwardedQuote(context, data){
+    },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // buyer
 

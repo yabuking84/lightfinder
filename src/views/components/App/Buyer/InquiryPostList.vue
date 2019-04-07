@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar color="grey darken-4" class="white--text">
-      <v-toolbar-title class="subheading font-weight-light">Bids {{ inquiry.id }}</v-toolbar-title>
+      <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
     </v-toolbar>
 
     <v-card color="grey lighten-5">
@@ -96,13 +96,21 @@
                           <!-- <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
                           <v-layout row wrap>
                               <v-flex xs6>
-                                  <v-btn flat block :disabled="inquiry.awarded ? true : false" large class="red darken-2 " @click="openSample(bidItem)">
+                                  <v-btn 
+                                  flat block large 
+                                  :disabled="inquiry.awarded ? true : false" 
+                                  class="red darken-2 " 
+                                  @click="openSample(bidItem)">
                                       <i class="fas fa-lightbulb white--text "></i>
                                       <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
                                   </v-btn>
                               </v-flex>
                               <v-flex xs6>
-                                  <v-btn flat block dark :disabled="inquiry.awarded ? true : false" large class="green darken-2" @click="openAwardBid(bidItem)">
+                                  <v-btn 
+                                  flat block dark large 
+                                  :disabled="inquiry.awarded ? true : false" 
+                                  class="green darken-2" 
+                                  @click="openAwardBid(bidItem)">
                                       <i class="fas fa-award white--text"></i>
                                       <span class="font-weight-bold ml-1 white--text">Award</span>
                                   </v-btn>
@@ -135,8 +143,9 @@
         </template>
 
 
+        <template v-else>
         <!-- <v-layout row wrap> -->
-        <v-layout align-center justify-center row fill-height v-if="loading">
+        <v-layout align-center justify-center row fill-height>
             <v-flex xs12 text-xs-center>
                 <v-progress-circular
                 :size="70"
@@ -146,14 +155,15 @@
                 indeterminate></v-progress-circular>
             </v-flex>
         </v-layout>
+        </template>
 
 
     </v-card>
 
 
-    <!-- <inquiry-confirm v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </inquiry-confirm> -->
-    <award-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
-    <request-sample-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
+    <!-- <inquiry-confirm v-if="inquiry" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </inquiry-confirm> -->
+    <award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
+    <request-sample-dialog v-if="bidToRequestSample" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToRequestSample"> </request-sample-dialog>
 
   </div>
 </template>
@@ -204,7 +214,7 @@ export default {
         bidItems: [],
         hasBid: true,
         bidToAward: null,
-        bidinquiry: null,
+        bidToRequestSample: null,
         has_awarded: true,
         
         loading: true,
@@ -235,6 +245,8 @@ export default {
 
         fillBidTable() {
 
+            this.loading = true;
+
             this.$store.dispatch('byrInq/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
                 })
@@ -262,14 +274,16 @@ export default {
         openAwardBid(bid) {
 
             this.bidToAward = bid;
-            this.bidinquiry = this.inquiry;
             this.openAwardDialog = true;
+
+            // console.log(this.bidToAward);
+            // console.log(this.inquiry);
 
         },
 
         openSample(bid) {
             this.bidToAward = bid;
-            this.bidinquiry = this.inquiry
+            this.bidToRequestSample = bid;
             this.openSampleDialog = true
         },
 
@@ -299,6 +313,13 @@ export default {
             this.fillBidTable();
         },
 
+    },
+
+    sockets: {
+        buyerAwardedQuote: function (data) {
+            console.log('buyerAwardedQuote')
+            this.fillBidTable();
+        },
     },
 
     created() {

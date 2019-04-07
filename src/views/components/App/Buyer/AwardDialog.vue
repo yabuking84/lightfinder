@@ -17,12 +17,12 @@
         	
 			<v-card-text>
 			    <v-layout row wrap pa-0 mx-3>
-			        <h2 class="font-weight-light"> INQUIRY# <span class="font-weight-bold"> {{ this.bidinquiry.id }} </span></h2>
+			        <h2 class="font-weight-light"> INQUIRY# <span class="font-weight-bold"> {{ this.inquiry.id }} </span></h2>
 			        <v-spacer></v-spacer>
-			        <v-btn @click="isEditAddress=true" flat small class="blue-grey darken-2">
+			        <!-- <v-btn @click="isEditAddress=true" flat small class="blue-grey darken-2">
 			            <i class="ml-1 font-weight-light  fas fa-edit white--text"></i>
 			            <span class="ml-1 white--text font-weight-light">Edit Address</span>
-			        </v-btn>
+			        </v-btn> -->
 			    </v-layout>
 			    <v-layout row wrap>
 			        <v-flex xs8 pa-1>
@@ -30,13 +30,14 @@
 			                <v-layout row wrap>
 			                    <v-flex xs6 pa-4>
 			                        <h1 class="font-weight-thick black--text subheading">Ship to</h1>
-			                        <h5 class="font-weight-light black--text darken-4">Shipping from China, Beijing</h5>
+			                        <!-- <h5 class="font-weight-light black--text darken-4">Shipping from China, Beijing</h5> -->
 			                        <v-divider></v-divider>
 			                        <div class="text-xs-left mt-2">
 			                            <!--   <h4 class=""> Almani Lighting L.L.C. Showroom 10, Dubai Investment Park 1,</h4>
 			                        <h4 class=""> Dubai, United Arab Emirates</h4> -->
 			                            <v-flex xs12 ml-2>
 											<v-autocomplete
+											v-model="form.shipping_country_id"
 											:items="countries"
 											item-text="name" 
 											item-value="id"
@@ -46,16 +47,18 @@
 											label="Countries"></v-autocomplete>
 			                            </v-flex>
 			                            <v-flex xs12 ml-2>
-			                                <v-text-field label="Street Address">
-			                                </v-text-field>
+			                                <v-text-field 
+			                                label="Street Address"
+			                                v-model="form.shipping_address"></v-text-field>
 			                            </v-flex>
 			                            <v-flex xs12 ml-2>
-			                                <v-text-field label="City">
-			                                </v-text-field>
+			                                <v-text-field label="City"
+			                                v-model="form.shipping_city"></v-text-field>
 			                            </v-flex>
 			                            <v-flex xs12 ml-2>
-			                                <v-text-field label="Zip/Postal Code">
-			                                </v-text-field>
+			                                <v-text-field 
+			                                label="Zip/Postal Code"
+			                                v-model="form.shipping_postal"></v-text-field>
 			                            </v-flex>
 			                        </div>
 			                    </v-flex>
@@ -68,7 +71,7 @@
 			                                <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Product Category</h4>
 			                                    <v-spacer></v-spacer>
-			                                    <h4 class="font-weight-bold">{{ this.bidinquiry.categories.join(', ') }}</h4>
+			                                    <h4 class="font-weight-bold">{{ this.inquiry.categories.join(', ') }}</h4>
 			                                </v-layout>
 			                                <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Seller Product Code</h4>
@@ -78,7 +81,7 @@
 			                                 <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Your Desired Price</h4>
 			                                    <v-spacer></v-spacer>
-			                                    <h4 class="font-weight-bold"> {{ this.bidinquiry.desired_price }} </h4>
+			                                    <h4 class="font-weight-bold"> {{ this.inquiry.desired_price }} </h4>
 			                                </v-layout>
 
 			                            </v-flex>
@@ -89,9 +92,15 @@
 			                <v-flex xs12 mt-3 px-4 py-3>
 			                    <h1 class="font-weight-thick black--text subheading">Shipping Method</h1>
 			                    <h5 class="font-weight-light black--text darken-4">Select your Shipping method so supplier can quote</h5>
-			                    <v-select v-model="form.shipping_method_id" :items="shipping_methods" :error-messages="fieldErrors('form.shipping_method_id')" @blur="$v.form.shipping_method_id.$touch()" item-text="name" item-value="id" flat class="mt-2">
-
-			                    </v-select>
+			                    <v-select 
+			                    v-model="form.shipping_method_id" 
+			                    :items="shipping_methods" 
+			                    :error-messages="fieldErrors('form.shipping_method_id')" 
+			                    @blur="$v.form.shipping_method_id.$touch()" 
+			                    item-text="name" 
+			                    item-value="id" 
+			                    flat 
+			                    class="mt-2"></v-select>
 			                </v-flex>
 			            </v-card>
 			        </v-flex>
@@ -107,7 +116,7 @@
 			                    <v-layout row wrap mt-4>
 			                        <h4 class="text-xs-left font-weight-light">Quantity</h4>
 			                        <v-spacer></v-spacer>
-			                        <h2 class="text-xs-right font-weight-bold">{{ this.bidinquiry.quantity }}</h2>
+			                        <h2 class="text-xs-right font-weight-bold">{{ this.inquiry.quantity }}</h2>
 			                    </v-layout>
 			                </v-flex>
 			                
@@ -195,7 +204,7 @@ import inqEvntBs from "@/bus/inquiry"
 
 export default {
 
-  props: ['bid', 'openAwardDialog', 'bidinquiry'],
+  props: ['bid', 'openAwardDialog', 'inquiry'],
 
   mixins: [
 
@@ -228,13 +237,22 @@ export default {
 
   data: () => ({
 
-    shipping_methods: config.main.shipping_methods,
+    shipping_methods: [
+    	// {
+    	// 	id: 0,
+    	// 	name: 'none',
+    	// },
+    	...config.main.shipping_methods,
+    ],
     payment_methods: config.main.payment_methods,
 
     form: {
 
-      shipping_method_id: '',
-
+	    shipping_method_id: '',
+	    shipping_address: '',
+		shipping_city: '',
+		shipping_country_id: '',
+		shipping_postal: '',
     },
 
     calendar_menu: false,
@@ -246,7 +264,7 @@ export default {
 
   }),
 
-
+ 
   methods: {
 
     changeAdd: () => {
@@ -257,19 +275,21 @@ export default {
 
     submit() {
 
+ 
 
-      this.formLoading = true
+		this.formLoading = true
+		var payload = {
+			shipping_method_id: this.form.shipping_method_id,
+			shipping_address: this.form.shipping_address,
+			shipping_city: this.form.shipping_city,
+			shipping_country_id: this.form.shipping_country_id,
+			shipping_postal: this.form.shipping_postal,
 
-      this.$store.dispatch('byrInq/awardBid_a', {
+			bid_id: this.bid.id,
+			inquiry_id: this.inquiry.id,
+		};
 
-          'payment_method_id': this.form.payment_method_id,
-          'shipping_method_id': this.form.shipping_method_id,
-          // 'shipping_date'		 : this.form.shipping_date,
-          'shipping_address': this.form.shipping_address,
-          'bid_id': this.bid.id,
-          'inquiry_id': this.bidinquiry.id,
-
-        })
+      	this.$store.dispatch('byrInq/awardBid_a', payload)
         .then((respose) => {
 
           this.formLoading = false
@@ -282,7 +302,7 @@ export default {
 
         })
         .finally(() => {
-          this.formLoading = false;
+         	this.formLoading = false;
         });
 
     },
@@ -297,13 +317,19 @@ export default {
 
     fillData() {
 
-      this.form.shipping_method_id = this.bidinquiry.shipping_method_id
-      this.form.payment_method_id = this.bidinquiry.payment_method_id
-      // this.form.shipping_date 	 = this.bidinquiry.shipping_date;
 
-      // this.odQuantity = this.bidinquiry.quantity
-      // this.odUnitprice = this.bid.price
-      // this.odTotalprice = this.bid.total_price
+		// this.form.shipping_date 	 = this.inquiry.shipping_date;
+		// this.odQuantity = this.inquiry.quantity
+		// this.odUnitprice = this.bid.price
+		// this.odTotalprice = this.bid.total_price
+
+	    this.form.shipping_method_id   = null;
+	    this.form.shipping_address 	   = this.inquiry.shipping_address;
+		this.form.shipping_city 	   = this.inquiry.shipping_city;
+		this.form.shipping_country_id  = this.inquiry.shipping_country_id;
+		this.form.shipping_postal 	   = this.inquiry.shipping_postal;
+
+		// console.log(this.inquiry);
 
     },
 
@@ -325,7 +351,7 @@ export default {
 
   watch: {
 
-    bidinquiry: {
+    inquiry: {
 
       handler(nVal, oVal) {
 
@@ -344,6 +370,7 @@ export default {
 
     // this.form.shipping_date = this.getDateTime();
     // this.minDate = this.form.shipping_date;
+    this.fillData();
 
   }
 }

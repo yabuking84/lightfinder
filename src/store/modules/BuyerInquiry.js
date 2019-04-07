@@ -219,6 +219,16 @@ const actions = {
                 token:localStorage.access_token,
                 "content-type": "application/json",
             };
+
+            // console.log(data);
+
+
+
+            // shipping_method_id:
+            // shipping_address:
+            // shipping_city:
+            // shipping_country_id:
+            // shipping_postal:
             
             axios({
 
@@ -228,7 +238,6 @@ const actions = {
                 data    : JSON.stringify(data)
 
             })
-
             .then(response => {
                 resolve(response.data);
             })
