@@ -269,80 +269,77 @@ export default {
  
   methods: {
 
-	    changeAdd: () => {
+    changeAdd: () => {
 
-	      alert(this.bidToAward);
-	    },
+      alert(this.bidToAward);
 
-	    submit() {
-
-
-			this.formLoading = true
-			var payload = {
-				shipping_method_id: this.form.shipping_method_id,
-				shipping_address: this.form.shipping_address,
-				shipping_city: this.form.shipping_city,
-				shipping_country_id: this.form.shipping_country_id,
-				shipping_postal: this.form.shipping_postal,
-
-				bid_id: this.bid.id,
-				inquiry_id: this.inquiry.id,
-			};
-
-	      	this.$store.dispatch('byrInq/awardBid_a', payload)
-	        .then((respose) => {
-
-<<<<<<< HEAD
-	          this.formLoading = false
-	          this.$emit('update:openAwardDialog', false)
-	          inqEvntBs.emitAwardSubmitted();
-
-
-	        })
-	        .catch((e) => {
-
-	        })
-	        .finally(() => {
-	         	this.formLoading = false;
-	        });
-
-	     },
-
-	     
-	    resetForm() {
-=======
     },
->>>>>>> rene-development
 
-	      this.$refs.form.reset()
-	      this.$v.$reset()
+    submit() {
 
-	    },
+ 
+
+		this.formLoading = true
+		var payload = {
+			shipping_method_id: this.form.shipping_method_id,
+			shipping_address: this.form.shipping_address,
+			shipping_city: this.form.shipping_city,
+			shipping_country_id: this.form.shipping_country_id,
+			shipping_postal: this.form.shipping_postal,
+
+			bid_id: this.bid.id,
+			inquiry_id: this.inquiry.id,
+		};
+
+      	this.$store.dispatch('byrInq/awardBid_a', payload)
+        .then((respose) => {
+
+          this.formLoading = false
+          this.$emit('update:openAwardDialog', false)
+          inqEvntBs.emitAwardSubmitted();
 
 
-	    fillData() {
+        })
+        .catch((e) => {
+
+        })
+        .finally(() => {
+         	this.formLoading = false;
+        });
+
+    },
+
+    resetForm() {
+
+      this.$refs.form.reset()
+      this.$v.$reset()
+
+    },
 
 
-			// this.form.shipping_date 	 = this.inquiry.shipping_date;
-			// this.odQuantity = this.inquiry.quantity
-			// this.odUnitprice = this.bid.price
-			// this.odTotalprice = this.bid.total_price
+    fillData() {
 
-		    this.form.shipping_method_id   = null;
-		    this.form.shipping_address 	   = this.inquiry.shipping_address;
-			this.form.shipping_city 	   = this.inquiry.shipping_city;
-			this.form.shipping_country_id  = this.inquiry.shipping_country_id;
-			this.form.shipping_postal 	   = this.inquiry.shipping_postal;
 
-			// console.log(this.inquiry);
+		// this.form.shipping_date 	 = this.inquiry.shipping_date;
+		// this.odQuantity = this.inquiry.quantity
+		// this.odUnitprice = this.bid.price
+		// this.odTotalprice = this.bid.total_price
 
-	    },
+	    this.form.shipping_method_id   = null;
+	    this.form.shipping_address 	   = this.inquiry.shipping_address;
+		this.form.shipping_city 	   = this.inquiry.shipping_city;
+		this.form.shipping_country_id  = this.inquiry.shipping_country_id;
+		this.form.shipping_postal 	   = this.inquiry.shipping_postal;
 
-	    closeDialog() {
+		// console.log(this.inquiry);
 
-	      this.$emit('update:openAwardDialog', false)
+    },
 
-	    },
+    closeDialog() {
+
+      this.$emit('update:openAwardDialog', false)
+
+    },
 
   },
 
@@ -356,17 +353,18 @@ export default {
 
   watch: {
 
-	    inquiry: {
+    inquiry: {
 
-	      handler(nVal, oVal) {
+      handler(nVal, oVal) {
 
-	        this.fillData();
+        this.fillData();
 
-	      },
+      },
 
-	      deep: true,
+      deep: true,
 
-	    },
+    },
+
 
   },
 
@@ -377,7 +375,6 @@ export default {
     this.fillData();
 
   }
-  
 }
 
 </script>
