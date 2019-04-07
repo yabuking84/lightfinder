@@ -17,7 +17,7 @@
         	
 			<v-card-text>
 			    <v-layout row wrap pa-0 mx-3>
-			        <h2 class="font-weight-light"> INQUIRY# <span class="font-weight-bold"> {{ this.inquiry.id }} </span></h2>
+			        <h2 class="font-weight-light"> INQUIRY# <span class="font-weight-bold"> {{ inquiry.id }} </span></h2>
 			        <v-spacer></v-spacer>
 			        <!-- <v-btn @click="isEditAddress=true" flat small class="blue-grey darken-2">
 			            <i class="ml-1 font-weight-light  fas fa-edit white--text"></i>
@@ -71,17 +71,17 @@
 			                                <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Product Category</h4>
 			                                    <v-spacer></v-spacer>
-			                                    <h4 class="font-weight-bold">{{ this.inquiry.categories.join(', ') }}</h4>
+			                                    <h4 class="font-weight-bold">{{ inquiry.categories.join(', ') }}</h4>
 			                                </v-layout>
 			                                <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Seller Product Code</h4>
 			                                    <v-spacer></v-spacer>
-			                                    <h4 class="font-weight-bold"> {{ this.bid.product_name }} </h4>
+			                                    <h4 class="font-weight-bold"> {{ bid.product_name }} </h4>
 			                                </v-layout>
 			                                 <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Your Desired Price</h4>
 			                                    <v-spacer></v-spacer>
-			                                    <h4 class="font-weight-bold"> {{ this.inquiry.desired_price }} </h4>
+			                                    <h4 class="font-weight-bold"> {{ inquiry.desired_price }} </h4>
 			                                </v-layout>
 
 			                            </v-flex>
@@ -116,7 +116,7 @@
 			                    <v-layout row wrap mt-4>
 			                        <h4 class="text-xs-left font-weight-light">Quantity</h4>
 			                        <v-spacer></v-spacer>
-			                        <h2 class="text-xs-right font-weight-bold">{{ this.inquiry.quantity }}</h2>
+			                        <h2 class="text-xs-right font-weight-bold">{{ inquiry.quantity }}</h2>
 			                    </v-layout>
 			                </v-flex>
 			                
@@ -146,7 +146,7 @@
 			                    <v-layout row wrap mt-3>
 			                        <h2 class="font-weight-light">Total Price</h2>
 			                        <v-spacer></v-spacer>
-			                        <h1 class="font-weight-bold green--text">${{ this.bid.total_price }}</h1>
+			                        <h1 class="font-weight-bold green--text">${{ bid.total_price }}</h1>
 			                    </v-layout>
 			                </v-flex>
 
@@ -292,6 +292,7 @@ export default {
 	      	this.$store.dispatch('byrInq/awardBid_a', payload)
 	        .then((respose) => {
 
+<<<<<<< HEAD
 	          this.formLoading = false
 	          this.$emit('update:openAwardDialog', false)
 	          inqEvntBs.emitAwardSubmitted();
@@ -309,6 +310,9 @@ export default {
 
 	     
 	    resetForm() {
+=======
+    },
+>>>>>>> rene-development
 
 	      this.$refs.form.reset()
 	      this.$v.$reset()

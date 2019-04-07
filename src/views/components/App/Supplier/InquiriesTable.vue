@@ -491,21 +491,32 @@ export default {
                     return a.value - b.value
                 })
 
-                items = items.filter(inquiry => {
-                        // add key to search in the dom
-                        return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
-                })
+                if(this.search) {
+                    items = items.filter(inquiry => {
+
+                            // add key to search in the dom
+                            return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
+
+                            // for(let key in items) {
+                            //     if(inquiry) {
+
+                            //     }
+                            // }
+
+                    })
 
 
-                var buff = this.categories;
-                items = items.filter(function(inquiry) {
-                        return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
-                });
+                    var buff = this.categories;
+                    items = items.filter(function(inquiry) {
+                            return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
+                    });
 
-                var buff = this.inquiryStatus;
-                items = items.filter(function(inquiry) {
-                    return (buff.length) ? buff.includes(inquiry.status) : true
-                });
+                    var buff = this.inquiryStatus;
+                    items = items.filter(function(inquiry) {
+                        // return (buff.length) ? buff.includes(inquiry.status) : true;
+                        return (buff.length) ? buff.includes(inquiry.status) : true
+                    });
+                }
 
                 console.log(items);
 
