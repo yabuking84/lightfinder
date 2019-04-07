@@ -415,13 +415,11 @@ export default {
                         inq_id: inq.inq_id
                     })
                     .then((data) => {
-
-                        // console.log('viewInquiry');
-                        // console.log(data);
-
-                        inq.loading = false;
+                        
                         this.inquiry = data;
                         this.openInquiry = true;
+                        inq.loading = false;
+
                     })
                     .catch((error) => {
                         console.log(error);

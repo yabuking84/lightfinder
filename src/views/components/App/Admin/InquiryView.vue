@@ -25,11 +25,7 @@
 
             <!-- inquiry details card -->
             <v-flex xs5>
-                <inquiry-details-card 
-                v-if="inquiry" 
-                :inquiry="inquiry"
-                :isClosed.sync="isClosed" 
-                :openInquiry="openInquiry"></inquiry-details-card>
+              <inquiry-details-card v-if="inquiry" :isClosed.sync="isClosed" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
             </v-flex>
             <!-- end of detils  -->
 

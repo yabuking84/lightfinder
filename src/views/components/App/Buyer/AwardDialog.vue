@@ -99,8 +99,8 @@
 			                    @blur="$v.form.shipping_method_id.$touch()" 
 			                    item-text="name" 
 			                    item-value="id" 
-			                    flat 
-			                    class="mt-2"></v-select>
+			                    flat class="mt-2">
+			                    </v-select>
 			                </v-flex>
 			            </v-card>
 			        </v-flex>
@@ -279,6 +279,7 @@ export default {
 
  
 
+		this.formLoading = true
 		var payload = {
 			shipping_method_id: this.form.shipping_method_id,
 			shipping_address: this.form.shipping_address,
@@ -289,13 +290,6 @@ export default {
 			bid_id: this.bid.id,
 			inquiry_id: this.inquiry.id,
 		};
-     if (this.$v.$invalid) {
-     	
- 		this.$v.$touch()
-
-     } else {
-
-      this.formLoading = true
 
       	this.$store.dispatch('byrInq/awardBid_a', payload)
         .then((respose) => {

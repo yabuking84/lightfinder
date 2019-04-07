@@ -55,100 +55,12 @@
 
                 <v-flex xs12 mx-5 mt-3 mb-3>
 
-                     <v-layout row justify-center mx-5>  
-
-                          <v-flex xs2>
-                               <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
-                          </v-flex>
-                          
-                          <v-flex xs10>
-                                <div>
-                                    <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                    <div class="blue-grey--text" style="font-style: italic;">Your INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
-                                    </div>
-                                </div>
-                          </v-flex>
-
-                      
-
-                      <v-flex xs12>
-                          <!-- <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at) }}</h5> -->
-                          <v-layout row wrap>
-                              <v-flex xs6>
-                                  <v-btn 
-                                  flat block large 
-                                  :disabled="inquiry.awarded ? true : false" 
-                                  class="red darken-2 " 
-                                  @click="openSample(bidItem)">
-                                      <i class="fas fa-lightbulb white--text "></i>
-                                      <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-                                  </v-btn>
-                              </v-flex>
-                              <v-flex xs6>
-                                  <v-btn 
-                                  flat block dark large 
-                                  :disabled="inquiry.awarded ? true : false" 
-                                  class="green darken-2" 
-                                  @click="openAwardBid(bidItem)">
-                                      <i class="fas fa-award white--text"></i>
-                                      <span class="font-weight-bold ml-1 white--text">Award</span>
-                                  </v-btn>
-                              </v-flex>
-                          </v-layout>
-                      </v-flex>
-
-                          <v-flex xs10 offset-xs1>
-                              <v-layout row wrap justif>
-                                  <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
-                                        <span class="font-weight-bold ml-1 white--text">Edit Now</span>
-                                    </v-btn>
-                              </v-layout>
-                                   
-                            </v-flex>
-
-                          <v-divider></v-divider>
-                          <!-- message box -->
-                            <!-- <comment-box :commentData="commentData"  :biditem="bidItem.id"> </comment-box> -->
-                          <!-- message box -->
-                      </v-flex>
-
-
-        </v-card>
-
-        <div v-else>
-
-        <!-- <v-layout row wrap> -->
-        <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
-            <v-flex xs12>
-                <v-alert :value="true" type="info" style="width: auto;" class="ma-4" outline>
-                    No Quote yet..
-                </v-alert>
-            </v-flex>
-        </v-layout>
-        </template>
-
-
-        <template v-else>
-        <!-- <v-layout row wrap> -->
-        <v-layout align-center justify-center row fill-height>
-            <v-flex xs12 text-xs-center>
-                <v-progress-circular
-                :size="70"
-                :width="7"
-                color="black"
-                style="margin:150px 50px;"
-                indeterminate></v-progress-circular>
-            </v-flex>
-        </v-layout>
-        </template>
-
 
     </v-card>
-
-
-    <!-- <inquiry-confirm v-if="inquiry" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </inquiry-confirm> -->
-    <award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
-    <request-sample-dialog v-if="bidToRequestSample" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToRequestSample"> </request-sample-dialog>
+    
+    <inquiry-create :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="bidinquiry"> </inquiry-create>
+    <award-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
+    <request-sample-dialog v-if="bidinquiry" :bidinquiry="bidinquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
 
   </div>
 </template>
@@ -193,10 +105,10 @@ export default {
 
     },
 
-    props: [
-        'inquiry', 
-        'openInquiry',
-    ],
+    openInquiry: {
+        type: Boolean
+  
+    }
 
   },
     
@@ -210,7 +122,8 @@ export default {
         bidToAward: null,
         bidToRequestSample: null,
         has_awarded: true,
-
+        isEdit:false,
+        dialog:false,
         // comment Data composed of the comment useridid and inquiry
         commentData: [
 
@@ -226,15 +139,23 @@ export default {
     }),
 
 
+    timers: [{
+        name: 'BidTableTimer',
+        time: config.polling.bidTable.time,
+        immediate: true,
+        repeat: true,
+        autostart: false,
+        callback: function() {
+            console.log("BidTableTimer");
+            this.fillBidTable();
+        },
+    }],
+  
 
   methods: {
 
         fillBidTable() {
 
-
-        fillBidTable() {
-
-            this.loading = true;
 
             this.$store.dispatch('byrInq/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
@@ -251,13 +172,6 @@ export default {
                         // return b.total_price - a.total_price;
                 return a.total_price - b.total_price;
 
-                    });
-
-                    this.loading = false;
-
-                })
-                .catch(error => {
-                    console.log(error);
                 });
 
             })
@@ -270,7 +184,6 @@ export default {
 
             this.bidToAward = bid;
             this.openAwardDialog = true;
-
         },
 
         openSample(bid) {
@@ -299,11 +212,9 @@ export default {
 
         EditInquiry() {
 
-    watch:{
-        
-        inquiry(nVal) {
-            this.fillBidTable();
-        },
+             this.bidinquiry = this.inquiry;
+             this.dialog=true 
+             this.isEdit=true
 
          }
 
@@ -318,12 +229,12 @@ export default {
 
     created() {
 
-        // console.log(this.inquiry)
-
         this.fillBidTable();
-        // inqEvntBs.$on('award-bid-form-submitted', () => {
-        //     this.fillBidTable();
-        // });
+        inqEvntBs.$on('award-bid-form-submitted', () => {
+            this.fillBidTable();
+            $emit('update:inquiry.awarded', 1)
+        });
+        
     },
 
       watch: {

@@ -16,16 +16,6 @@
 
                         <v-layout row justify-center mx-5>
 
-			<v-card-text v-else>
-				
-				 	<v-card 
-				 	v-for="(bidItem, i) in bidItems" 
-				 	:key="'bidItem_'+i"
-				 	class="mb-3"  
-				 	:hover="true" 
-				 	:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' ">
-						<v-card-text>
-							<v-layout row wrap>
                             <v-flex xs2>
                                 <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
                             </v-flex>
@@ -282,7 +272,7 @@ components: {
 },
 
 
-props: ['inquiry'],
+        data() {
 
                 openAwardDialog: false,
                 bidItems: [],
@@ -295,13 +285,9 @@ props: ['inquiry'],
 
             }
 
-		openAwardDialog: false,
-		bidItems: [],
-		hasBid: true,
-		bidToAward: null,
-		bidinquiry: null,
-		has_awarded:true,
-	}
+        },
+
+        watch: {
 
             inquiry: {
 
@@ -373,8 +359,7 @@ props: ['inquiry'],
                             this.$emit('update:isClosed', true);
                         });
 
-		console.log(typeof awarded);
-		console.log(typeof this.inquiry.awarded)
+                },
 
                 rejectInquiry(inquiry_id) {
 
@@ -402,23 +387,16 @@ props: ['inquiry'],
 
                         });
 
-created(){
-
-	// console.log(this.inquiry)
-
-	this.fillBidTable();
-	 inqEvntBs.$on('award-bid-form-submitted',()=>{
-        this.fillBidTable();
-        this.inquiry.awarded = 1
-    });
-
-},
-
-
-
+                },
 
 }
 </script>
+
+                    let is_awarded = false;
+
+                    // console.log(this.inquiry)
+
+                    if (this.inquiry.awarded == 1) {
 
                         if (awarded == 1) {
                             is_awarded = true;

@@ -48,29 +48,83 @@
                         </v-layout>
                     </div>
 
-              <v-stepper-content step="2" ref="step_2">
-                <v-container>
-                  <v-flex xs12>
-                    <v-layout row wrap>
-                      <v-flex xs5>
-                        <h4>Your Subject</h4>
-                        <v-text-field 
-                        v-model="formData.keywords" 
-                        @keyup.enter="stepUp()" 
-                        :error-messages="fieldErrors('formData.keywords')" 
-                        @blur="$v.formData.keywords.$touch()" 
-                        label="Subject">
-                        </v-text-field>
-                      </v-flex>
-                      <v-flex xs1>
-                      </v-flex>
-                      <v-flex xs5>
-                        <h4>Your Chosen Category</h4>
+                    <div v-else>
+                      <v-btn color="primary" @click="stepUp()">Start</v-btn>
+                      <v-btn color="primary" @click="inquirylookup=true"> <span>use existing Inquiry ?</span> </v-btn>
+                    </div>
 
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                  </v-stepper-content>
 
-                        <v-autocomplete 
+                  <v-stepper-step :rules="[() => 
+                    !$v.formData.keywords.$error && !$v.formData.category.$error ]" 
+                    step="2" 
+                    editable>
+                      <!-- Specific keyword for your Quotation -->
+                      Subject & Category
+                      <small 
+                      v-show="$v.formData.keywords.$error">Subject is required</small>
+                      <small 
+                      v-show="$v.formData.category.$error">Category is required</small>
+                  </v-stepper-step>
+
+                  <v-stepper-content step="2" ref="step_2">
+                      <v-container>
+                        <v-flex xs12>
+                          <v-layout row wrap>
+                            <v-flex xs5>
+                              <h4>Your Subject</h4>
+                              <v-text-field 
+                              v-model="formData.keywords" 
+                              @keyup.enter="stepUp()" 
+                              :error-messages="fieldErrors('formData.keywords')" 
+                              @blur="$v.formData.keywords.$touch()" 
+                              label="Subject">
+                              </v-text-field>
+                            </v-flex>
+                            <v-flex xs1>
+                            </v-flex>
+                            <v-flex xs5>
+                              <h4>Your Chosen Category</h4>
+                              <v-autocomplete 
+                              v-model="formData.category" 
+                              :items="categories" 
+                              item-text="name"
+                              item-value="id"
+                              :error-messages="fieldErrors('formData.category')"
+                              @blur="$v.formData.category.$touch()" 
+                              :search-input.sync="search" 
+                              ref="categorySelect" 
+                              ache-items flat hide-no-data hide-details label="Type here the category.."
+                               solo-inverted>
+                              </v-autocomplete>
+                            </v-flex>
+                          </v-layout>
+                        </v-flex>
+                      </v-container>
+                      <v-btn color="primary" @click="stepUp()">next</v-btn>
+                      <v-btn flat @click="stepDown()">back</v-btn>
+                  </v-stepper-content>
+                  <!--         <v-stepper-step step="3" :rules="[() => !$v.formData.category.$error ]" editable>
+            Choose a category
+            <small v-show="$v.formData.category.$error">Category is required</small>
+          </v-stepper-step>
+          <v-stepper-content step="3" ref="step_3" no-focus>
+            <v-container>
+              <v-layout row wrap>
+             <v-combobox 
+                v-model="formData.category" 
+                :items="categories" 
+                item-text="name" 
+                item-value="id" 
+                :error-messages="fieldErrors('formData.category')" 
+                @blur="$v.formData.category.$touch()" 
+                :search-input.sync="search" 
+                ref="category" 
+                label="Type here the category..">
+                </v-combobox>
+          
+                  <v-layout row wrap>
+                    <v-autocomplete 
                         v-model="formData.category" 
                         :items="categories" 
                         item-text="name"
@@ -78,128 +132,68 @@
                         :error-messages="fieldErrors('formData.category')" 
                         @blur="$v.formData.category.$touch()" 
                         ref="categorySelect" 
-                        ache-items flat hide-no-data hide-details label="Type here the category..">
-                        </v-autocomplete>
-
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
-                      </v-flex>
-                    </v-layout>
-                  </v-flex>
-                </v-container>
-                <v-btn color="primary" @click="stepUp()">next</v-btn>
-                <v-btn flat @click="stepDown()">back</v-btn>
-              </v-stepper-content>
-              <!--         <v-stepper-step step="3" :rules="[() => !$v.formData.category.$error ]" editable>
-        Choose a category
-        <small v-show="$v.formData.category.$error">Category is required</small>
-      </v-stepper-step>
-      <v-stepper-content step="3" ref="step_3" no-focus>
-        <v-container>
-          <v-layout row wrap>
-         <v-combobox 
-            v-model="formData.category" 
-            :items="categories" 
-            item-text="name" 
-            item-value="id" 
-            :error-messages="fieldErrors('formData.category')" 
-            @blur="$v.formData.category.$touch()" 
-            :search-input.sync="search" 
-            ref="category" 
-            label="Type here the category..">
-            </v-combobox>
-      
-              <v-layout row wrap>
-                <v-autocomplete 
-                    v-model="formData.category" 
-                    :items="categories" 
-                    item-text="name"
-                    item-value="id"
-                    :error-messages="fieldErrors('formData.category')" 
-                    @blur="$v.formData.category.$touch()" 
-                    :search-input.sync="search" 
-                    ref="categorySelect" 
-                    cache-items 
-                    class="mx-3" 
-                    flat 
-                    hide-no-data 
-                    hide-details 
-                    label="Type here the category.." 
-                    solo-inverted>
-                </v-autocomplete>
-            </v-layout>
-      
-          </v-layout>
-        </v-container>
-        <v-btn color="primary" @click="stepUp()">next</v-btn>
-        <v-btn flat @click="stepDown()">back</v-btn>
-      </v-stepper-content>
-       -->
-              <!-- Sub category here if there is -->
-              <v-stepper-step step="3" :rules="[() => !$v.formData.quantity.$error &&  !$v.formData.desired_price.$error ]" editable>
-                Quantity & Price
-                <small v-show="$v.formData.quantity.$error">Quantity is required.</small>
-                <small v-show="$v.formData.desired_price.$error">Preffered Price is required.</small>
-              </v-stepper-step>
-              <v-stepper-content step="3" ref="step_3">
-                <v-container>
-                  <v-layout row>
-                    <v-flex xs5>
-                      <v-text-field 
-                      v-model="formData.quantity" 
-                      label="Quantity" 
-                      @keyup.enter="stepUp()" 
-                      :error-messages="fieldErrors('formData.quantity')" 
-                      @blur="$v.formData.quantity.$touch()" 
-                      :value="formData.quantity" 
-                      suffix="pc/s" 
-                      mask="######">
-                      </v-text-field>
-                    </v-flex>
-                    <v-flex xs1>
-                    </v-flex>
-                    <v-flex xs5>
-                      <v-text-field 
-                      class="mr-1" 
-                      label="Preferred price" 
-                      :error-messages="fieldErrors('formData.desired_price')" 
-                      @blur="$v.formData.desired_price.$touch()" 
-                      v-model="formData.desired_price" 
-                      @keyup.enter="stepUp()" 
-                      :value="formData.desired_price" 
-                      suffix="USD">
-                      </v-text-field>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-                <v-btn color="primary" @click="stepUp()">next</v-btn>
-                <v-btn flat @click="stepDown()">back</v-btn>
-              </v-stepper-content>
-              <!-- 
-              <v-stepper-step step="5" :rules="[() => !$v.formData.desired_price.$error ]" editable>
-                Desire/d Price
-                Target Price
-                <small v-show="$v.formData.desired_price.$error">Target Price is required</small>
-              </v-stepper-step>
-              <v-stepper-content step="5"  ref="step_5">
-                <v-container>
-                  <v-layout row>
-                    <v-flex xs3>
-                      <v-text-field 
-                      class="mr-1" label="Price Per Piece" 
-                      :error-messages="fieldErrors('formData.desired_price')" 
-                      @blur="$v.formData.desired_price.$touch()" 
-                      v-model="formData.desired_price"
-                      @keyup.enter="stepUp()"
-                      :value="formData.desired_price" suffix="USD">
-                      </v-text-field>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-                <v-btn color="primary" @click="stepUp()">next</v-btn>
-                <v-btn flat @click="stepDown()">back</v-btn>
-              </v-stepper-content>
+                        cache-items 
+                        class="mx-3" 
+                        flat 
+                        hide-no-data 
+                        hide-details 
+                        label="Type here the category.." 
+                        solo-inverted>
+                    </v-autocomplete>
+                </v-layout>
+          
+              </v-layout>
+            </v-container>
+            <v-btn color="primary" @click="stepUp()">next</v-btn>
+            <v-btn flat @click="stepDown()">back</v-btn>
+          </v-stepper-content>
+           -->
+                  <!-- Sub category here if there is -->
+                  <v-stepper-step step="3" :rules="[() => !$v.formData.quantity.$error &&  !$v.formData.desired_price.$error ]" editable>
+                    Quantity & Price
+                    <small v-show="$v.formData.quantity.$error">Quantity is required.</small>
+                    <small v-show="$v.formData.desired_price.$error">Preffered Price is required.</small>
+                  </v-stepper-step>
+                  <v-stepper-content step="3" ref="step_3">
+                    <v-container>
+                      <v-layout row>
+                        <v-flex xs4>
+                          <v-text-field 
+                          v-model="formData.quantity" 
+                          label="Quantity" 
+                          @keyup.enter="stepUp()" 
+                          :error-messages="fieldErrors('formData.quantity')" 
+                          @blur="$v.formData.quantity.$touch()" 
+                          :value="formData.quantity" 
+                          suffix="pcs" 
+                          mask="######">
+                          </v-text-field>
+                        </v-flex>
+                        <v-flex xs1>
+                        </v-flex>
+                        <v-flex xs4>
+                          <v-text-field 
+                          class="mr-1" 
+                          label="Price Per Piece" 
+                          :error-messages="fieldErrors('formData.desired_price')" 
+                          @blur="$v.formData.desired_price.$touch()" 
+                          v-model="formData.desired_price" 
+                          @keyup.enter="stepUp()" 
+                          :value="formData.desired_price" 
+                          suffix="USD">
+                          </v-text-field>
+                        </v-flex>
+                      <v-flex xs1>
+                        </v-flex>
+                              <v-flex xs4>
+                          <v-text-field 
+                          class="mr-1" 
+                          label="Total Price" 
+                          @keyup.enter="stepUp()" 
+                          :value="formData.quantity * formData.desired_price" 
+                          suffix="USD">
+                          </v-text-field>
+                        </v-flex>
 
                       </v-layout>
                     </v-container>
@@ -583,26 +577,17 @@
                   <v-stepper-content step="7" ref="step_7" no-focus>
                     <v-container>
                       <v-layout row wrap>
-                        <v-flex xs6 pa-1>
-
-                        
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->                          
-
-                            <v-autocomplete
-                            v-model="formData.shipping_of_sample.country" 
-                            :items="countries"
-                            item-text="name" 
-                            item-value="id"                            
-                            class=""                            
-                            ref="countrySampleCountry" 
-                            :error-messages="fieldErrors('formData.shipping_of_sample.country')" 
-                            @blur="$v.formData.shipping_of_sample.country.$touch()" 
-                            label="Countries"></v-autocomplete>                          
-
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
+                        <v-flex xs5 ml-2>
+                          <v-select 
+                          v-model="formData.shipping_country_id" 
+                          :items="countries" 
+                          item-text="name" item-value="id" 
+                          :error-messages="fieldErrors('formData.shipping_country_id')" 
+                          @blur="$v.formData.shipping_country_id.$touch()" 
+                          :search-input.sync="search" 
+                          ref="countryMassShipping" 
+                          label="Countries">
+                          </v-select>
                         </v-flex>
                         <v-flex xs5 ml-2>
                           <v-text-field 
@@ -692,14 +677,7 @@
                     <v-card style="position: absolute; margin-left: 50px; margin-right: 50px; padding-bottom: 30px;"  color="white" class="pa-3">
                         <v-card-text>
 
-                            <v-layout row wrap justify-center>
-                                <!-- <h2 class="text-xs-center">Inquiry Preview</h2> -->
-                                <h2 class="grey--text lighten-5">Inquiry Preview </h2>
-                            </v-layout>
-
-
-                            <v-layout row wrap style="width: 475px;" >
-
+<<<<<<<<< Temporary merge branch 1
                   </v-layout>
                 </v-container>
                 <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -764,6 +742,49 @@
                 <v-btn flat @click="stepDown()">back</v-btn>
               </v-stepper-content>
 
+              <v-stepper-step step="8" editable>
+                Files to attach
+              </v-stepper-step>
+              <v-stepper-content step="8" ref="step_8">
+                <v-container>
+                  <v-layout row class="">
+                    <v-flex xs12>
+                      <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true>
+                        <div class="dropzone-custom-content">
+                          <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
+                          <div class="subtitle">...or click to select a file from your computer</div>
+                        </div>
+                      </vue-dropzone>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+                <v-btn color="primary" @click="stepUp()">next</v-btn>
+                <v-btn flat @click="stepDown()">back</v-btn>
+              </v-stepper-content>
+
+              <v-stepper-step step="9" :rules="[() => !$v.formData.message.$error ]" editable>
+                Message
+                <small v-show="$v.formData.message.$error">Message is required</small>
+              </v-stepper-step>
+              <v-stepper-content step="9" ref="step_9">
+                <v-container>
+                  <v-layout row>
+                    <v-textarea label="Type message here.." v-model="formData.message" :error-messages="fieldErrors('formData.message')" @blur="$v.formData.message.$touch()">
+                    </v-textarea>
+                  </v-layout>
+                </v-container>
+                <!-- <v-btn color="primary" @click="submitForm()">SUBMIT</v-btn> -->
+                <v-btn flat @click="stepDown()">back</v-btn>
+              </v-stepper-content>
+            </v-stepper>
+            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+          </v-form>
+=========
+                            <v-layout row wrap justify-center>
+                                <!-- <h2 class="text-xs-center">Inquiry Preview</h2> -->
+                                <h2 class="grey--text lighten-5">Inquiry Preview </h2>
                             </v-layout>
 
 
