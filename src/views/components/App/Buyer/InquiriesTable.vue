@@ -249,18 +249,9 @@
                         <h1 class="text-xs-center red--text">Nothing Found on "{{ search }}"</h1>  
                     </span>
              </v-flex>
-
-           </v-layout>
+         </v-layout>
         
            
-
-
-        
-           
-
-
-
-
     </v-card>   
 
 
