@@ -18,10 +18,10 @@
 			        <v-layout row wrap pa-0 mx-3>
 			            <h2 class="font-weight-light"> INQUIRY# <span class="font-weight-bold">1029381212312</span></h2>
 			            <v-spacer></v-spacer>
-			            <v-btn @click="isEditAddress=true" flat small class="blue-grey darken-2">
+			            <!-- <v-btn @click="isEditAddress=true" flat small class="blue-grey darken-2">
 			                <i class="ml-1 font-weight-light  fas fa-edit white--text"></i>
 			                <span class="ml-1 white--text font-weight-light">Edit Address</span>
-			            </v-btn>
+			            </v-btn> -->
 			        </v-layout>
 			        <v-layout row wrap>
 			            <v-flex xs8 pa-1>
@@ -35,21 +35,30 @@
 			                                <!--   <h4 class=""> Almani Lighting L.L.C. Showroom 10, Dubai Investment Park 1,</h4>
 							                        <h4 class=""> Dubai, United Arab Emirates</h4> -->
 			                                <v-flex xs12 ml-2>
-			                                    <v-select ref="countryMassShipping" label="Countries">
-			                                    </v-select>
+												<v-autocomplete
+												v-model="form.shipping_country_id"
+												:items="countries"
+												item-text="name" 
+												item-value="id"
+												class="mb-4"
+												hide-no-data
+												hide-details
+												label="Countries"></v-autocomplete>
 			                                </v-flex>
-			                                <v-flex xs12 ml-2>
-			                                    <v-text-field label="Street Address">
-			                                    </v-text-field>
-			                                </v-flex>
-			                                <v-flex xs12 ml-2>
-			                                    <v-text-field label="City">
-			                                    </v-text-field>
-			                                </v-flex>
-			                                <v-flex xs12 ml-2>
-			                                    <v-text-field label="Zip/Postal Code">
-			                                    </v-text-field>
-			                                </v-flex>
+				                            <v-flex xs12 ml-2>
+				                                <v-text-field 
+				                                label="Street Address"
+				                                v-model="form.shipping_address"></v-text-field>
+				                            </v-flex>
+				                            <v-flex xs12 ml-2>
+				                                <v-text-field label="City"
+				                                v-model="form.shipping_city"></v-text-field>
+				                            </v-flex>
+				                            <v-flex xs12 ml-2>
+				                                <v-text-field 
+				                                label="Zip/Postal Code"
+				                                v-model="form.shipping_postal"></v-text-field>
+				                            </v-flex>
 			                            </div>
 			                        </v-flex>
 			                        <v-flex xs6 pa-4>
@@ -88,7 +97,7 @@
 			                        <v-layout row wrap mt-4>
 			                            <h4 class="text-xs-left font-weight-light">Quantity</h4>
 			                            <v-spacer></v-spacer>
-			                            <h2 class="text-xs-right font-weight-bold">{{ this.bidinquiry.quantity }}</h2>
+			                            <h2 class="text-xs-right font-weight-bold">{{ this.inquiry.quantity }}</h2>
 			                        </v-layout>
 			                    </v-flex>
 			                    <v-flex xs12>
@@ -152,7 +161,7 @@
 
 	export default {
 
-	   props: ['bid', 'openSampleDialog', 'bidinquiry'],
+	   props: ['bid', 'openSampleDialog', 'inquiry'],
 
 	   mixins: [
 
@@ -197,10 +206,10 @@
 
        		form: {
 
-       			shipping_method_id : '',
-       			payment_method_id  : '',
-       			// shipping_date 	   : '',
-       			shipping_address   : '',
+       			shipping_address: null,
+				shipping_city: null,
+				shipping_country_id: null,
+				shipping_postal: null,
 
        		},
 
@@ -226,30 +235,17 @@
 
 					this.formLoading = true
 
-					this.$store.dispatch('byrInq/awardBid_a', { 
+					var payload = {
+						shipping_address: this.form.shipping_address,
+						shipping_city: this.form.shipping_city,
+						shipping_country_id: this.form.shipping_country_id,
+						shipping_postal: this.form.shipping_postal,
 
-						'payment_method_id'  : this.form.payment_method_id,
-						'shipping_method_id' : this.form.shipping_method_id,
-						// 'shipping_date'		 : this.form.shipping_date,
-						'shipping_address' 	 : this.form.shipping_address,
-						'bid_id'			 : this.bid.id,
-						'inquiry_id'		 : this.bidinquiry.id,
-
-					})
-					.then((respose) => {
-
-						this.formLoading = false
-						this.$emit('update:openSampleDialog',false)
-						inqEvntBs.emitAwardSubmitted();
+						bid_id: this.bid.id,
+						inquiry_id: this.inquiry.id,
+					};					
 
 
-					})
-					.catch((e) => {
-
-					})
-					.finally(() =>  {
-						this.formLoading = false;
-					});
 
 			},
 
@@ -263,11 +259,15 @@
 
 			fillData() {
 
-				this.form.shipping_method_id = this.bidinquiry.shipping_method_id
-				this.form.payment_method_id  = this.bidinquiry.payment_method_id
-				// this.form.shipping_date 	 = this.bidinquiry.shipping_date;
+			    this.form.shipping_method_id   = this.inquiry.shipping_method_id;
+			    this.form.shipping_address 	   = this.inquiry.shipping_address;
+				this.form.shipping_city 	   = this.inquiry.shipping_city;
+				this.form.shipping_country_id  = this.inquiry.shipping_country_id;
+				this.form.shipping_postal 	   = this.inquiry.shipping_postal;
+		
+				// this.form.shipping_date 	 = this.inquiry.shipping_date;
 
-				// this.odQuantity = this.bidinquiry.quantity
+				// this.odQuantity = this.inquiry.quantity
 				// this.odUnitprice = this.bid.price
 				// this.odTotalprice = this.bid.total_price
 
@@ -284,7 +284,7 @@
 
 		watch: {
 
-			bidinquiry: {
+			inquiry: {
 
 				handler(nVal, oVal) {
 					
@@ -299,10 +299,17 @@
 
 		},
 
+	    computed: {
+	        countries(){
+	            return config.countries;
+	        },        
+	    },
+    
 		created: function() {
 
 			    // this.form.shipping_date = this.getDateTime();
 			    // this.minDate = this.form.shipping_date;
+					this.fillData();
 
 		}
 	}

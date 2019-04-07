@@ -106,7 +106,8 @@
     </v-data-table>
 </v-card>
 <span>
-    <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view>
+    <!-- <inquiry-view :openInquiry.sync="openInquiry" v-if="inquiry" :inquiry="inquiry"></inquiry-view> -->
+    <inquiry-view></inquiry-view>
 </span>    
 
 
@@ -143,7 +144,7 @@ export default {
         ...config.inquiry_statuses.default,
         ...config.inquiry_statuses.buyers,
       ],
-      search: '',
+      search: '844',
       dialog: false,
       loading: false,
       headers: [{
@@ -208,8 +209,6 @@ export default {
       categories: [],
       categoryItems: [],
 
-      openInquiry: false,
-      inquiry: null,
       snackbar: true,
       rowsPerPageItems: [10, 15, 20, 30, 40],
       pagination: {
@@ -224,16 +223,6 @@ export default {
     InquiryView
 
   },
-
-  timers: [{
-    name: 'InquiryTableTimer',
-    time: config.polling.inquiryTable.time,
-    repeat: true,
-    autostart: false,
-    callback: function() {
-      this.fillTable(false);
-    },
-  }],
 
 
   methods: {
@@ -318,17 +307,13 @@ export default {
 
     viewInquiry(inq_id) {
 
-      this.$store.dispatch('admnInq/getInquiry_a', { inq_id: inq_id })
-
+        this.$store.dispatch('admnInq/getInquiry_a', { inq_id: inq_id })
         .then((response) => {
 
           this.inquiry = response
           this.openInquiry = true
         })
-        .catch((error) => {
-          
-
-        })
+        .catch((error) => {}) 
     }
   },
 
@@ -356,6 +341,33 @@ export default {
 
   },
 
+
+    computed: {
+        openInquiry: {
+            get() {
+                return this.$store.state.admnInq.openInquiryView;
+            },
+            set(nVal){
+                if(nVal)
+                this.$store.commit('admnInq/SHOW_OPENINQUIRYVIEW_M');
+                else
+                this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            },
+        },
+
+        inquiry: {
+            get() {
+                return this.$store.state.admnInq.inquiry;
+            },
+            set(nVal) {
+                // console.log('setVal');
+                // console.log(nVal);
+                this.$store.commit('admnInq/UPDATE_INQUIRY_M',{inquiry:nVal});
+            },
+        },
+    },
+
+
   watch: {
 
     inquiryStatus(nVal, oVal) {
@@ -365,15 +377,6 @@ export default {
     categories(nVal, oVal) {
       this.filterTable();
     },
-
-    openInquiry(nVal) {
-
-      // if (nVal)
-      //   this.$timer.stop('InquiryTableTimer');
-      // else
-      //   this.$timer.start('InquiryTableTimer');
-    },
-
 
   }
 

@@ -16,6 +16,16 @@
 
                         <v-layout row justify-center mx-5>
 
+			<v-card-text v-else>
+				
+				 	<v-card 
+				 	v-for="(bidItem, i) in bidItems" 
+				 	:key="'bidItem_'+i"
+				 	class="mb-3"  
+				 	:hover="true" 
+				 	:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' ">
+						<v-card-text>
+							<v-layout row wrap>
                             <v-flex xs2>
                                 <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
                             </v-flex>
@@ -56,9 +66,14 @@
 
                     <v-layout justify-center row fill-height>
 
-                        <v-flex xs12 mx-5 mt-2 mb-2>
+			                        <v-flex xs12>
+			                            <v-divider></v-divider>
+			                            <comment-box :biditemId="bidItem.id"> </comment-box>
 
-                            <v-layout row justify-center mx-5>
+			                        </v-flex>
+
+								<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+								<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
                                 <v-flex xs2>
                                     <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
@@ -238,8 +253,10 @@
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry"
 
-    import config from "@/config/main"
-    import VueTimers from 'vue-timers/mixin'
+import CommentBox from "@/views/Components/App/Admin/InquiryPostListCommentbox"
+
+import config from "@/config/main"
+import VueTimers from 'vue-timers/mixin'
 
     export default {
 
@@ -254,33 +271,18 @@
             MessageBox
         },
 
-        // timers: [     
-        //        { 
-        //            name: 'InquiryTableTimer',
-        //            time: config.polling.inquiryTable.time, 
-        //            repeat: true,
-        //            autostart: true,
-        //            callback: function(){
-        //                this.fillBidTable();
-        //            },
-        //        }
-        //    ],
+mixins: [
+	helpers,
+	VueTimers,
+],
 
-        props: ['inquiry'],
+components: {
+	ImageGallerySmall,
+	CommentBox,
+},
 
-        timers: [{
-            name: 'InquiryTableTimer',
-            time: config.polling.inquiryTable.time,
-            repeat: true,
-            autostart: false,
-            callback: function() {
-                this.fillBidTable();
-            },
-        }],
 
-        data() {
-
-            return {
+props: ['inquiry'],
 
                 openAwardDialog: false,
                 bidItems: [],
@@ -293,9 +295,13 @@
 
             }
 
-        },
-
-        watch: {
+		openAwardDialog: false,
+		bidItems: [],
+		hasBid: true,
+		bidToAward: null,
+		bidinquiry: null,
+		has_awarded:true,
+	}
 
             inquiry: {
 
@@ -367,7 +373,8 @@
                             this.$emit('update:isClosed', true);
                         });
 
-                },
+		console.log(typeof awarded);
+		console.log(typeof this.inquiry.awarded)
 
                 rejectInquiry(inquiry_id) {
 
@@ -395,16 +402,23 @@
 
                         });
 
-                },
+created(){
 
-                // for the blurring
-                checkIfawarded: function(awarded, btn) {
+	// console.log(this.inquiry)
 
-                    let is_awarded = false;
+	this.fillBidTable();
+	 inqEvntBs.$on('award-bid-form-submitted',()=>{
+        this.fillBidTable();
+        this.inquiry.awarded = 1
+    });
 
-                    // console.log(this.inquiry)
+},
 
-                    if (this.inquiry.awarded == 1) {
+
+
+
+}
+</script>
 
                         if (awarded == 1) {
                             is_awarded = true;

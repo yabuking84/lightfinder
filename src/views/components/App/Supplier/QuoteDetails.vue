@@ -139,7 +139,6 @@
 </template>
 <script>
     import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-    import CommentBox from "@/views/Components/App/CommentBox"
     import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
     import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
     import inqEvntBs from "@/bus/inquiry";
@@ -152,7 +151,6 @@
             InquiryDialog,
             QuoteDialog,
             ImageGallerySmall,
-            CommentBox
         },
 
         data: () => ({
@@ -214,10 +212,10 @@
 
             inquiry: {
                 handler(nVal, oVal) {
-                        this.reloadBid();
-                    },
-                    deep: true,
-            }
+                    this.reloadBid();
+                },
+                deep: true,
+            },
 
         },
 

@@ -97,12 +97,18 @@
                   <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
                 </td>
 
-                <td class="text-xs-center">
-                  <v-btn @click="viewInquiry(props.item)" :loading="props.item.loading" small flat value="left" class="v-btn--active blue-grey darken-4 font-weight-light text-decoration-none">
-                    <i class="fas fa-eye white--text"></i>
-                    <span class="ml-1 white--text font-weight-light ">View</span>
-                  </v-btn>
-                </td>
+            <td class="text-xs-center">
+              <v-btn 
+              @click="viewInquiry(props.item)" 
+              :loading="props.item.loading" 
+              small 
+              flat 
+              value="left" 
+              class="v-btn--active blue-grey darken-4 font-weight-light text-decoration-none btn-with-loading">
+                <i class="fas fa-eye white--text"></i>
+                <span class="ml-1 white--text font-weight-light ">View</span>
+              </v-btn>
+            </td>
 
               </tr>
             </template>
@@ -409,11 +415,13 @@ export default {
                         inq_id: inq.inq_id
                     })
                     .then((data) => {
-                        
+
+                        // console.log('viewInquiry');
+                        // console.log(data);
+
+                        inq.loading = false;
                         this.inquiry = data;
                         this.openInquiry = true;
-                        inq.loading = false;
-
                     })
                     .catch((error) => {
                         console.log(error);
@@ -583,6 +591,11 @@ export default {
 
 .th-heading a {
   text-decoration: none;
+}
+
+
+.btn-with-loading {
+    color: #ffff;
 }
 
 .tnt-height {

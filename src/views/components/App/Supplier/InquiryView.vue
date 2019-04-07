@@ -65,14 +65,14 @@ import inqEvntBs from "@/bus/inquiry";
 export default {
 
 
-  components: {
+components: {
 
     QuoteDetails,
     InquiryPostList,
     InquiryDetailsCard,
     BidDialog,
 
-  },
+},
 
 
   // props: {
@@ -81,16 +81,16 @@ export default {
   //  },
   // },
 
-  data: () => ({
+data: () => ({
 
     title: 'Inquiry Details',
     icon: null,
     bidDialog: false,
     bids: false,
 
-  }),
+}),
 
-  computed: {
+computed: {
 
     buyer: {
 
@@ -116,22 +116,9 @@ export default {
               this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
           },
 
-      },
+},
 
-      inquiry: {
-          get() {
-              return this.$store.state.spplrInq.inquiry;
-          },
-          set(nVal) {
-              // console.log('setVal');
-              // console.log(nVal);
-              this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
-          },
-      },
-
-  },
-
-  methods: {
+methods: {
 
     closeOpenInquiry() {
       this.openInquiry = false
@@ -148,9 +135,11 @@ export default {
     },
   },
 
-  watch: {
-
-  },
+    keyPress(e) {
+        if (e.target.querySelector("#InquiryView"))
+        this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+    },
+},
 
   created() {
 
