@@ -8,10 +8,10 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 
-_backup/
-build/
-config/
-test/
+/_backup/
+/build/
+/config/
+/test/
 package.json
 
 
