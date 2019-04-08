@@ -135,16 +135,23 @@ export default {
         .then((response) => {
 
           // create a event bus 
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
           // inqEvntBs.emitApproved();
 
         })
         .catch((e) => {
           console.log(e);
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
+
         })
         .finally(() => {
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
         });
 
     },
@@ -157,11 +164,16 @@ export default {
         })
         .then((response) => {
           // create a event bus 
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                                    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
+
           // inqEvntBs.emitApproved();
         })
         .catch((e) => {
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                                    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
           console.log(e);
         })
         .finally(() => {

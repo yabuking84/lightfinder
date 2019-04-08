@@ -1,8 +1,8 @@
 <template>
 	<div>
 
-	    <v-dialog :value="openMessageDialog" @input="$emit('update:openMessageDialog',false)" width="35%">
-	       
+	    <v-dialog :value="openMessageDialog" @input="$emit('update:openMessageDialog',false)" width="35%"
+>	       
 	        <v-toolbar dark color="red" height="40px">
 	            <v-toolbar-title class="font-weight-light subheading">
 	                Conversation Box
@@ -101,6 +101,8 @@
 
         		if(this.chatMessageEditor)
         			console.log(this.chatMessageEditor);
+        		    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
 
         		this.chatMessageEditor = null
         		this.$eventBus.$emit('resetChatEditor')

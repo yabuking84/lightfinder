@@ -419,7 +419,9 @@ export default {
       // this.categories = [];
       // this.search = "";
       this.fillTable();
+
     },
+
 
     filterTable() {
 

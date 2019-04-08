@@ -244,14 +244,18 @@
     export default {
 
         mixins: [
+
             helpers,
             VueTimers,
+
         ],
 
         components: {
+
             ImageGallerySmall,
             CommentBox,
             MessageBox
+
         },
 
         // timers: [     
@@ -355,21 +359,21 @@
                         .then((response) => {
 
                             // create a event bus 
-                            this.$emit('update:isClosed', true);
+                            // this.$emit('update:isClosed', true);
+                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
                             inqEvntBs.emitApproved();
 
                         })
                         .catch((e) => {
-                            console.log(e);
-
-
-                            this.$emit('update:isClosed', true);
-
-
-
+                              console.log(e);
+                              // this.$emit('update:isClosed', true);
+                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
                         })
                         .finally(() => {
-                            this.$emit('update:isClosed', true);
+                            // this.$emit('update:isClosed', true);
+                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
                         });
 
                 },
