@@ -107,7 +107,9 @@
 
         <v-layout v-if="filterInquiries.length > 0" class="grey lighten-5" row wrap >
 
-            <isotope :options='null' :list="filterInquiries" id="root_isotope">
+            <pre>{{ filterInquiries[0] }}</pre>
+
+            <isotope :options='inquiryTableOptions' :list="filterInquiries" id="root_isotope">
 
                   <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
                           <!-- {{ allInquiries }} -->

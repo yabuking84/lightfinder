@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%">
+    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%" persistent>
       <v-card>
         
         <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
@@ -562,7 +562,7 @@
 
                                     <v-flex xs6 v-show="formData.category">
                                         <h4>Category: </h4>
-                                        <small v-html="">{{ formData.category }}</small>
+                                        <small v-html="">{{ getCategory(formData.category) }}</small>
                                     </v-flex>
 
                                     <!-- price and quantity -->
@@ -1111,8 +1111,8 @@ export default {
 
        countries(){
             return config.countries;
-        },    
-         
+        },
+   
   },
 
 
@@ -1121,6 +1121,14 @@ export default {
     /* use for editing or updating the inquiry
      when it's rejected from the verificator */
 
+
+    getCategory(cat_id){
+        var cat = this.categories.filter(category => {
+            return category.id == cat_id;
+        });
+
+        return (cat.length)?cat[0].name:null;
+    },
 
     getInquiry(inquiry_id) {
 
