@@ -224,7 +224,7 @@
             </v-card-text>
         </v-card>
 
-        <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
+        <message-box :commentData="commentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
 
     </div>
 
@@ -266,7 +266,7 @@
         //        }
         //    ],
 
-        props: ['inquiry'],
+        props: ['inquiry', 'isClosed'],
 
         timers: [{
             name: 'InquiryTableTimer',
@@ -361,7 +361,12 @@
                         })
                         .catch((e) => {
                             console.log(e);
+
+
                             this.$emit('update:isClosed', true);
+
+
+
                         })
                         .finally(() => {
                             this.$emit('update:isClosed', true);

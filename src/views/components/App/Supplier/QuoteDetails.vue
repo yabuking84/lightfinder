@@ -137,9 +137,6 @@
                     </v-flex>
 
 
-
-
-
                         <!-- new -->
                         
                               <template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
@@ -153,6 +150,7 @@
                                                   icon="new_releases"
                                                 >
                                                   Upon Confirming, Please make sure to include your Estimated Production Date and as well as the shipment cost.
+                                                  
                                             </v-alert>
 
                                                 <v-layout row wrap>
@@ -372,7 +370,6 @@
 
                   } else {
 
-
                      this.$store.dispatch('spplrInq/confirmAward_a', {
                             inq_id: this.inquiry.id,
                             formData: this.formData,
@@ -384,9 +381,6 @@
                         // this.$emit('update:openInquiry', false)
                         this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
                   }
-
-                   
-
 
                 },
 
