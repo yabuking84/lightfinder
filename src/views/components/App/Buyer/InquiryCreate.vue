@@ -562,7 +562,7 @@
 
                                     <v-flex xs6 v-show="formData.category">
                                         <h4>Category: </h4>
-                                        <small v-html="formData.category"></small>
+                                        <small v-html="">{{ formData.category }}</small>
                                     </v-flex>
 
                                     <!-- price and quantity -->
@@ -1003,13 +1003,13 @@ export default {
     // -----------------------GET CATEGORIES-------------------------------------
 
     this.$store.dispatch('cat/getCategories_a')
-      .then((data) => {
-        this.categories = data;
-      })
-      .catch((e) => {
+    .then((data) => {
+        this.categories = data;        
+    })
+    .catch((e) => {
         console.log('Error: ');
         console.log(e);
-      });
+    });
 
 
     // -----------------------GET COUNTRY-------------------------------------
