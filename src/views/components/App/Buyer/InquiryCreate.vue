@@ -17,7 +17,7 @@
             <v-layout row wrap>
                   
                 <v-flex xs7>
-                  <v-card>
+                  <v-card style="border-radius: 10px;">
 
                           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
@@ -1064,7 +1064,7 @@ export default {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
-   
+          
         }
 
     },
@@ -1159,7 +1159,7 @@ export default {
 
     fillFormData() {
 
-            // console.log(this.inquiryHolder.shipping_address)
+            // console.log(this.inquiryHolder)
 
             this.formData.keywords = this.inquiryHolder.keyword
             this.formData.category = this.inquiryHolder.categories.join(', ') 
@@ -1487,10 +1487,14 @@ export default {
 }
 
 .cslookup {
+
   position: absolute; 
   margin-left: 50px; 
   margin-right: 50px; 
   padding-bottom: 30px;
+  border-radius:10px;
+  width: 550px;
+
 }
 
 </style>

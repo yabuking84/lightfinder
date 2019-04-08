@@ -277,8 +277,6 @@ export default {
 
     submit() {
 
- 
-
 		this.formLoading = true
 		var payload = {
 			shipping_method_id: this.form.shipping_method_id,

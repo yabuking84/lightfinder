@@ -481,30 +481,34 @@ export default {
 
                 var items = this.allInquiries
 
-                items.sort(function (a, b) {
-                    return a.value - b.value
-                })
+                if(this.search) {
 
-                items = items.filter(inquiry => {
-                        // add key to search in the dom
-                        return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
-                })
+                    items.sort(function (a, b) {
+                        return a.value - b.value
+                    })
+
+                    items = items.filter(inquiry => {
+                            // add key to search in the dom
+                            return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
+                    })
+
+                  }
+
+                    var buff = this.categories;
+                    items = items.filter(function(inquiry) {
+                            return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
+                    });
+
+                    var buff = this.inquiryStatus;
+                    items = items.filter(function(inquiry) {
+                        return (buff.length) ? buff.includes(inquiry.status) : true
+                    });
+
+                    console.log(items);
 
 
-                var buff = this.categories;
-                items = items.filter(function(inquiry) {
-                        return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
-                });
-
-                var buff = this.inquiryStatus;
-                items = items.filter(function(inquiry) {
-                    return (buff.length) ? buff.includes(inquiry.status) : true
-                });
-
-                console.log(items);
 
                 return items;
-
 
         },
 
