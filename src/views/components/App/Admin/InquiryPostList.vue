@@ -349,7 +349,7 @@
 
                 approvedInquiry(inquiry_id) {
 
-                    this.$store.dispatch('adminInquiries/approvedInquiry_a', {
+                    this.$store.dispatch('admnInq/approvedInquiry_a', {
                             inquiry_id: inquiry_id
                         })
                         .then((response) => {
@@ -377,7 +377,7 @@
 
                     console.log(inquiry_id);
 
-                    this.$store.dispatch('adminInquiries/declinedInquiry_a', {
+                    this.$store.dispatch('admnInq/declinedInquiry_a', {
                             inquiry_id: inquiry_id
                         })
                         .then((response) => {
