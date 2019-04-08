@@ -138,6 +138,8 @@
 
 
 
+
+
                         <!-- new -->
                         
                               <template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
@@ -151,7 +153,7 @@
                                                   icon="new_releases"
                                                 >
                                                   Upon Confirming, Please make sure to include your Estimated Production Date and as well as the shipment cost.
-                                                </v-alert>
+                                            </v-alert>
 
                                                 <v-layout row wrap>
 
