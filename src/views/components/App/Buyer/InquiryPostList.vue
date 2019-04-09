@@ -225,7 +225,7 @@
 
     </v-card>
     
-    <inquiry-create :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="inquiry"> </inquiry-create>    
+    <inquiry-create v-if="inquiry" :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="inquiry"> </inquiry-create>    
     <award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
     <request-sample-dialog v-if="bidToAward" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
 

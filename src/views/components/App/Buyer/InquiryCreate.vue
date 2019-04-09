@@ -1213,7 +1213,7 @@ export default {
 
          if(this.inquiryHolder.specifications.length > 0) {
                let objectHolder = this.inquiryHolder.specifications.find( specifications => specifications.name === key)
-              specsValue = objectHolder.value
+              specsValue = (typeof objectHolder !== 'undefined')?objectHolder.value:'';
          }
 
           // console.log(objectHolder.name +'='+ objectHolder.value)
