@@ -54,9 +54,13 @@ flat>
 
         </template>
         <v-list v-if="notifications && notifications.length">
-            <v-list-tile v-for="(notification, i) in notifications" :key="i" @click="">
-                <v-list-tile-title>{{ notification.title }}</v-list-tile-title>
-            </v-list-tile>
+            
+            <template v-for="(notification, index) in notifications">
+                <v-list-tile :key="'not_'+index" @click="gotoNotfication(notification)">
+                    <v-list-tile-title>{{ notification.title }}</v-list-tile-title>
+                </v-list-tile>
+            </template>
+
         </v-list>
     </v-menu>
 
@@ -209,9 +213,219 @@ computed: {
         };
     },
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     notifications(){
+
         return this.$store.state.ntfctns.notifications;
+
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+
+        //         return [
+        //   {
+        //     "title": "Inquiry \"Template Test Inquiry\" APPROVED!",
+        //     "dataType": "inquiry",
+        //     "data": {
+        //       "id": "1554795137726",
+        //       "subject": null,
+        //       "keyword": "Template Test Inquiry",
+        //       "warranty": 0,
+        //       "quantity": 525,
+        //       "desired_price": 20,
+        //       "desired_shipping_date": "2019-04-09",
+        //       "message": "Need this for a accomodation project.",
+        //       "status_id": 1,
+        //       "stage_id": 1003,
+        //       "shipping_city": "Taliban",
+        //       "shipping_country_id": 1,
+        //       "shipping_postal": "6000",
+        //       "sample_quantity": 2,
+        //       "sample_shipping_address": "12",
+        //       "sample_shipping_city": "Taliban",
+        //       "sample_shipping_country_id": 1,
+        //       "sample_shipping_postal": "6000",
+        //       "oem": 0,
+        //       "oem_service": null,
+        //       "oem_description": null,
+        //       "shipping_address": "12",
+        //       "shipping_method_id": 1,
+        //       "payment_method_id": 1,
+        //       "shipping_date": "2019-04-09",
+        //       "awarded": 0,
+        //       "paid": 0,
+        //       "user_id": 3,
+        //       "awarded_user_id": null,
+        //       "created_at": "2019-04-09 07:32:17",
+        //       "updated_at": "2019-04-09 11:09:08",
+        //       "categories": [
+        //         "LED DOWNLIGHTS"
+        //       ],
+        //       "specifications": [
+        //         {
+        //           "name": "Power",
+        //           "value": "20"
+        //         },
+        //         {
+        //           "name": "Lumen",
+        //           "value": null
+        //         },
+        //         {
+        //           "name": "Efficiency",
+        //           "value": "3000"
+        //         },
+        //         {
+        //           "name": "Beam Angle",
+        //           "value": null
+        //         },
+        //         {
+        //           "name": "CCT",
+        //           "value": null
+        //         },
+        //         {
+        //           "name": "IP",
+        //           "value": "55"
+        //         },
+        //         {
+        //           "name": "Finish",
+        //           "value": "matt black"
+        //         },
+        //         {
+        //           "name": "Size",
+        //           "value": null
+        //         },
+        //         {
+        //           "name": "Dimmable",
+        //           "value": "Non-Dim"
+        //         }
+        //       ],
+        //       "bids": [
+        //         {
+        //           "id": "1554795137726-88",
+        //           "price": 20,
+        //           "remarks": "supplier@bal.com remarks",
+        //           "sample_cost": 0,
+        //           "sample_shipment_cost": 0,
+        //           "total_price": 10,
+        //           "description": "test data",
+        //           "created_at": "2019-04-09 09:27:48",
+        //           "updated_at": "2019-04-09 09:27:48"
+        //         }
+        //       ]
+        //     },
+        //     "textSnackbar": "Inquiry \"Template Test Inquiry\" APPROVED!"
+        //   },
+        //   {
+        //     "title": "Inquiry \"DOWNLIGHT -  RENE TEST INQUIRY!!\" APPROVED!",
+        //     "dataType": "inquiry",
+        //     "data": {
+        //       "id": "1554808394327",
+        //       "subject": null,
+        //       "keyword": "DOWNLIGHT -  RENE TEST INQUIRY!!",
+        //       "warranty": 0,
+        //       "quantity": 100,
+        //       "desired_price": 25.36,
+        //       "desired_shipping_date": "2019-04-09",
+        //       "message": "So much nice I want it maximum!",
+        //       "status_id": 1,
+        //       "stage_id": 1002,
+        //       "shipping_city": "Iligan City",
+        //       "shipping_country_id": 178,
+        //       "shipping_postal": "9200",
+        //       "sample_quantity": 0,
+        //       "sample_shipping_address": null,
+        //       "sample_shipping_city": null,
+        //       "sample_shipping_country_id": null,
+        //       "sample_shipping_postal": "9200",
+        //       "oem": 0,
+        //       "oem_service": null,
+        //       "oem_description": null,
+        //       "shipping_address": "Kaimito St",
+        //       "shipping_method_id": 1,
+        //       "payment_method_id": 1,
+        //       "shipping_date": "2019-04-09",
+        //       "awarded": 0,
+        //       "paid": 0,
+        //       "user_id": 3,
+        //       "awarded_user_id": null,
+        //       "created_at": "2019-04-09 11:13:14",
+        //       "updated_at": "2019-04-09 11:13:26",
+        //       "categories": [
+        //         "LED DOWNLIGHTS"
+        //       ],
+        //       "specifications": [
+        //         {
+        //           "name": "Power",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "Lumen",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "Efficiency",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "Beam Angle",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "CCT",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "IP",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "Finish",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "Size",
+        //           "value": "00"
+        //         },
+        //         {
+        //           "name": "Dimmable",
+        //           "value": "00"
+        //         }
+        //       ],
+        //       "bids": []
+        //     },
+        //     "textSnackbar": "Inquiry \"DOWNLIGHT -  RENE TEST INQUIRY!!\" APPROVED!"
+        //   }
+        // ];
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+        // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+
     },
+
+
+
+
+
+
+    
 
     showSnackbar:{
         get(){
@@ -252,6 +466,65 @@ methods: {
     logout() {
         this.$router.push({name:'Logout'});                
     },
+
+
+
+
+
+
+
+
+
+    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+
+    gotoNotfication(ntfctn){
+        
+        // if inquiry type
+        if(ntfctn.dataType == 'inquiry') {
+
+            
+            // admin
+            if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) {
+
+            }
+            // buyer
+            else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) {
+                this.buyerNtfctn(ntfctn);
+            }
+            // supplier
+            else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) {
+
+            }        
+
+
+        }
+
+
+    },
+
+    buyerNtfctn(ntfctn){
+        this.$store.dispatch('byrInq/getInquiry_a', {
+            inq_id: ntfctn.data.id
+        })
+        .then((data) => {                                
+            this.$store.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:data});
+            this.$store.commit('byrInq/SHOW_OPENINQUIRYVIEW_M');
+        })
+        .catch((error) => {
+            console.log(error);
+        });            
+    },
+    
+    supplierNtfctn(){},
+    
+    adminNtfctn(){},
+    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+
+
 
 },
 
