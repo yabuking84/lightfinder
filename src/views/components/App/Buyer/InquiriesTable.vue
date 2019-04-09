@@ -126,6 +126,11 @@
 
                           <!-- {{ allInquiries }} -->
                         <v-card class="pa-3 mx-2 my-3" :hover="true"  @click="viewInquiry(inquiry)">
+
+
+  
+                       
+
                         
                             <v-layout row wrap>
 

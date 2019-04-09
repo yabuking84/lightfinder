@@ -68,6 +68,24 @@
                         
                             <v-layout row wrap mt-2>
 
+
+                                 <v-layout row wrap>
+
+                                     <v-flex xs6>
+
+                                      <h3 class="grey--text lighten-4">Inquiry Holder</h3>
+                                      <h2 class="mt-2 blue-grey--text font-weight-bold ">{{ inquiry.inquiry.buyer.first_name + ' ' + inquiry.inquiry.buyer.last_name }}</h2>
+
+                                    </v-flex>
+
+                                    <v-flex xs6>
+                                      <h3 class="grey--text">Job Title</h3>
+                                      <h2 class="mt-2 blue-grey--text  font-weight-bold ">{{ inquiry.inquiry.buyer.job_title }}</h2>
+                                    </v-flex>   
+
+                            </v-layout>
+                            
+
                                      <v-flex xs6>
 
                                       <h3 class="grey--text lighten-4">Inquiry</h3>
