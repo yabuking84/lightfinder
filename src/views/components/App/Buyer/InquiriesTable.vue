@@ -142,7 +142,7 @@
                   <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
 
                           <!-- {{ allInquiries }} -->
-                          
+
                         <v-card class="pa-3 mx-2 my-3" :hover="true"  @click="viewInquiry(inquiry)">
 
                        
@@ -191,7 +191,7 @@
                                        </div>
                                        <!-- pending payment-->
                                         <div v-else-if="inquiry.status==1005">
-                                            <small class="deep-orange--text">Awarded inquiry, supplier confirmed, waiting for buyer payment</small>
+                                            <small class="deep-orange--text">Waiting for your payment</small>
                                        </div>
                                        <!-- Production -->
                                        <div v-else-if="inquiry.status==2001">

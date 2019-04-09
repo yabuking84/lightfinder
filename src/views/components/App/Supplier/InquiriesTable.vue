@@ -18,9 +18,13 @@
         </v-toolbar>
       </v-layout>
       <v-card-title>
-        <v-layout row wrap>
-          <v-flex xs7>
-            <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
+         <v-layout row wrap>
+       
+      
+         
+
+        <v-flex xs4>
+            <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="Select categories..">
               <template v-slot:selection="slotData">
                 <v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
                   {{ slotData.item.name }}
@@ -28,11 +32,18 @@
               </template>
             </v-autocomplete>
           </v-flex>
-          <v-spacer></v-spacer>
-          <v-flex xs4>
-            <v-text-field label="Search" v-model="search"  prepend-inner-icon="search"  clearable>
+    
+
+         <v-spacer></v-spacer>
+
+           <v-flex xs4 class="">
+            <v-text-field label="Search" v-model="search"  prepend-inner-icon="search" clearable>
             </v-text-field>
           </v-flex>
+
+
+
+                         
         </v-layout>
       </v-card-title>
       <v-divider></v-divider>
