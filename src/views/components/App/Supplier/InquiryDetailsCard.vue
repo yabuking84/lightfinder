@@ -83,7 +83,6 @@
 
                        <!-- sample orders -->
 
-
                        <!-- oem -->
 
                            <v-flex xs6 v-show="inquiry.oem">
@@ -120,7 +119,7 @@
                         <v-flex xs12>
                             <h5 class="font-weight-thin">Specifications</h5>
                             <v-layout row wrap class="specifications">
-                              
+                               
                                  <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
                                     <v-chip label dark outline text-color="black" v-if="specification.value" >
                                            {{ specification.name }}: &nbsp;
@@ -129,12 +128,12 @@
                                        </span>
                                       </v-chip>
                                   </span>
-
                                 <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                                     No specifications..
                                 </v-alert>
                             </v-layout>
                         </v-flex>
+                        
                     </v-layout>
                 </v-flex>
             </v-container>

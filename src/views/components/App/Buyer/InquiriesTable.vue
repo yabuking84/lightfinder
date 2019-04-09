@@ -634,6 +634,7 @@ export default {
     margin: 0.5em -0.5em;
 
     .item {
+      
       padding: 1em;
       margin: 0.5em;
       width: calc(25% - 1em);
@@ -643,11 +644,15 @@ export default {
       transition: box-shadow 0.2s;
 
       @media(max-width: 767px) {
+
         width: calc(50% - 1em);
+
       }
 
       @media(max-width: 500px) {
+
         width: calc(100% - 1em);
+
       }
 
     }
