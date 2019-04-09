@@ -653,8 +653,8 @@
                                         <h5 v-show="formData.sample_quantity">Quantity</h5>
                                         <small v-html="formData.sample_quantity"></small>
 
-                                        <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| formData.sample_shipping_country_id">Sample Cost Shipping Address</h5>
-                                        <small v-html="formData.sample_shipping_country_id +', '+ formData.sample_shipping_address +','+ formData.sample_shipping_city "></small>
+                                        <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| getCountryName(formData.sample_shipping_country_id) ">Sample Cost Shipping Address</h5>
+                                        <small v-html="getCountryName(formData.sample_shipping_country_id) +', '+ formData.sample_shipping_address +','+ formData.sample_shipping_city "></small>
 
                                     </v-flex>
 
@@ -1536,7 +1536,6 @@ export default {
   margin-left: 50px; 
   margin-right: 50px; 
   padding-bottom: 30px;
-  border-radius:10px;
   width: 550px;
 
 }

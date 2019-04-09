@@ -269,6 +269,16 @@
 
         },
 
+        computed: {
+
+            countries(){
+                
+                return config.countries;
+            },
+   
+
+        },
+
         watch: {
 
             inquiry: {

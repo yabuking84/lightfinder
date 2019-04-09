@@ -422,6 +422,17 @@ export default {
       },
 
 
+              computed: {
+
+            countries(){
+                
+                return config.countries;
+            },
+   
+
+        },
+
+
 }
 
 </script>

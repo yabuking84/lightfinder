@@ -51,7 +51,7 @@
                             <v-flex xs12 v-show="inquiry.shipping_country_id">
                                 <h5 class="font-weight-thin">Shipping Address</h5>
                                 <h4 class="font-weight-bold">
-                                  <span>{{ inquiry.shipping_country_id }} </span>
+                                  <span>{{ getCountryName(inquiry.shipping_country_id) }} </span>
                                   <span>{{ inquiry.shipping_address }} </span>
                                   <span>{{ inquiry.shipping_city }} </span>
                                   <span>{{ inquiry.shipping_postal }} </span>
@@ -72,7 +72,7 @@
                                <h5 class="font-weight-thin">Sample Shipping Address</h5>
                                 <small></small>
                                 <h4 class="font-weight-bold">
-                                   <span>{{ inquiry.sample_shipping_country_id }} </span>
+                                   <span>{{ getCountryName(inquiry.sample_shipping_country_id) }} </span>
                                    <span>{{ inquiry.sample_shipping_address }}</span>
                                 </h4>
                                 <h4>
@@ -150,6 +150,8 @@
     import inqEvntBs from "@/bus/inquiry";
     import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 
+    import config from '@/config/index'
+
     export default {
         mixins: [
             helpers,
@@ -168,9 +170,30 @@
 
         methods: {
 
+
+            getCountryName(country_id) {
+
+                  var countryselect = this.countries.filter(country => {
+                      return country.id == country_id;
+                  });
+
+                  return (countryselect.length)?countryselect[0].name:null;
+
+            },
+
         },
 
         watch: {
+
+        },
+
+        computed: {
+
+            countries(){
+                
+                return config.countries;
+            },
+   
 
         },
 
