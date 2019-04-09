@@ -238,7 +238,7 @@ computed: {
         // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
         // // testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
 
-        //         return [
+        // return [
         //   {
         //     "title": "Inquiry \"Template Test Inquiry\" APPROVED!",
         //     "dataType": "inquiry",
@@ -331,6 +331,10 @@ computed: {
         //     },
         //     "textSnackbar": "Inquiry \"Template Test Inquiry\" APPROVED!"
         //   },
+
+
+
+
         //   {
         //     "title": "Inquiry \"DOWNLIGHT -  RENE TEST INQUIRY!!\" APPROVED!",
         //     "dataType": "inquiry",
@@ -425,7 +429,7 @@ computed: {
 
 
 
-    
+
 
     showSnackbar:{
         get(){
@@ -497,11 +501,7 @@ methods: {
             else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) {
 
             }        
-
-
         }
-
-
     },
 
     buyerNtfctn(ntfctn){
@@ -514,7 +514,7 @@ methods: {
         })
         .catch((error) => {
             console.log(error);
-        });            
+        });
     },
     
     supplierNtfctn(){},
