@@ -121,9 +121,11 @@
 
             <isotope :options='null' :list="filterInquiries" id="root_isotope">
 
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
+                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item_'+index">
+
+
                           <!-- {{ allInquiries }} -->
-                        <v-card class="rounded-card pa-3 mx-2 my-3" :hover="true">
+                        <v-card class="pa-3 mx-2 my-3" :hover="true"  @click="viewInquiry(inquiry)">
                         
                             <v-layout row wrap>
 

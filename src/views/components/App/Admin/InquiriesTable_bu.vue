@@ -39,34 +39,87 @@
 
     <v-divider></v-divider>
 
+<!--     <v-data-table :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination"  :headers="headers" :items="tableItems" :loading="loading" :search="search">
+        <template slot="items" slot-scope="props">
+            <tr class="th-heading">
+                <td>
+                <v-layout align-start justify-start column fill-height pt-3>
+                    <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
+                </v-layout>
+                </td>
 
-        <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap>
+                <td class="text-xs-left font-weight-medium">
+                <v-layout align-start justify-start column fill-height pt-3>
+                    <h3 class="mb-2" style="min-width:190px;">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
+                    {{ props.item.categories }}
+                </v-layout>
+                </td>
+
+                <td class="text-xs-left font-weight-medium">
+                <v-layout align-start justify-start column fill-height pt-3>
+                    <h3 class="mb-1">{{ props.item.keywords }}</h3>
+                    <p class="mb-3">{{ props.item.message }}</p>
+                </v-layout>
+                </td>
+
+                <td class="text-xs-left">
+                <v-layout align-start justify-start column fill-height pt-3>
+                    {{ props.item.quantity }}
+                </v-layout>
+                </td>
+
+                <td class="text-xs-left">
+                <v-layout align-start justify-start column fill-height pt-3>
+                    <div class="dateCellWidth">
+                        {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
+                    </div>
+                </v-layout>
+                </td>
+
+                <td class="text-xs-left">
+                <v-layout align-start justify-start column fill-height pt-3>
+                    <div class="dateCellWidth">
+                        {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
+                    </div>
+                </v-layout>
+                </td>
+
+                <td class="text-xs-left">
+                <v-layout align-start justify-start column fill-height pt-0>
+                    <inquiry-status-buttons :statuses="statuses" :status-id="props.item.status" />
+                </v-layout>
+                </td>
+
+                <td class="text-xs-center">
+                <v-layout align-start justify-start column fill-height pt-3>
+                    <v-btn @click="viewInquiry(props.item.inq_id)" small class="grey darken-1 font-weight-light">
+                        <i class="fas fa-eye white--text"></i>
+                        <span class="ml-1 white--text font-weight-light ">View</span>
+                    </v-btn>
+                </v-layout>
+                </td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+            Your search for "{{ search }}" found no results.
+        </v-alert>
+    </v-data-table> -->
+
+        <v-layout v-if="allInquiries.length > 0" class="grey lighten-5" row wrap >
 
             <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
-            <!-- <pre>{{ allInquiries[0] }}</pre> -->
+            <pre>{{ allInquiries[0] }}</pre>
             
-<!-- 
-            <isotope 
-            :options='inquiryTableOptions' 
-            :list="tableItems" 
-            id="root_isotope"
-            itemSelector="isotope_item"
-            class="layout grey lighten-5 row wrap pa-4">
 
-                    <v-flex 
-                    xs12 md4 xl3 pa-2  
-                    v-for="(inquiry, index) in tableItems" 
-                    :key="'itemsIsotope_'+index" > -->
+            <isotope :options='inquiryTableOptions' :list="allInquiries" id="root_isotope">
 
-
-            <isotope :options='null' :list="tableItems" id="root_isotope">
-
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
-
-
-                        <v-card class="pa-3 mx-2 my-3" :hover="true">
+                  <v-flex  xs12 md4 xl3 pa-2 
+                  v-for="(inquiry, index) in allInquiries" 
+                  :key="'item'+index">
+                          <!-- {{ allInquiries }} -->
+                        <v-card class="rounded-card pa-3 mx-2 my-3" :hover="true">
                         
-                            <v-layout row wrap mt-2>
+                            <v-layout row wrap>
 
                                      <v-flex xs6>
 
@@ -112,7 +165,7 @@
                                        </div>
                                        <!-- pending payment-->
                                         <div v-else-if="inquiry.status==1005">
-                                            <small class="deep-orange--text">Waiting for buyer payment</small>
+                                            <small class="deep-orange--text">Awarded inquiry, supplier confirmed, waiting for buyer payment</small>
                                        </div>
                                        <!-- Production -->
                                        <div v-else-if="inquiry.status==2001">
@@ -178,10 +231,8 @@
                             </v-layout>
                         </v-card>
 
-                    </v-flex>
-
-            </isotope>
-
+                  </v-flex>
+                 </isotope>
         </v-layout>
 
          <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
@@ -318,22 +369,13 @@ export default {
         rowsPerPage: 15
     },
 
-
-
-    // xxxxxxxxxxxxxxxxxxxxx
     inquiryTableOptions: {
-        getSortData: {
-            ca: "created_at",  
-        },
-        sortBy : "ca",
+
+        sortBy : "categories",
         sortAscending: {
-            ca: false,
+            categories: false,
         },
-    },
-    // xxxxxxxxxxxxxxxxxxxxx
-
-
-
+    } ,
 
     }
   },
@@ -356,29 +398,26 @@ export default {
       this.$store.dispatch('admnInq/getAllInquiries_a')
         .then((response) => {
             var buffer = [];
-            for (var i = response.length - 1; i >= 0; i--) {
-                var item = {};
-                item.inq_id = response[i].id;
-                item.keywords = this.ucwords(response[i].keyword);
-                item.message = response[i].message;
-                item.keywordsMessage = response[i].keyword + " " + response[i].message;
-                item.categories = response[i].categories.join(', ');
-                item.quantity = response[i].quantity;
-                item.shipping_date = response[i].desired_shipping_date;
-                item.created_at = response[i].created_at;
-                item.status = response[i].stage_id;
-                item.inquiry = response[i];
-                item.loading = false;
-                buffer.push(item);
-            }
-    
+          for (var i = response.length - 1; i >= 0; i--) {
+            var item = {};
+            item.inq_id = response[i].id;
+            item.keywords = this.ucwords(response[i].keyword);
+            item.message = response[i].message;
+            item.keywordsMessage = response[i].keyword + " " + response[i].message;
+            item.categories = response[i].categories.join(', ');
+            item.quantity = response[i].quantity;
+            item.shipping_date = response[i].desired_shipping_date;
+            item.created_at = response[i].created_at;
+            item.status = response[i].stage_id;
+            item.inquiry = response[i];
+            item.loading = false;
+            buffer.push(item);
+          }
+
             this.allInquiries = buffer;
-            // this.filterTable();
-            this.tableItems = this.allInquiries;
+          // this.filterTable();
 
-            this.filterTable();
-
-            this.loading = false;
+          this.loading = false;
 
         })
         .catch((e) => {
@@ -394,7 +433,6 @@ export default {
     refresh() {
 
       this.fillTable();
-
     },
 
 
@@ -403,38 +441,25 @@ export default {
 
     filterTable() {
 
-        var items = this.allInquiries;
+      var items = this.allInquiries;
+      if (this.inquiryStatus.length || this.categories.length) {
 
         // filter for statuses only
-        if (this.inquiryStatus.length) {
-
-            var isBuff = this.inquiryStatus;
-            items = items.filter(function(inq) {
-              return (isBuff.length) ? isBuff.includes(inq.status) : true;
-            });
-        }
-
+        var isBuff = this.inquiryStatus;
+        items = items.filter(function(inq) {
+          return (isBuff.length) ? isBuff.includes(inq.status) : true;
+        });
 
         // filter for categories
-        if (this.categories.length) {
-            isBuff = this.categories;
-            function callBackCat(inq) {
-              return (isBuff.length) ? isBuff.includes(inq.categories.trim()) : true;
-            };
-            items = items.filter(callBackCat);
-        }
+        isBuff = this.categories;
 
+        function callBackCat(inq) {
+          return (isBuff.length) ? isBuff.includes(inq.categories.trim()) : true;
+        };
+        items = items.filter(callBackCat);
+      }
 
-        // filter by search field
-        if(this.search) {
-            items = items.filter(inquiry => {
-                // add key to search in the dom
-                return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
-            })            
-            console.log(this.search);
-        }
-
-        this.tableItems = items;
+      this.tableItems = items;
 
     },
 
@@ -485,6 +510,40 @@ export default {
     computed: {
 
 
+        filterInquiries() {
+
+                  var items = this.allInquiries
+
+                  if(this.search) {
+
+                      items.sort(function (a, b) {
+                          return a.value - b.value
+                      })
+
+                      items = items.filter(inquiry => {
+                              // add key to search in the dom
+                              return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
+                      })
+
+                    }
+
+                      var buff = this.categories;
+                      items = items.filter(function(inquiry) {
+                              return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
+                      });
+
+                      var buff = this.inquiryStatus;
+                      items = items.filter(function(inquiry) {
+                          return (buff.length) ? buff.includes(inquiry.status) : true
+                      });
+
+                      // console.log(items);
+
+
+                  return items;
+
+        },
+
 
         openInquiry: {
             get() {
@@ -514,17 +573,12 @@ export default {
   watch: {
 
     inquiryStatus(nVal, oVal) {
-        this.filterTable();
+      this.filterTable();
     },
 
     categories(nVal, oVal) {
-        this.filterTable();
+      this.filterTable();
     },
-
-    search(nVal, oVal) {
-        this.filterTable();
-    },
-
 
   }
 
@@ -604,25 +658,27 @@ table.v-table tbody th {
   
     width: 100%;
     margin: 0.5em -0.5em;
-    
 
     .item {
       padding: 1em;
       margin: 0.5em;
+      width: calc(25% - 1em);
+      min-width: 100px;
+      // text-align: center;
       color: white;
       transition: box-shadow 0.2s;
 
-      min-width: 100px;
-      width: calc(25% - 1em);
       @media(max-width: 767px) {
         width: calc(50% - 1em);
       }
+
       @media(max-width: 500px) {
         width: calc(100% - 1em);
       }
+
     }
 
-}
+  }
 
 
 .tnt-height {
