@@ -453,18 +453,18 @@ export default {
             viewInquiry(inq) {
                 inq.loading = true;
                 this.$store.dispatch('byrInq/getInquiry_a', {
-                        inq_id: inq.inq_id
-                    })
-                    .then((data) => {
-                        
-                        this.inquiry = data;
-                        this.openInquiry = true;
-                        inq.loading = false;
+                    inq_id: inq.inq_id
+                })
+                .then((data) => {
+                    
+                    this.inquiry = data;
+                    this.openInquiry = true;
+                    inq.loading = false;
 
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
 
             refresh() {

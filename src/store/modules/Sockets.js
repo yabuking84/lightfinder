@@ -82,10 +82,10 @@ const actions = {
 		context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
 		.then((response)=>{
 			var ntfctn = {
-				title: 			"Inquiry \""+response.keyword+"\" approved!",
+				title: 			"Inquiry \""+response.keyword+"\" APPROVED!",
 				dataType: 		'inquiry',
 				data: 			response,
-				textSnackbar: 	'Inquiry "'+response.keyword+'" approved!',
+				textSnackbar: 	'Inquiry "'+response.keyword+'" APPROVED!',
 			}
 			context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
 
@@ -98,7 +98,21 @@ const actions = {
     },
 
     SOCKET_adminRejectedInquiry(context, data){
-        
+        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        .then((response)=>{
+            var ntfctn = {
+                title:          "Inquiry \""+response.keyword+"\" REJECTED!",
+                dataType:       'inquiry',
+                data:           response,
+                textSnackbar:   'Inquiry "'+response.keyword+'" REJECTED!',
+            }
+            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+
+            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
+            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
+
+        });
+
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // admin

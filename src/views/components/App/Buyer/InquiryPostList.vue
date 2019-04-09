@@ -397,16 +397,13 @@ export default {
             this.verified = (this.inquiry.stage_id == 1001)?true:false;
             this.rejected = (this.inquiry.stage_id == 1003)?true:false;
 
+            console.log("this.inquiry.stage_id = "+this.inquiry.stage_id);
+            console.log("this.verified = "+this.verified);
+            console.log("this.rejected = "+this.rejected);
+
         },
 
 
-    },
-
-    sockets: {
-        buyerAwardedQuote: function (data) {
-            console.log('buyerAwardedQuote')
-            this.fillBidTable();
-        },
     },
 
     created() {        
@@ -434,16 +431,22 @@ export default {
 
     sockets:{
 
-        supplierSubmittedBid(){            
+        supplierCreatedQuote(){            
+            console.log('Buyer InquiryPostList = supplierCreatedQuote');
             this.fillBidTable();
         },
         supplierModifiedBid(){
+            console.log('Buyer InquiryPostList = supplierModifiedBid');
             this.fillBidTable();
         },
         adminApprovedInquiry(){
+            console.log('Buyer InquiryPostList = adminApprovedInquiry');
             this.fillBidTable();            
         },
-
+        buyerAwardedQuote: function (data) {
+            console.log('Buyer InquiryPostList = buyerAwardedQuote')
+            this.fillBidTable();
+        },
     },
 
 
