@@ -543,6 +543,7 @@
                 <v-flex xs4>
 
                         <v-card color="cslookup white" class="pa-3">
+
                             <v-card-text>
 
                                 <v-layout row wrap justify-center>
@@ -675,13 +676,13 @@
 
                                     </v-flex>
 
-                                    <v-flex xs12 v-show="formData.shipping_address || formData.shipping_country_id || formData.shipping_city">
+                                    <v-flex xs12 v-show="formData.shipping_address || getCountryName(formData.shipping_country_id)  || formData.shipping_city">
 
                                         <div class="mt-3">
                                             <h4>Shipping Address</h4>
                                         </div>
 
-                                        <small v-html="formData.shipping_country_id +', '+  formData.shipping_address +', '+ formData.shipping_city + formData.shipping_postal"></small>
+                                        <small v-html="getCountryName(formData.shipping_country_id) +', '+  formData.shipping_address +', '+ formData.shipping_city + formData.shipping_postal"></small>
 
                                     </v-flex>
 
@@ -1064,11 +1065,12 @@ export default {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
+           console.log(this.inquiry)
+           // this.getInquiry(this.inquiry.inq);
           
         }
 
     },
-
   
 
     dialog(nVal, oVal) {
@@ -1079,7 +1081,6 @@ export default {
           this.clearData();
         }
 
-
     },
 
     // if edit inquiry is click perform code below
@@ -1087,9 +1088,11 @@ export default {
     isEdit(nVal, oVal) {
 
         if(!nVal) {
-              this.$emit('update:isEdit', false)
+
               this.inquiryHolder = this.inquiry
               this.fillFormData();  
+              this.$emit('update:isEdit', false)
+
         }
         
     },
@@ -1123,11 +1126,30 @@ export default {
 
 
     getCategory(cat_id){
+
         var cat = this.categories.filter(category => {
             return category.id == cat_id;
         });
 
         return (cat.length)?cat[0].name:null;
+
+    },
+
+
+    getCountryName(country_id) {
+
+
+      var countryselect = this.countries.filter(country => {
+          return country.id == country_id;
+      });
+
+      return (countryselect.length)?countryselect[0].name:null;
+
+      // return country_id
+
+      // const countrys =  this.countries.find( country => country.id = country_id )
+      // console.log(countrys)
+
     },
 
     getInquiry(inquiry_id) {
@@ -1144,6 +1166,7 @@ export default {
                 // console.log('-----------------')
 
                 this.fillFormData()
+
             })
             .catch((error) => {
                 console.log(error);

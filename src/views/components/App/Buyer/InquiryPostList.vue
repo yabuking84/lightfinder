@@ -174,7 +174,7 @@
                                            <span class="font-weight-bold">
                                               {{ specification.value.split(',').join(', ') }}
                                            </span>
-                                          </v-chip>
+                                        </v-chip>
                                       </span>
                                     <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
