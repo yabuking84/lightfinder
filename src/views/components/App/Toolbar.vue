@@ -65,15 +65,17 @@ flat>
     </v-menu>
 
     <v-spacer></v-spacer>
-
-    <v-btn>
+    
+    <!-- remove this -->
+    <!-- <v-btn>
         <h3>{{ authUser.email }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>{{ authUser.name }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>{{ authUser.uuid }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3 v-if="authUser.role==roles.admin.id">ADMIN</h3>
         <h3 v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
         <h3 v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
-    </v-btn>
+    </v-btn> -->
+    <!-- remove this -->
 
     <v-menu offset-x>
         <v-avatar slot="activator" size="40">
@@ -446,12 +448,12 @@ computed: {
     style(){
         var style = '';
         
-        if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) 
-        style = 'background-color:yellow !important;';
-        else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) 
-        style = 'background-color:blue !important;';
-        else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) 
-        style = 'background-color:red !important;';
+        // if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) 
+        // style = 'background-color:yellow !important;';
+        // else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) 
+        // style = 'background-color:blue !important;';
+        // else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) 
+        // style = 'background-color:red !important;';
         
         return style;
     },
@@ -484,7 +486,6 @@ methods: {
         // if inquiry type
         if(ntfctn.dataType == 'inquiry') {
 
-            
             // admin
             if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) {
 
@@ -497,7 +498,6 @@ methods: {
             else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) {
 
             }        
-
 
         }
 

@@ -431,7 +431,7 @@ export default {
 
     sockets:{
 
-        supplierCreatedQuote(){            
+        supplierCreatedBid(){            
             console.log('Buyer InquiryPostList = supplierCreatedQuote');
             this.fillBidTable();
         },
