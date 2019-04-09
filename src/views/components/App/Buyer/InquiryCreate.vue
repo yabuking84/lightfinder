@@ -1063,11 +1063,9 @@ export default {
 
         if(nVal) {
 
-            this.getInquiry(this.inquiry.id);
-
-           // this.inquiryHolder = this.inquiry
-           // this.fillFormData();  
-           // console.log(this.inquiry)
+           this.inquiryHolder = this.inquiry
+           this.fillFormData();  
+           console.log(this.inquiry)
            // this.getInquiry(this.inquiry.inq);
           
         }
@@ -1091,11 +1089,9 @@ export default {
 
         if(!nVal) {
 
-              this.getInquiry(this.inquiry.id);
-
-              // this.inquiryHolder = this.inquiry
-              // this.fillFormData();  
-              // this.$emit('update:isEdit', false)
+              this.inquiryHolder = this.inquiry
+              this.fillFormData();  
+              this.$emit('update:isEdit', false)
 
         }
         
@@ -1194,7 +1190,7 @@ export default {
 
     fillFormData() {
 
-            console.log(this.inquiryHolder)
+            // console.log(this.inquiryHolder)
 
             this.formData.keywords = this.inquiryHolder.keyword
             this.formData.category = this.inquiryHolder.categories.join(', ') 
