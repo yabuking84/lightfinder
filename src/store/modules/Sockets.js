@@ -96,6 +96,10 @@ const actions = {
 
 
     },
+
+    SOCKET_adminRejectedInquiry(context, data){
+        
+    },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // admin
 
@@ -103,8 +107,8 @@ const actions = {
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_buyerCreatedInquiry(context, data){
     },
-    
-    SOCKET_buyerAwardedQuote(context, data){
+
+    SOCKET_buyerAwardedBid(context, data){
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // buyer
@@ -112,6 +116,15 @@ const actions = {
     // supplier
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_supplierCreatedQuote(context, data){
+    },
+
+    SOCKET_supplierConfirmedAward(context, data){
+    },
+
+    SOCKET_supplierModifiedBid(context, data){
+    },
+
+    SOCKET_supplierSubmittedBid(context, data){
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // supplier

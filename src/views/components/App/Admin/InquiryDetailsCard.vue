@@ -91,7 +91,7 @@
                   <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
                     {{ specification.name }}: &nbsp;
                     <span class="font-weight-bold">
-                      {{ specification.value.split(',').join(', ') }}
+                        {{ (specification.value)?specification.value.split(',').join(', '):'' }}
                     </span>
                   </v-chip>
                   <v-alert :value="!inquiry.specifications.length" type="warning" style="width: 100%;" class="ma-4" outline>
