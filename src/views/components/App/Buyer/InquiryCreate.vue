@@ -364,7 +364,7 @@
                                           <v-text-field 
                                           v-model="formData.sample_shipping_postal" 
                                           @keyup.enter="stepUp()" 
-                                          label="State">
+                                          label="Zip/Postal Code">
                                           </v-text-field>
                                         </v-flex>
                                       </v-layout>
@@ -682,7 +682,7 @@
                                             <h4>Shipping Address</h4>
                                         </div>
 
-                                        <small v-html="getCountryName(formData.shipping_country_id) +', '+  formData.shipping_address +', '+ formData.shipping_city + formData.shipping_postal"></small>
+                                        <small v-html="getCountryName(formData.shipping_country_id) +', '+  formData.shipping_address +', '+ formData.shipping_city +', '+ formData.shipping_postal"></small>
 
                                     </v-flex>
 

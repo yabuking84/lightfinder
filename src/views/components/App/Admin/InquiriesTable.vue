@@ -416,9 +416,6 @@ export default {
     },
 
 
-
-
-
     filterTable() {
 
         var items = this.allInquiries;
@@ -501,7 +498,6 @@ export default {
 
 
     computed: {
-
 
 
         openInquiry: {
