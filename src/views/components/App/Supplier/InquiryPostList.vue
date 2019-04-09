@@ -161,25 +161,12 @@
 
     import config from "@/config/main";
 
-    // import crono from 'vue-crono';
-    import VueTimers from 'vue-timers/mixin'
 
     export default {
         mixins: [
             helpers,
-            VueTimers,
         ],
 
-        timers: [{
-            name: 'BidTableTimer',
-            time: config.polling.bidTable.time,
-            immediate: true,
-            repeat: true,
-            autostart: true,
-            callback: function() {
-                this.fillBidTable();
-            },
-        }],
 
         components: {
             InquiryDialog,
@@ -258,7 +245,7 @@
 
         created() {
             this.fillBidTable();
-            inqEvntBs.onBidFormSubmitted(this.fillBidTable);
+            // inqEvntBs.onBidFormSubmitted(this.fillBidTable);
 
             this.formData.shipping_date = null;
             this.minDate = this.getDateTime();

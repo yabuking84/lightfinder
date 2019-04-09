@@ -257,10 +257,10 @@
           <v-btn color="primary" :loading="loading" @click="submitForm()"> Submit </v-btn>
 
 
-            <v-btn 
+            <!-- <v-btn 
             @click="triggerTestEvent()">
                 Trigger Create Inquiry Event
-            </v-btn>
+            </v-btn> -->
 
         </v-card-actions>
       </v-card>
@@ -472,8 +472,6 @@ methods: {
             this.$store.dispatch(action, data)
               .then((response) => {
                   this.loading = false;
-                  this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});
-                  inqEvntBs.emitBidFormSubmitted();
                   this.$emit('update:openQuoteDialog', false);
               }).catch((e) => {
                   this.loading = false;
@@ -504,7 +502,7 @@ methods: {
 
 
     triggerTestEvent() {
-        this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});        
+        // this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});        
     },
 
     getSpefications(key) {

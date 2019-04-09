@@ -146,7 +146,7 @@
 
                   <v-flex xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
 
-                      <v-card class="pa-3 mx-2 my-3 rounded-card" :hover="true">
+                      <v-card class="pa-3 mx-2 my-3 " :hover="true">
 
                           <v-layout row wrap>
 
@@ -324,7 +324,7 @@ export default {
             { text: 'Action', align: 'center', sortable: false, value: 'inq_id', }, 
         ], 
         // search: '1551612312798',
-        search: '', 
+        search: '1554795137726', 
         inquiryStatus: [], 
         allInquiries: [], 
         tableItems: [], 
@@ -504,9 +504,7 @@ export default {
                         return (buff.length) ? buff.includes(inquiry.status) : true
                     });
 
-                    console.log(items);
-
-
+                    // console.log(items);
 
                 return items;
 

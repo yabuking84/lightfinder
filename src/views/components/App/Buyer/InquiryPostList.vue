@@ -10,7 +10,7 @@
       <v-divider></v-divider>
 
         <!-- waiting for verification -->
-        <v-layout v-if="inquiry.stage_id == 1001" align-center justify-center row fill-height>
+        <v-layout v-if="verified" align-center justify-center row fill-height>
                       
                           <v-flex xs12 mx-5 mt-3 mb-3>
 
@@ -34,7 +34,7 @@
         </v-layout>
         
         <!-- rejected inquiry -->
-        <v-layout v-else-if="inquiry.stage_id == 1003" align-center justify-center row wrap fill-height>
+        <v-layout v-else-if="rejected" align-center justify-center row wrap fill-height>
             
 
                 <v-flex xs12 mx-5 mt-3 mb-3>
@@ -306,6 +306,8 @@ export default {
 
             // },
         ],
+        verified : false,
+        rejected : false,
 
     }),
 
@@ -327,12 +329,14 @@ export default {
 
         fillBidTable() {
 
+            this.checkInquiryStatus();
 
             this.$store.dispatch('byrInq/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
              })
             .then(response => {
-          
+                
+
                this.bidItems = response;
 
                // console.log('============================================')
@@ -386,7 +390,15 @@ export default {
              this.dialog=true 
              this.isEdit=true
 
-         }
+        },
+
+        checkInquiryStatus(){
+            
+            this.verified = (this.inquiry.stage_id == 1001)?true:false;
+            this.rejected = (this.inquiry.stage_id == 1003)?true:false;
+
+        },
+
 
     },
 
@@ -397,8 +409,8 @@ export default {
         },
     },
 
-    created() {
-
+    created() {        
+        
         this.fillBidTable();
         inqEvntBs.$on('award-bid-form-submitted', () => {
             this.fillBidTable();
@@ -407,19 +419,32 @@ export default {
         
     },
 
-      watch: {
+    watch: {
+        inquiry: {
+            handler(nVal, oVal) {
+                this.fillBidTable();
+            },
+            deep: true,
+        },
+    },
 
-          inquiry: {
+    computed: {
 
-              handler(nVal, oVal) {
-                      this.fillBidTable();
-              },
+    },
 
-              deep: true,
+    sockets:{
 
-          },
+        supplierSubmittedBid(){            
+            this.fillBidTable();
+        },
+        supplierModifiedBid(){
+            this.fillBidTable();
+        },
+        adminApprovedInquiry(){
+            this.fillBidTable();            
+        },
 
-      },
+    },
 
 
               computed: {

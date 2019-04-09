@@ -304,7 +304,7 @@ export default {
             ...config.inquiry_statuses.default,
             ...config.inquiry_statuses.buyers,
         ],
-        search: '',
+        search: '1554795137726',
         dialog: false,
         loading: false,
         headers: [

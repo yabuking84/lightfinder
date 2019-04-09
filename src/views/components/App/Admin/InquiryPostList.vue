@@ -197,16 +197,13 @@
                             <v-flex xs12 mx-5 mt-2 mb-2 pt-0>
                                 <h5 class="font-weight-thin">Specifications</h5>
                                 <v-layout row wrap class="specifications">
-
-                                      <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
-                                        <v-chip label dark outline text-color="black" v-if="specification.value" >
-                                               {{ specification.name }}: &nbsp;
-                                           <span class="font-weight-bold">
-                                              {{ specification.value.split(',').join(', ') }}
-                                           </span>
-                                        </v-chip>
-                                      </span>
-                                    
+                                    <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                        {{ specification.name }}: &nbsp;
+                                        <span class="font-weight-bold">
+                                            <!-- {{ specification.value.split(',').join(', ') }} -->
+                                            {{ (specification.value)?specification.value.split(',').join(', '):'' }}
+                                        </span>
+                                    </v-chip>
                                     <v-alert :value="!inquiry.specifications.length" type="warning" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
@@ -343,7 +340,7 @@
 
                     .then(response => {
 
-                        console.log(this.inquiry.id);
+                        // console.log(this.inquiry.id);
 
                         this.bidItems = response;
 
