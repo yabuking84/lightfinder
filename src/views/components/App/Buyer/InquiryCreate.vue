@@ -1065,7 +1065,7 @@ export default {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
-           console.log(this.inquiry)
+           // console.log(this.inquiry)
            // this.getInquiry(this.inquiry.inq);
           
         }
@@ -1135,6 +1135,18 @@ export default {
 
     },
 
+    // use for when using existing inquiry and editing.
+    // because api doesnt return id instead text
+    getCategoryId(category_name) {
+
+        var cat = this.categories.filter(category => {
+            return category.name == category_name;
+        });
+
+        return (cat.length)?cat[0].id:null;
+
+    },
+
 
     getCountryName(country_id) {
 
@@ -1193,7 +1205,8 @@ export default {
             // console.log(this.inquiryHolder)
 
             this.formData.keywords = this.inquiryHolder.keyword
-            this.formData.category = this.inquiryHolder.categories.join(', ') 
+            this.formData.category = this.getCategoryId(this.inquiryHolder.categories.join(', '))  
+
             this.formData.warranty = this.inquiryHolder.warranty
 
             this.formData.quantity = this.inquiryHolder.quantity
