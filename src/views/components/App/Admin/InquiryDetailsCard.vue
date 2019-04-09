@@ -88,12 +88,14 @@
               <v-flex xs12>
                 <h5 class="font-weight-thin">Specifications</h5>
                 <v-layout row wrap class="specifications">
-                  <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                    {{ specification.name }}: &nbsp;
-                    <span class="font-weight-bold">
-                      {{ specification.value.split(',').join(', ') }}
-                    </span>
-                  </v-chip>
+                     <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
+                        <v-chip label dark outline text-color="black" v-if="specification.value" >
+                               {{ specification.name }}: &nbsp;
+                           <span class="font-weight-bold">
+                              {{ specification.value.split(',').join(', ') }}
+                           </span>
+                        </v-chip>
+                      </span>
                   <v-alert :value="!inquiry.specifications.length" type="warning" style="width: 100%;" class="ma-4" outline>
                     No specifications..
                   </v-alert>

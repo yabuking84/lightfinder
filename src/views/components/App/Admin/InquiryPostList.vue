@@ -132,6 +132,11 @@
                 <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
     
                     <v-card-text>
+
+                        <pre>
+                            {{ bidItems }}
+                        </pre>
+
                         <v-layout row wrap>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -192,12 +197,16 @@
                             <v-flex xs12 mx-5 mt-2 mb-2 pt-0>
                                 <h5 class="font-weight-thin">Specifications</h5>
                                 <v-layout row wrap class="specifications">
-                                    <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                                        {{ specification.name }}: &nbsp;
-                                        <span class="font-weight-bold">
-                                          {{ specification.value.split(',').join(', ') }}
-                                        </span>
-                                    </v-chip>
+
+                                      <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
+                                        <v-chip label dark outline text-color="black" v-if="specification.value" >
+                                               {{ specification.name }}: &nbsp;
+                                           <span class="font-weight-bold">
+                                              {{ specification.value.split(',').join(', ') }}
+                                           </span>
+                                        </v-chip>
+                                      </span>
+                                    
                                     <v-alert :value="!inquiry.specifications.length" type="warning" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
@@ -337,6 +346,7 @@
                         console.log(this.inquiry.id);
 
                         this.bidItems = response;
+
 
                         this.bidItems.sort((a, b) => {
                             // return b.total_price - a.total_price;
