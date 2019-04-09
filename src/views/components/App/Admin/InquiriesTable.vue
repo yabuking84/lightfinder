@@ -66,7 +66,7 @@
 
                         <v-card class="pa-3 mx-2 my-3" :hover="true">
                         
-                            <v-layout row wrap>
+                            <v-layout row wrap mt-2>
 
                                      <v-flex xs6>
 
@@ -112,7 +112,7 @@
                                        </div>
                                        <!-- pending payment-->
                                         <div v-else-if="inquiry.status==1005">
-                                            <small class="deep-orange--text">Awarded inquiry, supplier confirmed, waiting for buyer payment</small>
+                                            <small class="deep-orange--text">Waiting for buyer payment</small>
                                        </div>
                                        <!-- Production -->
                                        <div v-else-if="inquiry.status==2001">
@@ -394,6 +394,7 @@ export default {
     refresh() {
 
       this.fillTable();
+
     },
 
 

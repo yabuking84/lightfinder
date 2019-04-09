@@ -17,7 +17,7 @@
             <v-layout row wrap>
                   
                 <v-flex xs7>
-                  <v-card style="border-radius: 10px;">
+                  <v-card class="inqCurved">
 
                           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 

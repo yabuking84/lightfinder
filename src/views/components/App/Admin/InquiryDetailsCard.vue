@@ -22,39 +22,66 @@
          </v-btn>
        </v-flex>
      </v-layout> -->
+<!-- 
+     <pre>
+     {{ inquiry }}
+   </pre>
+ -->
         <v-layout row wrap>
           <v-flex xs12>
+
+
             <v-layout row wrap>
-              <v-flex shrink>
+
+              <v-flex xs6>
+                  <h5 class="font-weight-thin">Inquiry Holder </h5>
+                  <h4 class="font-weight-bold">
+                    <p class="mb-0">{{ inquiry.buyer.first_name +' '+ inquiry.buyer.last_name }}</p>
+                  </h4>
+              </v-flex>
+
+              <v-flex xs6>
+                  <h5 class="font-weight-thin">Job Title </h5>
+                  <h4 class="font-weight-bold">
+                    <p class="mb-0">{{ inquiry.buyer.job_title }}</p>
+                  </h4>
+              </v-flex>
+
+              <v-flex xs4>
                 <h5 class="font-weight-thin">Keywords </h5>
                 <h4 class="font-weight-bold">
                   <p class="mb-0">{{ inquiry.keyword }}</p>
                 </h4>
               </v-flex>
-              <v-flex shrink>
+
+              <v-flex xs4>
                 <h5 class="font-weight-thin">Category</h5>
                 <h4 class="font-weight-bold">
                   <span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
                 </h4>
               </v-flex>
-              <v-flex shrink>
+
+              <v-flex xs4>
                 <h5 class="font-weight-thin">Quantity</h5>
                 <h4 class="font-weight-bold">
                   <span>{{ inquiry.quantity }} pcs</span>
                 </h4> 
               </v-flex>
+
               <v-flex xs12>
                 <h5 class="font-weight-thin">Message </h5>
                 <h4 class="font-weight-bold">
                   <p class="mb-0">{{ inquiry.message }}</p>
                 </h4>
               </v-flex>
+              
               <v-flex xs12 class="attachments">
                 <h5 class="font-weight-thin">Attachments </h5>
                 <v-icon large>far fa-file-excel</v-icon>
                 <v-icon large>far fa-file-archive</v-icon>
               </v-flex>
             </v-layout>
+
           </v-flex>
           <v-flex xs12>
             <v-layout row wrap>
@@ -135,16 +162,23 @@ export default {
         .then((response) => {
 
           // create a event bus 
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
           // inqEvntBs.emitApproved();
 
         })
         .catch((e) => {
           console.log(e);
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
+
         })
         .finally(() => {
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
         });
 
     },
@@ -157,11 +191,16 @@ export default {
         })
         .then((response) => {
           // create a event bus 
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                                    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
+
           // inqEvntBs.emitApproved();
         })
         .catch((e) => {
-          this.$emit('update:isClosed', true);
+          // this.$emit('update:isClosed', true);
+                                    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
           console.log(e);
         })
         .finally(() => {

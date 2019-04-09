@@ -128,9 +128,9 @@
                     </v-flex>
 
                 </v-layout>
-
+            
                 <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
-
+    
                     <v-card-text>
                         <v-layout row wrap>
 
@@ -206,12 +206,11 @@
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
                         </v-layout>
-
                     </v-card-text>
 
                     <v-divider></v-divider>
+                    
                     <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box>
 
                     <v-card-actions>
@@ -224,7 +223,7 @@
             </v-card-text>
         </v-card>
 
-        <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
+        <message-box :commentData="commentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
 
     </div>
 
@@ -244,14 +243,18 @@
     export default {
 
         mixins: [
+
             helpers,
             VueTimers,
+
         ],
 
         components: {
+
             ImageGallerySmall,
             CommentBox,
             MessageBox
+
         },
 
         // timers: [     
@@ -266,7 +269,7 @@
         //        }
         //    ],
 
-        props: ['inquiry'],
+        props: ['inquiry', 'isClosed'],
 
         timers: [{
             name: 'InquiryTableTimer',
@@ -355,16 +358,21 @@
                         .then((response) => {
 
                             // create a event bus 
-                            this.$emit('update:isClosed', true);
+                            // this.$emit('update:isClosed', true);
+                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
                             inqEvntBs.emitApproved();
 
                         })
                         .catch((e) => {
-                            console.log(e);
-                            this.$emit('update:isClosed', true);
+                              console.log(e);
+                              // this.$emit('update:isClosed', true);
+                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
                         })
                         .finally(() => {
-                            this.$emit('update:isClosed', true);
+                            // this.$emit('update:isClosed', true);
+                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+
                         });
 
                 },
