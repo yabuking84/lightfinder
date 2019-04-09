@@ -149,7 +149,7 @@
                                                   color="deep-orange"
                                                   icon="new_releases"
                                                 >
-                                                  Upon Confirming, Please make sure to include your Estimated Production Date and as well as the shipment cost.
+                                                  Upon Confirming, Please make sure to include your Estimated Production Date as well as the shipment cost.
                                                   
                                             </v-alert>
 

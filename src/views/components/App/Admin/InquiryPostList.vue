@@ -128,9 +128,9 @@
                     </v-flex>
 
                 </v-layout>
-
+            
                 <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
-
+    
                     <v-card-text>
                         <v-layout row wrap>
 
@@ -206,12 +206,11 @@
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
                         </v-layout>
-
                     </v-card-text>
 
                     <v-divider></v-divider>
+                    
                     <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box>
 
                     <v-card-actions>

@@ -176,7 +176,7 @@
                                        </div>
                                        <!-- pending payment-->
                                         <div v-else-if="inquiry.status==1005">
-                                            <small class="deep-orange--text">Awarded inquiry, supplier confirmed, waiting for buyer payment</small>
+                                            <small class="deep-orange--text">Waiting for buyer payment</small>
                                        </div>
                                        <!-- Production -->
                                        <div v-else-if="inquiry.status==2001">
