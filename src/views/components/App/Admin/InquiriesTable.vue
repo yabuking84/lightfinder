@@ -106,18 +106,34 @@
     </v-data-table> -->
 
         <v-layout v-if="filterInquiries.length > 0" class="grey lighten-5" row wrap >
-       <!--    <pre>
-          {{ filterInquiries }}
-          </pre> -->
+          
+    
+
             <isotope :options='null' :list="filterInquiries" id="root_isotope">
 
-            <isotope :options='inquiryTableOptions' :list="filterInquiries" id="root_isotope">
+            <!-- <isotope :options='inquiryTableOptions' :list="filterInquiries" id="root_isotope"> -->
 
                   <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
-                          <!-- {{ allInquiries }} -->
                         <v-card class="rounded-card pa-3 mx-2 my-3" :hover="true">
+
+                              <v-layout row wrap>
+
+                                     <v-flex xs6>
+
+                                      <h3 class="grey--text lighten-4">Inquiry Holder</h3>
+                                      <h2 class="mt-2 blue-grey--text font-weight-bold ">{{ inquiry.inquiry.buyer.first_name + ' ' + inquiry.inquiry.buyer.last_name }}</h2>
+
+                                    </v-flex>
+
+                                    <v-flex xs6>
+                                      <h3 class="grey--text">Job Title</h3>
+                                      <h2 class="mt-2 blue-grey--text  font-weight-bold ">{{ inquiry.inquiry.buyer.job_title }}</h2>
+                                    </v-flex>   
+
+                            </v-layout>
+
                         
-                            <v-layout row wrap>
+                            <v-layout row wrap mt-2>
 
                                      <v-flex xs6>
 
