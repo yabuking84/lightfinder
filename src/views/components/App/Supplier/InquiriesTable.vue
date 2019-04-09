@@ -18,9 +18,13 @@
         </v-toolbar>
       </v-layout>
       <v-card-title>
-        <v-layout row wrap>
-          <v-flex xs7>
-            <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="select categories..">
+         <v-layout row wrap>
+       
+      
+         
+
+        <v-flex xs4>
+            <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="Select categories..">
               <template v-slot:selection="slotData">
                 <v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
                   {{ slotData.item.name }}
@@ -28,11 +32,18 @@
               </template>
             </v-autocomplete>
           </v-flex>
-          <v-spacer></v-spacer>
-          <v-flex xs4>
-            <v-text-field label="Search" v-model="search"  prepend-inner-icon="search"  clearable>
+    
+
+         <v-spacer></v-spacer>
+
+           <v-flex xs4 class="">
+            <v-text-field label="Search" v-model="search"  prepend-inner-icon="search" clearable>
             </v-text-field>
           </v-flex>
+
+
+
+                         
         </v-layout>
       </v-card-title>
       <v-divider></v-divider>
@@ -140,11 +151,29 @@
  -->
 
 
-         <v-layout row wrap class="grey lighten-4" justify-center v-if="filterInquiries.length > 0">
+    <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap>
 
-              <isotope :options='null' :list="filterInquiries" id="root_isotope">
+            <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
+            <!-- <pre>{{ allInquiries[0] }}</pre> -->
+            
+<!-- 
+            <isotope 
+            :options='inquiryTableOptions' 
+            :list="tableItems" 
+            id="root_isotope"
+            itemSelector="isotope_item"
+            class="layout grey lighten-5 row wrap pa-4">
 
-                  <v-flex xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item'+index">
+                    <v-flex 
+                    xs12 md4 xl3 pa-2  
+                    v-for="(inquiry, index) in tableItems" 
+                    :key="'itemsIsotope_'+index" > -->
+
+
+            <isotope :options='null' :list="tableItems" id="root_isotope">
+
+                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
+
 
                       <v-card class="pa-3 mx-2 my-3 " :hover="true">
 
@@ -376,6 +405,7 @@ export default {
             this.$store.dispatch('spplrInq/getInquiries_a')
             .then((response)=> {
                 // console.log(response);
+                var buffer = [];
                 for (var i=response.length - 1; i >=0; i--) {
                     var item= {};
                     item.inq_id=response[i].id;
@@ -389,12 +419,22 @@ export default {
                     item.status=response[i].stage_id;
                     item.loading=false;
                     item.inquiry=response[i];
-                    this.allInquiries.push(item);
+                    // this.allInquiries.push(item);
+                    buffer.push(item);
                 }
 
                 // this.tableItems = this.allInquiries;
+                // this.filterTable();
+                // this.loading=false;
+
+                this.allInquiries = buffer;
+                // this.filterTable();
+                this.tableItems = this.allInquiries;
+
                 this.filterTable();
-                this.loading=false;
+
+                this.loading = false;
+
             })
             .catch((e)=> {
                 console.log('Error: ' + e);
@@ -413,22 +453,40 @@ export default {
         },
 
         filterTable() {
-            var items=this.allInquiries;
-            if (this.inquiryStatus.length || this.categories.length) {
-                // filter for statuses only
-                var isBuff=this.inquiryStatus;
-                items=items.filter(function(inq) {
-                    return (isBuff.length) ? isBuff.includes(inq.status): true;
-                }
-                );
-                // filter for categories
-                isBuff=this.categories;
-                items=items.filter(function(inq) {
-                    return (isBuff.length) ? isBuff.includes(inq.categories.trim()): true;
-                }
-                );
+
+             var items = this.allInquiries;
+
+            // filter for statuses only
+            if (this.inquiryStatus.length) {
+
+                var isBuff = this.inquiryStatus;
+                items = items.filter(function(inq) {
+                  return (isBuff.length) ? isBuff.includes(inq.status) : true;
+                });
             }
-            this.tableItems=items;
+
+
+            // filter for categories
+            if (this.categories.length) {
+                isBuff = this.categories;
+                function callBackCat(inq) {
+                  return (isBuff.length) ? isBuff.includes(inq.categories.trim()) : true;
+                };
+                items = items.filter(callBackCat);
+            }
+
+
+            // filter by search field
+            if(this.search) {
+                items = items.filter(inquiry => {
+                    // add key to search in the dom
+                    return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
+                })            
+                // console.log(this.search);
+            }
+
+            this.tableItems = items;
+
         },
 
         removeFromCategories(item) {
@@ -469,46 +527,15 @@ export default {
             this.filterTable();
         },
 
+         search(nVal, oVal) {
+            this.filterTable();
+        },
+
+
     },
 
 
     computed: {
-
-       // create a computed property from 
-
-           // for searching 
-        filterInquiries() {
-
-                var items = this.allInquiries
-
-                if(this.search) {
-
-                    items.sort(function (a, b) {
-                        return a.value - b.value
-                    })
-
-                    items = items.filter(inquiry => {
-                            // add key to search in the dom
-                            return (inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search))
-                    })
-
-                  }
-
-                    var buff = this.categories;
-                    items = items.filter(function(inquiry) {
-                            return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
-                    });
-
-                    var buff = this.inquiryStatus;
-                    items = items.filter(function(inquiry) {
-                        return (buff.length) ? buff.includes(inquiry.status) : true
-                    });
-
-                    // console.log(items);
-
-                return items;
-
-        },
 
         openInquiry: {
             get() {

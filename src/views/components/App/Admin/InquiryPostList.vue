@@ -132,6 +132,11 @@
                 <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
     
                     <v-card-text>
+
+                     <!--    <pre>
+                            {{ bidItems }}
+                        </pre>
+ -->
                         <v-layout row wrap>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -338,6 +343,7 @@
                         // console.log(this.inquiry.id);
 
                         this.bidItems = response;
+
 
                         this.bidItems.sort((a, b) => {
                             // return b.total_price - a.total_price;

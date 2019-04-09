@@ -117,15 +117,36 @@
             </v-alert>
       </v-data-table> -->
 
-        <v-layout v-if="filterInquiries.length > 0" class="grey lighten-5" row wrap >
 
-            <isotope :options='null' :list="filterInquiries" id="root_isotope">
+    <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap>
 
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in filterInquiries" :key="'item_'+index">
+            <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
+            <!-- <pre>{{ allInquiries[0] }}</pre> -->
+            
+<!-- 
+            <isotope 
+            :options='inquiryTableOptions' 
+            :list="tableItems" 
+            id="root_isotope"
+            itemSelector="isotope_item"
+            class="layout grey lighten-5 row wrap pa-4">
 
+                    <v-flex 
+                    xs12 md4 xl3 pa-2  
+                    v-for="(inquiry, index) in tableItems" 
+                    :key="'itemsIsotope_'+index" > -->
+
+
+            <isotope :options='null' :list="tableItems" id="root_isotope">
+
+                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
 
                           <!-- {{ allInquiries }} -->
+
                         <v-card class="pa-3 mx-2 my-3" :hover="true"  @click="viewInquiry(inquiry)">
+
+                       
+
                         
                             <v-layout row wrap>
 
@@ -170,7 +191,7 @@
                                        </div>
                                        <!-- pending payment-->
                                         <div v-else-if="inquiry.status==1005">
-                                            <small class="deep-orange--text">Awarded inquiry, supplier confirmed, waiting for buyer payment</small>
+                                            <small class="deep-orange--text">Waiting for your payment</small>
                                        </div>
                                        <!-- Production -->
                                        <div v-else-if="inquiry.status==2001">
@@ -455,22 +476,39 @@ export default {
 
             filterTable() {
 
-                var items = this.allInquiries;
-                if (this.inquiryStatus.length || this.categories.length) {
-                    // filter for statuses only
-                    var buff = this.inquiryStatus;
-                    items = items.filter(function(inq) {
-                        return (buff.length) ? buff.includes(inq.status) : true;
-                    });
+                 var items = this.allInquiries;
 
-                    // filter for categories
-                    buff = this.categories;
-                    items = items.filter(function(inq) {
-                        return (buff.length) ? buff.includes(inq.categories.trim()) : true;
-                    });
-                }
+                  // filter for statuses only
+                  if (this.inquiryStatus.length) {
 
-                this.tableItems = items;
+                      var isBuff = this.inquiryStatus;
+                      items = items.filter(function(inq) {
+                        return (isBuff.length) ? isBuff.includes(inq.status) : true;
+                      });
+                  }
+
+
+                  // filter for categories
+                  if (this.categories.length) {
+                      isBuff = this.categories;
+                      function callBackCat(inq) {
+                        return (isBuff.length) ? isBuff.includes(inq.categories.trim()) : true;
+                      };
+                      items = items.filter(callBackCat);
+                  }
+
+
+                  // filter by search field
+                  if(this.search) {
+                      items = items.filter(inquiry => {
+                          // add key to search in the dom
+                          return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
+                      })            
+                      // console.log(this.search);
+                  }
+
+                  this.tableItems = items;
+
             },
 
             removeFromCategories(item) {
@@ -515,46 +553,14 @@ export default {
             categories(nVal, oVal) {
                 this.filterTable();
             },
+
+           search(nVal, oVal) {
+             this.filterTable();
+           },
            
     },
 
     computed: {
-
-        // for searching 
-        filterInquiries() {
-
-                var items = this.allInquiries;
-
-
-                items.sort(function (a, b) {
-                    return a.value - b.value
-                })
-
-
-                  if(this.search) {
-
-                      items = items.filter(inquiry => {
-                              // add key to search in the dom
-                              return ( inquiry.inq_id.includes(this.search) || inquiry.keywords.toLowerCase().includes(this.search) )
-                      })
-
-                  }
-                
-                  var buff = this.categories;
-                  items = items.filter(function(inquiry) {
-                          return (buff.length) ? buff.includes(inquiry.categories.trim()) : true
-                  });
-
-                  var buff = this.inquiryStatus;
-                  items = items.filter(function(inquiry) {
-                      // return (buff.length) ? buff.includes(inquiry.status) : true;
-                      return (buff.length) ? buff.includes(inquiry.status) : true
-                  });
-                
-                
-                return items;
-        },
-
 
         openInquiry: {  
             get() {
@@ -636,6 +642,7 @@ export default {
     margin: 0.5em -0.5em;
 
     .item {
+      
       padding: 1em;
       margin: 0.5em;
       width: calc(25% - 1em);
@@ -645,11 +652,15 @@ export default {
       transition: box-shadow 0.2s;
 
       @media(max-width: 767px) {
+
         width: calc(50% - 1em);
+
       }
 
       @media(max-width: 500px) {
+
         width: calc(100% - 1em);
+
       }
 
     }

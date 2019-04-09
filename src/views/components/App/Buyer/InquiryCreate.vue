@@ -364,7 +364,7 @@
                                           <v-text-field 
                                           v-model="formData.sample_shipping_postal" 
                                           @keyup.enter="stepUp()" 
-                                          label="State">
+                                          label="Zip/Postal Code">
                                           </v-text-field>
                                         </v-flex>
                                       </v-layout>
@@ -543,6 +543,7 @@
                 <v-flex xs4>
 
                         <v-card color="cslookup white" class="pa-3">
+
                             <v-card-text>
 
                                 <v-layout row wrap justify-center>
@@ -652,8 +653,8 @@
                                         <h5 v-show="formData.sample_quantity">Quantity</h5>
                                         <small v-html="formData.sample_quantity"></small>
 
-                                        <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| formData.sample_shipping_country_id">Sample Cost Shipping Address</h5>
-                                        <small v-html="formData.sample_shipping_country_id +', '+ formData.sample_shipping_address +','+ formData.sample_shipping_city "></small>
+                                        <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| getCountryName(formData.sample_shipping_country_id) ">Sample Cost Shipping Address</h5>
+                                        <small v-html="getCountryName(formData.sample_shipping_country_id) +', '+ formData.sample_shipping_address +','+ formData.sample_shipping_city "></small>
 
                                     </v-flex>
 
@@ -675,13 +676,13 @@
 
                                     </v-flex>
 
-                                    <v-flex xs12 v-show="formData.shipping_address || formData.shipping_country_id || formData.shipping_city">
+                                    <v-flex xs12 v-show="formData.shipping_address || getCountryName(formData.shipping_country_id)  || formData.shipping_city">
 
                                         <div class="mt-3">
                                             <h4>Shipping Address</h4>
                                         </div>
 
-                                        <small v-html="formData.shipping_country_id +', '+  formData.shipping_address +', '+ formData.shipping_city + formData.shipping_postal"></small>
+                                        <small v-html="getCountryName(formData.shipping_country_id) +', '+  formData.shipping_address +', '+ formData.shipping_city +', '+ formData.shipping_postal"></small>
 
                                     </v-flex>
 
@@ -1064,11 +1065,12 @@ export default {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
+           // console.log(this.inquiry)
+           // this.getInquiry(this.inquiry.inq);
           
         }
 
     },
-
   
 
     dialog(nVal, oVal) {
@@ -1079,7 +1081,6 @@ export default {
           this.clearData();
         }
 
-
     },
 
     // if edit inquiry is click perform code below
@@ -1087,9 +1088,11 @@ export default {
     isEdit(nVal, oVal) {
 
         if(!nVal) {
-              this.$emit('update:isEdit', false)
+
               this.inquiryHolder = this.inquiry
               this.fillFormData();  
+              this.$emit('update:isEdit', false)
+
         }
         
     },
@@ -1123,11 +1126,42 @@ export default {
 
 
     getCategory(cat_id){
+
         var cat = this.categories.filter(category => {
             return category.id == cat_id;
         });
 
         return (cat.length)?cat[0].name:null;
+
+    },
+
+    // use for when using existing inquiry and editing.
+    // because api doesnt return id instead text
+    getCategoryId(category_name) {
+
+        var cat = this.categories.filter(category => {
+            return category.name == category_name;
+        });
+
+        return (cat.length)?cat[0].id:null;
+
+    },
+
+
+    getCountryName(country_id) {
+
+
+      var countryselect = this.countries.filter(country => {
+          return country.id == country_id;
+      });
+
+      return (countryselect.length)?countryselect[0].name:null;
+
+      // return country_id
+
+      // const countrys =  this.countries.find( country => country.id = country_id )
+      // console.log(countrys)
+
     },
 
     getInquiry(inquiry_id) {
@@ -1144,6 +1178,7 @@ export default {
                 // console.log('-----------------')
 
                 this.fillFormData()
+
             })
             .catch((error) => {
                 console.log(error);
@@ -1170,7 +1205,8 @@ export default {
             // console.log(this.inquiryHolder)
 
             this.formData.keywords = this.inquiryHolder.keyword
-            this.formData.category = this.inquiryHolder.categories.join(', ') 
+            this.formData.category = this.getCategoryId(this.inquiryHolder.categories.join(', '))  
+
             this.formData.warranty = this.inquiryHolder.warranty
 
             this.formData.quantity = this.inquiryHolder.quantity
@@ -1500,7 +1536,6 @@ export default {
   margin-left: 50px; 
   margin-right: 50px; 
   padding-bottom: 30px;
-  border-radius:10px;
   width: 550px;
 
 }

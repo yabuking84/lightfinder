@@ -51,7 +51,7 @@
                             <v-flex xs12 v-show="inquiry.shipping_country_id">
                                 <h5 class="font-weight-thin">Shipping Address</h5>
                                 <h4 class="font-weight-bold">
-                                  <span>{{ inquiry.shipping_country_id }} </span>
+                                  <span>{{ getCountryName(inquiry.shipping_country_id) }} </span>
                                   <span>{{ inquiry.shipping_address }} </span>
                                   <span>{{ inquiry.shipping_city }} </span>
                                   <span>{{ inquiry.shipping_postal }} </span>
@@ -72,7 +72,7 @@
                                <h5 class="font-weight-thin">Sample Shipping Address</h5>
                                 <small></small>
                                 <h4 class="font-weight-bold">
-                                   <span>{{ inquiry.sample_shipping_country_id }} </span>
+                                   <span>{{ getCountryName(inquiry.sample_shipping_country_id) }} </span>
                                    <span>{{ inquiry.sample_shipping_address }}</span>
                                 </h4>
                                 <h4>
@@ -82,7 +82,6 @@
                             </v-flex>
 
                        <!-- sample orders -->
-
 
                        <!-- oem -->
 
@@ -120,7 +119,7 @@
                         <v-flex xs12>
                             <h5 class="font-weight-thin">Specifications</h5>
                             <v-layout row wrap class="specifications">
-                              
+                               
                                  <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
                                     <v-chip label dark outline text-color="black" v-if="specification.value" >
                                            {{ specification.name }}: &nbsp;
@@ -129,12 +128,12 @@
                                        </span>
                                       </v-chip>
                                   </span>
-
                                 <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                                     No specifications..
                                 </v-alert>
                             </v-layout>
                         </v-flex>
+                        
                     </v-layout>
                 </v-flex>
             </v-container>
@@ -150,6 +149,8 @@
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry";
     import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
+
+    import config from '@/config/index'
 
     export default {
         mixins: [
@@ -169,9 +170,30 @@
 
         methods: {
 
+
+            getCountryName(country_id) {
+
+                  var countryselect = this.countries.filter(country => {
+                      return country.id == country_id;
+                  });
+
+                  return (countryselect.length)?countryselect[0].name:null;
+
+            },
+
         },
 
         watch: {
+
+        },
+
+        computed: {
+
+            countries(){
+                
+                return config.countries;
+            },
+   
 
         },
 
