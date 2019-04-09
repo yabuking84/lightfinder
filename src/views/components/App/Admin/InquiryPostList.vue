@@ -133,10 +133,10 @@
     
                     <v-card-text>
 
-                        <pre>
+                     <!--    <pre>
                             {{ bidItems }}
                         </pre>
-
+ -->
                         <v-layout row wrap>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
