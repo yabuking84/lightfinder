@@ -99,17 +99,19 @@
 
                                      <v-flex xs6>
 
-                                      <h3 class="grey--text lighten-4">Inquiry</h3>
-                                      <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
+                                        <h3 class="grey--text lighten-4">Inquiry</h3>
+                                        <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
 
                                     </v-flex>
 
                                     <v-flex xs6>
+
                                         <h3 class="grey--text">Date</h3>
                                         <h4 class="mt-2 font-weight-medium ">
                                             {{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }} 
                                             <br> {{ inquiry.created_at }}
                                         </h4>
+                                        
                                     </v-flex>   
 
                             </v-layout>
@@ -120,9 +122,15 @@
                                           <h3 class="grey--text lighten-4">Quantity</h3>
                                           <h4 class="mt-3  font-weight-medium ">{{ inquiry.quantity }} pcs</h4>
                                     </v-flex>
+
                                     <!-- {{ inquiry }} -->
+
                                     <v-flex xs6>
+
                                       <h3 class="grey--text lighten-4">Status</h3>
+
+                                      <template v-if="false">
+
                                       <!-- verifying -->
                                        <div v-if="inquiry.status==1001">
                                             <small class="orange--text">Inquiry sent for BAL approval</small>
@@ -167,6 +175,8 @@
                                        <div v-else-if="inquiry.status==3002">
                                             <small class="red--text">Order is cancelled</small>
                                        </div>
+
+                                     </template>
                                         <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
                                     </v-flex>   
 
@@ -193,7 +203,6 @@
 
                             </v-layout>
 
-
                              <v-layout row wrap mt-4 >
                       
                                      <v-flex xs12 class="text-xs-center">
@@ -201,10 +210,10 @@
                                                 <i class="fas fa-eye white--text"></i>
                                                 <span class="ml-1 white--text font-weight-light ">Manage</span>
                                               </v-btn>
-
                                     </v-flex>
 
                             </v-layout>
+
                         </v-card>
 
                     </v-flex>

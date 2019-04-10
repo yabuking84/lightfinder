@@ -194,16 +194,20 @@
                            <v-flex xs12>
                                       <v-layout row wrap>
                                           <v-flex xs6>
-                                              <v-btn flat block :disabled="inquiry.awarded ? true : false" large class="green darken-2 " @click="openSample(bidItem)">
+                                            <template v-if="!inquiry.awarded">                                                
+                                              <v-btn flat block :disabled="inquiry.awarded" large class="green darken-2 " @click="openSample(bidItem)">
                                                   <i class="fas fa-lightbulb white--text "></i>
                                                   <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
                                               </v-btn>
+                                            </template>
                                           </v-flex>
                                           <v-flex xs6>
-                                              <v-btn flat block dark :disabled="inquiry.awarded ? true : false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
+                                            <template v-if="!inquiry.awarded">                                                
+                                              <v-btn flat block dark :disabled="inquiry.awarded" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
                                                   <i class="fas fa-award white--text"></i>
                                                   <span class="font-weight-bold ml-1 white--text">Award</span>
                                               </v-btn>
+                                            </template>
                                           </v-flex>
                                       </v-layout>
                                   </v-flex>
@@ -431,7 +435,7 @@ export default {
 
     sockets:{
 
-        supplierCreatedQuote(){            
+        supplierCreatedBid(){            
             console.log('Buyer InquiryPostList = supplierCreatedQuote');
             this.fillBidTable();
         },

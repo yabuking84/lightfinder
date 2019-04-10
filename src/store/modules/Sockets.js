@@ -129,7 +129,7 @@ const actions = {
 
     // supplier
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    SOCKET_supplierCreatedQuote(context, data){
+    SOCKET_supplierCreatedBid(context, data){
     },
 
     SOCKET_supplierConfirmedAward(context, data){
@@ -139,6 +139,9 @@ const actions = {
     },
 
     SOCKET_supplierSubmittedBid(context, data){
+    },
+
+    SOCKET_deadlineNear(context, data){
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // supplier
