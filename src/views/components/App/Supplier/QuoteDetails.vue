@@ -14,7 +14,7 @@
                     <v-btn v-if="hasBid && !inquiry.awarded" @click="openEditQuote()" class="font-weight-light" color="light-blue lighten-1" dark small >
                         <i class="fas fa-edit  white--text ma-2"> </i> Edit Quote
                     </v-btn>
-
+    
                     <v-btn v-else-if="!inquiry.awarded" @click="openCreateQuote()" class="font-weight-light" color="green" dark small >
                         <i class="fas fa-plus  white--text ma-2"> </i> Create Quote
                     </v-btn>

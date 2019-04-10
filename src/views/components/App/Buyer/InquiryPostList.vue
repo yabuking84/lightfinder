@@ -3,7 +3,7 @@
     <v-toolbar color="grey darken-4" class="white--text">
       <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
     </v-toolbar>
-    <v-card>
+    <v-card class="pa-3">
         
         <!-- <h1 class="font-weight-light subheading">Layout</h1> -->
   
@@ -191,11 +191,11 @@
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
 
-                           <v-flex xs12>
+                           <v-flex xs12><p></p>
                                       <v-layout row wrap>
                                           <v-flex xs6>
                                             <template v-if="!inquiry.awarded">                                                
-                                              <v-btn flat block :disabled="inquiry.awarded" large class="green darken-2 " @click="openSample(bidItem)">
+                                              <v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
                                                   <i class="fas fa-lightbulb white--text "></i>
                                                   <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
                                               </v-btn>
@@ -203,7 +203,7 @@
                                           </v-flex>
                                           <v-flex xs6>
                                             <template v-if="!inquiry.awarded">                                                
-                                              <v-btn flat block dark :disabled="inquiry.awarded" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
+                                              <v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
                                                   <i class="fas fa-award white--text"></i>
                                                   <span class="font-weight-bold ml-1 white--text">Award</span>
                                               </v-btn>
@@ -447,7 +447,7 @@ export default {
             console.log('Buyer InquiryPostList = adminApprovedInquiry');
             this.fillBidTable();            
         },
-        buyerAwardedQuote: function (data) {
+        buyerAwardedBid: function (data) {
             console.log('Buyer InquiryPostList = buyerAwardedQuote')
             this.fillBidTable();
         },

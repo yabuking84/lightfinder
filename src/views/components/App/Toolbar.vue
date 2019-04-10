@@ -146,12 +146,17 @@ flat>
 :timeout="timeoutSnackbar"
 right
 top
-multi-line>
-    {{ textSnackbar }}
+multi-line
+color="white"
+v-if="sbNtfctnData"
+@click="gotoNotfication(sbNtfctnData)"
+style="cursor: pointer;">
+    <h4 style="color:#000;">{{ sbNtfctnData.textSnackbar }}</h4>
     <v-btn color="pink" flat @click="showSnackbar = false">
         Close
     </v-btn>
 </v-snackbar>
+
 
 
 
@@ -445,8 +450,8 @@ computed: {
         },
     },
 
-    textSnackbar(){
-        return this.$store.state.ntfctns.textSnackbar;
+    sbNtfctnData(){
+        return this.$store.state.ntfctns.dataSnackbar;
     },
 
     style(){
@@ -487,6 +492,8 @@ methods: {
 
     gotoNotfication(ntfctn){
         
+        this.showSnackbar = false;
+
         // if inquiry type
         if(ntfctn.dataType == 'inquiry') {
 
@@ -500,7 +507,7 @@ methods: {
             }
             // supplier
             else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) {
-
+                this.supplierNtfctn(ntfctn);
             }        
         }
     },
@@ -518,7 +525,18 @@ methods: {
         });
     },
     
-    supplierNtfctn(){},
+    supplierNtfctn(ntfctn){
+        this.$store.dispatch('spplrInq/getInquiry_a', {
+            inq_id: ntfctn.data.id
+        })
+        .then((data) => {                                
+            this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:data});
+            this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    },
     
     adminNtfctn(){},
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
