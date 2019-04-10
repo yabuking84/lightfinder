@@ -80,7 +80,7 @@
 	white-space: nowrap;
 	font-size:17px;
 	// text-decoration:underline;	
-	border-bottom: 1px solid;
+	// border-bottom: 1px solid;
 }
 	
 </style>
