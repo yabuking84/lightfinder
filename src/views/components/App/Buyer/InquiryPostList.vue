@@ -7,7 +7,7 @@
         
         <!-- <h1 class="font-weight-light subheading">Layout</h1> -->
   
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
 
         <!-- waiting for verification -->
         <v-layout v-if="verified" align-center justify-center row fill-height>
@@ -163,12 +163,11 @@
                               <p class="mb-0">{{ bidItem.remarks }}</p>
                             </h4>
                                 </v-flex>
-
                                 <v-flex xs12>
-                                <h5 class="font-weight-thin">Specifications</h5>
+                                <h5 class="font-weight-thin">Specifications </h5>
                                 <v-layout row wrap class="specifications">
                                    
-                                     <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
+                                     <span v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index"> 
                                         <v-chip label dark outline text-color="black" v-if="specification.value" >
                                                {{ specification.name }}: &nbsp;
                                            <span class="font-weight-bold">

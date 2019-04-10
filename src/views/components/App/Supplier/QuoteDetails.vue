@@ -86,7 +86,7 @@
                                 </h4>
                                 <h5 class="font-weight-thin">Specifications</h5>
                                 <v-layout row wrap class="specifications">
-                                    <v-flex xs12>
+                                    <v-flex xs12 >
                                             <span v-for="(specification, index) in bid.specifications" :key="specification+'_'+index">
                                                   <v-chip label dark outline text-color="black" v-if="specification.value">
                                                       {{ specification.name }}: &nbsp;
@@ -96,9 +96,10 @@
                                                   </v-chip>
                                             </span>
                                     </v-flex>
-                                    <v-alert :value="!bid.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
+                                         <v-alert :value="!bid.specifications" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
+                                 
                                 </v-layout>
                             </v-flex>
                         </v-flex>
