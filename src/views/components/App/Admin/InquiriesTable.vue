@@ -99,17 +99,19 @@
 
                                      <v-flex xs6>
 
-                                      <h3 class="grey--text lighten-4">Inquiry</h3>
-                                      <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
+                                        <h3 class="grey--text lighten-4">Inquiry</h3>
+                                        <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
 
                                     </v-flex>
 
                                     <v-flex xs6>
+
                                         <h3 class="grey--text">Date</h3>
                                         <h4 class="mt-2 font-weight-medium ">
                                             {{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }} 
                                             <br> {{ inquiry.created_at }}
                                         </h4>
+                                        
                                     </v-flex>   
 
                             </v-layout>
@@ -124,7 +126,7 @@
                                     <!-- {{ inquiry }} -->
 
                                     <v-flex xs6>
-                                      
+
                                       <h3 class="grey--text lighten-4">Status</h3>
 
                                       <template v-if="false">
@@ -200,7 +202,6 @@
                                     </v-flex>
 
                             </v-layout>
-
 
                              <v-layout row wrap mt-4 >
                       

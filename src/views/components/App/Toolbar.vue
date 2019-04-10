@@ -45,7 +45,7 @@ flat>
         <template v-slot:activator="{ on }">
             <v-btn flat v-on="on">
                 <v-badge color="red">
-                    <template v-slot:badge>
+                    <template v-slot:badge  v-if="notifications.length>0">
                         <span>{{ notifications.length }}</span>
                     </template>
                     <v-icon>far fa-bell</v-icon>

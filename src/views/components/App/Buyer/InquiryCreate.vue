@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%" persistent>
+    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%" >
       <v-card>
         
         <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
