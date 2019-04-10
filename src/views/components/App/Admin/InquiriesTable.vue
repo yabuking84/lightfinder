@@ -109,7 +109,7 @@
                                         <h3 class="grey--text">Date</h3>
                                         <h4 class="mt-2 font-weight-medium ">
                                             {{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }} 
-                                            <br> {{ inquiry.created_at }}
+                                            <!-- <br> {{ inquiry.created_at }} -->
                                         </h4>
                                         
                                     </v-flex>   

@@ -69,7 +69,7 @@
                                   <span>{{ inquiry.sample_quantity }} </span>
                                  </h4>
 
-                                 <h5 class="font-weight-thin">Sample Shipping Address</h5>
+                                 <h5 class="font-weight-thin">Sample Order Shipping Address</h5>
                                   <small></small>
                                   <h4 class="font-weight-bold">
                                      <span>{{ inquiry.sample_shipping_country_id }} </span>

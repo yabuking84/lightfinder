@@ -20,7 +20,7 @@ const state = {
     // ]
 
     showSnackbar: false,
-    textSnackbar: "",
+    dataSnackbar: null,
 
 }
 
@@ -38,8 +38,12 @@ const mutations = {
         state.notifications = [];
     },
 
-    UPDATE_TEXTSNACKBAR_M(state,data) {        
-        state.textSnackbar = data.textSnackbar;
+    // UPDATE_TEXTSNACKBAR_M(state,data) {        
+    //     state.textSnackbar = data.textSnackbar;
+    // },
+
+    UPDATE_SNACKBAR_M(state,data) {        
+        state.dataSnackbar = data.dataSnackbar;
     },
 
     SHOW_SNACKBAR_M(state) {
@@ -62,7 +66,8 @@ const actions = {
 
     updateNotification_a(context, data){
         context.commit('UPDATE_NOTIFICATIONS_M',data);
-        context.commit('UPDATE_TEXTSNACKBAR_M',{textSnackbar:data.textSnackbar});
+        // context.commit('UPDATE_TEXTSNACKBAR_M',{textSnackbar:data.textSnackbar});
+        context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
         context.commit('SHOW_SNACKBAR_M');
     },
 
