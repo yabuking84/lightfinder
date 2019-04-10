@@ -123,6 +123,20 @@ const actions = {
     },
 
     SOCKET_buyerAwardedBid(context, data){
+        context.dispatch('spplrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        .then((response)=>{
+            var ntfctn = {
+                title:          "Bid \""+response.keyword+"\" AWARDED!",
+                dataType:       'inquiry',
+                data:           response,
+                textSnackbar:   'Bid "'+response.keyword+'" AWARDED!',
+            }
+            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+
+            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
+            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
+
+        });        
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // buyer
