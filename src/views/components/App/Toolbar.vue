@@ -149,9 +149,10 @@ top
 multi-line
 color="white"
 v-if="sbNtfctnData"
-@click="gotoNotfication(sbNtfctnData)"
 style="cursor: pointer;">
-    <h4 style="color:#000;">{{ sbNtfctnData.textSnackbar }}</h4>
+    <h4 style="color:#000;" @click="gotoNotfication(sbNtfctnData)">
+        {{ sbNtfctnData.textSnackbar }}
+    </h4>
     <v-btn color="pink" flat @click="showSnackbar = false">
         Close
     </v-btn>
@@ -187,7 +188,7 @@ export default {
 data: () => ({
     title: 'BuyAnyLight.com',
     roles: config.auth.role,
-    timeoutSnackbar: 60000,
+    timeoutSnackbar: 8000,
 }),
 
 
