@@ -86,7 +86,7 @@
                                 </h4>
                                 <h5 class="font-weight-thin">Specifications</h5>
                                 <v-layout row wrap class="specifications">
-                                    <v-flex xs12>
+                                    <v-flex xs12 >
                                             <span v-for="(specification, index) in bid.specifications" :key="specification+'_'+index">
                                                   <v-chip label dark outline text-color="black" v-if="specification.value">
                                                       {{ specification.name }}: &nbsp;
@@ -96,9 +96,10 @@
                                                   </v-chip>
                                             </span>
                                     </v-flex>
-                                    <v-alert :value="!bid.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
+                                         <v-alert :value="!bid.specifications" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
+                                 
                                 </v-layout>
                             </v-flex>
                         </v-flex>
@@ -170,8 +171,9 @@
                                                         <!-- <h2 class="mb-0">                  
                                                         {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
                                                       </h2> -->
+                                                       
                                                         <v-menu 
-                                                        v-model="calendar_menu" 
+                                                        v-model="calendar_menu1" 
                                                         :close-on-content-click="false" 
                                                         :nudge-right="40" 
                                                         lazy 
@@ -189,9 +191,11 @@
                                                               v-model="formData.shipping_date" 
                                                               header-color="black" 
                                                               :min="minDate"
-                                                               @input="calendar_menu = false">
+                                                               @input="calendar_menu1 = false">
                                                               </v-date-picker>
                                                         </v-menu>
+
+
                                                       </h4>
                                                     </v-flex>
 
@@ -211,6 +215,84 @@
                                                  
                                                       </h4>
                                                     </v-flex>
+
+
+
+
+
+                                                     <v-flex xs6>
+                                                        <h5 class="font-weight-thin">Estimated Time of  Delivery</h5>
+                                                        <h4 class="font-weight-bold">
+                                                        <!-- <h2 class="mb-0">                  
+                                                        {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+                                                      </h2> -->
+                                                       
+                                                        <v-menu 
+                                                        v-model="calendar_menu2" 
+                                                        :close-on-content-click="false" 
+                                                        :nudge-right="40" 
+                                                        lazy 
+                                                        transition="scale-transition"
+                                                        offset-y full-width min-width="290px" class="">
+                                                              <v-text-field   
+                                                               v-model="formData.etd" 
+                                                              :error-messages="fieldErrors('formData.etd')" 
+                                                              @blur="$v.formData.etd.$touch()"
+                                                              slot="activator" 
+                                                              label="Estimated Time of Delivery" 
+                                                              prepend-icon="event" 
+                                                              readonly></v-text-field>
+                                                              <v-date-picker 
+                                                              v-model="formData.etd" 
+                                                              header-color="black" 
+                                                              :min="minDate"
+                                                               @input="calendar_menu2 = false">
+                                                              </v-date-picker>
+                                                        </v-menu>
+                                                      </h4>
+                                                    </v-flex>
+
+                                                  
+                                                    <v-flex xs6>
+                                                        <h5 class="font-weight-thin">Estimated Time of Arrival</h5>
+                                                        <h4 class="font-weight-bold">
+                                                        <!-- <h2 class="mb-0">                  
+                                                        {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+                                                      </h2> -->
+                                                       
+
+                                                        <v-menu 
+                                                        v-model="calendar_menu3" 
+                                                        :close-on-content-click="false" 
+                                                        :nudge-right="40" 
+                                                        lazy 
+                                                        transition="scale-transition"
+                                                        offset-y full-width min-width="290px" class="">
+                                                              <v-text-field   
+                                                               v-model="formData.eta" 
+                                                              :error-messages="fieldErrors('formData.eta')" 
+                                                              @blur="$v.formData.eta.$touch()"
+                                                              slot="activator" 
+                                                              label="Estimated Time of Arrival" 
+                                                              prepend-icon="event" 
+                                                              readonly></v-text-field>
+                                                              <v-date-picker 
+                                                              v-model="formData.eta" 
+                                                              header-color="black" 
+                                                              :min="minDate"
+                                                               @input="calendar_menu3 = false">
+                                                              </v-date-picker>
+                                                        </v-menu>
+                                                      </h4>
+                                                    </v-flex>
+
+                                                 
+
+
+
+
+
+
                                                 </v-layout>
                                            
 
@@ -278,7 +360,9 @@
             formData: {
 
               shipping_date: { required },
-              shipping_cost: { required }
+              shipping_cost: { required },
+              eta: { required },
+              etd: { required }
 
             }
 
@@ -290,6 +374,8 @@
 
               shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
               shipping_cost: { required: 'Please Include your Shipping Cost. ' },
+              eta: { required: "Please specify your Estimated Time of Arrival." },
+              etd: { required: "Please specify your Estimated Time of Delivery." },
 
             }
 
@@ -321,10 +407,16 @@
             payment_methods: config.payment_methods,
             shipping_methods: config.shipping_methods,
 
-            calendar_menu: false,
+            calendar_menu1: false,
+            calendar_menu2: false,
+            calendar_menu3: false,
+
             minDate: null,
 
             formData: {
+
+                eta:null,
+                etd:null,
                 shipping_date:null,
                 shipping_cost:null,
                 confirm: 1,
@@ -366,7 +458,6 @@
                   if (this.$v.$invalid) {
 
                     this.$v.$touch()
-
 
                   } else {
 

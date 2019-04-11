@@ -111,7 +111,7 @@
                                             {{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }} 
                                             <!-- <br> {{ inquiry.created_at }} -->
                                         </h4>
-                                        
+
                                     </v-flex>   
 
                             </v-layout>
@@ -285,7 +285,8 @@ export default {
         ...config.inquiry_statuses.buyers,
       ],
       // search: '844',
-      search: '1554795137726',
+      // search: '1554795137726',
+      search: '',
       dialog: false,
       loading: false,
       headers: [{

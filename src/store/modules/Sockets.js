@@ -42,6 +42,8 @@ const actions = {
     SOCKET_connect(context, data){
         context.commit('CONNECTED_M');
 
+        // console.log(context.rootState.auth.auth_user.uuid);
+        // console.log(typeof context.rootState.auth.auth_user.uuid);
         // set socket user
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         if(
@@ -147,6 +149,20 @@ const actions = {
     },
 
     SOCKET_supplierConfirmedAward(context, data){
+        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        .then((response)=>{
+            var ntfctn = {
+                title:          "Supplier Confirmed \""+response.keyword+"\"!",
+                dataType:       'inquiry',
+                data:           response,
+                textSnackbar:   'Bid Confirmed "'+response.keyword+'"!',
+            }
+            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+
+            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
+            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
+
+        });               
     },
 
     SOCKET_supplierModifiedBid(context, data){

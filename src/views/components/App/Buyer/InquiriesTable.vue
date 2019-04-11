@@ -228,6 +228,27 @@
     </span>
 
 
+
+      <v-snackbar
+          v-model="successSnackbar"
+          color="green"
+           top
+           multi-line
+           middle
+           :timeout="100000000"
+          >
+
+          Successfully Created Inquiry
+          <v-btn
+            dark
+            flat
+            @click="successSnackbar = false"
+          >
+            Close
+          </v-btn>
+    </v-snackbar>
+
+
   </div>
 </template>
 <script>
@@ -261,7 +282,8 @@ export default {
             ...config.inquiry_statuses.default,
             ...config.inquiry_statuses.buyers,
         ],
-        search: '1554795137726',
+        // search: '1554795137726',
+        search: '',
         dialog: false,
         loading: false,
         headers: [
@@ -332,6 +354,8 @@ export default {
         pagination: {
             rowsPerPage: 15
         },
+
+        successSnackbar:true
 
     }),
 
