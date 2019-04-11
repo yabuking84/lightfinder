@@ -8,7 +8,7 @@
         </v-card-title> -->
 
         <!-- #69779b blue-grey darken-4 -->
-        <v-toolbar card color="blue-grey darken-4" dark height="50px">
+        <v-toolbar card color="grey darken-4" dark >
           <v-toolbar-title> <span class="font-weight-bold">Add Quotation</span> </v-toolbar-title>
           <v-spacer></v-spacer>
           <h2 class="font-weight-bold">INQUIRY # <span class="font-weight-thin">{{ inquiry.id }}</span> </h2>
@@ -142,7 +142,7 @@
                     <v-layout row wrap>
                       <v-flex xs12>
                         <!-- change to product code  -->
-                        <v-text-field label="Product Code" hint="Product Code helps you later soon. this would be display  " v-model="formData.product_name">
+                        <v-text-field label="Product Code" v-model="formData.product_name">
                         </v-text-field>
                       </v-flex>
                       <!--    <v-flex xs12>
@@ -174,169 +174,72 @@
                             <!-- new --------------------------------------------------------- -->
                             
 
-                                <v-flex xs4 mt-3>
-                                        <h4 class="text-xs-center">Specifications</h4>&nbsp&nbsp
-                                </v-flex>
 
-                                <v-flex xs4 mt-3>
-                                        <h4 class="text-xs-center">Buyer Product Specifications</h4>&nbsp&nbsp
-                                </v-flex>
+                            <!-- body -->
 
+                                <v-layout row column>
+                                         <h3 class="text-xs-center">Specification Name</h3>&nbsp&nbsp
 
-                                <v-flex xs4 mt-3>
-                                      <h4 class="text-xs-center">Your Product Specifications</h4>&nbsp&nbsp
-                                </v-flex>
-
-                              
-
-                               <v-flex xs3>
-                                       <!-- <small class="ml-2 red--text">Buyer Required Details</small> -->
-                                       <!-- <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field> -->
-                                          <h3 class="text-xs-center font-weight-thin black--text lighten-4 mt-3">Lumen</h3>&nbsp&nbsp
-                                </v-flex>
-
-                                <v-flex xs4>
-                                       <!-- <small class="ml-2 red--text">Buyer Required Details</small> -->
-                                       <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" prefix="Lumen:" suffix="lm"></v-text-field>
-                                </v-flex>
-
-                                 <v-flex xs4>
-                                      <!-- <small class="ml-2">Your Required Details</small> -->
-                                      <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                                 </v-flex>
-
-                             <!-- --------------------------------------------------------------- -->
-
-                           <!--   <v-flex xs6>
-                                <small class="ml-2 red--text">Buyer Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                <small class="ml-2">Your Required Details</small>
-                                
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                           
-                                                       <v-flex xs6>
-                                 <small class="ml-2 red--text">Buyer Required Details</small>
-                                 <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                           <v-flex xs6>
-                                <small class="ml-2">Your Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                           </v-flex>
-                           
-                           ---------------------------------------------------------------
-                           
-                           <v-flex xs6>
-                                <small class="ml-2 red--text">Buyer Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                <small class="ml-2">Lumen</small>
-                                
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                 <small class="ml-2 red--text">Buyer Required Details</small>
-                                 <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                           <v-flex xs6>
-                                <small class="ml-2">Power</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                           </v-flex>
-                           
-                           ---------------------------------------------------------------
-                           
-                           <v-flex xs6>
-                                <small class="ml-2 red--text">Buyer Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                <small class="ml-2">Your Required Details</small>
-                                
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                 <small class="ml-2 red--text">Buyer Required Details</small>
-                                 <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                           <v-flex xs6>
-                                <small class="ml-2">Your Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                           </v-flex>
-                           
-                           ---------------------------------------------------------------
-                           
-                           <v-flex xs6>
-                                <small class="ml-2 red--text">Buyer Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                <small class="ml-2">Your Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                <small class="ml-2 red--text">Buyer Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex>
-                           
-                                                       <v-flex xs6>
-                                <small class="ml-2">Your Required Details</small>
-                                <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Power:" suffix="lm"></v-text-field>
-                                                       </v-flex> -->
+                                     <v-flex xs3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                             <!-- <small class="ml-2 red--text">Buyer Required Details</small> -->
+                                             <!-- <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field> -->
+                                                <h3 class="text-xs-left font-weight-bold black--text lighten-4 mt-3">{{ specification.name }}:</h3>&nbsp&nbsp
+                                      </v-flex> 
+                                </v-layout>
 
 
-                             <!-- --------------------------------------------------------------- -->
+                                <v-layout row column>
+                                          <h3 class="text-xs-center">Buyer Product Specifications</h3>&nbsp&nbsp
+
+                                      <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                         <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" :value="specification.value ? specification.value : 'N/A' "  :suffix="getSuffix(specification.name)"></v-text-field>
+                                     </v-flex>
+
+                                 </v-layout>
+                                 
+
+                                 <v-layout row column>
+
+                                      <h3 class="text-xs-center">Your Product Specifications</h3>&nbsp&nbsp
+
+                                      <v-flex xs4>
+                                          <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                         <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" suffix="lm"></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                         <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.efficiency"  suffix="lm/w"></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                          <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.beam_angle"  suffix="degress"></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.cct" suffix="lm"></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.ip" ></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.finish" ></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.size" ></v-text-field>
+                                      </v-flex>
+
+                                      <v-flex xs4>
+                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.dimmable" ></v-text-field>
+                                      </v-flex>
 
 
-                   <!--          <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.power" prefix="Power:" suffix="watts"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.efficiency" prefix="Efficiency:" suffix="lm/w"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.beam_angle" prefix="Beam Angle:" suffix="degress"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.cct" prefix="CCT:" suffix="lm"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.ip" prefix="IP:"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.finish" prefix="Finish:"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.size" prefix="Size:"></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs4>
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.dimmable" prefix="Dimmable:"></v-text-field>
-                            </v-flex> -->
-
+                                 </v-layout>
 
                           </v-layout>
                         </v-flex>
@@ -645,6 +548,25 @@ methods: {
 
     },
 
+    /* get specifications suffix */
+    getSuffix(key) {
+
+      var suffix = '';
+      
+        if(key.toLowerCase() == 'power') {
+           suffix = 'watts'
+        } else if(key.toLowerCase() == 'lumen' || key.toLowerCase() == 'cct') {
+          suffix = 'lm'
+        } else if(key.toLowerCase() == 'efficiency') {
+          suffix = 'lm/w'          
+        } else if(key.toLowerCase() == 'beam angle') {
+          suffix = 'degress';
+        }
+
+      return suffix;
+
+    },
+
       // clear existing object
     clearData() {
            for (const prop of Object.keys(this.formData)) {
@@ -727,6 +649,7 @@ watch: {
 
 </script>
 <style lang="scss">
+
 .border-textfield .v-input__slot {
   border: 1px solid black;
   margin-bottom: -17px;
