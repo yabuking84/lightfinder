@@ -290,6 +290,27 @@
     </span>
 
 
+
+      <v-snackbar
+          v-model="successSnackbar"
+          color="green"
+           top
+           multi-line
+           middle
+           :timeout="100000000"
+          >
+
+          Successfully Created Inquiry
+          <v-btn
+            dark
+            flat
+            @click="successSnackbar = false"
+          >
+            Close
+          </v-btn>
+    </v-snackbar>
+
+
   </div>
 </template>
 <script>
@@ -395,6 +416,8 @@ export default {
         pagination: {
             rowsPerPage: 15
         },
+
+        successSnackbar:true
 
     }),
 

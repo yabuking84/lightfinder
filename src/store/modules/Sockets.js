@@ -42,6 +42,8 @@ const actions = {
     SOCKET_connect(context, data){
         context.commit('CONNECTED_M');
 
+        // console.log(context.rootState.auth.auth_user.uuid);
+        // console.log(typeof context.rootState.auth.auth_user.uuid);
         // set socket user
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         if(
