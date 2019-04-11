@@ -205,12 +205,17 @@ const actions = {
 
 
     logout_a(context){
+        var headers = {token:localStorage.access_token};
+        console.log("headers");
+        console.log(headers);
+        console.log(localStorage.getItem('access_token'));
+
         // if(context.getters.isLoggedIn_g) {
             return new Promise((resolve, reject) => {
                 axios({
                     method: state.api.logout.method,
                     url: state.api.logout.url,
-                    headers: state.axios.config.headers,
+                    headers: headers,
                 })
                 .then(response => {
                     // localStorage.removeItem('access_token');
