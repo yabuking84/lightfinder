@@ -73,11 +73,11 @@
 			                                    <v-spacer></v-spacer>
 			                                    <h4 class="font-weight-bold">{{ inquiry.categories.join(', ') }}</h4>
 			                                </v-layout>
-			                                <v-layout row wrap mt-2 pa-0 mb-3>
+			                            <!--     <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Seller Product Code</h4>
 			                                    <v-spacer></v-spacer>
 			                                    <h4 class="font-weight-bold"> {{ bid.product_name }} </h4>
-			                                </v-layout>
+			                                </v-layout> -->
 			                                 <v-layout row wrap mt-2 pa-0 mb-3>
 			                                    <h4 class="font-weight-light">Your Desired Price</h4>
 			                                    <v-spacer></v-spacer>

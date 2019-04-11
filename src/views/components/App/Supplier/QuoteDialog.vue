@@ -145,6 +145,7 @@
                 <v-layout row wrap>
                   <v-flex xs12>
                     <v-layout row wrap>
+
                       <v-flex xs12>
                         <!-- change to product code  -->
                         <v-text-field label="Product Code" v-model="formData.product_name">
@@ -167,9 +168,24 @@
                         </v-text-field>
                       </v-flex>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       <!-- specification -->
-                      <v-layout row wrap mb-3 v-show="inquiry.specifications.length">
-                        <v-flex xs12>
+                        <v-flex xs12  v-show="inquiry.specifications.length">
                           <v-layout row wrap justify-center>
 
                            <!--    <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
@@ -185,10 +201,10 @@
                                 <v-layout row column>
                                          <h3 class="text-xs-center font-weight-thin">Specification Name</h3>&nbsp&nbsp
 
-                                     <v-flex lg-3 md-3 xs3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                     <v-flex lg-2 md-2 xs2 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
                                              <!-- <small class="ml-2 red--text">Buyer Required Details</small> -->
                                              <!-- <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field> -->
-                                                <h4 color="#504f4fde" class="text-xs-center font-weight-light mt-3">{{ specification.name }}:</h4>&nbsp&nbsp
+                                                <h3 color="#504f4fde" class="text-xs-left font-weight-light mt-4 ml-5">{{ specification.name }}:</h3>&nbsp&nbsp
                                       </v-flex> 
                                 </v-layout>
 
@@ -197,7 +213,10 @@
                                           <h3 class="text-xs-center font-weight-light">Buyer Product Specifications</h3>&nbsp&nbsp
 
                                       <v-flex lg-4 md-4 xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                                         <v-text-field readonly solo flat class="ml-1 pa-1 border-textfieldb" :value="specification.value ? specification.value : 'N/A' "  :suffix="getSuffix(specification.name)"></v-text-field>
+
+                                          <!-- {{ inquiry.specifications }} -->
+
+                                         <v-text-field readonly solo flat class="ml-1 mt-2  border-textfieldb" :value="specification.value ? specification.value : 'N/A' "  :suffix="getSuffix(specification.name)"></v-text-field>
                                      </v-flex>
 
                                  </v-layout>
@@ -208,61 +227,69 @@
                                       <h3 class="text-xs-center font-weight-thin">Your Product Specifications</h3>&nbsp&nbsp
 
                                       <v-flex xs4>
-                                          <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                         <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.lumen" suffix="lm"></v-text-field>
+                                         <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.lumen" suffix="lm"></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                         <v-text-field solo flat class="ml-1 pa-1 border-textfield"  v-model="formData.efficiency = getEfficiency()"  suffix="lm/w"></v-text-field>
+                                         <v-text-field solo flat class="ml-4 mt-2  border-textfield"  v-model="formData.efficiency = getEfficiency()"  suffix="lm/w"></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                          <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.beam_angle"  suffix="degress"></v-text-field>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.beam_angle"  suffix="degress"></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.cct" suffix="lm"></v-text-field>
+                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.cct" suffix="lm"></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.ip" ></v-text-field>
+                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.ip" ></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.finish" ></v-text-field>
+                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.finish" ></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.size" ></v-text-field>
+                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.size" ></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
-                                        <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.dimmable" ></v-text-field>
+                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.dimmable" ></v-text-field>
                                       </v-flex>
 
 
                                  </v-layout>
-
                           </v-layout>
                         </v-flex>
-                      </v-layout>
 
-                        <!-- optional data  -->
-                        <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
-                          <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
-                          <v-flex xs12 v-show="is_sample">
-                            <v-layout row wrap>
-                              <v-flex xs5 mr-5>
-                                <v-text-field label="Sample Cost" :error-messages="fieldErrors('formData.sample_cost')" @blur="$v.formData.sample_cost.$touch()" v-model="formData.sample_cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
-                              </v-flex>
-                              <v-flex xs6 ml-3>
-                                <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
-                              </v-flex>
-                            </v-layout>
-                        </v-flex>
+
+
+
+                             <!-- optional data  -->
+                             <v-layout row wrap mt-3>
+                                    <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
+                                    <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
+                                    <v-flex xs12 v-show="is_sample">
+                                      <v-layout row wrap>
+                                        <v-flex xs5 mr-5>
+                                          <v-text-field label="Sample Cost" :error-messages="fieldErrors('formData.sample_cost')" @blur="$v.formData.sample_cost.$touch()" v-model="formData.sample_cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
+                                        </v-flex>
+                                        <v-flex xs6 ml-3>
+                                          <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
+                                        </v-flex>
+                                      </v-layout>
+                                  </v-flex>
+                             </v-layout>
+                   
+
+
+
+                   
 
                       <v-flex xs12>
                         <v-textarea label="Message" placeholder="Enter Remarks Here" v-model="formData.remarks">
@@ -279,6 +306,7 @@
                         </vue-dropzone>
                       </v-flex>
                     </v-layout>
+
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -650,11 +678,11 @@ watch: {
     inquiry(nVal, oVal) {
 
            // check if sample cost && and sample shipment cost is 
-            if(this.inquiry.sample_quantity > 0) {
-              this.is_sample = true
-            } else {
-              this.is_sample = false
-            }
+          if(this.inquiry.sample_quantity > 0) {
+            this.is_sample = true
+          } else {
+            this.is_sample = false
+          }
 
 
     },
