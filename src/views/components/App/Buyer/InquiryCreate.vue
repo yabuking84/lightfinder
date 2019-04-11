@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%" >
+    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="95%" >
       <v-card>
         
         <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
@@ -16,8 +16,7 @@
         <v-card-text id="inquiryCreate_scrollable_cont">
             <v-layout row wrap>
                   
-                <v-flex xs7>
-
+                <v-flex xs7 style="max-height:71vh; overflow:hidden; overflow-y:auto;">
                   <v-card class="inqCurved">
                         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
@@ -541,9 +540,23 @@
 
                 </v-flex>
 
-                <v-flex xs4>
+                <v-flex xs5>
+                    
 
-                        <v-card color="cslookup white" class="pa-3">
+
+
+
+
+
+
+
+
+
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+
+                        <v-card color="white" class="pa-3 ml-3">
 
                             <v-card-text>
 
@@ -699,6 +712,11 @@
                                 </v-layout>
                             </v-card-text>
                         </v-card>
+                   
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+
                 </v-flex>
                 
             </v-layout>
@@ -1556,7 +1574,7 @@ export default {
   margin-left: 50px; 
   margin-right: 50px; 
   padding-bottom: 30px;
-  width: 550px;
+  // width: 550px;
 
 }
 
