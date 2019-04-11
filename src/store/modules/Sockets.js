@@ -20,12 +20,12 @@ const state = {
 const mutations = {
 
     CONNECTED_M(state) {
-        // console.log("CONNECTED_M auth,js");
+        console.log("CONNECTED_M auth,js");
         state.isConnected = true;
     },
 
     DISCONNECTED_M(state) {
-        // console.log("DISCONNECTED_M auth,js");
+        console.log("DISCONNECTED_M auth,js");
         state.isConnected = false;
     },
 }
@@ -41,7 +41,7 @@ const actions = {
 
     SOCKET_connect(context, data){
         context.commit('CONNECTED_M');
-
+        
         // console.log(context.rootState.auth.auth_user.uuid);
         // console.log(typeof context.rootState.auth.auth_user.uuid);
         // set socket user
@@ -51,7 +51,6 @@ const actions = {
         	context.rootState.auth.auth_user.uuid
         ) {
 	    	context.dispatch('joinRoom_a', context.rootState.auth.auth_user.uuid);    
-	    	console.log('joinRoom_a');
         }
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         // set socket user
@@ -192,6 +191,8 @@ const actions = {
 
 	joinRoom_a(context, data){
 		var uuid = data;
+        
+        console.log('joinRoom_a = '+uuid);
         vm.$socket.emit('join', uuid);
 	},
 
