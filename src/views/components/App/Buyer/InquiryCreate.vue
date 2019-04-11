@@ -329,19 +329,7 @@
                                     <h3 class="mt-2 font-weight-light">Specify your shipping Address for sample order's.</h3>
                                     <v-layout row wrap>
                                       <v-flex xs6 pa-1>
-                                     <!--    <v-select 
-                                        v-model="formData.sample_shipping_country_id" 
-                                        :items="countries" 
-                                        item-text="name" 
-                                        item-value="id" 
-                                        :error-messages="fieldErrors('formData.sample_shipping_country_id')" 
-                                        @blur="$v.formData.sample_shipping_country_id.$touch()" 
-                                        :search-input.sync="search" 
-                                        ref="countrySampleCountry" 
-                                        label="Countries">
-                                        </v-select>
- -->
-
+                  
 
                                    <v-autocomplete 
                                         v-model="formData.sample_shipping_country_id" 
