@@ -117,9 +117,7 @@
                                      <v-layout row justify-center mx-5>  
 
                                           <v-flex xs2>
-
                                                <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                                               
                                           </v-flex>
                                           
                                           <v-flex xs10 mt-3>
@@ -430,7 +428,9 @@
         },
 
         methods: {
-            reloadBid() {
+
+
+             reloadBid() {
 
                     this.$store.dispatch('spplrInq/getInquiryBid_a', {
                             inq_id: this.inquiry.id
@@ -489,11 +489,17 @@
         watch: {
 
             inquiry: {
+
                 handler(nVal, oVal) {
                     this.reloadBid();
                 },
+
                 deep: true,
             },
+
+            openQuoteDialog(nVal, oVal) {
+                  this.reloadBid();
+            }
 
         },
 

@@ -169,21 +169,6 @@
                       </v-flex>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                       <!-- specification -->
                         <v-flex xs12  v-show="inquiry.specifications.length">
                           <v-layout row wrap justify-center>
@@ -268,8 +253,6 @@
                         </v-flex>
 
 
-
-
                              <!-- optional data  -->
                              <v-layout row wrap mt-3>
                                     <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
@@ -285,10 +268,6 @@
                                       </v-layout>
                                   </v-flex>
                              </v-layout>
-                   
-
-
-
                    
 
                       <v-flex xs12>

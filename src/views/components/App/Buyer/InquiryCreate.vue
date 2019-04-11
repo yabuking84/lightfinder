@@ -87,12 +87,12 @@
                                         item-value="id"
                                         :error-messages="fieldErrors('formData.category')"
                                         @blur="$v.formData.category.$touch()" 
-                                        :search-input.sync="search" 
                                         ref="categorySelect" 
-                                        ache-items flat hide-no-data hide-details label="Type here the category.."
-                                         solo-inverted>
+                                        flat hide-no-data hide-details label="Type here the category.."
+                                         >
                                         </v-autocomplete>
                                       </v-flex>
+
                                     </v-layout>
                                   </v-flex>
                                 </v-container>
@@ -329,7 +329,7 @@
                                     <h3 class="mt-2 font-weight-light">Specify your shipping Address for sample order's.</h3>
                                     <v-layout row wrap>
                                       <v-flex xs6 pa-1>
-                                        <v-select 
+                                     <!--    <v-select 
                                         v-model="formData.sample_shipping_country_id" 
                                         :items="countries" 
                                         item-text="name" 
@@ -340,6 +340,22 @@
                                         ref="countrySampleCountry" 
                                         label="Countries">
                                         </v-select>
+ -->
+
+
+                                   <v-autocomplete 
+                                        v-model="formData.sample_shipping_country_id" 
+                                        :items="countries" 
+                                        item-text="name"
+                                        item-value="id"
+                                           :error-messages="fieldErrors('formData.sample_shipping_country_id')" 
+                                        @blur="$v.formData.sample_shipping_country_id.$touch()" 
+                                        ref="categorySelect" 
+                                        flat hide-no-data hide-details label="Search Country .."
+                                         >
+                                        </v-autocomplete>
+
+
                                       </v-flex>
                                       <v-flex xs6 pa-1>
                                         <v-text-field 
@@ -446,16 +462,27 @@
                               <v-container>
                                 <v-layout row wrap>
                                   <v-flex xs5 ml-2>
-                                    <v-select 
+                         
+
+                                   <v-autocomplete 
                                     v-model="formData.shipping_country_id" 
-                                    :items="countries" 
-                                    item-text="name" item-value="id" 
-                                    :error-messages="fieldErrors('formData.shipping_country_id')" 
+                                        :items="countries" 
+                                        item-text="name"
+                                        item-value="id"
+                                     :error-messages="fieldErrors('formData.shipping_country_id')" 
                                     @blur="$v.formData.shipping_country_id.$touch()" 
-                                    :search-input.sync="search" 
-                                    ref="countryMassShipping" 
-                                    label="Countries">
-                                    </v-select>
+                                        ref="categorySelect" 
+                                        flat hide-no-data hide-details label="Search Country ..."
+                                      >
+                                        </v-autocomplete>
+
+
+
+
+
+
+
+
                                   </v-flex>
                                   <v-flex xs5 ml-2>
                                     <v-text-field 
@@ -746,7 +773,7 @@
           </v-layout>
         </v-card-actions>
 
-      <v-snackbar
+   <!--    <v-snackbar
           v-model="successSnackbar"
           color="success"
            bottom
@@ -760,7 +787,7 @@
           >
             Close
           </v-btn>
-    </v-snackbar>
+    </v-snackbar> -->
 
 
       </v-card>
@@ -945,6 +972,12 @@ export default {
 
     inquiry: {
       type: Object,
+    },
+
+    snackBar: {
+      type:Boolean,
+      default: false,
+
     }
   
   },
@@ -1423,6 +1456,7 @@ export default {
 
             // emit on bus that Inquiry form is submitted
             inqEvntBs.emitFormSubmitted();
+            this.$emit('update:snackBar', true)
             this.clearData();
 
           }).catch((e) => {
