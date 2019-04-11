@@ -23,7 +23,7 @@
           -->
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
             <v-layout row wrap>
-              <v-flex xs5>
+              <v-flex xs4 mr-5>
                 <v-container class="pt-2">
                   <v-layout row wrap>
                     <v-flex xs12>
@@ -135,7 +135,12 @@
                 </v-container>
               </v-flex>
               <!--  -->
-              <v-flex xs7 pa-2>
+              
+              <v-layout pa-0>
+                 <v-divider vertical></v-divider>
+            </v-layout>
+
+              <v-flex xs7 pa-2 mr-4>
                 <h4>Product Details</h4>
                 <v-layout row wrap>
                   <v-flex xs12>
@@ -178,21 +183,21 @@
                             <!-- body -->
 
                                 <v-layout row column>
-                                         <h3 class="text-xs-center">Specification Name</h3>&nbsp&nbsp
+                                         <h3 class="text-xs-center font-weight-thin">Specification Name</h3>&nbsp&nbsp
 
-                                     <v-flex xs3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                     <v-flex lg-3 md-3 xs3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
                                              <!-- <small class="ml-2 red--text">Buyer Required Details</small> -->
                                              <!-- <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" value="200" v-model="formData.lumen" prefix="Lumen:" suffix="lm"></v-text-field> -->
-                                                <h3 class="text-xs-left font-weight-bold black--text lighten-4 mt-3">{{ specification.name }}:</h3>&nbsp&nbsp
+                                                <h4 color="#504f4fde" class="text-xs-center font-weight-light mt-3">{{ specification.name }}:</h4>&nbsp&nbsp
                                       </v-flex> 
                                 </v-layout>
 
 
                                 <v-layout row column>
-                                          <h3 class="text-xs-center">Buyer Product Specifications</h3>&nbsp&nbsp
+                                          <h3 class="text-xs-center font-weight-light">Buyer Product Specifications</h3>&nbsp&nbsp
 
-                                      <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                                         <v-text-field readonly solo flat class="ml-1 pa-1 border-textfield" :value="specification.value ? specification.value : 'N/A' "  :suffix="getSuffix(specification.name)"></v-text-field>
+                                      <v-flex lg-4 md-4 xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                         <v-text-field readonly solo flat class="ml-1 pa-1 border-textfieldb" :value="specification.value ? specification.value : 'N/A' "  :suffix="getSuffix(specification.name)"></v-text-field>
                                      </v-flex>
 
                                  </v-layout>
@@ -200,7 +205,7 @@
 
                                  <v-layout row column>
 
-                                      <h3 class="text-xs-center">Your Product Specifications</h3>&nbsp&nbsp
+                                      <h3 class="text-xs-center font-weight-thin">Your Product Specifications</h3>&nbsp&nbsp
 
                                       <v-flex xs4>
                                           <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
@@ -211,7 +216,7 @@
                                       </v-flex>
 
                                       <v-flex xs4>
-                                         <v-text-field solo flat class="ml-1 pa-1 border-textfield" v-model="formData.efficiency"  suffix="lm/w"></v-text-field>
+                                         <v-text-field solo flat class="ml-1 pa-1 border-textfield"  v-model="formData.efficiency = getEfficiency()"  suffix="lm/w"></v-text-field>
                                       </v-flex>
 
                                       <v-flex xs4>
@@ -567,6 +572,18 @@ methods: {
 
     },
 
+    getEfficiency() {
+      var result = 0;
+
+      if(this.formData.lumen || this.formData.power)
+        result = this.formData.lumen / this.formData.power
+        this.formData.efficiency = result.toFixed(2)
+        
+
+      return result.toFixed(2)
+
+    },
+
       // clear existing object
     clearData() {
            for (const prop of Object.keys(this.formData)) {
@@ -642,6 +659,7 @@ watch: {
 
     },
 
+
 },
 
 
@@ -654,6 +672,12 @@ watch: {
   border: 1px solid black;
   margin-bottom: -17px;
 }
+
+.border-textfieldb .v-input__slot {
+  border: 1px solid gray;
+  margin-bottom: -17px;
+}
+
 
 </style>
 <style scoped lang="scss">
