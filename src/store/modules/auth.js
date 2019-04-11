@@ -223,14 +223,11 @@ const actions = {
                     context.commit('DESTROY_TOKEN_M');
                     context.commit('DESTROY_AUTHUSER_M');
 
-
-
                     // reset notifications
-                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                     context.dispatch('ntfctns/resetNotification_a', null, { root: true });
-                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    // reset notifications
 
+                    // unsubscribe to socket                    
+                    context.dispatch('sckts/unsubscribeSocket_a', null, { root: true });
 
                     resolve(response);
                 })
@@ -239,14 +236,12 @@ const actions = {
                     context.commit('DESTROY_TOKEN_M');
                     context.commit('DESTROY_AUTHUSER_M');
 
-
-
-                    // reset notifications
-                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    // reset notifications                    
                     context.dispatch('ntfctns/resetNotification_a', null, { root: true });
-                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                    // reset notifications
                     
+                    // unsubscribe to socket                    
+                    context.dispatch('sckts/unsubscribeSocket_a', null, { root: true });
+
                     reject(error)
                 })
             });
