@@ -28,7 +28,28 @@
 			</v-layout>
 
 		</v-container>
-		<inquiry-create :dialog.sync="openInquiryCreate"></inquiry-create>
+		<inquiry-create :snackBar.sync="successSnackbar" :dialog.sync="openInquiryCreate"></inquiry-create>
+
+    <v-snackbar
+
+        v-model="successSnackbar"
+        color="green"
+         top
+         multi-line
+         middle
+         :timeout="10000"
+        >
+
+        Successfully Created Inquiry
+        <v-btn
+          dark
+          flat
+          @click="successSnackbar = false"
+        >
+          Close
+        </v-btn>
+  </v-snackbar>
+
 	</div>
 </template>
 
@@ -57,6 +78,8 @@ export default {
 		isActive: false,
 		component: 'InquiriesTable',
 		openInquiryCreate: false,
+		successSnackbar:false
+
 
 	}),
 
@@ -73,6 +96,14 @@ export default {
 			},			
 		},
 
+	},
+
+	watch: {
+		snackBar(nVal, oVal) {
+			if(nval) {
+				this.snackBar = true
+			}
+		},
 	},
 
 	methods: {

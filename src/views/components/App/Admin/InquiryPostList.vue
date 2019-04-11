@@ -48,6 +48,7 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
+
             </v-flex>
 
             <v-flex xs12 v-else-if="inquiry.stage_id == 1003">
@@ -82,7 +83,6 @@
                         <v-layout row wrap>
                             <v-flex xs6 offset-xs3>
                                 <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
-                                    <i class="fas fa-thumbs-up white--text"></i>
                                     <span class="ml-1 white--text font-weight-light ">Approved</span>
                                 </v-btn>
                             </v-flex>
@@ -133,6 +133,10 @@
     
                     <v-card-text>
 
+                     <v-btn large :loading="formLoading" @click="submit()" flat block class="grey darken-4">
+                                        <span class="ml-1 white--text font-weight-bold">Approved bid</span>
+                                        <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
+                    </v-btn>
                      <!--    <pre>
                             {{ bidItems }}
                         </pre>
@@ -148,6 +152,9 @@
 
                             <v-flex xs7>
                                 <v-layout row wrap>
+
+                                     
+
                                     <!-- <v-container> -->
 
                                     <v-flex xs12 pl-2>
@@ -197,7 +204,7 @@
                             <v-flex xs12 mx-5 mt-2 mb-2 pt-0>
                                 <h5 class="font-weight-thin">Specifications</h5>
                                 <v-layout row wrap class="specifications">
-                                    <v-chip label dark outline text-color="black" v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                    <v-chip label dark outline text-color="black" v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index">
                                         {{ specification.name }}: &nbsp;
                                         <span class="font-weight-bold">
                                             <!-- {{ specification.value.split(',').join(', ') }} -->

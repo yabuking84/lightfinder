@@ -229,24 +229,7 @@
 
 
 
-      <v-snackbar
-          v-model="successSnackbar"
-          color="green"
-           top
-           multi-line
-           middle
-           :timeout="100000000"
-          >
 
-          Successfully Created Inquiry
-          <v-btn
-            dark
-            flat
-            @click="successSnackbar = false"
-          >
-            Close
-          </v-btn>
-    </v-snackbar>
 
 
   </div>
@@ -354,8 +337,6 @@ export default {
         pagination: {
             rowsPerPage: 15
         },
-
-        successSnackbar:true
 
     }),
 
@@ -549,6 +530,9 @@ export default {
                 this.$store.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
             },
         },
+
+
+        
     },
 
 }
