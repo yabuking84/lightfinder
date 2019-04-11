@@ -165,7 +165,7 @@ const actions = {
 
                 // set socket user
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                context.dispatch('sckts/joinRoom_a', null, { root: true });
+                context.dispatch('sckts/joinRoom_a', state.auth_user.uuid, { root: true });
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 // set socket user
 
