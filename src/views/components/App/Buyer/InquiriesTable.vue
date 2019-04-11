@@ -8,7 +8,7 @@
             <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
               <v-btn flat :value="status.id" :title="status.name">
                 <i class="white--text" :class="status.icon"></i>
-                <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
+                <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
               </v-btn>
             </span>
           </v-btn-toggle>
@@ -50,74 +50,6 @@
         </v-layout>
       </v-card-title>
 
-      <!-- <v-divider></v-divider> -->
-      
-      <!-- <v-data-table   
-            :rows-per-page-items="rowsPerPageItems"
-            :pagination.sync="pagination" 
-            :headers="headers" 
-            :items="tableItems" 
-            :loading="loading" 
-            :search="search">
-            <template  v-slot:items="props">
-              <tr class="th-heading">
-                
-                <td>
-                  <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
-                </td>
-
-                <td class="text-xs-left font-weight-medium ">
-                  <v-layout align-start justify-start column fill-height pt-3>
-                    <h3 class="mb-2" style="min-width:190px;">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
-                    {{ props.item.categories }}
-                  </v-layout>
-                </td>
-
-                    <td class="text-xs-left font-weight-medium">
-                        <v-layout align-start justify-start column fill-height pt-3>
-                            <h3 class="mb-1">{{ props.item.keywords }}</h3>
-                            <p class="mb-3">{{ props.item.message }}</p>
-                        </v-layout>
-                        </td>
-                <td class="text-xs-left">{{ props.item.quantity }}</td>
-
-                <td class="text-xs-left">
-                  <div class="dateCellWidth">
-                    {{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}
-                  </div>
-                </td>
-
-                <td class="text-xs-center">
-                  <div class="dateCellWidth">
-                    {{ getDateTime('mmm dd, yyyy hh:mm', props.item.created_at ) }}
-                  </div>
-                </td>
-
-                <td class="text-xs-center">
-                  <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
-                </td>
-
-            <td class="text-xs-center">
-              <v-btn 
-              @click="viewInquiry(props.item)" 
-              :loading="props.item.loading" 
-              small 
-              flat 
-              value="left" 
-              class="v-btn--active blue-grey darken-4 font-weight-light text-decoration-none btn-with-loading">
-                <i class="fas fa-eye white--text"></i>
-                <span class="ml-1 white--text font-weight-light ">View</span>
-              </v-btn>
-            </td>
-
-              </tr>
-            </template>
-            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-              Your search for "{{ search }}" found no results.
-            </v-alert>
-      </v-data-table> -->
-
-
     <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap>
 
             <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
@@ -137,11 +69,17 @@
                     :key="'itemsIsotope_'+index" > -->
 
 
-            <isotope :options='null' :list="tableItems" id="root_isotope">
+            <!-- <isotope :options='null' :list="tableItems" id="root_isotope" class="layout row wrap"> -->
+            <!-- {{ allInquiries }} -->
 
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
 
-                          <!-- {{ allInquiries }} -->
+                 <transition-group tag="div" name="fade" class="layout grey lighten-5 row wrap">
+
+                  <v-flex  
+                  xs12 sm6 md4 pa-2 
+                  v-for="(inquiry, index) in tableItems"                   
+                  :key="'tiItem_'+index">
+
 
                         <v-card class="pa-3 mx-2 my-3" :hover="true"  @click="viewInquiry(inquiry)">
 
@@ -261,7 +199,7 @@
                         </v-card>
 
                   </v-flex>
-                 </isotope>
+                 </transition-group>
         </v-layout>
 
          <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
@@ -648,21 +586,28 @@ export default {
       
       padding: 1em;
       margin: 0.5em;
-      width: calc(25% - 1em);
+      // width: calc(25% - 1em);
       min-width: 100px;
       // text-align: center;
       color: white;
       transition: box-shadow 0.2s;
+        max-width: none;
+
+      @media(max-width: 1400px) {
+
+        // width: calc(100% - 1em);
+
+      }
 
       @media(max-width: 767px) {
 
-        width: calc(50% - 1em);
+        // width: calc(50% - 1em);
 
       }
 
       @media(max-width: 500px) {
 
-        width: calc(100% - 1em);
+        // width: calc(100% - 1em);
 
       }
 

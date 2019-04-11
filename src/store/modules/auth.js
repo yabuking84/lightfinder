@@ -230,6 +230,18 @@ const actions = {
                     resolve(response);
                 })
                 .catch(error => {
+                    localStorage.clear();
+                    context.commit('DESTROY_TOKEN_M');
+                    context.commit('DESTROY_AUTHUSER_M');
+
+
+
+                    // reset notifications
+                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    context.dispatch('ntfctns/resetNotification_a', null, { root: true });
+                    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    // reset notifications
+                    
                     reject(error)
                 })
             });
