@@ -96,7 +96,7 @@
 
 
         <transition-group 
-        tag="p" 
+        tag="v-layout" 
         v-if="tableItems.length > 0" 
         name="tiItems" 
         class="layout grey lighten-5 row wrap">
@@ -714,7 +714,6 @@ export default {
 // transitions
 // ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 .inquiry {
-    display: inline-block;    
     transition: all 1s;
 }
 
