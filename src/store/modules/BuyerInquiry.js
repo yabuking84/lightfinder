@@ -108,12 +108,9 @@ const actions = {
                 resolve(response.data);
             })
             .catch(error => {
-
                 if(actions.checkToken(error)) {
                     reject(error);
                 }
-                
-
             })
 
         }) 
