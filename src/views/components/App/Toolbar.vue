@@ -66,16 +66,20 @@ flat>
 
     <v-spacer></v-spacer>
     
-    <!-- remove this -->
-    <!-- <v-btn>
+    <!-- devMode -->
+    <!-- dddddddddddddddddddddddddddddddddddddddddd -->
+    <template v-if="devMode">
+    <v-btn>
         <h3>{{ authUser.email }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>{{ authUser.name }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>{{ authUser.uuid }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3 v-if="authUser.role==roles.admin.id">ADMIN</h3>
         <h3 v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
         <h3 v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
-    </v-btn> -->
-    <!-- remove this -->
+    </v-btn>
+    </template>
+    <!-- dddddddddddddddddddddddddddddddddddddddddd -->
+    <!-- devMode -->
 
     <v-menu offset-x>
         <v-avatar slot="activator" size="40">
@@ -189,6 +193,7 @@ data: () => ({
     title: 'BuyAnyLight.com',
     roles: config.auth.role,
     timeoutSnackbar: 8000,
+    devMode: true,
 }),
 
 
@@ -458,12 +463,16 @@ computed: {
     style(){
         var style = '';
         
-        // if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) 
-        // style = 'background-color:yellow !important;';
-        // else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) 
-        // style = 'background-color:blue !important;';
-        // else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) 
-        // style = 'background-color:red !important;';
+        
+        // Dev mode, some markers for easier to know the user and type.
+        if(this.devMode) {            
+            if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) 
+            style = 'background-color:yellow !important;';
+            else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) 
+            style = 'background-color:blue !important;';
+            else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) 
+            style = 'background-color:red !important;';
+        }
         
         return style;
     },

@@ -66,9 +66,11 @@ export default {
                   reject(error);
               })
           });
-      },
+    },
 
-
+    randomIndexArray: function (items) {
+      return Math.floor(Math.random() * items.length)
+    },
 
   },
 
