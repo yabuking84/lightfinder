@@ -72,7 +72,6 @@
             <!-- <isotope :options='null' :list="tableItems" id="root_isotope"> -->
 
 
-
               <transition-group 
               tag="v-layout" 
               v-if="tableItems.length > 0" 
