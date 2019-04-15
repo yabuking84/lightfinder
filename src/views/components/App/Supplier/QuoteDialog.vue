@@ -187,7 +187,7 @@
 
                                 <v-flex xs2>
                                          <v-layout row column>
-                                       <h3 class="text-xs-center font-weight-thin">Specification Name</h3>&nbsp&nbsp
+                                       <h4 class="text-xs-left font-weight-thin">Specification Name</h4>
 
                                        <v-flex  lg4 md4 xs4 sm3 mt-3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
                                            
@@ -201,7 +201,8 @@
 
                                 <v-flex xs5>
                                          <v-layout row column>
-                                          <h3 class="text-xs-center font-weight-light">Buyer <br/> Product Specifications</h3>&nbsp&nbsp
+                                        <h4 class="text-xs-left font-weight-thin">Buyer <br/> Product Specifications</h4>
+
 
                                       <v-flex lg4 md4 xs4 sm3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
 
@@ -220,7 +221,7 @@
                                   
                                  <v-layout row column>
 
-                                      <h3 class="text-xs-center font-weight-thin">Your  <br/> Product Specifications</h3>&nbsp&nbsp
+                                        <h3 class="text-xs-center font-weight-light">Your  <br/> Product Specifications</h3>&nbsp&nbsp
 
                                       <v-flex  lg4 md4 xs4 sm3 >
                                           <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
@@ -294,13 +295,20 @@
                       </v-flex>
                       <v-flex xs12>
                         <h4 class="font-weight-thin mt-3 mb-2">Attachments </h4>
+
                         <!-- <upload-file></upload-file> -->
-                        <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true>
-                          <div class="dropzone-custom-content">
-                            <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
-                            <div class="subtitle">...or click to select a file from your computer</div>
-                          </div>
+                        <vue-dropzone 
+                        id="dropzone_attachments" 
+                        :options="dropzoneOptions" 
+                        :useCustomSlot="useCustomSlot"
+                        :awss3="getAWSS3('attachments')"
+                        @vdropzone-success="vdp_success($event,'add-quote-attachments')">
+                            <div class="dropzone-custom-content">
+                                <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
+                                <div class="subtitle">...or click to select a file from your computer</div>
+                            </div>
                         </vue-dropzone>
+
                       </v-flex>
                     </v-layout>
 
@@ -328,6 +336,9 @@
   </div>
 </template>
 <script>
+
+import config from '@/config/index'
+
 import helpers from "@/mixins/helpers";
 import UploadFile from "@/views/Components/App/UploadFile";
 import inqEvntBs from "@/bus/inquiry";
@@ -421,49 +432,68 @@ props: {
 
 
 data: () => ({
-  loading: false,
-  formData: {
-    // price: 11.11,
-    // total_price: 7777.56,
-    // product_name: "Super LED Industrial",
-    // remarks: "Nice light",
-    // description: "Last multiple years!",
-    price: null,
-    total_price: null,
-    product_name: null,
-    remarks: null,
-    description: null,
+    loading: false,
+    formData: {
+        // price: 11.11,
+        // total_price: 7777.56,
+        // product_name: "Super LED Industrial",
+        // remarks: "Nice light",
+        // description: "Last multiple years!",
+        price: null,
+        total_price: null,
+        product_name: null,
+        remarks: null,
+        description: null,
 
-    sample_cost:null,
-    sample_shipment_cost:null,
+        sample_cost:null,
+        sample_shipment_cost:null,
 
-    lumen:null,
-    power:null,
-    efficiency:null,
-    beam_angle: null,
-    cct: null,
-     ip: null,
-    finish: null,
-    size: null,
-    dimmable: null,
+        lumen:null,
+        power:null,
+        efficiency:null,
+        beam_angle: null,
+        cct: null,
+         ip: null,
+        finish: null,
+        size: null,
+        dimmable: null,
+        attachments: [],
 
-    
-    
+    },
 
-  },
+    is_sample:false, // i set lang true if naa na ang data sa sample sa inquiry - ongoing pa
+    quoteAction: "Add",
 
-  is_sample:false, // i set lang true if naa na ang data sa sample sa inquiry - ongoing pa
-  quoteAction: "Add",
-  
-  initBid: {
-    price: null,
-    total_price: null,
-    product_name: null,
-    remarks: null,
-    description: null,
-  },
+    initBid: {
+        price: null,
+        total_price: null,
+        product_name: null,
+        remarks: null,
+        description: null,
+        attachments: [],
+    },
 
 
+
+
+    // Dropzone
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+
+    useCustomSlot: true,
+    dropzoneOptions: {
+        url: config.main.awss3.urls.inquiry,
+        thumbnailWidth: 200,
+        maxFilesize: 0.5,
+        headers: {},
+        addRemoveLinks: true,            
+        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
+    },
+
+
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // Dropzone
 
 
 
@@ -641,20 +671,16 @@ methods: {
     // dddddddddddddddddddddddddddddddddddddddddddddddddddd
     // dddddddddddddddddddddddddddddddddddddddddddddddddddd
     getAWSS3(upload_group){
-        var action = "";
-        if(upload_group=='attachments')    
-        action = "add-inquiry-attachments";
-        else if(upload_group=='images')
-        action = "add-inquiry-images";
-        else
-        action = "add-inquiry-attachments";
 
         var awss3 =  {
             signingURL: config.main.awss3.signingURL,
             headers: {
                 token:localStorage.access_token,
             },
-            params : { action: action },
+            params : { 
+                action: upload_group, 
+                inquiry_id: this.inquiry.id,
+            },
             sendFileToServer : true,
             withCredentials: false
         };
@@ -671,19 +697,11 @@ methods: {
         console.log("vdp_success upload_group = ",upload_group);
 
         if(file.status=='success') {
-            var action = "";
-            if(upload_group=='attachments')    
-            action = "add-inquiry-attachments";
-            else if(upload_group=='images')
-            action = "add-inquiry-images";
-            else
-            action = "add-inquiry-attachments";
-
             var attachment = {
                 location: file.s3ObjectLocation,
                 filename: file.name,
                 filetype: file.type,
-                filegroup: action,
+                filegroup: upload_group,
                 filesize: _.round((file.size/1000), 2),
             };
 
