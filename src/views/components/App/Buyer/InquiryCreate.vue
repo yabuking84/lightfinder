@@ -1578,6 +1578,7 @@ export default {
 
 
             console.log('attachment',attachment);
+            this.formData.attachments.push(attachment);
 
         }
 
