@@ -197,22 +197,7 @@
 
                                 </v-flex>
 
-                                <!-- ----------------------------------------- -->
-
-                                <v-flex xs5>
-                                         <v-layout row column>
-                                          <h3 class="text-xs-center font-weight-light">Buyer <br/> Product Specifications</h3>&nbsp&nbsp
-
-                                      <v-flex lg4 md4 xs4 sm3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-
-
-                                         <v-text-field readonly solo flat class="ml-1 mt-2  border-textfieldb" :value="specification.value ? specification.value : 'N/A' "  :suffix="getSuffix(specification.name)"></v-text-field>
-                                     </v-flex>
-
-                                 </v-layout>
-                                 
-                                </v-flex>
-
+                           
                                <!-- ----------------------------------------- -->
 
 
@@ -235,7 +220,7 @@
                                       </v-flex>
 
                                       <v-flex  lg4 md4 xs4 sm3>
-                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.beam_angle"  suffix="degress"></v-text-field>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.beam_angle"  suffix="degrees"></v-text-field>
                                       </v-flex>
 
                                       <v-flex  lg4 md4 xs4 sm3>
@@ -259,6 +244,24 @@
                                       </v-flex>
                                  </v-layout>
                                 </v-flex>
+
+
+                                <!-- ----------------------------------------- -->
+
+                                <v-flex xs5>
+                                         <v-layout row column>
+                                          <h3 class="text-xs-center font-weight-light">Buyer <br/> Product Specifications</h3>&nbsp&nbsp
+
+                                      <v-flex lg4 md4 xs4 sm3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+
+
+                                         <v-text-field readonly solo flat class="ml-1 mt-2  border-textfieldb" :value="specification.value ? specification.value : '' "  :suffix="getSuffix(specification.name)"></v-text-field>
+                                     </v-flex>
+
+                                 </v-layout>
+                                 
+                                </v-flex>
+
 
                            
                               
@@ -590,7 +593,7 @@ methods: {
         } else if(key.toLowerCase() == 'efficiency') {
           suffix = 'lm/w'          
         } else if(key.toLowerCase() == 'beam angle') {
-          suffix = 'degress';
+          suffix = 'degrees';
         }
 
       return suffix;
