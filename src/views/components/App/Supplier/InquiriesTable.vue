@@ -48,110 +48,9 @@
       </v-card-title>
       <v-divider></v-divider>
 
-      <!-- :headers="headers"  -->
-
-    <!--   <v-data-table :headers="headers" :items="tableItems" :loading="loading" :search="search">
     
-        <template v-slot:items="props">
-
-           <tr class="">
-               
-                   <td>
-                       <v-layout align-start justify-start column fill-height pt-3>
-                           <v-checkbox v-model="props.item.select" :inq-id="props.item.inq_id" primary hide-details></v-checkbox>
-                       </v-layout>
-                   </td>
-               
-                   <td class="text-xs-left font-weight-medium ">
-                       <v-layout align-start justify-start column fill-height pt-3>
-                           <h3 class="mb-2" style="min-width:190px;">Inquiry # <span>{{ props.item.inq_id }}</span></h3>
-                           {{ props.item.categories }}
-                       </v-layout>
-                   </td>
-               
-                   <td class="text-xs-left font-weight-medium">
-                       <v-layout align-start justify-start column fill-height pt-3>
-                           <h3 class="mb-1">{{ props.item.keywords }}</h3>
-                           <p class="mb-3">{{ props.item.message }}</p>
-                       </v-layout>
-                   </td>
-               
-               
-                   <td class="text-xs-left">
-                       <v-layout align-start justify-start column fill-height pt-3>
-                           {{ props.item.quantity }}
-                       </v-layout>
-                   </td>
-               
-                   <td class="text-xs-left">
-                       <v-layout align-start justify-start column fill-height pt-3>
-                           <div class="dateCellWidth">{{ getDateTime('mmm dd, yyyy',props.item.shipping_date) }}</div>
-                       </v-layout>
-                   </td>
-               
-                   <td class="text-xs-left">
-                       <v-layout align-start justify-start column fill-height pt-3>
-                           <div class="dateCellWidth">{{ getDateTime('mmm dd, yyyy hh:mm',props.item.created_at) }}</div>
-                       </v-layout>
-                   </td>
-               
-                   <td class="text-xs-left">
-                       <v-layout align-start justify-start column fill-height pt-2 style="position:relative;">
-                           <v-flex>
-                               <div v-if="props.item.inquiry.status == 1002 || props.item.inquiry.has_bid == false">
-                                  <small class="red--text font-weight-medium">Haven't quoted</small>
-                              </div>
-                              <div v-else>
-                                 <small class="green--text">Already quoted </small>
-                              </div>
-                               <inquiry-status-buttons :status-id="props.item.status" :statuses="statuses"></inquiry-status-buttons>
-                           </v-flex>
-                   
-                           <div style="position:absolute; top:20px; right:-20px;" v-if="props.item.status==1004">
-                               <v-icon 
-                               v-if="props.item.inquiry.awarded && props.item.inquiry.awarded_to_me"
-                               class="awarded orange--text">
-                                   fas fa-award
-                               </v-icon>
-                   
-                               <v-icon 
-                               v-else-if="props.item.inquiry.awarded"
-                               class="awarded red--text">
-                                   fas fa-ban
-                               </v-icon>
-                           </div>
-
-                        
-
-                       </v-layout>
-                   </td>
-               
-                   <td class="text-xs-left">
-                       <v-layout align-start justify-start column fill-height pt-2>
-                               <v-btn 
-                               small 
-                               flat 
-                               value="left" 
-                               @click="viewInquiry(props.item)"
-                               class="v-btn--active blue-grey darken-4 font-weight-light text-decoration-none"
-                               :loading="props.item.loading">
-                                   <i class="fas fa-eye white--text"></i>
-                                   <span class="ml-1 white--text font-weight-light ">View</span>
-                               </v-btn>                           
-                       </v-layout>
-                   </td>
-               </tr>
-   
-        </template>
-
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
-        </v-alert>
-      </v-data-table>
- -->
 
 
-    <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap>
 
             <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
             <!-- <pre>{{ allInquiries[0] }}</pre> -->
@@ -170,12 +69,27 @@
                     :key="'itemsIsotope_'+index" > -->
 
 
-            <isotope :options='null' :list="tableItems" id="root_isotope">
-
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
+            <!-- <isotope :options='null' :list="tableItems" id="root_isotope"> -->
 
 
-                      <v-card class="pa-3 mx-2 my-3 " :hover="true">
+
+              <transition-group 
+              tag="v-layout" 
+              v-if="tableItems.length > 0" 
+              name="tiItems" 
+              class="layout grey lighten-5 row wrap">
+
+                  <v-flex  
+                xs12 sm6 md4 pa-2 
+                  v-for="(inquiry, index) in tableItems" 
+                  :key="inquiry.inq_id"
+                          class="inquiry">
+
+
+                      <v-card 
+                      class="pa-3 mx-2 my-3 tiItem" 
+                      :hover="true"
+                      @click="viewInquiry(inquiry)">
 
                           <v-layout row wrap>
 
@@ -280,9 +194,11 @@
 
                   </v-flex>
 
-              </isotope>
+        </transition-group>
+
+
+              <!-- </isotope> -->
               
-        </v-layout>
 
 
         <v-layout v-else class="grey lighten-4" justify-center row wrap pa-5>
@@ -638,6 +554,27 @@ table.v-table tbody th {
 
   }
 
+
+// transitions
+// ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+.inquiry {
+    transition: all 1s;
+}
+
+// .tiItems-enter-active, .tiItems-leave-active {
+//   transition: all 3s;
+// }
+
+.tiItems-enter, .tiItems-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  // transform: translateX(30px);
+}
+
+.tiItems-leave-active {
+  position: absolute;
+}
+// ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+// transitions
 
 
 
