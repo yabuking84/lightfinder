@@ -51,7 +51,7 @@
     <v-divider></v-divider>
 
 
-        <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap>
+        <!-- <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap> -->
 
             <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
             <!-- <pre>{{ allInquiries[0] }}</pre> -->
@@ -70,13 +70,34 @@
                     :key="'itemsIsotope_'+index" > -->
 
 
-            <isotope :options='null' :list="tableItems" id="root_isotope">
+          <!--   <isotope :options='null' :list="tableItems" id="root_isotope">
 
                   <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
 
 
                         <v-card class="pa-3 mx-2 my-3" :hover="true">
-                        
+                         -->
+
+
+              <transition-group 
+              tag="v-layout" 
+              v-if="tableItems.length > 0" 
+              name="tiItems" 
+              class="layout grey lighten-5 row wrap">
+
+                  <v-flex  
+                  
+                  xs12 sm6 md4 pa-2 
+                  v-for="(inquiry, index) in tableItems" 
+                  :key="inquiry.inq_id"
+                          class="inquiry">
+
+
+                      <v-card 
+                      class="pa-3 mx-2 my-3 tiItem" 
+                      :hover="true"
+                      @click="viewInquiry(inquiry)">
+
                             <v-layout row wrap mt-2>
 
 
@@ -218,9 +239,11 @@
 
                     </v-flex>
 
-            </isotope>
+            <!-- </isotope> -->
 
-        </v-layout>
+                    </transition-group>
+
+
 
          <v-layout v-else class="grey lighten-4" justify-center  row wrap pa-5>
 
@@ -670,6 +693,30 @@ table.v-table tbody th {
     border-bottom: 5px solid #dedede ;
 }
 
+
+
+// transitions
+// ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+.inquiry {
+    transition: all 1s;
+}
+
+// .tiItems-enter-active, .tiItems-leave-active {
+//   transition: all 3s;
+// }
+
+.tiItems-enter, .tiItems-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  // transform: translateX(30px);
+}
+
+.tiItems-leave-active {
+  position: absolute;
+}
+// ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+// transitions
+
+</style>
 
 
 </style>
