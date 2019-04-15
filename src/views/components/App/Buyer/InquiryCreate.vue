@@ -1,26 +1,52 @@
 <template>
   <div>
     <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen >
+
       <v-card>
+
+        <v-toolbar v-if="isEdit" class="headline red darken-1 white--text">
+              <span class="font-weight-bold">EDIT INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
+                 <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn dark flat @click="$emit('update:dialog', false)">
+                    <v-icon>close</v-icon>
+                  </v-btn>
+                </v-toolbar-items>
+        </v-toolbar>
         
-        <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
+
+        <v-toolbar v-else class="headline grey darken-4 white--text">
+                  <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-toolbar-items>
+                    <v-btn dark flat @click="$emit('update:dialog', false)">
+                      <v-icon>close</v-icon>
+                    </v-btn>
+                  </v-toolbar-items>
+        </v-toolbar>
+
+      <!--   
+        <v-card-title v-if="isEdit" class="headline red darken-1 white--text">
           Edit
           <v-spacer></v-spacer>
           <span class="font-weight-bold">INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
         </v-card-title>
 
-        <v-card-title v-else class="headline grey darken-4 white--text" primary-title>
+        <v-card-title v-else class="headline grey darken-4 white--text">
             Create Inquiry
             <v-spacer></v-spacer>
             <v-btn dark flat @click="$emit('update:dialog', false)">
                 <v-icon>close</v-icon>
             </v-btn>           
-        </v-card-title>
+        </v-card-title> -->
+
+
 
         <v-card-text id="inquiryCreate_scrollable_cont">
+
             <v-layout row wrap>
                   
-                <v-flex xs7 style="max-height:71vh; overflow:hidden; overflow-y:auto;">
+                <v-flex xs7 style="max-height:77vh; overflow:hidden; overflow-y:auto;">
                   <v-card class="inqCurved">
                         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
@@ -589,6 +615,8 @@
                  </v-card>
 
                 </v-flex>
+              
+              <!-- <v-divider vertical></v-divider> -->
 
                 <v-flex xs5>
                     
@@ -767,7 +795,6 @@
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
-
                 </v-flex>
                 
             </v-layout>
@@ -775,26 +802,43 @@
 
         <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-layout align-center justify-space-between row fill-height wrap>
-            <v-flex xs12 sm6>
-              <v-layout class="ma-3">
-                <v-btn color="primary" @click="$emit('update:dialog', false)">
+             <!--  <v-btn color="primary" @click="$emit('update:dialog', false)">
                   close
                 </v-btn>
                 <v-btn color="error" @click="clearForm()">
                   clear
                 </v-btn>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <v-layout align-center justify-end row fill-height class="ma-3">
-                <v-btn color="success" @click="submitForm()" :loading="formLoading">
+
+                <v-spacer></v-spacer>
+
+                 <v-btn color="success" @click="submitForm()" :loading="formLoading">
                   submit
-                </v-btn>
-              </v-layout>
-            </v-flex>
-          </v-layout>
+                </v-btn> -->
+
+        <v-card-actions>
+
+            <v-layout align-center justify-space-between row fill-height wrap>
+
+              <v-flex xs12 sm6>
+                <v-layout class="ma-3">
+                  <v-btn color="primary" @click="$emit('update:dialog', false)">
+                    close
+                  </v-btn>
+                  <v-btn color="error" @click="clearForm()">
+                    clear
+                  </v-btn>
+                </v-layout>
+              </v-flex>
+
+              <v-flex xs12 sm6>
+                <v-layout align-center justify-end row fill-height class="ma-3">
+                  <v-btn color="success" @click="submitForm()" :loading="formLoading">
+                    submit
+                  </v-btn>
+                </v-layout>
+              </v-flex>
+            </v-layout>
+
         </v-card-actions>
 
    <!--    <v-snackbar
