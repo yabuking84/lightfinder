@@ -9,7 +9,7 @@
           <span class="font-weight-bold">INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
         </v-card-title>
 
-        <v-card-title v-else class="headline grey darken-4 white--text" primary-title height="45px">
+        <v-card-title v-else class="headline grey darken-4 white--text" primary-title>
             Create Inquiry
             <v-spacer></v-spacer>
             <v-btn dark flat @click="$emit('update:dialog', false)">
@@ -101,12 +101,12 @@
                                   </v-flex>
                                   <v-flex xs12>                                        
                                         <h4 class="mb-3 mt-4">Upload Images:</h4>
+                                        <!-- @vdropzone-success="vdp_success($event,'images')" -->
                                         <vue-dropzone 
                                         id="dropzone_images" 
                                         :options="dropzoneOptions" 
-                                        :useCustomSlot="useCustomSlot"
-                                        @vdropzone-s3-upload-success="vdp_s3UploadSuccess"
-                                        @vdropzone-success="vdp_success('testt')"
+                                        :useCustomSlot="useCustomSlot"                                        
+                                        @vdropzone-success="vdp_success($event,'images')"
                                         :awss3="getAWSS3('images')">
                                           <div class="dropzone-custom-content">
                                             <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
@@ -550,8 +550,7 @@
                                     :options="dropzoneOptions" 
                                     :useCustomSlot="useCustomSlot"
                                     :awss3="getAWSS3('attachments')"
-                                    @vdropzone-s3-upload-success="vdp_s3UploadSuccess"
-                                    @vdropzone-success="vdp_success(file,response,'testt')">
+                                    @vdropzone-success="vdp_success($event,'attachments')">
                                       <div class="dropzone-custom-content">
                                         <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                         <div class="subtitle">...or click to select a file from your computer</div>
@@ -1122,9 +1121,6 @@ export default {
 
   created: function() {
 
-    console.log('config.main.awss3.headers');
-    console.log(config.main.awss3.headers);
-
     // for shipping_date field
     this.formData.shipping_date = this.getDateTime();
     this.minDate = this.formData.shipping_date;
@@ -1479,10 +1475,7 @@ export default {
         "categories": [
           this.formData.category
         ],
-        "attachments": [
-          "cdn link here later later 1",
-          "cdn link here later later 2"
-        ],
+        "attachments": [],
         "specifications": {
           power: this.formData.power,
           lumen: this.formData.lumen,
@@ -1547,7 +1540,9 @@ export default {
 
         var awss3 =  {
             signingURL: config.main.awss3.signingURL,
-            headers: config.main.awss3.headers,
+            headers: {
+                token:localStorage.access_token,
+            },
             params : { action: action },
             sendFileToServer : true,
             withCredentials: false
@@ -1560,10 +1555,41 @@ export default {
         // console.log("vdp_s3UploadSuccess",s3ObjectLocation);
         // console.log();
     },
-    vdp_success(file, response, upload_group){
+    vdp_success(file, upload_group){
         console.log("vdp_success file = ",file);
-        console.log("vdp_success response = ",response);
         console.log("vdp_success upload_group = ",upload_group);
+
+        if(file.status=='success') {
+            var action = "";
+            if(upload_group=='attachments')    
+            action = "add-inquiry-attachments";
+            else if(upload_group=='images')
+            action = "add-inquiry-images";
+            else
+            action = "add-inquiry-attachments";
+
+            var attachment = {
+                location: file.s3ObjectLocation,
+                filename: file.name,
+                filetype: file.type,
+                filegroup: action,
+                filesize: _.round((file.size/1000), 2),
+            };
+
+
+            console.log('attachment',attachment);
+
+        }
+
+        // if(upload_group=='attachments')    
+        // action = "add-inquiry-attachments";
+        // else if(upload_group=='images')
+        // action = "add-inquiry-images";
+        // else
+        // action = "add-inquiry-attachments";
+
+
+
         // this.formData.attachments.push({
 
         // });
