@@ -126,25 +126,27 @@
                                   </v-flex>
                                   <v-flex xs4>
                                     <v-text-field 
-                                    class="mr-1" 
-                                    label="Price Per Piece" 
-                                    :error-messages="fieldErrors('formData.desired_price')" 
-                                    @blur="$v.formData.desired_price.$touch()" 
-                                    v-model="formData.desired_price" 
-                                    @keyup.enter="stepUp()" 
-                                    :value="formData.desired_price" 
-                                    suffix="USD">
+                                      class="mr-1" 
+                                        mask="######"
+                                      label="Price Per Piece" 
+                                      :error-messages="fieldErrors('formData.desired_price')" 
+                                      @blur="$v.formData.desired_price.$touch()" 
+                                      v-model="formData.desired_price" 
+                                      @keyup.enter="stepUp()" 
+                                      :value="formData.desired_price" 
+                                      suffix="USD">
                                     </v-text-field>
                                   </v-flex>
                                 <v-flex xs1>
                                   </v-flex>
                                         <v-flex xs4>
                                     <v-text-field 
-                                    class="mr-1" 
-                                    label="Total Price" 
-                                    @keyup.enter="stepUp()" 
-                                    :value="formData.quantity * formData.desired_price" 
-                                    suffix="USD">
+                                      class="mr-1" 
+                                      readonly
+                                      label="Total Price" 
+                                      @keyup.enter="stepUp()" 
+                                      :value="formData.quantity * formData.desired_price" 
+                                      suffix="USD">
                                     </v-text-field>
                                   </v-flex>
 
@@ -159,63 +161,63 @@
                               Specifications
                             </v-stepper-step>
                             <v-stepper-content step="4" ref="step_4">
-                              <v-container>
                                 <v-layout row wrap>
-                                  <v-flex xs6>
-                                    <v-layout row class="custom_digits">
+                                  <v-flex xs12 sm12 md6 lg6>
+                                    <v-layout row ml-4>
                                       <v-text-field 
-                                      label="Power" 
-                                      v-model="formData.power" 
-                                      @keyup.enter="stepUp()" 
-                                      :value="formData.power" 
-                                      suffix="watts" 
-                                      mask="######">
+                                        label="Power" 
+                                        v-model="formData.power" 
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.power" 
+                                        suffix="watts" 
+                                        mask="######">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row class="custom_digits">
+                                    <v-layout row ml-4 >
                                       <v-text-field 
-                                      label="Lumen" 
-                                      v-model="formData.lumen"
-                                      @keyup.enter="stepUp()" 
-                                      :value="formData.lumen" 
-                                      suffix="lm" 
-                                      mask="######">
+                                        label="Lumen" 
+                                        v-model="formData.lumen"
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.lumen" 
+                                        suffix="lm" 
+                                        mask="######">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row class="custom_digits">
+                                    <v-layout row ml-4 >
                                       <v-text-field 
-                                      label="Efficiency" 
-                                      v-model="formData.efficiency" 
-                                      @keyup.enter="stepUp()" 
-                                      :value="formData.efficiency" 
-                                      suffix="lm/w" mask="######">
+                                        label="Efficiency" 
+                                        v-model="formData.efficiency" 
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.efficiency" 
+                                        suffix="lm/w" mask="######">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row class="custom_digits">
+                                    <v-layout row ml-4 >
                                       <v-text-field 
-                                      label="Beam Angle" 
-                                      v-model="formData.beam_angle" 
-                                      @keyup.enter="stepUp()" 
-                                      :value="formData.beam_angle" 
-                                      suffix="degrees" mask="###">
+                                        label="Beam Angle" 
+                                        v-model="formData.beam_angle" 
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.beam_angle" 
+                                        suffix="degrees" mask="###">
                                       </v-text-field>
                                     </v-layout>
                                     <v-layout row wrap>
-                                      <v-flex xs6>
+                                      <v-flex xs6 ml-4>
                                         <h5 class="font-weight-light"> <strong> Want to include warranty ? </strong> </h5>
                                         <v-radio-group v-model="is_warranty" row>
                                           <v-radio label="Yes" :value="1"></v-radio>
                                           <v-radio label="No" :value="0"></v-radio>
                                         </v-radio-group>
                                       </v-flex>
-                                      <v-flex xs3 mt-2 mr-3 v-show="is_warranty">
+                                      <v-flex xs6 ml-4 mt-2 mr-3 v-show="is_warranty">
                                         <v-text-field label="Warranty" v-model="formData.warranty" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.warranty')" @blur="$v.formData.warranty.$touch()" :value="formData.warranty" suffix="yr/s" mask="#">
                                         </v-text-field>
                                       </v-flex>
                                     </v-layout>
                                   </v-flex>
-                                  <v-flex xs6>
-                                    <v-layout row class="custom_digits">
+
+                                  <v-flex xs12 sm12 md6 lg6>
+                                    <v-layout row ml-4>
                                       <v-text-field label="CCT" 
                                       v-model="formData.cct" 
                                       @keyup.enter="stepUp()" 
@@ -224,7 +226,7 @@
                                       mask="######">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row class="custom_digits">
+                                    <v-layout row ml-4 class="">
                                       <v-text-field 
                                       label="IP Rating" 
                                       v-model="formData.ip"
@@ -233,57 +235,68 @@
                                       mask="######">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row wrap class="custom_digits">
+                                    <v-layout row ml-4 class="">
                                       <v-text-field 
                                       v-model="formData.size" 
                                       @keyup.enter="stepUp()" 
                                       label="Size">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row wrap class="custom_digits">
+                                    <v-layout row ml-4 class="">
                                       <v-text-field 
                                       v-model="formData.finish" 
                                       @keyup.enter="stepUp()" 
                                       label="Finish">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row wrap class="">
-                                      <v-flex xs3>
-                                        <v-switch 
-                                        color="black" 
-                                        v-model="formData.dimmable" 
-                                        label="Non-Dim"
-                                         value="Non-Dim"
-                                         ></v-switch>
+
+                                    <v-layout row wrap ml-4>
+
+                                      <v-flex xs12>
+                                          <h5 class="font-weight-light"> <strong> Dimmable </strong> </h5>
                                       </v-flex>
-                                      <v-flex xs3>
-                                        <v-switch 
-                                        color="black" 
-                                        v-model="formData.dimmable" 
-                                        label="TRIAC" 
-                                        value="TRIAC">
-                                        </v-switch>
+
+                                         <v-flex xs6 sm6 lg6>
+                                          <v-switch 
+                                            color="black" 
+                                            v-model="formData.dimmable" 
+                                            label="Non-Dim"
+                                             value="Non-Dim"
+                                           ></v-switch>
                                       </v-flex>
-                                      <v-flex xs3>
-                                        <v-switch 
-                                        color="black" 
-                                        v-model="formData.dimmable" 
-                                        label="0-10V" 
-                                        value="0-10V">
-                                        </v-switch>
-                                      </v-flex>
-                                      <v-flex xs3>
-                                        <v-switch 
-                                        color="black" 
-                                        v-model="formData.dimmable"
-                                        label="DALI" 
-                                        value="DALI">
-                                        </v-switch>
-                                      </v-flex>
+
+                                      <v-flex xs6 sm6 lg6>
+                                          <v-switch 
+                                            color="black" 
+                                            v-model="formData.dimmable" 
+                                            label="TRIAC" 
+                                            value="TRIAC">
+                                          </v-switch>
+                                        </v-flex>
+
+                                          <v-flex xs6 sm6 lg6>
+                                            <v-switch 
+                                              color="black" 
+                                              v-model="formData.dimmable" 
+                                              label="0-10V" 
+                                              value="0-10V">
+                                            </v-switch>
+                                          </v-flex>
+                                          <v-flex xs6 sm6 lg6>
+                                            <v-switch 
+                                              color="black" 
+                                              v-model="formData.dimmable"
+                                              label="DALI" 
+                                              value="DALI">
+                                            </v-switch>
+                                          </v-flex>
+                                        
+
+                                     
                                     </v-layout>
+
                                   </v-flex>
                                 </v-layout>
-                              </v-container>
                               <v-btn color="primary" @click="stepUp()">next</v-btn>
                               <v-btn flat @click="stepDown()">back</v-btn>
                             </v-stepper-content>
@@ -302,7 +315,7 @@
                                 <v-layout row wrap>
 
 
-                                  <v-flex xs6>
+                                  <v-flex xs12 sm6 md6 lg12>
                                     <!-- <v-text-field v-model="formData.street" @keyup.enter="stepUp()" label="Street Name/No.">  </v-text-field>  -->
                                     <h3 class="font-weight-light">Do you want to purchase a sample order ?</h3>
                                     <v-radio-group v-model="is_sample" row>
@@ -311,7 +324,7 @@
                                     </v-radio-group>
                                   </v-flex>
 
-                                  <v-flex xs6 v-show="is_sample">
+                                  <v-flex xs12 sm6 md6 lg12 v-show="is_sample">
                                      <h3 class="font-weight-light">Enter your desired quantity.</h3>
                                     <v-layout row wrap>
                                       <v-flex xs7 class="custom_digits">
@@ -388,7 +401,7 @@
                               <v-container>
                                 <v-layout row wrap>
 
-                                  <v-flex xs4>
+                                  <v-flex xs12 sm12 md12 lg12>
                                     <h3 class="font-weight-light">Do you require OEM ?</h3>
                                     <v-radio-group v-model="is_oem" row>
                                       <v-radio label="Yes" :value="1"></v-radio>
@@ -396,7 +409,7 @@
                                     </v-radio-group>
                                   </v-flex>
                                     
-                                    <v-flex xs7>
+                                    <v-flex xs12 sm6 md12 lg12>
 
                                   <v-layout row wrap v-show="is_oem">
                                           <h3 class="font-weight-light">Please be accurate as possible.</h3>
@@ -449,30 +462,22 @@
                             <v-stepper-content step="7" ref="step_7" no-focus>
                               <v-container>
                                 <v-layout row wrap>
-                                  <v-flex xs5 ml-2>
-                         
 
+                                  <v-flex xs12 pb-3>
                                    <v-autocomplete 
-                                    v-model="formData.shipping_country_id" 
+                                        v-model="formData.shipping_country_id" 
                                         :items="countries" 
                                         item-text="name"
                                         item-value="id"
-                                     :error-messages="fieldErrors('formData.shipping_country_id')" 
-                                    @blur="$v.formData.shipping_country_id.$touch()" 
+                                        :error-messages="fieldErrors('formData.shipping_country_id')" 
+                                        @blur="$v.formData.shipping_country_id.$touch()" 
                                         ref="categorySelect" 
                                         flat hide-no-data hide-details label="Search Country ..."
                                       >
                                         </v-autocomplete>
-
-
-
-
-
-
-
-
                                   </v-flex>
-                                  <v-flex xs5 ml-2>
+
+                                  <v-flex xs12>
                                     <v-text-field 
                                     v-model="formData.shipping_address" 
                                     @keyup.enter="stepUp()" 
@@ -481,7 +486,8 @@
                                     label="Street Address">
                                     </v-text-field>
                                   </v-flex>
-                                  <v-flex xs5 ml-2>
+
+                                  <v-flex xs12>
                                     <v-text-field 
                                     v-model="formData.shipping_city" 
                                     :error-messages="fieldErrors('formData.shipping_city')" 
@@ -490,7 +496,8 @@
                                     label="City">
                                     </v-text-field>
                                   </v-flex>
-                                  <v-flex xs5 ml-2>
+
+                                  <v-flex xs12>
                                     <v-text-field 
                                     v-model="formData.shipping_postal"
                                      @keyup.enter="stepUp()" 
@@ -680,14 +687,15 @@
                                     <v-flex xs12 v-show="is_sample" >
 
                                         <div class="mt-3">
-                                            <h4>Sample Order Data</h4>
+                                            <h4>Sample Order</h4>
                                         </div>
 
                                         <h5 v-show="formData.sample_quantity">Quantity</h5>
                                         <small v-html="formData.sample_quantity"></small>
 
                                         <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| getCountryName(formData.sample_shipping_country_id) ">Sample Cost Shipping Address</h5>
-                                        <small v-html="getCountryName(formData.sample_shipping_country_id) +', '+ formData.sample_shipping_address +','+ formData.sample_shipping_city "></small>
+
+                                        <small v-html="getCountryName(formData.sample_shipping_country_id) +' '+ getDataStrips(formData.sample_shipping_address) +' '+ getDataStrips(formData.sample_shipping_city) +' '+getDataStrips(formData.sample_shipping_postal) "></small>
 
                                     </v-flex>
 
@@ -715,7 +723,7 @@
                                             <h4>Shipping Address</h4>
                                         </div>
 
-                                        <small v-html="getCountryName(formData.shipping_country_id) +', '+  formData.shipping_address +', '+ formData.shipping_city +', '+ formData.shipping_postal"></small>
+                                        <small v-html="getCountryName(formData.shipping_country_id) +' '+ getDataStrips(formData.shipping_address) +' '+ getDataStrips(formData.shipping_city)  +' '+ getDataStrips(formData.shipping_postal) "></small>
 
                                     </v-flex>
 
@@ -1256,13 +1264,18 @@ export default {
           return country.id == country_id;
       });
 
-      return (countryselect.length)?countryselect[0].name:null;
+      return (countryselect.length)?countryselect[0].name:'';
 
       // return country_id
 
       // const countrys =  this.countries.find( country => country.id = country_id )
       // console.log(countrys)
 
+    },
+
+
+    getDataStrips(str) {
+      return (str == null || str == undefined) ? '' : str 
     },
 
     getInquiry(inquiry_id) {
