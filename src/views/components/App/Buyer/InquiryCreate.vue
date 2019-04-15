@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="95%" >
+    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen >
       <v-card>
         
         <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
@@ -10,7 +10,11 @@
         </v-card-title>
 
         <v-card-title v-else class="headline grey darken-4 white--text" primary-title height="45px">
-           Create Inquiry
+            Create Inquiry
+            <v-spacer></v-spacer>
+            <v-btn dark flat @click="$emit('update:dialog', false)">
+                <v-icon>close</v-icon>
+            </v-btn>           
         </v-card-title>
 
         <v-card-text id="inquiryCreate_scrollable_cont">
@@ -55,7 +59,7 @@
                               step="2" 
                               editable>
                                 <!-- Specific keyword for your Quotation -->
-                                Subject & Category
+                                Subject, Category & Upload Images
                                 <small 
                                 v-show="$v.formData.keywords.$error">Subject is required</small>
                                 <small 
@@ -94,6 +98,21 @@
                                       </v-flex>
 
                                     </v-layout>
+                                  </v-flex>
+                                  <v-flex xs12>                                        
+                                        <h4 class="mb-3 mt-4">Upload Images:</h4>
+                                        <vue-dropzone 
+                                        id="dropzone_images" 
+                                        :options="dropzoneOptions" 
+                                        :useCustomSlot="useCustomSlot"
+                                        @vdropzone-s3-upload-success="vdp_s3UploadSuccess"
+                                        @vdropzone-success="vdp_success('testt')"
+                                        :awss3="getAWSS3('images')">
+                                          <div class="dropzone-custom-content">
+                                            <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
+                                            <div class="subtitle">...or click to select a file from your computer</div>
+                                          </div>
+                                        </vue-dropzone>                                    
                                   </v-flex>
                                 </v-container>
                                 <v-btn color="primary" @click="stepUp()">next</v-btn>
@@ -522,20 +541,26 @@
 
                             <v-stepper-content step="8" ref="step_8">
                               <v-container>
+
                                 <v-layout row class="">
+
                                   <v-flex xs12>
                                     <vue-dropzone 
-                                    id="dropzone" 
+                                    id="dropzone_attachments" 
                                     :options="dropzoneOptions" 
                                     :useCustomSlot="useCustomSlot"
-                                    :awss3="awss3">
+                                    :awss3="getAWSS3('attachments')"
+                                    @vdropzone-s3-upload-success="vdp_s3UploadSuccess"
+                                    @vdropzone-success="vdp_success(file,response,'testt')">
                                       <div class="dropzone-custom-content">
                                         <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                         <div class="subtitle">...or click to select a file from your computer</div>
                                       </div>
                                     </vue-dropzone>
                                   </v-flex>
+
                                 </v-layout>
+
                               </v-container>
                               <v-btn color="primary" @click="stepUp()">next</v-btn>
                               <v-btn flat @click="stepDown()">back</v-btn>
@@ -1074,13 +1099,6 @@ export default {
             dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
         },
 
-        awss3: {
-          signingURL: config.main.awss3.signingURL,
-          headers: config.main.awss3.headers,
-          params : {},
-          sendFileToServer : true,
-          withCredentials: false
-        },      
 
       /*  --------------------------  end of dropzone  --------------------------  */
 
@@ -1104,6 +1122,7 @@ export default {
 
   created: function() {
 
+    console.log('config.main.awss3.headers');
     console.log(config.main.awss3.headers);
 
     // for shipping_date field
@@ -1512,6 +1531,47 @@ export default {
       }
 
     },
+
+
+    // Dropzone
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    getAWSS3(upload_group){
+        var action = "";
+        if(upload_group=='attachments')    
+        action = "add-inquiry-attachments";
+        else if(upload_group=='images')
+        action = "add-inquiry-images";
+        else
+        action = "add-inquiry-attachments";
+
+        var awss3 =  {
+            signingURL: config.main.awss3.signingURL,
+            headers: config.main.awss3.headers,
+            params : { action: action },
+            sendFileToServer : true,
+            withCredentials: false
+        };
+
+        return awss3;
+    },
+
+    vdp_s3UploadSuccess: function(s3ObjectLocation){
+        // console.log("vdp_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
+    },
+    vdp_success(file, response, upload_group){
+        console.log("vdp_success file = ",file);
+        console.log("vdp_success response = ",response);
+        console.log("vdp_success upload_group = ",upload_group);
+        // this.formData.attachments.push({
+
+        // });
+
+    },
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // Dropzone
 
   },
 
