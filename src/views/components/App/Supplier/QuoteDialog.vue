@@ -296,11 +296,11 @@
                         </v-textarea>
                       </v-flex>
                       <v-flex xs12>
-                        <h5 class="font-weight-thin mt-3">Attachments </h5>
+                        <h4 class="font-weight-thin mt-3 mb-2">Attachments </h4>
                         <!-- <upload-file></upload-file> -->
                         <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true>
                           <div class="dropzone-custom-content">
-                            <h3 class="dropzone-custom-title">Drag and drop to upload images or file</h3>
+                            <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
                             <div class="subtitle">...or click to select a file from your computer</div>
                           </div>
                         </vue-dropzone>
@@ -440,15 +440,15 @@ data: () => ({
     sample_cost:null,
     sample_shipment_cost:null,
 
-     lumen:null,
-     power:null,
-     efficiency:null,
-     beam_angle: null,
-     cct: null,
-      ip: null,
-     finish: null,
-     size: null,
-     dimmable: null,
+    lumen:null,
+    power:null,
+    efficiency:null,
+    beam_angle: null,
+    cct: null,
+     ip: null,
+    finish: null,
+    size: null,
+    dimmable: null,
 
     
     
@@ -465,16 +465,11 @@ data: () => ({
     remarks: null,
     description: null,
   },
-  /* DROPZONE FOR AWS 3*/
-  dropzoneOptions: {
-    url: 'https://httpbin.org/post',
-    thumbnailWidth: 200,
-    maxFilesize: 0.5,
-    headers: { "My-Awesome-Header": "header value" },
-    addRemoveLinks: true,
-    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME"
-  }
-  /* DROPZONE FOR AWS 3*/
+
+
+
+
+
 }),
 
 
@@ -641,6 +636,83 @@ methods: {
 
     },
 
+
+
+
+
+    // Dropzone
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    getAWSS3(upload_group){
+        var action = "";
+        if(upload_group=='attachments')    
+        action = "add-inquiry-attachments";
+        else if(upload_group=='images')
+        action = "add-inquiry-images";
+        else
+        action = "add-inquiry-attachments";
+
+        var awss3 =  {
+            signingURL: config.main.awss3.signingURL,
+            headers: {
+                token:localStorage.access_token,
+            },
+            params : { action: action },
+            sendFileToServer : true,
+            withCredentials: false
+        };
+
+        return awss3;
+    },
+
+    vdp_s3UploadSuccess: function(s3ObjectLocation){
+        // console.log("vdp_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
+    },
+    vdp_success(file, upload_group){
+        console.log("vdp_success file = ",file);
+        console.log("vdp_success upload_group = ",upload_group);
+
+        if(file.status=='success') {
+            var action = "";
+            if(upload_group=='attachments')    
+            action = "add-inquiry-attachments";
+            else if(upload_group=='images')
+            action = "add-inquiry-images";
+            else
+            action = "add-inquiry-attachments";
+
+            var attachment = {
+                location: file.s3ObjectLocation,
+                filename: file.name,
+                filetype: file.type,
+                filegroup: action,
+                filesize: _.round((file.size/1000), 2),
+            };
+
+
+            console.log('attachment',attachment);
+            this.formData.attachments.push(attachment);
+
+        }
+
+        // if(upload_group=='attachments')    
+        // action = "add-inquiry-attachments";
+        // else if(upload_group=='images')
+        // action = "add-inquiry-images";
+        // else
+        // action = "add-inquiry-attachments";
+
+
+
+        // this.formData.attachments.push({
+
+        // });
+
+    },
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // Dropzone
 
 },
 
