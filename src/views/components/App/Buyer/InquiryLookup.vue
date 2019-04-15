@@ -3,7 +3,7 @@
 
 	  	  <v-dialog :value="inquirylookup" @input="$emit('update:inquirylookup',false)" fullscreen >
 	 		      
-		        <v-toolbar dark color="green" height="50px">
+		        <v-toolbar dark color="green">
 		            <v-toolbar-title class="font-weight-light subheading">
 		                Use Existing Inquiry
 		            </v-toolbar-title>
@@ -13,7 +13,7 @@
 		            </v-btn>
 		        </v-toolbar>
 
-	        <v-card height=500>
+	        <v-card>
 
 		          <v-card-text>
 
