@@ -517,7 +517,11 @@
                               <v-container>
                                 <v-layout row class="">
                                   <v-flex xs12>
-                                    <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true>
+                                    <vue-dropzone 
+                                    id="dropzone" 
+                                    :options="dropzoneOptions" 
+                                    :useCustomSlot="useCustomSlot"
+                                    :awss3="awss3">
                                       <div class="dropzone-custom-content">
                                         <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                         <div class="subtitle">...or click to select a file from your computer</div>
@@ -937,6 +941,7 @@ export default {
       shipping_address: { required: 'Please enter an Address.' },
       shipping_country_id: { required: 'Please enter a Country.' },
       shipping_city: { required: 'Please enter City.' },
+
       
     }
   },
@@ -969,6 +974,21 @@ export default {
     }
   
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   data() {
     return {
@@ -1006,7 +1026,8 @@ export default {
         shipping_address: null,
         shipping_country_id: null,
         shipping_city: null,
-        shipping_postal: null
+        shipping_postal: null,
+        attachments: [],
        
       },
 
@@ -1035,19 +1056,38 @@ export default {
 
       /* -------------------------- dropzone -------------------------- */
 
-      dropzoneOptions: {
-        url: 'https://httpbin.org/post',
-        thumbnailWidth: 200,
-        maxFilesize: 0.5,
-        headers: { "My-Awesome-Header": "header value" },
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME"
-      }
+        useCustomSlot: true,
+        dropzoneOptions: {
+            url: config.main.awss3.urls.inquiry,
+            thumbnailWidth: 200,
+            maxFilesize: 0.5,
+            headers: {},
+            addRemoveLinks: true,            
+            dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
+        },
+
+        awss3: {
+          signingURL: config.main.awss3.signingURL,
+          headers: config.main.awss3.headers,
+          params : {},
+          sendFileToServer : true,
+          withCredentials: false
+        },      
 
       /*  --------------------------  end of dropzone  --------------------------  */
 
     }
   },
+
+
+
+
+
+
+
+
+
+
 
   components: {
     vueDropzone: vue2Dropzone,
@@ -1055,6 +1095,8 @@ export default {
   },
 
   created: function() {
+
+    console.log(config.main.awss3.headers);
 
     // for shipping_date field
     this.formData.shipping_date = this.getDateTime();

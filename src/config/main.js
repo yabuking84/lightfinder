@@ -2,6 +2,18 @@
 
 export default {
 
+
+	awss3: {
+		signingURL:"http://192.168.1.200:8000/v1/aws-s3-signature",
+		headers: {
+            token:localStorage.access_token,
+        },
+        urls: {
+        	inquiry: 'https://httpbin.org/post',
+        },
+
+	},
+
 	shipping_methods: [
 		{
 			id: 1,
