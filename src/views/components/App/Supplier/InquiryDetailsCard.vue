@@ -19,10 +19,8 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                       
-                 <!--      <pre>
-                      <h4>{{ inquiry }}</h4>
-                      </pre>
- -->
+                   
+
                         <v-layout row wrap>
 
                             <v-flex xs4>
@@ -63,7 +61,7 @@
         
 
                        <!-- sample orders -->
-                            <v-flex xs6 v-show="inquiry.sample_quantity">
+                            <v-flex xs12 v-show="inquiry.sample_quantity">
                                 <h5 class="font-weight-thin">Sample Orders Quantity</h5>
                                 <h4 class="font-weight-bold">
                                 <span>{{ inquiry.sample_quantity }} </span>
@@ -85,7 +83,7 @@
 
                        <!-- oem -->
 
-                           <v-flex xs6 v-show="inquiry.oem">
+                           <v-flex xs12 v-show="inquiry.oem">
                                 <h5 class="font-weight-thin">Original Equipment Manufacture</h5>
                                 <h4 class="font-weight-bold">
                                    What kind of Original Equipment Manufacture
@@ -95,6 +93,55 @@
                                    Description
                                 </h4>
                                 <h5>{{ inquiry.oem_description }}</h5>
+                                
+                                <h4>Attachments</h4>
+
+                                  <v-layout row wrap v-if="inquiry.attachments.length" class="attachments">
+                                                
+                                            <!-- display only here the attachment and images from thre inquiry -->
+
+                                        <v-flex xs4 lg4 v-for="(attachment, index) in inquiry.attachments" :key="attachment+'_'+index">
+
+                                            <div v-if="getAttachments(attachment, '')">
+                                                    
+                                              <!--        <div v-if="attachment.filetype === 'image/jpeg' || attachment.filetype === 'image/png' ">
+                                              
+                                                   <a :href="attachment.location">
+                                              
+                                                         <v-img
+                                                           :src="attachment.location"
+                                                           aspect-ratio="1"
+                                                           class="grey lighten-2"
+                                                           >
+                                                         </v-img>
+                                              
+                                                   </a>
+                                                  
+                                               </div>
+                                              
+                                               other file pdf
+                                              
+                                               <div v-else-if="attachment.filetype">
+                                                 
+                                                 <a :href="attachment.location">
+                                                   <v-icon color="red" large>fas fa-file-pdf</v-icon>
+                                                 </a>
+                                              
+                                               </div> -->
+
+                                            </div>
+
+                                        <!--     <div>
+                                                <h5>No Attachments</h5>
+                                            </div> -->
+
+                                        </v-flex>
+                                        
+                                      </v-layout>
+
+
+
+
                             </v-flex>
 
                        <!-- oem -->
@@ -105,10 +152,67 @@
                                   <p class="mb-0">{{ inquiry.message }}</p>
                                 </h4>
                             </v-flex>
+
                             <v-flex xs12 class="attachments">
                                 <h5 class="font-weight-thin">Attachments </h5>
-                                <v-icon large>far fa-file-excel</v-icon>
-                                <v-icon large>far fa-file-archive</v-icon>
+                                
+                                          <v-layout row wrap v-if="inquiry.attachments.length">
+
+                                 <!--                <pre>
+                                                    {{ inquiry.attachments }}
+                                               </pre>
+                                    -->
+                                                
+                                            <!-- display only here the attachment and images from thre inquiry -->
+
+                                            <v-flex xs4 lg v-for="(attachment, index) in inquiry.attachments" :key="attachment+'_'+index">
+
+                                        
+                                                <div v-if="attachment.filegroup == 'add-inquiry-attachments' || attachment.filegroup == 'add-inquiry-images' " >
+                                                        
+                                                         <div v-if="attachment.filetype === 'image/jpeg' || attachment.filetype === 'image/png' ">
+                                                         
+                                                              <a :href="attachment.location">
+                                                                    <v-img
+                                                                      :src="attachment.location"
+                                                                      aspect-ratio="1"
+                                                                      class="grey lighten-2"
+                                                                      >
+                                                                    </v-img>
+                                                              </a>
+                                                          </div>
+
+                                                          <!-- other file pdf -->
+                                                          <div v-else-if="attachment.filetype">
+                                                            
+                                                            <a :href="attachment.location">
+                                                              <v-icon color="red" large>fas fa-file-pdf</v-icon>
+                                                            </a>
+
+                                                          </div>
+
+                                                          <div v-else>
+                                                              
+                                                              <pre>
+                                                                 {{ attachment }}
+                                                              </pre>
+                                                              
+                                                          </div>
+                                                </div>
+
+
+                                                   
+                                            </v-flex>
+                                            
+                                          </v-layout>
+
+
+                                          <v-layout v-else row wrap>
+                                                <v-flex xs12 >
+                                                  <h4 class="red--text">No Attachments</h4>
+                                                </v-flex>
+                                          </v-layout>
+
                             </v-flex>
                         </v-layout>
                     </v-flex>
@@ -193,30 +297,37 @@
                 
                 return config.countries;
             },
+
+
+
    
 
         },
 
         created() {
             // console.log(this.inquiry);
+            // this.getAttachments();
         },
 
     }
 </script>
 <style scoped lang="scss">
+
     .specifications {
         .v-chip {
             width: 210px;
         }
     }
     
-    .attachments {
+    .attachments /deep/ { 
+
         .v-icon {
             width: 50px;
             margin-right: 15px;
             margin-top: 15px;
-            font-size: 60px !important;
+            font-size: 100px !important;
             cursor: pointer;
         }
+
     }
 </style>
