@@ -185,7 +185,7 @@
 
                 const vueThis = this;
                 setTimeout(function(){
-                    vueThis.$store.dispatch('auth/loginSuccess_a',response);
+                    vueThis.$store.dispatch('auth/loginSuccess_a');
                     vueThis.loading = false;
                 }, 1500);
 

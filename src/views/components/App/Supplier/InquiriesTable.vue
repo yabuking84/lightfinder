@@ -7,7 +7,7 @@
             <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
               <v-btn flat :value="status.id" :title="status.name">
                 <i class="white--text" :class="status.icon"></i>
-                <span class="ml-1 font-weight-light white--text">{{ status.name }}</span>
+                <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
               </v-btn>
             </span>
           </v-btn-toggle>

@@ -5,6 +5,8 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+import hlprs from '@/mixins/helpers'
+
 import vm from '@/main.js';
 
 const state = {
@@ -145,20 +147,34 @@ const actions = {
     // supplier
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_supplierCreatedBid(context, data){
-        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Supplier Created Bid for Inquiry # \""+response.keyword+"\"!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Supplier Created Bid for Inquiry # "'+response.keyword+'"!',
-            }
-            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
 
-            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
+        var store = "";       
 
-        }); 
+        if(hlprs.methods.isRole('admin')) 
+        store = 'admnInq';
+        else if(hlprs.methods.isRole('buyer')) 
+        store = 'byrInq';
+        else if(hlprs.methods.isRole('supplier')) 
+        store = 'spplrInq';
+
+
+        if(store!='supplier') {
+            context.dispatch(store+'/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+            .then((response)=>{
+                var ntfctn = {
+                    title:          "Supplier Created Bid for Inquiry # "+data.inquiry_id+"!",
+                    dataType:       'inquiry',
+                    data:           response,
+                    textSnackbar:   'Supplier Created Bid for Inquiry # '+data.inquiry_id+'!',
+                }
+                context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+
+                // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
+                // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
+            });
+        }
+
+
     },
 
     SOCKET_supplierConfirmedAward(context, data){
@@ -219,15 +235,18 @@ const actions = {
 
 
 
-
 const getters = {
 
 }
 
 
+
+
+
+
 export default {
 	namespaced: true,
-	state,
+    state,
 	getters,
 	mutations,
 	actions	

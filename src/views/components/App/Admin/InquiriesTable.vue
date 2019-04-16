@@ -8,7 +8,7 @@
             <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
               <v-btn flat value="left" :value="status.id" :title="status.name">
                 <i class="white--text" :class="status.icon"></i>
-                <span class="ml-1 font-weight-light white--text">{{ status.name }} </span>
+                <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }} </span> -->
             </v-btn>
             </span>
         </v-btn-toggle>
@@ -85,119 +85,105 @@
               name="tiItems" 
               class="layout grey lighten-5 row wrap">
 
-                  <v-flex  
-                  
-                  xs12 sm6 md4 pa-2 
-                  v-for="(inquiry, index) in tableItems" 
-                  :key="inquiry.inq_id"
-                          class="inquiry">
+                    <v-flex                    
+                    xs12 sm6 md4 pa-2 
+                    v-for="(inquiry, index) in tableItems" 
+                    :key="inquiry.inq_id"
+                    class="inquiry">
 
 
-                      <v-card 
-                      class="pa-3 mx-2 my-3 tiItem" 
-                      :hover="true"
-                      @click="viewInquiry(inquiry)">
+                        <v-card 
+                        class="pa-3 mx-2 my-3 tiItem" 
+                        :hover="true"
+                        @click="viewInquiry(inquiry.inq_id)">
 
                             <v-layout row wrap mt-2>
 
-
-                                 <v-layout row wrap>
-
-                                     <v-flex xs6>
-
-                                      <h3 class="grey--text lighten-4">Inquiry Holder</h3>
-                                      <h2 class="mt-2 blue-grey--text font-weight-bold ">{{ inquiry.inquiry.buyer.first_name + ' ' + inquiry.inquiry.buyer.last_name }}</h2>
-
+                                    <v-flex xs6>
+                                        <h5 class="grey--text lighten-4">Inquiry Holder</h5>
+                                        <h3 class="mb-1 blue-grey--text font-weight-bold ">{{ inquiry.inquiry.buyer.first_name + ' ' + inquiry.inquiry.buyer.last_name }}</h3>
                                     </v-flex>
 
                                     <v-flex xs6>
-                                      <h3 class="grey--text">Job Title</h3>
-                                      <h2 class="mt-2 blue-grey--text  font-weight-bold ">{{ inquiry.inquiry.buyer.job_title }}</h2>
+                                        <h5 class="grey--text">Job Title</h5>
+                                        <h3 class="mb-1 blue-grey--text  font-weight-bold ">{{ inquiry.inquiry.buyer.job_title }}</h3>
                                     </v-flex>   
 
-                            </v-layout>
-                            
-
-                                     <v-flex xs6>
-
-                                        <h3 class="grey--text lighten-4">Inquiry</h3>
-                                        <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
-
+                                    <v-flex xs6>
+                                        <h5 class="grey--text lighten-4">Inquiry #</h5>
+                                        <h3 class="mb-1 font-weight-medium ">{{ inquiry.inq_id }}</h3>
                                     </v-flex>
 
                                     <v-flex xs6>
-
-                                        <h3 class="grey--text">Date</h3>
-                                        <h4 class="mt-2 font-weight-medium ">
+                                        <h5 class="grey--text">Date</h5>
+                                        <h3 class="mb-1 font-weight-medium ">
                                             {{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }} 
-                                            <!-- <br> {{ inquiry.created_at }} -->
-                                        </h4>
-
+                                        </h3>
                                     </v-flex>   
 
                             </v-layout>
 
                             <v-layout  row wrap mt-2>
 
-                                     <v-flex xs6>
-                                          <h3 class="grey--text lighten-4">Quantity</h3>
-                                          <h4 class="mt-3  font-weight-medium ">{{ inquiry.quantity }} pcs</h4>
+                                    <v-flex xs6>
+                                          <h5 class="grey--text lighten-4">Quantity</h5>
+                                          <h3 class="mb-1 font-weight-medium ">{{ inquiry.quantity }} pcs</h3>
                                     </v-flex>
 
                                     <!-- {{ inquiry }} -->
 
                                     <v-flex xs6>
 
-                                      <h3 class="grey--text lighten-4">Status</h3>
+                                        <h5 class="grey--text lighten-4">Status</h5>
 
-                                      <template v-if="false">
+                                        <template v-if="false">
+                                            <!-- verifying -->
+                                            <div v-if="inquiry.status==1001">
+                                                 <small class="orange--text">Inquiry sent for BAL approval</small>
+                                            </div>
+                                            <!-- open -->
+                                            <div v-else-if="inquiry.status==1002">
+                                                 <small class="green--text">Approved inquiry, open for bidding</small>
+                                            </div>
+                                            <!-- rejected -->
+                                            <div v-else-if="inquiry.status==1003">
+                                                 <small class="red--text">Declined by BAL</small>
+                                            </div>
+                                            <!-- confirmation-->
+                                            <div v-else-if="inquiry.status==1004">
+                                                 <small class="teal--text">Waiting for supplier confirmation</small>
+                                            </div>
+                                            <!-- pending payment-->
+                                             <div v-else-if="inquiry.status==1005">
+                                                 <small class="deep-orange--text">Waiting for buyer payment</small>
+                                            </div>
+                                            <!-- Production -->
+                                            <div v-else-if="inquiry.status==2001">
+                                                 <small class="blue--text">Products are on the production line</small>
+                                            </div>
+                                            <!-- Shipment -->
+                                            <div v-else-if="inquiry.status==2002">
+                                                 <small class="light-green--text">Order is sent for shipment</small>
+                                            </div>
+                                            <!-- Receiving -->
+                                            <div v-else-if="inquiry.status==2003">
+                                                 <small class="orange--text">Order reached the destination, waiting for buyer confirmation</small>
+                                            </div>
+                                            <!-- Return -->
+                                            <div v-else-if="inquiry.status==2004">
+                                                 <small class="red--text">Order is returning to the supplier</small>
+                                            </div>
+                                            <!-- Success -->
+                                            <div v-else-if="inquiry.status==3001">
+                                                 <small class="light-blue--text">Order is successful</small>
+                                            </div>
+                                            <!-- Cancelled -->
+                                            <div v-else-if="inquiry.status==3002">
+                                                 <small class="red--text">Order is cancelled</small>
+                                            </div>
+                                        </template>
 
-                                      <!-- verifying -->
-                                       <div v-if="inquiry.status==1001">
-                                            <small class="orange--text">Inquiry sent for BAL approval</small>
-                                       </div>
-                                       <!-- open -->
-                                       <div v-else-if="inquiry.status==1002">
-                                            <small class="green--text">Approved inquiry, open for bidding</small>
-                                       </div>
-                                       <!-- rejected -->
-                                       <div v-else-if="inquiry.status==1003">
-                                            <small class="red--text">Declined by BAL</small>
-                                       </div>
-                                       <!-- confirmation-->
-                                       <div v-else-if="inquiry.status==1004">
-                                            <small class="teal--text">Waiting for supplier confirmation</small>
-                                       </div>
-                                       <!-- pending payment-->
-                                        <div v-else-if="inquiry.status==1005">
-                                            <small class="deep-orange--text">Waiting for buyer payment</small>
-                                       </div>
-                                       <!-- Production -->
-                                       <div v-else-if="inquiry.status==2001">
-                                            <small class="blue--text">Products are on the production line</small>
-                                       </div>
-                                       <!-- Shipment -->
-                                       <div v-else-if="inquiry.status==2002">
-                                            <small class="light-green--text">Order is sent for shipment</small>
-                                       </div>
-                                       <!-- Receiving -->
-                                       <div v-else-if="inquiry.status==2003">
-                                            <small class="orange--text">Order reached the destination, waiting for buyer confirmation</small>
-                                       </div>
-                                       <!-- Return -->
-                                       <div v-else-if="inquiry.status==2004">
-                                            <small class="red--text">Order is returning to the supplier</small>
-                                       </div>
-                                       <!-- Success -->
-                                       <div v-else-if="inquiry.status==3001">
-                                            <small class="light-blue--text">Order is successful</small>
-                                       </div>
-                                       <!-- Cancelled -->
-                                       <div v-else-if="inquiry.status==3002">
-                                            <small class="red--text">Order is cancelled</small>
-                                       </div>
 
-                                     </template>
                                         <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
                                     </v-flex>   
 
@@ -207,7 +193,7 @@
                             <v-layout row wrap mt-2>
                       
                                      <v-flex xs12>
-                                         <h3 class="mt-2 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
+                                         <h3 class="mb-1 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
                                     </v-flex>
 
                             </v-layout>
@@ -215,11 +201,10 @@
 
                             <v-layout row wrap mt-2 class="tnt-height">
                       
-                                     <v-flex xs12>
-                                          <!-- <h4 class="font-weight-medium black--text lighten-4">Details</h4> -->
-                                          <h5 class="mt-2 black--text font-weight-light">
-                                              {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
-                                          </h5>
+                                    <v-flex xs12>                                        
+                                        <h5 class=" black--text font-weight-light">
+                                            {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
+                                        </h5>
                                     </v-flex>
 
                             </v-layout>
@@ -281,9 +266,9 @@
 import inqEvntBs from "@/bus/inquiry";
 
 import helpers from "@/mixins/helpers";
+
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
-import main from "@/config/main"
 import config from "@/config/main"
 
 import VueTimers from 'vue-timers/mixin'

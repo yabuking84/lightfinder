@@ -118,14 +118,11 @@
     
                     <v-card-text>
 
-                     <v-btn large :loading="formLoading" @click="submit()" flat block class="grey darken-4">
+                     <v-btn large @click="submit()" flat block class="grey darken-4">
                                         <span class="ml-1 white--text font-weight-bold">Approved bid</span>
                                         <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
                     </v-btn>
-                     <!--    <pre>
-                            {{ bidItems }}
-                        </pre>
- -->
+                     <!-- <pre>{{ bidItems }}</pre> -->
                         <v-layout row wrap>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
