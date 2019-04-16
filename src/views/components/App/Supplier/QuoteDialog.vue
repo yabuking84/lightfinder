@@ -168,6 +168,24 @@
                         </v-text-field>
                       </v-flex>
 
+                      <v-flex xs12>
+                         <h4 class="font-weight-thin">Images </h4>
+                        <!-- IMAGE QUOTE DROPZONE  -->
+                              <vue-dropzone 
+                                  id="dropzone_oem" 
+                                  :options="dropzoneOptions" 
+                                  :useCustomSlot="useCustomSlot"
+                                  :awss3="getAWSS3('images')"
+                                  @vdropzone-success="vdz_success($event,'add-quote-images')"
+                                  >
+                                <div class="dropzone-custom-content">
+                                  <h3 class="dropzone-custom-title">Drag and drop to upload Images</h3>
+                                  <div class="subtitle">...or click to select a file from your computer</div>
+                                </div>
+                              </vue-dropzone>
+                          <!-- IMAGE QUOTE DROPZONE  -->
+                      </v-flex>
+
 
                       <!-- specification -->
                         <v-flex xs12  v-show="inquiry.specifications.length">
@@ -177,7 +195,6 @@
 
                             
                             <v-layout row wrap mt-3>
-
 
                                 <v-flex xs2>
                                     <v-layout row column>
@@ -534,9 +551,9 @@ methods: {
                 dimmable: this.formData.dimmable,
           },
 
+          "attachments": this.attachments,
           "sample_cost": this.formData.sample_cost ? this.formData.sample_cost : null,
           "sample_shipment_cost": this.formData.sample_shipment_cost ? this.formData.sample_shipment_cost : null
-
         };
 
         var action = "";
