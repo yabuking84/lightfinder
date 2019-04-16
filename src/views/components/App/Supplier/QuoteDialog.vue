@@ -251,7 +251,7 @@
                                     <v-layout row column>                                        
                                         <v-flex lg4 md4 xs4 sm3>
                                             <h4 class="text-xs-left ml-2 mt-2">
-                                                Inquiry Specifications
+                                                <!-- Inquiry Specifications -->&nbsp;
                                             </h4>
                                         </v-flex>
 
@@ -790,21 +790,35 @@ watch: {
 }
 
 </script>
-<style lang="scss">
 
-.border-textfield .v-input__slot {
+<style scoped lang="scss">
+
+.border-textfield /deep/ .v-input__slot {
   border: 1px solid black;
   margin-bottom: -17px;
 }
 
-.border-textfieldb .v-input__slot {
-  border: 1px solid gray;
-  margin-bottom: -17px;
+.border-textfieldb /deep/ {
+    
+    input {
+        text-align: right;
+        font-weight:bold;
+    }
+    
+    .v-input__slot {
+      border: 1px solid transparent;
+      margin-bottom: -17px;
+    }
+
+    .v-text-field__suffix {
+        font-size: 85%;
+    }
+
 }
 
 
-</style>
-<style scoped lang="scss">
+
+
 .dropzone-custom-content {
   text-align: center;
 }
