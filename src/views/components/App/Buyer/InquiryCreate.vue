@@ -132,7 +132,7 @@
                                         id="dropzone_images" 
                                         :options="dropzoneOptions" 
                                         :useCustomSlot="useCustomSlot"                                        
-                                        @vdropzone-success="vdp_success($event,'images')"
+                                        @vdropzone-success="vdp_success($event,'add-inquiry-images')"
                                         :awss3="getAWSS3('images')">
                                           <div class="dropzone-custom-content">
                                             <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
@@ -576,7 +576,7 @@
                                     :options="dropzoneOptions" 
                                     :useCustomSlot="useCustomSlot"
                                     :awss3="getAWSS3('attachments')"
-                                    @vdropzone-success="vdp_success($event,'attachments')">
+                                    @vdropzone-success="vdp_success($event,'add-inquiry-attachments')">
                                       <div class="dropzone-custom-content">
                                         <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                         <div class="subtitle">...or click to select a file from your computer</div>
@@ -1130,7 +1130,10 @@ export default {
       useInquiry: null, // for inquiry lookup then use inquiry
       inquiryHolder:null, // object holder
 
-      /* -------------------------- dropzone -------------------------- */
+
+    // Dropzone
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
 
         useCustomSlot: true,
         dropzoneOptions: {
@@ -1143,7 +1146,9 @@ export default {
         },
 
 
-      /*  --------------------------  end of dropzone  --------------------------  */
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // Dropzone
 
     }
   },
@@ -1572,22 +1577,18 @@ export default {
 
     // Dropzone
     // dddddddddddddddddddddddddddddddddddddddddddddddddddd
-    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     getAWSS3(upload_group){
-        var action = "";
-        if(upload_group=='attachments')    
-        action = "add-inquiry-attachments";
-        else if(upload_group=='images')
-        action = "add-inquiry-images";
-        else
-        action = "add-inquiry-attachments";
+
 
         var awss3 =  {
             signingURL: config.main.awss3.signingURL,
             headers: {
                 token:localStorage.access_token,
             },
-            params : { action: action },
+            params : {
+                action: upload_group,
+            },
             sendFileToServer : true,
             withCredentials: false
         };
@@ -1604,19 +1605,12 @@ export default {
         console.log("vdp_success upload_group = ",upload_group);
 
         if(file.status=='success') {
-            var action = "";
-            if(upload_group=='attachments')    
-            action = "add-inquiry-attachments";
-            else if(upload_group=='images')
-            action = "add-inquiry-images";
-            else
-            action = "add-inquiry-attachments";
 
             var attachment = {
                 location: file.s3ObjectLocation,
                 filename: file.name,
                 filetype: file.type,
-                filegroup: action,
+                filegroup: upload_group,
                 filesize: _.round((file.size/1000), 2),
             };
 
@@ -1640,10 +1634,9 @@ export default {
         // });
 
     },
-    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     // dddddddddddddddddddddddddddddddddddddddddddddddddddd
     // Dropzone
-
   },
 
 
