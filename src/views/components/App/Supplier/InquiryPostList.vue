@@ -132,7 +132,7 @@
 
                                           <v-flex xs12>
 
-                                                     <v-img src="https://image.flaticon.com/icons/svg/1490/1490328.svg" height="90px" contain></v-img>
+                                                     <!-- <v-img src="https://image.flaticon.com/icons/svg/1490/1490328.svg" height="90px" contain></v-img> -->
 
                                                     <h1 color="#BF4653" class="headline mt-2 text-xs-center font-weight-bold darken-4">No bids yet..</h1>
 
