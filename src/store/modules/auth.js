@@ -7,6 +7,8 @@ import config from '@/config/index'
 
 import vm from '@/main.js';
 
+import hlprs from '@/mixins/helpers'
+
 const state = {
     api: {
         login: {
@@ -248,16 +250,13 @@ const actions = {
         // }
     },
 
-    loginSuccess_a(context,response){
+    loginSuccess_a(context){
 
-        // console.log(response.data);
-        // console.log(response.data.user.role);
-        
-        if(response.data.user.role == config.auth.role.admin.id) 
+        if(hlprs.methods.isRole('admin')) 
         router.push({name:'AdminHome'});
-        else if(response.data.user.role == config.auth.role.buyer.id) 
+        else if(hlprs.methods.isRole('buyer')) 
         router.push({name:'BuyerHome'});
-        else if(response.data.user.role == config.auth.role.supplier.id) 
+        else if(hlprs.methods.isRole('supplier')) 
         router.push({name:'SupplierHome'});
         else
         router.push({name:'Login'});

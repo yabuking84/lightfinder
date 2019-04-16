@@ -186,6 +186,7 @@ style="cursor: pointer;">
 import { mapGetters } from 'vuex'
 import config from '@/config/index'
 
+import hlprs from "@/mixins/helpers";
 // console.log(config);
 
 export default {
@@ -466,11 +467,11 @@ computed: {
         
         // Dev mode, some markers for easier to know the user and type.
         if(this.devMode) {            
-            if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) 
+            if(hlprs.methods.isRole("admin"))
             style = 'background-color:yellow !important;';
-            else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) 
+            else if(hlprs.methods.isRole("buyer"))
             style = 'background-color:blue !important;';
-            else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) 
+            else if(hlprs.methods.isRole("supplier"))
             style = 'background-color:red !important;';
         }
         
@@ -503,52 +504,9 @@ methods: {
     gotoNotfication(ntfctn){
         
         this.showSnackbar = false;
-
-        // if inquiry type
-        if(ntfctn.dataType == 'inquiry') {
-
-            // admin
-            if(this.$store.state.auth.auth_user.role == config.auth.role.admin.id) {
-
-            }
-            // buyer
-            else if(this.$store.state.auth.auth_user.role == config.auth.role.buyer.id) {
-                this.buyerNtfctn(ntfctn);
-            }
-            // supplier
-            else if(this.$store.state.auth.auth_user.role == config.auth.role.supplier.id) {
-                this.supplierNtfctn(ntfctn);
-            }        
-        }
+        this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
+        
     },
-
-    buyerNtfctn(ntfctn){
-        this.$store.dispatch('byrInq/getInquiry_a', {
-            inq_id: ntfctn.data.id
-        })
-        .then((data) => {                                
-            this.$store.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:data});
-            this.$store.commit('byrInq/SHOW_OPENINQUIRYVIEW_M');
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    },
-    
-    supplierNtfctn(ntfctn){
-        this.$store.dispatch('spplrInq/getInquiry_a', {
-            inq_id: ntfctn.data.id
-        })
-        .then((data) => {                                
-            this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:data});
-            this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    },
-    
-    adminNtfctn(){},
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications

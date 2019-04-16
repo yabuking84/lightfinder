@@ -137,7 +137,7 @@
     }
 
     .chat-container {
-      height: 250px; 
+      height: 100px; 
       overflow-y: scroll;
     }
 </style>

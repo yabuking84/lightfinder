@@ -72,6 +72,23 @@ export default {
       return Math.floor(Math.random() * items.length)
     },
 
+
+    isRole(roleName){
+        var retVal = false;
+
+        if(roleName == 'admin') {
+            retVal = (localStorage.role == config.auth.role.admin.id)?true:false;
+        }
+        else if(roleName == 'buyer') {
+            retVal = (localStorage.role == config.auth.role.buyer.id)?true:false;
+        }
+        else if(roleName == 'supplier') {
+            retVal = (localStorage.role == config.auth.role.supplier.id)?true:false;
+        }
+
+        return retVal;
+    },
+
   },
 
 
