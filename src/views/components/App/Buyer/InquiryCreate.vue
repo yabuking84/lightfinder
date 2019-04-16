@@ -478,13 +478,12 @@
                                     <v-flex xs12 >
                                       <!-- OEM DROPZONE  -->
                                         <vue-dropzone 
-
-                                        id="dropzone_oem" 
-                                        :options="dropzoneOptions" 
-                                        :useCustomSlot="useCustomSlot"
-                                        :awss3="getAWSS3('add-inquiry-oem')"
-                                        @vdropzone-success="vdz_success($event,'add-inquiry-oem')"
-                                        >
+                                            id="dropzone_oem" 
+                                            :options="dropzoneOptions" 
+                                            :useCustomSlot="useCustomSlot"
+                                            :awss3="getAWSS3('add-inquiry-oems')"
+                                            @vdropzone-success="vdz_success($event,'add-inquiry-oems')"
+                                            >
                                           <div class="dropzone-custom-content">
                                             <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
                                             <div class="subtitle">...or click to select a file from your computer</div>
@@ -1533,7 +1532,7 @@ export default {
         "categories": [
           this.formData.category
         ],
-        "attachments": [],
+        "attachments": this.attachments,
         "specifications": {
           power: this.formData.power,
           lumen: this.formData.lumen,
