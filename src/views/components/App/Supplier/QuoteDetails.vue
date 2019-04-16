@@ -113,22 +113,18 @@
                         <v-layout justify-center row fill-height>
 
                                 <v-flex xs12 mx-5 mt-2 mb-2>
+                                
 
-                                     <v-layout row justify-center mx-5>  
-
-                                          <v-flex xs2>
+                                   <!--        <v-flex xs2>
                                                <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                                          </v-flex>
+                                          </v-flex> -->
                                           
-                                          <v-flex xs10 mt-3>
                                                 <div>
-                                                    <div class="headline font-weight-bold darken-3" color="#BF4653">You have not quoted yet</div>
-                                                    <div class="blue-grey--text" style="font-style: italic;">Be the one to quote this inquiry.</b>
+                                                    <div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
+                                                    <div class="blue-grey--text" >You have not quoted yet.</b>
                                                     </div>
                                                 </div>
-                                          </v-flex>
 
-                                     </v-layout>
 
                             </v-flex> 
 

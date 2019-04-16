@@ -23,6 +23,11 @@ const state = {
             url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
         },
 
+        editInquiry: {
+            method  : 'patch',
+            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+        },
+
         getInquiryBids: {
             method  : 'get',
             url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
@@ -129,6 +134,37 @@ const actions = {
             axios({
                 method: state.api.addInquiry.method,
                 url: state.api.addInquiry.url,
+                headers: headers,
+                data: JSON.stringify(data.formData),
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+
+                if(actions.checkToken(error)) {
+                    reject(error);
+                }
+                
+            });
+
+        });
+    },
+
+
+    editInquiry_a(context,data){
+        return new Promise((resolve, reject) => {
+
+            // console.log(data.formData);
+            // console.log(JSON.stringify(data.formData));
+
+            var headers = {
+                token:localStorage.access_token,
+                "content-type": "application/json",
+            };
+            axios({
+                method: state.api.editInquiry.method,
+                url: state.api.editInquiry.url + '/' + data.inq_id,
                 headers: headers,
                 data: JSON.stringify(data.formData),
             })

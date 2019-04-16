@@ -61,7 +61,18 @@ const InquiryEventBus = new Vue({
 			this.$on('closed-submitted', () => {
 				func();
 			});
-		}
+		},
+
+
+		// use for updating inquiry 
+		emitEditedInquiry() {
+			this.$emit('edited-inquiry');
+		},
+		onEditedInquiry(func) {
+			this.$on('edited-inquiry', () => {
+				func();
+			});
+		},
 
 	},
 

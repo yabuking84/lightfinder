@@ -1129,6 +1129,7 @@ export default {
       inquirylookup:false,
       useInquiry: null, // for inquiry lookup then use inquiry
       inquiryHolder:null, // object holder
+      createAction:'add',
 
 
     // Dropzone
@@ -1543,24 +1544,50 @@ export default {
       // console.log(formData);
       // console.log('--------------------------')
 
+        var action = "";
+        var data = {};
+
+
+      if(this.isEdit) {
+
+          action = 'byrInq/editInquiry_a';
+          data = {
+            formData: formData,
+            inq_id: this.inquiry.id,
+          }
+
+      } else {
+
+          action = 'byrInq/addInquiry_a';
+          data = {
+            formData: formData,
+          }
+
+      }
+
       if (this.$v.$invalid) {
 
         this.$v.$touch()
 
-
       } else {
 
         this.formLoading = true;
-        this.$store.dispatch('byrInq/addInquiry_a', {
-            formData: formData,
-          })
+        this.$store.dispatch(action, data)
           .then((response) => {
             this.formLoading = false;
             this.$emit('update:dialog', false);
 
             // emit on bus that Inquiry form is submitted
             inqEvntBs.emitFormSubmitted();
-            this.$emit('update:snackBar', true)
+
+            if(this.isEdit) {
+                inqEvntBs.emitEditedInquiry();
+                console.log('edittttttttttttttttttttttttttttt it should be emit')
+            } else {
+                // when newly inquiry is created
+                this.$emit('update:snackBar', true)
+            }
+
             this.clearData();
 
           }).catch((e) => {
@@ -1613,7 +1640,6 @@ export default {
                 filegroup: upload_group,
                 filesize: _.round((file.size/1000), 2),
             };
-
 
             console.log('attachment',attachment);
             this.formData.attachments.push(attachment);

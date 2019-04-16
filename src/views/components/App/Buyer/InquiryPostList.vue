@@ -11,65 +11,45 @@
 
         <!-- waiting for verification -->
         <v-layout v-if="verified" align-center justify-center row fill-height>
-                      
-                          <v-flex xs12 mx-5 mt-3 mb-3>
 
-                               <v-layout row justify-center mx-5>  
+           <!--          <v-flex xs2>
+                        <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>  
+                    </v-flex> -->
+                    
+                    <v-flex xs12 mx-5 mt-3 mb-3>
+                         <div>
+                            <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
+                            <div class="blue-grey--text">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+                            </div>
+                        </div>  
+                    </v-flex>
 
-                                    <v-flex xs2>
-                                        <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>  
-                                    </v-flex>
-                                    
-                                    <v-flex xs10>
-                                         <div>
-                                            <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-                                            <div class="blue-grey--text" style="font-style: italic;">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
-                                            </div>
-                                        </div>  
-                                    </v-flex>
 
-                               </v-layout>
-
-                          </v-flex> 
         </v-layout>
         
         <!-- rejected inquiry -->
         <v-layout v-else-if="rejected" align-center justify-center row wrap fill-height>
             
 
-                <v-flex xs12 mx-5 mt-3 mb-3>
-
-                     <v-layout row justify-center mx-5>  
-
-                          <v-flex xs2>
+                     <!--      <v-flex xs2>
                                <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
-                          </v-flex>
+                          </v-flex> -->
                           
-                          <v-flex xs10>
+                          <v-flex xs12 mx-5 mt-3 mb-3>
                                 <div>
                                     <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                    <div class="blue-grey--text" style="font-style: italic;">Your INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
+                                    <div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
                                     </div>
                                 </div>
-                          </v-flex>
 
-                      
-
-                     </v-layout>
-
-                          <v-flex xs10 offset-xs1>
-                              <v-layout row wrap justif>
+                              <v-layout row wrap justify>
                                   <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
                                         <span class="font-weight-bold ml-1 white--text">Edit Now</span>
                                     </v-btn>
                               </v-layout>
-                                   
-                            </v-flex>
+                          </v-flex>
 
-                </v-flex> 
-
-
-                  <v-flex xs12 mx-2>
+                  <v-flex xs12>
                         <comment-box :commentData="commentData"> </comment-box>
                   </v-flex>
         </v-layout>
@@ -81,25 +61,20 @@
 
             <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
 
-                  <v-flex xs12 mx-5 mt-3 mb-3>
-
-                       <v-layout row justify-center mx-5>  
-
+<!-- 
                             <v-flex xs2>
                                   <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                            </v-flex>
+                            </v-flex> -->
                             
-                            <v-flex xs10 mt-4>
+                            <v-flex xs12 mx-5 mt-3 mb-3>
                                         <div>
-                                          <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
-                                          <div class="blue-grey--text" style="font-style: italic;">INQUIRY <b>#{{ inquiry.id }}</b> 
+                                          <div class="headline font-weight-bold error--text darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
+                                          <div class="blue-grey--text" >
+                                            Just Wait for While, quotation are coming. thanks
                                           </div>
 
                                       </div>
                             </v-flex>
-
-                       </v-layout>
-                  </v-flex> 
             </v-layout>
 
             <v-card 
