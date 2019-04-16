@@ -311,7 +311,7 @@
                         :options="dropzoneOptions" 
                         :useCustomSlot="useCustomSlot"
                         :awss3="getAWSS3('attachments')"
-                        @vdropzone-success="vdp_success($event,'add-quote-attachments')">
+                        @vdropzone-success="vdz_success($event,'add-quote-attachments')">
                             <div class="dropzone-custom-content">
                                 <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                 <div class="subtitle">...or click to select a file from your computer</div>
@@ -697,13 +697,13 @@ methods: {
         return awss3;
     },
 
-    vdp_s3UploadSuccess: function(s3ObjectLocation){
-        // console.log("vdp_s3UploadSuccess",s3ObjectLocation);
+    vdz_s3UploadSuccess: function(s3ObjectLocation){
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
         // console.log();
     },
-    vdp_success(file, upload_group){
-        console.log("vdp_success file = ",file);
-        console.log("vdp_success upload_group = ",upload_group);
+    vdz_success(file, upload_group){
+        console.log("vdz_success file = ",file);
+        console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
             var attachment = {

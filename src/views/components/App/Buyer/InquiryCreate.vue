@@ -127,13 +127,12 @@
                                   </v-flex>
                                   <v-flex xs12>                                        
                                         <h4 class="mb-3 mt-4">Upload Images:</h4>
-                                        <!-- @vdropzone-success="vdp_success($event,'images')" -->
                                         <vue-dropzone 
                                         id="dropzone_images" 
                                         :options="dropzoneOptions" 
-                                        :useCustomSlot="useCustomSlot"                                        
-                                        @vdropzone-success="vdp_success($event,'add-inquiry-images')"
-                                        :awss3="getAWSS3('images')">
+                                        :useCustomSlot="useCustomSlot"
+                                        :awss3="getAWSS3('add-inquiry-images')"
+                                        @vdropzone-success="vdz_success($event,'add-inquiry-images')">
                                           <div class="dropzone-custom-content">
                                             <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                             <div class="subtitle">...or click to select a file from your computer</div>
@@ -575,8 +574,8 @@
                                     id="dropzone_attachments" 
                                     :options="dropzoneOptions" 
                                     :useCustomSlot="useCustomSlot"
-                                    :awss3="getAWSS3('attachments')"
-                                    @vdropzone-success="vdp_success($event,'add-inquiry-attachments')">
+                                    :awss3="getAWSS3('add-inquiry-attachments')"
+                                    @vdropzone-success="vdz_success($event,'add-inquiry-attachments')">
                                       <div class="dropzone-custom-content">
                                         <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                         <div class="subtitle">...or click to select a file from your computer</div>
@@ -1623,13 +1622,13 @@ export default {
         return awss3;
     },
 
-    vdp_s3UploadSuccess: function(s3ObjectLocation){
-        // console.log("vdp_s3UploadSuccess",s3ObjectLocation);
+    vdz_s3UploadSuccess: function(s3ObjectLocation){
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
         // console.log();
     },
-    vdp_success(file, upload_group){
-        console.log("vdp_success file = ",file);
-        console.log("vdp_success upload_group = ",upload_group);
+    vdz_success(file, upload_group){
+        console.log("vdz_success file = ",file);
+        console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
