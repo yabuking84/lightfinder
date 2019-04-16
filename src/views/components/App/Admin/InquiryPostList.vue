@@ -12,23 +12,19 @@
 
                 <v-layout justify-center row fill-height>
 
-                    <v-flex xs12 mx-5 mt-2 mb-2>
+                    <v-flex xs12 mx-5 mt-3 mb-3>
 
-                        <v-layout row justify-center mx-5>
 
-                            <v-flex xs2>
+                           <!--  <v-flex xs2>
                                 <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
-                            </v-flex>
+                            </v-flex> -->
 
-                            <v-flex xs10 mt-3>
                                 <div>
                                     <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-                                    <div class="blue-grey--text" style="font-style: italic;">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+                                    <div class="blue-grey--text" >We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
                                     </div>
                                 </div>
-                            </v-flex>
 
-                        </v-layout>
 
                     </v-flex>
 
@@ -55,37 +51,31 @@
 
                 <v-layout row wrap>
 
-                    <v-layout justify-center row fill-height>
-
-                        <v-flex xs12 mx-5 mt-2 mb-2>
-
-                            <v-layout row justify-center mx-5>
-
+                        <v-flex xs12 mx-5 mt-3 >
+<!-- 
                                 <v-flex xs2>
                                     <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
-                                </v-flex>
+                                </v-flex> -->
 
-                                <v-flex xs10 mt-3>
                                     <div>
                                         <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
                                         <div class="blue-grey--text" style="font-style: italic;">the INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
                                         </div>
                                     </div>
-                                </v-flex>
 
-                            </v-layout>
 
                         </v-flex>
 
-                    </v-layout>
 
-                    <v-flex xs12>
-                        <v-layout row wrap>
-                            <v-flex xs6 offset-xs3>
+                           <v-flex xs12 mx-5>
                                 <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
                                     <span class="ml-1 white--text font-weight-light ">Approved</span>
                                 </v-btn>
                             </v-flex>
+
+                    <v-flex xs12>
+                        <v-layout row wrap>
+                         
 
                             <!--   <v-flex xs6>
                           rejectInquiry(inquiry.id)
@@ -106,24 +96,19 @@
 
                 <v-layout justify-center row fill-height v-if="!bidItems.length">
 
-                    <v-flex xs12 mx-5 mt-2 mb-2>
+                    <v-flex xs12 mx-5 mt-3 mb-3>
 
-                        <v-layout row justify-center mx-5>
-
+<!-- 
                             <v-flex xs2>
                                 <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                            </v-flex>
+                            </v-flex> -->
 
-                            <v-flex xs10 mt-3>
                                 <div>
                                     <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
-                                    <div class="blue-grey--text" style="font-style: italic;">INQUIRY <b>#{{ inquiry.id }}</b>
+                                    <div class="blue-grey--text">INQUIRY <b>#{{ inquiry.id }}</b>
                                     </div>
 
                                 </div>
-                            </v-flex>
-
-                        </v-layout>
 
                     </v-flex>
 

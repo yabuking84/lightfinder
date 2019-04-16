@@ -31,7 +31,6 @@
 		<inquiry-create :snackBar.sync="successSnackbar" :dialog.sync="openInquiryCreate"></inquiry-create>
 
     <v-snackbar
-
         v-model="successSnackbar"
         color="green"
          top

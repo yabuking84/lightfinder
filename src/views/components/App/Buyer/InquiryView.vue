@@ -31,6 +31,27 @@
 		</v-container>	
 	
     </v-card>
+
+<v-snackbar
+        v-model="successSnackbar"
+         color="green"
+         top
+         multi-line
+         middle
+         :timeout="6000"
+        >
+
+        Successfully Updated your Inquiry
+        <v-btn
+          dark
+          flat
+          @click="successSnackbar = false"
+        >
+          Close
+        </v-btn>
+  </v-snackbar>
+
+
 </v-dialog>   	
 </template>
 
@@ -40,6 +61,7 @@ import InquiryPostList from "@/views/Components/App/Buyer/InquiryPostList"
 import InquiryDetailsCard from "@/views/Components/App/Buyer/InquiryDetailsCard"
 import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
 
+import inqEvntBs from "@/bus/inquiry"
 
 export default {
 
@@ -57,6 +79,7 @@ export default {
 		title: 'Inquiry Details',
 		icon: null,
 		bidDialog:false,
+		successSnackbar:false,
 	}),
 
 	computed: {
@@ -109,6 +132,9 @@ export default {
 	created() {
 
 		// console.log(this.inquiry);
+        inqEvntBs.$on('edited-inquiry', () => {
+            this.successSnackbar = true;
+        });
 
 	},
 }
