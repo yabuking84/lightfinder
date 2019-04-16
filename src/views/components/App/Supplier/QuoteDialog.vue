@@ -313,7 +313,7 @@
                         :awss3="getAWSS3('attachments')"
                         @vdropzone-success="vdz_success($event,'add-quote-attachments')">
                             <div class="dropzone-custom-content">
-                                <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
+                                <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
                                 <div class="subtitle">...or click to select a file from your computer</div>
                             </div>
                         </vue-dropzone>
