@@ -173,93 +173,100 @@
                         <v-flex xs12  v-show="inquiry.specifications.length">
                           <v-layout row wrap justify-center>
 
-                           <!--    <v-flex xs4 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                              <v-text-field solo flat class="ml-1 pa-1 border-textfield" :v-model="specification.name" :prefix="specification.name == 'Beam Angle' ? 'Angle:' : specification.name  + ':'"></v-text-field>
-                            </v-flex>
-                            -->
-                            <!-- new --------------------------------------------------------- -->
-                            
 
-                            <!-- body -->
+
                             
-                            <v-layout row wrap>
+                            <v-layout row wrap mt-3>
 
 
                                 <v-flex xs2>
-                                         <v-layout row column>
-                                       <h4 class="text-xs-left font-weight-thin">Specification Name</h4>
+                                    <v-layout row column>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                            <h4 class="text-xs-left ml-0 mt-2">
+                                                Specifications
+                                            </h4>
+                                        </v-flex>
 
-                                       <v-flex  lg4 md4 xs4 sm3 mt-3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
-                                           
-                                                  <h3 color="#504f4fde" class="text-xs-left font-weight-light">{{ specification.name }}:</h3>&nbsp&nbsp
+                                        <v-flex  lg4 md4 xs4 sm3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                            <h4 color="#504f4fde" 
+                                            class="text-xs-left font-weight-light ml-0 mt-3">
+                                                {{ specification.name }}:
+                                            </h4>&nbsp;
                                         </v-flex> 
-                                  </v-layout>
-
+                                    </v-layout>
                                 </v-flex>
 
                            
-                               <!-- ----------------------------------------- -->
 
+                                <v-flex xs5>                                  
+                                    <v-layout row column>
+                                        <v-flex  lg4 md4 xs4 sm3 >
+                                            <h4 class="text-xs-left ml-4 mt-2">
+                                                &nbsp;
+                                            </h4>
+                                        </v-flex>
 
-                                <v-flex xs5>
-                                  
-                                 <v-layout row column>
+                                        <v-flex  lg4 md4 xs4 sm3 >
+                                            <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
+                                        </v-flex>
 
-                                        <h3 class="text-xs-center font-weight-light">Your  <br/> Product Specifications</h3>&nbsp&nbsp
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                           <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.lumen" suffix="lm"></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3 >
-                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.power"  suffix="watts"></v-text-field>
-                                      </v-flex>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                           <v-text-field solo flat class="ml-4 mt-2  border-textfield"  v-model="formData.efficiency = getEfficiency()"  suffix="lm/w"></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                         <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.lumen" suffix="lm"></v-text-field>
-                                      </v-flex>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                            <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.beam_angle"  suffix="degrees"></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                         <v-text-field solo flat class="ml-4 mt-2  border-textfield"  v-model="formData.efficiency = getEfficiency()"  suffix="lm/w"></v-text-field>
-                                      </v-flex>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.cct" suffix="lm"></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.beam_angle"  suffix="degrees"></v-text-field>
-                                      </v-flex>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.ip" ></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.cct" suffix="lm"></v-text-field>
-                                      </v-flex>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.finish" ></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.ip" ></v-text-field>
-                                      </v-flex>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.size" ></v-text-field>
+                                        </v-flex>
 
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.finish" ></v-text-field>
-                                      </v-flex>
-
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.size" ></v-text-field>
-                                      </v-flex>
-
-                                      <v-flex  lg4 md4 xs4 sm3>
-                                        <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.dimmable" ></v-text-field>
-                                      </v-flex>
-                                 </v-layout>
+                                        <v-flex  lg4 md4 xs4 sm3>
+                                          <v-text-field solo flat class="ml-4 mt-2  border-textfield" v-model="formData.dimmable" ></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
                                 </v-flex>
 
 
                                 <!-- ----------------------------------------- -->
 
                                 <v-flex xs5>
-                                         <v-layout row column>
-                                          <h3 class="text-xs-center font-weight-light">Buyer <br/> Product Specifications</h3>&nbsp&nbsp
+                                    <v-layout row column>                                        
+                                        <v-flex lg4 md4 xs4 sm3>
+                                            <h4 class="text-xs-left ml-2 mt-2">
+                                                Inquiry Specifications
+                                            </h4>
+                                        </v-flex>
 
-                                      <v-flex lg4 md4 xs4 sm3 v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index">
+                                        <v-flex 
+                                        lg4 md4 xs4 sm3
+                                        v-for="(specification, index) in inquiry.specifications" 
+                                        :key="specification+'_'+index">
+                                            <v-text-field 
+                                            readonly solo flat 
+                                            class="ml-2 mt-2 border-textfieldb"                                             
+                                            :value="specification.value ? specification.value : '' "  
+                                            :suffix="getSuffix(specification.name)"></v-text-field>
+                                        </v-flex>
 
-
-                                         <v-text-field readonly solo flat class="ml-1 mt-2  border-textfieldb" :value="specification.value ? specification.value : '' "  :suffix="getSuffix(specification.name)"></v-text-field>
-                                     </v-flex>
-
-                                 </v-layout>
-                                 
+                                    </v-layout>                                 
                                 </v-flex>
 
 
@@ -304,7 +311,7 @@
                         :options="dropzoneOptions" 
                         :useCustomSlot="useCustomSlot"
                         :awss3="getAWSS3('attachments')"
-                        @vdropzone-success="vdp_success($event,'add-quote-attachments')">
+                        @vdropzone-success="vdz_success($event,'add-quote-attachments')">
                             <div class="dropzone-custom-content">
                                 <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
                                 <div class="subtitle">...or click to select a file from your computer</div>
@@ -690,13 +697,13 @@ methods: {
         return awss3;
     },
 
-    vdp_s3UploadSuccess: function(s3ObjectLocation){
-        // console.log("vdp_s3UploadSuccess",s3ObjectLocation);
+    vdz_s3UploadSuccess: function(s3ObjectLocation){
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
         // console.log();
     },
-    vdp_success(file, upload_group){
-        console.log("vdp_success file = ",file);
-        console.log("vdp_success upload_group = ",upload_group);
+    vdz_success(file, upload_group){
+        console.log("vdz_success file = ",file);
+        console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
             var attachment = {
