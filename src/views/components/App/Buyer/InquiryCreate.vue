@@ -476,12 +476,20 @@
                                         </v-textarea>
                                     </v-flex>
                                     <v-flex xs12 >
-                                      <vue-dropzone id="dropzone-oem" :options="dropzoneOptions" :useCustomSlot=true>
-                                        <div class="dropzone-custom-content">
-                                          <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
-                                          <div class="subtitle">...or click to select a file from your computer</div>
-                                        </div>
-                                      </vue-dropzone>
+                                      <!-- OEM DROPZONE  -->
+                                        <vue-dropzone 
+                                        id="dropzone_oem" 
+                                        :options="dropzoneOptions" 
+                                        :useCustomSlot="useCustomSlot"
+                                        :awss3="getAWSS3('add-inquiry-images')"
+                                        @vdropzone-success="vdz_success($event,'add-inquiry-oem')">
+                                        >
+                                          <div class="dropzone-custom-content">
+                                            <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
+                                            <div class="subtitle">...or click to select a file from your computer</div>
+                                          </div>
+                                        </vue-dropzone>
+                                    <!-- OEM DROPZONE  -->
                                     </v-flex>
                                   </v-layout>
                                       </v-flex>
