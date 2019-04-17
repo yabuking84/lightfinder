@@ -1,6 +1,6 @@
 <template>
+<div>
 
-    <div>
         <v-card color="transparent" style="" class="chat-container" :class="'chatscroll-statesetter_'+this.biditem"  :id="'chatscrollstatesetter_'+this.biditem" ref="chatscrollstatesetter">
             <v-card-text class="transparent" id="chatscroll-thread">  
 
@@ -45,8 +45,8 @@
             </v-flex>
         </v-layout>
         <!-- Add Comment -->
-    </div>
 
+</div>
 </template>
 
 <script>
