@@ -140,20 +140,29 @@
                                 </v-flex>
                                 <v-flex xs12>
                                 <h5 class="font-weight-thin">Specifications </h5>
-                                <v-layout row wrap class="specifications">
+                                <v-layout row wrap class="specifications mt-2">
                                    
+          
+                                    <template v-for="(specification, index) in bidItem.specifications">
+
                                     <v-flex 
-                                    xs6 ma-0 pa-0 pr-2
-                                    v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index">                                    
-                                        <v-chip label dark outline text-color="black" v-if="specification.value" >
+                                    v-if="specification.value"
+                                    :key="specification+'_'+index"
+                                    xs6 ma-0 pa-0 pr-0 pl-2>
+                                        <div                                         
+                                        text-color="black" 
+                                        class="spec">
                                             {{ specification.name }}: &nbsp;
                                             <span class="font-weight-bold">
                                                 {{ specification.value.split(',').join(', ') }}
                                             </span>
-                                        </v-chip>                                    
+                                        </div>
                                     </v-flex>
 
-                                    <template v-for="">
+                                    </template>
+
+
+                                    <!-- <template v-for="">
                                     <v-flex xs6 ma-0 pa-0 pr-1>
                                         <div text-color="black" class="">
                                             Dimmable: &nbsp;
@@ -162,7 +171,7 @@
                                             </span>
                                         </div>                                    
                                     </v-flex>
-                                    </template>
+                                    </template> -->
 
                                     <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
@@ -498,10 +507,6 @@ export default {
   /* For IE8 and earlier */
 }
 
-.specifications {
-  .v-chip {
-    width: 100%;
-  }
-}
+
 
 </style>
