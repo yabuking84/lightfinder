@@ -85,8 +85,9 @@
                                   <p>{{ bid.remarks }}</p>
                                 </h4>
                                 <h5 class="font-weight-thin">Specifications</h5>
-                                <v-layout row wrap class="specifications">
-                                    <v-flex xs12 >
+                                <v-layout row wrap class="specifications  mt-2">
+
+                                    <!-- <v-flex xs12 >
                                             <span v-for="(specification, index) in bid.specifications" :key="specification+'_'+index">
                                                   <v-chip label dark outline text-color="black" v-if="specification.value">
                                                       {{ specification.name }}: &nbsp;
@@ -95,8 +96,28 @@
                                                       </span>
                                                   </v-chip>
                                             </span>
-                                    </v-flex>
-                                         <v-alert :value="!bid.specifications" type="info" style="width: 100%;" class="ma-4" outline>
+                                    </v-flex> -->
+
+                                    <template v-for="(specification, index) in bid.specifications">
+                                        
+                                        <v-flex
+                                        v-if="specification.value"
+                                        :key="specification+'_'+index"
+                                        xs6 ma-0 pa-0 pr-0 pl-2>
+                                            <div 
+                                            v-if="specification.value" 
+                                            text-color="black" 
+                                            class="spec">
+                                                {{ specification.name }}: &nbsp;
+                                                <span class="font-weight-bold">
+                                                    {{ specification.value.split(',').join(', ') }}
+                                                </span>
+                                            </div>
+                                        </v-flex>
+
+                                    </template>
+
+                                    <v-alert :value="!bid.specifications" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
                                  
@@ -517,9 +538,5 @@
         overflow-y: auto;
     }
     
-    .specifications {
-        .v-chip {
-            width: 180px;
-        }
-    }
+
 </style>

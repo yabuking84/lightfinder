@@ -33,6 +33,8 @@ import App from './App'
 
 import VueScrollTo from 'vue-scrollto'
 
+// Importing the global css file
+import "@/assets/global.scss"
 
 
 // Vue socket.io
