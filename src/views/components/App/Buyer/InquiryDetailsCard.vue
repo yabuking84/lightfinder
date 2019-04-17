@@ -291,7 +291,6 @@
 
         methods: {
 
-
             getCountryName(country_id) {
 
                   var countryselect = this.countries.filter(country => {

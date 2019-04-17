@@ -16,10 +16,10 @@
             <v-divider></v-divider>
 
             <v-container fluid>
+
                 <v-layout row wrap>
+
                     <v-flex xs12>
-                      
-                   
 
                         <v-layout row wrap>
 
@@ -215,7 +215,6 @@
                                 </v-flex>
                         </v-layout>
 
-
                     </v-flex>
                 </v-layout>
              
@@ -224,8 +223,8 @@
             <v-flex xs12 mt-2>
                 <inquiry-post-list v-if="inquiry" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-post-list>
             </v-flex>
-
         </v-card>
+        
     </div>
 </template>
 <script>
@@ -306,7 +305,7 @@
                 
                         }
                   }
-                  
+
 
             }            
 
@@ -343,7 +342,6 @@
         created() {
 
             // console.log(this.inquiry);
-
                this.SortAttachments();    
 
 
