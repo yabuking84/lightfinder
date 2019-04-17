@@ -485,7 +485,7 @@
                                             @vdropzone-success="vdz_success($event,'add-inquiry-oems')"
                                             >
                                           <div class="dropzone-custom-content">
-                                            <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
+                                            <h3 class="dropzone-custom-title">Drag and drop to upload Images and Files</h3>
                                             <div class="subtitle">...or click to select a file from your computer</div>
                                           </div>
                                         </vue-dropzone>
@@ -1532,7 +1532,7 @@ export default {
         "categories": [
           this.formData.category
         ],
-        "attachments": this.attachments,
+        "attachments": this.formData.attachments,
         "specifications": {
           power: this.formData.power,
           lumen: this.formData.lumen,
@@ -1554,7 +1554,6 @@ export default {
         var action = "";
         var data = {};
 
-
       if(this.isEdit) {
 
           action = 'byrInq/editInquiry_a';
@@ -1571,6 +1570,8 @@ export default {
           }
 
       }
+
+      // console.log(data)
 
       if (this.$v.$invalid) {
 

@@ -24,13 +24,17 @@
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
             <v-layout row wrap>
               <v-flex xs4 mr-5>
-                <v-container class="pt-2">
+
+              <v-container class="pt-2">
                   <v-layout row wrap>
                     <v-flex xs12>
                       <v-layout row wrap>
                         <v-flex xs12 mr-4 mb-3>
                           <h5 class="font-weight-thin">Keywords </h5>
                           <h4 class="font-weight-bold">
+                                  
+                  
+
                             <p class="mb-0">{{ inquiry.keyword }}</p>
                           </h4>
                         </v-flex>

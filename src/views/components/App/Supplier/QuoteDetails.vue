@@ -146,7 +146,6 @@
                                                     </div>
                                                 </div>
 
-
                             </v-flex> 
 
                         </v-layout>
@@ -358,7 +357,6 @@
     import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
     import inqEvntBs from "@/bus/inquiry";
     import config from "@/config/main";
-
 
     export default {
 

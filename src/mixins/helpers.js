@@ -89,6 +89,13 @@ export default {
         return retVal;
     },
 
+    getAttachments(attachments) {
+        console.log(attachments.filegroup);
+        console.log(attachments.filename)
+        return attachments.filegroup
+    },
+
+
   },
 
 
