@@ -223,7 +223,6 @@
                                                              </a>
                                                            </div>
 
-
                                                     </v-flex>
                                                     
                                               </v-layout>
@@ -354,7 +353,7 @@
 
         watch: {
 
-                      inquiry: {
+           inquiry: {
 
                 handler(nVal, oVal) {
 
@@ -367,11 +366,12 @@
                 deep: true,
             },
 
-
         },
 
         created() {
             // console.log(this.inquiry);
+             this.SortAttachments();    
+
         },
 
     }

@@ -213,7 +213,6 @@
                                 <v-flex xs12 class="mb-10" v-show="inquiry.oem">
                                   <v-divider></v-divider>
                                 </v-flex>
-                                           
                         </v-layout>
 
 
@@ -306,8 +305,8 @@
                               break;
                 
                         }
-
                   }
+                  
 
             }            
 
