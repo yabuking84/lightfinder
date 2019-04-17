@@ -142,14 +142,28 @@
                                 <h5 class="font-weight-thin">Specifications </h5>
                                 <v-layout row wrap class="specifications">
                                    
-                                     <span v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index"> 
+                                    <v-flex 
+                                    xs6 ma-0 pa-0 pr-2
+                                    v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index">                                    
                                         <v-chip label dark outline text-color="black" v-if="specification.value" >
-                                               {{ specification.name }}: &nbsp;
-                                           <span class="font-weight-bold">
-                                              {{ specification.value.split(',').join(', ') }}
-                                           </span>
-                                        </v-chip>
-                                      </span>
+                                            {{ specification.name }}: &nbsp;
+                                            <span class="font-weight-bold">
+                                                {{ specification.value.split(',').join(', ') }}
+                                            </span>
+                                        </v-chip>                                    
+                                    </v-flex>
+
+                                    <template v-for="">
+                                    <v-flex xs6 ma-0 pa-0 pr-1>
+                                        <div text-color="black" class="">
+                                            Dimmable: &nbsp;
+                                            <span class="font-weight-bold">
+                                                TRIAC, 0-10v, DALI
+                                            </span>
+                                        </div>                                    
+                                    </v-flex>
+                                    </template>
+
                                     <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
                                     </v-alert>
@@ -486,7 +500,7 @@ export default {
 
 .specifications {
   .v-chip {
-    width: 180px;
+    width: 100%;
   }
 }
 
