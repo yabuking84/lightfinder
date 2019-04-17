@@ -1,6 +1,6 @@
 <template>
 <div>
-        <v-card id="product" >
+        <!-- <v-card id="product" > -->
             <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop" style="">
                 <swiper-slide v-for="(image,i) in images" :key="'image_'+i" class="slide-img" >
                     <img :src="image.link" alt="" :style="imgStyle">
@@ -18,7 +18,7 @@
                     <img :src="image.link" alt="">
                 </swiper-slide>
             </swiper>
-        </v-card>
+        <!-- </v-card> -->
 </div>
 </template>
 
