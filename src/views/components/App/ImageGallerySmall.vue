@@ -5,25 +5,20 @@
                 <swiper-slide v-for="(image,i) in images" :key="'image_'+i" class="slide-img" >
                     <img :src="image.link" alt="" :style="imgStyle">
                 </swiper-slide>
-
-                <div v-if="images.length > 1">
-	                <div class="swiper-button-next" slot="button-next">
-	                	 <v-icon>fas fa-chevron-right</v-icon>
-	                </div>
-	                <div class="swiper-button-prev" slot="button-prev">
-	                	 <v-icon>fas fa-chevron-left</v-icon>
-	                </div>
+                
+                <div class="swiper-button-next" slot="button-next">
+                	 <v-icon>fas fa-chevron-right</v-icon>
                 </div>
-
+                <div class="swiper-button-prev" slot="button-prev">
+                	 <v-icon>fas fa-chevron-left</v-icon>
+                </div>
             </swiper>
-
             <!-- swiper2 Thumbs -->
             <swiper :options="swiperOptionThumbs" class="gallery-thumbs" :class="{hide:noThumbnails}" ref="swiperThumbs">
                 <swiper-slide v-for="image in images" :key="image.index" class="slide-img">
                     <img :src="image.link" alt="">
                 </swiper-slide>
             </swiper>
-            
         <!-- </v-card> -->
 </div>
 </template>
