@@ -2,38 +2,28 @@
 <div>
         <!-- <v-card id="product" > -->
             <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop" style="">
-                <swiper-slide v-for="(image,i) in images" :key="'image_'+i" class="slide-img" >
-                    <img :src="image.link" alt="" :style="imgStyle">
+
+                <swiper-slide v-for="(image, index) in images"  :key="image+'_'+index" class="slide-img" >
+                    <img :src="image.location" alt="" :style="imgStyle">
                 </swiper-slide>
-                <div class="swiper-button-next" slot="button-next">
-                	 <v-icon>fas fa-chevron-right</v-icon>
-                </div>
-                <div class="swiper-button-prev" slot="button-prev">
-                	 <v-icon>fas fa-chevron-left</v-icon>
-                </div>
+
+	                <div class="swiper-button-next" slot="button-next">
+	                	 <v-icon>fas fa-chevron-right</v-icon>
+	                </div>
+	                <div class="swiper-button-prev" slot="button-prev">
+	                	 <v-icon>fas fa-chevron-left</v-icon>
+	                </div>
+                
             </swiper>
             <!-- swiper2 Thumbs -->
             <swiper :options="swiperOptionThumbs" class="gallery-thumbs" :class="{hide:noThumbnails}" ref="swiperThumbs">
-                <swiper-slide v-for="image in images" :key="image.index" class="slide-img">
-                    <img :src="image.link" alt="">
+                <swiper-slide v-for="(image, index) in images"  :key="image+'_'+index" class="slide-img">
+                    <img :src="image.location" alt="">
                 </swiper-slide>
             </swiper>
         <!-- </v-card> -->
 </div>
 </template>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>
@@ -50,35 +40,26 @@ export default {
 	},
 
 	props:{
+
 		noThumbnails:{
 			type: Boolean,
 			default: false,
 		},
+
 		height: {
 			type: String,
 			default: null,
+		},
+
+		images: {
+			type: Array,
+			default:null
 		}
+
+
 	},
 
 	data: ()=>({
-        images: [ 
-	        {
-	            index: 0, 
-	            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7599.jpg?v=1.58"
-	        }, 
-	        {
-	            index: 1, 
-	            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7598.jpg?v=1.58"
-	        }, 
-	        {
-	            index: 2, 
-	            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7600.jpg?v=1.58"
-	        }, 
-	        {
-	            index: 3, 
-	            link: "https://almani.ae/assets/images/products/led-downlights-heitersheim-al-do-0001-7021.jpg?v=1.58"
-	        }
-        ],
 
 	    imgStyle: null,
 
@@ -102,22 +83,56 @@ export default {
 	created(){
 
 
-		this.images = this.images.sort( () => Math.random() - 0.5);
-
-		// set height of images
-		if(this.height) {
-			this.imgStyle = {
-				height: this.height,
-				width: 'auto',
-		    };
-		} else {
-			this.imgStyle = {
-				height: 'inherit',
-				width: 'inherit',
-		    };			
-		}
+	
 		
 	},
+
+	watch: {
+		images: {
+
+			  handler(nVal, oVal) {
+
+				  	if(nVal) {
+
+				  		this.getImages();
+				  	}
+
+               },
+
+                deep: true,
+		}
+	},
+
+	methods: {
+		getImages() {
+
+			if(this.images.length == 0) {
+				var imageArchive = {
+					location:'http://chittagongit.com//images/no-photo-available-icon/no-photo-available-icon-4.jpg'
+				}
+				this.images.push(imageArchive);
+			}
+
+			// this.images = this.images.sort( () => Math.random() - 0.5);
+
+			// set height of images
+			if(this.height) {
+				this.imgStyle = {
+					height: this.height,
+					width: 'auto',
+			    };
+			} else {
+				this.imgStyle = {
+					height: 'inherit',
+					width: 'inherit',
+			    };			
+			}
+
+			console.log(this.images)
+
+		},
+	},
+
 
 	mounted() {
 	    this.$nextTick(()=> {
