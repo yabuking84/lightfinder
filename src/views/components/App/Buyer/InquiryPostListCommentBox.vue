@@ -73,7 +73,7 @@
 
             biditem: {
                 type: String
-            }
+            },
 
         },
 
@@ -97,8 +97,7 @@
 
             sendMessage(biditem, key) {
 
-                if (this.chatMessageEditor) 
-
+                if (this.chatMessageEditor) {
                     this.commentData.push({
 
                        user_id: this.authUser.id,
@@ -106,15 +105,16 @@
                        message: this.chatMessageEditor
 
                     });
+                }
 
-                     this.chatMessageEditor = null
-                     this.$eventBus.$emit('resetChatEditor')
+                this.chatMessageEditor = null
+                this.$eventBus.$emit('resetChatEditor')
 
-                     var div_id = '#chatscrollstatesetter_' + this.biditem
-                     this.$nextTick(() => {
-                      const container = document.querySelector(div_id)
-                      container.scrollTop = container.scrollHeight
-                    })
+                var div_id = '#chatscrollstatesetter_' + this.biditem
+                this.$nextTick(() => {
+                  const container = document.querySelector(div_id)
+                  container.scrollTop = container.scrollHeight
+                })
 
             },
 

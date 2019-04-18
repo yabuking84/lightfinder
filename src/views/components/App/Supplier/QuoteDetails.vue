@@ -384,12 +384,10 @@
         validationMessages: {
 
             formData: {
-
-              shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
-              shipping_cost: { required: 'Please Include your Shipping Cost. ' },
-              eta: { required: "Please specify your Estimated Time of Arrival." },
-              etd: { required: "Please specify your Estimated Time of Delivery." },
-
+                shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
+                shipping_cost: { required: 'Please Include your Shipping Cost. ' },
+                eta: { required: "Please specify your Estimated Time of Arrival." },
+                etd: { required: "Please specify your Estimated Time of Delivery." },
             }
 
         },
