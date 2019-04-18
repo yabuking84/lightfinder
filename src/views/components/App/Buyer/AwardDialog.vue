@@ -152,25 +152,25 @@
 
 			            </v-card>
 			            <v-card class="pa-4 mt-2" elevation=3>
-			                <v-layout row wrap>
+			                <v-layout row wrap justify-center>
 			                    <v-flex xs4>
-			                        <v-img class="mx-5" width="60px" src="https://image.flaticon.com/icons/svg/1493/1493688.svg">
+			                        <v-img style="margin: 0 auto;" width="60px" src="https://image.flaticon.com/icons/svg/1493/1493688.svg">
 			                        </v-img>
 			                    </v-flex>
-			                    <v-flex xs7 mt-2 px-2>
+			                    <v-flex xs7 >
 			                        <h1 class="font-weight-thick black--text subheading"> <span class="body-2">Step 2.)</span> Wait for Confirmation</h1>
 			                        <h5 class="font-weight-light black--text darken-4">Wait for the confirmation of the supplier to confirm and close the deal </h5>
 			                    </v-flex>
 			                </v-layout>
-			                <v-layout row wrap pa-4>
+			                <v-layout row wrap pa-3>
 			                    <v-divider></v-divider>
 			                </v-layout>
-			                <v-layout row wrap>
+			                <v-layout row wrap justify-center>
 			                    <v-flex xs4>
-			                        <v-img class="mx-5" width="60px" src="https://image.flaticon.com/icons/svg/1086/1086741.svg">
+			                        <v-img style="margin: 0 auto;" width="60px" src="https://image.flaticon.com/icons/svg/1086/1086741.svg">
 			                        </v-img>
 			                    </v-flex>
-			                    <v-flex xs7 mt-2 px-2>
+			                    <v-flex xs7>
 			                        <h1 class="font-weight-thick black--text subheading"><span class="body-2">Step 3.)</span> Ready for Payment</h1>
 			                        <h5 class="font-weight-light black--text darken-4">After the confirmation, the payment link will be activated </h5>
 			                    </v-flex>

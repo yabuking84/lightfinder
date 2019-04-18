@@ -99,7 +99,9 @@
                         <v-flex xs7>
                             <v-layout row wrap>
                                 <!-- <v-container> -->
+                            
 
+                            <!-- // {{ bidItem }} -->
                                 <v-flex xs12 pl-2>
                                     <h5 class="font-weight-thin">Product name</h5>
                                     <h2>{{ bidItem.product_name }}</h2>
@@ -239,6 +241,7 @@
 <script>
 
 import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+// import ImageGallerySmall from "@/views/Components/App/ImageGallery"
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate"
 
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"
@@ -265,7 +268,9 @@ export default {
     AwardDialog,
     RequestSampleDialog,
     CommentBox,
-    InquiryCreate
+    InquiryCreate,
+
+ 
 
   },
 
@@ -309,6 +314,10 @@ export default {
         ],
         verified : false,
         rejected : false,
+
+        inquiryImages:[],
+        inquiryAttachments:[],
+        inquiryOEM:[],
 
     }),
 
