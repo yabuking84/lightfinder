@@ -81,10 +81,7 @@ export default {
 	}),
 
 	created(){
-
-
-	
-		
+		this.getImages();
 	},
 
 	watch: {
@@ -108,8 +105,9 @@ export default {
 
 			if(this.images.length == 0) {
 				var imageArchive = {
-					location:'http://chittagongit.com//images/no-photo-available-icon/no-photo-available-icon-4.jpg'
+					location:'/static/images/no-photo-available-icon-4.jpg'
 				}
+
 				this.images.push(imageArchive);
 			}
 
