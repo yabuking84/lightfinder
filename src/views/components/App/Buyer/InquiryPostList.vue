@@ -191,36 +191,33 @@
 
 
                            <v-flex xs12><p></p>
-                                      <v-layout row wrap>
-                                          <v-flex xs6>
-                                            <template v-if="!inquiry.awarded">                                                
-                                              <v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
-                                                  <i class="fas fa-lightbulb white--text "></i>
-                                                  <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-                                              </v-btn>
-                                            </template>
-                                          </v-flex>
-                                          <v-flex xs6>
-                                            <template v-if="!inquiry.awarded">                                                
-                                              <v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
-                                                  <i class="fas fa-award white--text"></i>
-                                                  <span class="font-weight-bold ml-1 white--text">Award</span>
-                                              </v-btn>
-                                            </template>
-                                          </v-flex>
-                                      </v-layout>
+                              <v-layout row wrap>
+                                  <v-flex xs6>
+                                    <template v-if="!inquiry.awarded">                                                
+                                      <v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
+                                          <i class="fas fa-lightbulb white--text "></i>
+                                          <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
+                                      </v-btn>
+                                    </template>
                                   </v-flex>
-
-                                  <v-flex xs12>
-                                      <v-divider></v-divider>
-                                      <!-- message box -->
-                                      <messaging> </messaging>
-                                      <!-- message box -->
-
-
-
-
+                                  <v-flex xs6>
+                                    <template v-if="!inquiry.awarded">                                                
+                                      <v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
+                                          <i class="fas fa-award white--text"></i>
+                                          <span class="font-weight-bold ml-1 white--text">Award</span>
+                                      </v-btn>
+                                    </template>
                                   </v-flex>
+                              </v-layout>
+                            </v-flex>
+
+                            <v-flex xs12>
+                                <!-- <v-divider></v-divider> -->
+                                <!-- message box -->
+                                <messaging> </messaging>
+                                <!-- message box -->
+                            </v-flex>
+
                     </v-layout>
                 </v-card-text>
 
@@ -251,7 +248,7 @@ import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate"
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"
 import RequestSampleDialog from "@/views/Components/App/Buyer/RequestSampleDialog"
 
-import Messaging from "@/views/Components/App/Buyer/InquiryPostListMessaging"
+import Messaging from "@/views/Components/App/InquiryPostListMessaging"
 
 // import Comment from "@/views/Components/App/Buyer/InquiryPostListComment"
 

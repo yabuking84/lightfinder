@@ -219,14 +219,16 @@
                                 </v-layout>
                             </v-flex>
 
+                            <v-flex xs12>
+                                <!-- <v-divider></v-divider> -->                                
+                                <!-- <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box> -->
+                                <messaging> </messaging>
+                            </v-flex>
+
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         </v-layout>
                     </v-card-text>
-
-                    <v-divider></v-divider>
-                    
-                    <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box>
 
                     <v-card-actions>
                         <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at)  }}</h5>
@@ -246,8 +248,11 @@
 
 <script>
     import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-    import CommentBox from "@/views/Components/App/CommentBox"
+
     import MessageBox from '@/views/Components/App/Admin/MessageDialog'
+
+    // import CommentBox from "@/views/Components/App/CommentBox"
+    import Messaging from "@/views/Components/App/InquiryPostListMessaging"
 
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry"
@@ -267,7 +272,7 @@
         components: {
 
             ImageGallerySmall,
-            CommentBox,
+            Messaging,
             MessageBox
 
         },
