@@ -21,6 +21,9 @@ const mutations = {
     
 const actions = {
 
+    getInquiryMessages_a(context,data){
+
+    },
 
 
 }

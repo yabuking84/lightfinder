@@ -7,20 +7,13 @@
   export default {
     props: ['content', 'type'],
     mounted () {
-
-
-      	this.$eventBus.$on('resetChatEditor', () => {
-      	  if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = ''
-      	})
-      	if (this.$refs['chateditable']) {
-      	  this.$refs['chateditable'].addEventListener('paste', this.chatEditablePastEventHandler)
-      	}
-      	this.$refs.chateditable.addEventListener('keypress', this.chatEditableKeypressEventHandler)
-
-
-      	// by tawing
-      	// this.ChatEditableBus.$on('reset-chateditor', this.resetChatEditor());
-
+      this.$eventBus.$on('resetChatEditor', () => {
+        if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = ''
+      })
+      if (this.$refs['chateditable']) {
+        this.$refs['chateditable'].addEventListener('paste', this.chatEditablePastEventHandler)
+      }
+      this.$refs.chateditable.addEventListener('keypress', this.chatEditableKeypressEventHandler)
     },
     beforeCreate () {
       this.$eventBus.$off('resetChatEditor')
@@ -63,16 +56,7 @@
             vm.$emit('onEnter')
           }
         }
-      },
-
-
-      // by tawing
-      // resetChatEditor(){
-      //   if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = '';
-
-      //   console.log('resetChatEditor');
-      // },
-
+      }
     }
   }
 </script>

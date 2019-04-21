@@ -119,12 +119,14 @@ flat>
                 </v-list-tile-avatar>
                 <v-list-tile-title>Edit Profile</v-list-tile-title>
             </v-list-tile>
+            
             <v-list-tile @click="() => {}">
                 <v-list-tile-avatar>
                     <v-icon>settings_applications</v-icon>
                 </v-list-tile-avatar>
                 <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile>
+
             <v-list-tile @click="() => {}">
                 <v-list-tile-avatar>
                     <v-icon>mail</v-icon>
@@ -140,6 +142,7 @@ flat>
                 </v-list-tile-avatar>
                 <v-list-tile-title>Sign Out</v-list-tile-title>
             </v-list-tile>
+
         </v-list>
 
     </v-menu>

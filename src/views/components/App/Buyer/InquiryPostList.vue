@@ -38,7 +38,7 @@
                           <v-flex xs12 mx-5 mt-3 mb-3>
                                 <div>
                                     <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                    <div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
+                                    <div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> has been declined, please refer on the message box if you have concerns. thanks!
                                     </div>
                                 </div>
 
@@ -50,7 +50,7 @@
                           </v-flex>
 
                   <v-flex xs12>
-                        <comment-box :commentData="commentData"> </comment-box>
+                        <!-- <messaging> </messaging> -->
                   </v-flex>
         </v-layout>
 
@@ -171,7 +171,7 @@
                                             <span class="font-weight-bold">
                                                 TRIAC, 0-10v, DALI
                                             </span>
-                                        </div>                                    
+                                        </div>
                                     </v-flex>
                                     </template> -->
 
@@ -191,32 +191,33 @@
 
 
                            <v-flex xs12><p></p>
-                                      <v-layout row wrap>
-                                          <v-flex xs6>
-                                            <template v-if="!inquiry.awarded">                                                
-                                              <v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
-                                                  <i class="fas fa-lightbulb white--text "></i>
-                                                  <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-                                              </v-btn>
-                                            </template>
-                                          </v-flex>
-                                          <v-flex xs6>
-                                            <template v-if="!inquiry.awarded">                                                
-                                              <v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
-                                                  <i class="fas fa-award white--text"></i>
-                                                  <span class="font-weight-bold ml-1 white--text">Award</span>
-                                              </v-btn>
-                                            </template>
-                                          </v-flex>
-                                      </v-layout>
+                              <v-layout row wrap>
+                                  <v-flex xs6>
+                                    <template v-if="!inquiry.awarded">                                                
+                                      <v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
+                                          <i class="fas fa-lightbulb white--text "></i>
+                                          <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
+                                      </v-btn>
+                                    </template>
                                   </v-flex>
+                                  <v-flex xs6>
+                                    <template v-if="!inquiry.awarded">                                                
+                                      <v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
+                                          <i class="fas fa-award white--text"></i>
+                                          <span class="font-weight-bold ml-1 white--text">Award</span>
+                                      </v-btn>
+                                    </template>
+                                  </v-flex>
+                              </v-layout>
+                            </v-flex>
 
-                                  <v-flex xs12>
-                                      <v-divider></v-divider>
-                                      <!-- message box -->
-                                      <comment-box :commentData="commentData" :biditem="bidItem.id"> </comment-box>
-                                      <!-- message box -->
-                                  </v-flex>
+                            <v-flex xs12>
+                                <!-- <v-divider></v-divider> -->
+                                <!-- message box -->
+                                <messaging> </messaging>
+                                <!-- message box -->
+                            </v-flex>
+
                     </v-layout>
                 </v-card-text>
 
@@ -247,7 +248,9 @@ import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate"
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"
 import RequestSampleDialog from "@/views/Components/App/Buyer/RequestSampleDialog"
 
-import CommentBox from "@/views/Components/App/Buyer/InquiryPostListCommentBox"
+import Messaging from "@/views/Components/App/InquiryPostListMessaging"
+
+// import Comment from "@/views/Components/App/Buyer/InquiryPostListComment"
 
 import helpers from "@/mixins/helpers"
 import inqEvntBs from "@/bus/inquiry"
@@ -267,7 +270,7 @@ export default {
     ImageGallerySmall,
     AwardDialog,
     RequestSampleDialog,
-    CommentBox,
+    Messaging,
     InquiryCreate,
 
  
@@ -302,16 +305,7 @@ export default {
         isEdit:false,
         dialog:false,
         // comment Data composed of the comment useridid and inquiry
-        commentData: [
-
-            // {
-            //     id: 1,
-            //     user_id: 1,fillBidTable 
-            //     name: 'Jonh Doe',
-            //     message: 'Original Branded LED chips with high luminous flux density creats less glare, low heat resistance and stable light output.',
-
-            // },
-        ],
+       
         verified : false,
         rejected : false,
 
