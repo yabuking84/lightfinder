@@ -18,6 +18,8 @@ import admnInq from './modules/adminInquiries'
 
 import sckts from './modules/Sockets'
 import ntfctns from './modules/Notifications'
+
+import msg from './modules/Messaging'
  
 Vue.use(Vuex)
 
@@ -31,6 +33,7 @@ export const store = new Vuex.Store({
     swatch,
     auth,
     sckts,
+    msg,
     ntfctns,
     cat,
     byrInq,

@@ -49,8 +49,15 @@
 
                         <v-layout row wrap>
 
+                                <v-flex xs12 v-if="inquiryImages.length > 0">
+                                    <!-- <h4 class="font-weight-medium">Image</h4> -->
+                                    <!-- <v-flex xs10 offset-xs1> -->
+                                         <image-gallery-small :images="inquiryImages" noThumbnails height="250px"></image-gallery-small> 
+                                    <!-- </v-flex> -->
+                                </v-flex>
+
                                 <v-flex xs12>
-                                    <small class="blue-grey--text">Details</small>
+                                    <!-- <small class="blue-grey--text">Details</small> -->
                                     <h4 class="font-weight-medium">Keywords </h4>
                                     <h4 class="font-weight-light">
                                       <p class="mb-0">{{ inquiry.keyword }}</p>
@@ -70,13 +77,6 @@
                                     <h4 class="font-weight-light">
                                     <span>{{ inquiry.quantity }} pcs</span>
                                   </h4>
-                                </v-flex>
-
-                                <v-flex xs12 >
-                                    <h4 class="font-weight-medium">Image</h4>
-                                    <v-flex xs10 offset-xs1>
-                                         <image-gallery-small :images="inquiryImages" noThumbnails height="100px"></image-gallery-small>  
-                                    </v-flex>
                                 </v-flex>
 
                                 <v-flex xs12>
@@ -113,24 +113,24 @@
 
                                 <v-flex xs12 class="attachments">
 
+                                    <h4 class="font-weight-medium">Attachments </h4>
+                                    <div v-if="inquiryAttachments.length">
 
-                                            <h4 class="font-weight-medium">Attachments </h4>
-                                            <div v-if="inquiryAttachments.length">
+                                    <v-layout row wrap>
+                                         <v-flex xs4 v-for="(attachment, index) in inquiryAttachments" :key="attachment+'_'+index">
+                                                 <a target="_blank" :href="attachment.location">
+                                                    <v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
+                                                 </a>   
+                                          </v-flex> 
+                                    </v-layout>
+                                      
+                                    </div>
+                                    
+                                    <div v-else>
+                                        <h4 class="red--text">No Attachment</h4>
+                                    </div>
 
-                                            <v-layout row wrap>
-                                                 <v-flex xs4 v-for="(attachment, index) in inquiryAttachments" :key="attachment+'_'+index">
-                                                         <a target="_blank" :href="attachment.location">
-                                                            <v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
-                                                         </a>   
-                                                  </v-flex> 
-                                            </v-layout>
-                                              
-                                            </div>
-                                            
-                                            <div v-else>
-                                                <h4 class="red--text">No Attachment</h4>
-                                            </div>
-                                    </v-flex>
+                                </v-flex>
 
                                     
                                 <v-flex xs12 class="mb-10">
