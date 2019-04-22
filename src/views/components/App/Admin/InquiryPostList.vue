@@ -252,7 +252,7 @@
     import MessageBox from '@/views/Components/App/Admin/MessageDialog'
 
     // import CommentBox from "@/views/Components/App/CommentBox"
-    import Messaging from "@/views/Components/App/InquiryPostListMessaging"
+    import Messaging from "@/views/Components/App/MessagingBox"
 
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry"

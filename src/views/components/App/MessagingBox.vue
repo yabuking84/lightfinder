@@ -1,6 +1,7 @@
 <template>
 <div>
 
+	<div class="messaging-box">
         <v-card color="transparent" style="" class="chat-container">
             <v-card-text class="" id="chatscroll-thread">  
 
@@ -11,7 +12,7 @@
 
                                 <div 
                                 class="chat-thread" 
-                                :class="[authUser.id === message.user_id ? 'end' :'start']">
+                                :class="[authUser.uuid == message.uuid ? 'end' :'start']">
                                     <!-- <div class="user-avatar">
                                         <v-avatar size="40px" color="grey lighten-4">
                                             <img :src="[authUser.id === message.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="avatar">
@@ -43,10 +44,12 @@
                 <div class="pos-relative vuse-chat-message-container">
                     
                     <chat-editable 
+                    ref="cme" 
+                    :cmeBus="cmeBus" 
                     class="chat-message-editor" 
                     @update="chatMessageEditor = $event" 
                     type="innerHTML"                     
-                    @onEnter="sendMessage()" 
+                    @onEnter="sendMessage2()" 
                     placeholder="Type you message .."></chat-editable>
 
                     <v-btn color="green" 
@@ -61,11 +64,13 @@
         <!-- Add message -->
 
 
+	</div>
 </div>
 </template>
 
 <script>
 import ChatEditable from '@/views/Components/Editable/ChatEditable'
+import Vue from 'vue'
 
 
     export default {
@@ -77,11 +82,13 @@ import ChatEditable from '@/views/Components/Editable/ChatEditable'
         props: {
 
             inquiry: {
-                type: Object
+                type: Object,
+                default: null,
             },
 
             bid: {
-                type: Object
+                type: Object,
+                default: null,
             },
 
 
@@ -90,41 +97,79 @@ import ChatEditable from '@/views/Components/Editable/ChatEditable'
         data: () => ({
         	messages:  [],
         	chatMessageEditor:  null,
+        	cmeBus: new Vue(),
         }),
 
-        beforeDestroy() {
-
-
+        created() {
+		    // alert(this.authUser.uuid);
         },
 
         methods: {
 
             sendMessage() {
 
-                if (this.chatMessageEditor) {
-                    this.messages.push({
-
-                       	user_id: this.authUser.id,
-                       	name: this.authUser.name,                       	
-                       	text: this.chatMessageEditor,
-
-                    });
-                }
-                this.chatMessageEditor = null;		      	
-		        this.$eventBus.$emit('resetChatEditor');
-                this.$nextTick(() => {
-                	const container = this.$el.querySelector('.chat-container');
-                	container.scrollTop = container.scrollHeight;
-                })
+            	// send Message
+				if (this.chatMessageEditor) {
+		            this.$store.dispatch('msg/sendMessageToBid_a', {                    
+	                   	user_id: this.authUser.id,
+	                   	name: this.authUser.name,
+	                   	text: this.chatMessageEditor,
+		            }).then(response=>{
+		            	this.updateChat();
+		            });
+				}
 
 
             },
+
+
+            sendMessage2() {
+				this.messages.push({			         
+			         uuid: this.authUser.uuid,
+			         name: this.authUser.name,
+			         text: this.chatMessageEditor,					
+				});
+
+	            this.resetChat();
+    			this.scrollChat();
+            },
+
+
+            updateChat(){
+				// get bid messages
+				if(this.bid!=null) {
+		            this.$store.dispatch('msg/getBidMessages_a', {
+	                    bid_id: this.bid.id,
+		            }).then(response=>{		            	
+						this.messages = response;
+						
+			            this.resetChat();
+            			this.scrollChat();
+
+		            });
+				}            	
+
+            },
+
+            resetChat(){
+				this.chatMessageEditor = null;
+				// this.$eventBus.$emit('resetChatEditor');
+				// this.$refs.cme.resetChatEditor();
+				this.cmeBus.$emit('reset-chateditor');
+            },
+            scrollChat(){
+				this.$nextTick(() => {
+					const container = this.$el.querySelector('.chat-container');
+					container.scrollTop = container.scrollHeight;
+				})
+            },
+
 
         },
 
         computed: {
 
-             authUser () {        
+            authUser () {        
                 return this.$store.state.auth.auth_user;
             },
 
@@ -142,44 +187,50 @@ import ChatEditable from '@/views/Components/Editable/ChatEditable'
         },
 
 	    beforeDestroy () {
-	    	this.$eventBus.$off('resetChatEditor')
+	    	// this.$eventBus.$off('resetChatEditor')
 	    },
     }
 </script>
 
 <style scoped lang="scss">
-#chatscroll-thread {
-    // max-height: 400px;
-    // overflow: scroll;
-    background-color:#fff;
-}
 
-.chat-container {
-	max-height: 300px; 
-  	overflow-y: scroll;
-  	box-shadow: none;
+.messaging-box {
+	border: 1px solid gainsboro;
 
-  	.chat-message {
-  		max-width: calc(90% - 50px);		
-  		.chat-message-name {
-		    font-size: 12px;
-		    font-weight: bold;
-	  	}
-  		.chat-message-text {
-		    font-size: 14px;
-	  	}
-  	}
-}
+	.chat-container {
 
+		max-height: 300px; 
+	  	overflow-y: scroll;
+	  	box-shadow: none;
 
-.vuse-chat-message-container {
-    border: 0px;
-    // border-top: 1px solid gainsboro;
-	.chat-message-editor {
-    	background-color: #fff;	
+		#chatscroll-thread {
+		    // max-height: 400px;
+		    // overflow: scroll;
+		    background-color:#fff;
+		  	.chat-message {
+		  		max-width: calc(90% - 50px);		
+		  		.chat-message-name {
+				    font-size: 12px;
+				    font-weight: bold;
+			  	}
+		  		.chat-message-text {
+				    font-size: 14px;
+			  	}
+		  	}
+		}
+
 	}
-}
 
+
+	.vuse-chat-message-container {
+	    border: 0px;
+	    // border-top: 1px solid gainsboro;
+		.chat-message-editor {
+	    	background-color: #fff;	
+		}
+	}
+
+}
 
 
 </style>

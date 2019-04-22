@@ -5,13 +5,14 @@
   import striptags from 'striptags'
   import { replaceInvalidCharacters, cleanHTML } from '@/utils/EditorHelper'
   export default {
-    props: ['content', 'type'],
+    props: ['content', 'type', 'cmeBus'],
     mounted () {
 
 
       	this.$eventBus.$on('resetChatEditor', () => {
       	  if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = ''
       	})
+
       	if (this.$refs['chateditable']) {
       	  this.$refs['chateditable'].addEventListener('paste', this.chatEditablePastEventHandler)
       	}
@@ -19,7 +20,12 @@
 
 
       	// by tawing
-      	// this.ChatEditableBus.$on('reset-chateditor', this.resetChatEditor());
+      	var self = this;
+      	this.cmeBus.$on('reset-chateditor', function(){
+      		self.resetChatEditor();
+      	});
+
+
 
     },
     beforeCreate () {
@@ -67,11 +73,10 @@
 
 
       // by tawing
-      // resetChatEditor(){
-      //   if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = '';
-
-      //   console.log('resetChatEditor');
-      // },
+      resetChatEditor(){
+        if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = '';
+        console.log('resetChatEditor');
+      },
 
     }
   }
