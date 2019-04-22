@@ -484,12 +484,35 @@ computed: {
 
 
 methods: {
+
     toggleMiniVariantMode () {
       this.$store.dispatch('toggleMiniVariantMode')
       this.$store.dispatch('toggleMiniVarient')
     },
+
     logout() {
         this.$router.push({name:'Logout'});                
+    },
+
+    getNotifications() {
+
+        this.$store.dispatch('ntfctns/getNotifications_a')
+        .then((response) => {
+            // create a event bus 
+            // this.openMessageDialog = true
+                // this.$emit('update:isClosed', true);
+            // inqEvntBs.emitApproved();
+            console.log(response)
+
+        })
+        .catch((e) => {
+            this.$emit('update:isClosed', true);
+            console.log(e);
+        })
+        .finally(() => {
+
+        });
+
     },
 
 
@@ -517,6 +540,10 @@ methods: {
 
 
 },
+
+created()  {
+	this.getNotifications()
+}
 
 
 

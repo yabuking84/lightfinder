@@ -101,9 +101,11 @@ export default {
 	},
 
 	methods: {
+
 		getImages() {
 
 			if(this.images.length == 0) {
+				
 				var imageArchive = {
 					location:'/static/images/no-photo-available-icon-4.jpg'
 				}
@@ -112,7 +114,7 @@ export default {
 			}
 
 			// this.images = this.images.sort( () => Math.random() - 0.5);
-
+			
 			// set height of images
 			if(this.height) {
 				this.imgStyle = {
