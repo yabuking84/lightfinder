@@ -76,11 +76,12 @@
                                       </div>
                             </v-flex>
             </v-layout>
+           
 
+            <!-- color="grey lighten-4"  -->
             <v-card 
             v-else 
             class="mb-5 ma-3" 
-            color="grey lighten-4" 
             :hover="true" 
             :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
             v-for="(bidItem, i) in bidItems" 
@@ -142,7 +143,7 @@
                                 </v-flex>
                                 <v-flex xs12>
                                 <h5 class="font-weight-thin">Specifications </h5>
-                                <v-layout row wrap class="specifications mt-2">
+                                <v-layout row wrap class="specifications mt-2 mr-2">
                                    
           
                                     <template v-for="(specification, index) in bidItem.specifications">
@@ -214,7 +215,7 @@
                             <v-flex xs12>
                                 <!-- <v-divider></v-divider> -->
                                 <!-- message box -->
-                                <messaging> </messaging>
+                                <messaging :bid="bidItem"> </messaging>
                                 <!-- message box -->
                             </v-flex>
 
@@ -248,7 +249,7 @@ import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate"
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"
 import RequestSampleDialog from "@/views/Components/App/Buyer/RequestSampleDialog"
 
-import Messaging from "@/views/Components/App/InquiryPostListMessaging"
+import Messaging from "@/views/Components/App/MessagingBox"
 
 // import Comment from "@/views/Components/App/Buyer/InquiryPostListComment"
 
@@ -337,7 +338,7 @@ export default {
 
             this.$store.dispatch('byrInq/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
-             })
+            })
             .then(response => {
                 
 
