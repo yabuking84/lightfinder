@@ -13,6 +13,10 @@ const state= {
 			},
 			getInquiry: {
 				url: base_url + `/v1/admin/inquiries`
+			},
+
+			getInquiryBids: {
+				url: base_url + `/v1/admin/inquiries`
 			}
 		},
 		/* POST */
@@ -123,9 +127,39 @@ const actions = {
   },
 
 
+   getAllInquiryBids_a(context,data){
 
 
+        return new Promise((resolve, reject) => {
 
+            var method = state.api.get.method; 
+            var url = state.api.get.getInquiryBids.url + "/" + data.inq_id + "/bids" 
+            // var url = `${state.api.get.getInquiryBids}/${data.inq_id}/bids`
+
+            var headers = {
+                                 token:localStorage.access_token,
+                                 "content-type": "application/json",
+                           };
+            axios({
+                method: method,
+                url: url,
+                headers: headers,
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+
+             if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+				console.log("EXPIRED");
+				router.push({ 'name': 'Logout' })
+			  } else {
+				reject(error);
+			  }
+                
+            })
+        });
+    },
 
 
   /* PUT  */
@@ -185,7 +219,22 @@ const actions = {
 		})
 	});
 
-  }
+  },
+
+   checkToken(context,error){
+        
+        // console.log("checkToken = ",error);
+        if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+            console.log("EXPIRED");
+            router.push({'name': 'Logout'})
+        }
+        else {
+            // reject(error);
+            return true;
+        }
+
+    },
+
 
 
 
