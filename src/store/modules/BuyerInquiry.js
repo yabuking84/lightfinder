@@ -74,6 +74,7 @@ const mutations = {
 const actions = {
 
     getInquiries_a(context){
+    	
         return new Promise((resolve, reject) => {
             var headers = {token:localStorage.access_token};
             // console.log(state.api.getInquiries.url);

@@ -99,10 +99,12 @@
 
                         <v-flex xs7>
                             <v-layout row wrap>
+                            	
                                 <!-- <v-container> -->
-                            
+						    <pre>
+                           	{{ bidItem }}
+							</pre>
 
-                            <!-- // {{ bidItem }} -->
                                 <v-flex xs12 pl-2>
                                     <h5 class="font-weight-thin">Product name</h5>
                                     <h2>{{ bidItem.product_name }}</h2>
