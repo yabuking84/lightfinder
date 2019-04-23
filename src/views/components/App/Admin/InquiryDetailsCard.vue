@@ -24,10 +24,10 @@
          </v-btn>
        </v-flex>
      </v-layout> -->
-
+<!-- 
      <pre>
      {{ inquiry }}
-    </pre>
+    </pre> -->
 
         <v-layout row wrap>
           <v-flex xs12>
