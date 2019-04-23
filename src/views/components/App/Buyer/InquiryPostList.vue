@@ -101,9 +101,7 @@
                             <v-layout row wrap>
                             	
                                 <!-- <v-container> -->
-						    <pre>
-                           	{{ bidItem }}
-							</pre>
+						    <!-- <pre>{{ bidItem }}</pre> -->
 
                                 <v-flex xs12 pl-2>
                                     <h5 class="font-weight-thin">Product name</h5>

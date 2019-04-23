@@ -134,18 +134,42 @@ const actions = {
 
 
 	getNotifications_a(context) {
+    	return new Promise((resolve, reject) => {
 
-	    	return new Promise((resolve, reject) => {
+            var headers = {token:localStorage.access_token};
 
-	            var headers = {token:localStorage.access_token};
+            axios({
+                method: state.api.getNotifications.method,
+                url: state.api.getNotifications.url,
+                headers: headers,
+            })
+            .then(response => {
+                resolve(response.data);
+            })
+            .catch(error => {
+                // console.log(error);
+                if(actions.checkToken(error)) {
+                    reject(error);
+                }
+            })
 
-	            axios({
-	                method: state.api.getNotifications.method,
-	                url: state.api.getNotifications.url,
+        });
+   },
+
+   markNotifasRead_a(context,ntfctn) {
+
+   		return new Promise((resolve, reject) => {
+
+   			  var headers = {token:localStorage.access_token};
+
+   			   axios({
+	                method: state.api.markNotifasRead.method,
+	                url: state.api.markNotifasRead.url + `/${ntfctn.data.notification_id}/read`,
 	                headers: headers,
 	            })
 	            .then(response => {
 	                resolve(response.data);
+	                state.unread = parseInt(state.unread) - 1
 	            })
 	            .catch(error => {
 	                // console.log(error);
@@ -154,35 +178,9 @@ const actions = {
 	                }
 	            })
 
-	        });
+   		});
 
-	   },
-
-	   markNotifasRead_a(context,ntfctn) {
-
-	   		return new Promise((resolve, reject) => {
-
-	   			  var headers = {token:localStorage.access_token};
-
-	   			   axios({
-		                method: state.api.markNotifasRead.method,
-		                url: state.api.markNotifasRead.url + `/${ntfctn.data.notification_id}/read`,
-		                headers: headers,
-		            })
-		            .then(response => {
-		                resolve(response.data);
-		                state.unread = parseInt(state.unread) - 1
-		            })
-		            .catch(error => {
-		                // console.log(error);
-		                if(actions.checkToken(error)) {
-		                    reject(error);
-		                }
-		            })
-
-	   		});
-
-	   }
+   },
 
 
 
