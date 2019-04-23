@@ -34,6 +34,25 @@
 
      <v-layout row wrap>
 
+
+     							  <v-flex xs12>
+                                    <small class="blue-grey--text">Buyer Name</small>
+                                    <!-- <h4 class="font-weight-medium">Keywords </h4> -->
+                                    <h4 class="font-weight-light">
+                                      <p class="mb-0">{{ inquiry.buyer.first_name }} {{ inquiry.buyer.last_name }}</p>
+                                    </h4>
+                                </v-flex>
+
+
+     	 				         <v-flex xs12 >
+                                    <h4 class="font-weight-medium">Image</h4>
+                                    <v-flex xs10 offset-xs1>
+                                         <image-gallery-small :images="inquiryImages" noThumbnails height="100px"></image-gallery-small>  
+                                    </v-flex>
+                                </v-flex>
+
+
+
                                 <v-flex xs12>
                                     <small class="blue-grey--text">Details</small>
                                     <h4 class="font-weight-medium">Keywords </h4>
@@ -57,12 +76,7 @@
                                   </h4>
                                 </v-flex>
 
-                                <v-flex xs12 >
-                                    <h4 class="font-weight-medium">Image</h4>
-                                    <v-flex xs10 offset-xs1>
-                                         <image-gallery-small :images="inquiryImages" noThumbnails height="100px"></image-gallery-small>  
-                                    </v-flex>
-                                </v-flex>
+                             
 
                                 <v-flex xs12>
                                     <h4 class="font-weight-medium">Message </h4>
@@ -218,7 +232,7 @@
                                                       <h4 class="red--text">No Files</h4>
                                                 </v-flex>
                                               </v-layout>
-                                              
+
                                    </v-flex>
 
                
