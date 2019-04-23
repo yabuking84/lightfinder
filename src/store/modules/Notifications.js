@@ -178,7 +178,6 @@ const actions = {
 						state.unread = parseInt(state.unread) - 1
 	                }
 	                
-	                
 	            })
 	            .catch(error => {
 	                // console.log(error);
