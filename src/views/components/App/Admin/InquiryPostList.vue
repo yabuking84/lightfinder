@@ -222,7 +222,7 @@
                             <v-flex xs12>
                                 <!-- <v-divider></v-divider> -->                                
                                 <!-- <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box> -->
-                                <messaging> </messaging>
+                                <messaging :bid="bidItem"> </messaging>
                             </v-flex>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

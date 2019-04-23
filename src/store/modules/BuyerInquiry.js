@@ -88,8 +88,9 @@ const actions = {
                 resolve(response.data);
             })
             .catch(error => {
-                // console.log(error);
-                if(actions.checkToken(error)) {
+                console.log('error getInquiries_a',error);
+                // if(actions.checkToken(error)) {                
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
             })
@@ -113,7 +114,8 @@ const actions = {
                 resolve(response.data);
             })
             .catch(error => {
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
             })
@@ -142,7 +144,8 @@ const actions = {
             })
             .catch(error => {
 
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
                 
@@ -173,7 +176,8 @@ const actions = {
             })
             .catch(error => {
 
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
                 
@@ -205,7 +209,8 @@ const actions = {
             .catch(error => {
 
                 // console.log(error);
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
                 
@@ -232,7 +237,8 @@ const actions = {
             .catch(error => {
 
                 // console.log(error);
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
                 
@@ -277,7 +283,8 @@ const actions = {
             .catch(error => {
 
                 // console.log(error);
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
+                if(context.dispatch('checkToken',error)) {
                     reject(error);
                 }
                 
@@ -286,8 +293,9 @@ const actions = {
     },
 
 
-    checkToken(error){
-
+    checkToken(context,error){
+        
+        // console.log("checkToken = ",error);
         if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
             console.log("EXPIRED");
             router.push({'name': 'Logout'})

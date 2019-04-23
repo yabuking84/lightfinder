@@ -55,7 +55,7 @@ const mutations = {
         state.showSnackbar = false;
     },
 
-} 
+}
 
  
 
