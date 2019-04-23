@@ -6,6 +6,8 @@
       <v-toolbar-title class="font-weight-thin body-2"> Posted on: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
     </v-toolbar>
     <v-card>
+
+
       <v-container>
      <!--    <v-layout row wrap pa-0 v-if="inquiry.stage_id == onVerification">
        <v-flex xs6>
@@ -29,7 +31,7 @@
 
         <v-layout row wrap>
           <v-flex xs12>
-<!-- 
+
      <v-layout row wrap>
 
                                 <v-flex xs12>
@@ -178,9 +180,9 @@
                                         
                                         <h4 class="mt-2">Files</h4>
 
-                                          <v-layout row wrap v-if="inquiry.attachments.length" class="attachments">
+                                          <v-layout row wrap v-if="inquiryOEM.length" class="attachments">
                                                         
-                                                    display only here the attachment and images from thre inquiry
+                                                    <!-- display only here the attachment and images from thre inquiry -->
                                                     <v-flex xs4 lg4 v-for="(attachment, index) in inquiryOEM" :key="attachment+'_'+index">
 
                                                             <div v-if="attachment.filetype === 'image/jpeg' || attachment.filetype === 'image/png' ">
@@ -198,7 +200,7 @@
 
                                                            </div>
                                                           
-                                                           other file pdf
+                                                           <!-- other file pdf -->
                                                           
                                                            <div v-else-if="attachment.filetype">
                                                              <a :href="attachment.location">
@@ -216,6 +218,7 @@
                                                       <h4 class="red--text">No Files</h4>
                                                 </v-flex>
                                               </v-layout>
+                                              
                                    </v-flex>
 
                
@@ -224,7 +227,7 @@
                                 </v-flex>
                         </v-layout>
 
-           -->
+          
 
 
          </v-flex>
