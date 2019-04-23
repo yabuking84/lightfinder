@@ -528,7 +528,7 @@ methods: {
      getSortNotification(notifications) {
 
     	// var notificationHolder = [];
-    	console.table(notifications);
+    	// console.table(notifications);
 
     	var unreadCount = 0; // integer
     	var isRead;
