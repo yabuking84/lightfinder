@@ -45,22 +45,26 @@ flat>
         <template v-slot:activator="{ on }">
             <v-btn flat v-on="on">
                 <v-badge color="red">
-                    <template v-slot:badge  v-if="notifications.length>0">
-                        <span>{{ notifications.length }}</span>
+                    <template v-slot:badge  v-if="unread>0">
+                        <span>{{ unread }}</span>
                     </template>
                     <v-icon>far fa-bell</v-icon>
                 </v-badge>
             </v-btn>
 
         </template>
-        <v-list v-if="notifications && notifications.length">
-            
-            <template v-for="(notification, index) in notifications">
-                <v-list-tile :key="'not_'+index" @click="gotoNotfication(notification)">
-                    <v-list-tile-title>{{ notification.title }}</v-list-tile-title>
+        <v-list dense  v-if="notifications && notifications.length">
+        	<!-- v-if="index <= 10" -->
+            <template v-for="(notification, index) in notifications" >
+                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
+                    <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
+                    <v-list-tile-sub-title :class="notification.isRead == true ? 'grey--text' : 'black--text'">{{ notification.title }} </v-list-tile-sub-title>
                 </v-list-tile>
+                 <v-divider :key="'divider_'+index"></v-divider>
             </template>
-
+             <v-list-tile @click="">
+                <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
+            </v-list-tile>
         </v-list>
     </v-menu>
 
@@ -198,6 +202,11 @@ data: () => ({
     roles: config.auth.role,
     timeoutSnackbar: 8000,
     devMode: true,
+    notificationList:null,
+    isReadnow:false,
+    isReadColor: 'grey--text',
+    isunReadColor: 'black--text'
+
 }),
 
 
@@ -242,9 +251,11 @@ computed: {
 
 
 
+   unread() {
 
+   	return this.$store.state.ntfctns.unread
 
-
+   },
 
     notifications(){
 
@@ -494,19 +505,14 @@ methods: {
         this.$router.push({name:'Logout'});                
     },
 
+
     getNotifications() {
 
         this.$store.dispatch('ntfctns/getNotifications_a')
         .then((response) => {
-            // create a event bus 
-            // this.openMessageDialog = true
-                // this.$emit('update:isClosed', true);
-            // inqEvntBs.emitApproved();
-            console.log(response)
-
+        	this.getSortNotification(response);
         })
         .catch((e) => {
-            this.$emit('update:isClosed', true);
             console.log(e);
         })
         .finally(() => {
@@ -517,6 +523,89 @@ methods: {
 
 
 
+
+     getSortNotification(notifications) {
+
+    	// var notificationHolder = [];
+    	console.table(notifications);
+
+    	var unreadCount = 0; // integer
+    	var vvisRead;
+    	var title = '';
+
+
+        for (var i = notifications.length - 1; i >= 0; i--) {
+
+
+    	     var vvisRead = true; 
+        	   if(notifications[i].read_at == null || notifications[i].read_at == undefined) {
+        	   	
+        	   	  unreadCount = parseInt(unreadCount) + 1
+        	   	  vvisRead = false
+
+        	   	  console.log(vvisRead)
+
+        	   }
+
+	            var data = {
+
+	          			'id':notifications[i].data.inquiry_id,
+	          			'notification_id': notifications[i].id
+	          			
+	          	}
+
+
+	       switch (notifications[i].type) {
+
+			    case 'adminApprovedInquiry':
+			    	 title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
+			    break;
+
+			    case 'adminRejectedInquiry':
+			    	 title="Inquiry \""+notifications[i].data.inquiry_id+"\" REJECTED!";
+			    break;
+
+			    case 'supplierCreatedBid': 
+			   		 title="Supplier Created Bid for Inquiry # "+notifications[i].data.inquiry_id+"!";
+			    break;
+
+			    case 'supplierConfirmedAward': 
+			   		 title="Supplier Confirmed \""+notifications[i].data.inquiry_id+"\"!";
+			    break;
+
+			    // supplier
+			    case 'buyerAwardedBid': 
+			    	title=`Buyer has Awarded for Inquiry # ${ notifications[i].data.inquiry_id }  to you`;
+			    break;
+
+			    // admin
+			    case 'newMessage': 
+			    	title=`New Message Received "${notifications[i].data.content}" `
+			     break;
+			}
+
+				console.log(vvisRead)
+
+ 		     	var ntfctn = {
+
+                    title:         title,
+                    dataType:      'inquiry',
+                    data:          data,
+                    textSnackbar:  title,
+                    isRead: 	   vvisRead
+
+                }
+
+	           this.$store.state.ntfctns.notifications.push(ntfctn);
+	           this.$store.state.ntfctns.unread = unreadCount
+	    }
+		     
+    },
+
+
+
+
+   
 
 
 
@@ -531,8 +620,14 @@ methods: {
         
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
-        
+    	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
+        // console.log(this.$refs);
+
     },
+
+ 
+
+
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
@@ -571,4 +666,9 @@ created()  {
         }
     }
 }
+
+.read {
+	color: gray;
+}
+
 </style>

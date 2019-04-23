@@ -11,6 +11,7 @@ import vm from '@/main.js';
 const state = {
 
     notifications: [],
+    unread:null,
 
     // [
     //     {
@@ -28,6 +29,11 @@ const state = {
     	getNotifications: {
             method  : 'get',
             url     : 'http://192.168.1.200:8000/v1/notifications',
+	    },
+
+	    markNotifasRead: {
+	    	method  : 'put',
+	    	url     : 'http://192.168.1.200:8000/v1/notifications'
 	    },
 
 
@@ -113,6 +119,8 @@ const actions = {
             .then((data) => {
                 context.commit(store+'/UPDATE_INQUIRY_M',{inquiry:data}, {root:true});
                 context.commit(store+'/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
+
+
             })
             .catch((error) => {
                 console.log(error);
@@ -123,13 +131,14 @@ const actions = {
         }        
     },
 
+
+
 	getNotifications_a(context) {
 
 	    	return new Promise((resolve, reject) => {
+
 	            var headers = {token:localStorage.access_token};
-	            // console.log(state.api.getInquiries.url);
-	            // console.log(state.api.getInquiries.method);
-	            // console.log(headers);
+
 	            axios({
 	                method: state.api.getNotifications.method,
 	                url: state.api.getNotifications.url,
@@ -147,12 +156,39 @@ const actions = {
 
 	        });
 
+	   },
 
-	    },
+	   markNotifasRead_a(context,ntfctn) {
+
+	   		return new Promise((resolve, reject) => {
+
+	   			  var headers = {token:localStorage.access_token};
+
+	   			   axios({
+		                method: state.api.markNotifasRead.method,
+		                url: state.api.markNotifasRead.url + `/${ntfctn.data.notification_id}/read`,
+		                headers: headers,
+		            })
+		            .then(response => {
+		                resolve(response.data);
+		                state.unread = parseInt(state.unread) - 1
+		            })
+		            .catch(error => {
+		                // console.log(error);
+		                if(actions.checkToken(error)) {
+		                    reject(error);
+		                }
+		            })
+
+	   		});
+
+	   }
 
 
 
 }
+
+
 
 
  
