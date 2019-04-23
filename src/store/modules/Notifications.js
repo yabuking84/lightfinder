@@ -23,6 +23,18 @@ const state = {
     showSnackbar: false,
     dataSnackbar: null,
 
+    api: {
+
+    	getNotifications: {
+            method  : 'get',
+            url     : 'http://192.168.1.200:8000/v1/notifications',
+	    },
+
+
+
+
+    } 
+
 }
 
 
@@ -110,6 +122,35 @@ const actions = {
 
         }        
     },
+
+	getNotifications_a(context) {
+
+	    	return new Promise((resolve, reject) => {
+	            var headers = {token:localStorage.access_token};
+	            // console.log(state.api.getInquiries.url);
+	            // console.log(state.api.getInquiries.method);
+	            // console.log(headers);
+	            axios({
+	                method: state.api.getNotifications.method,
+	                url: state.api.getNotifications.url,
+	                headers: headers,
+	            })
+	            .then(response => {
+	                resolve(response.data);
+	            })
+	            .catch(error => {
+	                // console.log(error);
+	                if(actions.checkToken(error)) {
+	                    reject(error);
+	                }
+	            })
+
+	        });
+
+
+	    },
+
+
 
 }
 

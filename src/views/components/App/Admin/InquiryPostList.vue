@@ -118,11 +118,14 @@
     
                     <v-card-text>
 
-                     <v-btn large @click="submit()" flat block class="grey darken-4">
+                     <v-btn large :loading="formLoading" @click="submit()" flat block class="grey darken-4">
                                         <span class="ml-1 white--text font-weight-bold">Approved bid</span>
                                         <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
                     </v-btn>
-                     <!-- <pre>{{ bidItems }}</pre> -->
+                        <pre>
+                            {{ bidItems }}
+                        </pre>
+
                         <v-layout row wrap>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -185,37 +188,17 @@
 
                             <v-flex xs12 mx-5 mt-2 mb-2 pt-0>
                                 <h5 class="font-weight-thin">Specifications</h5>
-                                <v-layout row wrap class="specifications mt-2">
-
-                                    <!-- <v-chip label dark outline text-color="black" v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index">
+                                <v-layout row wrap class="specifications">
+                                    <v-chip label dark outline text-color="black" v-for="(specification, index) in bidItem.specifications" :key="specification+'_'+index">
                                         {{ specification.name }}: &nbsp;
                                         <span class="font-weight-bold">
+                                            <!-- {{ specification.value.split(',').join(', ') }} -->
                                             {{ (specification.value)?specification.value.split(',').join(', '):'' }}
                                         </span>
-                                    </v-chip> -->
- 
-          
-
-                                    <template v-for="(specification, index) in bidItem.specifications">
-                                        <v-flex
-                                        xs6 ma-0 pa-0 pr-0 pl-2
-                                        :key="specification+'_'+index"
-                                        v-if="specification.value">
-                                            <div
-                                            text-color="black" 
-                                            class="spec">
-                                                {{ specification.name }}: &nbsp;
-                                                <span class="font-weight-bold">
-                                                    {{ (specification.value)?specification.value.split(',').join(', '):'' }}
-                                                </span>
-                                            </div>
-                                        </v-flex>
-                                    </template>
-
+                                    </v-chip>
                                     <v-alert :value="!inquiry.specifications.length" type="warning" style="width: 100%;" class="ma-4" outline>
                                         No specifications..
-                                    </v-alert>                                        
-
+                                    </v-alert>
                                 </v-layout>
                             </v-flex>
 
@@ -470,7 +453,7 @@
     .specifications {
         .v-chip {
             width: 180px;
-        }       
+        }
     }
     
     .proposal-section {
