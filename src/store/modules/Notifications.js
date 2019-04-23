@@ -171,7 +171,13 @@ const actions = {
 		            })
 		            .then(response => {
 		                resolve(response.data);
-		                state.unread = parseInt(state.unread) - 1
+
+		                // deduct unread
+		                if(!ntfctn.isRead) {
+							state.unread = parseInt(state.unread) - 1
+		                }
+
+		                
 		            })
 		            .catch(error => {
 		                // console.log(error);

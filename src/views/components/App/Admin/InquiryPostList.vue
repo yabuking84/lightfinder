@@ -134,10 +134,24 @@
 
                             <v-flex xs7>
                                 <v-layout row wrap>
-
-                                     
-
+                                    <!-- <pre>
+								{{ bidItem }}
+							</pre> -->
                                     <!-- <v-container> -->
+
+                                    <v-flex xs12 pl-2>
+
+                                        <h5 class="font-weight-thin">Brand Name</h5>
+                                        <h2>{{ bidItem.supplier.brand_name }}</h2>
+
+                                    </v-flex>
+
+                                    <v-flex xs12 pl-2>
+
+                                        <h5 class="font-weight-thin">Owner name</h5>
+                                        <h2>{{ bidItem.supplier.first_name }} {{ bidItem.supplier.last_name }}</h2>
+
+                                    </v-flex>
 
                                     <v-flex xs12 pl-2>
 
@@ -328,7 +342,7 @@
 
             fillBidTable() {
 
-                    this.$store.dispatch('byrInq/getAllInquiryBids_a', {
+                    this.$store.dispatch('admnInq/getAllInquiryBids_a', {
                         inq_id: this.inquiry.id
                     })
 

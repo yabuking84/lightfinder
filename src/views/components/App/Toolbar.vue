@@ -53,19 +53,20 @@ flat>
             </v-btn>
 
         </template>
-        <v-list dense  v-if="notifications && notifications.length">
+        <v-list class="notification_list" dense  v-if="notifications && notifications.length">
         	<!-- v-if="index <= 10" -->
             <template v-for="(notification, index) in notifications" >
                 <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
                     <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
-                    <v-list-tile-sub-title :class="notification.isRead == true ? 'grey--text' : 'black--text'">{{ notification.title }} </v-list-tile-sub-title>
+                    <v-list-tile-sub-title :class="notification.isRead ? 'grey--text' : 'black--text'">{{ notification.title }} </v-list-tile-sub-title>
                 </v-list-tile>
                  <v-divider :key="'divider_'+index"></v-divider>
             </template>
-             <v-list-tile @click="">
+                <v-list-tile  @click="">
                 <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
-            </v-list-tile>
+           </v-list-tile>
         </v-list>
+     
     </v-menu>
 
     <v-spacer></v-spacer>
@@ -530,20 +531,18 @@ methods: {
     	console.table(notifications);
 
     	var unreadCount = 0; // integer
-    	var vvisRead;
+    	var isRead;
     	var title = '';
 
 
         for (var i = notifications.length - 1; i >= 0; i--) {
 
 
-    	     var vvisRead = true; 
+    	     var isRead = true; 
         	   if(notifications[i].read_at == null || notifications[i].read_at == undefined) {
         	   	
         	   	  unreadCount = parseInt(unreadCount) + 1
-        	   	  vvisRead = false
-
-        	   	  console.log(vvisRead)
+        	   	  isRead = false
 
         	   }
 
@@ -584,15 +583,13 @@ methods: {
 			     break;
 			}
 
-				console.log(vvisRead)
-
  		     	var ntfctn = {
 
                     title:         title,
                     dataType:      'inquiry',
                     data:          data,
                     textSnackbar:  title,
-                    isRead: 	   vvisRead
+                    isRead: 	   isRead
 
                 }
 
@@ -669,6 +666,11 @@ created()  {
 
 .read {
 	color: gray;
+}
+
+.notification_list {
+	max-height: 500px;
+	overflow-y: auto;
 }
 
 </style>
