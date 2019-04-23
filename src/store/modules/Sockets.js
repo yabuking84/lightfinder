@@ -9,6 +9,8 @@ import hlprs from '@/mixins/helpers'
 
 import vm from '@/main.js';
 
+import MsgBus from "@/bus/messaging";
+
 const state = {
 
 	isConnected: false,
@@ -208,6 +210,22 @@ const actions = {
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+// Messaging
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    SOCKET_newMessage(context, data){
+		
+		MsgBus.emitNewMessage(data);
+
+        context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+    },
+
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// Messaging
 
 
 

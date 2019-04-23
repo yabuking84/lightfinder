@@ -148,15 +148,6 @@ const actions = {
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 // set user details 
 
-                
-                // set inquiry statuses
-                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                context.dispatch('retrieveInquiryStatuses_a').then(function(){                    
-                    resolve(response);
-                });
-                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                // set inquiry statuses
-
 
                 // reset notifications
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -170,6 +161,15 @@ const actions = {
                 context.dispatch('sckts/joinRoom_a', state.auth_user.uuid, { root: true });
                 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 // set socket user
+
+                
+                // set inquiry statuses
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                context.dispatch('retrieveInquiryStatuses_a').then(function(){                    
+                    resolve(response);
+                });
+                // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                // set inquiry statuses
 
             })
             .catch(error => {

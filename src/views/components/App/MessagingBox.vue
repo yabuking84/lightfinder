@@ -12,15 +12,15 @@
 
                                 <div 
                                 class="chat-thread" 
-                                :class="[authUser.uuid == message.uuid ? 'end' :'start']">
+                                :class="[message.own?'end':'start']">
                                     <!-- <div class="user-avatar">
                                         <v-avatar size="40px" color="grey lighten-4">
                                             <img :src="[authUser.id === message.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="avatar">
                                         </v-avatar>
                                     </div> -->
                                     <div class="chat-message pa-2 border-radius6">
-                                        <div class="chat-message-name">{{ message.name }}</div>
-                                        <div v-html="message.text" class="chat-message-text dont-break-out"></div>
+                                        <!-- <div class="chat-message-name">{{ message.name }}</div> -->
+                                        <div v-html="message.content" class="chat-message-text dont-break-out"></div>
                                     </div>
                                 </div>
 
@@ -45,19 +45,23 @@
                     
                     <chat-editable 
                     ref="cme" 
-                    :cmeBus="cmeBus" 
+                    readonly
+                    disable
+                    disabled
                     class="chat-message-editor" 
                     @update="chatMessageEditor = $event" 
-                    type="innerHTML"                     
-                    @onEnter="sendMessage2()" 
+                    type="innerHTML"
+                    @onEnter="sendMessage()" 
                     placeholder="Type you message .."></chat-editable>
 
                     <v-btn color="green" 
+                    :loading="loading"
                     @click="sendMessage()" 
                     class="ma-0 send-message-btn pa-0" 
                     :disabled="chatMessageEditor === null || chatMessageEditor === ''">
                         <v-icon color="white">fa-paper-plane</v-icon>
                     </v-btn>
+
                 </div>
             </v-flex>
         </v-layout>
@@ -71,6 +75,7 @@
 <script>
 import ChatEditable from '@/views/Components/Editable/ChatEditable'
 import Vue from 'vue'
+import MsgBus from "@/bus/messaging";
 
 
     export default {
@@ -97,71 +102,85 @@ import Vue from 'vue'
         data: () => ({
         	messages:  [],
         	chatMessageEditor:  null,
-        	cmeBus: new Vue(),
+        	loading: false,
         }),
 
         created() {
-		    // alert(this.authUser.uuid);
+		    this.updateChat();
+
+		    var self = this;
+		    MsgBus.onNewMessage(function(data){
+
+				// if message box is bid
+				if(self.bid!=null && self.bid.id == data.id) {
+		    		console.log("onNewMessage = ",data);
+					self.updateChat();
+				};
+
+		    });
         },
 
         methods: {
 
             sendMessage() {
 
+            	this.loading = true;
+
             	// send Message
 				if (this.chatMessageEditor) {
-		            this.$store.dispatch('msg/sendMessageToBid_a', {                    
-	                   	user_id: this.authUser.id,
-	                   	name: this.authUser.name,
-	                   	text: this.chatMessageEditor,
-		            }).then(response=>{
+		            this.$store.dispatch('msg/sendMessage_a', {                    
+	                   	content: this.chatMessageEditor,
+	                   	type: 'bid.buyer.admin',
+	                   	id: this.bid.id,
+		            })
+		            .then(response=>{
 		            	this.updateChat();
+		            })
+		            .catch(error => {
+		            	this.loading = false;
+		                console.log(error);
 		            });
 				}
 
-
             },
 
-
-            sendMessage2() {
-				this.messages.push({			         
-			         uuid: this.authUser.uuid,
-			         name: this.authUser.name,
-			         text: this.chatMessageEditor,					
-				});
-
-	            this.resetChat();
-    			this.scrollChat();
-            },
 
 
             updateChat(){
 				// get bid messages
 				if(this.bid!=null) {
 		            this.$store.dispatch('msg/getBidMessages_a', {
-	                    bid_id: this.bid.id,
+	                    type: 'bid.buyer.admin',
+	                    id: this.bid.id,
 		            }).then(response=>{		            	
 						this.messages = response;
 						
-			            this.resetChat();
+			            this.resetChatEditor();
             			this.scrollChat();
 
+		            	this.loading = false;
+
+		            }).catch(error => {
+
+		            	this.loading = false;
+		                console.log('error xxx',error);
 		            });
 				}            	
 
             },
 
-            resetChat(){
+            resetChatEditor(){
 				this.chatMessageEditor = null;
 				// this.$eventBus.$emit('resetChatEditor');
-				// this.$refs.cme.resetChatEditor();
-				this.cmeBus.$emit('reset-chateditor');
+				this.$refs.cme.resetChatEditor();
             },
-            scrollChat(){
-				this.$nextTick(() => {
-					const container = this.$el.querySelector('.chat-container');
-					container.scrollTop = container.scrollHeight;
-				})
+            scrollChat(position = 'bottom'){
+            	if(position == 'bottom') {            		
+					this.$nextTick(() => {
+						const container = this.$el.querySelector('.chat-container');
+						container.scrollTop = container.scrollHeight;
+					})
+            	}
             },
 
 
@@ -183,6 +202,24 @@ import Vue from 'vue'
 
 		        return this.$store.state.auth.auth_user.avatar+')';
 		    },
+
+        },
+
+        watch: {
+
+        	bid: {
+			    handler(nVal, oVal) {			    	
+		    		this.updateChat();
+			    },
+		    	deep: true,
+        	},
+
+        	inquiry: {
+			    handler(nVal, oVal) {			    	
+		    		this.updateChat();
+			    },
+		    	deep: true,
+        	},
 
         },
 
