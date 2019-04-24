@@ -113,9 +113,13 @@ import MsgBus from "@/bus/messaging";
 
 				// if message box is bid
 				if(self.bid!=null && self.bid.id == data.id) {
-		    		console.log("onNewMessage = ",data);
+		    		console.log("BID onNewMessage = ",data);
 					self.updateChat();
-				};
+				}				
+				else if(self.inquiry!=null && self.inquiry.id == data.id) {
+		    		console.log("INQUIRY onNewMessage = ",data);
+					self.updateChat();
+				}
 
 		    });
         },
@@ -128,11 +132,22 @@ import MsgBus from "@/bus/messaging";
 
             	// send Message
 				if (this.chatMessageEditor) {
-		            this.$store.dispatch('msg/sendMessage_a', {                    
-	                   	content: this.chatMessageEditor,
-	                   	type: 'bid.buyer.admin',
-	                   	id: this.bid.id,
-		            })
+            	
+	            	var payload = {};
+	            	payload.content = this.chatMessageEditor;
+	            	payload.type = "";
+	            	payload.id = "";
+
+					if(this.bid!=null) {					
+						payload.type = 'bid.buyer.admin';
+						payload.id = this.bid.id;
+					}
+					else if(this.inquiry!=null) {					
+						payload.type = 'inquiry.buyer.admin';
+						payload.id = this.inquiry.id;					
+					}
+
+		            this.$store.dispatch('msg/sendMessage_a', payload)
 		            .then(response=>{
 		            	this.updateChat();
 		            })
@@ -140,33 +155,42 @@ import MsgBus from "@/bus/messaging";
 		            	this.loading = false;
 		                console.log(error);
 		            });
-				}
 
+				}
             },
 
 
 
             updateChat(){
-				// get bid messages
-				if(this.bid!=null) {
-		            this.$store.dispatch('msg/getBidMessages_a', {
-	                    type: 'bid.buyer.admin',
-	                    id: this.bid.id,
-		            }).then(response=>{		            	
-						this.messages = response;
-						
-			            this.resetChatEditor();
-            			this.scrollChat();
+            	
+            	var payload = {};
+            	payload.type = "";
+            	payload.id = "";
 
-		            	this.loading = false;
+				if(this.bid!=null) {					
+					payload.type = 'bid.buyer.admin';
+					payload.id = this.bid.id;
+				}
+				else if(this.inquiry!=null) {					
+					payload.type = 'inquiry.buyer.admin';
+					payload.id = this.inquiry.id;					
+				}
 
-		            }).catch(error => {
+				this.$store.dispatch('msg/getMessages_a', payload).then(response=>{
+					this.messages = response;
 
-		            	this.loading = false;
-		                console.log('error xxx',error);
-		            });
-				}            	
+					// console.table(response);
+					
+				    this.resetChatEditor();
+					this.scrollChat();
 
+					this.loading = false;
+				}).catch(error => {
+
+					this.loading = false;
+				    // console.log('error xxx',error);
+
+				});
             },
 
             resetChatEditor(){
@@ -174,6 +198,7 @@ import MsgBus from "@/bus/messaging";
 				// this.$eventBus.$emit('resetChatEditor');
 				this.$refs.cme.resetChatEditor();
             },
+
             scrollChat(position = 'bottom'){
             	if(position == 'bottom') {            		
 					this.$nextTick(() => {

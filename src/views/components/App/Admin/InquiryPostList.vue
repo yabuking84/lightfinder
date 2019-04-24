@@ -67,26 +67,22 @@
                         </v-flex>
 
 
-                           <v-flex xs12 mx-5>
+                            <v-flex xs12 mx-5>
                                 <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
                                     <span class="ml-1 white--text font-weight-light ">Approved</span>
                                 </v-btn>
                             </v-flex>
 
                     <v-flex xs12>
-                        <v-layout row wrap>
-                         
+                        <v-layout row wrap>                         
 
-                            <!--   <v-flex xs6>
-                          rejectInquiry(inquiry.id)
-                          <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 large font-weight-light ">
-                            <i class="fas fa-thumbs-down white--text"></i>
-                            <span class="ml-1 white--text font-weight-light ">Reject</span>
-                          </v-btn>
-                        </v-flex> -->
+                            <!-- if rejected -->
+                            <v-flex xs12>
+                                <messaging :inquiry="inquiry"> </messaging>
+                            </v-flex>
 
                         </v-layout>
-                        <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box>
+                        <!-- <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box> -->
                     </v-flex>
 
                 </v-layout>
@@ -447,7 +443,7 @@
 
         created() {
 
-            console.log(this.inquiry)
+            // console.log(this.inquiry)
 
             this.fillBidTable();
             inqEvntBs.$on('award-bid-form-submitted', () => {
