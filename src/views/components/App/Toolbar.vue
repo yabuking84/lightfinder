@@ -41,8 +41,9 @@ flat>
 
     <!-- <v-icon>far fa-bell</v-icon> -->
 
-    <v-menu offset-y transition="scale-transition" allow-overflow fixed>
-    	
+    <!-- bell notifications -->
+    <!-- bellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbell -->
+    <v-menu offset-y transition="scale-transition" allow-overflow fixed>    	
         <template v-slot:activator="{ on }">
             <v-btn flat v-on="on">
                 <v-badge color="red">
@@ -69,9 +70,47 @@ flat>
                 <v-list-tile @click="">
                 <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
            </v-list-tile>
-        </v-list>
-     
+        </v-list>     
     </v-menu>
+    <!-- bellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbell -->
+    <!-- bell notifications -->
+
+
+    <!-- msg notifications -->
+    <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
+    <v-menu offset-y transition="scale-transition" allow-overflow fixed>    	
+        <template v-slot:activator="{ on }">
+            <v-btn flat v-on="on">
+                <v-badge color="red">
+                    <template v-slot:badge  v-if="unread>0">
+                        <span>{{ unread }}</span>
+                    </template>
+                    <v-icon>far fa-bell</v-icon>
+                </v-badge>
+            </v-btn>
+        </template>
+
+        <v-list class="notification_list" dense  v-if="notifications && notifications.length" >
+        	<!-- v-if="index <= 10" -->
+            <template v-for="(notification, index) in notifications.slice().reverse()">
+                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
+                    <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
+                    <v-list-tile-sub-title 
+                    :class="notification.isRead ? 'grey--text' : 'black--text'">
+                		{{ notification.title }} 
+                	</v-list-tile-sub-title>
+                </v-list-tile>
+                 <v-divider :key="'divider_'+index"></v-divider>
+            </template>
+                <v-list-tile @click="">
+                <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
+           </v-list-tile>
+        </v-list>     
+    </v-menu>
+    <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
+    <!-- msg notifications -->
+
+
 
     <v-spacer></v-spacer>
     
@@ -247,6 +286,8 @@ computed: {
     	return config.main.devMode;
     },
 
+
+    // bell ntfctns
 	unread() {
 		return this.$store.state.ntfctns.unread
 	},
@@ -254,6 +295,17 @@ computed: {
     notifications(){
         return this.$store.state.ntfctns.notifications;
     },
+
+    // msg ntfctns
+	unreadMsg() {
+		return this.$store.state.ntfctns.unread
+	},
+
+    notificationsMsg(){
+        return this.$store.state.ntfctns.notifications;
+    },
+
+
 
     showSnackbar:{
         get(){
@@ -276,7 +328,7 @@ computed: {
         
         
         // Dev mode, some markers for easier to know the user and type.
-        if(this.devMode) {            
+        if(this.devMode) {
             if(hlprs.methods.isRole("admin"))
             style = 'background-color:yellow !important;';
             else if(hlprs.methods.isRole("buyer"))
@@ -288,6 +340,12 @@ computed: {
         return style;
     },
 },
+
+
+
+
+
+
 
 
 methods: {
