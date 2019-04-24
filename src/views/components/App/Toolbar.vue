@@ -208,7 +208,7 @@ multi-line
 color="white"
 v-if="sbNtfctnData"
 style="cursor: pointer;">
-    <h4 style="color:#000;" @click="gotoNotfication(sbNtfctnData)">
+    <h4 style="color:#000;">
         {{ sbNtfctnData.textSnackbar }}
     </h4>
     <v-btn color="pink" flat @click="showSnackbar = false">
@@ -301,11 +301,11 @@ computed: {
 
     // msg ntfctns
 	unreadMsg() {
-		return this.$store.state.ntfctns.unread
+		return this.$store.state.ntfctns.unreadMsgs
 	},
 
     notificationMsgs(){
-        return this.$store.state.ntfctns.notifications;
+        return this.$store.state.ntfctns.notificationsMsgs;
     },
 
 
@@ -363,36 +363,27 @@ methods: {
     },
 
 
-    getNotifications() {
+
+
+    // notifications
+    // /////////////////////////////////////////////////////////
+    populateNotifications() {
 
         this.$store.dispatch('ntfctns/getNotifications_a')
         .then((response) => {
-        	this.getSortNotification(response);
-        })
-        .catch((e) => {
-            console.log(e);
-        })
-        .finally(() => {
+        	// this.getSortNotification(response);
 
-        });
+        	var notifications = response;
 
-    },
+	    	var unreadCount = 0; // integer
+	    	var isRead;
+	    	var title = '';
 
-    getSortNotification(notifications) {
+	    	// Get the array of keys
+			// var keys = Object.keys( notifications );
+	  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
 
-    	var unreadCount = 0; // integer
-    	var isRead;
-    	var title = '';
-
-    	// Get the array of keys
-		// var keys = Object.keys( notifications );
-  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
-
-  		remove 
-
-        for (var i = notifications.length - 1; i >= 0; i--) {
-
-            if(notifications[i].type!='newMessage'){
+	        for (var i = notifications.length - 1; i >= 0; i--) {
 
 		       	isRead = true; 
 
@@ -439,35 +430,93 @@ methods: {
 
 	 		    var ntfctn = {
 	                title:         title,
-	                dataType:      'inquiry',
 	                data:          data,
 	                textSnackbar:  title,
 	                isRead: 	   isRead,
 	            }
 
 		        this.$store.commit('ntfctns/INSERT_NOTIFICATIONS_M',ntfctn);
+		    }
+		    
+		    this.$store.commit('ntfctns/SET_UNREAD_M',unreadCount);	     
 
-	    	}
-	    }
-	    
-	    this.$store.commit('ntfctns/INSERT_NOTIFICATIONS_M',unreadCount);
+        })
+        .catch((e) => {
+            console.log(e);
+        });
 
-		     
     },
+    // /////////////////////////////////////////////////////////
+    // notifications
 
 
 
 
-   
+    // notifications messages
+    // /////////////////////////////////////////////////////////
+    populateNotificationsMsgs() {
+
+        this.$store.dispatch('ntfctns/getNotificationsMsgs_a')
+        .then((response) => {
+
+        	var notifications = response;
+
+	    	var unreadCount = 0; // integer
+	    	var isRead;
+	    	var title = '';
+
+	    	// Get the array of keys
+			// var keys = Object.keys( notifications );
+	  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
+
+	        for (var i = notifications.length - 1; i >= 0; i--) {
+
+		       	isRead = true; 
+
+	    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
+	    	   		unreadCount = parseInt(unreadCount) + 1
+	    	   		isRead = false
+	    	   	}
+	            var data = {
+	      			'id':notifications[i].data.inquiry_id,
+	      			'notification_id': notifications[i].id
+	          	}
+		    	title = 'New Message Received "'+notifications[i].data.content+'" ';
+
+	 		    var ntfctn = {
+	                title:         title,
+	                data:          data,
+	                textSnackbar:  title,
+	                isRead: 	   isRead,
+	            }
+
+		        this.$store.commit('ntfctns/INSERT_NOTIFICATIONSMSGS_M',ntfctn);
+		    }
+		    
+		    this.$store.commit('ntfctns/SET_UNREADMSGS_M',unreadCount);	     
+
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+
+    },
+    // /////////////////////////////////////////////////////////
+    // notifications messages
 
 
 
 
 
 
-    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
-    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
-    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+
+
+
+
+
+    
+    // gotonotification
+    // /////////////////////////////////////////////////////////
 
     gotoNotfication(ntfctn){
 
@@ -478,16 +527,16 @@ methods: {
 
     },
 
-    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
-    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
-    // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
+    // /////////////////////////////////////////////////////////
+    // gotonotification
 
 
 
 },
 
 created()  {
-	this.getNotifications()
+	this.populateNotifications()
+	this.populateNotificationsMsgs()
 }
 
 

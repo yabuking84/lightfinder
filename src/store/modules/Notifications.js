@@ -8,11 +8,26 @@ import hlprs from '@/mixins/helpers'
 
 import vm from '@/main.js';
 
+
+
+import MsgBus from "@/bus/messaging";
+
+
+
+
+
+
+
+
+
+
+
 const state = {
 
     notifications: [],
-    notificationsMessages: [],
+    notificationsMsgs: [],
     unread:null,
+    unreadMsgs:null,
 
     // [
     //     {
@@ -48,25 +63,45 @@ const state = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const mutations = {
 
     INSERT_NOTIFICATIONS_M(state, data) {
         state.notifications.push(data);
     },
-
     RESET_NOTIFICATIONS_M(state) {
         state.notifications = [];
     },
-
-    // UPDATE_TEXTSNACKBAR_M(state,data) {        
-    //     state.textSnackbar = data.textSnackbar;
-    // },
-
-    SET_UNREAD_M(state,data) {        
+    SET_UNREAD_M(state,data) {
         state.unread = data;
     },
 
-    UPDATE_SNACKBAR_M(state,data) {        
+    INSERT_NOTIFICATIONSMSGS_M(state, data) {
+        state.notificationsMsgs.push(data);
+    },
+    RESET_NOTIFICATIONSMSGS_M(state) {
+        state.notificationsMsgs = [];
+    },
+    SET_UNREADMSGS_M(state,data) {
+        state.unreadMsgs = data;
+    },
+
+
+
+    UPDATE_SNACKBAR_M(state,data) {
         state.dataSnackbar = data.dataSnackbar;
     },
 
@@ -78,28 +113,210 @@ const mutations = {
         state.showSnackbar = false;
     },
 
+    // UPDATE_TEXTSNACKBAR_M(state,data) {        
+    //     state.textSnackbar = data.textSnackbar;
+    // },
 }
 
  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const actions = {
+
+
+
+
+
+
+
+
+
+	// sockets
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+
+
+    // admin
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    adminApprovedInquiry_a(context, data){
+		var ntfctn = {				
+			dataType: 		'inquiry',
+			textSnackbar: 	'Inquiry #'+data.inquiry_id+' APPROVED!',
+		}
+
+        context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
+        context.commit('SHOW_SNACKBAR_M');
+
+    },
+    adminRejectedInquiry_a(context, data){
+        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        .then((response)=>{
+            var ntfctn = {
+                title:          "Inquiry \""+response.keyword+"\" REJECTED!",
+                dataType:       'inquiry',
+                data:           response,
+                textSnackbar:   'Inquiry "'+response.keyword+'" REJECTED!',
+            }
+            context.dispatch('updateNotification_a',ntfctn);
+
+        });    	
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // admin
+
+    // buyer
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    buyerAwardedBid_a(context, data){
+        context.dispatch('spplrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        .then((response)=>{
+            var ntfctn = {
+                title:          "Bid \""+response.keyword+"\" AWARDED!",
+                dataType:       'inquiry',
+                data:           response,
+                textSnackbar:   'Bid "'+response.keyword+'" AWARDED!',
+            }
+            context.dispatch('updateNotification_a',ntfctn,);
+        });       
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // buyer
+
+    // supplier
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    supplierCreatedBid_a(context, data) {
+
+        var store = "";       
+
+        if(hlprs.methods.isRole('admin')) 
+        store = 'admnInq';
+        else if(hlprs.methods.isRole('buyer')) 
+        store = 'byrInq';
+        else if(hlprs.methods.isRole('supplier')) 
+        store = 'spplrInq';
+
+
+        if(store!='supplier') {
+            context.dispatch(store+'/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+            .then((response)=>{
+                var ntfctn = {
+                    title:          "Supplier Created Bid for Inquiry # "+data.inquiry_id+"!",
+                    dataType:       'inquiry',
+                    data:           response,
+                    textSnackbar:   'Supplier Created Bid for Inquiry # '+data.inquiry_id+'!',
+                }
+                context.dispatch('updateNotification_a',ntfctn);
+            });
+        }
+
+    },
+
+    supplierConfirmedAward_a(context, data) {
+        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        .then((response)=>{
+            var ntfctn = {
+                title:          "Supplier Confirmed \""+response.keyword+"\"!",
+                dataType:       'inquiry',
+                data:           response,
+                textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
+            }
+            context.dispatch('updateNotification_a',ntfctn);
+        });       	
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
+    // supplier
+
+
+
+    // messaging
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
+	newMessage_a(context, data){
+		MsgBus.emitNewMessage(data);
+		
+		
+        // var ntfctn = {
+        //     title:          "Supplier Confirmed \""+response.keyword+"\"!",
+        //     dataType:       'inquiry',
+        //     data:           response,
+        //     textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
+        // }
+        // context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});		
+
+	},
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
+    // messaging
+
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////
+	// sockets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     resetNotification_a(context){
         context.commit('RESET_NOTIFICATIONS_M');
     },
 
-    updateNotification_a(context, data){
-       
-        context.commit('INSERT_NOTIFICATIONS_M',data);
-       
-        // context.commit('UPDATE_TEXTSNACKBAR_M',{textSnackbar:data.textSnackbar});
-        context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
-        context.commit('SHOW_SNACKBAR_M');
-
-        // if there's an update
-        state.unread = parseInt(state.unread) + 1
-
+    resetAllNotification_a(context){
+        context.commit('RESET_NOTIFICATIONS_M');
+        context.commit('RESET_NOTIFICATIONSMSGS_M');
     },
+
+
+
+    // commented because when there's a notification the notifcation component will just refresh
+    // updateNotification_a(context, data){
+       
+    //     context.commit('INSERT_NOTIFICATIONS_M',data);
+
+    //     context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
+    //     context.commit('SHOW_SNACKBAR_M');
+
+    //     // if there's an update
+    //     context.commit('SET_UNREAD_M', parseInt(state.unread) + 1);
+    //     // state.unread = parseInt(state.unread) + 1
+
+    // },
+
+
 
     gotoNotfication_a(context,ntfctn){
 
@@ -145,7 +362,6 @@ const actions = {
 
 
 	getNotifications_a(context) {
-		console.log('called');
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
@@ -156,7 +372,10 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
-                resolve(response.data);
+
+            	var ntfctns = response.data.filter(item=>item.type!='newMessage');
+
+                resolve(ntfctns);
             })
             .catch(error => {
                 // console.log(error);
@@ -167,6 +386,37 @@ const actions = {
 
         });
    },
+
+
+
+	getNotificationsMsgs_a(context) {
+    	return new Promise((resolve, reject) => {
+
+            var headers = {token:localStorage.access_token};
+
+            axios({
+                method: state.api.getNotifications.method,
+                url: state.api.getNotifications.url,
+                headers: headers,
+            })
+            .then(response => {
+
+            	var ntfctns = response.data.filter(item=>item.type=='newMessage');
+
+                resolve(ntfctns);
+            })
+            .catch(error => {
+                // console.log(error);
+                // if(actions.checkToken(error)) {
+                    reject(error);
+                // }
+            })
+
+        });
+   },
+
+
+
 
    markNotifasRead_a(context,ntfctn) {
 
@@ -208,6 +458,32 @@ const actions = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 const methods = {
 
@@ -219,9 +495,41 @@ const methods = {
  
  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getters = {
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export default {

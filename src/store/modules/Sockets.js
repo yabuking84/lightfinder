@@ -79,47 +79,11 @@ const actions = {
     // admin
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_adminApprovedInquiry(context, data){
-    	// console.log('SOCKET_adminApprovedInquiry');
-		// inquiry_id: "1553672466844"
-		// room: "7e1292c6-3d84-11e9-9c72-0a0027000001"
-		// socket: "PoBz0Huu8uTbp2shAABQ"    	
-
-		context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-		.then((response)=>{
-			var ntfctn = {
-				title: 			"Inquiry \""+response.keyword+"\" APPROVED!",
-				dataType: 		'inquiry',
-				data: 			response,
-				textSnackbar: 	'Inquiry "'+response.keyword+'" APPROVED!',
-			}
-			context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-			console.log('-------------------------------------------------------')
-			console.log(response)
-			console.log('-------------------------------------------------------')
-        	// context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-        	// context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
-
-		});
-
-
+		context.dispatch('ntfctns/adminApprovedInquiry_a',data,{root:true});
     },
 
     SOCKET_adminRejectedInquiry(context, data){
-        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Inquiry \""+response.keyword+"\" REJECTED!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Inquiry "'+response.keyword+'" REJECTED!',
-            }
-            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-
-            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
-
-        });
-
+		context.dispatch('ntfctns/adminRejectedInquiry_a',data,{root:true});
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // admin
@@ -127,75 +91,23 @@ const actions = {
     // buyer
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_buyerCreatedInquiry(context, data){
+
     },
 
     SOCKET_buyerAwardedBid(context, data){
-        context.dispatch('spplrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Bid \""+response.keyword+"\" AWARDED!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Bid "'+response.keyword+'" AWARDED!',
-            }
-            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-
-            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
-
-        });        
+		context.dispatch('ntfctns/buyerAwardedBid_a',data,{root:true});
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // buyer
 
     // supplier
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // xxxxxxxxxxxxxxx
     SOCKET_supplierCreatedBid(context, data){
-
-        var store = "";       
-
-        if(hlprs.methods.isRole('admin')) 
-        store = 'admnInq';
-        else if(hlprs.methods.isRole('buyer')) 
-        store = 'byrInq';
-        else if(hlprs.methods.isRole('supplier')) 
-        store = 'spplrInq';
-
-
-        if(store!='supplier') {
-            context.dispatch(store+'/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-            .then((response)=>{
-                var ntfctn = {
-                    title:          "Supplier Created Bid for Inquiry # "+data.inquiry_id+"!",
-                    dataType:       'inquiry',
-                    data:           response,
-                    textSnackbar:   'Supplier Created Bid for Inquiry # '+data.inquiry_id+'!',
-                }
-                context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-
-                // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-                // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
-            });
-        }
-
-
+		context.dispatch('ntfctns/supplierCreatedBid_a',data,{root:true});
     },
 
     SOCKET_supplierConfirmedAward(context, data){
-        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Supplier Confirmed \""+response.keyword+"\"!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
-            }
-            context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-
-            // context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-            // context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
-
-        });               
+		context.dispatch('ntfctns/supplierConfirmedAward_a',data,{root:true});    	             
     },
 
     SOCKET_supplierModifiedBid(context, data){
@@ -219,16 +131,7 @@ const actions = {
 // Messaging
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_newMessage(context, data){
-		
-		MsgBus.emitNewMessage(data);
-		
-        // var ntfctn = {
-        //     title:          "Supplier Confirmed \""+response.keyword+"\"!",
-        //     dataType:       'inquiry',
-        //     data:           response,
-        //     textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
-        // }
-        // context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+		context.dispatch('ntfctns/newMessage_a',data,{root:true});
     },
 
 
