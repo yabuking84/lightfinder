@@ -50,7 +50,12 @@ const state = {
 const mutations = {
 
     UPDATE_NOTIFICATIONS_M(state, data) {
+
         state.notifications.push(data);
+        // triggered someting
+
+
+
     },
 
     RESET_NOTIFICATIONS_M(state) {
@@ -88,6 +93,10 @@ const actions = {
         // context.commit('UPDATE_TEXTSNACKBAR_M',{textSnackbar:data.textSnackbar});
         context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
         context.commit('SHOW_SNACKBAR_M');
+
+        // if there's an update
+       state.unread = parseInt(state.unread) + 1
+
     },
 
     gotoNotfication_a(context,ntfctn){
@@ -133,9 +142,6 @@ const actions = {
 
 
 
-
-
-
 	getNotifications_a(context) {
     	return new Promise((resolve, reject) => {
 
@@ -151,9 +157,9 @@ const actions = {
             })
             .catch(error => {
                 // console.log(error);
-                if(actions.checkToken(error)) {
+                // if(actions.checkToken(error)) {
                     reject(error);
-                }
+                // }
             })
 
         });
@@ -176,13 +182,15 @@ const actions = {
 	                // deduct unread
 	                if(!ntfctn.isRead) {
 						state.unread = parseInt(state.unread) - 1
+						ntfctn.isRead = true;
 	                }
 	                
+
 	            })
 	            .catch(error => {
 	                // console.log(error);
 	                if(actions.checkToken(error)) {
-	                    reject(error);
+	                //     reject(error);
 	                }
 	            })
 

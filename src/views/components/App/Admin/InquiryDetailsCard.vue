@@ -6,6 +6,8 @@
       <v-toolbar-title class="font-weight-thin body-2"> Posted on: {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}</v-toolbar-title>
     </v-toolbar>
     <v-card>
+
+
       <v-container>
      <!--    <v-layout row wrap pa-0 v-if="inquiry.stage_id == onVerification">
        <v-flex xs6>
@@ -23,187 +25,215 @@
        </v-flex>
      </v-layout> -->
 
-     <!-- <pre>{{ inquiry }}</pre> -->
-
+	
         <v-layout row wrap>
-          	<v-flex xs12>
-				<v-layout row wrap>
+          <v-flex xs12>
 
-				    <v-flex xs12>
-				        <small class="blue-grey--text">Details</small>
-				        <h4 class="font-weight-medium">Keywords </h4>
-				        <h4 class="font-weight-light">
-				                                      <p class="mb-0">{{ inquiry.keyword }}</p>
-				                                    </h4>
-				    </v-flex>
+                        <v-layout row wrap>
+  							<v-flex xs12>
+							    <small class="blue-grey--text">Buyer Name</small>
+							    <h4 class="font-weight-medium">
+                                  <p class="mb-0">{{ inquiry.buyer.first_name }} {{ inquiry.buyer.last_name }}</p>
+                                </h4>
+							</v-flex>
 
-				    <v-flex xs6>
-				        <h4 class="font-weight-medium">Category</h4>
-				        <h4 class="font-weight-light">
-				                                      <span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
-				                                    </h4>
-				    </v-flex>
+                                <v-flex xs12 v-if="inquiryImages.length > 0">
+                                    <!-- <h4 class="font-weight-medium">Image</h4> -->
+                                    <!-- <v-flex xs10 offset-xs1> -->
+                                         <image-gallery-small :images="inquiryImages" noThumbnails height="250px"></image-gallery-small> 
+                                    <!-- </v-flex> -->
+                                </v-flex>
 
-				    <v-flex xs6>
-				        <h4 class="font-weight-medium">Quantity</h4>
-				        <h4 class="font-weight-light">
-				                                    <span>{{ inquiry.quantity }} pcs</span>
-				                                  </h4>
-				    </v-flex>
+                                <v-flex xs12>
+                                    <!-- <small class="blue-grey--text">Details</small> -->
+                                    <h4 class="font-weight-medium">Keywords </h4>
+                                    <h4 class="font-weight-light">
+                                      <p class="mb-0">{{ inquiry.keyword }}</p>
+                                    </h4>
+                                </v-flex>
 
-				    <v-flex xs12>
-				        <h4 class="font-weight-medium">Image</h4>
-				        <v-flex xs10 offset-xs1>
-				            <image-gallery-small :images="inquiryImages" noThumbnails height="100px"></image-gallery-small>
-				        </v-flex>
-				    </v-flex>
+                                <v-flex xs6>
+                                    <h4 class="font-weight-medium">Category</h4>
+                                    <h4 class="font-weight-light">
+                                      <span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
+                                    </h4>
+                                </v-flex>
 
-				    <v-flex xs12>
-				        <h4 class="font-weight-medium">Message </h4>
-				        <h4 class="font-weight-light">
-				                                      <p class="mb-0">{{ inquiry.message }}</p>
-				                                    </h4>
-				    </v-flex>
+                           
+                                <v-flex xs6>
+                                    <h4 class="font-weight-medium">Quantity</h4>
+                                    <h4 class="font-weight-light">
+                                    <span>{{ inquiry.quantity }} pcs</span>
+                                  </h4>
+                                </v-flex>
 
-				    <v-flex xs12>
-				        <v-layout row wrap>
-				            <v-flex xs12>
-				                <h4 class="font-weight-medium">Specifications</h4>
-				                <v-layout row wrap class="specifications">
-
-				                    <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
-				                                                        <v-chip label dark outline text-color="black" v-if="specification.value" >
-				                                                               {{ specification.name }}: &nbsp;
-				                                                           <span class="font-weight-light">
-				                                                              {{ specification.value.split(',').join(', ') }}
-				                                                           </span>
-				                    </v-chip>
-				                    </span>
-				                    <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
-				                        No specifications..
-				                    </v-alert>
-				                </v-layout>
-				            </v-flex>
-				        </v-layout>
-
-				    </v-flex>
-
-				    <!-- <v-flex xs12 class="attachments">
-
-				        <h4 class="font-weight-medium">Attachments </h4>
-				        <div v-if="inquiryAttachments.length">
-
-				            <v-layout row wrap>
-				                <v-flex xs4 v-for="(attachment, index) in inquiryAttachments" :key="attachment+'_'+index">
-				                    <a target="_blank" :href="attachment.location">
-				                        <v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
-				                    </a>
-				                </v-flex>
-				            </v-layout>
-
-				        </div>
-
-				        <div v-else>
-				            <h4 class="red--text">No Attachment</h4>
-				        </div>
-				    </v-flex> -->
-
-				    <v-flex xs12 class="mb-10">
-				        <v-divider></v-divider>
-				    </v-flex>
-
-				    <v-flex xs12 v-show="inquiry.shipping_country_id">
-				        <small class="blue-grey--text">Mass Shipping Address</small>
-				        <h4 class="font-weight-medium">Shipping Address</h4>
-				        <h4 class="font-weight-light">
-				                                          <span>{{ getCountryName(inquiry.shipping_country_id) }} </span>
-				                                          <span>{{ inquiry.shipping_address }} </span>
-				                                          <span>{{ inquiry.shipping_city }} </span>
-				                                          <span>{{ inquiry.shipping_postal }} </span>
-				                                        </h4>
-				    </v-flex>
-
-				    <v-flex xs12 class="mb-10">
-				        <v-divider></v-divider>
-				    </v-flex>
-
-				    <v-flex xs12 v-show="inquiry.sample_quantity">
-				        <small class="blue-grey--text">Sample Order Information</small>
-				        <h4 class="font-weight-medium">Sample Orders Quantity </h4>
-				        <h4 class="font-weight-light">
-				                                        <span>{{ inquiry.sample_quantity }} </span>
-				                                       </h4>
-
-				        <h4 class="font-weight-medium mt-2"> Shipping Address</h4>
-				        <h4 class="font-weight-light">
-				                                           <span>{{ getCountryName(inquiry.sample_shipping_country_id) }} </span>
-				                                           <span>{{ inquiry.sample_shipping_address }}</span>
-				                                           <span>{{ inquiry.sample_shipping_city }} </span>
-				                                           <span>{{ inquiry.sample_shipping_postal }} </span>
-				                                        </h4>
-				    </v-flex>
-
-				    <v-flex xs12 class="mb-10" v-show="inquiry.sample_quantity">
-				        <v-divider></v-divider>
-				    </v-flex>
-
-				    <v-flex xs12 v-show="inquiry.oem">
-
-				        <small class="blue-grey--text">Original Equipment Manufacture</small>
-				        <h4 class="font-weight-medium">
-				                                           What kind of Original Equipment Manufacture ?
-				                                        </h4>
-				        <h4 class="font-weight-light">{{ inquiry.oem_service }}</h4>
-
-				        <h4 class="font-weight-medium mt-2">
-				                                           Description
-				                                        </h4>
-				        <h4 class="font-weight-light">{{ inquiry.oem_description }}</h4>
-
-				        <h4 class="mt-2">Files</h4>
-
-				        <!-- <v-layout row wrap v-if="inquiry.attachments.length" class="attachments">
-
-				            display only here the attachment and images from thre inquiry
-				            <v-flex xs4 lg4 v-for="(attachment, index) in inquiryOEM" :key="attachment+'_'+index">
-
-				                <div v-if="attachment.filetype === 'image/jpeg' || attachment.filetype === 'image/png' ">
-
-				                    <a :href="attachment.location">
-
-				                        <v-img :src="attachment.location" aspect-ratio="1" class="grey lighten-2">
-				                        </v-img>
-
-				                    </a>
-
-				                </div>
-
-				                other file pdf
-
-				                <div v-else-if="attachment.filetype">
-				                    <a :href="attachment.location">
-				                        <v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
-				                    </a>
-				                </div>
-
-				            </v-flex>
-
-				        </v-layout>
-
-				        <v-layout v-else row wrap>
-				            <v-flex xs12>
-				                <h4 class="red--text">No Files</h4>
-				            </v-flex>
-				        </v-layout> -->
-				    </v-flex>
-
-				    <v-flex xs12 class="mb-10" v-show="inquiry.oem">
-				        <v-divider></v-divider>
-				    </v-flex>
-				</v-layout>
+                                <v-flex xs12>
+                                    <h4 class="font-weight-medium">Message </h4>
+                                    <h4 class="font-weight-light">
+                                      <p class="mb-0">{{ inquiry.message }}</p>
+                                    </h4>
+                                </v-flex>
 
 
-         	</v-flex>
+                                <v-flex xs12>
+                                        <v-layout row wrap>
+                                            <!-- specification -->
+                                            <v-flex xs12>
+                                                <h4 class="font-weight-medium">Specifications</h4>
+                                                <v-layout row wrap class="specifications">
+                                                   
+                                                     <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
+                                                        <v-chip label dark outline text-color="black" v-if="specification.value" >
+                                                               {{ specification.name }}: &nbsp;
+                                                           <span class="font-weight-light">
+                                                              {{ specification.value.split(',').join(', ') }}
+                                                           </span>
+                                                          </v-chip>
+                                                      </span>
+                                                    <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
+                                                        No specifications..
+                                                    </v-alert>
+                                                </v-layout>
+                                            </v-flex>
+                                        </v-layout>
+                                         
+                                 </v-flex>
+
+                                <v-flex xs12 class="attachments">
+
+                                    <h4 class="font-weight-medium">Attachments </h4>
+                                    <div v-if="inquiryAttachments.length">
+
+                                    <v-layout row wrap>
+                                         <v-flex xs4 v-for="(attachment, index) in inquiryAttachments" :key="attachment+'_'+index">
+                                                 <a target="_blank" :href="attachment.location">
+                                                    <v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
+                                                 </a>   
+                                          </v-flex> 
+                                    </v-layout>
+                                      
+                                    </div>
+                                    
+                                    <div v-else>
+                                        <h4 class="red--text">No Attachment</h4>
+                                    </div>
+
+                                </v-flex>
+
+                                    
+                                <v-flex xs12 class="mb-10">
+                                  <v-divider></v-divider>
+                                </v-flex>
+                                                    
+
+                                    <v-flex xs12 v-show="inquiry.shipping_country_id">
+                                        <small class="blue-grey--text">Mass Shipping Address</small>
+                                        <h4 class="font-weight-medium">Shipping Address</h4>
+                                        <h4 class="font-weight-light">
+                                          <span>{{ getCountryName(inquiry.shipping_country_id) }} </span>
+                                          <span>{{ inquiry.shipping_address }} </span>
+                                          <span>{{ inquiry.shipping_city }} </span>
+                                          <span>{{ inquiry.shipping_postal }} </span>
+                                        </h4>
+                                    </v-flex>
+
+               
+                                <v-flex xs12 class="mb-10">
+                                  <v-divider></v-divider>
+                                </v-flex>
+                                           
+
+
+                                    <v-flex xs12 v-show="inquiry.sample_quantity">
+                                        <small class="blue-grey--text">Sample Order Information</small>
+                                        <h4 class="font-weight-medium">Sample Orders Quantity </h4>
+                                        <h4 class="font-weight-light">
+                                        <span>{{ inquiry.sample_quantity }} </span>
+                                       </h4>
+
+                                       <h4 class="font-weight-medium mt-2"> Shipping Address</h4>
+                                        <h4 class="font-weight-light">
+                                           <span>{{ getCountryName(inquiry.sample_shipping_country_id) }} </span>
+                                           <span>{{ inquiry.sample_shipping_address }}</span>
+                                           <span>{{ inquiry.sample_shipping_city }} </span>
+                                           <span>{{ inquiry.sample_shipping_postal }} </span>
+                                        </h4>
+                                    </v-flex>
+
+
+               
+                                <v-flex xs12 class="mb-10" v-show="inquiry.sample_quantity">
+                                  <v-divider></v-divider>
+                                </v-flex>
+                                           
+
+
+                                   <v-flex xs12 v-show="inquiry.oem">
+
+                                        <small class="blue-grey--text">Original Equipment Manufacture</small>
+                                        <h4 class="font-weight-medium">
+                                           What kind of Original Equipment Manufacture ?
+                                        </h4>
+                                        <h4 class="font-weight-light">{{ inquiry.oem_service }}</h4>
+
+                                        <h4 class="font-weight-medium mt-2">
+                                           Description
+                                        </h4>
+                                        <h4 class="font-weight-light">{{ inquiry.oem_description }}</h4>
+                                        
+                                        <h4 class="mt-2">Files</h4>
+
+                                          <v-layout row wrap v-if="inquiryOEM.length" class="attachments">
+                                                        
+                                                    <!-- display only here the attachment and images from thre inquiry -->
+                                                    <v-flex xs4 lg4 v-for="(attachment, index) in inquiryOEM" :key="attachment+'_'+index">
+
+                                                            <div v-if="attachment.filetype === 'image/jpeg' || attachment.filetype === 'image/png' ">
+
+                                                               <a :href="attachment.location">
+
+                                                                     <v-img
+                                                                       :src="attachment.location"
+                                                                       aspect-ratio="1"
+                                                                       class="grey lighten-2"
+                                                                       >
+                                                                     </v-img>
+
+                                                               </a>
+
+                                                           </div>
+                                                          
+                                                           <!-- other file pdf -->
+                                                          
+                                                           <div v-else-if="attachment.filetype">
+                                                             <a :href="attachment.location">
+                                                                 <v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
+                                                             </a>
+                                                           </div>
+
+                                                    </v-flex>
+                                                    
+                                              </v-layout>
+
+                                              <v-layout v-else row wrap>
+                                                <v-flex xs12>
+                                                      <h4 class="red--text">No Files</h4>
+                                                </v-flex>
+                                              </v-layout>
+                                   </v-flex>
+
+               
+                                <v-flex xs12 class="mb-10" v-show="inquiry.oem">
+                                  <v-divider></v-divider>
+                                </v-flex>
+                                           
+                        </v-layout>
+
+
+
+
+         </v-flex>
+
         </v-layout>
       </v-container>
     </v-card>
@@ -288,7 +318,7 @@ export default {
 
           // create a event bus 
           // this.$emit('update:isClosed', true);
-                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+             this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
 
           // inqEvntBs.emitApproved();
 
@@ -296,13 +326,13 @@ export default {
         .catch((e) => {
           console.log(e);
           // this.$emit('update:isClosed', true);
-                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+             this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
 
 
         })
         .finally(() => {
           // this.$emit('update:isClosed', true);
-                          this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
 
         });
     },
@@ -315,14 +345,14 @@ export default {
         .then((response) => {
           // create a event bus 
           // this.$emit('update:isClosed', true);
-                                    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+             this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
 
 
           // inqEvntBs.emitApproved();
         })
         .catch((e) => {
           // this.$emit('update:isClosed', true);
-                                    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+             this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
 
           console.log(e);
         })
@@ -333,14 +363,21 @@ export default {
 
     SortAttachments() {
 
-            var attachmentHolder = (this.inquiry.attachments)?this.inquiry.attachments:[];
+
+    	// console.log('aslllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+    	// console.log(this.inquiry.attachments);
+
+            var attachmentHolder = this.inquiry.attachments;
 
             this.inquiryImages = []
             this.inquiryAttachments = []
             this.inquiryOEM = []
 
-                for (var i = attachmentHolder.length - 1; i >= 0; i--) {
+            if(attachmentHolder) {
 
+            	 for (var i = attachmentHolder.length - 1; i >= 0; i--) {
+
+            	 
                     switch (attachmentHolder[i].filegroup) {
 
                           case 'add-inquiry-oems':
@@ -362,8 +399,10 @@ export default {
                           break;
             
                     }
+                }
 
-              }
+            }
+               
     } ,
 
   
@@ -376,7 +415,7 @@ export default {
 
             handler(nVal, oVal) {
 	            if(nVal) 
-                this.SortAttachments();
+                 this.SortAttachments();
             },
             deep: true,
         },
@@ -392,12 +431,10 @@ export default {
   },
 
 
-  // created() {
-  //           // console.log(this.inquiry);
-  //            this.SortAttachments();    
-
-  //            console.log(this.inquiry)
-  //   },
+  created() {
+            // console.log(this.inquiry);
+             this.SortAttachments();    
+    },
 
 }
 
