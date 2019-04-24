@@ -1,7 +1,7 @@
-// Define authentication static data
 
 export default {
 
+	devMode: true,
 
 	awss3: {
 		signingURL:"http://192.168.1.200:8000/v1/aws-s3-signature",

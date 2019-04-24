@@ -11,6 +11,7 @@ import vm from '@/main.js';
 const state = {
 
     notifications: [],
+    notificationsMessages: [],
     unread:null,
 
     // [
