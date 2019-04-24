@@ -182,6 +182,7 @@ const actions = {
 	                // deduct unread
 	                if(!ntfctn.isRead) {
 						state.unread = parseInt(state.unread) - 1
+						ntfctn.isRead = true;
 	                }
 	                
 

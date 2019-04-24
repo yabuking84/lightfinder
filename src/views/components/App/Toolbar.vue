@@ -59,7 +59,10 @@ flat>
             <template v-for="(notification, index) in notifications.slice().reverse()">
                 <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
                     <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
-                    <v-list-tile-sub-title :class="notification.isRead ? 'grey--text' : 'black--text'">{{ notification.title }} </v-list-tile-sub-title>
+                    <v-list-tile-sub-title 
+                    :class="notification.isRead ? 'grey--text' : 'black--text'">
+                		{{ notification.title }} 
+                	</v-list-tile-sub-title>
                 </v-list-tile>
                  <v-divider :key="'divider_'+index"></v-divider>
             </template>
@@ -612,16 +615,14 @@ methods: {
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
 
     gotoNotfication(ntfctn){
-        
+
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
     	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
         // console.log(this.$refs);
 
     },
-
  
-
 
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
