@@ -31,6 +31,9 @@ const state= {
 			/* DECLINED INQUIRY */
 			declinedInquiry: {
 				url: base_url + `/v1/admin/inquiries`
+			},
+			approveBid: {
+				url: base_url + `/v1/admin/inquiries/`
 			}
 		}
 	},
@@ -163,6 +166,39 @@ const actions = {
 
 
   /* PUT  */
+
+
+    approvedBid_a(context, data) {
+
+	// console.log(data.inquiry_id);
+	return new Promise((resolve, reject) => {
+	  var headers = {
+		token: localStorage.access_token,
+		"content-type": "application/json",
+	  };
+	  axios({
+		  method: state.api.put.method,
+		  url: state.api.put.approveBid.url + data.inquiry_id +'/bids/' + data.bid_id + '/evaluation',
+		  headers: headers,
+		  data: JSON.stringify({ 'approve': 1 })
+		})
+		.then(response => {
+		  resolve(response.data);
+		})
+		.catch(error => {
+		  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+			console.log("EXPIRED");
+			router.push({ 'name': 'Logout' })
+		  } else {
+			reject(error);
+		  }
+		})
+	});
+
+  },
+
+
+
 
   approvedInquiry_a(context, data) {
 
