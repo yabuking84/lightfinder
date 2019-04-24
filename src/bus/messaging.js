@@ -7,7 +7,6 @@ const MessagingEventBus = new Vue({
 
 	methods: {
 
-
 		emitNewMessage(data){
 			this.$emit('new-message',data);
 		},
@@ -16,8 +15,6 @@ const MessagingEventBus = new Vue({
 				func(data);
 	        });
 		},
-
-
 
 	},
 
