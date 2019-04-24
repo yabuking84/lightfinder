@@ -50,7 +50,7 @@
                           </v-flex>
 
                   <v-flex xs12>
-                        <!-- <messaging> </messaging> -->
+                        <messaging :inquiry="inquiry"> </messaging>
                   </v-flex>
         </v-layout>
 

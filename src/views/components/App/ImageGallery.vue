@@ -128,7 +128,7 @@ export default {
 			    };			
 			}
 
-			console.log(this.images)
+			// console.log(this.images)
 
 		},
 	},

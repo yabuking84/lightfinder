@@ -32,31 +32,10 @@ const mutations = {
     
 const actions = {
 
+
     sendMessage_a(context,data){
         return new Promise((resolve, reject) => {
-            
-            if(data.type == 'bid.buyer.admin') {
-                context.dispatch('sendMessageToBid_a',data)
-                .then(function(){                    
-                    resolve();
-                })
-                .catch(error => {
-                    reject(error)
-                });
-            } 
-            else 
-            reject('no message type!');
-
-        });
-    },
-
-    // bid messages
-    ///////////////////////////////////////////////////////////////
-    sendMessageToBid_a(context,data){
-        return new Promise((resolve, reject) => {
-
             console.log("data stringify",JSON.stringify(data));
-
             var headers = {
                 token:localStorage.access_token,
                 "content-type": "application/json",
@@ -76,24 +55,11 @@ const actions = {
                 reject(error);
                 
             })
-
-            // testMessages
-            // testtesttesttesttesttesttesttesttesttesttesttesttesttest
-            // context.commit('INSERTTM_M',{
-            //     own: 1,
-            //     content: data.content,
-            // });
-            // context.commit('INSERTTM_M',{
-            //     own: 0,
-            //     content:"HEY LOREM Upsipiums sad",
-            // });                
-            // resolve();
-            // testtesttesttesttesttesttesttesttesttesttesttesttesttest
-            // testMessages
         });
-    },
+    },    
 
-    getBidMessages_a(context,data){
+
+    getMessages_a(context,data){
         return new Promise((resolve, reject) => {
             var headers = {
                 token:localStorage.access_token,
@@ -113,19 +79,8 @@ const actions = {
                 console.log(error);
             })
 
-            // testMessages
-            // testtesttesttesttesttesttesttesttesttesttesttesttesttest
-            // setTimeout(function(){ 
-            //     var newArr = [...state.testMessages];
-            //     resolve(newArr);
-            // }, 2000);
-            // testtesttesttesttesttesttesttesttesttesttesttesttesttest
-            // testMessages
-
         });
     },
-    ///////////////////////////////////////////////////////////////
-    // bid messages
 
 
 

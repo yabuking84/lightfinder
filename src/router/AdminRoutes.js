@@ -22,7 +22,7 @@ const meta = {
           {
             title: 'Inquiry',
             name: 'AdminInquiry',
-            icon: 'fas fa-search',
+            icon: 'fas fa-clipboard',
         },
         {
             title: 'Buyer',

@@ -221,8 +221,14 @@ const actions = {
     SOCKET_newMessage(context, data){
 		
 		MsgBus.emitNewMessage(data);
-
-        context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
+		
+        // var ntfctn = {
+        //     title:          "Supplier Confirmed \""+response.keyword+"\"!",
+        //     dataType:       'inquiry',
+        //     data:           response,
+        //     textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
+        // }
+        // context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
     },
 
 
