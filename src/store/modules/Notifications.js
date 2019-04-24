@@ -50,10 +50,8 @@ const state = {
 
 const mutations = {
 
-    UPDATE_NOTIFICATIONS_M(state, data) {
-
+    INSERT_NOTIFICATIONS_M(state, data) {
         state.notifications.push(data);
-
     },
 
     RESET_NOTIFICATIONS_M(state) {
@@ -63,6 +61,10 @@ const mutations = {
     // UPDATE_TEXTSNACKBAR_M(state,data) {        
     //     state.textSnackbar = data.textSnackbar;
     // },
+
+    SET_UNREAD_M(state,data) {        
+        state.unread = data;
+    },
 
     UPDATE_SNACKBAR_M(state,data) {        
         state.dataSnackbar = data.dataSnackbar;
@@ -88,7 +90,7 @@ const actions = {
 
     updateNotification_a(context, data){
        
-        context.commit('UPDATE_NOTIFICATIONS_M',data);
+        context.commit('INSERT_NOTIFICATIONS_M',data);
        
         // context.commit('UPDATE_TEXTSNACKBAR_M',{textSnackbar:data.textSnackbar});
         context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
