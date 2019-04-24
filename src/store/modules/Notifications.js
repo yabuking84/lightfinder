@@ -54,6 +54,19 @@ const mutations = {
         state.notifications.push(data);
         // triggered someting
 
+        actions.dispatch('getNotifications_a')
+        .then((response) => {
+        	// this.getSortNotification(response);
+        	console.log(response)
+        })
+        .catch((e) => {
+            console.log(e);
+        })
+        .finally(() => {
+
+        });
+
+
 
 
     },
@@ -189,9 +202,9 @@ const actions = {
 	            })
 	            .catch(error => {
 	                // console.log(error);
-	                if(actions.checkToken(error)) {
-	                //     reject(error);
-	                }
+	                // if(actions.checkToken(error)) {
+	                    reject(error);
+	                // }
 	            })
 
    		});
