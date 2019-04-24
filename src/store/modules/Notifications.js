@@ -53,9 +53,6 @@ const mutations = {
     UPDATE_NOTIFICATIONS_M(state, data) {
 
         state.notifications.push(data);
-        // triggered someting
-
-
 
     },
 
@@ -90,13 +87,15 @@ const actions = {
     },
 
     updateNotification_a(context, data){
+       
         context.commit('UPDATE_NOTIFICATIONS_M',data);
+       
         // context.commit('UPDATE_TEXTSNACKBAR_M',{textSnackbar:data.textSnackbar});
         context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
         context.commit('SHOW_SNACKBAR_M');
 
         // if there's an update
-       state.unread = parseInt(state.unread) + 1
+        state.unread = parseInt(state.unread) + 1
 
     },
 
@@ -144,6 +143,7 @@ const actions = {
 
 
 	getNotifications_a(context) {
+		console.log('called');
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
@@ -190,9 +190,9 @@ const actions = {
 	            })
 	            .catch(error => {
 	                // console.log(error);
-	                if(actions.checkToken(error)) {
-	                //     reject(error);
-	                }
+	                // if(actions.checkToken(error)) {
+	                    reject(error);
+	                // }
 	            })
 
    		});
@@ -208,6 +208,8 @@ const actions = {
 
  
 const methods = {
+
+
 
 
 

@@ -399,12 +399,13 @@ methods: {
 
 	            var data = {
 
-	          			'id':notifications[i].data.inquiry_id,
-	          			'notification_id': notifications[i].id
+          			'id':notifications[i].data.inquiry_id,
+          			'notification_id': notifications[i].id
+
 	          	}
 
 
-	       switch (notifications[i].type) {
+	       	switch (notifications[i].type) {
 
 			    case 'adminApprovedInquiry':
 			    	 title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
@@ -430,7 +431,8 @@ methods: {
 			    // admin
 			    case 'newMessage': 
 			    	title=`New Message Received "${notifications[i].data.content}" `
-			     break;
+			    break;
+
 			}
 
  		     	var ntfctn = {
@@ -445,6 +447,7 @@ methods: {
 
 	           this.$store.state.ntfctns.notifications.push(ntfctn);
 	           this.$store.state.ntfctns.unread = unreadCount
+
 	    }
 		     
     },
@@ -471,7 +474,6 @@ methods: {
         // console.log(this.$refs);
 
     },
- 
 
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
     // notificationsnotificationsnotificationsnotificationsnotificationsnotifications
