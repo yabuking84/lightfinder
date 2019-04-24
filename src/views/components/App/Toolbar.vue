@@ -45,7 +45,7 @@ flat>
     <!-- bellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbell -->
     <v-menu offset-y transition="scale-transition" allow-overflow fixed>    	
         <template v-slot:activator="{ on }">
-            <v-btn flat v-on="on">
+            <v-btn flat icon v-on="on">
                 <v-badge color="red">
                     <template v-slot:badge  v-if="unread>0">
                         <span>{{ unread }}</span>
@@ -78,34 +78,37 @@ flat>
 
     <!-- msg notifications -->
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
-    <v-menu offset-y transition="scale-transition" allow-overflow fixed>    	
+    <v-menu offset-y transition="scale-transition" allow-overflow fixed>
         <template v-slot:activator="{ on }">
-            <v-btn flat v-on="on">
+            <v-btn flat icon v-on="on" class="ml-4">
                 <v-badge color="red">
-                    <template v-slot:badge  v-if="unread>0">
-                        <span>{{ unread }}</span>
+                    <template v-slot:badge  v-if="unreadMsg>0" >
+                        <span>{{ unreadMsg }}</span>
+                        <!-- <span>99</span> -->
                     </template>
-                    <v-icon>far fa-bell</v-icon>
+                    <v-icon>far fa-envelope</v-icon>
                 </v-badge>
             </v-btn>
         </template>
 
-        <v-list class="notification_list" dense  v-if="notifications && notifications.length" >
-        	<!-- v-if="index <= 10" -->
-            <template v-for="(notification, index) in notifications.slice().reverse()">
-                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
-                    <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
-                    <v-list-tile-sub-title 
+        <v-list class="notification_list" dense  v-if="notificationMsgs && notificationMsgs.length" >
+            <template v-for="(notificationMsg, index) in notificationMsgs.slice().reverse()">
+                <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg)">
+                    <!-- <v-list-tile-title
                     :class="notification.isRead ? 'grey--text' : 'black--text'">
-                		{{ notification.title }} 
+                    	{{notification.title}}
+                    </v-list-tile-title>  -->
+                    <v-list-tile-sub-title 
+                    :class="notificationMsg.isRead ? 'grey--text' : 'black--text'">
+                		{{ notificationMsg.title }} 
                 	</v-list-tile-sub-title>
                 </v-list-tile>
                  <v-divider :key="'divider_'+index"></v-divider>
             </template>
-                <v-list-tile @click="">
+            <v-list-tile @click="">
                 <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
            </v-list-tile>
-        </v-list>     
+        </v-list>
     </v-menu>
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
     <!-- msg notifications -->
@@ -301,7 +304,7 @@ computed: {
 		return this.$store.state.ntfctns.unread
 	},
 
-    notificationsMsg(){
+    notificationMsgs(){
         return this.$store.state.ntfctns.notifications;
     },
 
@@ -375,7 +378,7 @@ methods: {
 
     },
 
-     getSortNotification(notifications) {
+    getSortNotification(notifications) {
 
     	var unreadCount = 0; // integer
     	var isRead;
@@ -385,70 +388,70 @@ methods: {
 		// var keys = Object.keys( notifications );
   		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
 
+  		remove 
+
         for (var i = notifications.length - 1; i >= 0; i--) {
 
+            if(notifications[i].type!='newMessage'){
 
-    	       var isRead = true; 
+		       	isRead = true; 
 
-        	   if(notifications[i].read_at == null || notifications[i].read_at == undefined) {
-        	   	
-        	   	  unreadCount = parseInt(unreadCount) + 1
-        	   	  isRead = false
-
-        	   }
+	    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
+	    	   		unreadCount = parseInt(unreadCount) + 1
+	    	   		isRead = false
+	    	   	}
 
 	            var data = {
-
-          			'id':notifications[i].data.inquiry_id,
-          			'notification_id': notifications[i].id
-
+	      			'id':notifications[i].data.inquiry_id,
+	      			'notification_id': notifications[i].id
 	          	}
 
 
-	       	switch (notifications[i].type) {
+		       	switch (notifications[i].type) {
 
-			    case 'adminApprovedInquiry':
-			    	 title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
-			    break;
+				    case 'adminApprovedInquiry':
+				    	 title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
+				    break;
 
-			    case 'adminRejectedInquiry':
-			    	 title="Inquiry \""+notifications[i].data.inquiry_id+"\" REJECTED!";
-			    break;
+				    case 'adminRejectedInquiry':
+				    	 title="Inquiry \""+notifications[i].data.inquiry_id+"\" REJECTED!";
+				    break;
 
-			    case 'supplierCreatedBid': 
-			   		 title="Supplier Created Bid for Inquiry # "+notifications[i].data.inquiry_id+"!";
-			    break;
+				    case 'supplierCreatedBid': 
+				   		 title="Supplier Created Bid for Inquiry # "+notifications[i].data.inquiry_id+"!";
+				    break;
 
-			    case 'supplierConfirmedAward': 
-			   		 title="Supplier Confirmed \""+notifications[i].data.inquiry_id+"\"!";
-			    break;
+				    case 'supplierConfirmedAward': 
+				   		 title="Supplier Confirmed \""+notifications[i].data.inquiry_id+"\"!";
+				    break;
 
-			    // supplier
-			    case 'buyerAwardedBid': 
-			    	title=`Buyer has Awarded for Inquiry # ${ notifications[i].data.inquiry_id }  to you`;
-			    break;
+				    // supplier
+				    case 'buyerAwardedBid': 
+				    	title=`Buyer has Awarded for Inquiry # ${ notifications[i].data.inquiry_id }  to you`;
+				    break;
 
-			    // admin
-			    case 'newMessage': 
-			    	title=`New Message Received "${notifications[i].data.content}" `
-			    break;
+				    // admin
+				    // case 'newMessage': 
+				    // 	title=`New Message Received "${notifications[i].data.content}" `
+				    // break;
 
-			}
+				}
 
- 		     	var ntfctn = {
+	 		    var ntfctn = {
+	                title:         title,
+	                dataType:      'inquiry',
+	                data:          data,
+	                textSnackbar:  title,
+	                isRead: 	   isRead,
+	            }
 
-                    title:         title,
-                    dataType:      'inquiry',
-                    data:          data,
-                    textSnackbar:  title,
-                    isRead: 	   isRead,
+		        this.$store.commit('ntfctns/INSERT_NOTIFICATIONS_M',ntfctn);
 
-                }
-
-	           this.$store.state.ntfctns.notifications.push(ntfctn);
-	           this.$store.state.ntfctns.unread = unreadCount
-
+	    	}
 	    }
+	    
+	    this.$store.commit('ntfctns/INSERT_NOTIFICATIONS_M',unreadCount);
+
 		     
     },
 
