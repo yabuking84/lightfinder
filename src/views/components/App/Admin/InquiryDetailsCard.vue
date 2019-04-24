@@ -380,7 +380,9 @@ export default {
             this.inquiryAttachments = []
             this.inquiryOEM = []
 
-                for (var i = attachmentHolder.length - 1; i >= 0; i--) {
+            if(!attachmentHolder) {
+
+            	 for (var i = attachmentHolder.length - 1; i >= 0; i--) {
 
                     switch (attachmentHolder[i].filegroup) {
 
@@ -403,8 +405,10 @@ export default {
                           break;
             
                     }
+                }
 
-              }
+            }
+               
     } ,
 
   

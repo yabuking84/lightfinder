@@ -93,7 +93,9 @@ const actions = {
 				textSnackbar: 	'Inquiry "'+response.keyword+'" APPROVED!',
 			}
 			context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-
+			console.log('-------------------------------------------------------')
+			console.log(response)
+			console.log('-------------------------------------------------------')
         	// context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
         	// context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
 
