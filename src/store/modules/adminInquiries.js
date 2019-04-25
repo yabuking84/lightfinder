@@ -202,7 +202,6 @@ const actions = {
 
   approvedInquiry_a(context, data) {
 
-	// console.log(data.inquiry_id);
 	return new Promise((resolve, reject) => {
 	  var headers = {
 		token: localStorage.access_token,
