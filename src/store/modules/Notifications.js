@@ -276,7 +276,7 @@ const actions = {
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
 	newMessage_a(context, data){
 
-		console.log('data',data);
+		console.log('newMessage_a = ',data);
 		
     	// populate but not show snackbar yet until all notifications are loaded
 		var textSnackbar = '';
@@ -359,7 +359,7 @@ const actions = {
 
     gotoNotfication_a(context,ntfctn){
 
-    	console.log('ntfctn',ntfctn);
+    	// console.log('gotoNotfication_a ntfctn = ',ntfctn);
 
         // if inquiry type
         if(ntfctn.dataType == 'inquiry' || ntfctn.dataType == 'bid') {
@@ -397,13 +397,13 @@ const actions = {
             })
             .then(response => {
 
-            	var ntfctns = response.data.filter(item=>item.type!='newMessage');
+	        	var notifications = response.data.filter(item=>item.type!='newMessage');
 
+            	console.log("populateNotifications_a notifications = ",notifications[0]);
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-	        	var notifications = ntfctns;
 
 		    	var unreadCount = 0; // integer
 		    	var isRead;
@@ -411,56 +411,59 @@ const actions = {
 				var dataType = '';
 		        var data = {};
 
-		  		var ntfctns = [];
-		        for (var i = notifications.length - 1; i >= 0; i--) {
+		  		// var ntfctns = [];
+		  		var ntfctns = notifications.map((ntfctn)=>{
 
-			       	isRead = true; 
 		    		title = '';
-					dataType = '';
+			    	data = {};
+			    	dataType = "";
+			       	isRead = true; 
 
-		    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
+		    	   	if(ntfctn.read_at == null || ntfctn.read_at == undefined) {    	   	
 		    	   		unreadCount = parseInt(unreadCount) + 1
 		    	   		isRead = false
 		    	   	}
 
 		            data = {
-		      			'id':notifications[i].data.inquiry_id,
-		      			'bid_id':notifications[i].data.bid_id,
-		      			'notification_id': notifications[i].id,
-		      			'type': notifications[i].type,
+		      			'id':ntfctn.data.inquiry_id,
+		      			'bid_id':ntfctn.data.bid_id,
+		      			'notification_id': ntfctn.id,
 		          	}
 
 
-			       	switch (notifications[i].type) {
+			       	switch (ntfctn.type) {
 
 					    case 'adminApprovedInquiry':
-					    	title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
+					    	title='Inquiry "'+ntfctn.data.inquiry_id+'" APPROVED!';
 					    	dataType = 'inquiry';
+					    	data.bid_id = null;
 					    break;
 
 					    case 'adminRejectedInquiry':
-					    	title="Inquiry \""+notifications[i].data.inquiry_id+"\" REJECTED!";
+					    	title="Inquiry \""+ntfctn.data.inquiry_id+"\" REJECTED!";
 					    	dataType = 'inquiry';
+					    	data.bid_id = null;
 					    break;
 
 					    case 'supplierCreatedBid': 
-					   		title="Supplier Created Bid for Inquiry #"+notifications[i].data.inquiry_id+"!";
+					   		title="Supplier Created Bid for Inquiry #"+ntfctn.data.inquiry_id+"!";
 					    	dataType = 'bid';
 					    break;
 
 					    case 'supplierConfirmedAward': 
-					   		title="Supplier Confirmed \""+notifications[i].data.inquiry_id+"\"!";
+					   		title="Supplier Confirmed \""+ntfctn.data.inquiry_id+"\"!";
 					    	dataType = 'inquiry';
+					    	data.bid_id = null;
 					    break;
 
 					    // supplier
 					    case 'buyerAwardedBid': 
-					    	title=`Buyer has Awarded for Inquiry # ${ notifications[i].data.inquiry_id }  to you`;
+					    	title=`Buyer has Awarded for Inquiry # ${ ntfctn.data.inquiry_id }  to you`;
 					    	dataType = 'inquiry';
 					    break;
 					}
 
-		 		    var ntfctn = {
+		 		    return {
 		                title:         title,
 		                dataType:      dataType,
 		                data:          data,
@@ -468,8 +471,10 @@ const actions = {
 		                isRead: 	   isRead,
 		            }
 
-			        ntfctns.push(ntfctn);
-			    }
+				});
+			    ntfctns.reverse();
+
+            	console.log("populateNotifications_a ntfctns = ",ntfctns[0]);
 			    
 			    context.commit('SET_NOTIFICATIONS_M',ntfctns);
 			    context.commit('SET_UNREAD_M',unreadCount);
@@ -492,7 +497,7 @@ const actions = {
 
 
 
-	getNotificationsMsgs_a(context) {
+	populateNotificationsMsgs_a(context) {
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
@@ -504,47 +509,66 @@ const actions = {
             })
             .then(response => {
 
-            	var ntfctns = response.data.filter(item=>item.type=='newMessage');
-
-            	// console.log(ntfctns);
+	        	var notifications = response.data.filter(item=>item.type=='newMessage');
+            	console.log("getNotificationsMsgs_a notifications = ",notifications[0]);
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	        	var notifications = ntfctns;
 
 		    	var unreadCount = 0; // integer
 		    	var isRead;
 		    	var title = '';
+		        var data = {};
+				var dataType = "";
 
-		    	// Get the array of keys
-				// var keys = Object.keys( notifications );
-		  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
+			    var retVal = {};
+			    var ntfctns = notifications.map((ntfctn)=>{
 
-		  		var ntfctns = [];
-
-		        for (var i = notifications.length - 1; i >= 0; i--) {
-
+			    	data = {};
+			    	dataType = "";
+		    		title = '';
 			       	isRead = true; 
 
-		    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
+		    	   	if(ntfctn.read_at == null || ntfctn.read_at == undefined) {    	   	
 		    	   		unreadCount = parseInt(unreadCount) + 1
 		    	   		isRead = false
 		    	   	}
-		            var data = {
-		      			'id':notifications[i].data.inquiry_id,
-		      			'notification_id': notifications[i].id
-		          	}
-			    	title = 'New Message Received "'+notifications[i].data.content+'" ';
 
-		 		    var ntfctn = {
+		    	   	// check what type of message
+					if(ntfctn.data.type=="bid.buyer.admin") {
+						data = {
+							'id':ntfctn.data.id.split("-")[0],
+							'bid_id':ntfctn.data.id,
+							'notification_id': ntfctn.id,
+						};
+						dataType = "bid";
+			    		title = 'New Message in Bid #'+ntfctn.data.id+'';
+					} 
+					else
+					if(ntfctn.data.type=="inquiry.buyer.admin") {
+						data = {
+							'id':ntfctn.data.id,
+							'bid_id':null,
+							'notification_id': ntfctn.id,
+						};
+						dataType = "inquiry";
+			    		title = 'New Message in Inquiry #'+ntfctn.data.id+'';
+					}
+
+
+			    	return {
 		                title:         title,
+		                dataType:      dataType,
 		                data:          data,
 		                textSnackbar:  title,
 		                isRead: 	   isRead,
-		            }
+			    	};
 
-			        ntfctns.push(ntfctn);
-			    }
+			    });
+			    ntfctns.reverse();
+
+
+            	console.log("getNotificationsMsgs_a ntfctns = ",ntfctns[0]);
 			    
 			    context.commit('SET_NOTIFICATIONSMSGS_M',ntfctns);
 			    context.commit('SET_UNREADMSGS_M',unreadCount);            	
