@@ -111,6 +111,22 @@
 
                                     </v-layout>
                                   </v-flex>
+
+
+                                  <!-- preview of the edit images here can be removable -->
+                                <v-flex xs12 v-show="inquiryImage.length">
+                                	<v-layout row wrap>
+										<v-flex xs4 v-for="(image, i) in inquiryImage" :key="'image'+i">
+											<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+											   <div class="image-area">
+												  <img :src="image.location" alt="Preview">
+												  <a class="remove-image" href="#" style="display: inline;">&#215;</a>
+												</div>
+										</v-flex>   
+                                	</v-layout>
+                                </v-flex>
+
+
                                   <v-flex xs12>                                        
                                         <h4 class="mb-3 mt-4">Upload Images:</h4>
                                         <vue-dropzone 
@@ -125,6 +141,11 @@
                                           </div>
                                         </vue-dropzone>                                    
                                   </v-flex>
+								
+
+								<!-- preview of the edit images here can be removable -->
+
+
                                 </v-container>
                                 <v-btn color="primary" @click="stepUp()">next</v-btn>
                                 <v-btn flat @click="stepDown()">back</v-btn>
@@ -1066,6 +1087,8 @@ export default {
        
       },
 
+      inquiryImage: [],
+      inquiryAttachments:[],
       shipping_methods: config.main.shipping_methods,
       payment_methods: config.main.payment_methods,
       search: null,
@@ -1193,12 +1216,14 @@ export default {
 
     inquiry(nVal, oVal) {
 
-        // if(nVal) {
+        if(!nVal) {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
           
-        // }
+           console.log('in used')
+
+        }
 
     },
   
@@ -1220,10 +1245,13 @@ export default {
         if(!nVal) {
 
               this.inquiryHolder = this.inquiry
-              this.fillFormData();  
               this.$emit('update:isEdit', false)
+              this.fillFormData();  
+
+              console.log('inquiry is edit')
 
         }
+
         
     },
     // if inquiry lookup is click then useInquiry
@@ -1330,9 +1358,14 @@ export default {
 
     },
 
+    // usable for editing the inquiry/ and previewing to sidebar
+
     fillFormData() {
 
             // console.log(this.inquiryHolder)
+
+            this.inquiryImage = []
+            this.inquiryAttachments = []
 
             this.formData.keywords = this.inquiryHolder.keyword
             this.formData.category = this.getCategoryId(this.inquiryHolder.categories.join(', '))  
@@ -1368,10 +1401,36 @@ export default {
             this.formData.finish = this.getSpefications('Finish')
             this.formData.size = this.getSpefications('Size')
             this.formData.dimmable = this.getSpefications('Dimmable')
-          
+
+            this.formData.attachments = this.inquiryHolder.attachments
+
+            // execute this if there's an attachments
+            if(this.formData.attachments.length > 0) {
+
+	            var attachments = this.formData.attachments.map(attachments => { 
+
+			            	if(attachments.filegroup == 'add-inquiry-images') {
+
+			            		this.inquiryImage.push(attachments);
+
+			            	}
+
+			            	if(attachments.filegroup == 'add-inquiry-attachments') {
+
+								this.inquiryAttachments.push(attachments);
+
+			            	}
+				});
+
+            }
+
 
       },
 
+    removeAttachments(key) {
+	
+
+    },
 
     getSpefications(key) {
 
@@ -1753,6 +1812,45 @@ export default {
   padding-bottom: 30px;
   // width: 550px;
 
+}
+
+
+.image-area {
+  position: relative;
+  width: 50%;
+  background: #333;
+}
+.image-area img{
+  max-width: 100%;
+  height: auto;
+}
+.remove-image {
+display: none;
+position: absolute;
+top: -10px;
+right: -10px;
+border-radius: 10em;
+padding: 2px 6px 3px;
+text-decoration: none;
+font: 700 21px/20px sans-serif;
+background: #555;
+border: 3px solid #fff;
+color: #FFF;
+box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+}
+.remove-image:hover {
+ background: #E54E4E;
+  padding: 3px 7px 5px;
+  top: -11px;
+right: -11px;
+}
+.remove-image:active {
+ background: #E54E4E;
+  top: -10px;
+right: -11px;
 }
 
 </style>
