@@ -506,7 +506,7 @@ const actions = {
 
             	var ntfctns = response.data.filter(item=>item.type=='newMessage');
 
-            	console.log(ntfctns);
+            	// console.log(ntfctns);
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
