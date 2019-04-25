@@ -12,9 +12,6 @@
         <!-- waiting for verification -->
         <v-layout v-if="verified" align-center justify-center row fill-height>
 
-           <!--          <v-flex xs2>
-                        <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>  
-                    </v-flex> -->
                     
                     <v-flex xs12 mx-5 mt-3 mb-3>
                          <div>
@@ -30,11 +27,6 @@
         <!-- rejected inquiry -->
         <v-layout v-else-if="rejected" align-center justify-center row wrap fill-height>
             
-
-                     <!--      <v-flex xs2>
-                               <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
-                          </v-flex> -->
-                          
                   <v-flex xs12 mx-5 mt-3 mb-3>
                         <div>
                             <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
@@ -57,14 +49,9 @@
         <div v-else>
 
 
-            <!-- <pre>{{ bidItems }}</pre> -->
-
             <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
 
-<!-- 
-                            <v-flex xs2>
-                                  <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                            </v-flex> -->
+
                             
                             <v-flex xs12 mx-5 mt-3 mb-3>
                                         <div>
@@ -96,9 +83,9 @@
                      <!--    <v-flex xs5>
                             <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
                         </v-flex> -->
-
-                            <v-flex xs5>
-                                    <image-gallery-small :images="bidItem.attachments" noThumbnails height="120px"></image-gallery-small> 
+								
+                             <v-flex xs5>
+                                    <image-gallery-small :images="bidItem.attachments > 0 ? bidItem.attachments : [] " noThumbnails height="120px"></image-gallery-small> 
                             </v-flex>
 
                         <v-flex xs7>

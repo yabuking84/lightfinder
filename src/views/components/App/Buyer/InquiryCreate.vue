@@ -1,57 +1,39 @@
 <template>
   <div>
+
     <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen >
 
       <v-card>
 
-        <v-toolbar v-if="isEdit" class="headline red darken-1 white--text">
-              <span class="font-weight-bold">EDIT INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
-                 <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn dark flat @click="$emit('update:dialog', false)">
-                    <v-icon>close</v-icon>
-                  </v-btn>
-                </v-toolbar-items>
+		<!-- When Edit  -->
+	    <v-toolbar v-if="isEdit" class="headline red darken-1 white--text">
+	          <span class="font-weight-bold">EDIT INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
+	             <v-spacer></v-spacer>
+	            <v-toolbar-items>
+	              <v-btn dark flat @click="$emit('update:dialog', false)">
+	                <v-icon>close</v-icon>
+	              </v-btn>
+	            </v-toolbar-items>
+	    </v-toolbar>
 
+		<!-- When Creating new  -->
+	    <v-toolbar v-else class="headline grey darken-4 white--text">
+	              <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
+	              <v-spacer></v-spacer>
+	              <v-toolbar-items>
+	                <v-btn dark flat @click="$emit('update:dialog', false)">
+	                  <v-icon>close</v-icon>
+	                </v-btn>
+	              </v-toolbar-items>
+	    </v-toolbar>
 
-
-        </v-toolbar>
-
-	
-
-        <v-toolbar v-else class="headline grey darken-4 white--text">
-                  <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-toolbar-items>
-                    <v-btn dark flat @click="$emit('update:dialog', false)">
-                      <v-icon>close</v-icon>
-                    </v-btn>
-                  </v-toolbar-items>
-        </v-toolbar>
-
-      <!--   
-        <v-card-title v-if="isEdit" class="headline red darken-1 white--text">
-          Edit
-          <v-spacer></v-spacer>
-          <span class="font-weight-bold">INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
-        </v-card-title>
-
-        <v-card-title v-else class="headline grey darken-4 white--text">
-            Create Inquiry
-            <v-spacer></v-spacer>
-            <v-btn dark flat @click="$emit('update:dialog', false)">
-                <v-icon>close</v-icon>
-            </v-btn>           
-        </v-card-title> -->
-
-
-
+		<!-- Displaying new -->
         <v-card-text id="inquiryCreate_scrollable_cont">
 
             <v-layout row wrap>
                   
                 <v-flex xs7 style="max-height:77vh; overflow:hidden; overflow-y:auto;">
-                  <v-card class="inqCurved">
+                   <v-card class="inqCurved">
                         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
                           <v-stepper v-model="stepCnt" class="stepperClass" vertical>
@@ -623,8 +605,7 @@
                           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         </v-form>
-                 </v-card>
-
+                   </v-card>
                 </v-flex>
               
               <!-- <v-divider vertical></v-divider> -->
@@ -807,24 +788,11 @@
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                 </v-flex>
-                
             </v-layout>
         </v-card-text>
+        <!-- Displaying new -->
 
         <v-divider></v-divider>
-
-             <!--  <v-btn color="primary" @click="$emit('update:dialog', false)">
-                  close
-                </v-btn>
-                <v-btn color="error" @click="clearForm()">
-                  clear
-                </v-btn>
-
-                <v-spacer></v-spacer>
-
-                 <v-btn color="success" @click="submitForm()" :loading="formLoading">
-                  submit
-                </v-btn> -->
 
         <v-card-actions>
 
@@ -849,25 +817,7 @@
                 </v-layout>
               </v-flex>
             </v-layout>
-
         </v-card-actions>
-
-   <!--    <v-snackbar
-          v-model="successSnackbar"
-          color="success"
-           bottom
-           left
-           :timeout="8000"
-          >
-          <v-btn
-            dark
-            flat
-            @click="successSnackbar = false"
-          >
-            Close
-          </v-btn>
-    </v-snackbar> -->
-
 
       </v-card>
     </v-dialog>
@@ -944,8 +894,6 @@ export default {
         })
 
       },
-
-    // optional /*state: zipcode:*/
 
     sample_shipping_address: {
       required: requiredIf(function() {
