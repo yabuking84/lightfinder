@@ -303,7 +303,7 @@
                              <!-- optional data  -->
                              <v-layout row wrap mt-3>
                                     <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
-                                    <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
+                                    <!-- <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small> -->
                                     <v-flex xs12 v-show="is_sample">
                                       <v-layout row wrap>
 
