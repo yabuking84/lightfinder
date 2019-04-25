@@ -52,10 +52,7 @@
                 <v-layout row wrap>
 
                         <v-flex xs12 mx-5 mt-3 >
-<!-- 
-                                <v-flex xs2>
-                                    <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
-                                </v-flex> -->
+
 
                                     <div>
                                         <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
@@ -94,17 +91,12 @@
 
                     <v-flex xs12 mx-5 mt-3 mb-3>
 
-<!-- 
-                            <v-flex xs2>
-                                <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                            </v-flex> -->
-
-                                <div>
-                                    <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
-                                    <div class="blue-grey--text">INQUIRY <b>#{{ inquiry.id }}</b>
-                                    </div>
-
+                            <div>
+                                <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
+                                <div class="blue-grey--text">INQUIRY <b>#{{ inquiry.id }}</b>
                                 </div>
+
+                            </div>
 
                     </v-flex>
 
@@ -113,26 +105,33 @@
                 <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
     
                     <v-card-text>
-
-                     <v-btn largeflat block class="grey darken-4">
-                                        <span class="ml-1 white--text font-weight-bold">Approved bid</span>
-                                        <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
-                    </v-btn>
-
+						
+						<div>
+							<v-btn v-if="bidItem.active == 0" @click="approvedBid(bidItem)" large flat block class="grey darken-4">
+		                            <span class="ml-1 white--text font-weight-bold">Approved bid</span>
+		                            <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
+		                    </v-btn>	
+						</div>
+						 
+                    
                         <v-layout row wrap>
 
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
                             <v-flex xs5>
-                                <image-gallery-small no-thumbnails height="200px"></image-gallery-small>
+                                    <image-gallery-small :images="bidItem.attachments" noThumbnails height="120px"></image-gallery-small> 
                             </v-flex>
 
                             <v-flex xs7>
+
+
                                 <v-layout row wrap>
-                                    <!-- <pre>
+
+                            <!--         <pre>
 								{{ bidItem }}
 							</pre> -->
+
                                     <!-- <v-container> -->
 
                                     <v-flex xs12 pl-2>
@@ -228,6 +227,8 @@
                 </v-card>
 
             </v-card-text>
+
+
         </v-card>
 
         <message-box :commentData="commentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
@@ -237,7 +238,9 @@
 </template>
 
 <script>
-    import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+    // import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+    import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+
 
     import MessageBox from '@/views/Components/App/Admin/MessageDialog'
 
@@ -303,6 +306,7 @@
                 has_awarded: true,
                 commentData: [],
                 openMessageDialog: false,
+                bidImages:[],
 
             }
 
@@ -416,6 +420,27 @@
 
                 },
 
+
+                approvedBid(bidItem) {
+
+                	 this.$store.dispatch('admnInq/approvedBid_a', {
+                            inquiry_id: this.inquiry.id,
+                            bid_id: bidItem.id
+                        })
+                        .then((response) => {
+
+                        	bidItem.active = 1
+
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        })
+                        .finally(() => {
+
+                        });
+
+                },
+
                 // for the blurring
                 checkIfawarded: function(awarded, btn) {
 
@@ -437,6 +462,11 @@
                     }
 
                     return is_awarded;
+                },
+
+
+                sortImage: function(attachments) {
+                	console.log(attachments);
                 },
 
         },

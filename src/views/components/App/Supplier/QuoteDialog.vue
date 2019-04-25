@@ -555,7 +555,7 @@ methods: {
                 dimmable: this.formData.dimmable,
           },
 
-          "attachments": this.attachments,
+          "attachments": this.formData.attachments,
           "sample_cost": this.formData.sample_cost ? this.formData.sample_cost : null,
           "sample_shipment_cost": this.formData.sample_shipment_cost ? this.formData.sample_shipment_cost : null
         };
