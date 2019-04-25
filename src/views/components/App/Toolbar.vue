@@ -208,7 +208,7 @@ multi-line
 color="white"
 v-if="sbNtfctnData"
 style="cursor: pointer;">
-    <h4 style="color:#000;">
+    <h4 style="color:#000;" @click="showSnackbar = false">
         {{ sbNtfctnData }}
     </h4>
     <v-btn color="pink" flat @click="showSnackbar = false">
@@ -393,7 +393,7 @@ methods: {
     // /////////////////////////////////////////////////////////
     populateNotificationsMsgs() {
 
-        this.$store.dispatch('ntfctns/getNotificationsMsgs_a')
+        this.$store.dispatch('ntfctns/populateNotificationsMsgs_a')
         .then((response) => {
 
         	// Now notifications are done populating show snackbar
