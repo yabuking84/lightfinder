@@ -40,12 +40,15 @@
 
 
 
-
-
-
-                        <v-flex xs5>
+                     <!--    <v-flex xs5>
                             <image-gallery-small></image-gallery-small>
-                        </v-flex>
+                        </v-flex> -->
+
+                             <v-flex xs5>
+                                    <image-gallery-small :images="bid.attachments" noThumbnails height="120px"></image-gallery-small> 
+                            </v-flex>
+
+
                         <v-flex xs7>
                              <v-flex xs12>
                                 <h5 class="font-weight-thin">Product code</h5>
@@ -352,7 +355,8 @@
     import { required, email, maxLength } from 'vuelidate/lib/validators'
     import validationMixin from '@/mixins/validationMixin'
 
-    import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+    // import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+    import ImageGallerySmall from "@/views/Components/App/ImageGallery"
     import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
     import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
     import inqEvntBs from "@/bus/inquiry";

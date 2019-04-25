@@ -323,23 +323,23 @@
                         <v-textarea label="Message" placeholder="Enter Remarks Here" v-model="formData.remarks">
                         </v-textarea>
                       </v-flex>
-                      <v-flex xs12>
-                        <h4 class="font-weight-thin mt-3 mb-2">Attachments </h4>
-
-                        <!-- <upload-file></upload-file> -->
-                        <vue-dropzone 
-                        id="dropzone_attachments" 
-                        :options="dropzoneOptions" 
-                        :useCustomSlot="useCustomSlot"
-                        :awss3="getAWSS3('attachments')"
-                        @vdropzone-success="vdz_success($event,'add-quote-attachments')">
-                            <div class="dropzone-custom-content">
-                                <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
-                                <div class="subtitle">...or click to select a file from your computer</div>
-                            </div>
-                        </vue-dropzone>
-
-                      </v-flex>
+                    <!--   <v-flex xs12>
+                      <h4 class="font-weight-thin mt-3 mb-2">Attachments </h4>
+                    
+                      <upload-file></upload-file>
+                      <vue-dropzone 
+                      id="dropzone_attachments" 
+                      :options="dropzoneOptions" 
+                      :useCustomSlot="useCustomSlot"
+                      :awss3="getAWSS3('attachments')"
+                      @vdropzone-success="vdz_success($event,'add-quote-attachments')">
+                          <div class="dropzone-custom-content">
+                              <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
+                              <div class="subtitle">...or click to select a file from your computer</div>
+                          </div>
+                      </vue-dropzone>
+                    
+                    </v-flex> -->
                     </v-layout>
 
                   </v-flex>

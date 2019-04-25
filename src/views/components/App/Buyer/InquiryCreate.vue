@@ -12,8 +12,12 @@
                     <v-icon>close</v-icon>
                   </v-btn>
                 </v-toolbar-items>
+
+
+
         </v-toolbar>
-        
+
+	
 
         <v-toolbar v-else class="headline grey darken-4 white--text">
                   <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
@@ -1193,7 +1197,6 @@ export default {
         console.log(e);
     });
 
-
     // -----------------------GET COUNTRY-------------------------------------
 
     // this.$store.dispatch(this.getCountries_a())
@@ -1242,14 +1245,12 @@ export default {
 
     inquiry(nVal, oVal) {
 
-        if(nVal) {
+        // if(nVal) {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
-           // console.log(this.inquiry)
-           // this.getInquiry(this.inquiry.inq);
           
-        }
+        // }
 
     },
   
@@ -1358,11 +1359,6 @@ export default {
             .then((data) => {
                 
                 this.inquiryHolder = data
-
-                // console.log('-----------------')
-                // console.log(this.inquiryHolder)
-                // console.log('-----------------')
-
                 this.fillFormData()
 
             })

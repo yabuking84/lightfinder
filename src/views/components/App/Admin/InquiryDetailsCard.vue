@@ -30,12 +30,13 @@
           <v-flex xs12>
 
                         <v-layout row wrap>
-  							<v-flex xs12>
-							    <small class="blue-grey--text">Buyer Name</small>
-							    <h4 class="font-weight-medium">
-                                  <p class="mb-0">{{ inquiry.buyer.first_name }} {{ inquiry.buyer.last_name }}</p>
-                                </h4>
-							</v-flex>
+                        	
+	  							<v-flex xs12>
+								    <small class="blue-grey--text">Buyer Name</small>
+								    <h4 class="font-weight-medium">
+	                                  <p class="mb-0">{{ inquiry.buyer.first_name }} {{ inquiry.buyer.last_name }}</p>
+	                                </h4>
+								</v-flex>
 
                                 <v-flex xs12 v-if="inquiryImages.length > 0">
                                     <!-- <h4 class="font-weight-medium">Image</h4> -->

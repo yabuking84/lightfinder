@@ -23,6 +23,13 @@
 
                         <v-layout row wrap>
 
+                        	       <v-flex xs12 v-if="inquiryImages.length > 0">
+                                    <!-- <h4 class="font-weight-medium">Image</h4> -->
+                                    <!-- <v-flex xs10 offset-xs1> -->
+                                         <image-gallery-small :images="inquiryImages" noThumbnails height="250px"></image-gallery-small> 
+                                    <!-- </v-flex> -->
+                                </v-flex>
+
                                 <v-flex xs12>
                                     <small class="blue-grey--text">Details</small>
                                     <h4 class="font-weight-medium">Keywords </h4>
@@ -46,12 +53,12 @@
                                   </h4>
                                 </v-flex>
 
-                                <v-flex xs12 >
+                           <!--      <v-flex xs12 >
                                     <h4 class="font-weight-medium">Image</h4>
                                     <v-flex xs10 offset-xs1>
                                          <image-gallery-small :images="inquiryImages" noThumbnails height="100px"></image-gallery-small>  
                                     </v-flex>
-                                </v-flex>
+                                </v-flex> -->
 
                                 <v-flex xs12>
                                     <h4 class="font-weight-medium">Message </h4>

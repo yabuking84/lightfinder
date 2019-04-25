@@ -93,9 +93,13 @@
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-                        <v-flex xs5>
+                     <!--    <v-flex xs5>
                             <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
-                        </v-flex>
+                        </v-flex> -->
+
+                            <v-flex xs5>
+                                    <image-gallery-small :images="bidItem.attachments" noThumbnails height="120px"></image-gallery-small> 
+                            </v-flex>
 
                         <v-flex xs7>
                             <v-layout row wrap>
@@ -242,8 +246,8 @@
 </template>
 <script>
 
-import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-// import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+// import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+import ImageGallerySmall from "@/views/Components/App/ImageGallery"
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate"
 
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"

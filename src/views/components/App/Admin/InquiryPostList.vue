@@ -53,24 +53,24 @@
 
                         <v-flex xs12 mx-5 mt-3 >
 
-
-                                    <div>
-                                        <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                        <div class="blue-grey--text" style="font-style: italic;">the INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
-                                        </div>
+                                <div>
+                                    <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
+                                    <div class="blue-grey--text" style="font-style: italic;">the INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
                                     </div>
-
+                                </div>
 
                         </v-flex>
 
+                        <v-flex xs12 mx-5>
 
-                            <v-flex xs12 mx-5>
-                                <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
-                                    <span class="ml-1 white--text font-weight-light ">Approved</span>
-                                </v-btn>
-                            </v-flex>
+                            <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
+                                <span class="ml-1 white--text font-weight-light ">Approved</span>
+                            </v-btn>
+
+                        </v-flex>
 
                     <v-flex xs12>
+
                         <v-layout row wrap>                         
 
                             <!-- if rejected -->
@@ -80,6 +80,7 @@
 
                         </v-layout>
                         <!-- <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box> -->
+                        
                     </v-flex>
 
                 </v-layout>
