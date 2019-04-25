@@ -209,7 +209,7 @@ color="white"
 v-if="sbNtfctnData"
 style="cursor: pointer;">
     <h4 style="color:#000;">
-        {{ sbNtfctnData.textSnackbar }}
+        {{ sbNtfctnData }}
     </h4>
     <v-btn color="pink" flat @click="showSnackbar = false">
         Close
@@ -242,6 +242,9 @@ import config from '@/config/index'
 
 import hlprs from "@/mixins/helpers";
 // console.log(config);
+
+import NtfctnBus from "@/bus/notification";
+import MsgBus from "@/bus/messaging";
 
 export default {
 data: () => ({
@@ -369,77 +372,11 @@ methods: {
     // /////////////////////////////////////////////////////////
     populateNotifications() {
 
-        this.$store.dispatch('ntfctns/getNotifications_a')
+        this.$store.dispatch('ntfctns/populateNotifications_a')
         .then((response) => {
-        	// this.getSortNotification(response);
 
-        	var notifications = response;
-
-	    	var unreadCount = 0; // integer
-	    	var isRead;
-	    	var title = '';
-
-	    	// Get the array of keys
-			// var keys = Object.keys( notifications );
-	  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
-
-	        for (var i = notifications.length - 1; i >= 0; i--) {
-
-		       	isRead = true; 
-
-	    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
-	    	   		unreadCount = parseInt(unreadCount) + 1
-	    	   		isRead = false
-	    	   	}
-
-	            var data = {
-	      			'id':notifications[i].data.inquiry_id,
-	      			'notification_id': notifications[i].id
-	          	}
-
-
-		       	switch (notifications[i].type) {
-
-				    case 'adminApprovedInquiry':
-				    	 title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
-				    break;
-
-				    case 'adminRejectedInquiry':
-				    	 title="Inquiry \""+notifications[i].data.inquiry_id+"\" REJECTED!";
-				    break;
-
-				    case 'supplierCreatedBid': 
-				   		 title="Supplier Created Bid for Inquiry # "+notifications[i].data.inquiry_id+"!";
-				    break;
-
-				    case 'supplierConfirmedAward': 
-				   		 title="Supplier Confirmed \""+notifications[i].data.inquiry_id+"\"!";
-				    break;
-
-				    // supplier
-				    case 'buyerAwardedBid': 
-				    	title=`Buyer has Awarded for Inquiry # ${ notifications[i].data.inquiry_id }  to you`;
-				    break;
-
-				    // admin
-				    // case 'newMessage': 
-				    // 	title=`New Message Received "${notifications[i].data.content}" `
-				    // break;
-
-				}
-
-	 		    var ntfctn = {
-	                title:         title,
-	                data:          data,
-	                textSnackbar:  title,
-	                isRead: 	   isRead,
-	            }
-
-		        this.$store.commit('ntfctns/INSERT_NOTIFICATIONS_M',ntfctn);
-		    }
-		    
-		    this.$store.commit('ntfctns/SET_UNREAD_M',unreadCount);	     
-
+        	// Now notifications are done populating show snackbar
+        	this.$store.commit('ntfctns/SHOW_SNACKBAR_M');
         })
         .catch((e) => {
             console.log(e);
@@ -459,42 +396,8 @@ methods: {
         this.$store.dispatch('ntfctns/getNotificationsMsgs_a')
         .then((response) => {
 
-        	var notifications = response;
-
-	    	var unreadCount = 0; // integer
-	    	var isRead;
-	    	var title = '';
-
-	    	// Get the array of keys
-			// var keys = Object.keys( notifications );
-	  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
-
-	        for (var i = notifications.length - 1; i >= 0; i--) {
-
-		       	isRead = true; 
-
-	    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
-	    	   		unreadCount = parseInt(unreadCount) + 1
-	    	   		isRead = false
-	    	   	}
-	            var data = {
-	      			'id':notifications[i].data.inquiry_id,
-	      			'notification_id': notifications[i].id
-	          	}
-		    	title = 'New Message Received "'+notifications[i].data.content+'" ';
-
-	 		    var ntfctn = {
-	                title:         title,
-	                data:          data,
-	                textSnackbar:  title,
-	                isRead: 	   isRead,
-	            }
-
-		        this.$store.commit('ntfctns/INSERT_NOTIFICATIONSMSGS_M',ntfctn);
-		    }
-		    
-		    this.$store.commit('ntfctns/SET_UNREADMSGS_M',unreadCount);	     
-
+        	// Now notifications are done populating show snackbar
+        	this.$store.commit('ntfctns/SHOW_SNACKBAR_M');
         })
         .catch((e) => {
             console.log(e);
@@ -537,6 +440,13 @@ methods: {
 created()  {
 	this.populateNotifications()
 	this.populateNotificationsMsgs()
+
+    NtfctnBus.onNewNotification((data)=>{
+		this.populateNotifications()
+    });
+	MsgBus.onNewMessage((data)=>{
+		this.populateNotificationsMsgs()
+	});
 }
 
 

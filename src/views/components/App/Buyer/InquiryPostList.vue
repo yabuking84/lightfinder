@@ -35,19 +35,19 @@
                                <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="90px" contain></v-img>
                           </v-flex> -->
                           
-                          <v-flex xs12 mx-5 mt-3 mb-3>
-                                <div>
-                                    <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                    <div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> has been declined, please refer on the message box if you have concerns. thanks!
-                                    </div>
-                                </div>
+                  <v-flex xs12 mx-5 mt-3 mb-3>
+                        <div>
+                            <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
+                            <div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> has been declined, please refer on the message box if you have concerns. thanks!
+                            </div>
+                        </div>
 
-                              <v-layout row wrap justify>
-                                  <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
-                                        <span class="font-weight-bold ml-1 white--text">Edit Now</span>
-                                    </v-btn>
-                              </v-layout>
-                          </v-flex>
+                      <v-layout row wrap justify>
+                          <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
+                                <span class="font-weight-bold ml-1 white--text">Edit Now</span>
+                            </v-btn>
+                      </v-layout>
+                  </v-flex>
 
                   <v-flex xs12>
                         <messaging :inquiry="inquiry"> </messaging>
@@ -212,7 +212,7 @@
                               </v-layout>
                             </v-flex>
 
-                            <v-flex xs12>
+                            <v-flex xs12  v-if="checkIfawarded(bidItem.awarded)">
                                 <!-- <v-divider></v-divider> -->
                                 <!-- message box -->
                                 <messaging :bid="bidItem"> </messaging>
@@ -402,9 +402,9 @@ export default {
             this.verified = (this.inquiry.stage_id == 1001)?true:false;
             this.rejected = (this.inquiry.stage_id == 1003)?true:false;
 
-            console.log("this.inquiry.stage_id = "+this.inquiry.stage_id);
-            console.log("this.verified = "+this.verified);
-            console.log("this.rejected = "+this.rejected);
+            // console.log("this.inquiry.stage_id = "+this.inquiry.stage_id);
+            // console.log("this.verified = "+this.verified);
+            // console.log("this.rejected = "+this.rejected);
 
         },
 
