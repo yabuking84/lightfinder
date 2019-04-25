@@ -159,6 +159,7 @@
                         <v-textarea label="Product Details" v-model="formData.description">
                         </v-textarea>
                       </v-flex> -->
+
                       <v-flex xs4 pa-1>
                         <v-text-field label="Quantity" placeholder="0" readonly :value="inquiry.quantity" style="color: #000;" suffix="pcs">
                         </v-text-field>
@@ -194,7 +195,6 @@
                       <!-- specification -->
                         <v-flex xs12  v-show="inquiry.specifications.length">
                           <v-layout row wrap justify-center>
-
 
 
                             
@@ -269,7 +269,8 @@
                                 <!-- ----------------------------------------- -->
 
                                 <v-flex xs5>
-                                    <v-layout row column>                                        
+                                    <v-layout row column>          
+                                                                  
                                         <v-flex lg4 md4 xs4 sm3>
                                             <h4 class="text-xs-left ml-2 mt-2">
                                                 <!-- Inquiry Specifications -->&nbsp;
@@ -289,9 +290,6 @@
 
                                     </v-layout>                                 
                                 </v-flex>
-
-
-                           
                               
                             </v-layout>
                               
@@ -308,10 +306,12 @@
                                     <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
                                     <v-flex xs12 v-show="is_sample">
                                       <v-layout row wrap>
+
                                         <v-flex xs5 mr-5>
                                           <v-text-field label="Sample Cost" :error-messages="fieldErrors('formData.sample_cost')" @blur="$v.formData.sample_cost.$touch()" v-model="formData.sample_cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
                                         </v-flex>
-                                        <v-flex xs6 ml-3>
+
+                                        <v-flex xs5 ml-3>
                                           <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
                                         </v-flex>
                                       </v-layout>
