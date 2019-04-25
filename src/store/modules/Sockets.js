@@ -9,7 +9,6 @@ import hlprs from '@/mixins/helpers'
 
 import vm from '@/main.js';
 
-import MsgBus from "@/bus/messaging";
 
 const state = {
 

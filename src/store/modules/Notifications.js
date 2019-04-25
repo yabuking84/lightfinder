@@ -11,6 +11,7 @@ import vm from '@/main.js';
 
 
 import MsgBus from "@/bus/messaging";
+import NtfctnBus from "@/bus/notification";
 
 
 
@@ -51,10 +52,6 @@ const state = {
 	    	method  : 'put',
 	    	url     : 'http://192.168.1.200:8000/v1/notifications'
 	    },
-
-
-
-
     } 
 
 }
@@ -79,6 +76,9 @@ const state = {
 
 const mutations = {
 
+    SET_NOTIFICATIONS_M(state, data) {
+        state.notifications = data;
+    },
     INSERT_NOTIFICATIONS_M(state, data) {
         state.notifications.push(data);
     },
@@ -89,6 +89,9 @@ const mutations = {
         state.unread = data;
     },
 
+    SET_NOTIFICATIONSMSGS_M(state, data) {
+        state.notificationsMsgs = data;
+    },
     INSERT_NOTIFICATIONSMSGS_M(state, data) {
         state.notificationsMsgs.push(data);
     },
@@ -102,7 +105,7 @@ const mutations = {
 
 
     UPDATE_SNACKBAR_M(state,data) {
-        state.dataSnackbar = data.dataSnackbar;
+        state.dataSnackbar = data;
     },
 
     SHOW_SNACKBAR_M(state) {
@@ -145,9 +148,6 @@ const actions = {
 
 
 
-
-
-
 	// sockets
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
@@ -158,27 +158,41 @@ const actions = {
     // admin
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     adminApprovedInquiry_a(context, data){
-		var ntfctn = {				
-			dataType: 		'inquiry',
-			textSnackbar: 	'Inquiry #'+data.inquiry_id+' APPROVED!',
-		}
+		
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = 'Inquiry #'+data.inquiry_id+' APPROVED!';        
+        context.commit('UPDATE_SNACKBAR_M',textSnackbar);
 
-        context.commit('UPDATE_SNACKBAR_M',{dataSnackbar:data});
-        context.commit('SHOW_SNACKBAR_M');
-
+		NtfctnBus.emitNewNotification(data);
     },
-    adminRejectedInquiry_a(context, data){
-        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Inquiry \""+response.keyword+"\" REJECTED!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Inquiry "'+response.keyword+'" REJECTED!',
-            }
-            context.dispatch('updateNotification_a',ntfctn);
 
-        });    	
+
+    // zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+
+
+
+
+
+
+
+    adminRejectedInquiry_a(context, data){
+
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = 'Inquiry #'+data.inquiry_id+' REJECTED!';        
+        context.commit('UPDATE_SNACKBAR_M',textSnackbar);
+
+		NtfctnBus.emitNewNotification(data);
+
+        // context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        // .then((response)=>{
+        //     var ntfctn = {
+        //         title:          "Inquiry \""+response.keyword+"\" REJECTED!",
+        //         dataType:       'inquiry',
+        //         data:           response,
+        //         textSnackbar:   'Inquiry "'+response.keyword+'" REJECTED!',
+        //     }
+        //     context.dispatch('updateNotification_a',ntfctn);
+        // });    	
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // admin
@@ -186,16 +200,24 @@ const actions = {
     // buyer
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     buyerAwardedBid_a(context, data){
-        context.dispatch('spplrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Bid \""+response.keyword+"\" AWARDED!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Bid "'+response.keyword+'" AWARDED!',
-            }
-            context.dispatch('updateNotification_a',ntfctn,);
-        });       
+
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = 'Bid for Inquiry #'+data.inquiry_id+' AWARDED!';        
+        context.commit('UPDATE_SNACKBAR_M',textSnackbar);
+
+		NtfctnBus.emitNewNotification(data);
+
+        // context.dispatch('spplrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        // .then((response)=>{
+        //     var ntfctn = {
+        //         title:          "Bid \""+response.keyword+"\" AWARDED!",
+        //         dataType:       'inquiry',
+        //         data:           response,
+        //         textSnackbar:   'Bid "'+response.keyword+'" AWARDED!',
+        //     }
+        //     context.dispatch('updateNotification_a',ntfctn,);
+        // });
+
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // buyer
@@ -204,42 +226,46 @@ const actions = {
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     supplierCreatedBid_a(context, data) {
 
-        var store = "";       
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = 'New Bid for Inquiry #'+data.inquiry_id+' AWARDED!';        
+        context.commit('UPDATE_SNACKBAR_M',textSnackbar);
 
-        if(hlprs.methods.isRole('admin')) 
-        store = 'admnInq';
-        else if(hlprs.methods.isRole('buyer')) 
-        store = 'byrInq';
-        else if(hlprs.methods.isRole('supplier')) 
-        store = 'spplrInq';
+		NtfctnBus.emitNewNotification(data);
 
-
-        if(store!='supplier') {
-            context.dispatch(store+'/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-            .then((response)=>{
-                var ntfctn = {
-                    title:          "Supplier Created Bid for Inquiry # "+data.inquiry_id+"!",
-                    dataType:       'inquiry',
-                    data:           response,
-                    textSnackbar:   'Supplier Created Bid for Inquiry # '+data.inquiry_id+'!',
-                }
-                context.dispatch('updateNotification_a',ntfctn);
-            });
-        }
+        // var store = hlprs.methods.getStore();
+        // if(store!='supplier') {
+        //     context.dispatch(store+'/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        //     .then((response)=>{
+        //         var ntfctn = {
+        //             title:          "New Bid for Inquiry # "+data.inquiry_id+"!",
+        //             dataType:       'inquiry',
+        //             data:           response,
+        //             textSnackbar:   'Supplier Created Bid for Inquiry # '+data.inquiry_id+'!',
+        //         }
+        //         context.dispatch('updateNotification_a',ntfctn);
+        //     });
+        // }
 
     },
 
     supplierConfirmedAward_a(context, data) {
-        context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        .then((response)=>{
-            var ntfctn = {
-                title:          "Supplier Confirmed \""+response.keyword+"\"!",
-                dataType:       'inquiry',
-                data:           response,
-                textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
-            }
-            context.dispatch('updateNotification_a',ntfctn);
-        });       	
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = 'Supplier Confirmed for Inquiry #'+data.inquiry_id+' AWARDED!';
+        context.commit('UPDATE_SNACKBAR_M',textSnackbar);
+
+		NtfctnBus.emitNewNotification(data);
+
+
+        // context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        // .then((response)=>{
+        //     var ntfctn = {
+        //         title:          "Supplier Confirmed \""+response.keyword+"\"!",
+        //         dataType:       'inquiry',
+        //         data:           response,
+        //         textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
+        //     }
+        //     context.dispatch('updateNotification_a',ntfctn);
+        // });       	
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
     // supplier
@@ -249,8 +275,21 @@ const actions = {
     // messaging
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
 	newMessage_a(context, data){
-		MsgBus.emitNewMessage(data);
+
+		console.log('data',data);
 		
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = '';
+    	if(data.type == 'bid.buyer.admin')
+		textSnackbar = 'New Message on BID #'+data.id+'!';
+    	else 
+    	if(data.type == 'inquiry.buyer.admin')
+		textSnackbar = 'New Message on INQUIRY #'+data.id+'!';
+    	else
+		textSnackbar = 'New Message!';
+
+    	context.commit('UPDATE_SNACKBAR_M',textSnackbar);
+		MsgBus.emitNewMessage(data);
 		
         // var ntfctn = {
         //     title:          "Supplier Confirmed \""+response.keyword+"\"!",
@@ -320,24 +359,12 @@ const actions = {
 
     gotoNotfication_a(context,ntfctn){
 
+    	console.log('ntfctn',ntfctn);
+
         // if inquiry type
-        if(ntfctn.dataType == 'inquiry') {
+        if(ntfctn.dataType == 'inquiry' || ntfctn.dataType == 'bid') {
 
-            var store = "";
-
-            // admin
-            if(hlprs.methods.isRole("admin")) {
-                store = "admnInq";
-            }
-            // buyer
-            else if(hlprs.methods.isRole("buyer")) {
-                store = "byrInq";
-            }
-            // supplier
-            else if(hlprs.methods.isRole("supplier")) {
-                store = "spplrInq";
-            }
-
+            var store = hlprs.methods.getStore();
 
             // add notification
             /////////////////////////////////////////////////////////
@@ -347,21 +374,18 @@ const actions = {
             .then((data) => {
                 context.commit(store+'/UPDATE_INQUIRY_M',{inquiry:data}, {root:true});
                 context.commit(store+'/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
-
-
             })
             .catch((error) => {
                 console.log(error);
             });
             /////////////////////////////////////////////////////////
             // add notification
-
         }        
     },
 
 
 
-	getNotifications_a(context) {
+	populateNotifications_a(context) {
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
@@ -375,7 +399,86 @@ const actions = {
 
             	var ntfctns = response.data.filter(item=>item.type!='newMessage');
 
-                resolve(ntfctns);
+
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+	        	var notifications = ntfctns;
+
+		    	var unreadCount = 0; // integer
+		    	var isRead;
+		    	var title = '';
+				var dataType = '';
+		        var data = {};
+
+		  		var ntfctns = [];
+		        for (var i = notifications.length - 1; i >= 0; i--) {
+
+			       	isRead = true; 
+		    		title = '';
+					dataType = '';
+
+		    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
+		    	   		unreadCount = parseInt(unreadCount) + 1
+		    	   		isRead = false
+		    	   	}
+
+		            data = {
+		      			'id':notifications[i].data.inquiry_id,
+		      			'bid_id':notifications[i].data.bid_id,
+		      			'notification_id': notifications[i].id,
+		      			'type': notifications[i].type,
+		          	}
+
+
+			       	switch (notifications[i].type) {
+
+					    case 'adminApprovedInquiry':
+					    	title='Inquiry "'+notifications[i].data.inquiry_id+'" APPROVED!';
+					    	dataType = 'inquiry';
+					    break;
+
+					    case 'adminRejectedInquiry':
+					    	title="Inquiry \""+notifications[i].data.inquiry_id+"\" REJECTED!";
+					    	dataType = 'inquiry';
+					    break;
+
+					    case 'supplierCreatedBid': 
+					   		title="Supplier Created Bid for Inquiry #"+notifications[i].data.inquiry_id+"!";
+					    	dataType = 'bid';
+					    break;
+
+					    case 'supplierConfirmedAward': 
+					   		title="Supplier Confirmed \""+notifications[i].data.inquiry_id+"\"!";
+					    	dataType = 'inquiry';
+					    break;
+
+					    // supplier
+					    case 'buyerAwardedBid': 
+					    	title=`Buyer has Awarded for Inquiry # ${ notifications[i].data.inquiry_id }  to you`;
+					    	dataType = 'inquiry';
+					    break;
+					}
+
+		 		    var ntfctn = {
+		                title:         title,
+		                dataType:      dataType,
+		                data:          data,
+		                textSnackbar:  title,
+		                isRead: 	   isRead,
+		            }
+
+			        ntfctns.push(ntfctn);
+			    }
+			    
+			    context.commit('SET_NOTIFICATIONS_M',ntfctns);
+			    context.commit('SET_UNREAD_M',unreadCount);
+
+
+			    resolve();
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
             })
             .catch(error => {
                 // console.log(error);
@@ -403,7 +506,52 @@ const actions = {
 
             	var ntfctns = response.data.filter(item=>item.type=='newMessage');
 
-                resolve(ntfctns);
+            	console.log(ntfctns);
+
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	        	var notifications = ntfctns;
+
+		    	var unreadCount = 0; // integer
+		    	var isRead;
+		    	var title = '';
+
+		    	// Get the array of keys
+				// var keys = Object.keys( notifications );
+		  		// keys.sort( function ( a, b ) { return b.created_at - a.created_at; } );
+
+		  		var ntfctns = [];
+
+		        for (var i = notifications.length - 1; i >= 0; i--) {
+
+			       	isRead = true; 
+
+		    	   	if(notifications[i].read_at == null || notifications[i].read_at == undefined) {    	   	
+		    	   		unreadCount = parseInt(unreadCount) + 1
+		    	   		isRead = false
+		    	   	}
+		            var data = {
+		      			'id':notifications[i].data.inquiry_id,
+		      			'notification_id': notifications[i].id
+		          	}
+			    	title = 'New Message Received "'+notifications[i].data.content+'" ';
+
+		 		    var ntfctn = {
+		                title:         title,
+		                data:          data,
+		                textSnackbar:  title,
+		                isRead: 	   isRead,
+		            }
+
+			        ntfctns.push(ntfctn);
+			    }
+			    
+			    context.commit('SET_NOTIFICATIONSMSGS_M',ntfctns);
+			    context.commit('SET_UNREADMSGS_M',unreadCount);            	
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+                resolve();
             })
             .catch(error => {
                 // console.log(error);

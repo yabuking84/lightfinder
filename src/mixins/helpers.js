@@ -89,6 +89,23 @@ export default {
         return retVal;
     },
 
+
+    getStore(){
+        var retVal = '';
+
+        if((localStorage.role == config.auth.role.admin.id)) {
+            retVal = "admnInq";
+        }
+        else if(localStorage.role == config.auth.role.buyer.id) {            
+            retVal = "byrInq";
+        }
+        else if(localStorage.role == config.auth.role.supplier.id) {
+            retVal = "spplrInq";            
+        }
+
+        return retVal;
+    },
+
     getAttachments(attachments) {
         console.log(attachments.filegroup);
         console.log(attachments.filename)
