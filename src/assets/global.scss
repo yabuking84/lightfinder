@@ -10,3 +10,13 @@
         line-height: 15px;
     }
 }
+
+.envelopeAnimation-enter-active, 
+.envelopeAnimation-leave-active {
+	transition: opacity 0.25s ease-out;
+}
+
+.envelopeAnimation-enter, 
+.envelopeAnimation-leave-to {
+	opacity: 0;
+}
