@@ -1,6 +1,10 @@
 <template>
+
+<!-- <div id="test" v-if="openInquiry" :value="openInquiry" @input="$emit('update:openInquiry', false)"></div> -->
+
+
+
 <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen>
-<!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card>
 		<v-toolbar dark color="grey darken-4 ">
 		    <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2>
@@ -9,6 +13,8 @@
 		        <v-btn dark flat @click="closeOpenInquiry()">
 		            <v-icon>close</v-icon>
 		        </v-btn>
+				
+
 		    </v-toolbar-items>
 		</v-toolbar>
 
@@ -51,8 +57,13 @@
         </v-btn>
   </v-snackbar>
 
+</v-dialog>   
 
-</v-dialog>   	
+
+
+
+
+
 </template>
 
 <script>
@@ -142,9 +153,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-	.scopedcontainer a {
-	  	text-decoration:none;
-	}
+.scopedcontainer a {
+  	text-decoration:none;
+}
+
+#test {
+    position: absolute;
+    margin: 30px;
+    top: 0;
+    height: 80%;
+    width: 80%;
+    box-shadow: 0px 0px 30px red;
+    overflow: hidden;	
+}
 
 </style>
 

@@ -277,8 +277,8 @@
 	</v-card>   
 
 
-	<span>
-	  <inquiry-view></inquiry-view>
+	<span>		
+	  	<inquiry-view></inquiry-view>		
 	</span>
 
 
@@ -420,6 +420,7 @@ export default {
 	// this.$timer.stop('InquiryTableTimer');
 
 	methods: {
+
 
 		fillTable(withLoading = true) {
 

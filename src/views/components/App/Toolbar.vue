@@ -86,6 +86,11 @@ flat>
                         <span>{{ unreadMsg }}</span>
                         <!-- <span>99</span> -->
                     </template>
+
+                    <transition name="envelopeAnimation">
+                    	<v-icon v-if="testShow">far fa-envelope</v-icon>
+                	</transition>
+                	
                     <v-icon>far fa-envelope</v-icon>
                 </v-badge>
             </v-btn>
@@ -120,7 +125,7 @@ flat>
     <!-- devMode -->
     <!-- dddddddddddddddddddddddddddddddddddddddddd -->
     <template v-if="devMode">
-    <v-btn>
+    <v-btn @click="testShow=!testShow">
         <h3>{{ authUser.email }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>{{ authUser.name }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <h3>{{ authUser.uuid }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -254,7 +259,9 @@ data: () => ({
     notificationList:null,
     isReadnow:false,
     isReadColor: 'grey--text',
-    isunReadColor: 'black--text'
+    isunReadColor: 'black--text',
+
+    testShow: false,
 
 }),
 
@@ -484,5 +491,6 @@ created()  {
 	max-height: 500px;
 	overflow-y: auto;
 }
+
 
 </style>
