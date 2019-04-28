@@ -267,6 +267,27 @@ const actions = {
         //     context.dispatch('updateNotification_a',ntfctn);
         // });       	
     },
+
+    supplierModifiedBid_a(context, data) {
+    	// populate but not show snackbar yet until all notifications are loaded
+		var textSnackbar = 'Supplier Modified Bid for Inquiry #'+data.inquiry_id+'!';
+        context.commit('UPDATE_SNACKBAR_M',textSnackbar);
+
+		NtfctnBus.emitNewNotification(data);
+
+
+        // context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
+        // .then((response)=>{
+        //     var ntfctn = {
+        //         title:          "Supplier Confirmed \""+response.keyword+"\"!",
+        //         dataType:       'inquiry',
+        //         data:           response,
+        //         textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
+        //     }
+        //     context.dispatch('updateNotification_a',ntfctn);
+        // });       	
+    },
+
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
     // supplier
 
@@ -461,6 +482,18 @@ const actions = {
 					    	title=`Buyer has Awarded for Inquiry # ${ ntfctn.data.inquiry_id }  to you`;
 					    	dataType = 'inquiry';
 					    break;
+
+					    case 'supplierModifiedBid': 
+					    	title=`Supplier Modified Bid for Inquiry # ${ ntfctn.data.inquiry_id } `;
+					    	dataType = 'inquiry';
+					    break;
+
+
+					    default:
+					    	title='None';
+					    	dataType = '';			
+					    break;
+					    		    
 					}
 
 		 		    return {

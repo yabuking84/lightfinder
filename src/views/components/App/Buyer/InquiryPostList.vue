@@ -20,8 +20,6 @@
                             </div>
                         </div>  
                     </v-flex>
-
-
         </v-layout>
         
         <!-- rejected inquiry -->
@@ -83,9 +81,16 @@
                      <!--    <v-flex xs5>
                             <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
                         </v-flex> -->
-								
+							
+
+						<!-- 	<pre>
+							  {{ bidItem }}
+							</pre>
+ -->
+	
+
                              <v-flex xs5>
-                                    <image-gallery-small :images="bidItem.attachments > 0 ? bidItem.attachments : [] " noThumbnails height="120px"></image-gallery-small> 
+                                    <image-gallery-small :images="bidItem.attachments && bidItem.attachments.length > 1 ? bidItem.attachments : [] " noThumbnails height="120px"></image-gallery-small> 
                             </v-flex>
 
                         <v-flex xs7>
@@ -220,7 +225,6 @@
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
-
         </div>
 
     </v-card>
@@ -334,6 +338,8 @@ export default {
                 
 
                this.bidItems = response;
+
+               console.log(response);
 
                // console.log('============================================')
                // console.log(this.bidItems);

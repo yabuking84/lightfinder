@@ -7,7 +7,8 @@
         </v-toolbar>
 
         <v-card color="grey lighten-5">
-
+			
+			<!-- waiting for verification -->
             <v-flex xs12 v-if="inquiry.stage_id == 1001">
 
                 <v-layout justify-center row fill-height>
@@ -44,9 +45,9 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
-
             </v-flex>
 
+			<!-- rejected inquiry -->
             <v-flex xs12 v-else-if="inquiry.stage_id == 1003">
 
                 <v-layout row wrap>

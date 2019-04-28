@@ -97,18 +97,17 @@
                                       <v-flex xs5>
                                         <h4>Your Chosen Category</h4>
                                         <v-autocomplete 
-                                        v-model="formData.category" 
-                                        :items="categories" 
-                                        item-text="name"
-                                        item-value="id"
-                                        :error-messages="fieldErrors('formData.category')"
-                                        @blur="$v.formData.category.$touch()" 
-                                        ref="categorySelect" 
-                                        flat hide-no-data hide-details label="Type here the category.."
+	                                        v-model="formData.category" 
+	                                        :items="categories" 
+	                                        item-text="name"
+	                                        item-value="id"
+	                                        :error-messages="fieldErrors('formData.category')"
+	                                        @blur="$v.formData.category.$touch()" 
+	                                        ref="categorySelect" 
+	                                        flat hide-no-data hide-details label="Type here the category.."
                                          >
                                         </v-autocomplete>
                                       </v-flex>
-
                                     </v-layout>
                                   </v-flex>
 
@@ -117,7 +116,6 @@
 	                                <v-flex xs12 v-show="inquiry_images.length">
 	                                	<v-layout row wrap>
 											<v-flex xs4 v-for="(image, i) in inquiry_images" :key="'image'+i">
-												<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
 												   <div class="image-area">
 													  <img :src="image.location" alt="Preview">
 

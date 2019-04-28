@@ -34,19 +34,9 @@
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <template v-if="hasBid">
 
-
-
-
-
-
-
-                     <!--    <v-flex xs5>
-                            <image-gallery-small></image-gallery-small>
-                        </v-flex> -->
-
-                             <v-flex xs5>
-                                    <image-gallery-small :images="bid.attachments" noThumbnails height="120px"></image-gallery-small> 
-                            </v-flex>
+                         <v-flex xs5>
+                                <image-gallery-small :images="bid.attachments && bid.attachments.length > 0 ? bid.attachments : []" noThumbnails height="120px"></image-gallery-small> 
+                        </v-flex>
 
 
                         <v-flex xs7>
@@ -314,16 +304,13 @@
                                            
 
                                             <v-flex xs12>
-                                                
-
                                                 <v-btn @click="confirmQuote()" large block dark color="green">
                                                     Confirm Order &nbsp
                                                     <!-- <i class="fas fa-thumbs-up"></i>  -->
                                                 </v-btn>
                                             </v-flex>
-
                                     </v-card>
-  </v-flex>  
+  								</v-flex>  
                                       
                                         <!-- <v-flex xs6>
                                            <v-btn 
@@ -453,6 +440,7 @@
                             inq_id: this.inquiry.id
                         })
                         .then((data) => {
+
                             this.bid = (data) ? data : null;
 
                             // console.log("this.bid");
@@ -460,6 +448,7 @@
 
                             // check if  already has bid
                             this.hasBid = (this.bid) ? true : false;
+
 
                         })
                         .catch((error) => {
