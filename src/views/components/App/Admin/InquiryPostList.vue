@@ -121,36 +121,38 @@
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-                            <v-flex xs5>
+                            <v-flex xs12>
                                     <image-gallery-small :images="bidItem.attachments" noThumbnails height="120px"></image-gallery-small> 
                             </v-flex>
 
-                            <v-flex xs7>
+                            <v-flex xs12>
+								
+								<v-divider></v-divider>
 
-
-                                <v-layout row wrap>
 
                             <!--         <pre>
 								{{ bidItem }}
 							</pre> -->
 
-                                    <!-- <v-container> -->
+                                    <v-container>
 
-                                    <v-flex xs12 pl-2>
+                                     <v-layout row wrap>
+
+                                    <v-flex xs6 >
 
                                         <h5 class="font-weight-thin">Brand Name</h5>
                                         <h2>{{ bidItem.supplier.brand_name }}</h2>
 
                                     </v-flex>
 
-                                    <v-flex xs12 pl-2>
+                                    <v-flex xs6 >
 
                                         <h5 class="font-weight-thin">Owner name</h5>
                                         <h2>{{ bidItem.supplier.first_name }} {{ bidItem.supplier.last_name }}</h2>
 
                                     </v-flex>
 
-                                    <v-flex xs12 pl-2>
+                                    <v-flex xs6 >
 
                                         <h5 class="font-weight-thin">Product name</h5>
                                         <h2>{{ bidItem.product_name }}</h2>
@@ -160,7 +162,8 @@
 
                                     </v-flex>
 
-                                    <v-flex xs12 pt-0 pl-2>
+                                    <v-flex xs6 pt-0 >
+                                    	<h5 class="font-weight-thin">Description</h5>
                                         <h3 class="font-weight-regular">{{ bidItem.description }}</h3>
                                     </v-flex>
 
@@ -189,9 +192,9 @@
                                                     <p class="mb-0">{{ bidItem.remarks }}</p>
                                                 </h4>
                                     </v-flex>
-
-                                    <!-- </v-container> -->
                                 </v-layout>
+
+                                    </v-container>
                             </v-flex>
 
                             <v-flex xs12 mx-5 mt-2 mb-2 pt-0>

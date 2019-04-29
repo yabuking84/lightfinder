@@ -24,10 +24,39 @@
 
 				<v-alert 
     				:value="(inquiry.stage_id==1005)?1:0"
-    				color="error" 
+    				color="red darken-3" 
     				style="width: auto; text-align:center; font-size:20px;"
     				class="mb-2">
     				Pending Payment!
+
+    					<template v-if="inquiry.etd != null && inquiry.eta != null">
+
+						            <v-card color="white darken-4 mt-3" class="black--text">
+						              <v-card-title primary-title>
+						                <div>
+						                  <v-layout row wrap>
+											  <v-layout row wrap>
+											  </v-layout>
+											 <v-flex xs12>
+											   <div class="subheading">Shipment Details</div>
+											 </v-flex>
+						                     <v-flex xs6>
+							                    <span class="font-weight-light">Estimated Time Departure: </span> <br/> <span class="font-weight-medium">  {{  getDateTime('mmm dd, yyyy', inquiry.etd ) }} </span> 
+							                 </v-flex>
+											 <v-flex xs6>
+								                  <span class="font-weight-light">Estimated Time Arrival: </span> <br/> <span class="font-weight-medium">{{  getDateTime('mmm dd, yyyy', inquiry.eta ) }} </span>  
+											 </v-flex>
+						                  </v-layout>
+						                </div>
+						              </v-card-title>
+						              <v-card-actions>
+						                <v-btn block color="red darken-2" class="white--text" >Pay Now</v-btn>
+						              </v-card-actions>
+
+						            </v-card>
+
+						</template>
+
 				</v-alert>
 
 				<v-alert
@@ -41,11 +70,14 @@
 	    
 
                 <v-layout row wrap>
+					
+					<!--
+					 <pre>
+						{{ inquiry }}
+					</pre>
+ 					-->
 
                     <v-flex xs12>
-
-                   
-
 
                         <v-layout row wrap>
 
@@ -57,7 +89,6 @@
                                 </v-flex>
 
                                 <v-flex xs12>
-                                    <!-- <small class="blue-grey--text">Details</small> -->
                                     <h4 class="font-weight-medium">Keywords </h4>
                                     <h4 class="font-weight-light">
                                       <p class="mb-0">{{ inquiry.keyword }}</p>
@@ -86,14 +117,12 @@
                                     </h4>
                                 </v-flex>
 
-
                                 <v-flex xs12>
                                         <v-layout row wrap>
                                             <!-- specification -->
                                             <v-flex xs12>
                                                 <h4 class="font-weight-medium">Specifications</h4>
                                                 <v-layout row wrap class="specifications">
-                                                   
                                                      <span v-for="(specification, index) in inquiry.specifications" :key="specification+'_'+index"> 
                                                         <v-chip label dark outline text-color="black" v-if="specification.value" >
                                                                {{ specification.name }}: &nbsp;
@@ -108,7 +137,6 @@
                                                 </v-layout>
                                             </v-flex>
                                         </v-layout>
-                                         
                                  </v-flex>
 
                                 <v-flex xs12 class="attachments">

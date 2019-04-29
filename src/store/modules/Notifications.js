@@ -381,7 +381,6 @@ const actions = {
     gotoNotfication_a(context,ntfctn){
 
     	// console.log('gotoNotfication_a ntfctn = ',ntfctn);
-
         // if inquiry type
         if(ntfctn.dataType == 'inquiry' || ntfctn.dataType == 'bid') {
 
@@ -407,6 +406,7 @@ const actions = {
 
 
 	populateNotifications_a(context) {
+		
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
@@ -485,7 +485,7 @@ const actions = {
 
 					    case 'supplierModifiedBid': 
 					    	title=`Supplier Modified Bid for Inquiry # ${ ntfctn.data.inquiry_id } `;
-					    	dataType = 'inquiry';
+					    	dataType = 'inquiry'; 
 					    break;
 
 
@@ -493,7 +493,7 @@ const actions = {
 					    	title='None';
 					    	dataType = '';			
 					    break;
-					    		    
+
 					}
 
 		 		    return {

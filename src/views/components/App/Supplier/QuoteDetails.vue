@@ -34,16 +34,20 @@
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <template v-if="hasBid">
 
-                         <v-flex xs5>
+                         <v-flex xs12>
                                 <image-gallery-small :images="bid.attachments && bid.attachments.length > 0 ? bid.attachments : []" noThumbnails height="120px"></image-gallery-small> 
                         </v-flex>
 
 
-                        <v-flex xs7>
-                             <v-flex xs12>
+                        <v-flex xs12>
+
+                        	<v-divider></v-divider>
+
+                            <v-flex xs12>
                                 <h5 class="font-weight-thin">Product code</h5>
                                 <h2>{{ bid.product_name }}</h2>
                             </v-flex>
+
                             <v-flex xs12>
                             
                                 <v-layout row wrap>
@@ -127,19 +131,12 @@
                         <v-layout justify-center row fill-height>
 
                                 <v-flex xs12 mx-5 mt-2 mb-2>
-                                
-
-                                   <!--        <v-flex xs2>
-                                               <v-img src="https://image.flaticon.com/icons/svg/1283/1283305.svg" height="90px" contain></v-img>
-                                          </v-flex> -->
-                                          
-                                                <div>
-                                                    <div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
-                                                    <div class="blue-grey--text" >You have not quoted yet.</b>
-                                                    </div>
-                                                </div>
-
-                            </v-flex> 
+                                        <div>
+                                            <div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
+                                            <div class="blue-grey--text" >You have not quoted yet.</b>
+                                            </div>
+                                        </div>
+                                </v-flex> 
 
                         </v-layout>
                     </v-flex>
@@ -175,11 +172,9 @@
                                                     <v-flex xs4>
                                                         <h5 class="font-weight-thin">Estimated Production Date</h5>
                                                         <h4 class="font-weight-bold">
-                                                        <!-- <h2 class="mb-0">                  
-                                                        {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
-                                                      </h2> -->
                                                        
                                                         <v-menu 
+
                                                         v-model="calendar_menu1" 
                                                         :close-on-content-click="false" 
                                                         :nudge-right="40" 
@@ -222,7 +217,6 @@
                                                  
                                                       </h4>
                                                     </v-flex>
-
 
 
 
@@ -477,6 +471,7 @@
 
                         // this.$emit('update:openInquiry', false)
                         this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+                        
                   }
 
                 },

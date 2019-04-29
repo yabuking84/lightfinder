@@ -48,18 +48,14 @@
 
 
             <v-layout align-center justify-center row fill-height v-if="!bidItems.length">
-
-
-                            
-                            <v-flex xs12 mx-5 mt-3 mb-3>
-                                        <div>
-                                          <div class="headline font-weight-bold error--text darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
-                                          <div class="blue-grey--text" >
-                                            Just Wait for While, quotation are coming. thanks
-                                          </div>
-
-                                      </div>
-                            </v-flex>
+	                <v-flex xs12 mx-5 mt-3 mb-3>
+                            <div>
+                              <div class="headline font-weight-bold error--text darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
+                              <div class="blue-grey--text" >
+                                Just Wait for While, quotation are coming. thanks
+                              </div>
+                          </div>
+	                </v-flex>
             </v-layout>
            
 
@@ -74,114 +70,117 @@
               
                 <v-card-text>
 
+			    <v-layout row wrap>
+
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				
+				<pre>
+					{{ bidItem }}
+				</pre>
+
+				<v-flex xs12 pl-2>
+
+					  <image-gallery-small :images="bidItem.attachments && bidItem.attachments.length > 1 ? bidItem.attachments : [] " noThumbnails height="120px"></image-gallery-small> 
+				  
+				</v-flex>
+
+                <v-flex xs12>
+
+                	<v-divider></v-divider>
+                
                     <v-layout row wrap>
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                        <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
-                     <!--    <v-flex xs5>
-                            <image-gallery-small no-thumbnails height="310px"></image-gallery-small>
-                        </v-flex> -->
-							
-
-						<!-- 	<pre>
-							  {{ bidItem }}
-							</pre>
- -->
-	
-
-                             <v-flex xs5>
-                                    <image-gallery-small :images="bidItem.attachments && bidItem.attachments.length > 1 ? bidItem.attachments : [] " noThumbnails height="120px"></image-gallery-small> 
-                            </v-flex>
-
-                        <v-flex xs7>
+                    	
+                        <v-container>
+                
+                        <v-flex xs12 pl-2>
+                <!--         	
+                            <h5 class="font-weight-thin">Product name</h5>
+                            <h2>{{ bidItem.product_name }}</h2> -->
+                
+                            <v-img v-if="bidItem.awarded" src="/static/images/award.png" class="awarded">
+                            </v-img>
+                
+                        </v-flex>
+                
+                        <v-flex xs12 pt-0 pl-2>
+                        	<h5 class="font-weight-bold">Description</h5>
+                            <h3 class="font-weight-thin">{{ bidItem.description }}</h3>
+                        </v-flex>
+                        
+                        <v-flex xs12>
                             <v-layout row wrap>
-                            	
-                                <!-- <v-container> -->
-						    <!-- <pre>{{ bidItem }}</pre> -->
-
-                                <v-flex xs12 pl-2>
-                                    <h5 class="font-weight-thin">Product name</h5>
-                                    <h2>{{ bidItem.product_name }}</h2>
-
-                                    <v-img v-if="bidItem.awarded" src="/static/images/award.png" class="awarded">
-                                    </v-img>
-
+                                <v-flex xs4 pa-2>
+                                    <h5 class="font-weight-bold">Quantity</h5>
+                                    <h3 class="font-weight-thin">{{ inquiry.quantity }} pcs</h3>
                                 </v-flex>
-
-                                <v-flex xs12 pt-0 pl-2>
-                                    <h3 class="font-weight-regular">{{ bidItem.description }}</h3>
+                
+                                <v-flex xs4 pa-2>
+                                    <h5 class="font-weight-bold">Unit Price</h5>
+                                    <h3 class="font-weight-thin">${{ bidItem.price }}</h3>
                                 </v-flex>
-
-                                <v-flex xs12>
-                                    <v-layout row wrap>
-                                        <v-flex xs4 pa-2>
-                                            <h5 class="font-weight-thin">Quantity</h5>
-                                            <h3>{{ inquiry.quantity }} pcs</h3>
-                                        </v-flex>
-
-                                        <v-flex xs4 pa-2>
-                                            <h5 class="font-weight-thin">Unit Price</h5>
-                                            <h3>${{ bidItem.price }}</h3>
-                                        </v-flex>
-
-                                        <v-flex xs4 pa-2>
-                                            <h5 class="font-weight-thin">Total Price</h5>
-                                            <h2>${{ bidItem.total_price }}</h2>
-                                        </v-flex>
-                                    </v-layout>
+                
+                                <v-flex xs4 pa-2>
+                                    <h5 class="font-weight-bold">Total Price</h5>
+                                    <h2 class="font-weight-thin">${{ bidItem.total_price }}</h2>
                                 </v-flex>
-
-                                <v-flex xs12 pt-0>
-                                    <h5 class="font-weight-thin">Remarks</h5>
-                                    <h4>
-                              <p class="mb-0">{{ bidItem.remarks }}</p>
-                            </h4>
-                                </v-flex>
-                                <v-flex xs12>
-                                <h5 class="font-weight-thin">Specifications </h5>
-                                <v-layout row wrap class="specifications mt-2 mr-2">
-                                   
-          
-                                    <template v-for="(specification, index) in bidItem.specifications">
-
-                                    <v-flex 
-                                    v-if="specification.value"
-                                    :key="specification+'_'+index"
-                                    xs6 ma-0 pa-0 pr-0 pl-2>
-                                        <div                                         
-                                        text-color="black" 
-                                        class="spec">
-                                            {{ specification.name }}: &nbsp;
-                                            <span class="font-weight-bold">
-                                                {{ specification.value.split(',').join(', ') }}
-                                            </span>
-                                        </div>
-                                    </v-flex>
-
-                                    </template>
-
-
-                                    <!-- <template v-for="">
-                                    <v-flex xs6 ma-0 pa-0 pr-1>
-                                        <div text-color="black" class="">
-                                            Dimmable: &nbsp;
-                                            <span class="font-weight-bold">
-                                                TRIAC, 0-10v, DALI
-                                            </span>
-                                        </div>
-                                    </v-flex>
-                                    </template> -->
-
-                                    <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
-                                        No specifications..
-                                    </v-alert>
-                                    
-                                </v-layout>
-                            </v-flex>
-
-                                <!-- </v-container> -->
                             </v-layout>
                         </v-flex>
+                
+                        <v-flex xs12 pt-0>
+                            <h5 class="font-weight-thin">Remarks</h5>
+                            <h4>
+                      <p class="mb-0">{{ bidItem.remarks }}</p>
+                    </h4>
+                        </v-flex>
+
+                        <v-flex xs12>
+                        <h5 class="font-weight-bold">Specifications </h5>
+                        <v-layout row wrap class="specifications mt-2 mr-2">
+                           
+                          
+                            <template v-for="(specification, index) in bidItem.specifications">
+                
+                            <v-flex 
+                            v-if="specification.value"
+                            :key="specification+'_'+index"
+                            xs4 ma-0 pa-0 pr-0 pl-2>
+                                <div                                         
+                                text-color="black" 
+                                class="spec">
+                                    {{ specification.name }}: &nbsp;
+                                    <span class="font-weight-bold">
+                                        {{ specification.value.split(',').join(', ') }}
+                                    </span>
+                                </div>
+                            </v-flex>
+                
+                            </template>
+                
+                
+                      <!--       <template v-for="">
+                            <v-flex xs6 ma-0 pa-0 pr-1>
+                                <div text-color="black" class="">
+                                    Dimmable: &nbsp;
+                                    <span class="font-weight-bold">
+                                        TRIAC, 0-10v, DALI
+                                    </span>
+                                </div>
+                            </v-flex>
+                            </template> -->
+                
+                            <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="ma-4" outline>
+                                No specifications..
+                            </v-alert>
+                            
+                        </v-layout>
+                    </v-flex>
+                
+                        </v-container>
+                    </v-layout>
+                </v-flex>
+                
+
 
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

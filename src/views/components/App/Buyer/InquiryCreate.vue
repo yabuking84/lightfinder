@@ -92,8 +92,10 @@
                                         label="Subject">
                                         </v-text-field>
                                       </v-flex>
+
                                       <v-flex xs1>
                                       </v-flex>
+
                                       <v-flex xs5>
                                         <h4>Your Chosen Category</h4>
                                         <v-autocomplete 
@@ -108,6 +110,7 @@
                                          >
                                         </v-autocomplete>
                                       </v-flex>
+                                      
                                     </v-layout>
                                   </v-flex>
 
