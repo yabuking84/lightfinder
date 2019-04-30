@@ -7,7 +7,8 @@
         </v-toolbar>
 
         <v-card color="grey lighten-5">
-
+			
+			<!-- waiting for verification -->
             <v-flex xs12 v-if="inquiry.stage_id == 1001">
 
                 <v-layout justify-center row fill-height>
@@ -44,33 +45,33 @@
                         </v-btn>
                     </v-flex>
                 </v-layout>
-
             </v-flex>
 
+			<!-- rejected inquiry -->
             <v-flex xs12 v-else-if="inquiry.stage_id == 1003">
 
                 <v-layout row wrap>
 
                         <v-flex xs12 mx-5 mt-3 >
 
-
-                                    <div>
-                                        <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-                                        <div class="blue-grey--text" style="font-style: italic;">the INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
-                                        </div>
+                                <div>
+                                    <div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
+                                    <div class="blue-grey--text" style="font-style: italic;">the INQUIRY <b>#{{ inquiry.id }}</b> is decline by our verifier, please refer on the message box if you have concerns. thanks!
                                     </div>
-
+                                </div>
 
                         </v-flex>
 
+                        <v-flex xs12 mx-5>
 
-                            <v-flex xs12 mx-5>
-                                <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
-                                    <span class="ml-1 white--text font-weight-light ">Approved</span>
-                                </v-btn>
-                            </v-flex>
+                            <v-btn @click="approvedInquiry(inquiry.id)" block class="grey darken-4 large font-weight-light ">
+                                <span class="ml-1 white--text font-weight-light ">Approved</span>
+                            </v-btn>
+
+                        </v-flex>
 
                     <v-flex xs12>
+
                         <v-layout row wrap>                         
 
                             <!-- if rejected -->
@@ -80,6 +81,7 @@
 
                         </v-layout>
                         <!-- <comment-box :commentData="commentData" :biditem="inquiry.id"> </comment-box> -->
+                        
                     </v-flex>
 
                 </v-layout>
@@ -119,36 +121,38 @@
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-                            <v-flex xs5>
+                            <v-flex xs12>
                                     <image-gallery-small :images="bidItem.attachments" noThumbnails height="120px"></image-gallery-small> 
                             </v-flex>
 
-                            <v-flex xs7>
+                            <v-flex xs12>
+								
+								<v-divider></v-divider>
 
-
-                                <v-layout row wrap>
 
                             <!--         <pre>
 								{{ bidItem }}
 							</pre> -->
 
-                                    <!-- <v-container> -->
+                                    <v-container>
 
-                                    <v-flex xs12 pl-2>
+                                     <v-layout row wrap>
+
+                                    <v-flex xs6 >
 
                                         <h5 class="font-weight-thin">Brand Name</h5>
                                         <h2>{{ bidItem.supplier.brand_name }}</h2>
 
                                     </v-flex>
 
-                                    <v-flex xs12 pl-2>
+                                    <v-flex xs6 >
 
                                         <h5 class="font-weight-thin">Owner name</h5>
                                         <h2>{{ bidItem.supplier.first_name }} {{ bidItem.supplier.last_name }}</h2>
 
                                     </v-flex>
 
-                                    <v-flex xs12 pl-2>
+                                    <v-flex xs6 >
 
                                         <h5 class="font-weight-thin">Product name</h5>
                                         <h2>{{ bidItem.product_name }}</h2>
@@ -158,7 +162,8 @@
 
                                     </v-flex>
 
-                                    <v-flex xs12 pt-0 pl-2>
+                                    <v-flex xs6 pt-0 >
+                                    	<h5 class="font-weight-thin">Description</h5>
                                         <h3 class="font-weight-regular">{{ bidItem.description }}</h3>
                                     </v-flex>
 
@@ -187,9 +192,9 @@
                                                     <p class="mb-0">{{ bidItem.remarks }}</p>
                                                 </h4>
                                     </v-flex>
-
-                                    <!-- </v-container> -->
                                 </v-layout>
+
+                                    </v-container>
                             </v-flex>
 
                             <v-flex xs12 mx-5 mt-2 mb-2 pt-0>

@@ -31,19 +31,19 @@
                       <v-layout row wrap>
                         <v-flex xs12 mr-4 mb-3>
                           <h5 class="font-weight-thin">Keywords </h5>
-                          <h4 class="font-weight-bold">
-                                  
-                  
 
+                          <h4 class="font-weight-bold">
                             <p class="mb-0">{{ inquiry.keyword }}</p>
                           </h4>
                         </v-flex>
+
                         <v-flex xs12 mr-4 mb-3>
                           <h5 class="font-weight-thin">Category</h5>
                           <h4 class="font-weight-bold">
                             <span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
                           </h4>
                         </v-flex>
+
                         <v-flex xs12 mr-4 mb-3>
                           <h5 class="font-weight-thin">Quantity</h5>
                           <h4 class="font-weight-bold">
@@ -51,7 +51,7 @@
                           </h4>
                         </v-flex>
 
-                            <!-- shipping address -->
+                         <!-- shipping address -->
                             
                             <v-flex mr-4 mb-3 xs12 v-show="inquiry.shipping_country_id">
                                 <h5 class="font-weight-thin">Shipping Address</h5>
@@ -63,10 +63,9 @@
                                 </h4>
                             </v-flex>
 
-                            <!-- shipping address -->
-
+                         <!-- shipping address -->
       
-                         <!-- sample orders -->
+                        <!-- sample orders -->
                               <v-flex mr-4 mb-3 xs6 v-show="inquiry.sample_quantity">
                                   <h5 class="font-weight-thin">Sample Orders Quantity</h5>
                                   <h4 class="font-weight-bold">
@@ -84,9 +83,9 @@
                                      <span>{{ inquiry.sample_shipping_postal }} </span>
                                   </h4>
                               </v-flex>
-                         <!-- sample orders -->
+                        <!-- sample orders -->
 
-                         <!-- oem -->
+                        <!-- oem -->
                              <v-flex mr-4 mb-3 xs6 v-show="inquiry.oem">
                                   <h5 class="font-weight-thin">Original Equipment Manufacture</h5>
                                   <h4 class="font-weight-bold">
@@ -98,7 +97,7 @@
                                   </h4>
                                   <h5>{{ inquiry.oem_description }}</h5>
                               </v-flex>
-                         <!-- oem -->
+                        <!-- oem -->
 
                         <v-flex xs12 mr-4 mb-3>
                           <h5 class="font-weight-thin">Message </h5>
@@ -125,10 +124,10 @@
                                       </v-chip>
                                   </span>
 
-
                             <v-alert :value="!inquiry.specifications.length" type="info" style="width: 100%;" class="mt-4 ml-0" outline>
                               No specifications..
                             </v-alert>
+
                           </v-layout>
                         </v-flex>
 
@@ -155,10 +154,12 @@
                         <v-text-field label="Product Code" v-model="formData.product_name">
                         </v-text-field>
                       </v-flex>
+
                       <!--    <v-flex xs12>
                         <v-textarea label="Product Details" v-model="formData.description">
                         </v-textarea>
                       </v-flex> -->
+
                       <v-flex xs4 pa-1>
                         <v-text-field label="Quantity" placeholder="0" readonly :value="inquiry.quantity" style="color: #000;" suffix="pcs">
                         </v-text-field>
@@ -170,9 +171,25 @@
                       <v-flex xs4 pa-1>
                         <v-text-field label="Total Price" v-model="formData.total_price" placeholder="0.00" :error-messages="fieldErrors('formData.total_price')" @blur="$v.formData.total_price.$touch()" type="number" min="0" step="0.01" prefix="$">
                         </v-text-field>
+                      </v-flex>	
+						
+		
+                      <v-flex xs12 pa-1 v-if="formData.attachments && formData.attachments.length > 0">
+                      	<v-layout row wrap>
+                      		<v-flex xs4 v-for="(file, i) in formData.attachments" :key="'image'+i">
+                    		   <div class="image-area">
+									  <img :src="file.location" alt="Preview">
+									  <a class="remove-image" @click="removeFile(file)" style="display: inline;">&#215;</a>
+								</div>
+                        	</v-flex>  
+                      	</v-layout>
+                        
                       </v-flex>
 
                       <v-flex xs12>
+
+                      	
+
                          <h4 class="font-weight-thin">Images </h4>
                         <!-- IMAGE QUOTE DROPZONE  -->
                               <vue-dropzone 
@@ -195,11 +212,7 @@
                         <v-flex xs12  v-show="inquiry.specifications.length">
                           <v-layout row wrap justify-center>
 
-
-
-                            
                             <v-layout row wrap mt-3>
-
                                 <v-flex xs2>
                                     <v-layout row column>
                                         <v-flex  lg4 md4 xs4 sm3>
@@ -269,7 +282,8 @@
                                 <!-- ----------------------------------------- -->
 
                                 <v-flex xs5>
-                                    <v-layout row column>                                        
+                                    <v-layout row column>          
+
                                         <v-flex lg4 md4 xs4 sm3>
                                             <h4 class="text-xs-left ml-2 mt-2">
                                                 <!-- Inquiry Specifications -->&nbsp;
@@ -289,9 +303,6 @@
 
                                     </v-layout>                                 
                                 </v-flex>
-
-
-                           
                               
                             </v-layout>
                               
@@ -305,13 +316,15 @@
                              <!-- optional data  -->
                              <v-layout row wrap mt-3>
                                     <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
-                                    <small v-show="is_sample">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small>
+                                    <!-- <small v-show="is_sample	">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small> -->
                                     <v-flex xs12 v-show="is_sample">
                                       <v-layout row wrap>
+
                                         <v-flex xs5 mr-5>
                                           <v-text-field label="Sample Cost" :error-messages="fieldErrors('formData.sample_cost')" @blur="$v.formData.sample_cost.$touch()" v-model="formData.sample_cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
                                         </v-flex>
-                                        <v-flex xs6 ml-3>
+
+                                        <v-flex xs5 ml-3>
                                           <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
                                         </v-flex>
                                       </v-layout>
@@ -323,23 +336,23 @@
                         <v-textarea label="Message" placeholder="Enter Remarks Here" v-model="formData.remarks">
                         </v-textarea>
                       </v-flex>
-                      <v-flex xs12>
-                        <h4 class="font-weight-thin mt-3 mb-2">Attachments </h4>
-
-                        <!-- <upload-file></upload-file> -->
-                        <vue-dropzone 
-                        id="dropzone_attachments" 
-                        :options="dropzoneOptions" 
-                        :useCustomSlot="useCustomSlot"
-                        :awss3="getAWSS3('attachments')"
-                        @vdropzone-success="vdz_success($event,'add-quote-attachments')">
-                            <div class="dropzone-custom-content">
-                                <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
-                                <div class="subtitle">...or click to select a file from your computer</div>
-                            </div>
-                        </vue-dropzone>
-
-                      </v-flex>
+                    <!--   <v-flex xs12>
+                      <h4 class="font-weight-thin mt-3 mb-2">Attachments </h4>
+                    
+                      <upload-file></upload-file>
+                      <vue-dropzone 
+                      id="dropzone_attachments" 
+                      :options="dropzoneOptions" 
+                      :useCustomSlot="useCustomSlot"
+                      :awss3="getAWSS3('attachments')"
+                      @vdropzone-success="vdz_success($event,'add-quote-attachments')">
+                          <div class="dropzone-custom-content">
+                              <h3 class="dropzone-custom-title">Drag and drop to upload files</h3>
+                              <div class="subtitle">...or click to select a file from your computer</div>
+                          </div>
+                      </vue-dropzone>
+                    
+                    </v-flex> -->
                     </v-layout>
 
                   </v-flex>
@@ -463,6 +476,7 @@ props: {
 
 data: () => ({
     loading: false,
+
     formData: {
         // price: 11.11,
         // total_price: 7777.56,
@@ -491,19 +505,32 @@ data: () => ({
 
     },
 
-    is_sample:false, // i set lang true if naa na ang data sa sample sa inquiry - ongoing pa
+    is_sample:false, 
     quoteAction: "Add",
 
     initBid: {
+
         price: null,
         total_price: null,
         product_name: null,
         remarks: null,
         description: null,
+
+        sample_cost:null,
+        sample_shipment_cost:null,
+
+        lumen:null,
+        power:null,
+        efficiency:null,
+        beam_angle: null,
+        cct: null,
+         ip: null,
+        finish: null,
+        size: null,
+        dimmable: null,
         attachments: [],
-    },
 
-
+},
 
 
     // Dropzone
@@ -564,12 +591,14 @@ methods: {
         var data = {};
 
         if (this.editQuote) {
+
           action = 'spplrInq/editInquiryBid_a';
           data = {
             formData: formData,
             inq_id: this.inquiry.id,
             bid_ref: this.bid.reference,
           }
+
         } else {
           action = 'spplrInq/addInquiryBid_a';
           data = {
@@ -580,9 +609,7 @@ methods: {
 
         if (this.$v.$invalid) {
              this.$v.$touch()
-
         } else {
-
           	this.loading = true;
             this.$store.dispatch(action, data)
               .then((response) => {
@@ -617,7 +644,9 @@ methods: {
 
 
     triggerTestEvent() {
+
         // this.$socket.emit('supplierNewQuoteCreated', {inq_id:this.inquiry.id});        
+
     },
 
     getSpefications(key) {
@@ -666,9 +695,11 @@ methods: {
 
       // clear existing object
     clearData() {
+
            for (const prop of Object.keys(this.formData)) {
               delete this.formData[prop];
             }
+
     },
 
     fillFormData() {
@@ -691,7 +722,23 @@ methods: {
           this.formData.size = this.getSpefications('Size')
           this.formData.dimmable = this.getSpefications('Dimmable')
 
+          this.formData.attachments = this.bid.attachments
+
     },
+
+
+    removeFile(file) {
+
+		this.formData.attachments = this.formData.attachments.filter(function(attachments){
+		    return attachments != file;
+		});
+
+    },
+
+
+   pushImage(file) {
+   		this.formData.attachments.push(file);
+   },
 
 
 
@@ -722,11 +769,15 @@ methods: {
         // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
         // console.log();
     },
+
     vdz_success(file, upload_group){
+
         console.log("vdz_success file = ",file);
         console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
+
+
             var attachment = {
                 location: file.s3ObjectLocation,
                 filename: file.name,
@@ -737,8 +788,9 @@ methods: {
 
 
             console.log('attachment',attachment);
-            this.formData.attachments.push(attachment);
-
+            // this.formData.attachments.push(attachment);
+            // this.formData.attachments.concat(attachment);
+            this.pushImage(attachment)
         }
 
         // if(upload_group=='attachments')    
@@ -773,14 +825,14 @@ watch: {
     editQuote(nVal, oVal) {
 
         if (nVal) {
-
             this.quoteAction = "Edit";
             this.fillFormData()
-          
+          	console.log('-edit-')
         } else {
             this.quoteAction = "Add";
-            // this.formData = this.initBid;
+            this.formData = this.initBid;
             this.clearData();
+            console.log('-add-')
         }
 
     },
@@ -867,6 +919,45 @@ watch: {
     font-size: 60px !important;
     cursor: pointer;
   }
+}
+
+
+.image-area {
+  position: relative;
+  width: 50%;
+  // background: #333;
+}
+.image-area img{
+  max-width: 100%;
+  height: auto;
+}
+.remove-image {
+display: none;
+position: absolute;
+    top: -4px;
+    right: -30px;
+border-radius: 10em;
+padding: 2px 6px 3px;
+text-decoration: none;
+font: 700 21px/20px sans-serif;
+background: #555;
+border: 3px solid #fff;
+color: #FFF;
+box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+}
+.remove-image:hover {
+ background: #E54E4E;
+  padding: 3px 7px 5px;
+     top: -4px;
+    right: -30px;
+}
+.remove-image:active {
+ background: #E54E4E;
+    top: -4px;
+    right: -30px;
 }
 
 </style>

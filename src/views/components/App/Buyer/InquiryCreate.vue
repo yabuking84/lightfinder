@@ -1,53 +1,39 @@
 <template>
   <div>
+
     <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen >
 
       <v-card>
 
-        <v-toolbar v-if="isEdit" class="headline red darken-1 white--text">
-              <span class="font-weight-bold">EDIT INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
-                 <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn dark flat @click="$emit('update:dialog', false)">
-                    <v-icon>close</v-icon>
-                  </v-btn>
-                </v-toolbar-items>
-        </v-toolbar>
-        
+		<!-- When Edit  -->
+	    <v-toolbar v-if="isEdit" class="headline red darken-1 white--text">
+	          <span class="font-weight-bold">EDIT INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
+	             <v-spacer></v-spacer>
+	            <v-toolbar-items>
+	              <v-btn dark flat @click="$emit('update:dialog', false)">
+	                <v-icon>close</v-icon>
+	              </v-btn>
+	            </v-toolbar-items>
+	    </v-toolbar>
 
-        <v-toolbar v-else class="headline grey darken-4 white--text">
-                  <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-toolbar-items>
-                    <v-btn dark flat @click="$emit('update:dialog', false)">
-                      <v-icon>close</v-icon>
-                    </v-btn>
-                  </v-toolbar-items>
-        </v-toolbar>
+		<!-- When Creating new  -->
+	    <v-toolbar v-else class="headline grey darken-4 white--text">
+	              <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
+	              <v-spacer></v-spacer>
+	              <v-toolbar-items>
+	                <v-btn dark flat @click="$emit('update:dialog', false)">
+	                  <v-icon>close</v-icon>
+	                </v-btn>
+	              </v-toolbar-items>
+	    </v-toolbar>
 
-      <!--   
-        <v-card-title v-if="isEdit" class="headline red darken-1 white--text">
-          Edit
-          <v-spacer></v-spacer>
-          <span class="font-weight-bold">INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
-        </v-card-title>
-
-        <v-card-title v-else class="headline grey darken-4 white--text">
-            Create Inquiry
-            <v-spacer></v-spacer>
-            <v-btn dark flat @click="$emit('update:dialog', false)">
-                <v-icon>close</v-icon>
-            </v-btn>           
-        </v-card-title> -->
-
-
-
+		<!-- Displaying new -->
         <v-card-text id="inquiryCreate_scrollable_cont">
 
             <v-layout row wrap>
                   
                 <v-flex xs7 style="max-height:77vh; overflow:hidden; overflow-y:auto;">
-                  <v-card class="inqCurved">
+                   <v-card class="inqCurved">
                         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
                           <v-stepper v-model="stepCnt" class="stepperClass" vertical>
@@ -106,25 +92,43 @@
                                         label="Subject">
                                         </v-text-field>
                                       </v-flex>
+
                                       <v-flex xs1>
                                       </v-flex>
+
                                       <v-flex xs5>
                                         <h4>Your Chosen Category</h4>
                                         <v-autocomplete 
-                                        v-model="formData.category" 
-                                        :items="categories" 
-                                        item-text="name"
-                                        item-value="id"
-                                        :error-messages="fieldErrors('formData.category')"
-                                        @blur="$v.formData.category.$touch()" 
-                                        ref="categorySelect" 
-                                        flat hide-no-data hide-details label="Type here the category.."
+	                                        v-model="formData.category" 
+	                                        :items="categories" 
+	                                        item-text="name"
+	                                        item-value="id"
+	                                        :error-messages="fieldErrors('formData.category')"
+	                                        @blur="$v.formData.category.$touch()" 
+	                                        ref="categorySelect" 
+	                                        flat hide-no-data hide-details label="Type here the category.."
                                          >
                                         </v-autocomplete>
                                       </v-flex>
-
+                                      
                                     </v-layout>
                                   </v-flex>
+
+
+                                  <!-- preview of the edit images here can be removable -->
+	                                <v-flex xs12 v-show="inquiry_images.length">
+	                                	<v-layout row wrap>
+											<v-flex xs4 v-for="(image, i) in inquiry_images" :key="'image'+i">
+												   <div class="image-area">
+													  <img :src="image.location" alt="Preview">
+
+													  <a class="remove-image" @click="removeFile(image, 'image')" style="display: inline;">&#215;</a>
+													</div>
+											</v-flex>   
+	                                	</v-layout>
+	                                </v-flex>
+
+
                                   <v-flex xs12>                                        
                                         <h4 class="mb-3 mt-4">Upload Images:</h4>
                                         <vue-dropzone 
@@ -139,6 +143,11 @@
                                           </div>
                                         </vue-dropzone>                                    
                                   </v-flex>
+								
+
+								<!-- preview of the edit images here can be removable -->
+
+
                                 </v-container>
                                 <v-btn color="primary" @click="stepUp()">next</v-btn>
                                 <v-btn flat @click="stepDown()">back</v-btn>
@@ -456,9 +465,10 @@
                                     <v-flex xs12 sm6 md12 lg12>
 
                                   <v-layout row wrap v-show="is_oem">
-                                          <h3 class="font-weight-light">Please be accurate as possible.</h3>
 
-                                            <v-flex xs12 class="custom_digits" >
+                                        <h3 class="font-weight-light">Please be accurate as possible.</h3>
+
+                                     <v-flex xs12 class="custom_digits" >
                                         <v-text-field 
                                         v-model="formData.oem_service" 
                                         @keyup.enter="stepUp()" 
@@ -475,6 +485,10 @@
                                         v-model="formData.oem_description">
                                         </v-textarea>
                                     </v-flex>
+
+
+							
+
                                     <v-flex xs12 >
                                       <!-- OEM DROPZONE  -->
                                         <vue-dropzone 
@@ -485,7 +499,7 @@
                                             @vdropzone-success="vdz_success($event,'add-inquiry-oems')"
                                             >
                                           <div class="dropzone-custom-content">
-                                            <h3 class="dropzone-custom-title">Drag and drop to upload Images and Files</h3>
+                                            <h3 class="dropzone-custom-title">Drag and drop to Upload Files</h3>
                                             <div class="subtitle">...or click to select a file from your computer</div>
                                           </div>
                                         </vue-dropzone>
@@ -575,7 +589,22 @@
                             <v-stepper-content step="8" ref="step_8">
                               <v-container>
 
-                                <v-layout row class="">
+                              		 <v-flex xs12 class="mb-5" v-show="inquiry_attachments.length">
+		                                	<v-layout row wrap>
+												<v-flex xs4 v-for="(file, i) in inquiry_attachments" :key="'image'+i">
+													<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+													   <div class="image-area">
+  														<a :href="file.location" class="mr-3">
+                                                                 <v-icon  color="red" >fas fa-file-pdf</v-icon> {{ file.filename }}
+                                                        </a>
+														  <a class="remove-image" @click="removeFile(file, 'attachments')" style="display: inline;">&#215;</a>
+														</div>
+												</v-flex>   
+		                                	</v-layout>
+		                                </v-flex>
+
+
+                                <v-layout row>
 
                                   <v-flex xs12>
                                     <vue-dropzone 
@@ -619,8 +648,7 @@
                           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                           <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         </v-form>
-                 </v-card>
-
+                   </v-card>
                 </v-flex>
               
               <!-- <v-divider vertical></v-divider> -->
@@ -665,6 +693,20 @@
                                         <small v-html="">{{ getCategory(formData.category) }}</small>
                                     </v-flex>
 
+
+                                    <v-flex xs12 mt-3 v-show="inquiry_images.length">
+                                    	    <h4>Image: </h4>
+	                                	<v-layout row wrap>
+											<v-flex xs4 v-for="(image, i) in inquiry_images" :key="'image'+i">
+												<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+												   <div class="image-area">
+													  <img :src="image.location" alt="Preview">
+													</div>
+											</v-flex>   
+	                                	</v-layout>
+	                                </v-flex>
+
+
                                     <!-- price and quantity -->
                                     <v-flex xs12 mt-3>
 
@@ -686,7 +728,10 @@
                                             </v-flex>
 
                                         </v-layout>
+
                                     </v-flex>
+
+
 
                                     <!-- specifications -->
                                     <v-flex xs12>
@@ -795,6 +840,24 @@
                                         <small v-html="formData.message"></small>
 
                                     </v-flex>
+
+                                	 <v-flex xs12 v-show="inquiry_attachments.length">
+                                	 	  <div class="mt-3">
+                                            <h4>Attachments</h4>
+                                        </div>
+	                                	<v-layout row wrap>
+											<v-flex xs6 class="mt-2" v-for="(file, i) in inquiry_attachments" :key="'image'+i">
+												<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+												   <div class="image-area">
+														<a :href="file.location" class="mr-3">
+                                                             <v-icon  color="red" >fas fa-file-pdf</v-icon> {{ file.filename }}
+                                                    </a>
+													  <!-- <a class="remove-image" @click="removeFile(file)" style="display: inline;">&#215;</a> -->
+													</div>
+											</v-flex>   
+	                                	</v-layout>
+	                                </v-flex>
+
                                 </v-layout>
                             </v-card-text>
                         </v-card>
@@ -803,24 +866,11 @@
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                 </v-flex>
-                
             </v-layout>
         </v-card-text>
+        <!-- Displaying new -->
 
         <v-divider></v-divider>
-
-             <!--  <v-btn color="primary" @click="$emit('update:dialog', false)">
-                  close
-                </v-btn>
-                <v-btn color="error" @click="clearForm()">
-                  clear
-                </v-btn>
-
-                <v-spacer></v-spacer>
-
-                 <v-btn color="success" @click="submitForm()" :loading="formLoading">
-                  submit
-                </v-btn> -->
 
         <v-card-actions>
 
@@ -845,25 +895,7 @@
                 </v-layout>
               </v-flex>
             </v-layout>
-
         </v-card-actions>
-
-   <!--    <v-snackbar
-          v-model="successSnackbar"
-          color="success"
-           bottom
-           left
-           :timeout="8000"
-          >
-          <v-btn
-            dark
-            flat
-            @click="successSnackbar = false"
-          >
-            Close
-          </v-btn>
-    </v-snackbar> -->
-
 
       </v-card>
     </v-dialog>
@@ -940,8 +972,6 @@ export default {
         })
 
       },
-
-    // optional /*state: zipcode:*/
 
     sample_shipping_address: {
       required: requiredIf(function() {
@@ -1114,6 +1144,10 @@ export default {
        
       },
 
+      inquiry_images: [],
+      inquiry_attachments:[],
+      inquiry_oems:[],
+
       shipping_methods: config.main.shipping_methods,
       payment_methods: config.main.payment_methods,
       search: null,
@@ -1193,7 +1227,6 @@ export default {
         console.log(e);
     });
 
-
     // -----------------------GET COUNTRY-------------------------------------
 
     // this.$store.dispatch(this.getCountries_a())
@@ -1242,13 +1275,11 @@ export default {
 
     inquiry(nVal, oVal) {
 
-        if(nVal) {
+        if(!nVal) {
 
            this.inquiryHolder = this.inquiry
            this.fillFormData();  
-           // console.log(this.inquiry)
-           // this.getInquiry(this.inquiry.inq);
-          
+
         }
 
     },
@@ -1268,13 +1299,13 @@ export default {
     // assign props inquiry to data (inquiryHolder) to prefill formData
     isEdit(nVal, oVal) {
 
-        if(!nVal) {
+        if(nVal) {
 
               this.inquiryHolder = this.inquiry
+              this.$emit('update:isEdit', true)
               this.fillFormData();  
-              this.$emit('update:isEdit', false)
-
         }
+
         
     },
     // if inquiry lookup is click then useInquiry
@@ -1358,11 +1389,6 @@ export default {
             .then((data) => {
                 
                 this.inquiryHolder = data
-
-                // console.log('-----------------')
-                // console.log(this.inquiryHolder)
-                // console.log('-----------------')
-
                 this.fillFormData()
 
             })
@@ -1386,9 +1412,51 @@ export default {
 
     },
 
+
+    removeFile(file, type) {
+
+
+			// remove from  tep
+			if(type == 'image') {
+
+					this.inquiry_images = this.inquiry_images.filter(function(attachments) {
+						return attachments != file;
+				    })	
+
+			} 
+
+			 if(type == 'attachments') {
+
+					this.inquiry_attachments = this.inquiry_attachments.filter(function(attachments) {
+						return attachments != file;
+					})
+
+			} 
+
+
+			 if(type == 'oems') {
+
+					this.inquiry_oems = this.inquiry_oems.filter(function(attachments) {
+						return attachments != file;
+					})
+			}
+
+
+				// delete from the attachment data
+			this.formData.attachments = this.formData.attachments.filter(function(attachments){
+			    return attachments != file;
+			});
+
+
+    },
+
+    // usable for editing the inquiry/ and previewing to sidebar
     fillFormData() {
 
             // console.log(this.inquiryHolder)
+
+            this.inquiry_images = []
+            this.inquiry_attachments = []
 
             this.formData.keywords = this.inquiryHolder.keyword
             this.formData.category = this.getCategoryId(this.inquiryHolder.categories.join(', '))  
@@ -1424,10 +1492,42 @@ export default {
             this.formData.finish = this.getSpefications('Finish')
             this.formData.size = this.getSpefications('Size')
             this.formData.dimmable = this.getSpefications('Dimmable')
-          
+
+            this.formData.attachments = this.inquiryHolder.attachments
+
+            // execute this if there's an attachments
+            if(this.formData.attachments.length > 0) {
+
+	            var attachments = this.formData.attachments.map(attachments => { 
+
+			            	if(attachments.filegroup == 'add-inquiry-images') {
+
+			            		this.inquiry_images.push(attachments);
+
+			            	}
+
+			            	if(attachments.filegroup == 'add-inquiry-attachments') {
+
+								this.inquiry_attachments.push(attachments);
+
+			            	}
+
+			            	if(attachments.filegroup == 'add-inquiry-oems') {
+
+			            		this.inquiry_oems.push(attachments);
+
+			            	}
+				});
+
+            }
+
 
       },
 
+    removeAttachments(key) {
+	
+
+    },
 
     getSpefications(key) {
 
@@ -1647,8 +1747,10 @@ export default {
                 filesize: _.round((file.size/1000), 2),
             };
 
-            console.log('attachment',attachment);
+            // console.log('attachment',attachment);
             this.formData.attachments.push(attachment);
+            // for the preview when uploaded
+            this.inquiry_images.push(attachment);
 
         }
 
@@ -1809,6 +1911,45 @@ export default {
   padding-bottom: 30px;
   // width: 550px;
 
+}
+
+
+.image-area {
+  position: relative;
+  width: 50%;
+  // background: #333;
+}
+.image-area img{
+  max-width: 100%;
+  height: auto;
+}
+.remove-image {
+display: none;
+position: absolute;
+    top: -4px;
+    right: -30px;
+border-radius: 10em;
+padding: 2px 6px 3px;
+text-decoration: none;
+font: 700 21px/20px sans-serif;
+background: #555;
+border: 3px solid #fff;
+color: #FFF;
+box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+}
+.remove-image:hover {
+ background: #E54E4E;
+  padding: 3px 7px 5px;
+     top: -4px;
+    right: -30px;
+}
+.remove-image:active {
+ background: #E54E4E;
+    top: -4px;
+    right: -30px;
 }
 
 </style>

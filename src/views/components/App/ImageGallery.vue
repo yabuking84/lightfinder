@@ -85,6 +85,7 @@ export default {
 	},
 
 	watch: {
+		
 		images: {
 
 			  handler(nVal, oVal) {

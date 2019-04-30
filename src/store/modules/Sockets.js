@@ -110,6 +110,7 @@ const actions = {
     },
 
     SOCKET_supplierModifiedBid(context, data){
+    	context.dispatch('ntfctns/supplierModifiedBid_a',data,{root:true});
     },
 
     SOCKET_supplierSubmittedBid(context, data){
