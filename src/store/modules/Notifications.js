@@ -79,6 +79,18 @@ const mutations = {
     SET_NOTIFICATIONS_M(state, data) {
         state.notifications = data;
     },
+    INSERT_ARR_NOTIFICATIONS_M(state, data) {
+        state.notifications = [
+        	...state.notifications,
+        	...data,
+        ];
+    },
+    UNSHIFT_ARR_NOTIFICATIONS_M(state, data) {
+        state.notifications = [
+        	...data,
+        	...state.notifications,
+        ];        
+    },
     INSERT_NOTIFICATIONS_M(state, data) {
         state.notifications.push(data);
     },
@@ -89,11 +101,23 @@ const mutations = {
         state.unread = data;
     },
 
+    //////////////////////////////////////////////////////////
+
     SET_NOTIFICATIONSMSGS_M(state, data) {
         state.notificationsMsgs = data;
     },
-    INSERT_NOTIFICATIONSMSGS_M(state, data) {
-        state.notificationsMsgs.push(data);
+    INSERT_ARR_NOTIFICATIONSMSGS_M(state, data) {
+        state.notificationsMsgs = [
+        	...state.notificationsMsgs,
+        	...data,
+        ];        
+    },
+
+    UNSHIFT_ARR_NOTIFICATIONSMSGS_M(state, data) {
+        state.notificationsMsgs = [
+        	...data,
+        	...state.notificationsMsgs,
+        ];        
     },
     RESET_NOTIFICATIONSMSGS_M(state) {
         state.notificationsMsgs = [];
@@ -102,7 +126,7 @@ const mutations = {
         state.unreadMsgs = data;
     },
 
-
+    //////////////////////////////////////////////////////////
 
     UPDATE_SNACKBAR_M(state,data) {
         state.dataSnackbar = data;
@@ -366,52 +390,58 @@ const actions = {
 
             var store = hlprs.methods.getStore();
 
-            // add notification
+
+            // show notification
             /////////////////////////////////////////////////////////
             context.dispatch(store+'/getInquiry_a', {
                 inq_id: ntfctn.data.id
             }, {root:true})
             .then((data) => {
+    			console.log('data',data);
                 context.commit(store+'/UPDATE_INQUIRY_M',{inquiry:data}, {root:true});
+                context.commit(store+'/SET_INQUIRY_BID_M', null, {root:true});
                 context.commit(store+'/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
             })
             .catch((error) => {
                 console.log(error);
             });
             /////////////////////////////////////////////////////////
-            // add notification
+            // show notification
         }        
     },
 
 
 
-	populateNotifications_a(context) {
+	populateNotifications_a(context, options) {
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
+            var offsetUrl = "offset="+options.offset;
+            var limitUrl = "limit="+options.limit;
 
             axios({
                 method: state.api.getNotifications.method,
-                url: state.api.getNotifications.url,
+                url: state.api.getNotifications.url+"?"+offsetUrl+"&"+limitUrl,
                 headers: headers,
             })
             .then(response => {
 
-	        	var notifications = response.data.filter(item=>item.type!='newMessage');
+            	var count = response.data.data.length;
+	        	var notifications = response.data.data;
+	        	var unreadCount = response.data.unread;
 
-            	console.log("populateNotifications_a notifications = ",notifications[0]);
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-
-		    	var unreadCount = 0; // integer
 		    	var isRead;
 		    	var title = '';
 				var dataType = '';
 		        var data = {};
 
-		  		// var ntfctns = [];
+		        // sort by date updated_at
+		        notifications = _.sortBy(notifications,'created_at');
+
 		  		var ntfctns = notifications.map((ntfctn)=>{
 
 		    		title = '';
@@ -419,17 +449,13 @@ const actions = {
 			    	dataType = "";
 			       	isRead = true; 
 
-		    	   	if(ntfctn.read_at == null || ntfctn.read_at == undefined) {    	   	
-		    	   		unreadCount = parseInt(unreadCount) + 1
-		    	   		isRead = false
-		    	   	}
-
 		            data = {
 		      			'id':ntfctn.data.inquiry_id,
 		      			'bid_id':ntfctn.data.bid_id,
 		      			'notification_id': ntfctn.id,
 		          	}
 
+		    	   	isRead = (ntfctn.read_at == null || ntfctn.read_at == undefined)?false:true;
 
 			       	switch (ntfctn.type) {
 
@@ -461,9 +487,16 @@ const actions = {
 					    	title=`Buyer has Awarded for Inquiry # ${ ntfctn.data.inquiry_id }  to you`;
 					    	dataType = 'inquiry';
 					    break;
+
+					    // supplier
+					    default : 
+					    	title=`Others`;
+					    	dataType = 'inquiry';
+					    break;
 					}
 
 		 		    return {
+		                // title:         ntfctn.created_at+' = '+title,
 		                title:         title,
 		                dataType:      dataType,
 		                data:          data,
@@ -471,16 +504,21 @@ const actions = {
 		                isRead: 	   isRead,
 		            }
 
-				});
-			    ntfctns.reverse();
 
-            	console.log("populateNotifications_a ntfctns = ",ntfctns[0]);
-			    
-			    context.commit('SET_NOTIFICATIONS_M',ntfctns);
+				});
+
+		  		if(options.insertMethod=='unshift')
+			    context.commit('UNSHIFT_ARR_NOTIFICATIONS_M',ntfctns);
+				else			    
+			    context.commit('INSERT_ARR_NOTIFICATIONS_M',ntfctns);
+
+			    // context.commit('SET_NOTIFICATIONS_M',ntfctns);
 			    context.commit('SET_UNREAD_M',unreadCount);
 
 
-			    resolve();
+                resolve({
+                	count:count
+                });
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -497,31 +535,37 @@ const actions = {
 
 
 
-	populateNotificationsMsgs_a(context) {
+	populateNotificationsMsgs_a(context, options) {
     	return new Promise((resolve, reject) => {
 
             var headers = {token:localStorage.access_token};
-
+            var offsetUrl = "offset="+options.offset;
+            var limitUrl = "limit="+options.limit;
+            var typeUrl = 'type=message';
             axios({
                 method: state.api.getNotifications.method,
-                url: state.api.getNotifications.url,
+                url: state.api.getNotifications.url+"?"+typeUrl+"&"+offsetUrl+"&"+limitUrl,
                 headers: headers,
             })
             .then(response => {
 
-	        	var notifications = response.data.filter(item=>item.type=='newMessage');
-            	console.log("getNotificationsMsgs_a notifications = ",notifications[0]);
+            	var count = response.data.data.length;
+	        	var notifications = response.data.data;
+	        	var unreadCount = response.data.unread;
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-		    	var unreadCount = 0; // integer
 		    	var isRead;
 		    	var title = '';
 		        var data = {};
 				var dataType = "";
+			    
+		        // sort by date updated_at
+		        // notifications = _.sortBy(notifications,'created_at');
 
-			    var retVal = {};
+            	// console.log("getNotificationsMsgs_a notifications = ",notifications);
+
 			    var ntfctns = notifications.map((ntfctn)=>{
 
 			    	data = {};
@@ -529,10 +573,7 @@ const actions = {
 		    		title = '';
 			       	isRead = true; 
 
-		    	   	if(ntfctn.read_at == null || ntfctn.read_at == undefined) {    	   	
-		    	   		unreadCount = parseInt(unreadCount) + 1
-		    	   		isRead = false
-		    	   	}
+		    	   	isRead = (ntfctn.read_at == null || ntfctn.read_at == undefined)?false:true;
 
 		    	   	// check what type of message
 					if(ntfctn.data.type=="bid.buyer.admin") {
@@ -542,7 +583,7 @@ const actions = {
 							'notification_id': ntfctn.id,
 						};
 						dataType = "bid";
-			    		title = 'New Message in Bid #'+ntfctn.data.id+'';
+			    		title = 'New Message in Bid #'+ntfctn.data.id;
 					} 
 					else
 					if(ntfctn.data.type=="inquiry.buyer.admin") {
@@ -552,11 +593,12 @@ const actions = {
 							'notification_id': ntfctn.id,
 						};
 						dataType = "inquiry";
-			    		title = 'New Message in Inquiry #'+ntfctn.data.id+'';
+			    		title = 'New Message in Inquiry #'+ntfctn.data.id;
 					}
 
 
 			    	return {
+		                // title:         ntfctn.created_at+" || "+ntfctn.id+' <br> '+ntfctn.data.content+" = #"+ntfctn.data.id,
 		                title:         title,
 		                dataType:      dataType,
 		                data:          data,
@@ -565,17 +607,29 @@ const actions = {
 			    	};
 
 			    });
-			    ntfctns.reverse();
+
+		  		// test
+				// ntfctns.push({
+				// 	title:         'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+				// 	dataType:      dataType,
+				// 	data:          data,
+				// 	textSnackbar:  title,
+				// 	isRead: 	   isRead,					
+				// });
 
 
-            	console.log("getNotificationsMsgs_a ntfctns = ",ntfctns[0]);
-			    
-			    context.commit('SET_NOTIFICATIONSMSGS_M',ntfctns);
-			    context.commit('SET_UNREADMSGS_M',unreadCount);            	
+		  		if(options.insertMethod=='unshift')
+			    context.commit('UNSHIFT_ARR_NOTIFICATIONSMSGS_M',ntfctns);
+				else
+			    context.commit('INSERT_ARR_NOTIFICATIONSMSGS_M',ntfctns);
+
+			    context.commit('SET_UNREADMSGS_M',unreadCount);
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-                resolve();
+                resolve({
+                	count:count
+                });
             })
             .catch(error => {
                 // console.log(error);
@@ -585,7 +639,7 @@ const actions = {
             })
 
         });
-   },
+   	},
 
 
 

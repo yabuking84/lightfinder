@@ -48,8 +48,7 @@ const state = {
 
     },
     
-    inquiries: [],
-    
+    // inquiries: [],    
     inquiry: null,
     openInquiryView: false,
 

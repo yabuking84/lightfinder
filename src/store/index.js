@@ -16,6 +16,8 @@ import admnByr from './modules/adminBuyer'
 import admnSpplr from './modules/adminSupplier'
 import admnInq from './modules/adminInquiries'
 
+import inq from './modules/Inquiry'
+
 import sckts from './modules/Sockets'
 import ntfctns from './modules/Notifications'
 
@@ -36,6 +38,7 @@ export const store = new Vuex.Store({
     msg,
     ntfctns,
     cat,
+    inq,
     byrInq,
     spplrInq,
     admnByr,

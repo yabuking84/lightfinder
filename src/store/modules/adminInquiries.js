@@ -46,9 +46,10 @@ const state= {
 		}
 	},
 
+    // inquiries: [],
 	inquiry: null,
 	openInquiryView: false,
-	
+
 }
 
 const getters = {
