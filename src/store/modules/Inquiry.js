@@ -10,7 +10,8 @@ const state = {
     // inquiries: [],
     inquiry: null,
     openInquiryView: false,
-    bid: null,
+    // bid: null,
+    bid_id: null,
 }
 
 
@@ -21,7 +22,7 @@ const mutations = {
         state.openInquiryView = true;
     },
 
-    HIDE_OPENINQUIRYVIEW_M(state){
+    HIDE_OPENINQUIRYVIEW_M(state){ 
         state.openInquiryView = false;
     },
 
@@ -29,8 +30,8 @@ const mutations = {
         state.inquiry = data.inquiry;
     },
 
-    UPDATE_BID_M(state,data){
-        state.bid = data.bid;
+    UPDATE_BID_ID_M(state,data){
+        state.bid_id = data.bid_id;
     },
 
 }

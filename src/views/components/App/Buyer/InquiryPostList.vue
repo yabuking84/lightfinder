@@ -63,9 +63,9 @@
             <v-card 
             v-else 
             class="mb-5 ma-3" 
+            v-for="(bidItem, i) in bidItems" 
             :hover="true" 
             :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
-            v-for="(bidItem, i) in bidItems" 
             :key="'bidItem_'+i">
               
                 <v-card-text>
@@ -75,9 +75,11 @@
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 				
-				<pre>
-					{{ bidItem }}
-				</pre>
+				<!-- <pre>{{ bidItem }}</pre> -->
+
+				<v-flex xs12 pl-2 v-if="msgNtfctn == bidItem.id">
+					<h3 style="text-align:center;">THIS IS THE ONE!</h3>
+				</v-flex>
 
 				<v-flex xs12 pl-2>
 
@@ -210,7 +212,7 @@
                             <v-flex xs12  v-if="checkIfawarded(bidItem.awarded)">
                                 <!-- <v-divider></v-divider> -->
                                 <!-- message box -->
-                                <messaging :bid="bidItem"> </messaging>
+                                <messaging :bid="bidItem" :focus="msgNtfctn == bidItem.id"> </messaging>
                                 <!-- message box -->
                             </v-flex>
 
@@ -426,9 +428,6 @@ export default {
         },
     },
 
-    computed: {
-
-    },
 
     sockets:{
 
@@ -453,13 +452,16 @@ export default {
 
      computed: {
 
-            countries(){
-                
-                return config.countries;
-            },
-   
-
+        countries(){
+            
+            return config.countries;
         },
+   
+    	msgNtfctn(){
+    		return this.$store.state.inq.bid_id;
+    	},
+
+    },
 
 
 }

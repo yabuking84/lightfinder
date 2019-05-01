@@ -81,24 +81,24 @@ export default {
 
     openInquiry: {
         get() {
-            return this.$store.state.admnInq.openInquiryView;
+            return this.$store.state.inq.openInquiryView;
         },
         set(nVal){
             if(nVal)
-            this.$store.commit('admnInq/SHOW_OPENINQUIRYVIEW_M');
+            this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
             else
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
         },
     },
 
     inquiry: {
         get() {
-            return this.$store.state.admnInq.inquiry;
+            return this.$store.state.inq.inquiry;
         },
         set(nVal) {
             // console.log('setVal');
             // console.log(nVal);
-            this.$store.commit('admnInq/UPDATE_INQUIRY_M',{inquiry:nVal});
+            this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
         },
     },       
 
@@ -109,13 +109,13 @@ export default {
     methods: {
 
         closeOpenInquiry() {
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
         },
 
         keyPress(e){
 
             if(e.target.querySelector("#InquiryView"))
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
             
             // console.log(e.target);
 
@@ -134,7 +134,7 @@ export default {
 
         if (nVal) {
             this.isClosed = false
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
         }
 
       },

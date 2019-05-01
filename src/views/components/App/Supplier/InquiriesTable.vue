@@ -455,22 +455,22 @@ export default {
 
         openInquiry: {
             get() {
-                return this.$store.state.spplrInq.openInquiryView;
+                return this.$store.state.inq.openInquiryView;
             },
             set(nVal){
                 if(nVal)
-                this.$store.commit('spplrInq/SHOW_OPENINQUIRYVIEW_M');
+                this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
                 else
-                this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+                this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
             },
         },
 
         inquiry: {
             get() {
-                return this.$store.state.spplrInq.inquiry;
+                return this.$store.state.inq.inquiry;
             },
             set(nVal) {
-                this.$store.commit('spplrInq/UPDATE_INQUIRY_M',{inquiry:nVal});
+                this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
             },
         },
     },

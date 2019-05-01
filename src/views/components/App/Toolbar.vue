@@ -523,7 +523,7 @@ methods: {
     // /////////////////////////////////////////////////////////
 
     gotoNotfication(ntfctn){
-    	console.log('ntfctn',ntfctn);
+    	// console.log('ntfctn',ntfctn);
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
     	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
@@ -589,7 +589,7 @@ methods: {
 	        else 
 	        this.showMsgsLoading = false;
 
-            console.log("this.offsetMsgs",this.offsetMsgs);
+            // console.log("this.offsetMsgs",this.offsetMsgs);
         })
         .catch((e) => {
             console.log(e);

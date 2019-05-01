@@ -101,7 +101,7 @@
 
         		if(this.chatMessageEditor)
         			console.log(this.chatMessageEditor);
-        		    this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+        		    this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
 
 
         		this.chatMessageEditor = null

@@ -128,6 +128,7 @@ const mutations = {
 
     //////////////////////////////////////////////////////////
 
+
     UPDATE_SNACKBAR_M(state,data) {
         state.dataSnackbar = data;
     },
@@ -411,16 +412,27 @@ const actions = {
             var store = hlprs.methods.getStore();
 
 
+
+
             // show notification
             /////////////////////////////////////////////////////////
             context.dispatch(store+'/getInquiry_a', {
                 inq_id: ntfctn.data.id
             }, {root:true})
             .then((data) => {
-    			console.log('data',data);
-                context.commit(store+'/UPDATE_INQUIRY_M',{inquiry:data}, {root:true});
-                context.commit(store+'/SET_INQUIRY_BID_M', null, {root:true});
-                context.commit(store+'/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
+    			console.log('data',data);    			
+    			console.log('ntfctn',ntfctn);    			
+
+    			// serach BID
+    			// var bid = null;
+    			// if(data.bids && data.bids.length)
+    			// bid = data.bids.filter(bid => bid.id == ntfctn.data.bid_id)[0];
+
+    			var bid_id = ntfctn.data.bid_id
+
+                context.commit('inq/UPDATE_INQUIRY_M',{inquiry:data}, {root:true});
+                context.commit('inq/UPDATE_BID_ID_M', { bid_id:bid_id }, {root:true});
+                context.commit('inq/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
             })
             .catch((error) => {
                 console.log(error);
