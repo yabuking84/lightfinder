@@ -77,9 +77,7 @@
 				
 				<!-- <pre>{{ bidItem }}</pre> -->
 
-				<v-flex xs12 pl-2 v-if="msgNtfctn == bidItem.id">
-					<h3 style="text-align:center;">THIS IS THE ONE!</h3>
-				</v-flex>
+				<v-flex xs12 pl-2 v-if="isFocus(bidItem.id)"><h3 style="text-align:center;">THIS IS THE ONE!</h3></v-flex>
 
 				<v-flex xs12 pl-2>
 
@@ -212,7 +210,7 @@
                             <v-flex xs12  v-if="checkIfawarded(bidItem.awarded)">
                                 <!-- <v-divider></v-divider> -->
                                 <!-- message box -->
-                                <messaging :bid="bidItem" :focus="msgNtfctn == bidItem.id"> </messaging>
+                                <messaging :bid="bidItem" ref="'ref_'+bidItem.id" :isFocused="isFocus(bidItem.id)"> </messaging>
                                 <!-- message box -->
                             </v-flex>
 
@@ -406,6 +404,10 @@ export default {
 
         },
 
+        isFocus(bid_id){
+        	return bid_id == this.focus_bid_id;
+        },
+
 
     },
 
@@ -457,7 +459,7 @@ export default {
             return config.countries;
         },
    
-    	msgNtfctn(){
+    	focus_bid_id(){
     		return this.$store.state.inq.bid_id;
     	},
 

@@ -52,6 +52,7 @@
                     @update="chatMessageEditor = $event" 
                     type="innerHTML"
                     @onEnter="sendMessage()" 
+                    :isFocused="isFocused"
                     placeholder="Type you message .."></chat-editable>
 
                     <v-btn color="green" 
@@ -96,6 +97,11 @@ import MsgBus from "@/bus/messaging";
                 default: null,
             },
 
+            isFocused: {
+                type: Boolean,
+                default: false,
+            },
+
 
         },
 
@@ -107,6 +113,8 @@ import MsgBus from "@/bus/messaging";
 
         created() {
 		    this.updateChat();
+
+	    	console.log("created "+this.bid.id+" isFocused",this.isFocused);
 
 		    var self = this;
 		    MsgBus.onNewMessage(function(data){
@@ -245,6 +253,10 @@ import MsgBus from "@/bus/messaging";
 			    },
 		    	deep: true,
         	},
+
+			isFocused(nVal, oVal){
+		    	console.log("watch "+this.bid.id+" isFocused",nVal);			
+			},
 
         },
 
