@@ -50,14 +50,15 @@ flat>
                     <template v-slot:badge  v-if="unread>0">
                         <span>{{ unread }}</span>
                     </template>
-                    <v-icon>far fa-bell</v-icon>
+                    <v-icon :class="{ bounce: isBounceNtfctns }">far fa-bell</v-icon>
                 </v-badge>
             </v-btn>
         </template>
 
-        <v-list class="notification_list" dense  v-if="notifications && notifications.length" >
+        <v-list id="notification_list" ref="notification_list" dense>
         	<!-- v-if="index <= 10" -->
-            <template v-for="(notification, index) in notifications.slice().reverse()">
+            <template v-if="notifications && notifications.length">
+            <template v-for="(notification, index) in notifications">
                 <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
                     <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
                     <v-list-tile-sub-title 
@@ -67,9 +68,27 @@ flat>
                 </v-list-tile>
                  <v-divider :key="'divider_'+index"></v-divider>
             </template>
-                <v-list-tile @click="">
+            </template>
+
+            <!-- loading for mugen infinite scroll -->
+            <mugen-scroll 
+            v-if="showNtctnsLoading"
+            :handler="fetchNtfctns" 
+            :should-handle="!ntfctnsIsLoading" 
+            :threshold="1"
+            scroll-container="notification_list">
+                <v-list-tile class="mugen-loading">
+                    <v-list-tile-sub-title style="text-align: center;">
+                    	<v-icon class="ma-4">fas fa-circle-notch fa-spin</v-icon>
+                    </v-list-tile-sub-title>
+                </v-list-tile>
+			</mugen-scroll>
+            <!-- loading for mugen infinite scroll -->
+
+
+            <!-- <v-list-tile @click="">
                 <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
-           </v-list-tile>
+           	</v-list-tile> -->
         </v-list>     
     </v-menu>
     <!-- bellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbellbell -->
@@ -80,24 +99,24 @@ flat>
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
     <v-menu offset-y transition="scale-transition" allow-overflow fixed>
         <template v-slot:activator="{ on }">
-            <v-btn flat icon v-on="on" class="ml-4">
+            <v-btn 
+            flat icon 
+            v-on="on" 
+            class="ml-4" 
+            >
                 <v-badge color="red">
                     <template v-slot:badge  v-if="unreadMsg>0" >
                         <span>{{ unreadMsg }}</span>
                         <!-- <span>99</span> -->
                     </template>
-
-                    <transition name="envelopeAnimation">
-                    	<v-icon v-if="testShow">far fa-envelope</v-icon>
-                	</transition>
-                	
-                    <v-icon>far fa-envelope</v-icon>
+                    <v-icon :class="{ bounce: isBounceMsgs }">far fa-envelope</v-icon>
                 </v-badge>
             </v-btn>
         </template>
 
-        <v-list class="notification_list" dense  v-if="notificationMsgs && notificationMsgs.length" >
-            <template v-for="(notificationMsg, index) in notificationMsgs.slice().reverse()">
+        <v-list id="message_list" ref="message_list" dense>
+            <template v-if="notificationMsgs && notificationMsgs.length">
+            <template v-for="(notificationMsg, index) in notificationMsgs">
                 <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg)">
                     <!-- <v-list-tile-title
                     :class="notification.isRead ? 'grey--text' : 'black--text'">
@@ -105,18 +124,51 @@ flat>
                     </v-list-tile-title>  -->
                     <v-list-tile-sub-title 
                     :class="notificationMsg.isRead ? 'grey--text' : 'black--text'">
-                		{{ notificationMsg.title }} 
+                		<!-- {{ notificationMsg.title }}  -->
+                		<span v-html="notificationMsg.title"></span>
                 	</v-list-tile-sub-title>
                 </v-list-tile>
-                 <v-divider :key="'divider_'+index"></v-divider>
+                 <v-divider></v-divider>
             </template>
-            <v-list-tile @click="">
+            </template>
+
+            <!-- loading for mugen infinite scroll -->
+            <mugen-scroll
+            :handler="fetchMsgs" 
+            :should-handle="!msgsIsLoading"
+            :threshold="1"
+            scroll-container="message_list">
+                <v-list-tile 
+                v-if="showMsgsLoading"
+                class="mugen-loading">
+                    <v-list-tile-sub-title style="text-align: center;">
+                    	<v-icon class="ma-4">fas fa-circle-notch fa-spin</v-icon>
+                    </v-list-tile-sub-title>
+                </v-list-tile>
+			</mugen-scroll>
+            <!-- loading for mugen infinite scroll -->
+
+            <!-- <v-list-tile @click="">
                 <v-list-tile-sub-title class="black--text text-xs-center">See All</v-list-tile-sub-title>
-           </v-list-tile>
+           	</v-list-tile> -->
         </v-list>
+
+		
     </v-menu>
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
     <!-- msg notifications -->
+
+
+	<!-- test -->
+	<!-- ttttttttttttttttttttttttttttttttttttttttt -->    
+    <!-- <v-icon 
+    :class="{ bounce: isBounce }"
+    style="margin: 0 50px 0 50px;">
+    	fas fa-frog
+	</v-icon>
+	<v-btn @click="bounce()">bounce</v-btn> -->
+	<!-- ttttttttttttttttttttttttttttttttttttttttt -->
+	<!-- test -->
 
 
 
@@ -242,6 +294,7 @@ style="cursor: pointer;">
 
 <script>
 
+
 import { mapGetters } from 'vuex'
 import config from '@/config/index'
 
@@ -250,6 +303,8 @@ import hlprs from "@/mixins/helpers";
 
 import NtfctnBus from "@/bus/notification";
 import MsgBus from "@/bus/messaging";
+
+import MugenScroll from 'vue-mugen-scroll'
 
 export default {
 data: () => ({
@@ -261,10 +316,25 @@ data: () => ({
     isReadColor: 'grey--text',
     isunReadColor: 'black--text',
 
-    testShow: false,
+    isBounceNtfctns: false,
+    isBounceMsgs: false,
+
+    msgsIsLoading: false,
+    ntfctnsIsLoading: false,
+
+    showNtctnsLoading:true,
+    showMsgsLoading:true,
+
+    offsetNtfctns:0,
+    offsetMsgs:0,
+
+    limit: 20,
 
 }),
 
+components: {
+	MugenScroll,
+},
 
 computed: {
     ...mapGetters({
@@ -317,7 +387,6 @@ computed: {
     notificationMsgs(){
         return this.$store.state.ntfctns.notificationsMsgs;
     },
-
 
 
     showSnackbar:{
@@ -374,16 +443,35 @@ methods: {
 
 
 
+    bounce(type){
+    	console.log('type = ',type)
+
+    	if(type=='notifications') {
+    		this.isBounceNtfctns = true;
+			setTimeout(() => { this.isBounceNtfctns = false; },5000);
+    	}
+    	else 
+    	if(type=='messages') {
+    		this.isBounceMsgs = true;
+			setTimeout(() => { this.isBounceMsgs = false; },5000);
+    	}
+    },
+
 
     // notifications
     // /////////////////////////////////////////////////////////
-    populateNotifications() {
-
-        this.$store.dispatch('ntfctns/populateNotifications_a')
+    resetNotifications() {
+		console.log('resetNotifications');
+    	var options = {
+    		offset: 0,
+    		limit: this.limit,
+    	};
+        this.$store.dispatch('ntfctns/populateNotifications_a', options)
         .then((response) => {
 
         	// Now notifications are done populating show snackbar
         	this.$store.commit('ntfctns/SHOW_SNACKBAR_M');
+			this.offsetNtfctns = this.limit;
         })
         .catch((e) => {
             console.log(e);
@@ -398,13 +486,19 @@ methods: {
 
     // notifications messages
     // /////////////////////////////////////////////////////////
-    populateNotificationsMsgs() {
-
-        this.$store.dispatch('ntfctns/populateNotificationsMsgs_a')
+    resetNotificationsMsgs() {
+		console.log('resetNotificationsMsgs');
+        var options = {
+    		offset: 0,
+    		limit: this.limit,
+    	};
+    	this.$store.dispatch('ntfctns/populateNotificationsMsgs_a', options)
         .then((response) => {
 
         	// Now notifications are done populating show snackbar
         	this.$store.commit('ntfctns/SHOW_SNACKBAR_M');
+
+			this.offsetMsgs = this.limit;
         })
         .catch((e) => {
             console.log(e);
@@ -429,7 +523,7 @@ methods: {
     // /////////////////////////////////////////////////////////
 
     gotoNotfication(ntfctn){
-
+    	// console.log('ntfctn',ntfctn);
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
     	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
@@ -442,17 +536,110 @@ methods: {
 
 
 
+
+    // infinite-scroll
+    //////////////////////////////////////////////////////////
+	fetchNtfctns () {
+		console.log('fetchNtfctns');
+		this.ntfctnsIsLoading = true
+
+    	var options = {
+    		offset: this.offsetNtfctns,
+    		limit: this.limit,
+    	};
+        this.$store.dispatch('ntfctns/populateNotifications_a', options)
+        .then((response) => {
+
+            if(response.count>0) {        	
+	        	// Now notifications are done populating show snackbar
+	        	this.$store.commit('ntfctns/SHOW_SNACKBAR_M');			
+				this.ntfctnsIsLoading = false;
+				this.offsetNtfctns = this.offsetNtfctns+this.limit;
+	            this.showNtctnsLoading = true;
+            }
+	        else 
+	        this.showNtctnsLoading = false;
+
+            
+        })
+        .catch((e) => {
+            console.log(e);
+        });		
+
+	},
+
+	fetchMsgs () {
+		console.log('fetchMsgs');
+        this.msgsIsLoading = true
+
+        var options = {
+    		offset: this.offsetMsgs,
+    		limit: this.limit,
+    	};
+    	this.$store.dispatch('ntfctns/populateNotificationsMsgs_a', options)
+        .then((response) => {
+
+            if(response.count>0) {
+	        	// Now notifications are done populating show snackbar
+	        	this.$store.commit('ntfctns/SHOW_SNACKBAR_M');
+		        this.msgsIsLoading = false;
+				this.offsetMsgs = this.offsetMsgs+this.limit;
+	            this.showMsgsLoading = true;
+            }
+	        else 
+	        this.showMsgsLoading = false;
+
+            // console.log("this.offsetMsgs",this.offsetMsgs);
+        })
+        .catch((e) => {
+            console.log(e);
+        });      
+
+
+	},
+
+	insertLatestNtfctn(){
+
+	},
+
+	insertLatestMsg(){
+
+        var options = {
+    		offset: 0,
+    		limit: 1,
+    		insertMethod:'unshift',
+    	};
+    	this.$store.dispatch('ntfctns/populateNotificationsMsgs_a', options)
+        .then((response) => {
+
+        })
+        .catch((e) => {
+            console.log(e);
+        });      
+
+
+	},
+
+    //////////////////////////////////////////////////////////
+    // infinite-scroll
+
+
 },
 
 created()  {
-	this.populateNotifications()
-	this.populateNotificationsMsgs()
+	// this.resetNotificationsMsgs()
+	// this.resetNotificationsMsgs()
 
     NtfctnBus.onNewNotification((data)=>{
-		this.populateNotifications()
+    	this.bounce('notifications');
+    	this.offsetNtfctns++;
+		this.insertLatestNtfctn();
+		// this.resetNotificationsMsgs();
     });
 	MsgBus.onNewMessage((data)=>{
-		this.populateNotificationsMsgs()
+    	this.bounce('messages');
+    	this.offsetMsgs++;
+		this.insertLatestMsg();
 	});
 }
 
@@ -487,10 +674,22 @@ created()  {
 	color: gray;
 }
 
-.notification_list {
+#notification_list {
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+#message_list {
 	max-height: 500px;
 	overflow-y: auto;
 }
 
 
+.mugen-loading {
+	height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 8px;
+}
 </style>

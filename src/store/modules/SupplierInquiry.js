@@ -48,10 +48,9 @@ const state = {
 
     },
     
-    inquiries: [],
-    
-    inquiry: null,
-    openInquiryView: false,
+    // inquiries: [],    
+    // inquiry: null,
+    // openInquiryView: false,
 
 }
 
@@ -59,17 +58,17 @@ const state = {
 
 const mutations = {
     
-    SHOW_OPENINQUIRYVIEW_M(state){
-        state.openInquiryView = true;
-    },
+    // SHOW_OPENINQUIRYVIEW_M(state){
+    //     state.openInquiryView = true;
+    // },
 
-    HIDE_OPENINQUIRYVIEW_M(state){
-        state.openInquiryView = false;
-    },
+    // HIDE_OPENINQUIRYVIEW_M(state){
+    //     state.openInquiryView = false;
+    // },
 
-    UPDATE_INQUIRY_M(state,data){
-        state.inquiry = data.inquiry;
-    },
+    // UPDATE_INQUIRY_M(state,data){
+    //     state.inquiry = data.inquiry;
+    // },
 
 }
 

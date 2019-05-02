@@ -20,3 +20,56 @@
 .envelopeAnimation-leave-to {
 	opacity: 0;
 }
+
+
+
+// animation
+// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+.bounce-enter {
+
+}
+.bounce-enter-active {
+	animation-duration: 2.5s;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-name: bounce;  
+}
+
+.bounce-leave {
+	
+}
+.bounce-leave-active {
+	
+}
+
+
+
+.bounce {
+  // -webkit-animation-duration: 2.5s;
+  // -webkit-animation-fill-mode: both;
+  // -webkit-animation-timing-function: linear;
+  // -webkit-animation-iteration-count: infinite;    
+  animation-duration: 2.5s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: bounce;  
+} 
+
+
+@keyframes bounce { 
+  	0%, 20%, 40%, 60%, 80%, 100% {
+  		transform: translateY(0);
+  	}
+  	30%, 50%, 70% {
+  		transform: translateY(-10px);
+  	}
+} 
+
+
+// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+// animation

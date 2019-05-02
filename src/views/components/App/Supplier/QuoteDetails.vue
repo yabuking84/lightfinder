@@ -470,7 +470,7 @@
                         });
 
                         // this.$emit('update:openInquiry', false)
-                        this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
+                        this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
                         
                   }
 

@@ -104,7 +104,13 @@
 
                 </v-layout>
             
-                <v-card v-else class="mb-3" :hover="true" :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " v-for="(bidItem, i) in bidItems" :key="'bidItem_'+i">
+                <template v-else>
+                <v-card 
+                class="mb-3" 
+                :hover="true" 
+                :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
+                v-for="(bidItem, i) in bidItems" 
+                :key="'bidItem_'+i">
     
                     <v-card-text>
 						
@@ -230,6 +236,7 @@
                     </v-card-actions>
 
                 </v-card>
+            	</template>
 
             </v-card-text>
 
@@ -379,7 +386,7 @@
 
                             // create a event bus 
                             // this.$emit('update:isClosed', true);
-                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+                              this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
 
                             inqEvntBs.emitApproved();
 
@@ -387,11 +394,11 @@
                         .catch((e) => {
                               console.log(e);
                               // this.$emit('update:isClosed', true);
-                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+                              this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
                         })
                         .finally(() => {
                             // this.$emit('update:isClosed', true);
-                              this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+                              this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
 
                         });
 
