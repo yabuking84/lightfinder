@@ -6,7 +6,15 @@
   import { replaceInvalidCharacters, cleanHTML } from '@/utils/EditorHelper'
   export default {
 
-    props: ['content', 'type'],
+    props: [
+    	'content', 
+    	'type',
+    	'isFocused', 
+    ],
+
+    created(){
+
+    },
 
 
     mounted () {
@@ -34,6 +42,26 @@
       	this.$eventBus.$off('resetChatEditor')
     },
 
+    watch:{
+		isFocused(nVal, oVal){
+	    	console.log("watch isFocused",nVal);
+
+	    	if(nVal) {
+		    	this.$refs.chateditable.focus();
+	    		console.log("this.$refs.chateditable",this.$refs.chateditable);
+		    	console.log("WATCH ISFOCUSED CHANGED!!");
+	    	}
+		},
+    },
+
+	updated(){
+    	// must run first then watch for changes
+		if(this.isFocused) {
+			this.$refs.chateditable.focus();
+			console.log("this.$refs.chateditable",this.$refs.chateditable);
+			console.log("UPDATED ISFOCUSED CHANGED!!");
+		}
+	},
 
     methods: {
 
