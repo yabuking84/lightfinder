@@ -2,11 +2,11 @@
 
   <v-img :src="backgroundImg" class="page-vimg with-header" >
     <img class="logo" src="/static/logos/logo-white.png">
-        <v-flex lg10 offset-lg1>
+        <v-flex lg12 xs12>
                  <v-container mt-5>
                   <v-layout row justify-center grid-list-xl>
 
-                        <v-flex lg5 xs12>
+                        <v-flex lg6 xs12>
 
                               <!-- heading message -->
                                   <heading-message> </heading-message>
@@ -19,7 +19,7 @@
               
                         </v-flex>
 
-                        <v-flex lg4 xs12>
+                        <v-flex lg6 xs12>
                             <v-layout row wrap>
                                     <first-step-form :type="type"> </first-step-form>
                             </v-layout>
