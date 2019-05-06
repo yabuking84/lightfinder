@@ -1,7 +1,7 @@
 <template>
 <div>
 
-	<div class="messaging-box">
+	<div class="messaging-box" :id="'mb_'+bid.id">
         <v-card color="transparent" style="" class="chat-container">
             <v-card-text class="" id="chatscroll-thread">  
 
@@ -44,7 +44,8 @@
                 <div class="pos-relative vuse-chat-message-container">
                     
                     <chat-editable 
-                    ref="cme" 
+                    ref="cme"
+                    :id="'ce_'+bid.id" 
                     readonly
                     disable
                     disabled
@@ -52,7 +53,6 @@
                     @update="chatMessageEditor = $event" 
                     type="innerHTML"
                     @onEnter="sendMessage()" 
-                    :isFocused="isFocused"
                     placeholder="Type you message .."></chat-editable>
 
                     <v-btn color="green" 
@@ -94,7 +94,9 @@ import MsgBus from "@/bus/messaging";
 
             bid: {
                 type: Object,
-                default: null,
+                default: ()=>({
+                	id: 0,
+                }),
             },
 
             isFocused: {
@@ -109,18 +111,37 @@ import MsgBus from "@/bus/messaging";
         	messages:  [],
         	chatMessageEditor:  null,
         	loading: false,
+			scrollToOptions: {
+				container: '#inquiryView',
+				easing: 'ease-in',
+				offset: -20,
+				force: true,
+				cancelable: true,
+				onStart: function(element) {
+					// scrolling started
+				},
+				onDone: function(element) {
+					// scrolling is done
+				},
+				onCancel: function() {
+					// scrolling has been interrupted
+				},
+				x: false,
+				y: true
+			},
+
         }),
 
         created() {
 		    this.updateChat();
 
-	    	console.log("created "+this.bid.id+" isFocused",this.isFocused);
+	    	// console.log("created "+this.bid.id+" isFocused",this.isFocused);
 
 		    var self = this;
 		    MsgBus.onNewMessage(function(data){
 
 				// if message box is bid
-				if(self.bid!=null && self.bid.id == data.id) {
+				if(self.bid.id!=0 && self.bid.id == data.id) {
 		    		console.log("BID onNewMessage = ",data);
 					self.updateChat();
 				}				
@@ -130,6 +151,10 @@ import MsgBus from "@/bus/messaging";
 				}
 
 		    });
+        },
+
+        mounted(){
+			this.scrolling();
         },
 
         methods: {
@@ -146,7 +171,7 @@ import MsgBus from "@/bus/messaging";
 	            	payload.type = "";
 	            	payload.id = "";
 
-					if(this.bid!=null) {					
+					if(this.bid.id!=0) {					
 						payload.type = 'bid.buyer.admin';
 						payload.id = this.bid.id;
 					}
@@ -154,6 +179,9 @@ import MsgBus from "@/bus/messaging";
 						payload.type = 'inquiry.buyer.admin';
 						payload.id = this.inquiry.id;					
 					}
+
+
+					console.log('payload',payload);
 
 		            this.$store.dispatch('msg/sendMessage_a', payload)
 		            .then(response=>{
@@ -175,7 +203,7 @@ import MsgBus from "@/bus/messaging";
             	payload.type = "";
             	payload.id = "";
 
-				if(this.bid!=null) {					
+				if(this.bid.id!=0) {					
 					payload.type = 'bid.buyer.admin';
 					payload.id = this.bid.id;
 				}
@@ -216,6 +244,19 @@ import MsgBus from "@/bus/messaging";
             	}
             },
 
+            scrolling(){
+				this.$nextTick(() => {
+					if(this.isFocused  && this.bid.id!=0) {
+						this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
+						this.$el.querySelector('#ce_'+this.bid.id).focus();
+					} else 
+					if(this.bid.id==0) {
+						this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
+						this.$el.querySelector('#ce_'+this.bid.id).focus();
+					}
+				});            	
+            },
+
 
         },
 
@@ -236,6 +277,9 @@ import MsgBus from "@/bus/messaging";
 		        return this.$store.state.auth.auth_user.avatar+')';
 		    },
 
+		    openInquiryView(){
+				return 	this.$store.state.inq.openInquiryView;
+		    },
         },
 
         watch: {
@@ -254,9 +298,10 @@ import MsgBus from "@/bus/messaging";
 		    	deep: true,
         	},
 
-			isFocused(nVal, oVal){
-		    	console.log("watch "+this.bid.id+" isFocused",nVal);			
-			},
+
+			openInquiryView(nVal, oVal){		
+				this.scrolling();
+			},			
 
         },
 

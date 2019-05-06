@@ -27,7 +27,14 @@
       	  	this.$refs['chateditable'].addEventListener('paste', this.chatEditablePastEventHandler)
       	}
       	this.$refs.chateditable.addEventListener('keypress', this.chatEditableKeypressEventHandler)
-     
+
+		// this.$nextTick(() => {
+		// 	if(this.isFocused) {
+		// 		this.$refs.chateditable.focus();
+		// 		console.log("UPDATED this.$refs.chateditable",this.$refs.chateditable);
+		// 		console.log("UPDATED ISFOCUSED CHANGED!!");
+		// 	}
+		// });
     },
 
 
@@ -42,26 +49,6 @@
       	this.$eventBus.$off('resetChatEditor')
     },
 
-    watch:{
-		isFocused(nVal, oVal){
-	    	console.log("watch isFocused",nVal);
-
-	    	if(nVal) {
-		    	this.$refs.chateditable.focus();
-	    		console.log("this.$refs.chateditable",this.$refs.chateditable);
-		    	console.log("WATCH ISFOCUSED CHANGED!!");
-	    	}
-		},
-    },
-
-	updated(){
-    	// must run first then watch for changes
-		if(this.isFocused) {
-			this.$refs.chateditable.focus();
-			console.log("this.$refs.chateditable",this.$refs.chateditable);
-			console.log("UPDATED ISFOCUSED CHANGED!!");
-		}
-	},
 
     methods: {
 
@@ -109,6 +96,7 @@
 	    },
 
     },
+
 
 
 

@@ -74,6 +74,7 @@ export default {
 
 
     isRole(roleName){
+
         var retVal = false;
 
         if(roleName == 'admin') {
@@ -87,6 +88,7 @@ export default {
         }
 
         return retVal;
+        
     },
 
 

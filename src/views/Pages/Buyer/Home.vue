@@ -9,16 +9,16 @@
 			<v-layout row wrap>
 
 		        <v-flex xs12>
-		             <bar-card> </bar-card>
+		             <bar-card user-type="buyer"> </bar-card>
 		        </v-flex>
 
-				<v-flex xs12 md3>
+				<!-- <v-flex xs12 md3>
 			           <notification-list> </notification-list>
 			    </v-flex>
 
 	            <v-flex xs12 md9>
 	           			<notification-table> </notification-table>
-	            </v-flex>
+	            </v-flex> -->
 
 			</v-layout>
 
@@ -29,8 +29,9 @@
 
 <script>
 
+import BarCard from '@/views/components/App/BarCard'
+
 import NotificationList from '@/views/components/App/Admin/NotificationList'
-import BarCard from '@/views/components/App/Admin/BarCard'
 import NotificationTable from '@/views/components/App/Admin/NotificationTable'
 
 export default {

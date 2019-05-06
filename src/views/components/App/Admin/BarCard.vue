@@ -6,10 +6,12 @@
           <template v-for="(dataItem, index) in revenueTrend.data">
             <v-flex xs12 sm6 md2 :key="index">
               <v-card flat class="transparent text-xs-center box-glow pa-2" dark>
-                <v-card-title class="pa-0">
+                
+                <!-- <v-card-title class="pa-0">
                   <component :is="dataItem.type" :data="dataItem.chartData" :gradient="dataItem.trendGradient" auto-draw smooth>
                   </component>
-                </v-card-title>
+                </v-card-title> -->
+
                 <v-card-text class="pa-0 mt-2">
                   <h3 class="headline">{{ dataItem.statistic }}</h3>
                   <p class="subheading font-light-weight">{{ dataItem.title }}</p>
@@ -29,7 +31,7 @@ export default {
 
     revenueTrend: {
 
-      jumbotron: 'to right top, #241d3b, #473974',
+      // jumbotron: 'to right top, #241d3b, #473974',
       data: [{
           type: 'bars',
           title: 'Total Buyer',
