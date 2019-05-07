@@ -239,9 +239,7 @@
 	</v-card>   
 
 
-	<span>		
-	  	<inquiry-view></inquiry-view>		
-	</span>
+  	<!-- <inquiry-view></inquiry-view> -->
 
 
 
@@ -255,7 +253,7 @@ import inqEvntBs from "@/bus/inquiry";
 
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
-import InquiryView from "@/views/Components/App/Buyer/InquiryView";
+// import InquiryView from "@/views/Components/App/Buyer/InquiryView";
 import config from "@/config/main"
 
 import isotope from 'vueisotope'
@@ -271,7 +269,7 @@ export default {
 
 	components: {
 		InquiryStatusButtons,
-		InquiryView,
+		// InquiryView,
 		isotope
 	},
 

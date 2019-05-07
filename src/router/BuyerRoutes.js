@@ -13,6 +13,7 @@ import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
 import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerPackages from '@/views/Pages/Buyer/Packages'
+import BuyerInquiryView from "@/views/Components/App/Buyer/InquiryView";
 
 
 import test from '@/views/Components/App/test'
@@ -46,6 +47,7 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: BuyerInquiryView,
         },
         meta: meta,
     },
@@ -53,11 +55,12 @@ export default [
     {
         name: 'BuyerInquiry',
         path: '/buyer/inquiry',
-        components: { 
+        components: {
             default: BuyerInquiry, 
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: BuyerInquiryView,
         },
         meta: meta,
     },

@@ -9,10 +9,12 @@
                         
                         <v-card 
                         flat dark
-                        class="text-xs-center box-glow pa-2"                        
+                        class="text-xs-center box pa-2"                        
 						:class="[status.class]">
-                            <v-card-text class="pa-0 mt-2 mb-3 ">
-                                <h3 class="headline">2</h3>
+                            <v-card-text class="pa-0 mt-2 mb-2 ">
+                                <h3 class="headline">
+                                	{{ getStatusCount(status.id) }}
+                                </h3>
 								<v-layout>
 									<v-flex text-xs-right>
 										<v-icon
@@ -21,6 +23,7 @@
 											{{ status.icon }}
 										</v-icon>
 									</v-flex>
+
 									<v-flex 
 									text-xs-left pl-0
 									class="v-centered">
@@ -51,18 +54,25 @@ data: () => ({
 }),
 
 
+methods: {
+	getStatusCount(status_id){
+
+
+		return status_id;
+	},
+},
+
+
 computed:{
 
-	statuses(){
-
-		
+	statuses(){		
 
 		var statuses = [
 			...config.inquiry_statuses.default,
 			...config.inquiry_statuses.buyers,
 		];
 
-		console.log(statuses);
+		// console.log(statuses);
 		return statuses;
 	},
 
@@ -84,6 +94,17 @@ computed:{
 .v-centered {
     align-items: center;
     display: inline-flex;
+}
+
+
+.box {
+	-webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,0.2), 0 13px 24px -11px rgba(255,255,255,0.6);
+	box-shadow: 0 5px 20px 0 rgba(0,0,0,0.2), 0 13px 24px -11px rgba(255,255,255,0.6);
+	
+	.headline {
+	    font-size: 35px !important;
+	    margin-left: -10px;
+	}
 }
 	
 </style>

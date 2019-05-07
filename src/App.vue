@@ -10,6 +10,10 @@
 
 
         <router-view name="footer"/>
+
+        
+        <router-view name="dialog"/>
+
     </v-app>
 </template>
 <script>

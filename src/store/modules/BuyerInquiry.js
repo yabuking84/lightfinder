@@ -73,16 +73,17 @@ const mutations = {
     
 const actions = {
 
-    getInquiries_a(context){
-    	
+    getInquiries_a(context, data){    	
         return new Promise((resolve, reject) => {
             var headers = {token:localStorage.access_token};
             // console.log(state.api.getInquiries.url);
             // console.log(state.api.getInquiries.method);
             // console.log(headers);
+            var stage_id = (typeof data.stage_id === "undefiend")?"stage_id="+data.stage_id:"";
+
             axios({
                 method: state.api.getInquiries.method,
-                url: state.api.getInquiries.url,
+                url: state.api.getInquiries.url+"?"+stage_id,
                 headers: headers,
             })
             .then(response => {
