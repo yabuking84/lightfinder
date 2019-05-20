@@ -28,12 +28,14 @@
 	    </v-toolbar>
 
 		<!-- Displaying new -->
+
         <v-card-text id="inquiryCreate_scrollable_cont">
 
             <v-layout row wrap>
                   
                 <v-flex xs7 style="max-height:77vh; overflow:hidden; overflow-y:auto;">
                    <v-card class="inqCurved">
+
                         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
                           <v-stepper v-model="stepCnt" class="stepperClass" vertical>
@@ -42,6 +44,7 @@
 
                               <h2>Hello {{ $store.state.auth.auth_user.name }}! Tell us what you want.</h2>
                               <small>The more data you provide the better we can choose suppliers for you.</small>
+                              
                             </v-stepper-step>
 
                             <v-stepper-content step="1">
@@ -146,7 +149,6 @@
 								
 
 								<!-- preview of the edit images here can be removable -->
-
 
                                 </v-container>
                                 <v-btn color="primary" @click="stepUp()">next</v-btn>

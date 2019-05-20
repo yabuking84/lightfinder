@@ -51,14 +51,17 @@
                             <v-flex xs12>
                             
                                 <v-layout row wrap>
+                                	
                                     <v-flex xs4 pa-2>
                                         <h5 class="font-weight-thin">Quantity</h5>
                                         <h3>{{ inquiry.quantity }} pcs</h3>
                                     </v-flex>
+
                                     <v-flex xs4 pa-2>
                                         <h5 class="font-weight-thin">Unit Price</h5>
                                         <h3>${{ bid.price }}</h3>
                                     </v-flex>
+
                                     <v-flex xs4 pa-2>
                                         <h5 class="font-weight-thin">Total Price</h5>
                                         <h2>${{ bid.total_price }}</h2>
@@ -470,7 +473,7 @@
                         });
 
                         // this.$emit('update:openInquiry', false)
-                        this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+                        this.$store.commit('spplrInq/HIDE_OPENINQUIRYVIEW_M');
                         
                   }
 
