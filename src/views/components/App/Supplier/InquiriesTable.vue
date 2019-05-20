@@ -221,9 +221,9 @@
                   
     </v-card>
 
-    <span>
+    <!-- <span>
       <inquiry-view></inquiry-view>
-    </span>
+    </span> -->
 
   </div>
 </template>
@@ -231,7 +231,7 @@
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
-import InquiryView from "@/views/Components/App/Supplier/InquiryView";
+// import InquiryView from "@/views/Components/App/Supplier/InquiryView";
 import isotope from 'vueisotope'
 
 import config from "@/config/main"
@@ -241,7 +241,7 @@ import config from "@/config/main"
 export default {
     components: {
         InquiryStatusButtons,
-        InquiryView,
+        // InquiryView,
         isotope
     },
 

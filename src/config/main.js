@@ -93,7 +93,7 @@ export default {
 			{
 				id: 3001, 
 				name: "Success",
-				class: "light-blue ",
+				class: "light-blue",
 				icon: "far fa-check-circle",
 
 			},

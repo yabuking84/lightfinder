@@ -38,44 +38,11 @@ import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
 import SuperChat from '@/views/Pages/SuperChat'
 
 
-const routes = 
-[
-    // so that when logged out and / is accessed it will got to logout.
-    {
-        path: '/superchat',
-        name: 'SuperChat',
-        components: { 
-            default: SuperChat,             
-        },        
-    },
-    {
-        path: '/',
-        name: 'Home',
-        meta: {
-            requiresAuth: true,
-            redirectToRole: true,
-        },
-    },
-    {
-        path: '/login',
-        name: 'Login',
-        component: LoginPage,
-    },
-    {
-        path: '/logout',
-        name: 'Logout',
-        component: LogoutPage,
-    },
-]
-
-
-
 
 // PAGES
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-var i;
 import AdminRoutes from '@/router/AdminRoutes.js'
 import BuyerRoutes from '@/router/BuyerRoutes.js'
 import SupplierRoutes from '@/router/SupplierRoutes.js'
@@ -86,15 +53,16 @@ import SupplierRoutes from '@/router/SupplierRoutes.js'
 // console.log('store.state.auth.auth_user.role')
 
 // Push routes here
-for (i = 0; i < AdminRoutes.length; i++) {     
-    routes.push(AdminRoutes[i]);
-}
-for (i = 0; i < BuyerRoutes.length; i++) {     
-    routes.push(BuyerRoutes[i]);
-}
-for (i = 0; i < SupplierRoutes.length; i++) {
-    routes.push(SupplierRoutes[i]);
-}
+// var i;
+// for (i = 0; i < AdminRoutes.length; i++) {     
+//     routes.push(AdminRoutes[i]);
+// }
+// for (i = 0; i < BuyerRoutes.length; i++) {     
+//     routes.push(BuyerRoutes[i]);
+// }
+// for (i = 0; i < SupplierRoutes.length; i++) {
+//     routes.push(SupplierRoutes[i]);
+// }
 
 
 
@@ -125,6 +93,44 @@ for (i = 0; i < SupplierRoutes.length; i++) {
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // PAGES
+
+
+const routes = 
+[
+    // so that when logged out and / is accessed it will got to logout.
+    {
+        path: '/superchat',
+        name: 'SuperChat',
+        components: { 
+            default: SuperChat,             
+        },        
+    },
+    {
+        path: '/',
+        name: 'Home',
+        meta: {
+            requiresAuth: true,
+            redirectToRole: true,
+        },
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: LoginPage,
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: LogoutPage,
+    },
+
+    ...AdminRoutes,
+    ...BuyerRoutes,
+    ...SupplierRoutes,
+]
+
+
+
 
 
 

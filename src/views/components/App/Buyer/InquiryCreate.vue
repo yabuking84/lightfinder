@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen >
+    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen lazy>
 
       <v-card>
 
@@ -28,12 +28,13 @@
 	    </v-toolbar>
 
 		<!-- Displaying new -->
-
-        <v-card-text id="inquiryCreate_scrollable_cont">
+        <v-card-text>
 
             <v-layout row wrap>
                   
-                <v-flex xs7 style="max-height:77vh; overflow:hidden; overflow-y:auto;">
+                <v-flex xs7 
+                id="inquiryCreate_scrollable_cont"
+                style="max-height:77vh; overflow:hidden; overflow-y:auto;">
                    <v-card class="inqCurved">
 
                         <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">

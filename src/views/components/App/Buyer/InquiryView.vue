@@ -1,42 +1,66 @@
 <template>
 
 <!-- <div id="test" v-if="openInquiry" :value="openInquiry" @input="$emit('update:openInquiry', false)"></div> -->
+<div>
 
 
-
-<v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen>
+<v-dialog 
+:value="openInquiry" 
+@input="$emit('update:openInquiry', false)" 
+lazy
+fullscreen
+scrollable>
     <v-card>
-		<v-toolbar dark color="grey darken-4 ">
-		    <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2>
-		    <v-spacer></v-spacer>
-		    <v-toolbar-items>
-		        <v-btn dark flat @click="closeOpenInquiry()">
-		            <v-icon>close</v-icon>
-		        </v-btn>
-				
 
-		    </v-toolbar-items>
-		</v-toolbar>
+    	<v-card-title class="black darken-4 ">
+			<h2 v-if="inquiry" class="font-weight-bold white--text">INQUIRY # {{ inquiry.id }}</h2>
+			<v-spacer></v-spacer>
+	        <v-btn dark flat @click="closeOpenInquiry()">
+	            <v-icon>close</v-icon>
+	        </v-btn>
 
-		<v-container fluid grid-list-xl>
-		    <v-layout row wrap>
+			<!-- <v-toolbar dark color="grey darken-4 ">
+			    <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2>
+			    <v-spacer></v-spacer>
+			    <v-toolbar-items>
+			        <v-btn dark flat @click="closeOpenInquiry()">
+			            <v-icon>close</v-icon>
+			        </v-btn>
+			    </v-toolbar-items>
+			</v-toolbar> -->
 
-		        <!-- inquiry details card -->
-		        <v-flex xs5>
-		            <inquiry-details-card :openInquiry="openInquiry" v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
-		        </v-flex>
-		        <!-- end of detils  -->
+    	</v-card-title>
+        <v-divider></v-divider>
 
-		        <!-- supplier quote / bids -->
-		        <v-flex xs7>
-		            <inquiry-post-list :openInquiry="openInquiry" v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
-		        </v-flex>
-		        <!-- supplier quote -->
+        <v-card-text id="inquiryView">
+			<v-container fluid grid-list-xl>
+			    <v-layout row wrap>
 
-		    </v-layout>
-		</v-container>	
+			        <!-- inquiry details card -->
+			        <v-flex xs5>
+			            <inquiry-details-card :openInquiry="openInquiry" v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
+			        </v-flex>
+			        <!-- end of detils  -->
+
+			        <!-- supplier quote / bids -->
+			        <v-flex xs7>
+			            <inquiry-post-list :openInquiry="openInquiry" v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
+			        </v-flex>
+			        <!-- supplier quote -->
+
+			    </v-layout>
+			</v-container>	
+
+	   	</v-card-text>
+
+        <!-- <v-divider></v-divider>
+	   	<v-card-actions></v-card-actions> -->
+
 	
     </v-card>
+
+</v-dialog>   
+
 
 <v-snackbar
         v-model="successSnackbar"
@@ -57,10 +81,7 @@
         </v-btn>
   </v-snackbar>
 
-</v-dialog>   
-
-
-
+</div>
 
 
 
@@ -146,6 +167,13 @@ export default {
         inqEvntBs.$on('edited-inquiry', () => {
             this.successSnackbar = true;
         });
+
+	},
+
+	mounted(){
+		// console.log('querySelector',this.$refs);
+		// console.log('querySelector',this.$refs.inquiryView);
+		// console.log('querySelector',this.$el);
 
 	},
 }

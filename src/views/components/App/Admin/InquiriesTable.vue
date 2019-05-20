@@ -251,10 +251,10 @@
 
 </v-card>
 
-
+<!-- 
 <span>
     <inquiry-view></inquiry-view>
-</span>    
+</span>     -->
 
 
 
@@ -274,7 +274,7 @@ import config from "@/config/main"
 import VueTimers from 'vue-timers/mixin'
 import isotope from 'vueisotope'
 
-import InquiryView from "@/views/Components/App/admin/InquiryView";
+// import InquiryView from "@/views/Components/App/admin/InquiryView";
 
 
 export default {
@@ -282,9 +282,16 @@ export default {
   mixins: [
     helpers,
     VueTimers,
-    
-
   ],
+
+  components: {
+
+    InquiryStatusButtons,
+    // InquiryView,
+    isotope
+
+  },
+  
   data: function() {
     return {
 
@@ -384,13 +391,7 @@ export default {
 
     }
   },
-  components: {
 
-    InquiryStatusButtons,
-    InquiryView,
-    isotope
-
-  },
 
 
   methods: {

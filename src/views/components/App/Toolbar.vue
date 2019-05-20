@@ -7,7 +7,6 @@ v-if="toolbar"
 :class="navToolbarScheme" 
 :clipped-left="toolbarClippedLeft" 
 background-color="red"
-:style="style"
 app 
 flat>
 
@@ -19,7 +18,7 @@ flat>
       icon
       light
       class="hidden-md-and-down"
-      @click.stop="toggleMiniVariantMode"
+      @click.stop="toggleMiniVariantMode" 
     >
       <v-tooltip bottom v-if="navMiniVarient" color="sidebar">
         <v-icon slot="activator">fas fa-arrow-circle-right</v-icon>
@@ -48,7 +47,7 @@ flat>
             <v-btn flat icon v-on="on">
                 <v-badge color="red">
                     <template v-slot:badge  v-if="unread>0">
-                        <span>{{ unread }}</span>
+                        <span style="font-size:10px;">{{ unread }}</span>
                     </template>
                     <v-icon :class="{ bounce: isBounceNtfctns }">far fa-bell</v-icon>
                 </v-badge>
@@ -97,7 +96,7 @@ flat>
 
     <!-- msg notifications -->
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
-    <v-menu offset-y transition="scale-transition" allow-overflow fixed>
+    <v-menu v-if="!isRole('supplier')" offset-y transition="scale-transition" allow-overflow fixed>
         <template v-slot:activator="{ on }">
             <v-btn 
             flat icon 
@@ -106,7 +105,7 @@ flat>
             >
                 <v-badge color="red">
                     <template v-slot:badge  v-if="unreadMsg>0" >
-                        <span>{{ unreadMsg }}</span>
+                        <span style="font-size:10px;">{{ unreadMsg }}</span>
                         <!-- <span>99</span> -->
                     </template>
                     <v-icon :class="{ bounce: isBounceMsgs }">far fa-envelope</v-icon>
@@ -177,13 +176,16 @@ flat>
     <!-- devMode -->
     <!-- dddddddddddddddddddddddddddddddddddddddddd -->
     <template v-if="devMode">
-    <v-btn @click="testShow=!testShow">
-        <h3>{{ authUser.email }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <h3>{{ authUser.name }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <h3>{{ authUser.uuid }}</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <h3 v-if="authUser.role==roles.admin.id">ADMIN</h3>
-        <h3 v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
-        <h3 v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
+    <v-btn 
+    @click="testShow=!testShow" 
+    style="text-transform: none;"
+	:style="style">
+        <h3 class="mr-4 ml-4">{{ authUser.email }}</h3>
+        <h3 class="mr-4">{{ authUser.name }}</h3>
+        <!-- <h3 class="mr-4">{{ authUser.uuid }}</h3> -->
+        <h3 class="mr-4" v-if="authUser.role==roles.admin.id">ADMIN</h3>
+        <h3 class="mr-4" v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
+        <h3 class="mr-4" v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
     </v-btn>
     </template>
     <!-- dddddddddddddddddddddddddddddddddddddddddd -->
@@ -220,7 +222,7 @@ flat>
             <br>
 
             <v-divider></v-divider>
-
+<!-- 
             <v-list-tile @click="() => {}">
                 <v-list-tile-avatar>
                     <v-icon>person</v-icon>
@@ -241,7 +243,7 @@ flat>
                 </v-list-tile-avatar>
                 <v-list-tile-title>Inbox</v-list-tile-title>
             </v-list-tile>
-
+ -->
             <v-divider></v-divider>
 
             <v-list-tile @click="logout()">
@@ -307,6 +309,10 @@ import MsgBus from "@/bus/messaging";
 import MugenScroll from 'vue-mugen-scroll'
 
 export default {
+mixins:[
+	hlprs
+],
+
 data: () => ({
     title: 'BuyAnyLight.com',
     roles: config.auth.role,
@@ -412,11 +418,11 @@ computed: {
         // Dev mode, some markers for easier to know the user and type.
         if(this.devMode) {
             if(hlprs.methods.isRole("admin"))
-            style = 'background-color:yellow !important;';
+            style = 'background-color:yellow !important; color:#fff;';
             else if(hlprs.methods.isRole("buyer"))
-            style = 'background-color:blue !important;';
+            style = 'background-color:blue !important; color:#fff;';
             else if(hlprs.methods.isRole("supplier"))
-            style = 'background-color:red !important;';
+            style = 'background-color:red !important; color:#fff;';
         }
         
         return style;

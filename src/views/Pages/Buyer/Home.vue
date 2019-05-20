@@ -1,36 +1,42 @@
 <template>
+<div>
 	
 	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
 	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
 	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
 
-	<div>
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 
 		        <v-flex xs12>
-		             <bar-card> </bar-card>
+		             <bar-card user-type="buyer"> </bar-card>
 		        </v-flex>
 
-				<v-flex xs12 md3>
+				<!-- <v-flex xs12 md3>
 			           <notification-list> </notification-list>
-			    </v-flex>
+			    </v-flex> -->
 
-	            <v-flex xs12 md9>
-	           			<notification-table> </notification-table>
+	            <v-flex xs4>
+	           			<pending-payments> </pending-payments>
 	            </v-flex>
 
 			</v-layout>
 
 		</v-container>
-	</div>
 
+
+
+
+</div>
 </template>
 
 <script>
 
+
+import BarCard from '@/views/components/App/BarCard'
+import PendingPayments from '@/views/components/App/Buyer/PendingPayments'
+
 import NotificationList from '@/views/components/App/Admin/NotificationList'
-import BarCard from '@/views/components/App/Admin/BarCard'
 import NotificationTable from '@/views/components/App/Admin/NotificationTable'
 
 export default {
@@ -40,11 +46,8 @@ export default {
 	}),
 
 	components: {
-
-		NotificationList,
 	    BarCard,
-	    NotificationTable
-	    
+	    PendingPayments,
 	},
 
 	computed: {

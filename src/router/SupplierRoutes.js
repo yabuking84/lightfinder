@@ -10,6 +10,7 @@ import config from '@/config/index'
 
 import SupplierHome from '@/views/Pages/Supplier/Home'
 import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
+import SupplierInquiryView from "@/views/Components/App/Supplier/InquiryView";
 
 import Register from '@/views/Pages/Supplier/Register'
 import RegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
@@ -43,6 +44,7 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: SupplierInquiryView,
         },
         meta: meta
     },
@@ -55,6 +57,7 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: SupplierInquiryView,
         },
         meta: meta
     },
@@ -64,7 +67,7 @@ export default [
         name: 'SupplierRegistration' ,
         path: '/supplier/register',
         components: { 
-            default: Register, 
+            default: Register,             
         }
     },
 

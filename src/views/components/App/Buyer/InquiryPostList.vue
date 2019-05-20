@@ -3,7 +3,9 @@
     <v-toolbar color="grey darken-4" class="white--text">
       <v-toolbar-title class="subheading font-weight-light">Bids</v-toolbar-title>
     </v-toolbar>
-    <v-card class="pa-3">
+    
+    <v-card 
+    class="pa-3">
         
         <!-- <h1 class="font-weight-light subheading">Layout</h1> -->
   
@@ -77,7 +79,13 @@
 				
 				<!-- <pre>{{ bidItem }}</pre> -->
 
-				<v-flex xs12 pl-2 v-if="isFocus(bidItem.id)"><h3 style="text-align:center;">THIS IS THE ONE!</h3></v-flex>
+				<v-flex xs12 pl-2>
+					<h3>Bid #{{ bidItem.id }}</h3>
+				</v-flex>
+
+				<!-- <v-flex xs12 pl-2 v-if="isFocus(bidItem.id)">
+					<h3 style="text-align:center;">THIS IS THE ONE!</h3>
+				</v-flex> -->
 
 				<v-flex xs12 pl-2>
 
@@ -210,7 +218,10 @@
                             <v-flex xs12  v-if="checkIfawarded(bidItem.awarded)">
                                 <!-- <v-divider></v-divider> -->
                                 <!-- message box -->
-                                <messaging :bid="bidItem" ref="'ref_'+bidItem.id" :isFocused="isFocus(bidItem.id)"> </messaging>
+                                <messaging
+                                :bid="bidItem" 
+                                ref="'ref_'+bidItem.id" 
+                                :isFocused="isFocus(bidItem.id)"></messaging>
                                 <!-- message box -->
                             </v-flex>
 
@@ -338,7 +349,7 @@ export default {
 
                this.bidItems = response;
 
-               console.log(response);
+               // console.log(response);
 
                // console.log('============================================')
                // console.log(this.bidItems);
@@ -464,6 +475,7 @@ export default {
     	},
 
     },
+
 
 
 }

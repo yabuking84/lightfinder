@@ -2,22 +2,23 @@
   <div>
 	<v-card>
 
-	  <v-layout row wrap mb-3>
+	  	<v-layout row wrap mb-3>
 		<v-toolbar dark color="grey darken-4">
-		  <v-btn-toggle multiple v-model="inquiryStatus">
-			<span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
-			  <v-btn flat :value="status.id" :title="status.name">
-				<i class="white--text" :class="status.icon"></i>
-				<!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
-			  </v-btn>
-			</span>
-		  </v-btn-toggle>
-		  <v-spacer></v-spacer>
-		  <v-btn icon @click="refresh()">
-			<v-icon>refresh</v-icon>
-		  </v-btn>
+			<v-btn-toggle multiple v-model="inquiryStatus">
+				<span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
+					<v-btn flat :value="status.id" :title="status.name">
+						<v-icon>{{ status.icon }}</v-icon>
+						<!-- <i class="white--text" :class="status.icon"></i> -->
+						<!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
+					</v-btn>
+				</span>
+			</v-btn-toggle>
+			<v-spacer></v-spacer>
+			<v-btn icon @click="refresh()">
+				<v-icon>refresh</v-icon>
+			</v-btn>
 		</v-toolbar>
-	  </v-layout>
+	  	</v-layout>
 
 
 	<v-card-title>
@@ -27,12 +28,28 @@
 		 
 
 		<v-flex xs4>
-			<v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="name" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="Select categories..">
-			  <template v-slot:selection="slotData">
-				<v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
-				  {{ slotData.item.name }}
-				</v-chip>
-			  </template>
+			<v-autocomplete 
+			v-model="categories" 
+			:items="categoryItems" 
+			item-text="name" 
+			item-value="name" 
+			ref="categorySelect" 
+			cache-items 
+			chips 
+			multiple 
+			hide-no-data 
+			clearable 
+			hide-details 
+			label="Select categories..">
+				<template v-slot:selection="slotData">
+					<v-chip 
+					:selected="slotData.selected" 
+					close 
+					class="chip--select-multi" 
+					@input="removeFromCategories(slotData.item)">
+						{{ slotData.item.name }}
+					</v-chip>
+				</template>
 			</v-autocomplete>
 		  </v-flex>
 	
@@ -113,119 +130,64 @@
 			:hover="true"  
 			@click="viewInquiry(inquiry)">
 
-		   
-
-			
 				<v-layout row wrap>
+				    <v-flex xs6>
+				        <h3 class="grey--text lighten-4">Inquiry</h3>
+				        <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
+				    </v-flex>
 
-						 <v-flex xs6>
-
-						  <h3 class="grey--text lighten-4">Inquiry</h3>
-						  <h4 class="mt-2 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
-
-						</v-flex>
-
-						<v-flex xs6>
-						  <h3 class="grey--text">Date</h3>
-						  <h4 class="mt-2 font-weight-medium ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
-						</v-flex>   
-
+				    <v-flex xs6>
+				        <h3 class="grey--text">Date</h3>
+				        <h4 class="mt-2 font-weight-medium ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
+				    </v-flex>
 				</v-layout>
 
-				<v-layout  row wrap mt-2>
-
-						 <v-flex xs6>
-							  <h3 class="grey--text lighten-4">Quantity</h3>
-							  <h4 class="mt-3  font-weight-medium ">{{ inquiry.quantity }} pcs</h4>
-						</v-flex>
-						<!-- {{ inquiry }} -->
-						<v-flex xs6>
-						  <h3 class="grey--text lighten-4">Status</h3>
-
-						  <template v-if="false">
-						  <!-- verifying -->
-						   <div v-if="inquiry.status==1001">
-								<small class="orange--text">Inquiry sent for BAL approval</small>
-						   </div>
-						   <!-- open -->
-						   <div v-else-if="inquiry.status==1002">
-								<small class="green--text">Approved inquiry, open for bidding</small>
-						   </div>
-						   <!-- rejected -->
-						   <div v-else-if="inquiry.status==1003">
-								<small class="red--text">Declined by BAL</small>
-						   </div>
-						   <!-- confirmation-->
-						   <div v-else-if="inquiry.status==1004">
-								<small class="teal--text">Waiting for supplier confirmation</small>
-						   </div>
-						   <!-- pending payment-->
-							<div v-else-if="inquiry.status==1005">
-								<small class="deep-orange--text">Waiting for your payment</small>
-						   </div>
-						   <!-- Production -->
-						   <div v-else-if="inquiry.status==2001">
-								<small class="blue--text">Products are on the production line</small>
-						   </div>
-						   <!-- Shipment -->
-						   <div v-else-if="inquiry.status==2002">
-								<small class="light-green--text">Order is sent for shipment</small>
-						   </div>
-						   <!-- Receiving -->
-						   <div v-else-if="inquiry.status==2003">
-								<small class="orange--text">Order reached the destination, waiting for buyer confirmation</small>
-						   </div>
-						   <!-- Return -->
-						   <div v-else-if="inquiry.status==2004">
-								<small class="red--text">Order is returning to the supplier</small>
-						   </div>
-						   <!-- Success -->
-						   <div v-else-if="inquiry.status==3001">
-								<small class="light-blue--text">Order is successful</small>
-						   </div>
-						   <!-- Cancelled -->
-						   <div v-else-if="inquiry.status==3002">
-								<small class="red--text">Order is cancelled</small>
-						   </div>
-						   </template>
-							<inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
-						</v-flex>   
-
-				</v-layout>
 
 
 				<v-layout row wrap mt-2>
-		  
-						 <v-flex xs12>
-							 <h3 class="mt-2 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
-						</v-flex>
+				    <v-flex xs6>
+				        <h3 class="grey--text lighten-4">Quantity</h3>
+				        <h4 class="mt-3  font-weight-medium ">{{ inquiry.quantity }} pcs</h4>
+				    </v-flex>
+				    <!-- {{ inquiry }} -->
+				    <v-flex xs6>
+				        <h3 class="grey--text lighten-4">Status</h3>
 
+				        <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
+				    </v-flex>
 				</v-layout>
+
+
+
+				<v-layout row wrap mt-2>
+				    <v-flex xs12>
+				        <h3 class="mt-2 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
+				    </v-flex>
+				</v-layout>
+
 
 
 				<v-layout row wrap mt-2 class="tnt-height">
-		  
-						 <v-flex xs12>
-							  <!-- <h4 class="font-weight-medium black--text lighten-4">Details</h4> -->
-							  <h5 class="mt-2 black--text font-weight-light">
-								  {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
-							  </h5>
-						</v-flex>
-
+				    <v-flex xs12>
+				        <!-- <h4 class="font-weight-medium black--text lighten-4">Details</h4> -->
+				        <h5 class="mt-2 black--text font-weight-light">
+							{{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
+						</h5>
+				    </v-flex>
 				</v-layout>
 
 
-				 <v-layout row wrap mt-4 >
-		  
-						 <v-flex xs12 class="text-xs-center">
-								<v-btn @click="viewInquiry(inquiry)" :loading="inquiry.loading" block small class=" v-btn--active blue-grey darken-2 font-weight-light text-decoration-none">
-									<i class="fas fa-eye white--text"></i>
-									<span class="ml-1 white--text font-weight-light ">Manage</span>
-								  </v-btn>
 
-						</v-flex>
+				<v-layout row wrap mt-4>
+				    <v-flex xs12 class="text-xs-center">
+				        <v-btn @click="viewInquiry(inquiry)" :loading="inquiry.loading" block small class=" v-btn--active blue-grey darken-2 font-weight-light text-decoration-none">
+				            <i class="fas fa-eye white--text"></i>
+				            <span class="ml-1 white--text font-weight-light ">Manage</span>
+				        </v-btn>
 
+				    </v-flex>
 				</v-layout>
+
 			</v-card>
 
 
@@ -277,9 +239,7 @@
 	</v-card>   
 
 
-	<span>		
-	  	<inquiry-view></inquiry-view>		
-	</span>
+  	<!-- <inquiry-view></inquiry-view> -->
 
 
 
@@ -293,7 +253,7 @@ import inqEvntBs from "@/bus/inquiry";
 
 import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
-import InquiryView from "@/views/Components/App/Buyer/InquiryView";
+// import InquiryView from "@/views/Components/App/Buyer/InquiryView";
 import config from "@/config/main"
 
 import isotope from 'vueisotope'
@@ -309,7 +269,7 @@ export default {
 
 	components: {
 		InquiryStatusButtons,
-		InquiryView,
+		// InquiryView,
 		isotope
 	},
 

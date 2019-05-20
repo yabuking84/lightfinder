@@ -420,8 +420,8 @@ const actions = {
                 inq_id: ntfctn.data.id
             }, {root:true})
             .then((data) => {
-    			console.log('data',data);    			
-    			console.log('ntfctn',ntfctn);    			
+    			// console.log('data',data);    			
+    			// console.log('ntfctn',ntfctn);    			
 
     			// serach BID
     			// var bid = null;

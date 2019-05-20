@@ -6,6 +6,7 @@ import AdminHome from '@/views/Pages/Admin/Home'
 import AdminInquiry from '@/views/Pages/Admin/Inquiry'
 import AdminBuyer from '@/views/Pages/Admin/Buyer'
 import AdminSupplier from '@/views/Pages/Admin/Supplier'
+import AdminInquiryView from "@/views/Components/App/admin/InquiryView";
 
 import config from '@/config/index'
 
@@ -46,6 +47,7 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: AdminInquiryView,
         },
         meta: meta,
          props: { default:true },
@@ -59,6 +61,7 @@ export default [
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: AdminInquiryView,
         },
         meta: meta,
         props: { default:true },
@@ -71,7 +74,8 @@ export default [
             default: AdminBuyer,
             sidebar: AppSidebar,
             header: AppToolbar,
-            footer: AppFooter
+            footer: AppFooter,
+            dialog: AdminInquiryView,
         },
         meta: meta,
         props: { default:true },
@@ -84,7 +88,8 @@ export default [
             default: AdminSupplier,
             sidebar: AppSidebar,
             header: AppToolbar,
-            footer: AppFooter
+            footer: AppFooter,
+            dialog: AdminInquiryView,
         },
         meta: meta,
          props: { default:true },
