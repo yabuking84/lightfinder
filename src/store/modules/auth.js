@@ -10,20 +10,33 @@ import vm from '@/main.js';
 import hlprs from '@/mixins/helpers'
 
 const state = {
-	api: {
-		login: {
-			method: 'post',
-			url: "http://192.168.1.200:8000/v1/login",  
-		},
-		logout: {
-			method: 'post',
-			url: "http://192.168.1.200:8000/v1/logout",
-		},
 
-		getInquiryStatuses: {
-			method: 'get',
-			url: "http://192.168.1.200:8000/v1/inquiry-stages",
-		},
+    api: {
+
+        login: {
+            method: 'post',
+            url: "http://192.168.1.200:8000/v1/login",  
+        },
+
+        logout: {
+            method: 'post',
+            url: "http://192.168.1.200:8000/v1/logout",
+        },
+
+        buyerRegistration: {
+        	method: 'post',
+        	url: 'http://192.168.1.200:8000/v1/buyer/register'
+        },
+
+        supplierRegistration: {
+        	method: 'post',
+        	url: 'http://192.168.1.200:8000/v1/supplier/register'
+        },
+
+        getInquiryStatuses: {
+            method: 'get',
+            url: "http://192.168.1.200:8000/v1/inquiry-stages",
+        },
 
 
 	},
@@ -272,6 +285,65 @@ const actions = {
 			});
 		// }
 	},
+
+    },
+
+
+    buyerRegistration_a(context, data) {
+
+    	 return new Promise((resolve, reject) => {
+
+            var headers = {
+                "content-type": "application/json",
+            };
+
+            axios({
+                method: state.api.buyerRegistration.method,
+                url: state.api.buyerRegistration.url,
+                headers: headers,
+                data: JSON.stringify(data.data),
+            })
+            .then(response => {
+	            resolve(response);
+            })
+            .catch(error => {
+                // console.log(error);
+                // if(context.dispatch('checkToken',error))
+                reject(error);
+                
+            })
+        });
+
+
+    },
+
+
+    supplierRegistration_a(context, data) {
+
+    	 return new Promise((resolve, reject) => {
+    	 	
+            var headers = {
+                "content-type": "application/json",
+            };
+
+            axios({
+                method: state.api.supplierRegistration.method,
+                url: state.api.supplierRegistration.url,
+                headers: headers,
+                data: JSON.stringify(data.data),
+            })
+            .then(response => {
+                resolve(response);
+            })
+            .catch(error => {
+                // console.log(error);
+                if(context.dispatch('checkToken',error))
+                reject(error);
+                
+            })
+        });
+
+    },
 
 	loginSuccess_a(context){
 
