@@ -286,8 +286,6 @@ const actions = {
 		// }
 	},
 
-    },
-
 
     buyerRegistration_a(context, data) {
 
