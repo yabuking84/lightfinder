@@ -9,7 +9,7 @@
 			<v-layout row wrap>
 
 		        <v-flex xs12>
-		             <bar-card> </bar-card>
+		             <bar-cards> </bar-cards>
 		        </v-flex>
 
 				<v-flex xs12 md3>
@@ -29,8 +29,9 @@
 
 <script>
 
+import BarCards from '@/views/components/App/BarCards'
+
 import NotificationList from '@/views/components/App/Admin/NotificationList'
-import BarCard from '@/views/components/App/Admin/BarCard'
 import NotificationTable from '@/views/components/App/Admin/NotificationTable'
 
 export default {
@@ -42,7 +43,7 @@ export default {
 	components: {
 
 		NotificationList,
-	    BarCard,
+	    BarCards,
 	    NotificationTable
 	    
 	},

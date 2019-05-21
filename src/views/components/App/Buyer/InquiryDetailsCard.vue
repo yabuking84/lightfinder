@@ -22,7 +22,7 @@
 
             <v-container>
 
-				<v-alert 
+				<!-- <v-alert 
     				:value="(inquiry.stage_id==1005)?1:0"
     				color="red darken-3" 
     				style="width: auto; text-align:center; font-size:20px;"
@@ -57,7 +57,9 @@
 
 						</template>
 
-				</v-alert>
+				</v-alert> -->
+				
+				<pending-payment-card :inquiry="inquiry"></pending-payment-card>
 
 				<v-alert
     				:value="(inquiry.stage_id==1004)?1:0"
@@ -284,6 +286,8 @@
 <script>
 
     import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
+    import PendingPaymentCard from "@/views/Components/App/Buyer/PendingPaymentCard"
+
     import helpers from "@/mixins/helpers";
     import inqEvntBs from "@/bus/inquiry";
     import config from '@/config/index'
@@ -296,7 +300,8 @@
         components: {
 
             InquiryAwardCard,
-            ImageGallerySmall
+            ImageGallerySmall,
+            PendingPaymentCard,
 
         },
 

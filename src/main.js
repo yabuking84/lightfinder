@@ -26,7 +26,7 @@ import {truncate} from 'lodash'
 
 import helpers from "@/mixins/helpers"
 
-
+import Vuelidate from "vuelidate";
 
 import App from './App'
 
@@ -86,6 +86,7 @@ Vue.use(VueScrollTo,VueScrollToOptn)
 
 Vue.use(Vuebar)
 Vue.use(Trend)
+Vue.use(Vuelidate);
 
 Vue.use(Vuetify, {
     // theme: {

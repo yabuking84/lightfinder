@@ -1,9 +1,10 @@
 import axios from 'axios';
 import router from '@/router';
 import config from '@/config/index';
+import { ceil,floor } from 'lodash'
 
 export default {
-  methods: {
+methods: {
 
     getDateTime(format = "yyyy-mm-dd", date){
         let retVal = null;
@@ -115,12 +116,13 @@ export default {
     },
 
 
-  },
+	currency(arg){
+		// return ceil(arg,2).toFixed(2)
+		return arg.toFixed(2);
+	},
+
+},
 
 
-  actions: {
-
-
-  }
 
 }

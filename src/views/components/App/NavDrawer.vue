@@ -172,14 +172,12 @@
     import {camel} from '@/utils/helpers';
 
     export default {
-        data() {
-            return {
+        data() { return {
                 items: this.$route.meta.items,
                 dark: false,
                 // navMiniVarientData: this.navMiniVarient,
                 title: "BuyAnyLight.com",
-            }
-        },
+		}},
         mounted() {
             // const ps = document.getElementById('app-drawer')
             // ps.addEventListener('mouseenter', this.miniEnterVariantHandler)

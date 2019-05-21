@@ -3,9 +3,7 @@
 		<v-layout row wrap>
 			<v-container fluid>	
 
-				<!-- inquiry table -->
-					<inquiries-table> </inquiries-table>
-				<!-- inquiry table -->
+					<inquiries-grid> </inquiries-grid>
 				
 			</v-container>	
 		</v-layout>
@@ -15,7 +13,7 @@
 
 <script>
 	
-	import InquiriesTable from '@/views/components/app/Admin/InquiriesTable'
+	import InquiriesGrid from '@/views/components/app/Admin/InquiriesGrid'
 
 	export default {
 
@@ -44,7 +42,7 @@
 
 		components: {
 
-			InquiriesTable,
+			InquiriesGrid,
 
 		},
 		methods: {

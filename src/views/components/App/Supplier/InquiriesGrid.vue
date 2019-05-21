@@ -269,7 +269,7 @@ export default {
         ], 
         // search: '1551612312798',
         // search: '1554795137726', 
-        search: '', 
+        search: '1554969763787', 
         inquiryStatus: [], 
         allInquiries: [], 
         tableItems: [], 

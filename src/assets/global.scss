@@ -73,3 +73,39 @@
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 // animation
+
+
+
+
+
+
+
+// dropzone upload
+// dropdropdropdropdropdropdropdropdropdropdropdropdropdropdropdropdrop
+.dropzone-custom-content {
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 10px 20px;
+
+}
+
+.dropzone-custom-title {
+  margin-top: 0;
+  color: #00b782;
+}
+
+.dropzone .dz-preview.dz-error .dz-error-message {
+    top: 20px;	
+}
+
+.dropzone.dz-started .dz-message,
+.dropzone .dz-preview.dz-image-preview {
+	z-index: 1;
+}
+
+// dropdropdropdropdropdropdropdropdropdropdropdropdropdropdropdropdrop
+// dropzone upload
+

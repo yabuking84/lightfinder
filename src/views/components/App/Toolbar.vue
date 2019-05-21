@@ -2,13 +2,12 @@
 <div>
 
 <v-toolbar 
+v-if="toolbar"
 :fixed="fixedToolbar" 
-v-if="toolbar" 
 :class="navToolbarScheme" 
 :clipped-left="toolbarClippedLeft" 
-background-color="red"
-app 
-flat>
+style="border-bottom: 1px solid #e8e8e8;"
+app flat>
 
     <!-- <v-toolbar-side-icon
       class="hidden-lg-and-up"
@@ -54,9 +53,12 @@ flat>
             </v-btn>
         </template>
 
-        <v-list id="notification_list" ref="notification_list" dense>
+        <v-list 
+        v-if="notifications && notifications.length"
+        id="notification_list" 
+        ref="notification_list" 
+        dense>
         	<!-- v-if="index <= 10" -->
-            <template v-if="notifications && notifications.length">
             <template v-for="(notification, index) in notifications">
                 <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notification)">
                     <!-- <v-list-tile-title>{{notification.title  }}</v-list-tile-title> <br/> -->
@@ -66,7 +68,6 @@ flat>
                 	</v-list-tile-sub-title>
                 </v-list-tile>
                  <v-divider :key="'divider_'+index"></v-divider>
-            </template>
             </template>
 
             <!-- loading for mugen infinite scroll -->
@@ -96,7 +97,7 @@ flat>
 
     <!-- msg notifications -->
     <!-- msgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsgmsg -->
-    <v-menu v-if="!isRole('supplier')" offset-y transition="scale-transition" allow-overflow fixed>
+    <v-menu offset-y transition="scale-transition" allow-overflow fixed>
         <template v-slot:activator="{ on }">
             <v-btn 
             flat icon 
@@ -112,9 +113,15 @@ flat>
                 </v-badge>
             </v-btn>
         </template>
+		
+		<!-- <pre>{{ notificationMsgs }}</pre> -->
+		<!-- <pre>{{ notificationMsgs.length }}</pre> -->
 
-        <v-list id="message_list" ref="message_list" dense>
-            <template v-if="notificationMsgs && notificationMsgs.length">
+        <v-list 
+		v-if="notificationMsgs && notificationMsgs.length"
+        id="message_list" 
+        ref="message_list" 
+        dense>
             <template v-for="(notificationMsg, index) in notificationMsgs">
                 <v-list-tile  :key="'not_'+index" @click="gotoNotfication(notificationMsg)">
                     <!-- <v-list-tile-title
@@ -128,7 +135,6 @@ flat>
                 	</v-list-tile-sub-title>
                 </v-list-tile>
                  <v-divider></v-divider>
-            </template>
             </template>
 
             <!-- loading for mugen infinite scroll -->
@@ -177,7 +183,6 @@ flat>
     <!-- dddddddddddddddddddddddddddddddddddddddddd -->
     <template v-if="devMode">
     <v-btn 
-    @click="testShow=!testShow" 
     style="text-transform: none;"
 	:style="style">
         <h3 class="mr-4 ml-4">{{ authUser.email }}</h3>
@@ -221,15 +226,20 @@ flat>
 
             <br>
 
+
+    		<template v-for="(profileItem, i) in profileItems">
             <v-divider></v-divider>
-<!-- 
-            <v-list-tile @click="() => {}">
-                <v-list-tile-avatar>
-                    <v-icon>person</v-icon>
+            <v-list-tile 
+            @click="goToRoute(profileItem.name)" 
+            :key="`${i}-item`">
+            	<v-list-tile-avatar>
+                    <v-icon>{{ profileItem.icon }}</v-icon>
                 </v-list-tile-avatar>
-                <v-list-tile-title>Edit Profile</v-list-tile-title>
+                <v-list-tile-title>{{ profileItem.title }}</v-list-tile-title>            	
             </v-list-tile>
+			</template>
             
+<!-- 
             <v-list-tile @click="() => {}">
                 <v-list-tile-avatar>
                     <v-icon>settings_applications</v-icon>
@@ -313,9 +323,12 @@ mixins:[
 	hlprs
 ],
 
-data: () => ({
+data() { return {
     title: 'BuyAnyLight.com',
     roles: config.auth.role,
+
+    profileItems: this.$route.meta.profileItems,
+
     timeoutSnackbar: 8000,
     notificationList:null,
     isReadnow:false,
@@ -335,8 +348,7 @@ data: () => ({
     offsetMsgs:0,
 
     limit: 20,
-
-}),
+}},
 
 components: {
 	MugenScroll,
@@ -418,11 +430,11 @@ computed: {
         // Dev mode, some markers for easier to know the user and type.
         if(this.devMode) {
             if(hlprs.methods.isRole("admin"))
-            style = 'background-color:yellow !important; color:#fff;';
+            style = 'background-color:yellow !important; color:#fff; text-shadow: 1px 1px 7px black;';
             else if(hlprs.methods.isRole("buyer"))
-            style = 'background-color:blue !important; color:#fff;';
+            style = 'background-color:blue !important; color:#fff; text-shadow: 1px 1px 7px black;';
             else if(hlprs.methods.isRole("supplier"))
-            style = 'background-color:red !important; color:#fff;';
+            style = 'background-color:red !important; color:#fff; text-shadow: 1px 1px 7px black;';
         }
         
         return style;
@@ -444,10 +456,20 @@ methods: {
     },
 
     logout() {
-        this.$router.push({name:'Logout'});                
+        this.$router.push({name:'Logout'});
     },
 
+    goToRoute(routeName) {
+    	// var routeName = '';
+     //    if(hlprs.methods.isRole("admin"))
+    	// routeName = 'AdminProfile'; 
+     //    else if(hlprs.methods.isRole("buyer"))
+    	// routeName = 'BuyerProfile';         
+     //    else if(hlprs.methods.isRole("supplier"))
+    	// routeName = 'SupplierProfile';         
 
+        this.$router.push({name:routeName});
+    },
 
     bounce(type){
     	console.log('type = ',type)
@@ -584,6 +606,7 @@ methods: {
     	};
     	this.$store.dispatch('ntfctns/populateNotificationsMsgs_a', options)
         .then((response) => {
+            // console.log('fetchMsgs response',response);
 
             if(response.count>0) {
 	        	// Now notifications are done populating show snackbar
@@ -635,6 +658,8 @@ methods: {
 created()  {
 	// this.resetNotificationsMsgs()
 	// this.resetNotificationsMsgs()
+	this.fetchNtfctns();
+	this.fetchMsgs();
 
     NtfctnBus.onNewNotification((data)=>{
     	this.bounce('notifications');

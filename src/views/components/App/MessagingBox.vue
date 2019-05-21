@@ -1,7 +1,7 @@
 <template>
 <div>
 
-	<div class="messaging-box" :id="'mb_'+bid.id">
+	<div class="messaging-box" :id="'mb_'+bid.id" :ref="'mb_'+bid.id">
         <v-card color="transparent" style="" class="chat-container">
             <v-card-text class="" id="chatscroll-thread">  
 
@@ -31,7 +31,8 @@
 
                 <v-layout row wrap v-if="!messages.length">
                     <v-flex xs12>
-                        <h2 class="font-weight-medium grey--text mt-1 mb-1 text-xs-center">Start A Conversation Now</h2>
+                        <!-- <h2 class="font-weight-medium grey--text mt-1 mb-1 text-xs-center">Start A Conversation Now</h2> -->
+                        <h2 class="font-weight-medium grey--text mt-1 mb-1 text-xs-center">&nbsp;</h2>
                     </v-flex>
                 </v-layout>
 
@@ -67,7 +68,7 @@
             </v-flex>
         </v-layout>
         <!-- Add message -->
-
+		
 
 	</div>
 </div>
@@ -86,6 +87,11 @@ import MsgBus from "@/bus/messaging";
     	},
 
         props: {
+
+            type: {
+                type: String,
+                default: null,
+            },
 
             inquiry: {
                 type: Object,
@@ -135,7 +141,8 @@ import MsgBus from "@/bus/messaging";
         created() {
 		    this.updateChat();
 
-	    	// console.log("created "+this.bid.id+" isFocused",this.isFocused);
+	    	console.log("bid",this.bid);
+	    	console.log("type",this.type);
 
 		    var self = this;
 		    MsgBus.onNewMessage(function(data){
@@ -171,14 +178,22 @@ import MsgBus from "@/bus/messaging";
 	            	payload.type = "";
 	            	payload.id = "";
 
-					if(this.bid.id!=0) {					
-						payload.type = 'bid.buyer.admin';
+					if(this.type=='bid.buyer.admin' && this.bid.id!=0) {
+						payload.type = this.type;
 						payload.id = this.bid.id;
 					}
-					else if(this.inquiry!=null) {					
-						payload.type = 'inquiry.buyer.admin';
+					else if(this.type=='inquiry.buyer.admin' && this.inquiry!=null) {					
+						payload.type = this.type;
 						payload.id = this.inquiry.id;					
 					}
+					else if(this.type=='bid.supplier.admin' && this.bid.id!=0) {
+						payload.type = this.type;
+						payload.id = this.bid.id;
+					}
+					// else if(this.type=='inquiry.supplier.admin' && this.inquiry!=null) {					
+					// 	payload.type = this.type;
+					// 	payload.id = this.inquiry.id;					
+					// }
 
 
 					console.log('payload',payload);
@@ -203,14 +218,24 @@ import MsgBus from "@/bus/messaging";
             	payload.type = "";
             	payload.id = "";
 
-				if(this.bid.id!=0) {					
-					payload.type = 'bid.buyer.admin';
+				if(this.type=='bid.buyer.admin' && this.bid.id!=0) {
+					payload.type = this.type;
 					payload.id = this.bid.id;
 				}
-				else if(this.inquiry!=null) {					
-					payload.type = 'inquiry.buyer.admin';
+				else if(this.type=='inquiry.buyer.admin' && this.inquiry!=null) {					
+					payload.type = this.type;
 					payload.id = this.inquiry.id;					
 				}
+				else if(this.type=='bid.supplier.admin' && this.bid.id!=0) {
+					payload.type = this.type;
+					payload.id = this.bid.id;
+				}
+				// else if(this.type=='inquiry.supplier.admin' && this.inquiry!=null) {					
+				// 	payload.type = this.type;
+				// 	payload.id = this.inquiry.id;					
+				// }
+
+
 
 				this.$store.dispatch('msg/getMessages_a', payload).then(response=>{
 					this.messages = response;
@@ -318,7 +343,8 @@ import MsgBus from "@/bus/messaging";
 
 	.chat-container {
 
-		max-height: 300px; 
+		// max-height: 300px; 
+		max-height: 200px; 
 	  	overflow-y: scroll;
 	  	box-shadow: none;
 

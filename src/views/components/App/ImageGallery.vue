@@ -1,27 +1,34 @@
 <template>
 <div>
-        <!-- <v-card id="product" > -->
-            <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop" style="">
+		<!-- <v-card id="product" > -->
+			<swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop" style="">
 
-                <swiper-slide v-for="(image, index) in images"  :key="image+'_'+index" class="slide-img" >
-                    <img :src="image.location" alt="" :style="imgStyle">
-                </swiper-slide>
+				<swiper-slide v-for="(image, index) in imagesLocal"  :key="image+'_'+index" class="slide-img" >
+					<img :src="image.location" alt="" :style="imgStyle">
+				</swiper-slide>
 
-	                <div class="swiper-button-next" slot="button-next">
-	                	 <v-icon>fas fa-chevron-right</v-icon>
-	                </div>
-	                <div class="swiper-button-prev" slot="button-prev">
-	                	 <v-icon>fas fa-chevron-left</v-icon>
-	                </div>
-                
-            </swiper>
-            <!-- swiper2 Thumbs -->
-            <swiper :options="swiperOptionThumbs" class="gallery-thumbs" :class="{hide:noThumbnails}" ref="swiperThumbs">
-                <swiper-slide v-for="(image, index) in images"  :key="image+'_'+index" class="slide-img">
-                    <img :src="image.location" alt="">
-                </swiper-slide>
-            </swiper>
-        <!-- </v-card> -->
+					<template v-if="images.length > 1" v-slot:button-next>
+						<div class="swiper-button-next">
+							<v-icon>fas fa-chevron-right</v-icon>
+						</div>
+					</template>
+					<template v-if="images.length > 1" v-slot:button-prev>
+						<div class="swiper-button-prev">
+							<v-icon>fas fa-chevron-left</v-icon>
+						</div>
+					</template>
+
+				<!-- <template v-if="images.length > 1">
+				</template> -->
+				
+			</swiper>
+			<!-- swiper2 Thumbs -->
+			<swiper :options="swiperOptionThumbs" class="gallery-thumbs" :class="{hide:noThumbnails}" ref="swiperThumbs">
+				<swiper-slide v-for="(image, index) in imagesLocal"  :key="image+'_'+index" class="slide-img">
+					<img :src="image.location" alt="">
+				</swiper-slide>
+			</swiper>
+		<!-- </v-card> -->
 </div>
 </template>
 
@@ -61,23 +68,25 @@ export default {
 
 	data: ()=>({
 
-	    imgStyle: null,
+		imgStyle: null,
 
-	    swiperOptionTop: {
-	        initialSlide: 1, 
-	        spaceBetween: 20, 
-	        navigation: {
-	            nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev"
-	        }
-	    }, 
-	    swiperOptionThumbs: {
-	        initialSlide: 1, 
-	        spaceBetween: 20, 
-	        centeredSlides: true, 
-	        slidesPerView: "auto", 
-	        touchRatio: 0.2, 
-	        slideToClickedSlide: true,
-	    }
+		swiperOptionTop: {
+			initialSlide: 1, 
+			spaceBetween: 20, 
+			navigation: {
+				nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev"
+			}
+		}, 
+		swiperOptionThumbs: {
+			initialSlide: 1, 
+			spaceBetween: 20, 
+			centeredSlides: true, 
+			slidesPerView: "auto", 
+			touchRatio: 0.2, 
+			slideToClickedSlide: true,
+		},
+
+		imagesLocal: [],
 	}),
 
 	created(){
@@ -86,32 +95,28 @@ export default {
 
 	watch: {
 		
-		images: {
+		// images: {
 
-			  handler(nVal, oVal) {
-
-				  	if(nVal) {
-
-				  		this.getImages();
-				  	}
-
-               },
-
-                deep: true,
-		}
+		// 	handler(nVal, oVal) {
+		// 	  	if(nVal) {
+		// 	  		this.getImages();
+		// 	  	}
+  //           },
+		// 	deep: true,
+		// }
 	},
 
 	methods: {
 
 		getImages() {
+			console.log('images',this.images)
 
 			if(this.images.length == 0) {
-				
-				var imageArchive = {
+				this.imagesLocal.push({
 					location:'/static/images/no-photo-available-icon-4.jpg'
-				}
-
-				this.images.push(imageArchive);
+				});
+			} else {
+				this.imagesLocal = this.images;
 			}
 
 			// this.images = this.images.sort( () => Math.random() - 0.5);
@@ -121,12 +126,12 @@ export default {
 				this.imgStyle = {
 					height: this.height,
 					width: 'auto',
-			    };
+				};
 			} else {
 				this.imgStyle = {
 					height: 'inherit',
 					width: 'inherit',
-			    };			
+				};			
 			}
 
 			// console.log(this.images)
@@ -136,13 +141,13 @@ export default {
 
 
 	mounted() {
-	    this.$nextTick(()=> {
-	        const swiperTop=this.$refs.swiperTop.swiper;
-	        const swiperThumbs=this.$refs.swiperThumbs.swiper;
-	        swiperTop.controller.control=swiperThumbs;
-	        swiperThumbs.controller.control=swiperTop;
-	    }
-	    );
+		this.$nextTick(()=> {
+			const swiperTop=this.$refs.swiperTop.swiper;
+			const swiperThumbs=this.$refs.swiperThumbs.swiper;
+			swiperTop.controller.control=swiperThumbs;
+			swiperThumbs.controller.control=swiperTop;
+		}
+		);
 	}    	
 }
 </script>
@@ -167,7 +172,7 @@ export default {
   cursor: pointer;
 }
 .gallery-thumbs .swiper-slide-active {
-  	opacity: 1;
+	opacity: 1;
 	
 }
 
@@ -189,22 +194,22 @@ img {
 .swiper-button-prev ,
 .swiper-button-next {
 	outline: none;
-    cursor: pointer;
-    background-image: none;
-    color: #000;
+	cursor: pointer;
+	background-image: none;
+	color: #000;
 }
 
 .swiper-button-prev, 
 .swiper-container-rtl .swiper-button-next {
-    left: 0px;
-    right: auto;	
+	left: 0px;
+	right: auto;	
 }
 
 
 .swiper-button-next, 
 .swiper-container-rtl .swiper-button-prev {
 	right: 0px;
-    left: auto;
+	left: auto;
 }
 
 
@@ -217,7 +222,7 @@ img {
 }
 
 .theme--light.v-icon {
-    color: #000;
+	color: #000;
 }
 
 </style>

@@ -9,22 +9,21 @@
 			<v-layout row wrap>
 
 		        <v-flex xs12>
-		             <bar-card user-type="buyer"> </bar-card>
+		             <bar-cards> </bar-cards>
 		        </v-flex>
 
-				<!-- <v-flex xs12 md3>
-			           <notification-list> </notification-list>
-			    </v-flex> -->
 
-	            <v-flex xs4>
-	           			<pending-payments> </pending-payments>
+	            <v-flex xs5>
+	           		<pending-payments> </pending-payments>
 	            </v-flex>
+
+				<v-flex xs7>
+	           		<pending-payments> </pending-payments>			        
+			    </v-flex>
 
 			</v-layout>
 
 		</v-container>
-
-
 
 
 </div>
@@ -33,7 +32,7 @@
 <script>
 
 
-import BarCard from '@/views/components/App/BarCard'
+import BarCards from '@/views/components/App/BarCards'
 import PendingPayments from '@/views/components/App/Buyer/PendingPayments'
 
 import NotificationList from '@/views/components/App/Admin/NotificationList'
@@ -46,7 +45,7 @@ export default {
 	}),
 
 	components: {
-	    BarCard,
+	    BarCards,
 	    PendingPayments,
 	},
 

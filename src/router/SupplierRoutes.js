@@ -1,6 +1,7 @@
 import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
+import AppProfile from '@/views/Pages/Profile'
 
 
 import config from '@/config/index'
@@ -8,6 +9,7 @@ import config from '@/config/index'
 
 // SUPPLIER
 
+import SupplierWallet from '@/views/Pages/Supplier/Wallet'
 import SupplierHome from '@/views/Pages/Supplier/Home'
 import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
 import SupplierInquiryView from "@/views/Components/App/Supplier/InquiryView";
@@ -32,7 +34,23 @@ const meta = {
             name: 'SupplierInquiry',
             icon: 'fas fa-clipboard',
         },            
-    ],        
+    ], 
+    profileItems: [
+        {
+            title: 'Edit Profile',
+            name: 'SupplierProfile',
+            icon: 'person',
+        },           
+        {
+            title: 'Wallet',
+            name: 'SupplierWallet',
+            icon: 'fas fa-wallet',
+        },    
+    ],
+    statuses: [
+    	...config.main.inquiry_statuses.default,
+    	...config.main.inquiry_statuses.suppliers,
+    ],
 }
 
 export default [
@@ -60,6 +78,34 @@ export default [
             dialog: SupplierInquiryView,
         },
         meta: meta
+    },
+
+    {
+        name: 'SupplierProfile',
+        path: '/supplier/profile',
+        components: {
+            // default: BuyerHome, 
+            default: AppProfile, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: SupplierInquiryView,
+        },
+        meta: meta,
+    },
+
+
+    {
+        name: 'SupplierWallet',
+        path: '/supplier/wallet',
+        components: {
+            default: SupplierWallet, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: SupplierInquiryView,
+        },
+        meta: meta,
     },
 
 
