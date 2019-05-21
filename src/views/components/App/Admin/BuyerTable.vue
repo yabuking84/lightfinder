@@ -149,15 +149,16 @@ export default {
     }
   },
 
-  timers: [{
-    name: 'BuyerTableTimer',
-    time: config.polling.inquiryTable.time,
-    repeat: true,
-    autostart: true,
-    callback: function() {
-      this.fillTable(false);
-    },
-  }],
+  // disable polling
+  // timers: [{
+  //   name: 'BuyerTableTimer',
+  //   time: config.polling.inquiryTable.time,
+  //   repeat: true,
+  //   autostart: true,
+  //   callback: function() {
+  //     this.fillTable(false);
+  //   },
+  // }],
 
 
   methods: {

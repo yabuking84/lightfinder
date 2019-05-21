@@ -1,45 +1,35 @@
 <template>
-<div>
-    <v-card flat style="background-color: transparent;">
-        <v-container fill-height fluid grid-list-lg pa-0>
-            <v-layout row wrap>
-                
-                <template v-for="(status, index) in statuses">
-                    <v-flex xs12 sm6 md2 :key="index">
-                        
-                        <v-card 
-                        flat dark
-                        class="text-xs-center box pa-2"                        
-						:class="[status.class]">
-                            <v-card-text class="pa-0 mt-2 mb-2 ">
-                                <h3 class="headline">
-                                	{{ getStatusCount(status.id) }}
-                                </h3>
-								<v-layout>
-									<v-flex text-xs-right>
-										<v-icon
-										dark 										
-										class="">
-											{{ status.icon }}
-										</v-icon>
-									</v-flex>
+<!-- v-if="statusCount>0" -->
+<v-flex xs12 sm6 md2>
 
-									<v-flex 
-									text-xs-left pl-0
-									class="v-centered">
-			                            <p class="body-2 font-light-weight mb-0">{{ status.name }}</p>
-									</v-flex>
-								</v-layout>
-                            </v-card-text>
-                        </v-card>
+    <v-card 
+    flat dark
+    class="text-xs-center box pa-2"                        
+	:class="[status.class]">
+        <v-card-text class="pa-0 mt-2 mb-2 ">
+            <h3 class="headline">
+            	{{ statusCount }}
+            </h3>
+			<v-layout>
+				<v-flex text-xs-right>
+					<v-icon
+					dark 										
+					class="">
+						{{ status.icon }}
+					</v-icon>
+				</v-flex>
 
-                    </v-flex>
-                </template>
-
-            </v-layout>
-        </v-container>
+				<v-flex 
+				text-xs-left pl-0
+				class="v-centered">
+                    <p class="body-2 font-light-weight mb-0">{{ status.name }}</p>
+				</v-flex>
+			</v-layout>
+        </v-card-text>
     </v-card>
-</div>
+
+
+</v-flex>        
 </template>
 
 <script>
@@ -47,34 +37,37 @@ import config from "@/config/main"
 export default {
 
 props:[
-	'userType'
+	'status',
 ],
 
 data: () => ({
+	statusCount:0,
 }),
 
+created(){
+	this.getStatusCount()
+},
 
 methods: {
-	getStatusCount(status_id){
-
-
-		return status_id;
+	getStatusCount(){
+		var status_id = this.status.id
+		this.$store.dispatch('byrInq/getInquiries_a', {stage_id:status_id})
+	  	.then((response)=>{
+	  		// console.log('BarCards response '+status_id, response);	  		;
+			this.statusCount = response.length;
+	  	})
+		.catch((e) => {
+			console.log('Error: ' + e);
+			this.loading = false;
+		})
+		.finally(() => {
+			this.loading = false;
+		});
 	},
 },
 
 
 computed:{
-
-	statuses(){		
-
-		var statuses = [
-			...config.inquiry_statuses.default,
-			...config.inquiry_statuses.buyers,
-		];
-
-		// console.log(statuses);
-		return statuses;
-	},
 
 },
 

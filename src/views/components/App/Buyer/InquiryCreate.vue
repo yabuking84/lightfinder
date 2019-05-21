@@ -1763,8 +1763,6 @@ export default {
         // else
         // action = "add-inquiry-attachments";
 
-
-
         // this.formData.attachments.push({
 
         // });

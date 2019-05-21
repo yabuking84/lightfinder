@@ -118,8 +118,8 @@
   import validationMixin from '@/mixins/validationMixin'
   const defaultForm = {
     // email: 'info@bal.com',
-    email: 'buyer@bal.com',
-    // email: 'supplier@bal.com',
+    // email: 'buyer@bal.com',
+    email: 'supplier@bal.com',
     // email: 'm.ozil@philips.com',
     // email: 'z.abdin@almani.ae',
     password: '123456',

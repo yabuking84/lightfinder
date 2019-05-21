@@ -156,6 +156,7 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
+            	response.data.id = response.data.reference
                 resolve(response.data);
             })
             .catch(error => {

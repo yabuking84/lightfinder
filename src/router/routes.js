@@ -66,7 +66,6 @@ import SupplierRoutes from '@/router/SupplierRoutes.js'
 
 
 
-
 // if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
 //     for (i = 0; i < AdminRoutes.length; i++) {     
 //         routes.push(AdminRoutes[i]);

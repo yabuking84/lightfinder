@@ -81,7 +81,7 @@ data() { return {
 
 methods: {
 	setInquiries() {
-		this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1005'})
+		this.$store.dispatch('spplrInq/getInquiries_a', {stage_id:'1005'})
 		.then((response)=>{
 			// console.log('response', response);
 

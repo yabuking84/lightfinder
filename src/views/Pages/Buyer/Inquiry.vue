@@ -23,7 +23,7 @@
 
 		  	<v-layout row wrap>
 				<v-flex>
-						<inquiries-table> </inquiries-table>
+						<inquiries-grid> </inquiries-grid>
 				</v-flex>
 			</v-layout>
 
@@ -56,14 +56,14 @@
 <script>
 
 
-import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
+import InquiriesGrid from "@/views/Components/App/Buyer/InquiriesGrid";
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
 export default {
 
 	components: {
 
-	    InquiriesTable,
+	    InquiriesGrid,
 	    InquiryCreate,
 
 	},
@@ -75,7 +75,7 @@ export default {
 		icon: null,
 		packageLink: '/buyer/packages',
 		isActive: false,
-		component: 'InquiriesTable',
+		// component: 'InquiriesGrid',
 		openInquiryCreate: false,
 		successSnackbar:false
 

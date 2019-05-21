@@ -1,6 +1,7 @@
 import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
+import AppProfile from '@/views/Pages/Profile'
 
 import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
@@ -33,7 +34,18 @@ const meta = {
             name: 'BuyerInquiry',
             icon: 'fas fa-clipboard',
         },            
-    ],        
+    ],
+    profileItems: [
+        {
+            title: 'Edit Profile',
+            name: 'BuyerProfile',
+            icon: 'person',
+        },    
+    ],
+    statuses: [
+    	...config.main.inquiry_statuses.default,
+    	...config.main.inquiry_statuses.buyers,
+    ],
 }
 
 
@@ -57,6 +69,20 @@ export default [
         path: '/buyer/inquiry',
         components: {
             default: BuyerInquiry, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: BuyerInquiryView,
+        },
+        meta: meta,
+    },
+
+    {
+        name: 'BuyerProfile',
+        path: '/buyer/profile',
+        components: {
+            // default: BuyerHome, 
+            default: AppProfile, 
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,

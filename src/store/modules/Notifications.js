@@ -328,8 +328,9 @@ const actions = {
 		var textSnackbar = '';
     	if(data.type == 'bid.buyer.admin')
 		textSnackbar = 'New Message on BID #'+data.id+'!';
-    	else 
-    	if(data.type == 'inquiry.buyer.admin')
+    	else if(data.type == 'inquiry.buyer.admin')
+		textSnackbar = 'New Message on INQUIRY #'+data.id+'!';
+    	else if(data.type == 'bid.supplier.admin')
 		textSnackbar = 'New Message on INQUIRY #'+data.id+'!';
     	else
 		textSnackbar = 'New Message!';
@@ -411,17 +412,14 @@ const actions = {
 
             var store = hlprs.methods.getStore();
 
-
-
-
             // show notification
             /////////////////////////////////////////////////////////
             context.dispatch(store+'/getInquiry_a', {
                 inq_id: ntfctn.data.id
             }, {root:true})
-            .then((data) => {
-    			// console.log('data',data);    			
-    			// console.log('ntfctn',ntfctn);    			
+            .then((response) => {
+    			// console.log('data',data);
+    			// console.log('ntfctn',ntfctn);
 
     			// serach BID
     			// var bid = null;
@@ -430,7 +428,7 @@ const actions = {
 
     			var bid_id = ntfctn.data.bid_id
 
-                context.commit('inq/UPDATE_INQUIRY_M',{inquiry:data}, {root:true});
+                context.commit('inq/UPDATE_INQUIRY_M',{inquiry:response}, {root:true});
                 context.commit('inq/UPDATE_BID_ID_M', { bid_id:bid_id }, {root:true});
                 context.commit('inq/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
             })
@@ -580,6 +578,7 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
+    			console.log('populateNotificationsMsgs_a response',response);    			
 
             	var count = response.data.data.length;
 	        	var notifications = response.data.data;
@@ -613,9 +612,10 @@ const actions = {
 							'id':ntfctn.data.id.split("-")[0],
 							'bid_id':ntfctn.data.id,
 							'notification_id': ntfctn.id,
+							'type': ntfctn.data.type,
 						};
 						dataType = "bid";
-			    		title = 'New Message in Bid #'+ntfctn.data.id;
+			    		title = 'Message in BID# '+ntfctn.data.id;
 					} 
 					else
 					if(ntfctn.data.type=="inquiry.buyer.admin") {
@@ -623,14 +623,27 @@ const actions = {
 							'id':ntfctn.data.id,
 							'bid_id':null,
 							'notification_id': ntfctn.id,
+							'type': ntfctn.data.type,
 						};
 						dataType = "inquiry";
-			    		title = 'New Message in Inquiry #'+ntfctn.data.id;
+			    		title = 'Message in Inquiry# '+ntfctn.data.id;
+					}
+					else
+					if(ntfctn.data.type=="bid.supplier.admin") {
+						data = {
+							'id':ntfctn.data.id,
+							'bid_id':null,
+							'notification_id': ntfctn.id,
+							'type': ntfctn.data.type,
+						};
+						dataType = "inquiry";
+			    		title = 'Message in BID# '+ntfctn.data.id;
 					}
 
 
 			    	return {
 		                // title:         ntfctn.created_at+" || "+ntfctn.id+' <br> '+ntfctn.data.content+" = #"+ntfctn.data.id,
+		                // title:         ntfctn.created_at+" || "+ntfctn.id,
 		                title:         title,
 		                dataType:      dataType,
 		                data:          data,

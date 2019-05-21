@@ -7,49 +7,49 @@ import config from '@/config/index'
 
 
 const state = {
-    api: {
-        getInquiries: {
-            method  : 'get',
-            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
-        },
+	api: {
+		getInquiries: {
+			method  : 'get',
+			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+		},
 
-        getInquiry: {
-            method  : 'get',
-            url     :'http://192.168.1.200:8000/v1/buyer/inquiries'
-        },
+		getInquiry: {
+			method  : 'get',
+			url     :'http://192.168.1.200:8000/v1/buyer/inquiries'
+		},
 
-        addInquiry: {
-            method  : 'post',
-            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
-        },
+		addInquiry: {
+			method  : 'post',
+			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+		},
 
-        editInquiry: {
-            method  : 'patch',
-            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
-        },
+		editInquiry: {
+			method  : 'patch',
+			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+		},
 
-        getInquiryBids: {
-            method  : 'get',
-            url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
-            url2    : 'bids',
-        },
-        getInquiryBid: {
-            method: 'get',
-            url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
-            url2: 'bids/own-bid',
-        },
-        awardBid: {
-            method: 'put',
-            url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
-            url2: 'bids',
-            url3: 'award',
-        },
+		getInquiryBids: {
+			method  : 'get',
+			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url2    : 'bids',
+		},
+		getInquiryBid: {
+			method: 'get',
+			url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url2: 'bids/own-bid',
+		},
+		awardBid: {
+			method: 'put',
+			url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url2: 'bids',
+			url3: 'award',
+		},
 
-    },
+	},
 
-    // inquiries: [],
-    // inquiry: null,
-    // openInquiryView: false,
+	// inquiries: [],
+	// inquiry: null,
+	// openInquiryView: false,
 
 }
 
@@ -57,257 +57,257 @@ const state = {
 
 const mutations = {
 
-    // SHOW_OPENINQUIRYVIEW_M(state){
-    //     state.openInquiryView = true;
-    // },
+	// SHOW_OPENINQUIRYVIEW_M(state){
+	//     state.openInquiryView = true;
+	// },
 
-    // HIDE_OPENINQUIRYVIEW_M(state){
-    //     state.openInquiryView = false;
-    // },
+	// HIDE_OPENINQUIRYVIEW_M(state){
+	//     state.openInquiryView = false;
+	// },
 
-    // UPDATE_INQUIRY_M(state,data){
-    //     state.inquiry = data.inquiry;
-    // },
+	// UPDATE_INQUIRY_M(state,data){
+	//     state.inquiry = data.inquiry;
+	// },
 
 }
-    
+	
 const actions = {
 
-    getInquiries_a(context, data){    	
-        return new Promise((resolve, reject) => {
-            var headers = {token:localStorage.access_token};
-            // console.log(state.api.getInquiries.url);
-            // console.log(state.api.getInquiries.method);
-            // console.log(headers);
-            var stage_id = (typeof data.stage_id === "undefiend")?"stage_id="+data.stage_id:"";
+	getInquiries_a(context, data){    	
+		return new Promise((resolve, reject) => {
+			var headers = {token:localStorage.access_token};
+			// console.log(state.api.getInquiries.url);
+			// console.log(state.api.getInquiries.method);
+			// console.log(headers);
+			var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
 
-            axios({
-                method: state.api.getInquiries.method,
-                url: state.api.getInquiries.url+"?"+stage_id,
-                headers: headers,
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
-                console.log('error getInquiries_a',error);
-                // if(actions.checkToken(error)) {                
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-            })
-        });
-    },
-
-
-    getInquiry_a(context, data) {
-        return new Promise((resolve, reject) => {
-
-            var headers = { token: localStorage.access_token }
-
-            axios({
-
-                method  : state.api.getInquiry.method,
-                url     : state.api.getInquiry.url + "/" + data.inq_id,
-                headers : headers
-
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
-                // if(actions.checkToken(error)) {
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-            })
-
-        }) 
-    },
-
-    addInquiry_a(context,data){
-        return new Promise((resolve, reject) => {
-
-            // console.log(data.formData);
-            // console.log(JSON.stringify(data.formData));
-
-            var headers = {
-                token:localStorage.access_token,
-                "content-type": "application/json",
-            };
-            axios({
-                method: state.api.addInquiry.method,
-                url: state.api.addInquiry.url,
-                headers: headers,
-                data: JSON.stringify(data.formData),
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
-
-                // if(actions.checkToken(error)) {
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-                
-            });
-
-        });
-    },
+			axios({
+				method: state.api.getInquiries.method,
+				url: state.api.getInquiries.url+"?"+stage_id,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+		});
+	},
 
 
-    editInquiry_a(context,data){
-        return new Promise((resolve, reject) => {
+	getInquiry_a(context, data) {
+		return new Promise((resolve, reject) => {
 
-            // console.log(data.formData);
-            // console.log(JSON.stringify(data.formData));
+			var headers = { token: localStorage.access_token }
 
-            var headers = {
-                token:localStorage.access_token,
-                "content-type": "application/json",
-            };
-            axios({
-                method: state.api.editInquiry.method,
-                url: state.api.editInquiry.url + '/' + data.inq_id,
-                headers: headers,
-                data: JSON.stringify(data.formData),
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
+			axios({
 
-                // if(actions.checkToken(error)) {
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-                
-            });
+				method  : state.api.getInquiry.method,
+				url     : state.api.getInquiry.url + "/" + data.inq_id,
+				headers : headers
 
-        });
-    },
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
 
+		}) 
+	},
 
-    getAllInquiryBids_a(context,data){
-        
-        return new Promise((resolve, reject) => {
+	addInquiry_a(context,data){
+		return new Promise((resolve, reject) => {
 
-            var method = state.api.getInquiryBids.method; 
-            var url = state.api.getInquiryBids.url + "/" + data.inq_id + "/" + state.api.getInquiryBids.url2; 
-            
-            var headers = {
-                                 token:localStorage.access_token,
-                                 "content-type": "application/json",
-                           };
-            axios({
-                method: method,
-                url: url,
-                headers: headers,
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
+			// console.log(data.formData);
+			// console.log(JSON.stringify(data.formData));
 
-                // console.log(error);
-                // if(actions.checkToken(error)) {
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-                
-            })
-        });
-    },
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+			axios({
+				method: state.api.addInquiry.method,
+				url: state.api.addInquiry.url,
+				headers: headers,
+				data: JSON.stringify(data.formData),
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
 
-    getInquiryBid_a(context,data){
-        return new Promise((resolve, reject) => {
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+				
+			});
 
-            var method = state.api.getInquiryBid.method; 
-            var url = state.api.getInquiryBid.url+"/"+data.inq_id+"/"+state.api.getInquiryBid.url2; 
-            var headers = {token:localStorage.access_token,
-                            "content-type": "application/json",
-                             };
-            axios({
-                method: method,
-                url: url,
-                headers: headers,
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
-
-                // console.log(error);
-                // if(actions.checkToken(error)) {
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-                
-
-            })
-        });
-    },
+		});
+	},
 
 
-    awardBid_a(context,data){
-        return new Promise((resolve, reject) => {
+	editInquiry_a(context,data){
+		return new Promise((resolve, reject) => {
 
-            var method = state.api.awardBid.method; 
-            var url = state.api.awardBid.url+"/"+data.inquiry_id+"/"+state.api.awardBid.url2+"/"+data.bid_id+"/"+state.api.awardBid.url3; 
+			// console.log(data.formData);
+			// console.log(JSON.stringify(data.formData));
 
-            var headers = {
-                token:localStorage.access_token,
-                "content-type": "application/json",
-            };
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+			axios({
+				method: state.api.editInquiry.method,
+				url: state.api.editInquiry.url + '/' + data.inq_id,
+				headers: headers,
+				data: JSON.stringify(data.formData),
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
 
-            // console.log(data);
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+				
+			});
 
-
-
-            // shipping_method_id:
-            // shipping_address:
-            // shipping_city:
-            // shipping_country_id:
-            // shipping_postal:
-            
-            axios({
-
-                method: method,
-                url: url,
-                headers: headers,
-                data    : JSON.stringify(data)
-
-            })
-            .then(response => {
-                resolve(response.data);
-            })
-            .catch(error => {
-
-                // console.log(error);
-                // if(actions.checkToken(error)) {
-                if(context.dispatch('checkToken',error)) {
-                    reject(error);
-                }
-                
-            })
-        });
-    },
+		});
+	},
 
 
-    checkToken(context,error){
-        
-        // console.log("checkToken = ",error);
-        if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-            console.log("EXPIRED");
-            router.push({'name': 'Logout'})
-        }
-        else {
-            // reject(error);
-            return true;
-        }
+	getAllInquiryBids_a(context,data){
+		
+		return new Promise((resolve, reject) => {
 
-    },
+			var method = state.api.getInquiryBids.method; 
+			var url = state.api.getInquiryBids.url + "/" + data.inq_id + "/" + state.api.getInquiryBids.url2; 
+			
+			var headers = {
+				 token:localStorage.access_token,
+				 "content-type": "application/json",
+			};
+			axios({
+				method: method,
+				url: url,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+
+				// console.log(error);
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+				
+			})
+		});
+	},
+
+	getInquiryBid_a(context,data){
+		return new Promise((resolve, reject) => {
+
+			var method = state.api.getInquiryBid.method; 
+			var url = state.api.getInquiryBid.url+"/"+data.inq_id+"/"+state.api.getInquiryBid.url2; 
+			var headers = {token:localStorage.access_token,
+							"content-type": "application/json",
+							 };
+			axios({
+				method: method,
+				url: url,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+
+				// console.log(error);
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+				
+
+			})
+		});
+	},
+
+
+	awardBid_a(context,data){
+		return new Promise((resolve, reject) => {
+
+			var method = state.api.awardBid.method; 
+			var url = state.api.awardBid.url+"/"+data.inquiry_id+"/"+state.api.awardBid.url2+"/"+data.bid_id+"/"+state.api.awardBid.url3; 
+
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			// console.log(data);
+
+
+
+			// shipping_method_id:
+			// shipping_address:
+			// shipping_city:
+			// shipping_country_id:
+			// shipping_postal:
+			
+			axios({
+
+				method: method,
+				url: url,
+				headers: headers,
+				data    : JSON.stringify(data)
+
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+
+				// console.log(error);
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+				
+			})
+		});
+	},
+
+
+	checkToken(context,error){
+		
+		// console.log("checkToken = ",error);
+		if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+			console.log("EXPIRED");
+			router.push({'name': 'Logout'})
+		}
+		else {
+			// reject(error);
+			return true;
+		}
+
+	},
 
 
 }

@@ -1,6 +1,7 @@
 import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
+import AppProfile from '@/views/Pages/Profile'
 
 import AdminHome from '@/views/Pages/Admin/Home'
 import AdminInquiry from '@/views/Pages/Admin/Inquiry'
@@ -11,7 +12,7 @@ import AdminInquiryView from "@/views/Components/App/admin/InquiryView";
 import config from '@/config/index'
 
 
-const meta = { 
+const meta = {
     requiresAuth: true,
     role: config.auth.role.admin.id,
     items: [
@@ -35,6 +36,18 @@ const meta = {
             name: 'AdminSupplier',
             icon: 'fas fa-user-tie',
         },
+    ], 
+    profileItems: [
+        {
+            title: 'Edit Profile',
+            name: 'AdminProfile',
+            icon: 'person',
+        },    
+    ],
+    statuses: [
+    	...config.main.inquiry_statuses.default,
+    	...config.main.inquiry_statuses.suppliers,
+    	...config.main.inquiry_statuses.buyers,
     ],    
 }
 
@@ -82,6 +95,20 @@ export default [
 
     },
     {
+        name: 'AdminProfile',
+        path: '/admin/profile/',
+        components: {
+            default: AppProfile,
+            sidebar: AppSidebar,
+            header: AppToolbar,
+            footer: AppFooter,
+            dialog: AdminInquiryView,
+        },
+        meta: meta,
+        props: { default:true },
+
+    },
+    {
         name: 'AdminSupplier',
         path: '/admin/supplier',
         components: {
@@ -93,8 +120,6 @@ export default [
         },
         meta: meta,
          props: { default:true },
-
-
-    }    
+    },
 ]
 
