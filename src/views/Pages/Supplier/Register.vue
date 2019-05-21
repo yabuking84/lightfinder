@@ -8,19 +8,33 @@
 	      <v-container>
 	        <v-flex lg12 xs12>
 	          <v-layout row wrap>
+
 	            <v-flex lg4 xs12 offset-lg2 class="page-wrap">
 	            	<v-layout row wrap>
 	            	  <div >
 			            <!-- heading message -->
-			              <div class="page-content">
-			                <h1 class="white--text header-title">How to become a BAL supplier?</h1>
+			              <div class="page-content mt-5">
+
+
+			             	<h1 class="white--text header-title">How to become a BAL supplier?</h1>
 			                <h4 class="white--text font-weight-light sub-header-title">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe. </h4>
+			             	
+			              
+			             	 <v-flex xs12 mt-4 mb-4>
+			             	        <div class=" videocontent">
+				                        <div id="player-wrapper">
+<!-- 				                                <iframe src="https://www.youtube.com/embed/7N3FqFyASC0" allowfullscreen allowtransparency allow="autoplay"></iframe>
+ -->				                         <iframe width="560" height="315"  src="https://www.youtube.com/embed/7N3FqFyASC0?autoplay=0&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&playsinline=1&widget_referrer=https%3A%2F%2Fplyr.io%2F%23youtube&cc_load_policy=0&cc_lang_pref=auto&enablejsapi=1&origin=https%3A%2F%2Fplyr.io&widgetid=1?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
+				                        </div>
+				                    </div>
+			             	 </v-flex>
+
 			              </div>
 			              <!-- heading message -->
 	            	  </div>
 	            	</v-layout>
-	              
 	            </v-flex>
+
 	            <v-flex lg4 xs12>
 	              <v-layout row wrap fill>
 	                <!-- FOR 1ST STEP -->
@@ -34,14 +48,24 @@
 
 	                          <v-flex xs12 pa-0>
 
-	                            <v-text-field 
-	                            color="black" 
-	                            label="Username" 
-	                            v-model="form.username" 
-	                            required 
-	                            :error-messages="fieldErrors('form.username')" 
-	                            @blur="$v.form.username.$touch()">
-	                            </v-text-field>
+
+			                      <v-text-field 
+			                      color="black" 
+			                      label="First Name" 
+			                      v-model="form.firstname" 
+			                      required 
+			                      :error-messages="fieldErrors('form.firstname')" 
+			                      @blur="$v.form.firstname.$touch()">
+			                      </v-text-field>
+
+			                      <v-text-field 
+			                      color="black" 
+			                      label="Last Name" 
+			                      v-model="form.lastname"
+			                      required 
+			                      :error-messages="fieldErrors('form.lastname')"
+			                      @blur="$v.form.lastname.$touch()">
+			                      </v-text-field>
 
 	                            <v-text-field 
 	                            color="black" 
@@ -82,7 +106,7 @@
 	                          </v-flex>
 	                          <v-flex xs12 mt-3>
 	                            <router-link :to="{ name: 'Login' }">
-	                              <p class="blue--text text-xs-center font-weight-light"><strong>Existing User ? Click here to login</strong></p>
+	                              <p class="black--text text-xs-center font-weight-light"><strong>Existing User ? Click here to login</strong></p>
 	                            </router-link>
 	                          </v-flex>
 	                        </v-layout>
@@ -122,6 +146,7 @@
 			                <v-flex xs12>
 
 			                  <v-layout row wrap>
+
 			                    <v-flex xs6 pa-2>
 			                      <v-text-field 
 			                      color="black" 
@@ -158,11 +183,11 @@
 			                    <v-flex xs6 pa-2>
 			                      <v-text-field 
 			                      color="black" 
-			                      label="Company Website" 
-			                      v-model="form.companywebsite" 
+			                      label="Company Name" 
+			                      v-model="form.companyname" 
 			                      required 
-			                      :error-messages="fieldErrors('form.companywebsite')" 
-			                      @blur="$v.form.companywebsite.$touch()">
+			                      :error-messages="fieldErrors('form.companyname')" 
+			                      @blur="$v.form.companyname.$touch()">
 			                      </v-text-field>
 			                    </v-flex>
 
@@ -287,41 +312,63 @@
 
 			                		<v-flex xs4 pa-2>
 
-				                      <v-text-field 
-					                      color="black" 
-					                      label="Company established year:" 
-					                      v-model="form.companyestablishedyear" 
-					                      required 
-					                      :error-messages="fieldErrors('form.companyestablishedyear')" 
-					                      @blur="$v.form.companyestablishedyear.$touch()">
+				                     	 <v-text-field 
+						                      color="black" 
+						                      label="Company established year:" 
+						                      v-model="form.companyestablishedyear" 
+						                      required 
+						                      :error-messages="fieldErrors('form.companyestablishedyear')" 
+						                      @blur="$v.form.companyestablishedyear.$touch()">
 					                      </v-text-field>
+
 				                    </v-flex>
 
 				                    <v-flex xs4 pa-2>
-				                      <v-text-field 
-					                      color="black" 
-					                      label="Number of employees in total" 
-					                      v-model="form.numberofemployees" 
-					                      required 
-					                      :error-messages="fieldErrors('form.numberofemployees')" 
-					                      @blur="$v.form.numberofemployees.$touch()">
+
+				                    	  <v-text-field 
+						                      color="black" 
+						                      label="Number of employees in total" 
+						                      v-model="form.numberofemployessintotal" 
+						                      required 
+						                      :error-messages="fieldErrors('form.numberofemployessintotal')" 
+						                      @blur="$v.form.numberofemployessintotal.$touch()">
 					                      </v-text-field>
+
 				                    </v-flex>  
 
 				                    <v-flex xs4 pa-2>
 
-				                      <v-text-field 
-					                      color="black" 
-					                      label="Number of employees in total" 
-					                      v-model="form.numberofworkersinfactory" 
-					                      required 
-					                      :error-messages="fieldErrors('form.numberofworkersinfactory')" 
-					                      @blur="$v.form.numberofworkersinfactory.$touch()">
+				                     	  <v-text-field 
+						                      color="black" 
+						                      label="Number of employees in total" 
+						                      v-model="form.numberofworkersinfactory" 
+						                      required 
+						                      :error-messages="fieldErrors('form.numberofworkersinfactory')" 
+						                      @blur="$v.form.numberofworkersinfactory.$touch()">
 					                      </v-text-field>
 
 				                    </v-flex>
 
-				                    <v-flex xs6 pa-2>
+
+				                      <v-flex xs12 mt-2 mb-4>
+
+					                   	<h2 class="font-weight-medium text--grey">PRODUCT QUESTIONS</h2>
+					                   	<h5 class="font-weight-light ">What kind of LED lights do you offer?</h5>
+
+							      		<v-layout row wrap pa-2>
+							                <v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="id" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="List your Products ">
+							                  <template v-slot:selection="slotData">
+							                    <v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
+							                      {{ slotData.item.name }}
+							                    </v-chip>
+							                  </template>
+							                </v-autocomplete>
+							            </v-layout>	
+
+				                    </v-flex>
+
+
+				                    <v-flex xs6 pa-2 style="display: none;">
 
 				                    	  <vue-dropzone 
 			                                    id="dropzone_attachments" 
@@ -333,11 +380,11 @@
 			                                        <h3 class="dropzone-custom-title">Drag and drop to images of your Factory photo Inside!</h3>
 			                                        <div class="subtitle">...or click to select a file from your computer</div>
 			                                      </div>
-			                               </vue-dropzone>
+			                              </vue-dropzone>
 				                        
 				                    </v-flex>  
 
-				                    <v-flex xs6 pa-2>
+				                    <v-flex xs6 pa-2 style="display: none;">
 
 				                    	  <vue-dropzone 
 			                                    id="dropzone_attachments" 
@@ -349,9 +396,10 @@
 			                                        <h3 class="dropzone-custom-title">Drag and drop to images of your Factory photo Outside!</h3>
 			                                        <div class="subtitle">...or click to select a file from your computer</div>
 			                                      </div>
-			                               </vue-dropzone>
+			                              </vue-dropzone>
 				                      
 				                    </v-flex>
+
 
 			                		</v-layout>
 
@@ -373,12 +421,12 @@
 								<v-flex xs4 pa-2>
 
 				                  <v-text-field 
-				                      color="black" 
-				                      label="Account Name:" 
-				                      v-model="form.accountname" 
-				                      required 
-				                      :error-messages="fieldErrors('form.accountname')" 
-				                      @blur="$v.form.accountname.$touch()">
+					                      color="black" 
+					                      label="Account Name:" 
+					                      v-model="form.accountname" 
+					                      required 
+					                      :error-messages="fieldErrors('form.accountname')" 
+					                      @blur="$v.form.accountname.$touch()">
 				                   </v-text-field>
 
 				                </v-flex> 
@@ -400,12 +448,12 @@
 				                <v-flex xs4 pa-2>
 				                  
 				                   <v-text-field 
-				                      color="black" 
-				                      label="IBAN:" 
-				                      v-model="form.iban" 
-				                      required 
-				                      :error-messages="fieldErrors('form.iban')" 
-				                      @blur="$v.form.iban.$touch()">
+					                      color="black" 
+					                      label="IBAN:" 
+					                      v-model="form.iban" 
+					                      required 
+					                      :error-messages="fieldErrors('form.iban')" 
+					                      @blur="$v.form.iban.$touch()">
 				                   </v-text-field>
 
 				                </v-flex>
@@ -414,12 +462,12 @@
 				                <v-flex xs4 pa-2>
 				                  
 				                    <v-text-field 
-				                      color="black" 
-				                      label="Bank Name:" 
-				                      v-model="form.bankname" 
-				                      required 
-				                      :error-messages="fieldErrors('form.bankname')" 
-				                      @blur="$v.form.bankname.$touch()">
+					                      color="black" 
+					                      label="Bank Name:" 
+					                      v-model="form.bankname" 
+					                      required 
+					                      :error-messages="fieldErrors('form.bankname')" 
+					                      @blur="$v.form.bankname.$touch()">
 				                   </v-text-field>
 
 				                </v-flex>
@@ -427,12 +475,12 @@
 				                <v-flex xs4 pa-2>
 
 				                  <v-text-field 
-				                      color="black" 
-				                      label="Bank Address:" 
-				                      v-model="form.bankaddress" 
-				                      required 
-				                      :error-messages="fieldErrors('form.bankaddress')" 
-				                      @blur="$v.form.bankaddress.$touch()">
+					                      color="black" 
+					                      label="Bank Address:" 
+					                      v-model="form.bankaddress" 
+					                      required 
+					                      :error-messages="fieldErrors('form.bankaddress')" 
+					                      @blur="$v.form.bankaddress.$touch()">
 				                   </v-text-field>
 
 				                </v-flex>
@@ -440,65 +488,36 @@
 				                <v-flex xs4 pa-2>
 				                  
 				                    <v-text-field 
-				                      color="black" 
-				                      label="Swift Code:" 
-				                      v-model="form.swiftcode" 
-				                      required 
-				                      :error-messages="fieldErrors('form.swiftcode')" 
-				                      @blur="$v.form.swiftcode.$touch()">
+					                      color="black" 
+					                      label="Swift Code:" 
+					                      v-model="form.swiftcode" 
+					                      required 
+					                      :error-messages="fieldErrors('form.swiftcode')" 
+					                      @blur="$v.form.swiftcode.$touch()">
 				                   </v-text-field>
 
 				                </v-flex>
 
 				                <v-flex xs12 mt-4>
 
-								    <h3> In order that the form will be transmitted to us, you have to agree to the following terms:</h3>
+								    <h4 class="text--grey"> In order that the form will be transmitted to us, you have to agree to the following terms:</h4>
 
+									<div class="agree">
 
-									<div class="">
+										<p> 
 
-								    <v-checkbox v-model="isVerifyInformation">
-								        <template v-slot:label style="font-size: 12px">
-								            We hereby verify that all information and attachments on this form are fully true and correct to the best of my knowledge.
-								        </template>
-								    </v-checkbox>
+    										<span> 1.) We hereby verify that all information and attachments on this form are fully true and correct to the best of my knowledge.</span>
+								        	<span> 2.) We confirm to provide samples and supply orders from client with no minimum quantity required.</span>
+								            <span> 3.) We confirm, that BuyAnyLight Inspector can visit our company/factory to check on all the information given in this form.</span>
+								            <span> 4.) We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation!</span>
+								            <span> 5.) We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to:</span>
+				
+										</p>
 
-								    <v-checkbox v-model="isConfirmProvideSamples">
-								        <template v-slot:label>
-								        		We confirm to provide samples and supply orders from client with no minimum quantity required.
-								        </template>
-
-								    </v-checkbox>
-
-								    <v-checkbox v-model="isConfirmtoCheckBuyanyligh">
-								        <template v-slot:label>
-								            We confirm, that BuyAnyLight Inspector can visit our company/factory to check on all the information given in this form.
-
-								        </template>
-
-								    </v-checkbox>
-
-								    <v-checkbox v-model="isConfirmLossorDamages">
-								        <template v-slot:label>
-								            We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation!
-
-								        </template>
-								    </v-checkbox>
-
-								    <v-checkbox v-model="isAggreeInformation">
-								        <template v-slot:label>
-
-								            We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to:
-
-								        </template>
-								    </v-checkbox>
-
-								    <v-checkbox v-model="isAgreeAllAboveInformation">
-								        <template v-slot:label>
-								            I agree to the above terms and conditions..
-
-								        </template>
-								    </v-checkbox>
+								        <p> 
+											* By clicking the submit button you agree the above conditions.
+								        </p>
+								        
 									
 									</div>
 
@@ -510,7 +529,7 @@
 							</v-layout>
 							</v-flex>
 
-				      <v-btn color="primary" @click="FourStep()">Save</v-btn>
+				      <v-btn color="primary" @click="FourStep()">Submit</v-btn>
 				      <v-btn flat>Cancel</v-btn>
 
 				    </v-stepper-content>
@@ -564,35 +583,82 @@ import config from '@/config/index'
 
 const dform = {
   // 1st step 	
-  email: 'james@gmail.com',
-  password: 'belatting',
-  confirmpassword: 'belatting',
-  username: 'kabayan06',
+  // email: 'james@gmail.com',
+  // password: 'belatting',
+  // confirmpassword: 'belatting',
+  // username: 'kabayan06',
+  // // 2nd step
+  // // can add multiple contacts if he/she wanted
+  // firstname: 'James',
+  // lastname: 'Cameron',
+  // designation: 'lighther Designer Manager',
+  // companyname: 'Almani Lighting LCC',
+  // country: 'United Arab Emirates',
+  // city: 'Dubai',
+  // street: '171 Tower 69',
+  // zipcode: '6969',
+  // phonenumber: '+12312',
+  // mobilenumber: '123817',
+  // designation: '589647869',
+  // wechatid: '69696969',
+  // companywebsite: 'almani.ae',
+  // factoryaddress: '171 Tower 69',
+  // // optional
+  // managername: 'Zain Abdin',
+  // manageremail: 'zain@almani.ae',
+  // managerphone: '696969',
+  // // 3rd
+  // companyestablishedyear: '2017',
+  // numberofemployees: '20',
+  // numberofemployessintotal: '100',
+  // numberofworkersinfactory: '100',
+  // factoryphotoinside: [],
+  // factoryphotooutside: [],
+
+  // category list : what kind of led lights do you offer ?
+  // 4RTH
+  // accountname: '1',
+  // accountnumber: '1',
+  // iban: '1',
+  // bankname: '1',
+  // bankaddress: '1',
+  // swiftcode: '1',
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // 1st step 	
+  email: '',
+  password: '',
+  confirmpassword: '',
+  username: '',
   // 2nd step
   // can add multiple contacts if he/she wanted
-  firstname: 'James',
-  lastname: 'Cameron',
-  designation: 'lighther Designer Manager',
-  companyname: 'Almani Lighting LCC',
-  country: 'United Arab Emirates',
-  city: 'Dubai',
-  street: '171 Tower 69',
-  zipcode: '6969',
-  phonenumber: '+12312',
-  mobilenumber: '589647869',
-  wechatid: '69696969',
-  companywebsite: 'almani.ae',
-  factoryaddress: '171 Tower 69',
+  firstname: '',
+  lastname: '',
+  designation: '',
+  companyname: '',
+  country: '',
+  city: '',
+  street: '',
+  zipcode: '',
+  phonenumber: '',
+  mobilenumber: '',
+  designation: '',
+  wechatid: '',
+  companywebsite: '',
+  factoryaddress: '',
   // optional
-  managername: 'Zain Abdin',
-  manageremail: 'zain@almani.ae',
-  managerphone: '696969',
+  managername: '',
+  manageremail: '',
+  managerphone: '',
   // 3rd
-  companyestablishedyear: '2017',
-  numberofemployees: '20',
-  numberofworkersinfactory: '100',
+  companyestablishedyear: '',
+  numberofemployees: '',
+  numberofemployessintotal: '',
+  numberofworkersinfactory: '',
   factoryphotoinside: [],
   factoryphotooutside: [],
+
   // category list : what kind of led lights do you offer ?
   // 4RTH
   accountname: '',
@@ -601,6 +667,8 @@ const dform = {
   bankname: '',
   bankaddress: '',
   swiftcode: '',
+
+
 
 }
 
@@ -645,6 +713,7 @@ export default {
       companyestablishedyear: { required },
       numberofemployees: { required },
       numberofworkersinfactory: { required },
+      numberofemployessintotal: { required },
 
    	  accountname: { required },
 	  accountnumber: { required },
@@ -654,8 +723,6 @@ export default {
 	  swiftcode: { required },
 
     },
-
-
 
   },
 
@@ -683,6 +750,7 @@ export default {
       numberofworkersinfactory: { required: 'Please enter the number of workers in factory.'},
       companywebsite: { required: 'Please enter your Company Website.' },
       factoryaddress: { required: 'Please enter your Factory Address.' },
+     
       accountname: { required: 'Please enter your Account Name'},
       accountnumber: { required: 'Please enter your Account Number'},
       iban: { required: 'Please enter your IBAN'},
@@ -725,18 +793,14 @@ export default {
         },
 
        //  checkboxes
-       isVerifyInformation:false,
-       isConfirmProvideSamples:false,
-       isConfirmtoCheckBuyanyligh:false,
-       isConfirmLossorDamages:false,
-       isAggreeInformation:false,
        isAgreeAllAboveInformation:false,
-
-
 
 	    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 	    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
 	    // Dropzone
+
+	  categories: [],
+      categoryItems: [],
 
     }
 
@@ -748,12 +812,13 @@ export default {
 
   	FirstStep() {
 
-  		this.$v.form.username.$touch();
+  		this.$v.form.firstname.$touch();
+  		this.$v.form.lastname.$touch();  	
   		this.$v.form.email.$touch();
   		this.$v.form.password.$touch();
   		this.$v.form.confirmpassword.$touch();
 
-  		if (!this.$v.form.username.$invalid && !this.$v.form.email.$invalid && !this.$v.form.password.$invalid && ! this.$v.form.confirmpassword.$invalid) {
+  		if (!this.$v.form.firstname.$invalid && !this.$v.form.lastname.$invalid && !this.$v.form.username.$invalid && !this.$v.form.email.$invalid && !this.$v.form.password.$invalid && ! this.$v.form.confirmpassword.$invalid) {
 
   			// hide the step one 
 			this.isStepOne = false
@@ -815,8 +880,6 @@ export default {
 
   	FourStep() {
 
-  		console.log('hello')
-
  		this.$v.form.accountname.$touch();
  		this.$v.form.accountnumber.$touch();
  		this.$v.form.iban.$touch();
@@ -831,19 +894,92 @@ export default {
  			&& !this.$v.form.bankaddress.$invalid 
  			&& !this.$v.form.swiftcode.$invalid) {
 
- 			// alert('gooood');
- 			// console.log('--------')
- 			// console.log(this.form);
- 			// console.log('--------')
+ 				this.save();
+				// console.log('sulod ko deri ah ha')
 
- 			this.isSteptwo = false
- 			this.isComplete = true
+ 		} 
 
-
- 		}
-
+ 		// console.log('passok');
 
   		// validate last then save here
+  	},
+
+  	save() {
+
+
+
+		if (this.$v.$invalid) {
+		  	   this.$v.$touch()
+		} else {
+
+
+
+  		let data = {
+
+  				'first_name': this.form.firstname,
+  				'last_name': this.form.lastname,
+  				'email': this.form.email,
+  				'password': this.form.password,
+  				'confirm_password': this.form.confirmpassword,
+  				'website': this.form.companywebsite,
+  				'street': this.form.street,
+  				'city': this.form.city,
+  				'country_id': this.form.country,
+
+  				'phone': this.form.phonenumber,
+  				'mobile': this.form.mobilenumber,
+  				'wechatid': this.form.wechatid,
+
+  				'company_name': this.form.companyname,
+  				'job_title': this.form.designation,
+
+  				'factory_address': this.form.factoryaddress,
+  				'company_established_year': this.form.companyestablishedyear,
+  				'no_of_employees_factory': this.form.numberofworkersinfactory,
+  				'no_of_employees_total': this.form.numberofemployessintotal,
+
+  				'bank_account_name': this.form.accountname,
+  				'bank_account_no': this.form.accountnumber,
+  				'bank_iban': this.form.iban,
+  				'bank_name': this.form.bankname,
+  				'bank_address': this.form.bankaddress,
+  				'bank_swift': this.form.swiftcode,
+  				'categories': this.categories
+
+  			};
+
+
+  			console.log(data);
+
+		    // this.$store.dispatch("auth/supplierRegistration_a", {
+		    //   data: data
+		    // })
+		    // .then(response => {
+
+		    //   // this.formloading = false
+		    //   // console.log(response);
+		    //   if (response.status == 200) {
+
+		    //   		this.isSteptwo = false
+ 					// this.isComplete = true
+
+		    //   } else {
+
+		    //     this.$v.$touch();
+
+		    //   }
+		    // })
+		    // .catch(e => {
+		    //   console.log(e);
+		    //   this.formloading = false;
+		    // })
+		    // .finally(() => {
+		    //   this.formloading = false;
+		    // });
+
+		}
+
+
   	},
 
 	// Validate FORMS
@@ -1011,7 +1147,7 @@ export default {
 
 .page-content {
   position: relative;
-  top: 30%;
+  // top: 30%;
   padding: 20px;
   // padding: 100px;
 
@@ -1045,6 +1181,81 @@ export default {
 }
 
 
+.agree {
+	
+	margin-top: 20px;
+
+	p {
+
+	    font-weight: 400;
+	    line-height: 23px;
+	    min-height: 16px;
+	    -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+	    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+	    font-size: 12px;
+	    color: grey;
+	
+		span {
+			    display: block;
+		}
+
+	}
+}
+
+
+.videocontent { 
+
+	 width: 100%;
+	 height:304px;
+	 display: flex;
+	 justify-content: center;
+	 align-content: center;
+	 flex-flow: row column;
+	 /*padding: 50px;*/
+
+}
+
+.videocontent iframe {
+    border-radius:2%; /*use for circle 50% */
+    border:solid 0px #999;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+#player {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+#player-wrapper {
+   
+    border-radius:2%;  /* use for circle 50% */
+    border:solid 0px #999;
+    overflow:hidden;
+    position: relative;
+    width: 100%;
+    /*top:40px;*/
+    z-index:10;
+   -webkit-box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
+   -moz-box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
+   box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
+   /*float: left;*/
+   /*margin: 50px;*/
+ 
+}
+
+.video-area h6 {
+
+    color: white;
+    margin-top: 20px;
+    font-weight: lighter;
+    font-size: 13px;
+
+}
 
 
 </style>
@@ -1070,6 +1281,7 @@ export default {
 }
 
  a {
+
     cursor: pointer;
     text-decoration: none;
 }
