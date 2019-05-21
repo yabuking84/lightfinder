@@ -106,7 +106,7 @@
 			    </div>
 
 			    <div class="registration-success" v-show="isComplete">
-					 <v-flex xs8 class="offset-xs2">
+					 <v-flex xs6 class="offset-xs3">
 					     	<v-card class=pa-5>
 					     		<v-layout row wrap justify-center>
 					    			<div class="heading">
