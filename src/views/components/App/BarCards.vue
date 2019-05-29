@@ -3,13 +3,14 @@
     <v-card flat style="background-color: transparent;">
         <v-container fill-height fluid grid-list-lg pa-0>
             <v-layout row wrap>
-                
-               	<bar-card 
-            	v-for="(status, index) in statuses"
-            	:key="index"
-            	:status="status">
-	           	</bar-card>
-
+				<v-flex 
+				xs12 sm6 md3
+	            v-for="(status, index) in statuses"
+	            :key="index">
+	               	<bar-card 
+	            	:status="status">
+		           	</bar-card>
+				</v-flex>
             </v-layout>
         </v-container>
     </v-card>

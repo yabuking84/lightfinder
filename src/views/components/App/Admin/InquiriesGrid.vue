@@ -7,7 +7,8 @@
         <v-btn-toggle multiple v-model="inquiryStatus">
             <span v-for="(status, index) in statuses" class="grey darken-4 pa-2">
               <v-btn flat value="left" :value="status.id" :title="status.name">
-                <i class="white--text" :class="status.icon"></i>
+				<v-icon>{{ status.icon }}</v-icon>
+                <!-- <i class="white--text" :class="status.icon"></i> -->
                 <!-- <span class="ml-1 font-weight-light white--text">{{ status.name }} </span> -->
             </v-btn>
             </span>
@@ -51,182 +52,49 @@
     <v-divider></v-divider>
 
 
-        <!-- <v-layout v-if="tableItems.length > 0" class="grey lighten-5" row wrap> -->
+            <transition-group 
+            tag="v-layout" 
+            v-if="tableItems.length > 0" 
+            name="tiItems" 
+            class="layout grey lighten-5 row wrap">
+	              
+				<template v-for="(inquiry, key, index) in tableItems">				
+					<inquiry-grid-item
+					:key="inquiry.inq_id"
+					:inquiry="inquiry"
+					:statuses="statuses"
+					class="inquiry">
+						<template v-slot:details="sp">
+			                <v-flex xs6 mt-2>
+			                    <h5 class="grey--text lighten-4">Inquiry Holder</h5>
+			                    <h3 class="mt-0 blue-grey--text font-weight-bold ">
+			                    	{{ sp.inquiry.inquiry.buyer.first_name + ' ' + sp.inquiry.inquiry.buyer.last_name }}
+			                    </h3>
+			                </v-flex>
 
-            <!-- [ {{ allInquiries[0] }}, {{ allInquiries[1] }}, {{ allInquiries[2] }},{{ allInquiries[3] }}, ] -->
-            <!-- <pre>{{ allInquiries[0] }}</pre> -->
-            
-<!-- 
-            <isotope 
-            :options='inquiryTableOptions' 
-            :list="tableItems" 
-            id="root_isotope"
-            itemSelector="isotope_item"
-            class="layout grey lighten-5 row wrap pa-4">
+			                <v-flex xs6 mt-2>
+			                    <h5 class="grey--text">Job Title</h5>
+			                    <h3 class="mt-0 blue-grey--text  font-weight-bold ">
+			                    	{{ sp.inquiry.inquiry.buyer.job_title }}
+			                    </h3>
+			                </v-flex>
 
-                    <v-flex 
-                    xs12 md4 xl3 pa-2  
-                    v-for="(inquiry, index) in tableItems" 
-                    :key="'itemsIsotope_'+index" > -->
+			                <v-flex xs6 mt-2>
+			                    <h5 class="grey--text lighten-4">Inquiry</h5>
+			                    <h3 class="mt-0 font-weight-medium ">{{ sp.inquiry.inq_id }}</h3>
+			                </v-flex>
 
+			                <v-flex xs6 mt-2>
+			                    <h5 class="grey--text">Date</h5>
+			                    <h3 class="mt-0 font-weight-medium ">
+			                        {{  getDateTime('mmm dd, yyyy hh:mm', sp.inquiry.created_at ) }} 
+			                    </h3>
+			                </v-flex>
+						</template>
+					</inquiry-grid-item>
+				</template>
 
-          <!--   <isotope :options='null' :list="tableItems" id="root_isotope">
-
-                  <v-flex  xs12 md4 xl3 pa-2 v-for="(inquiry, index) in tableItems" :key="'item_'+index">
-
-
-                        <v-card class="pa-3 mx-2 my-3" :hover="true">
-                         -->
-
-
-              <transition-group 
-              tag="v-layout" 
-              v-if="tableItems.length > 0" 
-              name="tiItems" 
-              class="layout grey lighten-5 row wrap">
-
-                    <v-flex                    
-                    xs12 sm6 md4 pa-2 
-                    v-for="(inquiry, index) in tableItems" 
-                    :key="inquiry.inq_id"
-                    class="inquiry">
-
-
-                        <v-card 
-                        class="pa-3 mx-2 my-3 tiItem" 
-                        :hover="true"
-                        @click="viewInquiry(inquiry.inq_id)">
-
-                            <v-layout row wrap mt-2>
-
-                                    <v-flex xs6>
-                                        <h5 class="grey--text lighten-4">Inquiry Holder</h5>
-                                        <h3 class="mb-1 blue-grey--text font-weight-bold ">{{ inquiry.inquiry.buyer.first_name + ' ' + inquiry.inquiry.buyer.last_name }}</h3>
-                                    </v-flex>
-
-                                    <v-flex xs6>
-                                        <h5 class="grey--text">Job Title</h5>
-                                        <h3 class="mb-1 blue-grey--text  font-weight-bold ">{{ inquiry.inquiry.buyer.job_title }}</h3>
-                                    </v-flex>   
-
-                                    <v-flex xs6>
-                                        <h5 class="grey--text lighten-4">Inquiry #</h5>
-                                        <h3 class="mb-1 font-weight-medium ">{{ inquiry.inq_id }}</h3>
-                                    </v-flex>
-
-                                    <v-flex xs6>
-                                        <h5 class="grey--text">Date</h5>
-                                        <h3 class="mb-1 font-weight-medium ">
-                                            {{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }} 
-                                        </h3>
-                                    </v-flex>   
-
-                            </v-layout>
-
-                            <v-layout  row wrap mt-2>
-
-                                    <v-flex xs6>
-                                          <h5 class="grey--text lighten-4">Quantity</h5>
-                                          <h3 class="mb-1 font-weight-medium ">{{ inquiry.quantity }} pcs</h3>
-                                    </v-flex>
-
-                                    <!-- {{ inquiry }} -->
-
-                                    <v-flex xs6>
-
-                                        <h5 class="grey--text lighten-4">Status</h5>
-
-                                        <template v-if="false">
-                                            <!-- verifying -->
-                                            <div v-if="inquiry.status==1001">
-                                                 <small class="orange--text">Inquiry sent for BAL approval</small>
-                                            </div>
-                                            <!-- open -->
-                                            <div v-else-if="inquiry.status==1002">
-                                                 <small class="green--text">Approved inquiry, open for bidding</small>
-                                            </div>
-                                            <!-- rejected -->
-                                            <div v-else-if="inquiry.status==1003">
-                                                 <small class="red--text">Declined by BAL</small>
-                                            </div>
-                                            <!-- confirmation-->
-                                            <div v-else-if="inquiry.status==1004">
-                                                 <small class="teal--text">Waiting for supplier confirmation</small>
-                                            </div>
-                                            <!-- pending payment-->
-                                             <div v-else-if="inquiry.status==1005">
-                                                 <small class="deep-orange--text">Waiting for buyer payment</small>
-                                            </div>
-                                            <!-- Production -->
-                                            <div v-else-if="inquiry.status==2001">
-                                                 <small class="blue--text">Products are on the production line</small>
-                                            </div>
-                                            <!-- Shipment -->
-                                            <div v-else-if="inquiry.status==2002">
-                                                 <small class="light-green--text">Order is sent for shipment</small>
-                                            </div>
-                                            <!-- Receiving -->
-                                            <div v-else-if="inquiry.status==2003">
-                                                 <small class="orange--text">Order reached the destination, waiting for buyer confirmation</small>
-                                            </div>
-                                            <!-- Return -->
-                                            <div v-else-if="inquiry.status==2004">
-                                                 <small class="red--text">Order is returning to the supplier</small>
-                                            </div>
-                                            <!-- Success -->
-                                            <div v-else-if="inquiry.status==3001">
-                                                 <small class="light-blue--text">Order is successful</small>
-                                            </div>
-                                            <!-- Cancelled -->
-                                            <div v-else-if="inquiry.status==3002">
-                                                 <small class="red--text">Order is cancelled</small>
-                                            </div>
-                                        </template>
-
-
-                                        <inquiry-status-buttons :status-id="inquiry.status" :statuses="statuses"></inquiry-status-buttons>
-                                    </v-flex>   
-
-                            </v-layout>
-
-
-                            <v-layout row wrap mt-2>
-                      
-                                     <v-flex xs12>
-                                         <h3 class="mb-1 font-weight-medium black--text lighten-4">{{ inquiry.categories }}</h3>
-                                    </v-flex>
-
-                            </v-layout>
-
-
-                            <v-layout row wrap mt-2 class="tnt-height">
-                      
-                                    <v-flex xs12>                                        
-                                        <h5 class=" black--text font-weight-light">
-                                            {{ inquiry.message.length > 150 ?  inquiry.message.substring(0,250) + '...' : inquiry.message   }}
-                                        </h5>
-                                    </v-flex>
-
-                            </v-layout>
-
-                             <v-layout row wrap mt-4 >
-                      
-                                     <v-flex xs12 class="text-xs-center">
-                                            <v-btn @click="viewInquiry(inquiry.inq_id)" :loading="inquiry.loading" block small class=" v-btn--active blue-grey darken-2 font-weight-light text-decoration-none">
-                                                <i class="fas fa-eye white--text"></i>
-                                                <span class="ml-1 white--text font-weight-light ">Manage</span>
-                                              </v-btn>
-                                    </v-flex>
-
-                            </v-layout>
-
-                        </v-card>
-
-                    </v-flex>
-
-            <!-- </isotope> -->
-
-                    </transition-group>
+            </transition-group>
 
 
 
@@ -268,6 +136,7 @@ import inqEvntBs from "@/bus/inquiry";
 import helpers from "@/mixins/helpers";
 
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
+import InquiryGridItem from "@/views/Components/App/InquiryGridItem";
 
 import config from "@/config/main"
 
@@ -287,6 +156,7 @@ export default {
   components: {
 
     InquiryStatusButtons,
+	InquiryGridItem,
     // InquiryView,
     isotope
 
@@ -301,7 +171,8 @@ export default {
       ],
       // search: '844',
       // search: '1554795137726',
-      search: '1554969763787',
+      // search: '1554969763787',
+		search: '1559132882113', // 2 bids
       dialog: false,
       loading: false,
       headers: [{
@@ -416,7 +287,7 @@ export default {
                 item.created_at = response[i].created_at;
                 item.status = response[i].stage_id;
                 item.inquiry = response[i];
-                item.loading = false;
+                // item.loading = false;
                 buffer.push(item);
             }
     
@@ -490,16 +361,6 @@ export default {
         this.categories.splice(index, 1)
     },
 
-    viewInquiry(inq_id) {
-
-        this.$store.dispatch('admnInq/getInquiry_a', { inq_id: inq_id })
-        .then((response) => {
-
-          this.inquiry = response
-          this.openInquiry = true
-        })
-        .catch((error) => {}) 
-    }
   },
 
 
@@ -530,28 +391,7 @@ export default {
     computed: {
 
 
-        openInquiry: {
-            get() {
-                return this.$store.state.inq.openInquiryView;
-            },
-            set(nVal){
-                if(nVal)
-                this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
-                else
-                this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-            },
-        },
 
-        inquiry: {
-            get() {
-                return this.$store.state.inq.inquiry;
-            },
-            set(nVal) {
-                // console.log('setVal');
-                // console.log(nVal);
-                this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
-            },
-        },
     },
 
 
@@ -670,7 +510,8 @@ table.v-table tbody th {
 
 
 .tnt-height {
-    height: 70px;
+	height: 35px;
+	overflow: hidden;
 }
 
 .rounded-card{

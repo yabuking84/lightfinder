@@ -1,8 +1,8 @@
 <template>
 <div class="text-xs-center">
+  <!-- @input="$emit('update:openInquiry', false)"  -->
 <v-dialog 
   :value="openInquiry" 
-  @input="$emit('update:openInquiry', false)" 
   @keydown.escape="keyPress"
   fullscreen
   >
@@ -27,12 +27,12 @@
               <v-layout row wrap>
                 <!-- Inquiry Details  -->
                 <v-flex xs5>
-                  <inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
+                	<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
                 </v-flex>
                 <!-- Inquiry Details  -->
                 <!-- supplier QuoteDetails -->
                 <v-flex xs7>
-                  <quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
+                	<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
                 </v-flex>
                 <!-- supplier QuoteDetails -->
                 <!-- proposal list -->

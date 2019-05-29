@@ -45,6 +45,21 @@ const state = {
 			url3: 'award',
 		},
 
+		getCreditCardResource: {
+			method  : 'post',
+			url     : 'http://192.168.1.200:8000/v1/pay/credit-card',
+		},
+
+		payByBankTransfer: {
+			method  : 'post',
+			url     : 'http://192.168.1.200:8000/v1/pay/bank-transfer',
+		},
+
+	},
+
+	paymentMethod: {
+		creditCard: 1,
+		bankTransfer: 2,
 	},
 
 	// inquiries: [],
@@ -250,6 +265,67 @@ const actions = {
 	},
 
 
+	getCreditCardResource(context, data) {
+		return new Promise((resolve, reject) => {
+
+			var headers = { token: localStorage.access_token }
+
+			axios({
+
+				method  : state.api.getCreditCardResource.method,
+				url     : state.api.getCreditCardResource.url,
+				headers : headers,
+				data 	: {
+					id: 	 data.inquiry_id,
+					type:    "inquiry",
+					payment_method_id: state.paymentMethod.creditCard,
+				},
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+		}) 
+	},
+
+
+
+	payByBankTransfer(context, data) {
+		return new Promise((resolve, reject) => {
+
+			var headers = { token: localStorage.access_token }
+
+			axios({
+
+				method  : state.api.payByBankTransfer.method,
+				url     : state.api.payByBankTransfer.url,
+				headers : headers,
+				data 	: {
+					id: 	 data.inquiry_id,
+					type:    "inquiry",
+					payment_method_id: state.paymentMethod.bankTransfer,
+				},
+			})
+			.then(response => {
+				resolve(response);
+			})
+			.catch(error => {
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+		}) 
+	},
+
+
 	awardBid_a(context,data){
 		return new Promise((resolve, reject) => {
 
@@ -289,7 +365,7 @@ const actions = {
 				if(context.dispatch('checkToken',error)) {
 					reject(error);
 				}
-				
+
 			})
 		});
 	},

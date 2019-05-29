@@ -4,9 +4,9 @@
 <div>
 
 
+<!-- @input="$emit('update:openInquiry', false)"  -->
 <v-dialog 
 :value="openInquiry" 
-@input="$emit('update:openInquiry', false)" 
 lazy
 fullscreen
 scrollable>

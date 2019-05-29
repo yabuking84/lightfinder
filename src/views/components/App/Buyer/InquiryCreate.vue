@@ -257,7 +257,7 @@
                                         suffix="degrees" mask="###">
                                       </v-text-field>
                                     </v-layout>
-                                    <v-layout row wrap>
+                                    <v-layout row wrap v-if="false">
                                       <v-flex xs6 ml-4>
                                         <h5 class="font-weight-light"> <strong> Want to include warranty ? </strong> </h5>
                                         <v-radio-group v-model="is_warranty" row>
@@ -272,7 +272,7 @@
                                     </v-layout>
                                   </v-flex>
 
-                                  <v-flex xs12 sm12 md6 lg6>
+                                  <v-flex xs12 sm12 md16 lg6>
                                     <v-layout row ml-4>
                                       <v-text-field label="CCT" 
                                       v-model="formData.cct" 
@@ -305,6 +305,10 @@
                                       label="Finish">
                                       </v-text-field>
                                     </v-layout>
+                                  </v-flex>
+
+
+                                  <v-flex xs12 mt-4>
 
                                     <v-layout row wrap ml-4>
 
@@ -312,7 +316,7 @@
                                           <h5 class="font-weight-light"> <strong> Dimmable </strong> </h5>
                                       </v-flex>
 
-                                         <v-flex xs6 sm6 lg6>
+                                        <v-flex xs6 sm4 md4 lg3>
                                           <v-switch 
                                             color="black" 
                                             v-model="formData.dimmable" 
@@ -321,7 +325,7 @@
                                            ></v-switch>
                                       </v-flex>
 
-                                      <v-flex xs6 sm6 lg6>
+                                      <v-flex xs6 sm4 md4 lg3>
                                           <v-switch 
                                             color="black" 
                                             v-model="formData.dimmable" 
@@ -330,7 +334,7 @@
                                           </v-switch>
                                         </v-flex>
 
-                                          <v-flex xs6 sm6 lg6>
+                                          <v-flex xs6 sm4 md4 lg3>
                                             <v-switch 
                                               color="black" 
                                               v-model="formData.dimmable" 
@@ -338,7 +342,7 @@
                                               value="0-10V">
                                             </v-switch>
                                           </v-flex>
-                                          <v-flex xs6 sm6 lg6>
+                                          <v-flex xs6 sm4 md4 lg3>
                                             <v-switch 
                                               color="black" 
                                               v-model="formData.dimmable"
@@ -349,9 +353,9 @@
                                         
 
                                      
-                                    </v-layout>
-
+                                    </v-layout>                                  	
                                   </v-flex>
+
                                 </v-layout>
                               <v-btn color="primary" @click="stepUp()">next</v-btn>
                               <v-btn flat @click="stepDown()">back</v-btn>

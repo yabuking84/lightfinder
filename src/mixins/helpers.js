@@ -36,8 +36,8 @@ methods: {
             retVal = month[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
         } 
         else if(format=="mmm dd, yyyy hh:mm") {
-            var hrs = d.getHours()<10?"0"+d.getHours():d.getHours();
-            retVal = month[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+hrs+":"+d.getMinutes();
+            var hrs = (d.getHours()<10?"0":"")+d.getHours();
+            retVal = month[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+hrs+":"+(d.getMinutes()<10?"0":"")+d.getMinutes();
         } 
         else {
             retVal = null;
@@ -120,6 +120,9 @@ methods: {
 		// return ceil(arg,2).toFixed(2)
 		return arg.toFixed(2);
 	},
+
+
+
 
 },
 

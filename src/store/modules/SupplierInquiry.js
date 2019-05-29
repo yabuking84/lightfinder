@@ -156,8 +156,14 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
-            	response.data.id = response.data.reference
-                resolve(response.data);
+            	console.log("response",response);
+
+            	if(response.data) {
+            		response.data.id = (response.data.reference) ? response.data.reference : null; 
+	                resolve(response.data);
+            	}
+            	else 
+	            resolve(null);
             })
             .catch(error => {
 

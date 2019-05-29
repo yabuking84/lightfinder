@@ -6,6 +6,7 @@ import AppProfile from '@/views/Pages/Profile'
 import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
+import BuyerInvoice from '@/views/Components/App/Invoice'
 
 
 import config from '@/config/index'
@@ -87,6 +88,20 @@ export default [
             header: AppToolbar, 
             footer: AppFooter,
             dialog: BuyerInquiryView,
+        },
+        meta: meta,
+    },
+
+    {
+        name: 'BuyerInvoice',
+        path: '/buyer/invoice',
+        components: {
+            // default: BuyerHome, 
+            default: BuyerInvoice, 
+            // sidebar: AppSidebar, 
+            // header: AppToolbar, 
+            // footer: AppFooter,
+            // dialog: BuyerInquiryView,
         },
         meta: meta,
     },

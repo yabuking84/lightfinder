@@ -22,52 +22,26 @@
 
             <v-container>
 
-				<!-- <v-alert 
-    				:value="(inquiry.stage_id==1005)?1:0"
-    				color="red darken-3" 
-    				style="width: auto; text-align:center; font-size:20px;"
-    				class="mb-2">
-    				Pending Payment!
-
-    					<template v-if="inquiry.etd != null && inquiry.eta != null">
-
-						            <v-card color="white darken-4 mt-3" class="black--text">
-						              <v-card-title primary-title>
-						                <div>
-						                  <v-layout row wrap>
-											  <v-layout row wrap>
-											  </v-layout>
-											 <v-flex xs12>
-											   <div class="subheading">Shipment Details</div>
-											 </v-flex>
-						                     <v-flex xs6>
-							                    <span class="font-weight-light">Estimated Time Departure: </span> <br/> <span class="font-weight-medium">  {{  getDateTime('mmm dd, yyyy', inquiry.etd ) }} </span> 
-							                 </v-flex>
-											 <v-flex xs6>
-								                  <span class="font-weight-light">Estimated Time Arrival: </span> <br/> <span class="font-weight-medium">{{  getDateTime('mmm dd, yyyy', inquiry.eta ) }} </span>  
-											 </v-flex>
-						                  </v-layout>
-						                </div>
-						              </v-card-title>
-						              <v-card-actions>
-						                <v-btn block color="red darken-2" class="white--text" >Pay Now</v-btn>
-						              </v-card-actions>
-
-						            </v-card>
-
-						</template>
-
-				</v-alert> -->
+				<v-alert 
+				:value="(inquiry.stage_id==1006)?1:0"
+				color="green darken-3" 
+				style="width: auto; text-align:center; font-size:20px;"
+				class="mb-2">
+					Confirming Payment!
+				</v-alert>
 				
-				<pending-payment-card :inquiry="inquiry"></pending-payment-card>
+				<pending-payment-card 
+				v-if="inquiry.etd != null && inquiry.eta != null"
+				:inquiry="inquiry">
+				</pending-payment-card>
 
 				<v-alert
-    				:value="(inquiry.stage_id==1004)?1:0"
-    				type="success"
-    				color="light-blue"
-    				style="font-size:20px;"
-    				v-if="inquiry.awarded">
-    	                You have awarded a bid on this inquiry.
+				:value="(inquiry.stage_id==1004)?1:0"
+				type="success"
+				color="light-blue"
+				style="font-size:20px;"
+				v-if="inquiry.awarded">
+	                You have awarded a bid on this inquiry.
 	            </v-alert>
 	    
 
@@ -205,12 +179,12 @@
 
                
                                 <v-flex xs12 class="mb-10" v-show="inquiry.sample_quantity">
-                                  <v-divider></v-divider>
+                                  	<v-divider></v-divider>
                                 </v-flex>
                                            
 
 
-                                   <v-flex xs12 v-show="inquiry.oem">
+                                   	<v-flex xs12 v-show="inquiry.oem">
 
                                         <small class="blue-grey--text">Original Equipment Manufacture</small>
                                         <h4 class="font-weight-medium">

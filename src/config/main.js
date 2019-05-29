@@ -65,6 +65,12 @@ export default {
 				icon: "far fa-credit-card",
 			},
 			{
+				id: 1006, 
+				name: "Confirming Payment",
+				class: "green",
+				icon: "far fa-credit-card",
+			},
+			{
 				id: 2001, 
 				name: "Production",
 				class: "blue",

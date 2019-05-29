@@ -26,7 +26,7 @@
 
 							<td>{{ props.item.data.id }}</td>
 
-							<td>$3000</td>
+							<td>$9999</td>
 
 							<td class="text-xs-right pa-0">
 

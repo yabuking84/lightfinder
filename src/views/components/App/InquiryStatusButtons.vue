@@ -63,10 +63,18 @@
 		</template>
 
 		<h3 
+		v-if="statusId"
 		class="statuses px-0 mx-0 " 
 		:class="status.class+'--text'">
 			{{ status.name.trim() }}
 		</h3>
+		<h3 
+		v-else
+		:color="color"
+		class="statuses px-0 mx-0 ">
+			<slot></slot> &nbsp;
+		</h3>
+
 
 	</div>  
 </span>
@@ -74,53 +82,60 @@
 
 <script>
 
-	import main from "@/config/main"
+import main from "@/config/main"
 
-	export default {
-		props: {
-			statusId: {
-				type: Number,
-				required:true
-			},
-			statuses: {
-				type: Array,				
-			}
+export default {
+	props: {
+		statusId: {
+			type: Number,
+			default: null,
 		},
-		data: function () {
-			return {
-				dialog: false
-			}
+		statuses: {
+			type: Array,				
 		},
-
-		computed: {
-
-			status: function(){
-				var inquiry_statuses = JSON.parse(localStorage.getItem('inquiry_statuses'));
-
-				var status = inquiry_statuses.find(valObj => valObj.id+"" == this.statusId+"");
-
-				if(typeof status === "undefined" || status === "undefined") {
-					// if status does not exist from database
-					status = {};
-					status.name = "";
-					status.class = "";
-
-				} else {
-					
-					var statusClass = this.statuses.find(valObj => valObj.id+"" == this.statusId+"");
-					// if status not listed in main config inquiry_statuses.default
-					if(typeof statusClass === "undefined" || statusClass === "undefined") {
-						status.class = "";
-					} else {
-						status.class = statusClass.class;
-					}
-				}
-
-
-				return status;
-			},
+		color:{
+			type: String,
+		},
+	},
+	data: function () {
+		return {
+			dialog: false
 		}
+	},
+
+	computed: {
+
+		status: function(){
+			// var inquiry_statuses = JSON.parse(localStorage.getItem('inquiry_statuses'));
+
+			var inquiry_statuses = this.$route.meta.statuses;
+
+			console.log('inquiry_statuses',inquiry_statuses);
+
+			var status = inquiry_statuses.find(valObj => valObj.id+"" == this.statusId+"");
+
+			if(typeof status === "undefined" || status === "undefined") {
+				// if status does not exist from database
+				status = {};
+				status.name = "";
+				status.class = "";
+
+			} else {
+
+				var statusClass = this.statuses.find(valObj => valObj.id+"" == this.statusId+"");
+				// if status not listed in main config inquiry_statuses.default
+				if(typeof statusClass === "undefined" || statusClass === "undefined") {
+					status.class = "";
+				} else {
+					status.class = statusClass.class;
+				}
+			}
+
+
+			return status;
+		},
 	}
+}
 </script> 
 
 

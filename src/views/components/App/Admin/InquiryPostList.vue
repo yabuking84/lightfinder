@@ -33,13 +33,18 @@
 
                 <v-layout row wrap pa-0 v-if="inquiry.stage_id == 1001">
                     <v-flex xs6>
-                        <v-btn @click="approvedInquiry(inquiry.id)" block class="green darken-1 large font-weight-light ">
+                        <v-btn 
+                        @click="approvedInquiry(inquiry.id)" 
+                        block class="green darken-1 large font-weight-light ">
                             <i class="fas fa-thumbs-up white--text"></i>
                             <span class="ml-1 white--text font-weight-light ">Approved</span>
                         </v-btn>
                     </v-flex>
                     <v-flex xs6>
-                        <v-btn @click="rejectInquiry(inquiry.id)" block class="red darken-2 large font-weight-light ">
+                        <v-btn 
+                        @click="rejectInquiry(inquiry.id)" 
+                        block 
+                        class="red darken-2 large font-weight-light ">
                             <i class="fas fa-thumbs-down white--text"></i>
                             <span class="ml-1 white--text font-weight-light ">Reject</span>
                         </v-btn>
@@ -115,9 +120,12 @@
                     <v-card-text>
 						
 						<div v-if="bidItem.active == 0">
-							<v-btn @click="approvedBid(bidItem)" large flat block class="grey darken-4">
-		                            <span class="ml-1 white--text font-weight-bold">Approved bid</span>
-		                            <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
+							<v-btn 
+							class="green darken-4"
+							@click="approvedBid(bidItem)" 
+							large flat block>
+		                        <span class="mr-1 white--text font-weight-bold">Approved Bid</span>
+		                        <i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
 		                    </v-btn>	
 						</div>
 						 

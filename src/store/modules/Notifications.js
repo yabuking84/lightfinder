@@ -418,8 +418,8 @@ const actions = {
                 inq_id: ntfctn.data.id
             }, {root:true})
             .then((response) => {
-    			// console.log('data',data);
-    			// console.log('ntfctn',ntfctn);
+    			// console.log('response',response);
+    			console.log('ntfctn',ntfctn);
 
     			// serach BID
     			// var bid = null;
@@ -631,8 +631,8 @@ const actions = {
 					else
 					if(ntfctn.data.type=="bid.supplier.admin") {
 						data = {
-							'id':ntfctn.data.id,
-							'bid_id':null,
+							'id':ntfctn.data.id.split("-")[0],
+							'bid_id':ntfctn.data.id,
 							'notification_id': ntfctn.id,
 							'type': ntfctn.data.type,
 						};

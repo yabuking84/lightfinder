@@ -215,23 +215,22 @@
 						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
-
-						   <v-flex xs12><p></p>
+						   	<v-flex xs12>
 							  <v-layout row wrap>
 								  <v-flex xs6>
 									<template v-if="!inquiry.awarded">                                                
-									  <v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
-										  <i class="fas fa-lightbulb white--text "></i>
-										  <span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-									  </v-btn>
+									  	<v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
+										  	<i class="fas fa-lightbulb white--text "></i>
+										  	<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
+									  	</v-btn>
 									</template>
 								  </v-flex>
 								  <v-flex xs6>
 									<template v-if="!inquiry.awarded">                                                
-									  <v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
-										  <i class="fas fa-award white--text"></i>
-										  <span class="font-weight-bold ml-1 white--text">Award</span>
-									  </v-btn>
+									  	<v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
+											<i class="fas fa-award white--text"></i>
+											<span class="font-weight-bold ml-1 white--text">Award</span>
+									  	</v-btn>
 									</template>
 								  </v-flex>
 							  </v-layout>
@@ -244,7 +243,8 @@
 								type="bid.buyer.admin"
 								:bid="bidItem" 
 								ref="'ref_'+bidItem.id" 
-								:isFocused="isFocus(bidItem.id)"></messaging>
+								:isFocused="isFocus(bidItem.id)">
+								</messaging>
 								<!-- message box -->
 							</v-flex>
 
@@ -261,7 +261,7 @@
 		</div>
 
 	</v-card>
-	
+
 	<inquiry-create v-if="inquiry" :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="inquiry"> </inquiry-create>    
 	<award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
 	<request-sample-dialog v-if="bidToAward" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>

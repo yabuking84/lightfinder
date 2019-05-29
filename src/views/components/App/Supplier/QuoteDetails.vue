@@ -1,6 +1,29 @@
 <template>
 	<div>
 
+
+	<template v-if="!hasBid && (inquiry.stage_id == 1004  || inquiry.stage_id == 1005)">
+		<v-card>
+			<v-card-title>
+				<v-layout justify-center row fill-height>
+						<v-flex xs12 mx-5 mt-2 mb-2>
+								<div>
+									<div 
+									class="headline red--text font-weight-bold darken-3" 
+									color="#BF4653">
+										Another Supplier has won the bid.
+									</div>
+									<div class="red--text" >
+										Please select another inquiry.
+									</div>
+								</div>
+						</v-flex> 
+				</v-layout>
+			</v-card-title>
+		</v-card>
+	</template>
+
+	<template v-else>
 		<v-toolbar color="white darken-4" dark class="black--text" >
 
 			<v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
@@ -78,7 +101,6 @@
 										<h5 class="font-weight-thin">Sample Shipping Cost</h5>
 										<h3>${{ bid.sample_shipment_cost }}</h3>
 									</v-flex>
-
 								</v-layout>
 							</v-flex>
 							<v-flex xs12>
@@ -142,23 +164,24 @@
 						<!-- message box -->
 					
 						<!-- message box -->
-					</template>
+					</template>				
+					
+					<template v-else>
+						<v-flex xs12>
+							<v-layout justify-center row fill-height>
 
-					<v-flex xs12 v-if="!hasBid">
-
-						<v-layout justify-center row fill-height>
-
-								<v-flex xs12 mx-5 mt-2 mb-2>
-										<div>
-											<div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
-											<div class="blue-grey--text" >
-												<b>You have not quoted yet.</b>
+									<v-flex xs12 mx-5 mt-2 mb-2>
+											<div>
+												<div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
+												<div class="blue-grey--text" >
+													<b>You have not quoted yet.</b>
+												</div>
 											</div>
-										</div>
-								</v-flex> 
+									</v-flex> 
 
-						</v-layout>
-					</v-flex>
+							</v-layout>
+						</v-flex>
+					</template>
 
 
 						<!-- new -->
@@ -344,7 +367,9 @@
 			</v-container>
 		</v-card>
 
-		<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
+	</template>
+
+	<quote-dialog :openQuoteDialog.sync="openQuoteDialog" :editQuote.sync="editQuote" :inquiry="inquiry" :bid="bid"></quote-dialog>
 
 	</div>
 </template>
@@ -457,13 +482,8 @@ export default {
 					.then((data) => {
 
 						this.bid = (data) ? data : null;
-
-						console.log("this.bid",this.bid);
-
 						// check if  already has bid
 						this.hasBid = (this.bid) ? true : false;
-
-
 					})
 					.catch((error) => {
 						console.log(error);
@@ -517,6 +537,7 @@ export default {
 
 			handler(nVal, oVal) {
 				this.reloadBid();
+				console.log('watch inquiry');
 			},
 
 			deep: true,

@@ -72,7 +72,7 @@ app flat>
 
             <!-- loading for mugen infinite scroll -->
             <mugen-scroll 
-            v-if="showNtctnsLoading"
+            v-if="showNtctnsLoading  && notifications.length > limit"
             :handler="fetchNtfctns" 
             :should-handle="!ntfctnsIsLoading" 
             :threshold="1"
@@ -144,7 +144,7 @@ app flat>
             :threshold="1"
             scroll-container="message_list">
                 <v-list-tile 
-                v-if="showMsgsLoading"
+                v-if="showMsgsLoading  && notificationMsgs.length > limit"
                 class="mugen-loading">
                     <v-list-tile-sub-title style="text-align: center;">
                     	<v-icon class="ma-4">fas fa-circle-notch fa-spin</v-icon>

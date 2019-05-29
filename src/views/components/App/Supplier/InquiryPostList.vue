@@ -75,27 +75,7 @@
             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
             <!-- confirm awarded -->
 
-            <!-- pending payment -->
-            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-            <template v-if="(inquiry.stage_id==1005)">
-                <v-layout row wrap pa-0 mb-4>
-                    <v-flex xs12>
-                        <v-alert :value="1" color="error" style="width: auto; text-align:center; font-size:20px;" class="mb-2">
-                            Pending Payment!
-                        </v-alert>
-                    </v-flex>
-                    <v-flex xs4>
-                        <h5 class="font-weight-thin">Expected Shipment Date</h5>
-                        <h4 class="font-weight-bold">
-                <h2 class="mb-0">
-                  {{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
-                </h2>
-              </h4>
-                    </v-flex>
-                </v-layout>
-            </template>
-            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-            <!-- pending payment -->
+            
             <div v-for="bidItem in bidItems">
                 <v-card class="mb-2 pa-2" :class="(bidItem.owned)?'md-green-500': ''">
                     <v-layout row wrap class="pa-2">
