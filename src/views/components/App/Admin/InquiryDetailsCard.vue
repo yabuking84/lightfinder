@@ -30,7 +30,44 @@
           <v-flex xs12>
 
                         <v-layout row wrap>
-                        	
+
+
+
+                        		
+	  							<!-- Approvingbank transfer -->
+	  							<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+	  							<template v-if="inquiry.stage_id == 1006">	  								
+	  							<v-flex xs12>
+					                <v-layout row wrap pa-0 align-center justify-center>
+					                        <v-btn 
+					                        @click="approveBankTransfer(inquiry.id)" 
+					                        style="height: auto;"
+					                        class="green darken-1 large font-weight-light white--text py-3 mx-4"
+					                        block large>
+					                            <v-icon class="mr-3">far fa-check-circle</v-icon>
+					                            <h4 
+					                            style="text-align: left;" 
+					                            class="ml-1 white--text font-weight-light">
+					                            	Approve Inquiry #<strong>{{ inquiry.id }}</strong> <br>
+					                            	Bank Transfer Payment
+					                            </h4>
+					                        </v-btn>
+					                </v-layout>
+	  							</v-flex>
+	  							</template>
+	  							<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+	  							<!-- Approvingbank transfer -->
+
+
+
+	  							<v-flex xs12>
+									<inquiry-status-buttons 
+									:status-id="inquiry.status" 
+									:statuses="statuses">
+									</inquiry-status-buttons>
+									{{ inquiry.status }}
+	  							</v-flex>
+
 	  							<v-flex xs12>
 								    <small class="blue-grey--text">Buyer Name</small>
 								    <h4 class="font-weight-medium">
@@ -247,6 +284,7 @@ import helpers from "@/mixins/helpers"
 import inqEvntBs from "@/bus/inquiry"
 import MessageBox from '@/views/Components/App/Admin/MessageDialog'
 import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 
 import config from '@/config/index'
 
@@ -257,8 +295,14 @@ export default {
   ],
 
     // 'inquiry',
-    // 'openInquiry',
     // 'isClosed'
+  components: {
+
+    MessageBox,
+    ImageGallerySmall,
+	InquiryStatusButtons,
+  },
+
 
   props: {
     
@@ -266,9 +310,6 @@ export default {
       type: Object
     },
 
-    openInquiry: {
-      type:Boolean
-    },
 
     isClosed: {
       type: Boolean
@@ -290,13 +331,6 @@ export default {
   }),
 
 
-
-  components: {
-
-    MessageBox,
-    ImageGallerySmall
-
-  },
 
   methods: {
 
@@ -341,6 +375,30 @@ export default {
     rejectInquiry(inquiry_id) {
 
       this.$store.dispatch('admnInq/declinedInquiry_a', {
+          inquiry_id: inquiry_id
+        })
+        .then((response) => {
+          // create a event bus 
+          // this.$emit('update:isClosed', true);
+             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+
+
+          // inqEvntBs.emitApproved();
+        })
+        .catch((e) => {
+          // this.$emit('update:isClosed', true);
+             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+
+          console.log(e);
+        })
+        .finally(() => {
+
+        });
+    },
+
+    approveBankTransfer(inquiry_id) {
+
+      	this.$store.dispatch('admnInq/confirmBankTransfer_a', {
           inquiry_id: inquiry_id
         })
         .then((response) => {
@@ -427,6 +485,10 @@ export default {
 
       countries(){
           return config.countries;
+      },
+
+      statuses(){
+			return this.$route.meta.statuses;
       },
 
   },

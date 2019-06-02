@@ -10,7 +10,7 @@
     <v-card id="InquiryView">
 
         <v-toolbar dark color="primary">         
-            <v-toolbar-title v-if="inquiry">Inquiry # {{ inquiry.id }} </v-toolbar-title>
+            <v-toolbar-title v-if="stateInquiry">Inquiry # {{ stateInquiry.id }} </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn dark flat @click="closeOpenInquiry()">
@@ -25,13 +25,17 @@
 
             <!-- inquiry details card -->
             <v-flex xs5>
-              <inquiry-details-card v-if="inquiry" :isClosed.sync="isClosed" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
+              <inquiry-details-card 
+              v-if="stateInquiry" 
+              :inquiry="stateInquiry"
+              :openInquiry="openInquiry"
+              :isClosed.sync="isClosed"> </inquiry-details-card>
             </v-flex>
             <!-- end of detils  -->
 
             <!-- supplier quote / bids -->
             <v-flex xs7>
-              <inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
+              <inquiry-post-list v-if="stateInquiry" :inquiry="stateInquiry"> </inquiry-post-list>
             </v-flex>
             <!-- supplier quote -->
 
@@ -47,7 +51,14 @@ import InquiryDetailsCard from "@/views/Components/App/Admin/InquiryDetailsCard"
 
 import inqEvntBs from "@/bus/inquiry";
 
+import inqMixin from "@/mixins/inquiry";
+
 export default {
+
+	mixins: [
+		inqMixin,
+	],
+
 
   components: {
 
@@ -79,28 +90,28 @@ export default {
     },
 
 
-    openInquiry: {
-        get() {
-            return this.$store.state.inq.openInquiryView;
-        },
-        set(nVal){
-            if(nVal)
-            this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
-            else
-            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-        },
-    },
+    // openInquiry: {
+    //     get() {
+    //         return this.$store.state.inq.openInquiryView;
+    //     },
+    //     set(nVal){
+    //         if(nVal)
+    //         this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
+    //         else
+    //         this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+    //     },
+    // },
 
-    inquiry: {
-        get() {
-            return this.$store.state.inq.inquiry;
-        },
-        set(nVal) {
-            // console.log('setVal');
-            // console.log(nVal);
-            this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
-        },
-    },       
+    // inquiry: {
+    //     get() {
+    //         return this.$store.state.inq.inquiry;
+    //     },
+    //     set(nVal) {
+    //         // console.log('setVal');
+    //         // console.log(nVal);
+    //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
+    //     },
+    // },       
 
 
 

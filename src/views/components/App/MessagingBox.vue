@@ -261,7 +261,7 @@ import MsgBus from "@/bus/messaging";
             },
 
             scrollChat(position = 'bottom'){
-            	if(position == 'bottom') {            		
+            	if(position == 'bottom') {
 					this.$nextTick(() => {
 						const container = this.$el.querySelector('.chat-container');
 						container.scrollTop = container.scrollHeight;
@@ -274,10 +274,11 @@ import MsgBus from "@/bus/messaging";
 					if(this.isFocused  && this.bid.id!=0) {
 						this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
 						this.$el.querySelector('#ce_'+this.bid.id).focus();
-					} else 
-					if(this.bid.id==0) {
-						this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
-						this.$el.querySelector('#ce_'+this.bid.id).focus();
+					} 
+					else if(this.bid.id==0) {
+						// console.log("'#mb_'+this.bid.id",this.bid.id);
+					// 	this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
+					// 	this.$el.querySelector('#ce_'+this.bid.id).focus();
 					}
 				});            	
             },

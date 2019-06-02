@@ -12,7 +12,7 @@
             Privacy Policy
         </v-card-title> -->
         <v-toolbar dark color="grey darken-4 ">
-           <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2> 
+           <h2 v-if="stateInquiry" class="font-weight-bold">INQUIRY # {{ stateInquiry.id }}</h2> 
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click="closeOpenInquiry()">
@@ -27,12 +27,12 @@
               <v-layout row wrap>
                 <!-- Inquiry Details  -->
                 <v-flex xs5>
-                	<inquiry-details-card v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
+                	<inquiry-details-card v-if="stateInquiry" :inquiry="stateInquiry"> </inquiry-details-card>
                 </v-flex>
                 <!-- Inquiry Details  -->
                 <!-- supplier QuoteDetails -->
                 <v-flex xs7>
-                	<quote-details v-if="inquiry" :inquiry="inquiry"> </quote-details>
+                	<quote-details v-if="stateInquiry" :inquiry="stateInquiry"> </quote-details>
                 </v-flex>
                 <!-- supplier QuoteDetails -->
                 <!-- proposal list -->
@@ -62,8 +62,14 @@ import BidDialog from "@/views/Components/App/Supplier/BidDialog"
 
 import inqEvntBs from "@/bus/inquiry";
 
+import inqMixin from "@/mixins/inquiry";
+
+
 export default {
 
+mixins: [
+	inqMixin,
+],
 
 components: {
 
@@ -104,28 +110,28 @@ computed: {
         },
     },
 
-    openInquiry: {
-        get() {
-            return this.$store.state.inq.openInquiryView;
-        },
-        set(nVal){
-            if(nVal)
-            this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
-            else
-            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-        },
-    },
+    // openInquiry: {
+    //     get() {
+    //         return this.$store.state.inq.openInquiryView;
+    //     },
+    //     set(nVal){
+    //         if(nVal)
+    //         this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
+    //         else
+    //         this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+    //     },
+    // },
 
-    inquiry: {
-        get() {
-            return this.$store.state.inq.inquiry;
-        },
-        set(nVal) {
-            // console.log('setVal');
-            // console.log(nVal);
-            this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
-        },
-    },       
+    // inquiry: {
+    //     get() {
+    //         return this.$store.state.inq.inquiry;
+    //     },
+    //     set(nVal) {
+    //         // console.log('setVal');
+    //         // console.log(nVal);
+    //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
+    //     },
+    // },       
 
 },
 

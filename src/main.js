@@ -183,7 +183,9 @@ router.beforeEach(middleware)
 
 
 
-
+const mixins = [
+	helpers,
+];
 
 
 
@@ -227,6 +229,7 @@ router.beforeEach(middleware)
 
 /* eslint-disable no-new */
 export default new Vue({  
+  mixins,
   el: '#app',
   router,
   store,

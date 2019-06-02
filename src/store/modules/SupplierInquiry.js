@@ -5,44 +5,44 @@ import router from '@/router'
 
 import config from '@/config/index'
 
-
+let base_url = 'http://192.168.1.200:8000';
 const state = {
     api: {
         getInquiries: {
             method: 'get',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
         },
         getInquiry: {
             method: 'get',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
         },
         addInquiry: {
             method: 'post',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
         },
         addInquiryBid: {
             method: 'post',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
             url2: 'bids',
         },
         editInquiryBid: {
             method: 'patch',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
             url2: 'bids',
         },
         getInquiryBids: {
             method: 'get',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
             url2: 'bids',
         },
         getInquiryBid: {
             method: 'get',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
             url2: 'bids/own-bid',
         },
         confirmAward: {
             method: 'put',
-            url: 'http://192.168.1.200:8000/v1/supplier/inquiries',
+            url: base_url+'/v1/supplier/inquiries',
             url2: 'confirm-award',
         },
 

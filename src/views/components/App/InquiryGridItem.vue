@@ -79,11 +79,13 @@
 <script>
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import helpers from "@/mixins/helpers";
+import inqMixin from "@/mixins/inquiry";
 
 export default {
 
 	mixins: [
 		helpers,
+		inqMixin,
 	],
 
 	components: {
@@ -99,53 +101,21 @@ export default {
 		loading: false,
 	}},
 
+
 	methods: {
 
 		viewInquiry(inq) {
 			this.loading = true;
-			this.$store.dispatch(this.getStore()+'/getInquiry_a', {
-				inq_id: inq.inq_id
-			})
-			.then((data) => {
-				console.log('data',data);				
-				this.stateInquiry = data;
-				this.openInquiry = true;
-				this.loading = false;
-
-			})
-			.catch((error) => { 
-				console.log(error);
+			this.showInquiry(inq.inq_id)
+			.then((data)=>{
+				this.loading = false;				
 			});
+
+
+
+
+
 		},		
-	},
-
-
-	computed:{
-
-		openInquiry: {  
-			get() {
-				return this.$store.state.inq.openInquiryView;
-			},
-			set(nVal){
-				if(nVal)
-				this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
-				else
-				this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-			},
-		},
-
-
-
-		stateInquiry: {
-			get() {
-				return this.$store.state.inq.inquiry;
-			},
-			set(nVal) {
-				// console.log('setVal');
-				// console.log(nVal);
-				this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
-			},
-		},			
 	},
 
 

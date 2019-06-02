@@ -157,9 +157,7 @@
             inquiry: {
                 type: Object,
             },
-            openInquiry: {
-                type: Boolean,
-            }
+            
         },
 
         data: () => ({

@@ -76,7 +76,23 @@ export default [
             dialog: BuyerInquiryView,
         },
         meta: meta,
+        children:[
+		    {
+		        name: 'BuyerInquiryView',
+		        path: ':inquiry_id',
+		        meta: meta,
+		        children:[
+		        	{
+				        name: 'BuyerInquiryViewPayment',
+				        path: 'payment/:payment_status',		        	
+				        meta: meta,
+		        	},
+		        ],
+		    },
+
+        ],
     },
+
 
     {
         name: 'BuyerProfile',

@@ -163,13 +163,10 @@ import config from "@/config/main"
 
 import isotope from 'vueisotope'
 
-import VueTimers from 'vue-timers/mixin'
-
 export default {
 
 	mixins: [
 		helpers,
-		VueTimers,
 	],
 
 	components: {

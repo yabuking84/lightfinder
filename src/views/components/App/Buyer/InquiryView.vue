@@ -13,7 +13,7 @@ scrollable>
     <v-card>
 
     	<v-card-title class="black darken-4 ">
-			<h2 v-if="inquiry" class="font-weight-bold white--text">INQUIRY # {{ inquiry.id }}</h2>
+			<h2 v-if="stateInquiry" class="font-weight-bold white--text">INQUIRY # {{ stateInquiry.id }}</h2>			
 			<v-spacer></v-spacer>
 	        <v-btn dark flat @click="closeOpenInquiry()">
 	            <v-icon>close</v-icon>
@@ -30,6 +30,9 @@ scrollable>
 			</v-toolbar> -->
 
     	</v-card-title>
+
+		<h4 class="ma-3">{{ $route.params.payment_status }}</h4>
+
         <v-divider></v-divider>
 
         <v-card-text id="inquiryView">
@@ -38,13 +41,19 @@ scrollable>
 
 			        <!-- inquiry details card -->
 			        <v-flex xs5>
-			            <inquiry-details-card :openInquiry="openInquiry" v-if="inquiry" :inquiry="inquiry"> </inquiry-details-card>
+			            <inquiry-details-card 
+			            v-if="stateInquiry" 
+			            :openInquiry="openInquiry" 
+			            :inquiry="stateInquiry"> </inquiry-details-card>
 			        </v-flex>
 			        <!-- end of detils  -->
 
 			        <!-- supplier quote / bids -->
 			        <v-flex xs7>
-			            <inquiry-post-list :openInquiry="openInquiry" v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
+			            <inquiry-post-list 
+			            v-if="stateInquiry" 
+			            :openInquiry="openInquiry" 
+			            :inquiry="stateInquiry"></inquiry-post-list>
 			        </v-flex>
 			        <!-- supplier quote -->
 
@@ -94,8 +103,15 @@ import InquiryDetailsCard from "@/views/Components/App/Buyer/InquiryDetailsCard"
 import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
 
 import inqEvntBs from "@/bus/inquiry"
+// import helpers from "@/mixins/helpers";
+
+import inqMixin from "@/mixins/inquiry"
 
 export default {
+
+	mixins:[
+		inqMixin,
+	],
 
 	components: {
 
@@ -122,34 +138,35 @@ export default {
 				this.$store.commit('auth/CHANGE_TEST_M',data);
 			},
 
-			get(){				
+			get(){
         		return this.$store.state.auth.auth_user.name;
 			},			
 		},
 
 
-        openInquiry: {
-            get() {
-                return this.$store.state.inq.openInquiryView;
-            },
-            set(nVal){
-                if(nVal)
-                this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
-                else
-                this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-            },
-        },
+        // openInquiry: {
+        //     get() {
+        //         return this.$store.state.inq.openInquiryView;
+        //     },
+        //     set(nVal){
+        //         if(nVal)
+        //         this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
+        //         else
+        //         this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+        //     },
+        // },
 
-        inquiry: {
-            get() {
-                return this.$store.state.inq.inquiry;
-            },
-            set(nVal) {
-                // console.log('setVal');
-                // console.log(nVal);
-                this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
-            },
-        },
+        // inquiry: {
+        //     get() {
+        //         return this.$store.state.inq.inquiry;
+        //     },
+        //     set(nVal) {
+        //         // console.log('setVal');
+        //         // console.log(nVal);
+        //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
+
+        //     },
+        // },
 
 	},
 
@@ -163,10 +180,27 @@ export default {
 
 	created() {
 
+
 		// console.log(this.inquiry);
         inqEvntBs.$on('edited-inquiry', () => {
             this.successSnackbar = true;
         });
+
+
+        // if route has inquiry id
+        if(this.$route.params.inquiry_id) {
+        	this.$nextTick(() => {
+				console.log('nextTick $route.params.inquiry_id CREATED', this.$route.params.inquiry_id);
+				var inq_id = this.$route.params.inquiry_id;	
+				this.showInquiry(inq_id)
+				.then((data)=>{
+					console.log("data",data);
+				})
+				.catch((error)=>{
+					console.log("error",error);
+				});
+        	});
+        }
 
 	},
 
@@ -174,7 +208,12 @@ export default {
 		// console.log('querySelector',this.$refs);
 		// console.log('querySelector',this.$refs.inquiryView);
 		// console.log('querySelector',this.$el);
+	}, 
 
+	watch: {
+		// '$route.params.inquiry_id' () {
+		// 	console.log('$route.params.inquiry_id WATCH');
+		// }
 	},
 }
 	

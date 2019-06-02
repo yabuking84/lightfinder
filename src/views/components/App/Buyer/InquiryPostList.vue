@@ -314,11 +314,6 @@ export default {
 
 	},
 
-	openInquiry: {
-		type: Boolean
-  
-	}
-
   },
 	
 

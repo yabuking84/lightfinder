@@ -12,9 +12,9 @@ import cat from './modules/category'
 import byrInq from './modules/BuyerInquiry'
 import spplrInq from './modules/SupplierInquiry'
 // import adminHelper from './modules/adminHelper'
-import admnByr from './modules/adminBuyer'
-import admnSpplr from './modules/adminSupplier'
-import admnInq from './modules/adminInquiries'
+import admnByr from './modules/AdminBuyer'
+import admnSpplr from './modules/AdminSupplier'
+import admnInq from './modules/AdminInquiries'
 
 import inq from './modules/Inquiry'
 

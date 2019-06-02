@@ -55,138 +55,13 @@
 				<v-layout row wrap>
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-					<template v-if="hasBid">
 
-						<v-flex xs12>
-								<image-gallery-small :images="bid.attachments && bid.attachments.length > 0 ? bid.attachments : []" noThumbnails height="120px"></image-gallery-small> 
-						</v-flex>
-
-
-						<v-flex xs12>
-
-							<v-divider></v-divider>
-
-							<v-flex xs12>
-								<h5 class="font-weight-thin">Product code</h5>
-								<h2>{{ bid.product_name }}</h2>
-							</v-flex>
-
-							<v-flex xs12>
-							
-								<v-layout row wrap>
-									<v-flex xs4 pa-2>
-										<h5 class="font-weight-thin">Quantity</h5>
-										<h3>{{ inquiry.quantity }} pcs</h3>
-									</v-flex>
-									<v-flex xs4 pa-2>
-										<h5 class="font-weight-thin">Unit Price</h5>
-										<h3>${{ bid.price }}</h3>
-									</v-flex>
-									<v-flex xs4 pa-2>
-										<h5 class="font-weight-thin">Total Price</h5>
-										<h3>${{ bid.total_price }}</h3>
-									</v-flex>
-
-									<v-flex xs4 pa-2 v-show="inquiry.sample_quantity">
-										<h5 class="font-weight-thin">Sample Quantity</h5>
-										<h3>{{ inquiry.sample_quantity }}</h3>
-									</v-flex>
-
-									<v-flex xs4 pa-2 v-show="bid.sample_cost">
-										<h5 class="font-weight-thin">Sample Cost</h5>
-										<h3>${{ bid.sample_cost }}</h3>
-									</v-flex>
-
-									<v-flex xs4 pa-2 v-if="bid.sample_shipment_cost">
-										<h5 class="font-weight-thin">Sample Shipping Cost</h5>
-										<h3>${{ bid.sample_shipment_cost }}</h3>
-									</v-flex>
-								</v-layout>
-							</v-flex>
-							<v-flex xs12>
-								<h5 v-show="bid.remarks" class="font-weight-thin">Remarks</h5>
-								<h4 v-show="bid.remarks" class="font-weight-bold">
-								  <p>{{ bid.remarks }}</p>
-								</h4>
-							</v-flex>
-							<v-flex xs12>
-								<h5 class="font-weight-thin">Specifications</h5>
-								<v-layout row wrap class="specifications  mt-2">
-
-									<!-- <v-flex xs12 >
-											<span v-for="(specification, index) in bid.specifications" :key="specification+'_'+index">
-												  <v-chip label dark outline text-color="black" v-if="specification.value">
-													  {{ specification.name }}: &nbsp;
-													  <span class="font-weight-bold">
-														{{ specification.value.split(',').join(', ') }}
-													  </span>
-												  </v-chip>
-											</span>
-									</v-flex> -->
-
-									<template v-for="(specification, index) in bid.specifications">
-										
-										<v-flex
-										v-if="specification.value"
-										:key="specification+'_'+index"
-										xs6 ma-0 pa-0 pr-0 pl-2>
-											<div 
-											v-if="specification.value" 
-											text-color="black" 
-											class="spec">
-												{{ specification.name }}: &nbsp;
-												<span class="font-weight-bold">
-													{{ specification.value.split(',').join(', ') }}
-												</span>
-											</div>
-										</v-flex>
-
-									</template>
-
-									<v-alert :value="!bid.specifications" type="info" style="width: 100%;" class="ma-4" outline>
-										No specifications..
-									</v-alert>
-								 
-								</v-layout>
-							</v-flex>
-							<!-- chat -->
-							<!-- ccccccccccccccccccccccccccccccccccccccccccccc -->
-							<v-flex xs12 mt-3>
-								<messaging
-								type="bid.supplier.admin"
-								:bid="bid" 
-								ref="'ref_'+bid.id" 
-								:isFocused="isFocus(bid.id)"></messaging>
-							</v-flex>
-							<!-- ccccccccccccccccccccccccccccccccccccccccccccc -->
-							<!-- chat -->
-						</v-flex>
-						<!-- message box -->
-					
-						<!-- message box -->
-					</template>				
-					
-					<template v-else>
-						<v-flex xs12>
-							<v-layout justify-center row fill-height>
-
-									<v-flex xs12 mx-5 mt-2 mb-2>
-											<div>
-												<div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
-												<div class="blue-grey--text" >
-													<b>You have not quoted yet.</b>
-												</div>
-											</div>
-									</v-flex> 
-
-							</v-layout>
-						</v-flex>
-					</template>
 
 
 						<!-- new -->
-					
-						  <template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						  	<template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
 									   <v-flex xs12>
 
 								<v-card class="pa-3">
@@ -358,6 +233,146 @@
 									</v-flex> -->
 						  </template>
 
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						<!-- new -->
+
+
+					<template v-if="hasBid">
+
+						<v-flex xs12>
+								<image-gallery-small :images="bid.attachments && bid.attachments.length > 0 ? bid.attachments : []" noThumbnails height="120px"></image-gallery-small> 
+						</v-flex>
+
+
+						<v-flex xs12>
+
+							<v-divider></v-divider>
+
+							<v-flex xs12>
+								<h5 class="font-weight-thin">Product code</h5>
+								<h2>{{ bid.product_name }}</h2>
+							</v-flex>
+
+							<v-flex xs12>
+							
+								<v-layout row wrap>
+									<v-flex xs4 pa-2>
+										<h5 class="font-weight-thin">Quantity</h5>
+										<h3>{{ inquiry.quantity }} pcs</h3>
+									</v-flex>
+									<v-flex xs4 pa-2>
+										<h5 class="font-weight-thin">Unit Price</h5>
+										<h3>${{ bid.price }}</h3>
+									</v-flex>
+									<v-flex xs4 pa-2>
+										<h5 class="font-weight-thin">Total Price</h5>
+										<h3>${{ bid.total_price }}</h3>
+									</v-flex>
+
+									<v-flex xs4 pa-2 v-show="inquiry.sample_quantity">
+										<h5 class="font-weight-thin">Sample Quantity</h5>
+										<h3>{{ inquiry.sample_quantity }}</h3>
+									</v-flex>
+
+									<v-flex xs4 pa-2 v-show="bid.sample_cost">
+										<h5 class="font-weight-thin">Sample Cost</h5>
+										<h3>${{ bid.sample_cost }}</h3>
+									</v-flex>
+
+									<v-flex xs4 pa-2 v-if="bid.sample_shipment_cost">
+										<h5 class="font-weight-thin">Sample Shipping Cost</h5>
+										<h3>${{ bid.sample_shipment_cost }}</h3>
+									</v-flex>
+								</v-layout>
+							</v-flex>
+							<v-flex xs12>
+								<h5 v-show="bid.remarks" class="font-weight-thin">Remarks</h5>
+								<h4 v-show="bid.remarks" class="font-weight-bold">
+								  <p>{{ bid.remarks }}</p>
+								</h4>
+							</v-flex>
+							<v-flex xs12>
+								<h5 class="font-weight-thin">Specifications</h5>
+								<v-layout row wrap class="specifications  mt-2">
+
+									<!-- <v-flex xs12 >
+											<span v-for="(specification, index) in bid.specifications" :key="specification+'_'+index">
+												  <v-chip label dark outline text-color="black" v-if="specification.value">
+													  {{ specification.name }}: &nbsp;
+													  <span class="font-weight-bold">
+														{{ specification.value.split(',').join(', ') }}
+													  </span>
+												  </v-chip>
+											</span>
+									</v-flex> -->
+
+									<template v-for="(specification, index) in bid.specifications">
+										
+										<v-flex
+										v-if="specification.value"
+										:key="specification+'_'+index"
+										xs6 ma-0 pa-0 pr-0 pl-2>
+											<div 
+											v-if="specification.value" 
+											text-color="black" 
+											class="spec">
+												{{ specification.name }}: &nbsp;
+												<span class="font-weight-bold">
+													{{ specification.value.split(',').join(', ') }}
+												</span>
+											</div>
+										</v-flex>
+
+									</template>
+
+									<v-alert :value="!bid.specifications" type="info" style="width: 100%;" class="ma-4" outline>
+										No specifications..
+									</v-alert>
+								 
+								</v-layout>
+							</v-flex>
+							<!-- chat -->
+							<!-- ccccccccccccccccccccccccccccccccccccccccccccc -->
+							<v-flex xs12 mt-3>
+								<messaging
+								type="bid.supplier.admin"
+								:bid="bid" 
+								ref="'ref_'+bid.id" 
+								:isFocused="isFocus(bid.id)"></messaging>
+							</v-flex>
+							<!-- ccccccccccccccccccccccccccccccccccccccccccccc -->
+							<!-- chat -->
+						</v-flex>
+						<!-- message box -->
+					
+						<!-- message box -->
+					</template>				
+					
+					<template v-else>
+						<v-flex xs12>
+							<v-layout justify-center row fill-height>
+
+									<v-flex xs12 mx-5 mt-2 mb-2>
+											<div>
+												<div class="headline green--text font-weight-bold darken-3" color="#BF4653">QUOTE NOW!</div>
+												<div class="blue-grey--text" >
+													<b>You have not quoted yet.</b>
+												</div>
+											</div>
+									</v-flex> 
+
+							</v-layout>
+						</v-flex>
+					</template>
+
+
+						<!-- new -->
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
+						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
 						<!-- new -->
 
 
