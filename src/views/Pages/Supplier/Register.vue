@@ -15,10 +15,8 @@
 			            <!-- heading message -->
 			              <div class="page-content mt-5">
 
-
 			             	<h1 class="white--text header-title">How to become a BAL supplier?</h1>
 			                <h4 class="white--text font-weight-light sub-header-title">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe. </h4>
-			             	
 			              
 			             	 <v-flex xs12 mt-4 mb-4>
 			             	        <div class=" videocontent">
@@ -38,7 +36,7 @@
 	            <v-flex lg4 xs12>
 	              <v-layout row wrap fill>
 	                <!-- FOR 1ST STEP -->
-	                <div>
+	                <div class="frmcontainer">
 	                  <v-card class="pa-5">
 	                    <div class="headline font-weight-medium text-xs-center">SIGN UP</div>
 	                    <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4>
@@ -68,7 +66,7 @@
 			                      </v-text-field>
 
 	                            <v-text-field 
-	                            color="black" 
+	                            color="black"  
 	                            label="Email Address" 
 	                            v-model="form.email" 
 	                            required 
@@ -124,7 +122,7 @@
 
 	    <div class="registration-stepper" v-show="isSteptwo">
 	   
-	      <v-flex offset-xs2 offset-lg2 lg8 xs8>
+	      <v-flex offset-md2 offset-lg2 lg8 md8 xs12 pa-2>	
 
 	      	<v-layout align-center justify-center row fill-height>
 	      
@@ -147,7 +145,7 @@
 
 			                  <v-layout row wrap>
 
-			                    <v-flex xs6 pa-2>
+			                    <v-flex md6 xs12 pa-2>
 			                      <v-text-field 
 			                      color="black" 
 			                      label="First Name" 
@@ -158,7 +156,7 @@
 			                      </v-text-field>
 			                    </v-flex>
 
-			                    <v-flex xs6 pa-2>
+			                    <v-flex md6 xs12 pa-2>
 			                      <v-text-field 
 			                      color="black" 
 			                      label="Last Name" 
@@ -169,7 +167,7 @@
 			                      </v-text-field>
 			                    </v-flex>
 
-			                    <v-flex xs6 pa-2>
+			                    <v-flex md6 xs12 pa-2>
 			                      <v-text-field 
 			                      color="black" 
 			                      label="Designation" 
@@ -180,7 +178,7 @@
 			                      </v-text-field>
 			                    </v-flex>
 
-			                    <v-flex xs6 pa-2>
+			                    <v-flex md6 xs12 pa-2>
 			                      <v-text-field 
 			                      color="black" 
 			                      label="Company Name" 
@@ -191,7 +189,7 @@
 			                      </v-text-field>
 			                    </v-flex>
 
-			                    <v-flex xs3 pa-2>
+			                    <v-flex md3 xs12 pa-2>
 			                      <v-autocomplete 
 			                      v-model="form.country" 
 			                      :items="countries" 
@@ -204,7 +202,7 @@
 			                      </v-autocomplete>
 			                    </v-flex>
 
-			                    <v-flex xs2 pa-2>
+			                    <v-flex md2 xs12 pa-2>
 			                      <v-text-field 
 			                      color="black" 
 			                      label="City" 
@@ -215,7 +213,7 @@
 			                      </v-text-field>
 			                    </v-flex>
 
-			                    <v-flex xs5 pa-2>
+			                    <v-flex md5 xs12 pa-2>
 								  <v-text-field 
 			                      color="black" 
 			                      label="Street" 
@@ -226,7 +224,7 @@
 			                      </v-text-field>           
 			                    </v-flex>
 
-			                    <v-flex xs2 pa-2>
+			                    <v-flex md2 xs12 pa-2>
 			                       <v-text-field 
 				                      color="black" 
 				                      label="Zip Code" 
@@ -237,7 +235,7 @@
 				                    </v-text-field>   
 			                    </v-flex>
 
-			                    <v-flex xs4 pa-2>
+			                    <v-flex md4 xs12 pa-2>
 			                    	<v-text-field 
 				                      color="black" 
 				                      label="Phone Number" 
@@ -249,7 +247,7 @@
 			                    </v-flex>
 
 
-			                    <v-flex xs4 pa-2>
+			                    <v-flex md4 xs12 pa-2>
 			                        <v-text-field 
 				                      color="black" 
 				                      label="Mobile Number" 
@@ -260,7 +258,7 @@
 				                    </v-text-field>  
 			                    </v-flex>
 
-			                    <v-flex xs4 pa-2>
+			                    <v-flex md4 xs12 pa-2>
 			                        <v-text-field 
 				                      color="black" 
 				                      label="We Chat Id" 
@@ -271,7 +269,7 @@
 				                    </v-text-field>  
 			                    </v-flex>
 
-			                    <v-flex xs6 pa-2>
+			                    <v-flex md6 xs12 pa-2>
 			                        <v-text-field 
 				                      color="black" 
 				                      label="Company Website" 
@@ -282,7 +280,7 @@
 				                    </v-text-field>  
 			                    </v-flex>
 
-			                    <v-flex xs6 pa-2>
+			                    <v-flex md6 xs12 pa-2>
 			                        <v-text-field 
 				                      color="black" 
 				                      label="Factory Address" 
@@ -310,7 +308,7 @@
 
 			                		<v-layout row wrap>
 
-			                		<v-flex xs4 pa-2>
+			                		<v-flex xs12 lg4 md4 pa-2>
 
 				                     	 <v-text-field 
 						                      color="black" 
@@ -323,20 +321,20 @@
 
 				                    </v-flex>
 
-				                    <v-flex xs4 pa-2>
+				                    <v-flex xs12 lg4 md4 pa-2>
 
 				                    	  <v-text-field 
 						                      color="black" 
 						                      label="Number of employees in total" 
-						                      v-model="form.numberofemployessintotal" 
+						                      v-model="form.numberofemployees" 
 						                      required 
-						                      :error-messages="fieldErrors('form.numberofemployessintotal')" 
-						                      @blur="$v.form.numberofemployessintotal.$touch()">
+						                      :error-messages="fieldErrors('form.numberofemployees')" 
+						                      @blur="$v.form.numberofemployees.$touch()">
 					                      </v-text-field>
 
 				                    </v-flex>  
 
-				                    <v-flex xs4 pa-2>
+				                    <v-flex xs12 lg4 md4 pa-2>
 
 				                     	  <v-text-field 
 						                      color="black" 
@@ -418,7 +416,7 @@
 							<v-flex xs12>
 							<v-layout row wrap>
 
-								<v-flex xs4 pa-2>
+								<v-flex xs12 lg4 pa-2>
 
 				                  <v-text-field 
 					                      color="black" 
@@ -432,7 +430,7 @@
 				                </v-flex> 
 
 
-				                <v-flex xs4 pa-2>
+				                <v-flex xs12 lg4 pa-2>
 					                  
 					                  <v-text-field 
 					                      color="black" 
@@ -445,7 +443,7 @@
 
 				                </v-flex>
 
-				                <v-flex xs4 pa-2>
+				                <v-flex xs12 lg4 pa-2>
 				                  
 				                   <v-text-field 
 					                      color="black" 
@@ -459,7 +457,7 @@
 				                </v-flex>
 
 
-				                <v-flex xs4 pa-2>
+				                <v-flex xs12 lg4 pa-2>
 				                  
 				                    <v-text-field 
 					                      color="black" 
@@ -472,7 +470,7 @@
 
 				                </v-flex>
 
-				                <v-flex xs4 pa-2>
+				                <v-flex xs12 lg4 pa-2>
 
 				                  <v-text-field 
 					                      color="black" 
@@ -485,7 +483,7 @@
 
 				                </v-flex>
 
-				                <v-flex xs4 pa-2>
+				                <v-flex xs12 lg4 pa-2>
 				                  
 				                    <v-text-field 
 					                      color="black" 
@@ -529,7 +527,7 @@
 							</v-layout>
 							</v-flex>
 
-				      <v-btn color="primary" @click="FourStep()">Submit</v-btn>
+				      <v-btn color="primary" class="white--text" :loading="formloading"  @click="FourStep()">Submit</v-btn>
 				      <v-btn flat>Cancel</v-btn>
 
 				    </v-stepper-content>
@@ -610,13 +608,12 @@ const dform = {
   // // 3rd
   // companyestablishedyear: '2017',
   // numberofemployees: '20',
-  // numberofemployessintotal: '100',
   // numberofworkersinfactory: '100',
   // factoryphotoinside: [],
   // factoryphotooutside: [],
 
-  // category list : what kind of led lights do you offer ?
-  // 4RTH
+  // // category list : what kind of led lights do you offer ?
+  // // 4RTH
   // accountname: '1',
   // accountnumber: '1',
   // iban: '1',
@@ -654,7 +651,6 @@ const dform = {
   // 3rd
   companyestablishedyear: '',
   numberofemployees: '',
-  numberofemployessintotal: '',
   numberofworkersinfactory: '',
   factoryphotoinside: [],
   factoryphotooutside: [],
@@ -713,7 +709,6 @@ export default {
       companyestablishedyear: { required },
       numberofemployees: { required },
       numberofworkersinfactory: { required },
-      numberofemployessintotal: { required },
 
    	  accountname: { required },
 	  accountnumber: { required },
@@ -776,7 +771,7 @@ export default {
       isSteptwo : false,
       isComplete: false,
 
-
+      formloading: false, 
 
 	    // Dropzone
 	    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -818,7 +813,7 @@ export default {
   		this.$v.form.password.$touch();
   		this.$v.form.confirmpassword.$touch();
 
-  		if (!this.$v.form.firstname.$invalid && !this.$v.form.lastname.$invalid && !this.$v.form.username.$invalid && !this.$v.form.email.$invalid && !this.$v.form.password.$invalid && ! this.$v.form.confirmpassword.$invalid) {
+  		if (!this.$v.form.firstname.$invalid && !this.$v.form.lastname.$invalid && !this.$v.form.email.$invalid && !this.$v.form.password.$invalid && ! this.$v.form.confirmpassword.$invalid) {
 
   			// hide the step one 
 			this.isStepOne = false
@@ -874,7 +869,9 @@ export default {
   		if(!this.$v.form.companyestablishedyear.$invalid 
   			&& !this.$v.form.numberofemployees.$invalid 
   			&& !this.$v.form.numberofworkersinfactory.$invalid) {
+
   			this.e1 = 3
+
   		}
   	},
 
@@ -895,11 +892,7 @@ export default {
  			&& !this.$v.form.swiftcode.$invalid) {
 
  				this.save();
-				// console.log('sulod ko deri ah ha')
-
  		} 
-
- 		// console.log('passok');
 
   		// validate last then save here
   	},
@@ -907,78 +900,74 @@ export default {
   	save() {
 
 
+  		 	let data = {
 
-		if (this.$v.$invalid) {
-		  	   this.$v.$touch()
-		} else {
+	  				'first_name': this.form.firstname,
+	  				'last_name': this.form.lastname,
+	  				'email': this.form.email,
+	  				'password': this.form.password,
+	  				'confirm_password': this.form.confirmpassword,
+	  				'website': this.form.companywebsite,
+	  				'street': this.form.street,
+	  				'city': this.form.city,
+	  				'country_id': this.form.country,
 
+	  				'phone': this.form.phonenumber,
+	  				'mobile': this.form.mobilenumber,
+	  				'wechatid': this.form.wechatid,
 
+	  				'company_name': this.form.companyname,
+	  				'job_title': this.form.designation,
 
-  		let data = {
+	  				'factory_address': this.form.factoryaddress,
+	  				'company_established_year': this.form.companyestablishedyear,
+	  				'no_of_employees_factory': this.form.numberofworkersinfactory,
+	  				'no_of_employees_total': this.form.numberofemployees,
 
-  				'first_name': this.form.firstname,
-  				'last_name': this.form.lastname,
-  				'email': this.form.email,
-  				'password': this.form.password,
-  				'confirm_password': this.form.confirmpassword,
-  				'website': this.form.companywebsite,
-  				'street': this.form.street,
-  				'city': this.form.city,
-  				'country_id': this.form.country,
+	  				'bank_account_name': this.form.accountname,
+	  				'bank_account_no': this.form.accountnumber,
+	  				'bank_iban': this.form.iban,
+	  				'bank_name': this.form.bankname,
+	  				'bank_address': this.form.bankaddress,
+	  				'bank_swift': this.form.swiftcode,
+	  				'categories': this.categories
+	  		};
 
-  				'phone': this.form.phonenumber,
-  				'mobile': this.form.mobilenumber,
-  				'wechatid': this.form.wechatid,
+	  		// console.log(data);
 
-  				'company_name': this.form.companyname,
-  				'job_title': this.form.designation,
+  			this.formloading = true;
 
-  				'factory_address': this.form.factoryaddress,
-  				'company_established_year': this.form.companyestablishedyear,
-  				'no_of_employees_factory': this.form.numberofworkersinfactory,
-  				'no_of_employees_total': this.form.numberofemployessintotal,
+		    this.$store.dispatch("auth/supplierRegistration_a", {
+		      data: data
+		    })
+		    .then(response => {
 
-  				'bank_account_name': this.form.accountname,
-  				'bank_account_no': this.form.accountnumber,
-  				'bank_iban': this.form.iban,
-  				'bank_name': this.form.bankname,
-  				'bank_address': this.form.bankaddress,
-  				'bank_swift': this.form.swiftcode,
-  				'categories': this.categories
+			      if (response.status == 200) {
 
-  			};
+			      		this.isSteptwo = false
+	 					this.isComplete = true
+	 					this.formloading = false;
 
+			      } else {
 
-  			console.log(data);
+			       		this.$v.$touch();
 
-		    // this.$store.dispatch("auth/supplierRegistration_a", {
-		    //   data: data
-		    // })
-		    // .then(response => {
+			      }
 
-		    //   // this.formloading = false
-		    //   // console.log(response);
-		    //   if (response.status == 200) {
+		    })
+		    .catch(e => {
 
-		    //   		this.isSteptwo = false
- 					// this.isComplete = true
+		      console.log(e);
+		      this.formloading = false;
 
-		    //   } else {
+		    })
+		    .finally(() => {
 
-		    //     this.$v.$touch();
+		      this.formloading = false;
 
-		    //   }
-		    // })
-		    // .catch(e => {
-		    //   console.log(e);
-		    //   this.formloading = false;
-		    // })
-		    // .finally(() => {
-		    //   this.formloading = false;
-		    // });
+		    });
 
-		}
-
+		
 
   	},
 
@@ -1261,6 +1250,47 @@ export default {
 </style>
 
 <style scoped>
+
+
+@media only screen and (max-width: 959px) {
+
+	.container {
+	    padding: 16px;
+	    height: 100vh;
+	    overflow-y: scroll;
+	}
+
+	.registration-first {
+
+	  top: 61%;
+
+	}
+
+	.frmcontainer {
+	}
+
+	.page-content {
+	    position: relative;
+	    top: 8%;
+	    padding: 20px;
+	    margin-bottom: 164px;
+	    display: none;
+	}
+
+	.registration-success {
+	    position: relative;
+	    width: 100%;
+	    padding: 10px;
+	}
+
+	.registration-success .heading h1{
+		    text-align: center;
+		    font-size: 2rem;
+	}
+
+
+
+}
 
 .v-input--selection-controls.v-input >>> .v-label { 
 

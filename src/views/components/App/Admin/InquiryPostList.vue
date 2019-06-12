@@ -15,7 +15,6 @@
 
                     <v-flex xs12 mx-5 mt-3 mb-3>
 
-
                            <!--  <v-flex xs2>
                                 <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
                             </v-flex> -->
