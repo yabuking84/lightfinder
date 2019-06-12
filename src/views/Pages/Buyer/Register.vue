@@ -72,7 +72,7 @@
 			                            <v-layout row wrap text-xs-center>
 			                              <!-- Login form submit -->
 			                              <v-flex xs6 class="white--text no-mrpd mt-3">
-			                                <v-btn   color="black " type="submit" :loading="formloading" block @click="save()"> <span class="white--text font-weight-light ls-1" style="">SIGN UP</span></v-btn>
+			                                <v-btn   color="black" type="submit" class="white--text" :loading="formloading" block @click="save()"> <span class="white--text font-weight-light ls-1" style="">SIGN UP</span></v-btn>
 			                              </v-flex>
 			                            </v-layout>
 			                          </v-flex>
@@ -93,10 +93,20 @@
 			            	  <div >
 					            <!-- heading message -->
 					              <div class="page-content">
-					                <h1 class="white--text header-title">How to become a BAL Buyer?</h1>
-					                <h4 class="white--text font-weight-light sub-header-title">We are committed to helping you 	increase your turnover significantly and become as competitive as possible. Sign up now 	and start receiving inquiries from buyers across the globe. </h4>
-					              </div>
+					                <h1 class="white--text header-title">Ready to get the best price the market can offer? </h1>
+					                <h4 class="white--text font-weight-light sub-header-title">
+					              Please take a few moments to register and find out what we can do for your next LED lighting project! Rest assured, we’ll be with you every step of the way.</h4>
 					              <!-- heading message -->
+
+			             	        <div class=" videocontent mt-5">
+				                        <div id="player-wrapper">
+				                         <iframe width="560" height="315"  src="https://www.youtube.com/embed/aaJQLTaSgLk?autoplay=0&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&playsinline=1&widget_referrer=https%3A%2F%2Fplyr.io%2F%23youtube&cc_load_policy=0&cc_lang_pref=auto&enablejsapi=1&origin=https%3A%2F%2Fplyr.io&widgetid=1?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
+				                        </div>
+				                    </div>
+
+				                    	    </div>
+
+
 			            	  </div>
 			            	</v-layout>
 			            </v-flex>
@@ -106,7 +116,7 @@
 			    </div>
 
 			    <div class="registration-success" v-show="isComplete">
-					 <v-flex xs6 class="offset-xs3">
+					 <v-flex md6 xs12 class="offset-md3">
 					     	<v-card class=pa-5>
 					     		<v-layout row wrap justify-center>
 					    			<div class="heading">
@@ -119,10 +129,10 @@
 										</p> -->
 
 										<p class="main-content__body">
-										   Thank you for the your time, consideration and trust buyanylight! if you have any further questions, please contact us on: info@buyanylight.com
+										   Registration confirmation: Thank you for interest in BuyAnyLight. If you have any further questions,please contact us at info@buyanylight.com.
 										</p>
 
-										<h3 class="font-weight-medium">What happens next?</h3>
+									<!-- 	<h3 class="font-weight-medium">What happens next?</h3>
 
 										<p class="main-content__body mt-3">
 										  A verification link has been sent to your email account. please click on the link provided and continue using buyanylight.com. <a href="">if not received please click here!</a>
@@ -130,7 +140,7 @@
 										
 										<p class="main-content__body mt-3">
 										 for the mean time, you can browse our packages below.
-										</p>
+										</p> -->
 
 									</div>
 
@@ -433,6 +443,7 @@ import config from '@/config/index'
 
 			          	 this.isStepOne = false
 			          	 this.isComplete = true
+			         	 this.formloading = false
 
 			          } else {
 
@@ -523,7 +534,6 @@ import config from '@/config/index'
 	    color: #555857;
 	    letter-spacing: 1px;
 	    font-weight: 100;
-	    text-transform: capitalize;
 
   	}
 
@@ -558,7 +568,7 @@ import config from '@/config/index'
 
 .page-content {
   position: relative;
-  top: 30%;
+  top: 8%;
   padding: 20px;
   // padding: 100px;
 
@@ -593,10 +603,102 @@ import config from '@/config/index'
 
 
 
+.videocontent { 
+
+	 width: 100%;
+	 height:304px;
+	 display: flex;
+	 justify-content: center;
+	 align-content: center;
+	 flex-flow: row column;
+	 /*padding: 50px;*/
+
+}
+
+.videocontent iframe {
+    border-radius:2%; /*use for circle 50% */
+    border:solid 0px #999;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+#player {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+#player-wrapper {
+   
+    border-radius:2%;  /* use for circle 50% */
+    border:solid 0px #999;
+    overflow:hidden;
+    position: relative;
+    width: 100%;
+    /*top:40px;*/
+    z-index:10;
+   -webkit-box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
+   -moz-box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
+   box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
+   /*float: left;*/
+   /*margin: 50px;*/
+ 
+}
+
+.video-area h6 {
+
+    color: white;
+    margin-top: 20px;
+    font-weight: lighter;
+    font-size: 13px;
+
+}
+
+
+
+
 
 </style>
 
 <style scoped>
+
+@media only screen and (max-width: 959px) {
+
+	.container {
+	    padding: 16px;
+	    height: 100vh;
+	    overflow-y: scroll;
+	}
+
+	.registration-first {
+
+	  top: 64%;
+
+	}
+
+	.page-content {
+	    position: relative;
+	    top: 8%;
+	    padding: 20px;
+	    margin-bottom: 164px;
+	}
+
+	.registration-success {
+	    position: relative;
+	    width: 100%;
+	    padding: 10px;
+	}
+
+	.registration-success .heading h1{
+		    text-align: center;
+		    font-size: 2rem;
+	}
+
+}
+
 
 .v-input--selection-controls.v-input >>> .v-label { 
 
