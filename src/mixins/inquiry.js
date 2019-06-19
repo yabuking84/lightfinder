@@ -8,11 +8,19 @@ export default {
 
 		showInquiry(inq_id) {
 			return new Promise((resolve, reject) => {
-				this.$store.dispatch(this.getStore()+'/getInquiry_a', {
+				var storeType = this.$route.meta.storeType.inq;            
+				this.$store.dispatch(storeType+'/getInquiry_a', {
 					inq_id: inq_id
 				})
 				.then((data) => {
-					// console.log('data',data);
+					console.log('data',data);
+					var awarded_bid_id = data.id+'-'+data.awarded_bid_id
+					var bid = data.bids.filter(function(item) {						
+						return (item.id==awarded_bid_id)?true:false;
+					});
+					data.amount = (bid.length)?bid[0].total_price:0.0;
+
+
 					this.stateInquiry = data;
 					this.openInquiry = true;
 		  			resolve(data);
@@ -52,3 +60,10 @@ export default {
 	},
 
 }
+
+
+
+					// var bid = response[i].bids.filter(function(item) {
+					// 	return item.awarded;
+					// });
+					// var amount = (bid.length)?bid[0].total_price:0.0;

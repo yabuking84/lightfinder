@@ -30,11 +30,11 @@ const meta = {
             name: 'BuyerHome',
             icon: 'fas fa-th-large',
         },            
-        {
-            title: 'Inquiries',
-            name: 'BuyerInquiry',
-            icon: 'fas fa-clipboard',
-        },            
+        // {
+        //     title: 'Inquiries',
+        //     name: 'BuyerInquiry',
+        //     icon: 'fas fa-clipboard',
+        // },
     ],
     profileItems: [
         {
@@ -47,6 +47,9 @@ const meta = {
     	...config.main.inquiry_statuses.default,
     	...config.main.inquiry_statuses.buyers,
     ],
+    storeType: {
+    	inq: "byrInq",
+    }
 }
 
 

@@ -51,6 +51,9 @@ const meta = {
     	...config.main.inquiry_statuses.default,
     	...config.main.inquiry_statuses.suppliers,
     ],
+    storeType: {
+    	inq: "spplrInq",
+    },
 }
 
 export default [

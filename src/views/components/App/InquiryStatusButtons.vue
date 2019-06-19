@@ -1,6 +1,5 @@
 <template>
 <span>
-	<div>
 
 
 		<!-- <v-btn  small flat @click="dialog = true" value="left" class="v-btn--active" :class="status.class">
@@ -14,69 +13,24 @@
 
 
 
-
-		<template v-if="false">
-	    <!-- verifying -->
-	    <div v-if="statusId==1001">
-	        <small class="orange--text">Inquiry sent for BAL approval</small>
-	    </div>
-	    <!-- open -->
-	    <div v-else-if="statusId==1002">
-	        <small class="green--text">Approved inquiry, open for bidding</small>
-	    </div>
-	    <!-- rejected -->
-	    <div v-else-if="statusId==1003">
-	        <small class="red--text">Declined by BAL</small>
-	    </div>
-	    <!-- confirmation-->
-	    <div v-else-if="statusId==1004">
-	        <small class="teal--text">Waiting for supplier confirmation</small>
-	    </div>
-	    <!-- pending payment-->
-	    <div v-else-if="statusId==1005">
-	        <small class="deep-orange--text">Waiting for your payment</small>
-	    </div>
-	    <!-- Production -->
-	    <div v-else-if="statusId==2001">
-	        <small class="blue--text">Products are on the production line</small>
-	    </div>
-	    <!-- Shipment -->
-	    <div v-else-if="statusId==2002">
-	        <small class="light-green--text">Order is sent for shipment</small>
-	    </div>
-	    <!-- Receiving -->
-	    <div v-else-if="statusId==2003">
-	        <small class="orange--text">Order reached the destination, waiting for buyer confirmation</small>
-	    </div>
-	    <!-- Return -->
-	    <div v-else-if="statusId==2004">
-	        <small class="red--text">Order is returning to the supplier</small>
-	    </div>
-	    <!-- Success -->
-	    <div v-else-if="statusId==3001">
-	        <small class="light-blue--text">Order is successful</small>
-	    </div>
-	    <!-- Cancelled -->
-	    <div v-else-if="statusId==3002">
-	        <small class="red--text">Order is cancelled</small>
-	    </div>
+		<template v-if="statusId">
+			<slot name="statusText" :status="status">
+				<h5 
+				class="statuses px-0 mx-0 " 
+				:class="status.class+'--text'">
+					{{ status.name.trim() }}
+				</h5>
+			</slot>
+		</template>
+		<template v-else>	
+			<h5 
+			:color="color"
+			class="statuses px-0 mx-0 ">
+				<slot></slot> &nbsp;
+			</h5>
 		</template>
 
-		<h3 
-		v-if="statusId"
-		class="statuses px-0 mx-0 " 
-		:class="status.class+'--text'">
-			{{ status.name.trim() }}
-		</h3>
-		<h3 
-		v-else
-		:color="color"
-		class="statuses px-0 mx-0 ">
-			<slot></slot> &nbsp;
-		</h3>
 
-
-	</div>  
 </span>
 </template>
 

@@ -3,9 +3,7 @@
   <!-- @input="$emit('update:openInquiry', false)"  -->
 <v-dialog 
   :value="openInquiry" 
-  @keydown.escape="keyPress"
-  fullscreen
-  >
+  @keydown.escape="keyPress">
 
     <v-card id="InquiryView">
         <!-- <v-card-title class="headline grey lighten-2" primary-title>
@@ -23,7 +21,7 @@
 
         <!-- <v-card-text> -->
           <div class="scopedcontainer">
-            <v-container fluid grid-list-xl>
+            <v-container fluid grid-list-xl pa-0>
               <v-layout row wrap>
                 <!-- Inquiry Details  -->
                 <v-flex xs5>

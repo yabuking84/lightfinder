@@ -37,7 +37,10 @@
 							<v-layout row wrap>
 
 								<v-flex xs12 mt-3>
-									<h3>PAY BY:</h3>
+									<h3>
+										<span class="font-weight-light">Amount to Pay: </span>
+										$ {{ currency(inquiry.amount) }}
+									</h3>
 								</v-flex>
 								<v-flex xs6>
 									<v-btn block 
@@ -110,7 +113,12 @@ export default {
 			url: 'https://google.com',
 			requestParameter: null,
 		},
+		amountToPay:0.0,
 	}},
+
+	created(){
+		console.log('created inquiry',this.inquiry);
+	},
 
 	methods:{
 
@@ -121,7 +129,7 @@ export default {
 			})
 			.then((response) => {
 
-				console.log('getCreditCardResource', response);
+				// console.log('getCreditCardResource', response);
 
 				this.creditCard.requestParameter = response.request_parameter;
 				this.creditCard.url = response.request_url;
@@ -137,6 +145,7 @@ export default {
 			});
 
 		},
+
 
 	},
 

@@ -14,7 +14,7 @@ const state = {
     get: {
 
       getCountries: {
-        url: 'http://192.168.1.200:8000/v1/countries'
+        url: config.main.appUrl
       }
 
     },

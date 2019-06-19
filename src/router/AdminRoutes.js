@@ -48,7 +48,12 @@ const meta = {
     	...config.main.inquiry_statuses.default,
     	...config.main.inquiry_statuses.suppliers,
     	...config.main.inquiry_statuses.buyers,
-    ],    
+    ],
+    storeType: {
+	    byr: 'admnByr',
+	    spplr: 'admnSpplr',
+	    inq: 'admnInq',
+    },
 }
 
 export default [

@@ -9,11 +9,9 @@
 		        </v-flex>
 
 				<v-flex xs12 md3>
-			           <notification-list> </notification-list>
 			    </v-flex>
 
 	            <v-flex xs12 md9>
-	           			<notification-table> </notification-table>
 	            </v-flex>
 
 			</v-layout>
@@ -24,10 +22,7 @@
 </template>
 
 <script>
-import BarCards from '@/views/components/App/BarCards'
-
-import NotificationList from '@/views/components/App/Admin/NotificationList'
-import NotificationTable from '@/views/components/App/Admin/NotificationTable'
+import BarCards from '@/views/components/App/Admin/BarCards'
 
 export default {
 	
@@ -36,11 +31,7 @@ export default {
 	}),
 
 	components: {
-
-		NotificationList,
 	    BarCards,
-	    NotificationTable
-	    
 	},
 
 	computed: {

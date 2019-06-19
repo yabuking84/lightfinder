@@ -272,8 +272,9 @@ export default {
       this.loading = withLoading;
 
       // this.allInquiries = [];
-      this.$store.dispatch('admnInq/getAllInquiries_a')
+      this.$store.dispatch('admnInq/getInquiries_a')
         .then((response) => {
+        	// console.log('response',response);
             var buffer = [];
             for (var i = response.length - 1; i >= 0; i--) {
                 var item = {};

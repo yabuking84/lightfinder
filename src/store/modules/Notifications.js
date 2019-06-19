@@ -21,7 +21,7 @@ import NtfctnBus from "@/bus/notification";
 
 
 
-
+const base_url = config.main.appUrl;
 
 const state = {
 
@@ -45,12 +45,12 @@ const state = {
 
     	getNotifications: {
             method  : 'get',
-            url     : 'http://192.168.1.200:8000/v1/notifications',
+            url     : base_url+'/v1/notifications',
 	    },
 
 	    markNotifasRead: {
 	    	method  : 'put',
-	    	url     : 'http://192.168.1.200:8000/v1/notifications'
+	    	url     : base_url+'/v1/notifications'
 	    },
     } 
 
@@ -257,19 +257,6 @@ const actions = {
 
 		NtfctnBus.emitNewNotification(data);
 
-        // var store = hlprs.methods.getStore();
-        // if(store!='supplier') {
-        //     context.dispatch(store+'/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        //     .then((response)=>{
-        //         var ntfctn = {
-        //             title:          "New Bid for Inquiry # "+data.inquiry_id+"!",
-        //             dataType:       'inquiry',
-        //             data:           response,
-        //             textSnackbar:   'Supplier Created Bid for Inquiry # '+data.inquiry_id+'!',
-        //         }
-        //         context.dispatch('updateNotification_a',ntfctn);
-        //     });
-        // }
 
     },
 
@@ -280,17 +267,7 @@ const actions = {
 
 		NtfctnBus.emitNewNotification(data);
 
-
-        // context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-        // .then((response)=>{
-        //     var ntfctn = {
-        //         title:          "Supplier Confirmed \""+response.keyword+"\"!",
-        //         dataType:       'inquiry',
-        //         data:           response,
-        //         textSnackbar:   'Supplier Confirmed "'+response.keyword+'"!',
-        //     }
-        //     context.dispatch('updateNotification_a',ntfctn);
-        // });       	
+     	
     },
 
     supplierModifiedBid_a(context, data) {
@@ -410,7 +387,7 @@ const actions = {
         // if inquiry type
         if(ntfctn.dataType == 'inquiry' || ntfctn.dataType == 'bid') {
 
-            var store = hlprs.methods.getStore();
+            var store = this.$route.meta.storeType.inq;
 
             // show notification
             /////////////////////////////////////////////////////////

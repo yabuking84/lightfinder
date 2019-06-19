@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import BarCard from '@/views/Components/App/Supplier/BarCard'
+import BarCard from '@/views/Components/App/BarCard'
 import AwardedInquiries from '@/views/components/App/Supplier/InquiriesTableAwarded'
 
 export default {

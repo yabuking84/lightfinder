@@ -9,24 +9,16 @@
 			@click="viewInquiry(inquiry)">
 
 				<v-layout row wrap>
+					
 					<slot name="details" :inquiry="inquiry" :statuses="statuses">
-						<v-flex xs3 mt-2>
+						<v-flex xs6 mt-2>
 							<h3 class="grey--text lighten-4">Inquiry</h3>
 							<h4 class="mt-0 font-weight-medium ">#{{ inquiry.inq_id }}</h4>
 						</v-flex>
 
-						<v-flex xs3 mt-2>
+						<v-flex xs6 mt-2>
 							<h3 class="grey--text">Date</h3>
 							<h4 class="mt-0 font-weight-medium ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
-						</v-flex>
-
-						<v-flex xs3 mt-2>
-							<h3 class="grey--text">Date</h3>
-							<h4 class="mt-0 font-weight-medium ">{{  getDateTime('mmm dd, yyyy hh:mm', inquiry.created_at ) }}</h4>
-						</v-flex>
-
-						<v-flex xs3 mt-2>
-							<v-btn>View</v-btn>
 						</v-flex>
 					</slot>
 				</v-layout>

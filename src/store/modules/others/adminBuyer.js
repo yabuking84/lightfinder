@@ -5,7 +5,7 @@ import axios from 'axios';
 import router from '@/router';
 import config from '@/config/index';
 
-let base_url = 'http://192.168.1.200:8000';
+let base_url = config.main.appUrl;
 const state = {
   api: {
     get: {
@@ -44,7 +44,7 @@ const state = {
       method: 'patch',
       /* patch single buyer */
       editBuyer: {
-        url: 'http://192.168.1.200:8000/v1/admin/buyers'
+        url: base_url+'/v1/admin/buyers'
       }
     },
 
@@ -55,7 +55,7 @@ const state = {
       method: 'delete',
       /* delete single buyer */
       deleteBuyer: {
-        url: 'http://192.168.1.200:8000/v1/admin/buyers'
+        url: base_url+'/v1/admin/buyers'
       }
     }
 

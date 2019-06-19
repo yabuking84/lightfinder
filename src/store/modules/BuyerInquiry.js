@@ -5,54 +5,55 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+const base_url = config.main.appUrl;
 
 const state = {
 	api: {
 		getInquiries: {
 			method  : 'get',
-			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url     : base_url+'/v1/buyer/inquiries',
 		},
 
 		getInquiry: {
 			method  : 'get',
-			url     :'http://192.168.1.200:8000/v1/buyer/inquiries'
+			url     :base_url+'/v1/buyer/inquiries'
 		},
 
 		addInquiry: {
 			method  : 'post',
-			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url     : base_url+'/v1/buyer/inquiries',
 		},
 
 		editInquiry: {
 			method  : 'patch',
-			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url     : base_url+'/v1/buyer/inquiries',
 		},
 
 		getInquiryBids: {
 			method  : 'get',
-			url     : 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url     : base_url+'/v1/buyer/inquiries',
 			url2    : 'bids',
 		},
 		getInquiryBid: {
 			method: 'get',
-			url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url: base_url+'/v1/buyer/inquiries',
 			url2: 'bids/own-bid',
 		},
 		awardBid: {
 			method: 'put',
-			url: 'http://192.168.1.200:8000/v1/buyer/inquiries',
+			url: base_url+'/v1/buyer/inquiries',
 			url2: 'bids',
 			url3: 'award',
 		},
 
 		getCreditCardResource: {
 			method  : 'post',
-			url     : 'http://192.168.1.200:8000/v1/pay/credit-card',
+			url     : base_url+'/v1/pay/credit-card',
 		},
 
 		payByBankTransfer: {
 			method  : 'post',
-			url     : 'http://192.168.1.200:8000/v1/pay/bank-transfer',
+			url     : base_url+'/v1/pay/bank-transfer',
 		},
 
 	},
@@ -95,10 +96,12 @@ const actions = {
 			// console.log(state.api.getInquiries.method);
 			// console.log(headers);
 			var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
+			var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+			// var with_bids = "";
 
 			axios({
 				method: state.api.getInquiries.method,
-				url: state.api.getInquiries.url+"?"+stage_id,
+				url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
 				headers: headers,
 			})
 			.then(response => {
@@ -131,7 +134,9 @@ const actions = {
 				resolve(response.data);
 			})
 			.catch(error => {
-				// if(actions.checkToken(error)) {
+
+				console.log('byrInq/getInquiries_a error',error);
+				
 				if(context.dispatch('checkToken',error)) {
 					reject(error);
 				}
@@ -406,7 +411,6 @@ export default {
 
 
 
-// http://192.168.1.200:8000/v1/login
 
 // Admin Buyanylight
 

@@ -3,9 +3,7 @@
   <!-- @input="$emit('update:openInquiry', false)"  -->
   <v-dialog 
   :value="openInquiry" 
-  @keydown.escape="keyPress"
-  fullscreen
-  >
+  @keydown.escape="keyPress">
     <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
     <v-card id="InquiryView">
 
@@ -20,7 +18,7 @@
         </v-toolbar>
 
 
-        <v-container fluid grid-list-xl>
+        <v-container fluid grid-list-xl  pa-0>
           <v-layout row wrap>
 
             <!-- inquiry details card -->

@@ -5,17 +5,18 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+const base_url = config.main.appUrl;
 
 const state = {
 
     api: {
         sendMessage: {
             method  : 'post',
-            url     : 'http://192.168.1.200:8000/v1/messages',
+            url     : base_url+'/v1/messages',
         },        
         getMessages: {
             method  : 'get',
-            url     : 'http://192.168.1.200:8000/v1/messages',
+            url     : base_url+'/v1/messages',
         },
     },
 

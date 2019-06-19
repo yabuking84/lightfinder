@@ -1,5 +1,4 @@
 <template>
-<!-- v-if="statusCount>0" -->
 <div>
 	<!-- <v-card 
 	flat dark
@@ -27,27 +26,33 @@
 		</v-card-text>
 	</v-card> -->
 
-	<vuse-card-mini-widget
-	:icon="status.icon"
-	:class-name="[status.class]"
-	:headline="statusCount+''"
-	:subheader="'<strong>'+status.name+'</strong>'"
+	<!-- <vuse-card-mini-widget
+	:icon="icon"
+	:class-name="[className]"
+	:headline="count"
+	:subheader="'<strong>'+name+'</strong>'"
+	:icon-color="iconColor"
 
 	right-icon
 	dark
 	tile
 
 	class="tiles"
-	icon-color="white"
 	height="110px"
 	size="50px">
-	
-	<!-- :gradient=""
-	:avatar=""
-	:background="" -->
+	</vuse-card-mini-widget> -->
 
+	<vuse-card-mini-widget
+	:icon="status.icon"
+	:headline="status.count+''"
+	:subheader="'<strong>'+status.name+'</strong>'"
+	:icon-color="status.iconColor"
+	right-icon
+	tile
+	height="110px"
+	size="50px">
 	</vuse-card-mini-widget>
- 
+
  </div>
 </template>
 
@@ -56,33 +61,18 @@ import config from "@/config/main"
 export default {
 
 props:[
-	'status',
+	'status','count',
 ],
 
-data: () => ({
-	statusCount:0,
-}),
+data() { return {
+
+}},
 
 created(){
-	this.getStatusCount()
 },
 
 methods: {
-	getStatusCount(){
-		var status_id = this.status.id
-		this.$store.dispatch('byrInq/getInquiries_a', {stage_id:status_id})
-		.then((response)=>{
-			// console.log('BarCards response '+status_id, response);	  		;
-			this.statusCount = response.length;
-		})
-		.catch((e) => {
-			console.log('Error: ' + e);
-			this.loading = false;
-		})
-		.finally(() => {
-			this.loading = false;
-		});
-	},
+
 },
 
 

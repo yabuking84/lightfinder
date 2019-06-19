@@ -43,14 +43,18 @@ lazy>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Bank Address</h4>
-							<h3>168838</h3>
+							<h3>168838 Siomai Ampao St.</h3>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Amount to Pay</h4>
+							<h1>$ {{ currency(inquiry.amount) }}</h1>
 						</v-flex>
 						<v-flex xs12 py-4>
 							<v-divider></v-divider>
 						</v-flex>
 						<v-flex xs12 pa-2 v-if="!confirmed">
 							<h4 class="font-weight-thin">Please write this on the description:</h4>
-                			<h2>Payment for Inquiry# {{ inquiry.id }}.</h2>                			
+                			<h2>Payment for Inquiry# {{ inquiry.id }}</h2>                			
 						</v-flex>
 						<v-flex xs12 pa-2 mt-3 v-if="confirmed">
                 			<h2 style="text-align: center;">
@@ -106,7 +110,12 @@ lazy>
 </template>
 
 <script>
+import helpers from "@/mixins/helpers";
 export default {
+
+	mixins: [
+		helpers,
+	],
 
 	props:[
 		'openDialog',

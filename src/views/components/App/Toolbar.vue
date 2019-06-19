@@ -662,12 +662,14 @@ created()  {
 	this.fetchMsgs();
 
     NtfctnBus.onNewNotification((data)=>{
+    	// console.log('toolbar onNewNotification data',data);
     	this.bounce('notifications');
     	this.offsetNtfctns++;
 		this.insertLatestNtfctn();
 		// this.resetNotificationsMsgs();
     });
 	MsgBus.onNewMessage((data)=>{
+    	// console.log('toolbar onNewMessage data',data);
     	this.bounce('messages');
     	this.offsetMsgs++;
 		this.insertLatestMsg();

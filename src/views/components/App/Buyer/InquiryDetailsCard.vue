@@ -13,7 +13,7 @@
 			<v-toolbar-title class="subheading font-weight-light">Inquiry Details</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-toolbar-title class="subheading font-weight-light"> Posted: <i class="body-2"> {{ getDateTime('mmm dd, yyyy hh:mm',inquiry.created_at) }}  </i> </v-toolbar-title>
-			
+
 		</v-toolbar>
 
 		<v-card>
@@ -21,7 +21,7 @@
 			<v-divider></v-divider>
 
 			<v-container>
-				
+
 				<v-alert 				
 				:value="inquiry.stage_id==1006"
 				color="green darken-3" 
@@ -29,8 +29,8 @@
 				class="mb-2">
 					Confirming Payment!
 				</v-alert>
-				
-				
+
+				<!-- <pre>{{ inquiry }}</pre> -->
 				<pending-payment-card 
 				v-if="inquiry.etd != null && inquiry.eta != null"
 				:inquiry="inquiry">
@@ -43,7 +43,7 @@
 				style="font-size:20px;">
 					You have awarded a bid on this inquiry.
 				</v-alert>
-		
+
 
 				<v-layout row wrap>
 					
@@ -292,7 +292,6 @@
 			inquiryImages:[],
 			inquiryAttachments:[],
 			inquiryOEM:[],
-
 
 		}),
 

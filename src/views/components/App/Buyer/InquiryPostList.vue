@@ -64,26 +64,58 @@
 		   
 
 			<!-- color="grey lighten-4"  -->
+			<!-- :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' "  -->
 			<v-card 
 			v-else 
 			class="mb-5 ma-3" 
 			v-for="(bidItem, i) in bidItems" 
 			:hover="true" 
-			:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
+			:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'not_awarded' " 
 			:key="'bidItem_'+i">
 			  
+				<v-card-title >
+					<v-layout row wrap>					
+						<v-flex xs12 pt-2 >
+							<h3>BID #{{ bidItem.id }}</h3>
+
+							<v-img 
+							v-if="bidItem.awarded"
+							src="/static/images/award.png" 
+							class="awarded"></v-img>
+
+						</v-flex>
+					</v-layout>
+				</v-card-title>
+
 				<v-card-text>
 
 				<v-layout row wrap>
 
-						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-						
-						<!-- <pre>{{ bidItem }}</pre> -->
 
-						<v-flex xs12 pt-2 >
-							<h3>BID #{{ bidItem.id }}</h3>
-						</v-flex>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 
 						<!-- <v-flex xs12 pl-2 v-if="isFocus(bidItem.id)">
 							<h3 style="text-align:center;">THIS IS THE ONE!</h3>
@@ -98,24 +130,17 @@
 						  
 						</v-flex>
 
-						<v-flex xs12>
+						<v-flex xs12 >
 
 							<v-divider v-if="bidItem.attachments.length"></v-divider>
 						
 							<v-layout row wrap pa-2>
 								
-								<!-- <v-container> -->
 						
-								<v-flex xs12 pl-2 v-if="bidItem.awarded">
-									<!-- 	
-									<h5 class="font-weight-thin">Product name</h5>
-									<h2>{{ bidItem.product_name }}</h2> 
-									-->
-						
+								<!-- <v-flex xs12 pl-2 v-if="bidItem.awarded">						
 									<v-img src="/static/images/award.png" class="awarded">
-									</v-img>
-						
-								</v-flex>
+									</v-img>						
+								</v-flex> -->
 						
 								<v-flex xs12 pt-0 pl-2>
 									<h5 class="font-weight-thin">Description</h5>
@@ -131,12 +156,12 @@
 						
 										<v-flex xs4 pa-2>
 											<h5 class="font-weight-thin">Unit Price</h5>
-											<h3>${{ bidItem.price }}</h3>
+											<h3>${{ currency(bidItem.price,2) }}</h3>
 										</v-flex>
 						
 										<v-flex xs4 pa-2>
 											<h5 class="font-weight-thin">Total Price</h5>
-											<h3>${{ bidItem.total_price }}</h3>
+											<h3>${{ currency(bidItem.total_price) }}</h3>
 										</v-flex>
 
 										<v-flex xs4 pa-2 v-show="inquiry.sample_quantity">
@@ -146,7 +171,7 @@
 
 										<v-flex xs4 pa-2 v-show="bidItem.sample_cost">
 											<h5 class="font-weight-thin">Sample Cost</h5>
-											<h3>${{ bidItem.sample_cost }}</h3>
+											<h3>${{ currency(bidItem.sample_cost) }}</h3>
 										</v-flex>
 
 										<v-flex xs4 pa-2 v-if="bidItem.sample_shipment_cost">
@@ -206,7 +231,6 @@
 								</v-layout>
 								</v-flex>
 						
-								<!-- </v-container> -->
 							</v-layout>
 						</v-flex>
 				
@@ -214,6 +238,25 @@
 
 						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+						<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 						   	<v-flex xs12>
 							  <v-layout row wrap>
@@ -248,7 +291,7 @@
 								<!-- message box -->
 							</v-flex>
 
-					</v-layout>
+				</v-layout>
 				</v-card-text>
 
 				<v-divider></v-divider>
@@ -398,7 +441,7 @@ export default {
 		},
 
 		// for the blurring
-		checkIfawarded: function(awarded, btn) {
+		checkIfawarded: function(awarded) {
 
 			let is_awarded = false;
 
@@ -541,6 +584,10 @@ export default {
   /* For IE8 and earlier */
 }
 
-
+.not_awarded {
+	.v-card__text {
+		display: none;
+	}
+}
 
 </style>

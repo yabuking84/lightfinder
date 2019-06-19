@@ -7,20 +7,31 @@
 
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
-
 		        <v-flex xs12>
 		             <bar-cards> </bar-cards>
 		        </v-flex>
+			</v-layout>
 
 
-	            <v-flex xs5>
-	           		<pending-payments> </pending-payments>
+			<v-layout row wrap align-space-around justify-space-between fill-height>
+	            <v-flex xs7>
+	           		<inquiries-table-grid></inquiries-table-grid>
 	            </v-flex>
 
-				<v-flex xs7>
-	           		<pending-payments> </pending-payments>			        
+				<v-flex xs5>
+	           		 <pending-payments> </pending-payments>	
 			    </v-flex>
+			</v-layout>
 
+
+			<v-layout row wrap align-space-around justify-space-between fill-height>
+	            <v-flex xs6>
+	           		<sample-order-table-grid></sample-order-table-grid>
+	            </v-flex>
+
+				<v-flex xs6>
+	           		<confirmed-orders> </confirmed-orders>	
+			    </v-flex>
 			</v-layout>
 
 		</v-container>
@@ -32,11 +43,11 @@
 <script>
 
 
-import BarCards from '@/views/components/App/BarCards'
+import BarCards from '@/views/components/App/Buyer/BarCards'
+import InquiriesTableGrid from '@/views/components/App/Buyer/InquiriesTableGrid'
 import PendingPayments from '@/views/components/App/Buyer/PendingPayments'
-
-import NotificationList from '@/views/components/App/Admin/NotificationList'
-import NotificationTable from '@/views/components/App/Admin/NotificationTable'
+import SampleOrderTableGrid from '@/views/components/App/Buyer/SampleOrderTableGrid'
+import ConfirmedOrders from '@/views/components/App/Buyer/ConfirmedOrders'
 
 export default {
 	
@@ -46,7 +57,10 @@ export default {
 
 	components: {
 	    BarCards,
+	    InquiriesTableGrid,
 	    PendingPayments,
+	    SampleOrderTableGrid,
+	    ConfirmedOrders,
 	},
 
 	computed: {
@@ -62,6 +76,4 @@ export default {
 }
 	
 </script>
-
-
 

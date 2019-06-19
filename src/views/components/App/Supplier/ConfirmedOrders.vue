@@ -5,14 +5,14 @@
 			<v-card-title>
 				<v-layout row wrap class="grey darken-4 heading-title" style="width:100%;">
 				<v-flex xs12>
-					<h3 class="white--text ma-1">Pending Payments</h3>
+					<h3 class="white--text ma-1">Confirmed Orders</h3>
 				</v-flex>								 
 				</v-layout>
 			</v-card-title>
 
 
 			<!-- <v-divider></v-divider> -->
-			<v-card-text class="pa-0"  style="height: 509px; overflow: auto;">
+			<v-card-text class="pa-0"  style="height: 476px; overflow: auto;">
 				<template>
 
 					<v-data-table 
@@ -20,31 +20,25 @@
 					:items="inquiries" 
 					hide-actions 
 					class="elevation-0 pending-payments">
-						<template v-slot:items="sp">
+						<template v-slot:items="props">
 						<tr>
 							
+							<!-- <td><pre>{{ props.item }}</pre></td> -->
 
-							<td>{{ sp.item.data.id }}</td>
+							<td>{{ props.item.data.id }}</td>
 
-							<td>$ {{ currency(sp.item.amount) }}</td>
+							<td>$5677.99</td>
 
 							<td class="text-xs-right pa-0">
 
 								<v-btn 
-								@click="viewInquiry(sp.item.data.id)"
-								color="green" 
-								title="Pay"
-								class="white--text">
-									<v-icon>fas fa-money-check-alt</v-icon> &nbsp; Pay
-								</v-btn>
-
-								<!-- <v-btn 
-								@click="gotoNotfication(sp.item)"
+								@click="gotoNotfication(props.item)"
+								small
 								color="black" 
 								title="Pay"
 								class="white--text">
 									<v-icon>fas fa-search</v-icon>
-								</v-btn> -->
+								</v-btn>
 
 							</td>
 
@@ -53,7 +47,7 @@
 
 
 					    <template v-slot:no-data>
-					    	<h3 class="pa-4" style="text-align: center;">No pending payments..</h3>
+					    	<h3 class="pa-4" style="text-align: center;">No confirmed orders..</h3>
 					    </template>
 
 					</v-data-table>
@@ -66,17 +60,7 @@
 </template>
 <script>
 import { Projects } from '@/data/widgets/project'
-
-import helpers from "@/mixins/helpers"
-import inqMixin from "@/mixins/inquiry";
-
 export default {
-
-mixins: [
-	helpers,
-	inqMixin,
-],
-
 data() { return {
 	  headers: [
 		{
@@ -100,17 +84,14 @@ data() { return {
 
 methods: {
 	setInquiries() {
-
 		var storeType = this.$route.meta.storeType.inq;
-		this.$store.dispatch(storeType+'/getInquiries_a', {stage_id:'1005',with_bids:1})
+
+		this.$store.dispatch(storeType+'/getInquiries_a', {stage_id:'2001'})
+		// this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1006'})
 		.then((response)=>{
 			// console.log('response', response);
+
 			var inquiries = response.map((inquiry)=>{
-				
-				var bid = inquiry.bids.filter(function(item) {
-					return item.awarded;
-				});
-				var amount = (bid.length)?bid[0].total_price:0.0;
 
 				return {
 					data: {
@@ -118,7 +99,6 @@ methods: {
 						'bid_id': null,
 						'notification_id': null,
 					},
-					amount: amount,
 					dataType: "inquiry",
 					isRead: true,
 					textSnackbar: null,
@@ -141,13 +121,16 @@ methods: {
 		});
 	},
     
-	viewInquiry(inq_id) {
-		this.showInquiry(inq_id)
-		.then((data)=>{
+    // gotonotification
+    // /////////////////////////////////////////////////////////
 
-		});
+    gotoNotfication(ntfctn){
+        this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
+    },
 
-	},		
+    // /////////////////////////////////////////////////////////
+    // gotonotification
+
 
 },
 
@@ -172,4 +155,5 @@ created(){
 .v-icon.fa-search {
 	font-size: 15px;
 }
+
 </style>

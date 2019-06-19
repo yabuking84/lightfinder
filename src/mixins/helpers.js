@@ -58,7 +58,7 @@ methods: {
           return new Promise((resolve, reject) => {
               axios({
                   method: 'GET',
-                  url:  'http://192.168.1.200:8000/v1/countries',
+                  url:  config.main.appUrl+'/v1/countries',
               })
               .then(response => {
                   resolve(response.data);
@@ -96,15 +96,20 @@ methods: {
     getStore(){
         var retVal = '';
 
-        if((localStorage.role == config.auth.role.admin.id)) {
-            retVal = "admnInq";
-        }
-        else if(localStorage.role == config.auth.role.buyer.id) {            
-            retVal = "byrInq";
-        }
-        else if(localStorage.role == config.auth.role.supplier.id) {
-            retVal = "spplrInq";            
-        }
+        // Consolidate this, from now on we get from meta data
+        // if((localStorage.role == config.auth.role.admin.id)) {
+        //     retVal = "admnInq";
+        // }
+        // else if(localStorage.role == config.auth.role.buyer.id) {            
+        //     retVal = "byrInq";
+        // }
+        // else if(localStorage.role == config.auth.role.supplier.id) {
+        //     retVal = "spplrInq";            
+        // }
+
+		var storeType = this.$route.meta.storeType.inq;            
+        retVal = storeType;
+
 
         return retVal;
     },
@@ -116,13 +121,18 @@ methods: {
     },
 
 
-	currency(arg){
+	currency(arg,decimals=2){
 		// return ceil(arg,2).toFixed(2)
-		return arg.toFixed(2);
+		// return this.numberWithCommas(arg.toFixed(2));
+		return this.numberWithCommas(arg.toFixed(decimals));
 	},
 
 
-
+	numberWithCommas(x) {
+	    var parts = x.toString().split(".");
+	    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    return parts.join(".");
+	},
 
 },
 

@@ -8,6 +8,7 @@ import config from '@/config/index'
 import vm from '@/main.js';
 
 import hlprs from '@/mixins/helpers'
+const base_url = config.main.appUrl;
 
 const state = {
 
@@ -15,27 +16,27 @@ const state = {
 
         login: {
             method: 'post',
-            url: "http://192.168.1.200:8000/v1/login",  
+            url: base_url+'/v1/login',  
         },
 
         logout: {
             method: 'post',
-            url: "http://192.168.1.200:8000/v1/logout",
+            url: base_url+'/v1/logout',
         },
 
         buyerRegistration: {
         	method: 'post',
-        	url: 'http://192.168.1.200:8000/v1/buyer/register'
+        	url: base_url+'/v1/buyer/register'
         },
 
         supplierRegistration: {
         	method: 'post',
-        	url: 'http://192.168.1.200:8000/v1/supplier/register'
+        	url: base_url+'/v1/supplier/register'
         },
 
         getInquiryStatuses: {
             method: 'get',
-            url: "http://192.168.1.200:8000/v1/inquiry-stages",
+            url: base_url+'/v1/inquiry-stages',
         },
 
 
@@ -377,7 +378,6 @@ export default {
 
 
 
-// http://192.168.1.200:8000/v1/login
 // Admin Buyanylight
 // Supplier Buyanylight
 // Buyer Buyanylight

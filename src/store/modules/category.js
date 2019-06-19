@@ -5,6 +5,7 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+const base_url = config.main.appUrl;
 
 const state = {
 
@@ -21,7 +22,7 @@ const actions = {
     getCategories_a(context){
 
         return new Promise((resolve, reject) => {
-            var url = "http://192.168.1.200:8000/v1/categories";
+            var url = base_url+"/v1/categories";
 
             axios({
                 method: 'get',
@@ -97,7 +98,6 @@ export default {
 
 
 
-// http://192.168.1.200:8000/v1/login
 
 // Admin Buyanylight
 

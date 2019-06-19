@@ -8,12 +8,13 @@
 <v-dialog 
 :value="openInquiry" 
 lazy
-fullscreen
 scrollable>
     <v-card>
 
     	<v-card-title class="black darken-4 ">
-			<h2 v-if="stateInquiry" class="font-weight-bold white--text">INQUIRY # {{ stateInquiry.id }}</h2>			
+			<h2 v-if="stateInquiry" class="font-weight-bold white--text">
+				INQUIRY # {{ stateInquiry.id }}
+			</h2>
 			<v-spacer></v-spacer>
 	        <v-btn dark flat @click="closeOpenInquiry()">
 	            <v-icon>close</v-icon>
@@ -31,12 +32,12 @@ scrollable>
 
     	</v-card-title>
 
-		<h4 class="ma-3">{{ $route.params.payment_status }}</h4>
+		<!-- <h4 class="ma-3">{{ $route.params.payment_status }}</h4> -->
 
         <v-divider></v-divider>
 
         <v-card-text id="inquiryView">
-			<v-container fluid grid-list-xl>
+			<v-container fluid grid-list-xl pa-0>
 			    <v-layout row wrap>
 
 			        <!-- inquiry details card -->

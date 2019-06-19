@@ -141,19 +141,19 @@ import MsgBus from "@/bus/messaging";
         created() {
 		    this.updateChat();
 
-	    	console.log("bid",this.bid);
-	    	console.log("type",this.type);
+	    	// console.log("bid",this.bid);
+	    	// console.log("type",this.type);
 
 		    var self = this;
 		    MsgBus.onNewMessage(function(data){
 
 				// if message box is bid
 				if(self.bid.id!=0 && self.bid.id == data.id) {
-		    		console.log("BID onNewMessage = ",data);
+		    		// console.log("BID onNewMessage = ",data);
 					self.updateChat();
 				}				
 				else if(self.inquiry!=null && self.inquiry.id == data.id) {
-		    		console.log("INQUIRY onNewMessage = ",data);
+		    		// console.log("INQUIRY onNewMessage = ",data);
 					self.updateChat();
 				}
 

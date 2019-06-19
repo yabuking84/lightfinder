@@ -702,11 +702,11 @@
 
 
                                     <v-flex xs12 mt-3 v-show="inquiry_images.length">
-                                    	    <h4>Image: </h4>
+                                    	<h4>Image: </h4>
 	                                	<v-layout row wrap>
 											<v-flex xs4 v-for="(image, i) in inquiry_images" :key="'image'+i">
 												<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
-												   <div class="image-area">
+												   	<div class="image-area">
 													  <img :src="image.location" alt="Preview">
 													</div>
 											</v-flex>   
@@ -1756,8 +1756,19 @@ export default {
 
             // console.log('attachment',attachment);
             this.formData.attachments.push(attachment);
+
             // for the preview when uploaded
-            this.inquiry_images.push(attachment);
+            // this.inquiry_images.push(attachment);
+
+        	if(upload_group == 'add-inquiry-images') {
+        		this.inquiry_images.push(attachments);
+        	}
+        	if(upload_group == 'add-inquiry-attachments') {
+				this.inquiry_attachments.push(attachments);
+        	}
+        	if(upload_group == 'add-inquiry-oems') {
+        		this.inquiry_oems.push(attachments);        		
+        	}            
 
         }
 

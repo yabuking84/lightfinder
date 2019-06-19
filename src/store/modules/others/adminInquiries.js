@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import config from '@/config/index'
 
-let base_url = 'http://192.168.1.200:8000';
+let base_url = config.main.appUrl;
 const state= {
 	// api: {
 	// 	/* GET */
@@ -140,7 +140,7 @@ const actions = {
   },
 
 
-  getAllInquiries_a() {
+  getInquiries_a() {
 
 	return new Promise((resolve, reject) => {
 	  var headers = {

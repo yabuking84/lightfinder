@@ -1,10 +1,15 @@
+// const appUrl = 'http://192.168.1.200:8000';
+const appUrl = 'http://almani.ddns.net:18000';
+
 
 export default {
 
 	devMode: true,
 
+	appUrl: appUrl,
+
 	awss3: {
-		signingURL:"http://192.168.1.200:8000/v1/aws-s3-signature",
+		signingURL:appUrl+"/v1/aws-s3-signature",
         urls: {
         	inquiry: 'https://httpbin.org/post',
         },
