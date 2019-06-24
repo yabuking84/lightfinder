@@ -14,11 +14,11 @@
 
 					<v-flex xs6>
 						<h5 class="font-weight-thin">Shipping Method</h5>
-							<v-text-field 
-							  :value="shipping_methods.filter(obj=>obj.id==inquiry.shipping_method_id)[0].name + ' Freight' "
-							  placeholder=""
-							  readonly>
-							</v-text-field>
+						<v-text-field 
+						  :value="shipping_methods.filter(obj=>obj.id==inquiry.shipping_method_id)[0].name + ' Freight' "
+						  placeholder=""
+						  readonly>
+						</v-text-field>
 					</v-flex>
 
 					<v-flex xs6>

@@ -37,7 +37,11 @@
 			    </span> -->
 
 			<!-- <v-spacer></v-spacer> -->
-			<v-btn icon @click="refresh()" class="white--text">
+			<v-btn 
+			@click="refresh()" 
+			class="white--text"
+			icon 
+			style="margin: 0;">
 			    <v-icon>refresh</v-icon>
 			</v-btn>
 		</v-flex>

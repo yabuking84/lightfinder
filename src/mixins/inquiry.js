@@ -34,22 +34,34 @@ export default {
 		  			reject(error);
 				});
 			});
-		},				
+		},		
+
+		hideInquiry() {
+			this.openInquiry = false;
+		},
+
 	},
 
 	computed:{
 
-		openInquiry: {  
-			get() {
-				return this.$store.state.inq.openInquiryView;
-			},
-			set(nVal){
-				if(nVal)
-				this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
-				else
-				this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-			},
+		// openInquiry: {  
+		// 	get() {
+		// 		return this.$store.state.inq.openInquiryView;
+		// 	},
+		// 	set(nVal){
+		// 		if(nVal)
+		// 		this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
+		// 		else
+		// 		this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+		// 	},
+		// },
+
+		openInquiry() {  
+			return this.$store.state.inq.openInquiryView;
 		},
+
+		
+
 
 		storeType(){
 			return  this.$route.meta.storeType.inq;

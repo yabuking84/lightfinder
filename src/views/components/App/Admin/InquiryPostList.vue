@@ -113,106 +113,15 @@
 
 
 
-			<!-- BAL Confirmation -->
-			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-            <v-flex xs12 v-else-if="inquiry.stage_id == 10041">
-
-                <v-layout row wrap>
-
-                    <v-flex xs12 ma-1 >                        
-					    <v-alert
-				      	:value="true"
-				      	type="warning">
-					      	<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
-					    </v-alert>                          
-                    </v-flex>
-
-					<v-flex xs4>
-						<h4 class="font-weight-thin">Shipping Date</h4>
-					   
-						<v-menu
-						v-model="calendar_menu1" 
-						:close-on-content-click="false" 
-						:nudge-right="40" 
-						lazy 
-						transition="scale-transition"
-						offset-y full-width min-width="290px" class="">
-							<template v-slot:activator="{on}">								
-								<v-text-field   
-								v-model="formData.shipping_date" 
-								:error-messages="fieldErrors('formData.shipping_date')" 
-								@blur="$v.formData.shipping_date.$touch()"
-								v-on="on"
-								label="" 
-								prepend-icon="event" 
-								readonly></v-text-field>
-							</template>
-
-							<!-- <v-date-picker 
-							v-model="formData.shipping_date" 
-							header-color="black" 
-							:min="minDate"
-							:value="minDate"
-							no-title 
-							@input="calendar_menu1 = false"></v-date-picker> -->
-
-							<v-date-picker 
-							header-color="black" 
-							:min="minDate"
-							:value="(formData.shipping_date)?minDate:formData.shipping_date"
-							@input="calendar_menu1 = false; formData.shipping_date=$event">								
-							</v-date-picker>
-						</v-menu>
-
-
-					</v-flex>
-
-                    <v-flex xs12 mx-5>
-                    	<v-layout row wrap>                    	  
-	                        <v-btn 
-	                        @click="approvedInquiry(inquiry.id)"                         
-	                        class="grey darken-4 large font-weight-light ">
-	                            <span class="ml-1 white--text font-weight-light">confirm</span>
-	                        </v-btn>
-                    	</v-layout>
-                    </v-flex>                    
-
-                </v-layout>
-            </v-flex>
-			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-			<!-- BAL Confirmation -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
             <v-card-text v-else>
-
-
+				
+		
+                <!-- if not bids / quotes -->
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                 <v-layout 
                 v-if="!bidItems.length"
                 justify-center row fill-height>
@@ -225,6 +134,8 @@
                             </div>
                     </v-flex>
                 </v-layout>
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <!-- if not bids / quotes -->
             
 
 
@@ -238,6 +149,144 @@
 
 
                 <template v-else>
+
+
+
+				
+				<!-- BAL Confirmation -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	            <v-layout row wrap mb-5>
+	            <v-flex xs12 v-if="inquiry.stage_id == 10041">
+
+	                <v-layout row wrap>
+
+	                    <v-flex xs12 ma-1 >                        
+						    <v-alert
+					      	:value="true"
+					      	type="warning">
+						      	<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
+                            	<div class="" style="font-style: italic;">
+                            		Refer to the awarded BID below.
+                            	</div>
+						    </v-alert>
+	                    </v-flex>
+
+						<v-flex xs6>
+							<!-- <h4>Shipping Date</h4> -->
+							<v-menu
+							v-model="sd_menu" 
+							:close-on-content-click="false" 
+							:nudge-right="40" 
+							lazy 
+							transition="scale-transition"
+							offset-y full-width min-width="290px" class="">
+								<template v-slot:activator="{on}">								
+									<v-text-field   
+									v-model="formData.shipping_date" 
+									:error-messages="fieldErrors('formData.shipping_date')" 
+									@blur="$v.formData.shipping_date.$touch()"
+									v-on="on"
+									label="Shipping Date" 
+									prepend-icon="event" 
+									readonly></v-text-field>
+								</template>
+
+								<v-date-picker 
+								header-color="black" 
+								:min="minDate"
+								:value="(formData.shipping_date)?formData.shipping_date:minDate"
+								@input="sd_menu = false; formData.shipping_date=$event">								
+								</v-date-picker>
+							</v-menu>
+						</v-flex>
+
+
+						<v-flex xs6>
+							<!-- <h4>Shipping Cost</h4> -->
+							<v-text-field   
+						   	v-model="formData.shipping_cost" 
+						  	:error-messages="fieldErrors('formData.shipping_cost')" 
+						  	@blur="$v.formData.shipping_cost.$touch()"
+						  	label="Shipping Cost" 						  	
+						  	prepend-icon="fas fa-dollar-sign"></v-text-field>
+						</v-flex>
+
+	           
+
+						<v-flex xs6>
+							<!-- <h4>Estimated Time of Arrival</h4> -->
+							<v-menu
+							v-model="eta_menu" 
+							:close-on-content-click="false" 
+							:nudge-right="40" 
+							lazy 
+							transition="scale-transition"
+							offset-y full-width min-width="290px" class="">
+								<template v-slot:activator="{on}">								
+									<v-text-field   
+									v-model="formData.eta" 
+									:error-messages="fieldErrors('formData.eta')" 
+									@blur="$v.formData.eta.$touch()"
+									v-on="on"
+									label="Estimated Time of Arrival" 
+									prepend-icon="event" 
+									readonly></v-text-field>
+								</template>
+
+								<v-date-picker 
+								header-color="black" 
+								:min="minDate"
+								:value="(formData.eta)?formData.eta:minDate"
+								@input="eta_menu = false; formData.eta=$event">								
+								</v-date-picker>
+							</v-menu>
+						</v-flex>
+
+						<v-flex xs6>
+							<!-- <h4>Estimated Time of Delivery</h4> -->
+							<v-menu
+							v-model="etd_menu" 
+							:close-on-content-click="false" 
+							:nudge-right="40" 
+							lazy 
+							transition="scale-transition"
+							offset-y full-width min-width="290px" class="">
+								<template v-slot:activator="{on}">								
+									<v-text-field   
+									v-model="formData.etd" 
+									:error-messages="fieldErrors('formData.etd')" 
+									@blur="$v.formData.etd.$touch()"
+									v-on="on"
+									label="Estimated Time of Delivery" 
+									prepend-icon="event" 
+									readonly></v-text-field>
+								</template>
+
+								<v-date-picker 
+								header-color="black" 
+								:min="minDate"
+								:value="(formData.etd)?formData.etd:minDate"
+								@input="etd_menu = false; formData.etd=$event">								
+								</v-date-picker>
+							</v-menu>
+						</v-flex>
+
+
+	                    <v-flex xs12 ma-3>
+	                    	<v-layout row wrap align-center justify-end>
+		                        <v-btn
+		                        @click="confirmBid()" 	                        
+		                        class="grey darken-4 large font-weight-light ">
+		                            <span class="ml-1 white--text font-weight-light">confirm BID</span>
+		                        </v-btn>
+	                    	</v-layout>
+	                    </v-flex>         
+
+	                </v-layout>
+	            </v-flex>
+	        	</v-layout>
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- BAL Confirmation -->
 
 
 
@@ -267,9 +316,8 @@
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
-
-                    <v-card-title >
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <v-card-title>
                         <v-layout row wrap pa-2>
 
 							<v-flex xs12 pa-0>
@@ -561,11 +609,13 @@ import ImageGallerySmall from "@/views/Components/App/ImageGallery"
 import Messaging from "@/views/Components/App/MessagingBox"
 
 import helpers from "@/mixins/helpers";
+import inqMixin from "@/mixins/inquiry";
+
 import inqEvntBs from "@/bus/inquiry"
 
 import config from "@/config/main"
 
-import { required, email, maxLength } from 'vuelidate/lib/validators'
+import { required, email, maxLength, numeric, decimal } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
 export default {
@@ -573,6 +623,7 @@ export default {
     mixins: [
         helpers,
 		validationMixin,
+		inqMixin,
     ],
 
     components: {
@@ -586,15 +637,7 @@ export default {
     	'isClosed',
     ],
 
-    timers: [{
-        name: 'InquiryTableTimer',
-        time: config.polling.inquiryTable.time,
-        repeat: true,
-        autostart: false,
-        callback: function() {
-            this.fillBidTable();
-        },
-    }],
+
 
 
     data() {return {
@@ -611,9 +654,9 @@ export default {
 
         showSpplrMsgs: false,
 
-		calendar_menu1: false,
-		calendar_menu2: false,
-		calendar_menu3: false,
+		sd_menu: false,
+		eta_menu: false,
+		etd_menu: false,
 
 		formData: {
 			eta:null,
@@ -627,19 +670,22 @@ export default {
 	validations: {
 		formData: {
 		  shipping_date: { required },
-		  shipping_cost: { required },
+		  shipping_cost: { required,decimal },
 		  eta: { required },
-		  etd: { required }
+		  etd: { required },
 		}
 	},
 
 
 	validationMessages: {
 		formData: {
-			shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
-			shipping_cost: { required: 'Please Include your Shipping Cost. ' },
-			eta: { required: "Please specify your Estimated Time of Arrival." },
-			etd: { required: "Please specify your Estimated Time of Delivery." },
+			shipping_cost: { 
+				required: 'Please include your Shipping Cost. ',
+				decimal: 'must be numeric. ',
+			},
+			shipping_date: { required: 'Please specify your Shipping Date. ' },
+			eta: { required: "Please specify your ETA." },
+			etd: { required: "Please specify your ETD." },
 		}
 	},	
 
@@ -670,7 +716,7 @@ export default {
 
         fillBidTable() {
 
-                this.$store.dispatch('admnInq/getAllInquiryBids_a', {
+                this.$store.dispatch(this.getStore()+'/getAllInquiryBids_a', {
                     inq_id: this.inquiry.id
                 })
                 .then(response => {
@@ -692,29 +738,28 @@ export default {
 
             approvedInquiry(inquiry_id) {
 
-                this.$store.dispatch('admnInq/approvedInquiry_a', {
-                        inquiry_id: inquiry_id
-                    })
-                    .then((response) => {
+                this.$store.dispatch(this.getStore()+'/approvedInquiry_a', {
+                    inquiry_id: inquiry_id
+                })
+                .then((response) => {
 
-                        // create a event bus 
-                        // this.$emit('update:isClosed', true);
-                          this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+                    // create a event bus 
+                    // this.$emit('update:isClosed', true);
+                    this.hideInquiry();
 
-                        inqEvntBs.emitApproved();
+                    inqEvntBs.emitApproved();
 
-                    })
-                    .catch((e) => {
-                          console.log(e);
-                          // this.$emit('update:isClosed', true);
-                          this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-                    })
-                    .finally(() => {
-                        // this.$emit('update:isClosed', true);
-                          this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+                })
+                .catch((e) => {
+                      console.log(e);
+                      // this.$emit('update:isClosed', true);
+                      this.hideInquiry();
+                })
+                .finally(() => {
+                    // this.$emit('update:isClosed', true);
+                      this.hideInquiry();
 
-                    });
-
+                });
             },
 
             rejectInquiry(inquiry_id) {
@@ -723,9 +768,9 @@ export default {
                 // this.openMessageDialog = true
                 // console.log('--------------tae-----------------')
 
-                console.log(inquiry_id);
 
-                this.$store.dispatch('admnInq/declinedInquiry_a', {
+                console.log(inquiry_id);
+                this.$store.dispatch(this.getStore()+'/declinedInquiry_a', {
                         inquiry_id: inquiry_id
                     })
                     .then((response) => {
@@ -748,7 +793,7 @@ export default {
 
             approvedBid(bidItem) {
 
-            	this.$store.dispatch('admnInq/approvedBid_a', {
+            	this.$store.dispatch(this.getStore()+'/approvedBid_a', {
                     inquiry_id: this.inquiry.id,
                     bid_id: bidItem.id
                 })
@@ -762,6 +807,26 @@ export default {
 
                 });
 
+            },
+
+
+
+            confirmBid() {
+
+			  	if (this.$v.$invalid) {
+					this.$v.$touch()
+			  	} else {
+		        	this.$store.dispatch(this.getStore()+'/confirmBid_a', {
+		                inquiry_id: this.inquiry.id,
+		                formData: formData,
+		            })
+		            .then((response) => {
+            			inqMixin.hideInquiry();
+		            })
+		            .catch((e) => {
+		                console.log(e);
+		            });
+				}
             },
 
             // for the blurring
@@ -798,6 +863,11 @@ export default {
             this.inquiry.awarded = 1
         });
 
+    },
+
+
+    watch:{
+    	
     },
 
 }

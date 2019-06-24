@@ -5,39 +5,6 @@ import config from '@/config/index'
 const base_url = config.main.appUrl;
 
 const state= {
-	// api: {
-	// 	/* GET */
-	// 	get: {
-	// 		method: 'get',
-	// 		getAllInquiries: {
-	// 			url: base_url + `/v1/admin/inquiries`
-	// 		},
-	// 		getInquiry: {
-	// 			url: base_url + `/v1/admin/inquiries`
-	// 		},
-
-	// 		getInquiryBids: {
-	// 			url: base_url + `/v1/admin/inquiries`
-	// 		}
-	// 	},
-	// 	/* POST */
-	// 	post: {},
-	// 	/* PUT */
-	// 	put: {
-	// 		/* APPROVED INQUIRY */
-	// 		method: 'put',
-	// 		approvedInquiry: {
-	// 			url: base_url + `/v1/admin/inquiries`
-	// 		},
-	// 		/* DECLINED INQUIRY */
-	// 		declinedInquiry: {
-	// 			url: base_url + `/v1/admin/inquiries`
-	// 		},
-	// 		approveBid: {
-	// 			url: base_url + `/v1/admin/inquiries/`
-	// 		}
-	// 	}
-	// },
 
 	api: {
 
@@ -65,6 +32,12 @@ const state= {
 		},
 		approveBid: {
 			url: base_url + `/v1/admin/inquiries`,
+			method: 'put',
+		},
+
+		confirmBid: {
+			url: base_url + `/v1/admin/inquiries`,
+			url2: 'confirm-order',
 			method: 'put',
 		},
 
@@ -245,6 +218,45 @@ const actions = {
 	});
 
   },
+
+
+
+	confirmBid_a(context, data) {
+
+		// console.log(data.inquiry_id);
+		return new Promise((resolve, reject) => {
+			var payload = {
+			    "shipping_date": "2019-12-12",
+			    "eta": "2019-12-12",
+			    "etd": "2019-12-12",
+			    "shipping_cost": 69
+			};
+
+
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			};
+			axios({
+				method: state.api.confirmBid.method,
+				url: state.api.confirmBid.url +'/'+ data.inquiry_id +'/'+state.api.confirmBid.url2,
+				headers: headers,
+				data: JSON.stringify(payload)
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+					console.log("EXPIRED");
+					router.push({ 'name': 'Logout' })
+				} else {
+					reject(error);
+				}
+			})
+		});
+
+	},
 
 
 

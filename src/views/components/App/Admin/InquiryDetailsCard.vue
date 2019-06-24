@@ -281,6 +281,7 @@
 <script>
 
 import helpers from "@/mixins/helpers"
+import inqMixin from "@/mixins/inquiry"
 import inqEvntBs from "@/bus/inquiry"
 import MessageBox from '@/views/Components/App/Admin/MessageDialog'
 import ImageGallerySmall from "@/views/Components/App/ImageGallery"
@@ -292,6 +293,7 @@ export default {
 
   mixins: [
     helpers,
+    inqMixin,
   ],
 
     // 'inquiry',
@@ -353,7 +355,7 @@ export default {
 
           // create a event bus 
           // this.$emit('update:isClosed', true);
-             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+             this.hideInquiry();
 
           // inqEvntBs.emitApproved();
 
@@ -361,13 +363,13 @@ export default {
         .catch((e) => {
           console.log(e);
           // this.$emit('update:isClosed', true);
-             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+             this.hideInquiry();
 
 
         })
         .finally(() => {
           // this.$emit('update:isClosed', true);
-            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
 
         });
     },
@@ -380,14 +382,14 @@ export default {
         .then((response) => {
           // create a event bus 
           // this.$emit('update:isClosed', true);
-             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+             this.hideInquiry();
 
 
           // inqEvntBs.emitApproved();
         })
         .catch((e) => {
           // this.$emit('update:isClosed', true);
-             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+             this.hideInquiry();
 
           console.log(e);
         })
@@ -404,14 +406,14 @@ export default {
         .then((response) => {
           // create a event bus 
           // this.$emit('update:isClosed', true);
-             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+             this.hideInquiry();
 
 
           // inqEvntBs.emitApproved();
         })
         .catch((e) => {
           // this.$emit('update:isClosed', true);
-             this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+             this.hideInquiry();
 
           console.log(e);
         })

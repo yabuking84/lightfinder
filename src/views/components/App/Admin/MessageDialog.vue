@@ -55,68 +55,73 @@
 
 <script>
 
-	import ChatEditable from '@/views/Components/Editable/ChatEditable'
+import ChatEditable from '@/views/Components/Editable/ChatEditable'
+import inqMixin from "@/mixins/inquiry";
 
-	export default {
+export default {
 
-		data() {
+    mixins: [
+		inqMixin,
+    ],
 
-			return {
+	data() {
 
-				chatMessageEditor: null,
+		return {
 
-			}
+			chatMessageEditor: null,
 
+		}
+
+	},
+
+	props: {
+
+		openMessageDialog: {
+			type: Boolean
 		},
 
-		props: {
-
-			openMessageDialog: {
-				type: Boolean
-			},
-
-			CommentData: {
-				type: Array
-			},
-
-
+		CommentData: {
+			type: Array
 		},
 
-		components: {
 
-			ChatEditable
+	},
 
-		},
-		
+	components: {
 
-		beforeDestroy() {
+		ChatEditable
 
-            this.$eventBus.$off('resetChatEditor')
+	},
+	
 
-        },
+	beforeDestroy() {
 
-        methods: {
+        this.$eventBus.$off('resetChatEditor')
 
-        	sendMessage() {
+    },
 
-        		if(this.chatMessageEditor)
-        			console.log(this.chatMessageEditor);
-        		    this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+    methods: {
 
+    	sendMessage() {
 
-        		this.chatMessageEditor = null
-        		this.$eventBus.$emit('resetChatEditor')
-
-        	},
-
-        	closeDialog() {
-
-        	}
+    		if(this.chatMessageEditor)
+    			console.log(this.chatMessageEditor);
+    		    this.hideInquiry();
 
 
-        }
+    		this.chatMessageEditor = null
+    		this.$eventBus.$emit('resetChatEditor')
 
-	}
+    	},
+
+    	closeDialog() {
+
+    	}
+
+
+    }
+
+}
 	
 </script>
 

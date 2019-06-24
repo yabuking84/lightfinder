@@ -101,7 +101,7 @@ export default {
     //         if(nVal)
     //         this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
     //         else
-    //         this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+    //         this.hideInquiry();
     //     },
     // },
 
@@ -123,13 +123,13 @@ export default {
     methods: {
 
         closeOpenInquiry() {
-            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
         },
 
         keyPress(e){
 
             if(e.target.querySelector("#InquiryView"))
-            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
             
             // console.log(e.target);
 
@@ -148,7 +148,7 @@ export default {
 
         if (nVal) {
             this.isClosed = false
-            this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
         }
 
       },

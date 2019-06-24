@@ -39,19 +39,6 @@ export default new Vue({
 
 
 
-		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-		/* on the buyer award */
-		// emitAwardSubmitted(){
-		// 	this.$emit('award-bid-form-submitted');
-		// },
-		// onAwardSubmitted(func) {
-		// 	this.$on('award-bid-form-submitted', () => {
-		// 		func();
-		// 	});
-		// },
-
 		/* on the buyer award */
 		emitBidAwarded(){
 			this.$emit('bid-awarded');
@@ -62,11 +49,18 @@ export default new Vue({
 			});
 		},
 
-		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
 
+
+		emitBidConfirmed(){
+			this.$emit('bid-confirmed');
+		},
+		onBidConfirmed(func) {
+			this.$on('bid-confirmed', () => {
+				func();
+			});
+		},
 
 
 

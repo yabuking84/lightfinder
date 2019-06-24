@@ -27,7 +27,7 @@
 
 							<td>{{ props.item.data.id }}</td>
 
-							<td>$5677.99</td>
+							<td>$9999.99</td>
 
 							<td class="text-xs-right pa-0">
 								<v-btn 
