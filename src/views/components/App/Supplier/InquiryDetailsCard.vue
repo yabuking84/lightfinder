@@ -61,10 +61,12 @@
 			<v-card-text>
 				<v-container fluid>
 
+
+
+
 					<v-layout row wrap>
 
 						<v-flex xs12>
-
 							<v-layout row wrap>
 
 									   <v-flex xs12 v-if="inquiryImages.length > 0">

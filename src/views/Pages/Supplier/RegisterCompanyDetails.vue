@@ -23,7 +23,7 @@
 
 <script>
 
-  import CompanyFormDetailsComponent from '@/views/components/App/Supplier/CompanyFormDetailsComponent'
+  import CompanyFormDetailsComponent from '@/views/Components/App/Supplier/CompanyFormDetailsComponent'
 
   export default {
 

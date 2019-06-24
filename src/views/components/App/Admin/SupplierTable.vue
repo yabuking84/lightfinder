@@ -64,7 +64,7 @@
 import adminSupplierBus from "@/bus/admin-supplier"
 import helpers from "@/mixins/helpers"
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
-import SupplierDialog from '@/views/components/app/Admin/SupplierDialog'
+import SupplierDialog from '@/views/Components/app/Admin/SupplierDialog'
 
 
 export default {

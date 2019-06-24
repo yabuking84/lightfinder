@@ -37,11 +37,11 @@
 
 <script>
 
-import BarCards from '@/views/components/App/Supplier/BarCards'
-import InquiriesTableGrid from '@/views/components/App/Supplier/InquiriesTableGrid'
-import WalletTable from '@/views/components/App/Supplier/WalletTable'
-import SampleOrderTableGrid from '@/views/components/App/Supplier/SampleOrderTableGrid'
-import ConfirmedOrders from '@/views/components/App/Supplier/ConfirmedOrders'
+import BarCards from '@/views/Components/App/Supplier/BarCards'
+import InquiriesTableGrid from '@/views/Components/App/InquiriesTableGrid'
+import WalletTable from '@/views/Components/App/Supplier/WalletTable'
+import SampleOrderTableGrid from '@/views/Components/App/Supplier/SampleOrderTableGrid'
+import ConfirmedOrders from '@/views/Components/App/Supplier/ConfirmedOrders'
 
 export default {
 

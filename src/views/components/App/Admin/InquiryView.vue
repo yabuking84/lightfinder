@@ -1,45 +1,50 @@
 <template>
   
   <!-- @input="$emit('update:openInquiry', false)"  -->
-  <v-dialog 
-  :value="openInquiry" 
-  @keydown.escape="keyPress">
+<v-dialog 
+@input="closeOpenInquiry()" 
+:value="openInquiry" 
+@keydown.escape="keyPress">
     <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
-    <v-card id="InquiryView">
+    <v-card>
 
-        <v-toolbar dark color="primary">         
-            <v-toolbar-title v-if="stateInquiry">Inquiry # {{ stateInquiry.id }} </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click="closeOpenInquiry()">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-toolbar-items>
-        </v-toolbar>
+    	<v-card-title class="black darken-4 ">
+			<h2 v-if="stateInquiry" class="font-weight-bold white--text">
+				INQUIRY # {{ stateInquiry.id }}
+			</h2>
 
+			<v-spacer></v-spacer>
+	        <v-btn dark flat @click="closeOpenInquiry()">
+	            <v-icon>close</v-icon>
+	        </v-btn>
+    	</v-card-title>
 
-        <v-container fluid grid-list-xl  pa-0>
-          <v-layout row wrap>
+        <v-card-text id="inquiryView">
+	        <v-container fluid grid-list-xl  pa-0>
+	          	<v-layout row wrap>
 
-            <!-- inquiry details card -->
-            <v-flex xs5>
-              <inquiry-details-card 
-              v-if="stateInquiry" 
-              :inquiry="stateInquiry"
-              :openInquiry="openInquiry"
-              :isClosed.sync="isClosed"> </inquiry-details-card>
-            </v-flex>
-            <!-- end of detils  -->
+		            <!-- inquiry details card -->
+		            <v-flex xs5>
+		              <inquiry-details-card 
+		              v-if="stateInquiry" 
+		              :inquiry="stateInquiry"
+		              :openInquiry="openInquiry"
+		              :isClosed.sync="isClosed"> </inquiry-details-card>
+		            </v-flex>
+		            <!-- end of detils  -->
 
-            <!-- supplier quote / bids -->
-            <v-flex xs7>
-              <inquiry-post-list v-if="stateInquiry" :inquiry="stateInquiry"> </inquiry-post-list>
-            </v-flex>
-            <!-- supplier quote -->
+		            <!-- supplier quote / bids -->
+		            <v-flex xs7>
+		             	<inquiry-post-list 
+		             	v-if="stateInquiry" 
+		             	:inquiry="stateInquiry"> </inquiry-post-list>
+		            </v-flex>
+		            <!-- supplier quote -->
 
-          </v-layout>
-        </v-container>
+	          	</v-layout>
+	        </v-container>
       
+	   	</v-card-text>
     </v-card>
   </v-dialog>
 </template>

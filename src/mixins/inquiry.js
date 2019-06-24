@@ -13,12 +13,16 @@ export default {
 					inq_id: inq_id
 				})
 				.then((data) => {
-					console.log('data',data);
-					var awarded_bid_id = data.id+'-'+data.awarded_bid_id
-					var bid = data.bids.filter(function(item) {						
-						return (item.id==awarded_bid_id)?true:false;
-					});
-					data.amount = (bid.length)?bid[0].total_price:0.0;
+					// console.log('data',data);
+
+					if(data.bids){
+						var awarded_bid_id = data.id+'-'+data.awarded_bid_id
+						var bid = data.bids.filter(function(item) {
+							return (item.id==awarded_bid_id)?true:false;
+						});
+						data.amount = (bid.length)?bid[0].total_price:0.0;
+					} else 
+					data.amount = 0.0;
 
 
 					this.stateInquiry = data;
@@ -47,6 +51,9 @@ export default {
 			},
 		},
 
+		storeType(){
+			return  this.$route.meta.storeType.inq;
+		},
 
 
 		stateInquiry: {

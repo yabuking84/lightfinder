@@ -7,25 +7,32 @@
         </v-toolbar>
 
         <v-card color="grey lighten-5">
+
+
+
+
+
+
+
+
+
+
+
+
 			
 			<!-- waiting for verification -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
             <v-flex xs12 v-if="inquiry.stage_id == 1001">
 
                 <v-layout justify-center row fill-height>
 
                     <v-flex xs12 mx-5 mt-3 mb-3>
 
-                           <!--  <v-flex xs2>
-                                <v-img src="https://image.flaticon.com/icons/svg/148/148855.svg" height="90px" contain></v-img>
-                            </v-flex> -->
-
-                                <div>
-                                    <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-                                    <div class="blue-grey--text" >We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
-                                    </div>
-                                </div>
-
-
+                        <div>
+                            <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
+                            <div class="blue-grey--text" >We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+                            </div>
+                        </div>
                     </v-flex>
 
                 </v-layout>
@@ -50,8 +57,16 @@
                     </v-flex>
                 </v-layout>
             </v-flex>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- waiting for verification -->
+
+
+
+
+
 
 			<!-- rejected inquiry -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
             <v-flex xs12 v-else-if="inquiry.stage_id == 1003">
 
                 <v-layout row wrap>
@@ -90,32 +105,197 @@
 
                 </v-layout>
             </v-flex>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- rejected inquiry -->
+
+
+
+
+
+
+			<!-- BAL Confirmation -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <v-flex xs12 v-else-if="inquiry.stage_id == 10041">
+
+                <v-layout row wrap>
+
+                    <v-flex xs12 ma-1 >                        
+					    <v-alert
+				      	:value="true"
+				      	type="warning">
+					      	<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
+					    </v-alert>                          
+                    </v-flex>
+
+					<v-flex xs4>
+						<h4 class="font-weight-thin">Shipping Date</h4>
+					   
+						<v-menu
+						v-model="calendar_menu1" 
+						:close-on-content-click="false" 
+						:nudge-right="40" 
+						lazy 
+						transition="scale-transition"
+						offset-y full-width min-width="290px" class="">
+							<template v-slot:activator="{on}">								
+								<v-text-field   
+								v-model="formData.shipping_date" 
+								:error-messages="fieldErrors('formData.shipping_date')" 
+								@blur="$v.formData.shipping_date.$touch()"
+								v-on="on"
+								label="" 
+								prepend-icon="event" 
+								readonly></v-text-field>
+							</template>
+
+							<!-- <v-date-picker 
+							v-model="formData.shipping_date" 
+							header-color="black" 
+							:min="minDate"
+							:value="minDate"
+							no-title 
+							@input="calendar_menu1 = false"></v-date-picker> -->
+
+							<v-date-picker 
+							header-color="black" 
+							:min="minDate"
+							:value="(formData.shipping_date)?minDate:formData.shipping_date"
+							@input="calendar_menu1 = false; formData.shipping_date=$event">								
+							</v-date-picker>
+						</v-menu>
+
+
+					</v-flex>
+
+                    <v-flex xs12 mx-5>
+                    	<v-layout row wrap>                    	  
+	                        <v-btn 
+	                        @click="approvedInquiry(inquiry.id)"                         
+	                        class="grey darken-4 large font-weight-light ">
+	                            <span class="ml-1 white--text font-weight-light">confirm</span>
+	                        </v-btn>
+                    	</v-layout>
+                    </v-flex>                    
+
+                </v-layout>
+            </v-flex>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- BAL Confirmation -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <v-card-text v-else>
 
-                <v-layout justify-center row fill-height v-if="!bidItems.length">
 
+                <v-layout 
+                v-if="!bidItems.length"
+                justify-center row fill-height>
                     <v-flex xs12 mx-5 mt-3 mb-3>
-
                             <div>
                                 <div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
                                 <div class="blue-grey--text">INQUIRY <b>#{{ inquiry.id }}</b>
                                 </div>
 
                             </div>
-
                     </v-flex>
-
                 </v-layout>
             
+
+
+
+
+
+
+
+
+
+
+
                 <template v-else>
+
+
+
                 <v-card 
                 class="mb-3" 
                 :hover="true" 
-                :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' " 
+				:class="{
+					'is_selected': checkIfAwarded(bidItem),
+					'not_awarded': !checkIfAwarded(bidItem),
+					'showBid': bidItem.showBid,
+				}"                 
                 v-for="(bidItem, i) in bidItems" 
                 :key="'bidItem_'+i">
-    
+
+
+
+
+
+
+
+
+
+
+
+                    
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+
+                    <v-card-title >
+                        <v-layout row wrap pa-2>
+
+							<v-flex xs12 pa-0>
+								<h3>
+									BID #{{ bidItem.id }}
+
+									<v-btn icon 
+									v-if="!checkIfAwarded(bidItem)"
+									@click="bidItem.showBid=!bidItem.showBid"
+									class="showBidBtn">
+										<v-icon v-if="!bidItem.showBid">fas fa-eye</v-icon>
+										<v-icon v-if="bidItem.showBid">fas fa-eye-slash</v-icon>
+									</v-btn>
+								</h3>
+
+	                            <v-img v-if="bidItem.awarded" 
+	                            src="/static/images/award.png" 
+	                            class="awardedRibbon"></v-img>
+
+
+							</v-flex>
+						</v-layout>
+                      
+                    </v-card-title>
+
+
                     <v-card-text>
 						
 						<div v-if="bidItem.active == 0">
@@ -130,12 +310,6 @@
 						 
                     
                         <v-layout row wrap pa-2>
-                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-							
-							<v-flex xs12 pt-1 pl-2>
-								<h3>BID #{{ bidItem.id }}</h3>
-							</v-flex>
 
                             <v-flex xs12 v-if="bidItem.attachments.length">
                                     <image-gallery-small :images="bidItem.attachments" noThumbnails height="120px"></image-gallery-small> 
@@ -171,10 +345,6 @@
 
 	                                    <h5 class="font-weight-thin">Product name</h5>
 	                                    <h2>{{ bidItem.product_name }}</h2>
-
-	                                    <v-img v-if="bidItem.awarded" src="/static/images/award.png" class="awarded">
-	                                    </v-img>
-
 	                                </v-flex>
 
 	                                <v-flex xs6>
@@ -191,12 +361,12 @@
 
 	                                        <v-flex xs4 pa-2>
 	                                            <h5 class="font-weight-thin">Unit Price</h5>
-	                                            <h3>${{ bidItem.price }}</h3>
+	                                            <h3>${{ currency(bidItem.price) }}</h3>
 	                                        </v-flex>
 
 	                                        <v-flex xs4 pa-2>
 	                                            <h5 class="font-weight-thin">Total Price</h5>
-	                                            <h3>${{ bidItem.total_price }}</h3>
+	                                            <h3>${{ currency(bidItem.total_price) }}</h3>
 	                                        </v-flex>
 
 
@@ -207,12 +377,12 @@
 
 			                                <v-flex xs4 pa-2 v-show="bidItem.sample_cost">
 			                                    <h5 class="font-weight-thin">Sample Cost</h5>
-			                                    <h3>${{ bidItem.sample_cost }}</h3>
+			                                    <h3>${{ currency(bidItem.sample_cost) }}</h3>
 			                                </v-flex>
 
 			                                <v-flex xs4 pa-2 v-if="bidItem.sample_shipment_cost">
 			                                    <h5 class="font-weight-thin">Sample Shipping Cost</h5>
-			                                    <h3>${{ bidItem.sample_shipment_cost }}</h3>
+			                                    <h3>${{ currency(bidItem.sample_shipment_cost) }}</h3>
 			                                </v-flex>
 
 	                                    </v-layout>
@@ -345,19 +515,33 @@
 
 
 
-                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                         </v-layout>
             
 
                     </v-card-text>
+					<v-divider></v-divider>
 
                     <v-card-actions>
-                        <h5 class="font-weight-light"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at)  }}</h5>
+                        <h5 class="font-weight-light ml-2"> Date Bid: {{ getDateTime('mmm dd, yyyy hh:mm',bidItem.created_at)  }}</h5>
                         <v-spacer></v-spacer>
                     </v-card-actions>
 
                 </v-card>
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+
+
+
+
+
+
+
+
+
             	</template>
 
             </v-card-text>
@@ -372,254 +556,251 @@
 </template>
 
 <script>
-    // import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-    import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+
+import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+import Messaging from "@/views/Components/App/MessagingBox"
+
+import helpers from "@/mixins/helpers";
+import inqEvntBs from "@/bus/inquiry"
+
+import config from "@/config/main"
+
+import { required, email, maxLength } from 'vuelidate/lib/validators'
+import validationMixin from '@/mixins/validationMixin'
+
+export default {
+
+    mixins: [
+        helpers,
+		validationMixin,
+    ],
+
+    components: {
+        ImageGallerySmall,
+        Messaging,
+    },
 
 
-    // import MessageBox from '@/views/Components/App/Admin/MessageDialog'
+    props: [
+    	'inquiry', 
+    	'isClosed',
+    ],
 
-    // import CommentBox from "@/views/Components/App/CommentBox"
-    import Messaging from "@/views/Components/App/MessagingBox"
-
-    import helpers from "@/mixins/helpers";
-    import inqEvntBs from "@/bus/inquiry"
-
-    import config from "@/config/main"
-    import VueTimers from 'vue-timers/mixin'
-
-    export default {
-
-        mixins: [
-
-            helpers,
-            VueTimers,
-
-        ],
-
-        components: {
-
-            ImageGallerySmall,
-            Messaging,
-            // MessageBox
-
+    timers: [{
+        name: 'InquiryTableTimer',
+        time: config.polling.inquiryTable.time,
+        repeat: true,
+        autostart: false,
+        callback: function() {
+            this.fillBidTable();
         },
+    }],
 
-        // timers: [     
-        //        { 
-        //            name: 'InquiryTableTimer',
-        //            time: config.polling.inquiryTable.time, 
-        //            repeat: true,
-        //            autostart: true,
-        //            callback: function(){
-        //                this.fillBidTable();
-        //            },
-        //        }
-        //    ],
 
-        props: ['inquiry', 'isClosed'],
+    data() {return {
 
-        timers: [{
-            name: 'InquiryTableTimer',
-            time: config.polling.inquiryTable.time,
-            repeat: true,
-            autostart: false,
-            callback: function() {
+        openAwardDialog: false,
+        bidItems: [],
+        hasBid: true,
+        bidToAward: null,
+        bidinquiry: null,
+        has_awarded: true,
+        commentData: [],
+        openMessageDialog: false,
+        bidImages:[],
+
+        showSpplrMsgs: false,
+
+		calendar_menu1: false,
+		calendar_menu2: false,
+		calendar_menu3: false,
+
+		formData: {
+			eta:null,
+			etd:null,
+			shipping_date:null,
+			shipping_cost:null,
+		},
+
+    }},
+
+	validations: {
+		formData: {
+		  shipping_date: { required },
+		  shipping_cost: { required },
+		  eta: { required },
+		  etd: { required }
+		}
+	},
+
+
+	validationMessages: {
+		formData: {
+			shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
+			shipping_cost: { required: 'Please Include your Shipping Cost. ' },
+			eta: { required: "Please specify your Estimated Time of Arrival." },
+			etd: { required: "Please specify your Estimated Time of Delivery." },
+		}
+	},	
+
+    watch: {
+        inquiry: {
+            handler(nVal, oVal) {
                 this.fillBidTable();
             },
-        }],
+            deep: true,
+        }
+    },
 
-        data() {
+    computed: {
 
-            return {
+        // sortArray: function() {
+        //  if(a.name < b.name) {
+        //      return < b
+        //  }
+        // }
 
-                openAwardDialog: false,
-                bidItems: [],
-                hasBid: true,
-                bidToAward: null,
-                bidinquiry: null,
-                has_awarded: true,
-                commentData: [],
-                openMessageDialog: false,
-                bidImages:[],
-
-                showSpplrMsgs: false,
-
-            }
-
+        minDate(){
+        	return new Date().toISOString().substr(0, 10);
         },
 
-        watch: {
+    },
 
-            inquiry: {
+    methods: {
 
-                handler(nVal, oVal) {
+        fillBidTable() {
 
-                        this.fillBidTable();
-
-                    },
-
-                    deep: true,
-
-            }
-
-        },
-
-        computed: {
-
-            // sortArray: function() {
-            //  if(a.name < b.name) {
-            //      return < b
-            //  }
-            // }
-
-        },
-
-        methods: {
-
-            fillBidTable() {
-
-                    this.$store.dispatch('admnInq/getAllInquiryBids_a', {
-                        inq_id: this.inquiry.id
-                    })
-                    .then(response => {
-
+                this.$store.dispatch('admnInq/getAllInquiryBids_a', {
+                    inq_id: this.inquiry.id
+                })
+                .then(response => {
+					this.$nextTick(() => {
                         this.bidItems = response.map(bidItem=>({
                         	...bidItem,
                         	showSpplrMsgs: false,
                         	showByrMsgs: false,
+					   		showBid:false,
                         }));
 
-                        // console.log(this.bidItems);
-
                         this.bidItems.sort((a, b) => {
-                            // return b.total_price - a.total_price;
                             return a.total_price - b.total_price;
-
                         });
+					});
+                })
 
-                        // console.log(this.inquiry.id);
+            },
 
-                    })
+            approvedInquiry(inquiry_id) {
 
-                },
-
-                approvedInquiry(inquiry_id) {
-
-                    this.$store.dispatch('admnInq/approvedInquiry_a', {
-                            inquiry_id: inquiry_id
-                        })
-                        .then((response) => {
-
-                            // create a event bus 
-                            // this.$emit('update:isClosed', true);
-                              this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-
-                            inqEvntBs.emitApproved();
-
-                        })
-                        .catch((e) => {
-                              console.log(e);
-                              // this.$emit('update:isClosed', true);
-                              this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-                        })
-                        .finally(() => {
-                            // this.$emit('update:isClosed', true);
-                              this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-
-                        });
-
-                },
-
-                rejectInquiry(inquiry_id) {
-
-                    // console.log('--------------tae-----------------')
-                    // this.openMessageDialog = true
-                    // console.log('--------------tae-----------------')
-
-                    console.log(inquiry_id);
-
-                    this.$store.dispatch('admnInq/declinedInquiry_a', {
-                            inquiry_id: inquiry_id
-                        })
-                        .then((response) => {
-                            // create a event bus 
-                            this.openMessageDialog = true
-                                // this.$emit('update:isClosed', true);
-                            inqEvntBs.emitApproved();
-
-                        })
-                        .catch((e) => {
-                            this.$emit('update:isClosed', true);
-                            console.log(e);
-                        })
-                        .finally(() => {
-
-                        });
-
-                },
-
-
-                approvedBid(bidItem) {
-
-                	this.$store.dispatch('admnInq/approvedBid_a', {
-                        inquiry_id: this.inquiry.id,
-                        bid_id: bidItem.id
+                this.$store.dispatch('admnInq/approvedInquiry_a', {
+                        inquiry_id: inquiry_id
                     })
                     .then((response) => {
-                    	bidItem.active = 1
+
+                        // create a event bus 
+                        // this.$emit('update:isClosed', true);
+                          this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+
+                        inqEvntBs.emitApproved();
+
                     })
                     .catch((e) => {
+                          console.log(e);
+                          // this.$emit('update:isClosed', true);
+                          this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+                    })
+                    .finally(() => {
+                        // this.$emit('update:isClosed', true);
+                          this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+
+                    });
+
+            },
+
+            rejectInquiry(inquiry_id) {
+
+                // console.log('--------------tae-----------------')
+                // this.openMessageDialog = true
+                // console.log('--------------tae-----------------')
+
+                console.log(inquiry_id);
+
+                this.$store.dispatch('admnInq/declinedInquiry_a', {
+                        inquiry_id: inquiry_id
+                    })
+                    .then((response) => {
+                        // create a event bus 
+                        this.openMessageDialog = true
+                            // this.$emit('update:isClosed', true);
+                        inqEvntBs.emitApproved();
+
+                    })
+                    .catch((e) => {
+                        this.$emit('update:isClosed', true);
                         console.log(e);
                     })
                     .finally(() => {
 
                     });
 
-                },
+            },
 
-                // for the blurring
-                checkIfawarded: function(awarded, btn) {
 
-                    let is_awarded = false;
+            approvedBid(bidItem) {
 
-                    // console.log(this.inquiry)
+            	this.$store.dispatch('admnInq/approvedBid_a', {
+                    inquiry_id: this.inquiry.id,
+                    bid_id: bidItem.id
+                })
+                .then((response) => {
+                	bidItem.active = 1
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+                .finally(() => {
 
-                    if (this.inquiry.awarded == 1) {
+                });
 
-                        if (awarded == 1) {
-                            is_awarded = true;
-                        }
+            },
 
-                    } else {
-
-                        // trick here if its not awarded yet i will set it to true
+            // for the blurring
+            checkIfAwarded: function(bidItem) {
+            	var awarded = bidItem.awarded;
+                let is_awarded = false;
+                // console.log(this.inquiry)
+                if (this.inquiry.awarded == 1) {
+                    if (awarded == 1) {
                         is_awarded = true;
-
                     }
+                } else {
+                    // trick here if its not awarded yet i will set it to true
+                    is_awarded = true;
+                }
 
-                    return is_awarded;
-                },
+                return is_awarded;
+            },
 
 
-                sortImage: function(attachments) {
-                	console.log(attachments);
-                },
+            sortImage: function(attachments) {
+            	console.log(attachments);
+            },
 
-        },
+    },
 
-        created() {
+    created() {
 
-            // console.log(this.inquiry)
+        // console.log(this.inquiry)
 
+        this.fillBidTable();
+        inqEvntBs.onBidAwarded(() => {
             this.fillBidTable();
-            inqEvntBs.$on('award-bid-form-submitted', () => {
-                this.fillBidTable();
-                this.inquiry.awarded = 1
-            });
+            this.inquiry.awarded = 1
+        });
 
-        },
+    },
 
-    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -638,24 +819,36 @@
     min-height: 400px;
 }
 
-.awarded {
+.awardedRibbon {
     position: absolute;
     height: 50px;
     width: 50px;
-    top: 2px;
+    top: 5px;
     right: 0px;
-}
-
-.is_blur {
-    opacity: 0.3;
-    filter: alpha(opacity=70);
-    /* For IE8 and earlier */
 }
 
 .is_selected {
     opacity: 1;
-    filter: alpha(opacity=70);
-    /* For IE8 and earlier */
+    border: 5px solid black;
+}
+
+
+.not_awarded {
+	.v-card__text {
+		display: none;
+	}
+}
+.not_awarded.showBid {
+	.v-card__text {
+		display: block;
+	}
+}
+
+
+.showBidBtn {
+    position: absolute;
+    top: 0;
+    right: 0;	
 }
 
 // transition

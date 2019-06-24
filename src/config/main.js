@@ -1,5 +1,5 @@
-// const appUrl = 'http://192.168.1.200:8000';
-const appUrl = 'http://almani.ddns.net:18000';
+const appUrl = 'http://192.168.1.200:8000';
+// const appUrl = 'http://almani.ddns.net:18000';
 
 
 export default {
@@ -24,10 +24,6 @@ export default {
 		{
 			id: 2,
 			name: "SEA",
-		},
-		{
-			id: 3,
-			name: "Buyer handles shipment",
 		},
 	],
 
@@ -63,6 +59,14 @@ export default {
 				class: "teal",
 				icon: "fas fa-handshake",
 			},
+
+			{
+				id: 10041, 
+				name: "BAL Confirmation",
+				class: "purple",
+				icon: "fas fa-handshake",
+			},
+
 			{
 				id: 1005, 
 				name: "Pending Payment",
@@ -154,7 +158,7 @@ export default {
 
 	polling: {
 		bidTable:{
-			time: 5000,			
+			time: 5000,
 		},
 		inquiryTable: {
 			time: 10000,

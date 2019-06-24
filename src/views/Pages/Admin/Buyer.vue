@@ -14,7 +14,7 @@
 
 <script>
 	
-	import BuyerTable from '@/views/components/app/Admin/BuyerTable'
+	import BuyerTable from '@/views/Components/app/Admin/BuyerTable'
 
 	export default {
 

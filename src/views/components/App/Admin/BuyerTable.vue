@@ -63,7 +63,7 @@
 <script>
 import adminBuyerBus from "@/bus/admin-buyer"
 import helpers from "@/mixins/helpers"
-import BuyerDialog from '@/views/components/app/Admin/BuyerDialog'
+import BuyerDialog from '@/views/Components/app/Admin/BuyerDialog'
 
 
 import config from "@/config/main"

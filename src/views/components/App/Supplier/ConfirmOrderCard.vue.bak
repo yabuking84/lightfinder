@@ -1,0 +1,247 @@
+<template>
+
+	<v-card class="pa-3">
+ 
+				<v-alert
+			  	:value="true"
+			  	color="deep-orange"
+			  	icon="new_releases">
+				  Upon Confirming, Please make sure to include your Estimated Production Date as well as the shipment cost.
+				  
+			</v-alert>
+
+				<v-layout row wrap>
+
+					<v-flex xs4>
+						<h5 class="font-weight-thin">Shipping Method</h5>
+							<v-text-field 
+							  :value="shipping_methods.filter(obj=>obj.id==inquiry.shipping_method_id)[0].name + ' Freight' "
+							  placeholder=""
+							  readonly>
+							</v-text-field>
+					</v-flex>
+
+					<v-flex xs4>
+						<h5 class="font-weight-thin">Estimated Production Date</h5>
+						<h4 class="font-weight-bold">
+					   
+						<v-menu
+						v-model="calendar_menu1" 
+						:close-on-content-click="false" 
+						:nudge-right="40" 
+						lazy 
+						transition="scale-transition"
+						offset-y full-width min-width="290px" class="">
+							  <v-text-field   
+							   v-model="formData.shipping_date" 
+							  :error-messages="fieldErrors('formData.shipping_date')" 
+							  @blur="$v.formData.shipping_date.$touch()"
+							  slot="activator" 
+							  label="Preferred Production Date" 
+							  prepend-icon="event" 
+							  readonly></v-text-field>
+							  <v-date-picker 
+							  v-model="formData.shipping_date" 
+							  header-color="black" 
+							  :min="minDate"
+							   @input="calendar_menu1 = false">
+							  </v-date-picker>
+						</v-menu>
+
+
+					  </h4>
+					</v-flex>
+
+					<v-flex xs4>
+						<h5 class="font-weight-thin">Shipment Cost</h5>
+						<h4 class="font-weight-bold">
+			  
+						  <v-text-field 
+						  prefix="$"
+						  placeholder=""
+						  suffix="USD"
+						  :error-messages="fieldErrors('formData.shipping_cost')" 
+						  @blur="$v.formData.shipping_cost.$touch()" 
+						  v-model="formData.shipping_cost">
+						  </v-text-field>
+				 
+					  </h4>
+					</v-flex>
+
+
+
+
+					 <v-flex xs6>
+						<h5 class="font-weight-thin">Estimated Time of  Delivery</h5>
+						<h4 class="font-weight-bold">
+						<!-- <h2 class="mb-0">                  
+						{{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+					  </h2> -->
+					   
+						<v-menu 
+						v-model="calendar_menu2" 
+						:close-on-content-click="false" 
+						:nudge-right="40" 
+						lazy 
+						transition="scale-transition"
+						offset-y full-width min-width="290px" class="">
+							  <v-text-field   
+							   v-model="formData.etd" 
+							  :error-messages="fieldErrors('formData.etd')" 
+							  @blur="$v.formData.etd.$touch()"
+							  slot="activator" 
+							  label="Estimated Time of Delivery" 
+							  prepend-icon="event" 
+							  readonly></v-text-field>
+							  <v-date-picker 
+							  v-model="formData.etd" 
+							  header-color="black" 
+							  :min="minDate"
+							   @input="calendar_menu2 = false">
+							  </v-date-picker>
+						</v-menu>
+					  </h4>
+					</v-flex>
+
+				  
+					<v-flex xs6>
+						<h5 class="font-weight-thin">Estimated Time of Arrival</h5>
+						<h4 class="font-weight-bold">
+						<!-- <h2 class="mb-0">                  
+						{{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
+					  </h2> -->
+					   
+
+						<v-menu 
+						v-model="calendar_menu3" 
+						:close-on-content-click="false" 
+						:nudge-right="40" 
+						lazy 
+						transition="scale-transition"
+						offset-y full-width min-width="290px" class="">
+							  <v-text-field   
+							   v-model="formData.eta" 
+							  :error-messages="fieldErrors('formData.eta')" 
+							  @blur="$v.formData.eta.$touch()"
+							  slot="activator" 
+							  label="Estimated Time of Arrival" 
+							  prepend-icon="event" 
+							  readonly></v-text-field>
+							  <v-date-picker 
+							  v-model="formData.eta" 
+							  header-color="black" 
+							  :min="minDate"
+							   @input="calendar_menu3 = false">
+							  </v-date-picker>
+						</v-menu>
+					  </h4>
+					</v-flex>
+
+				 
+
+
+
+
+
+
+				</v-layout>
+		   
+
+			<v-flex xs12>
+				<v-btn @click="confirmQuote()" large block dark color="green">
+					Confirm Order &nbsp
+					<!-- <i class="fas fa-thumbs-up"></i>  -->
+				</v-btn>
+			</v-flex>
+	</v-card>	
+</template>
+
+
+<script>
+import { required, email, maxLength } from 'vuelidate/lib/validators'
+import validationMixin from '@/mixins/validationMixin'
+import config from "@/config/main";
+
+export default {
+
+	props:[
+		'inquiry',
+	],
+	mixins: [
+		validationMixin
+	],
+
+	data(){return{
+
+		shipping_methods: config.shipping_methods,
+
+		calendar_menu1: false,
+		calendar_menu2: false,
+		calendar_menu3: false,
+
+		formData: {
+
+			eta:null,
+			etd:null,
+			shipping_date:null,
+			shipping_cost:null,
+			confirm: 1,
+
+		},
+
+	}},
+
+	validations: {
+
+		formData: {
+
+		  shipping_date: { required },
+		  shipping_cost: { required },
+		  eta: { required },
+		  etd: { required }
+
+		}
+
+	},
+
+	validationMessages: {
+
+		formData: {
+			shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
+			shipping_cost: { required: 'Please Include your Shipping Cost. ' },
+			eta: { required: "Please specify your Estimated Time of Arrival." },
+			etd: { required: "Please specify your Estimated Time of Delivery." },
+		}
+
+	},	
+
+	methods:{
+
+		confirmQuote() {
+			// console.log("confirm");
+
+
+		  if (this.$v.$invalid) {
+
+			this.$v.$touch()
+
+		  } else {
+
+			 this.$store.dispatch('spplrInq/confirmAward_a', {
+					inq_id: this.inquiry.id,
+					formData: this.formData,
+				})
+				.catch(error => {
+					console.log(error);
+				});
+
+				// this.$emit('update:openInquiry', false)
+				this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+				
+		  }
+
+		},
+
+	},
+};
+</script>

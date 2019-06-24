@@ -45,7 +45,7 @@
 <script>
 
   
-  import BuyerFormDetailsComponent from '@/views/components/App/Buyer/BuyerFormDetails'
+  import BuyerFormDetailsComponent from '@/views/Components/App/Buyer/BuyerFormDetails'
 
   export default {
 

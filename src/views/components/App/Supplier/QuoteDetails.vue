@@ -32,6 +32,8 @@
 
 			<v-spacer></v-spacer>
 
+			<!-- edit quote -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2">
 
 					<v-btn v-if="hasBid && !inquiry.awarded" @click="openEditQuote()" class="font-weight-light" color="light-blue lighten-1" dark small >
@@ -43,6 +45,8 @@
 					</v-btn>
 
 			</v-toolbar-title>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- edit quote -->
 
 		</v-toolbar>
 
@@ -53,191 +57,68 @@
 
 			<v-container fluid grid-list-md>
 				<v-layout row wrap>
-					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-
-
-
-						<!-- new -->
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						  	<template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
-									   <v-flex xs12>
-
-								<v-card class="pa-3">
-
-											<v-alert
-											  :value="true"
-											  color="deep-orange"
-											  icon="new_releases"
-											>
-											  Upon Confirming, Please make sure to include your Estimated Production Date as well as the shipment cost.
-											  
-										</v-alert>
-
-											<v-layout row wrap>
-
-												<v-flex xs4>
-													<h5 class="font-weight-thin">Shipping Method</h5>
-														<v-text-field 
-														  :value="shipping_methods.filter(obj=>obj.id==inquiry.shipping_method_id)[0].name + ' Freight' "
-														  placeholder=""
-														  readonly>
-														</v-text-field>
-												</v-flex>
-
-												<v-flex xs4>
-													<h5 class="font-weight-thin">Estimated Production Date</h5>
-													<h4 class="font-weight-bold">
-												   
-													<v-menu 
-
-													v-model="calendar_menu1" 
-													:close-on-content-click="false" 
-													:nudge-right="40" 
-													lazy 
-													transition="scale-transition"
-													offset-y full-width min-width="290px" class="">
-														  <v-text-field   
-														   v-model="formData.shipping_date" 
-														  :error-messages="fieldErrors('formData.shipping_date')" 
-														  @blur="$v.formData.shipping_date.$touch()"
-														  slot="activator" 
-														  label="Preferred Production Date" 
-														  prepend-icon="event" 
-														  readonly></v-text-field>
-														  <v-date-picker 
-														  v-model="formData.shipping_date" 
-														  header-color="black" 
-														  :min="minDate"
-														   @input="calendar_menu1 = false">
-														  </v-date-picker>
-													</v-menu>
-
-
-												  </h4>
-												</v-flex>
-
-												<v-flex xs4>
-													<h5 class="font-weight-thin">Shipment Cost</h5>
-													<h4 class="font-weight-bold">
-										  
-													  <v-text-field 
-													  prefix="$"
-													  placeholder=""
-													  suffix="USD"
-													  :error-messages="fieldErrors('formData.shipping_cost')" 
-													  @blur="$v.formData.shipping_cost.$touch()" 
-													  v-model="formData.shipping_cost">
-													  </v-text-field>
-											 
-												  </h4>
-												</v-flex>
-
-
-
-
-												 <v-flex xs6>
-													<h5 class="font-weight-thin">Estimated Time of  Delivery</h5>
-													<h4 class="font-weight-bold">
-													<!-- <h2 class="mb-0">                  
-													{{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
-												  </h2> -->
-												   
-													<v-menu 
-													v-model="calendar_menu2" 
-													:close-on-content-click="false" 
-													:nudge-right="40" 
-													lazy 
-													transition="scale-transition"
-													offset-y full-width min-width="290px" class="">
-														  <v-text-field   
-														   v-model="formData.etd" 
-														  :error-messages="fieldErrors('formData.etd')" 
-														  @blur="$v.formData.etd.$touch()"
-														  slot="activator" 
-														  label="Estimated Time of Delivery" 
-														  prepend-icon="event" 
-														  readonly></v-text-field>
-														  <v-date-picker 
-														  v-model="formData.etd" 
-														  header-color="black" 
-														  :min="minDate"
-														   @input="calendar_menu2 = false">
-														  </v-date-picker>
-													</v-menu>
-												  </h4>
-												</v-flex>
-
-											  
-												<v-flex xs6>
-													<h5 class="font-weight-thin">Estimated Time of Arrival</h5>
-													<h4 class="font-weight-bold">
-													<!-- <h2 class="mb-0">                  
-													{{ getDateTime('mmm dd, yyyy',inquiry.desired_shipping_date) }}
-												  </h2> -->
-												   
-
-													<v-menu 
-													v-model="calendar_menu3" 
-													:close-on-content-click="false" 
-													:nudge-right="40" 
-													lazy 
-													transition="scale-transition"
-													offset-y full-width min-width="290px" class="">
-														  <v-text-field   
-														   v-model="formData.eta" 
-														  :error-messages="fieldErrors('formData.eta')" 
-														  @blur="$v.formData.eta.$touch()"
-														  slot="activator" 
-														  label="Estimated Time of Arrival" 
-														  prepend-icon="event" 
-														  readonly></v-text-field>
-														  <v-date-picker 
-														  v-model="formData.eta" 
-														  header-color="black" 
-														  :min="minDate"
-														   @input="calendar_menu3 = false">
-														  </v-date-picker>
-													</v-menu>
-												  </h4>
-												</v-flex>
-
-											 
 
 
 
 
 
 
-											</v-layout>
-									   
-
-										<v-flex xs12>
-											<v-btn @click="confirmQuote()" large block dark color="green">
-												Confirm Order &nbsp
-												<!-- <i class="fas fa-thumbs-up"></i>  -->
-											</v-btn>
-										</v-flex>
-								</v-card>
-								</v-flex>  
-								  
-									<!-- <v-flex xs6>
-									   <v-btn 
-											@click=""
-											block 
-											class="red darken-2 font-weight-light ">
-											<i class="fas fa-thumbs-down white--text"></i>
-											<span class="ml-1 white--text font-weight-light ">Deny</span>
-										</v-btn>
-									</v-flex> -->
-						  </template>
-
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						<!-- new -->
 
 
+
+
+
+
+
+
+
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					
+					<!-- new -->
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					 <template v-if="inquiry.awarded && inquiry.awarded_to_me && inquiry.stage_id==1004">
+						<v-flex xs12>
+							<confirm-order-card 
+							:inquiry="inquiry">
+							</confirm-order-card>
+						</v-flex>  
+						  
+							<!-- <v-flex xs6>
+							   <v-btn 
+									@click=""
+									block 
+									class="red darken-2 font-weight-light ">
+									<i class="fas fa-thumbs-down white--text"></i>
+									<span class="ml-1 white--text font-weight-light ">Deny</span>
+								</v-btn>
+							</v-flex> -->
+					 </template>
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<!-- new -->
+
+					<!-- BAL Confirmation -->
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<template v-if="inquiry.stage_id == 10041">
+			            <v-flex xs12 >
+			                <v-layout row wrap>
+			                    <v-flex xs12 pa-0>
+			                    	
+								    <v-alert
+							      	:value="true"
+							      	type="warning">
+								      	<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
+			                            <div class="" style="font-style: italic;">The awarded BID is currently being confirmed by our BuyAnyLight staff.</div>
+								    </v-alert>                        
+			                    </v-flex>
+
+			                </v-layout>
+			            </v-flex>
+					</template>
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<!-- BAL Confirmation -->
+						
 					<template v-if="hasBid">
 
 						<v-flex xs12>
@@ -367,17 +248,19 @@
 					</template>
 
 
-						<!-- new -->
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						<!-- newnewnewnewnewnewnewnewnewnewnewnewnewnewnewnewnew -->
-						<!-- new -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				
 
 
-					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+
+
+
+
+
+
 				</v-layout>
 			</v-container>
 		</v-card>
@@ -391,14 +274,13 @@
 <script>
 
 
-import { required, email, maxLength } from 'vuelidate/lib/validators'
-import validationMixin from '@/mixins/validationMixin'
+
 
 import Messaging from "@/views/Components/App/MessagingBox"
 
-// import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
+import ConfirmOrderCard from "@/views/Components/App/Supplier/ConfirmOrderCard"
+
 import ImageGallerySmall from "@/views/Components/App/ImageGallery"
-import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
 import QuoteDialog from "@/views/Components/App/Supplier/QuoteDialog"
 import inqEvntBs from "@/bus/inquiry";
 import config from "@/config/main";
@@ -407,42 +289,16 @@ export default {
 
 	props: ['inquiry'],
 
-	mixins: [
-
-		validationMixin
-
-	],
-
-	validations: {
-
-		formData: {
-
-		  shipping_date: { required },
-		  shipping_cost: { required },
-		  eta: { required },
-		  etd: { required }
-
-		}
-
-	},
-
-	validationMessages: {
-
-		formData: {
-			shipping_date: { required: 'Please specified your "Estimated Production Date". ' },
-			shipping_cost: { required: 'Please Include your Shipping Cost. ' },
-			eta: { required: "Please specify your Estimated Time of Arrival." },
-			etd: { required: "Please specify your Estimated Time of Delivery." },
-		}
-
-	},
-
 	components: {
-		InquiryDialog,
 		QuoteDialog,
 		Messaging,
 		ImageGallerySmall,
+		ConfirmOrderCard,
 	},
+
+
+
+
 
 	data: () => ({
 
@@ -461,24 +317,9 @@ export default {
 		editQuote: false,
 		commentData: [],
 
-		payment_methods: config.payment_methods,
-		shipping_methods: config.shipping_methods,
-
-		calendar_menu1: false,
-		calendar_menu2: false,
-		calendar_menu3: false,
 
 		minDate: null,
 
-		formData: {
-
-			eta:null,
-			etd:null,
-			shipping_date:null,
-			shipping_cost:null,
-			confirm: 1,
-
-		},
 
 	}),
 
@@ -506,30 +347,6 @@ export default {
 
 			},
 
-			confirmQuote() {
-				// console.log("confirm");
-
-
-			  if (this.$v.$invalid) {
-
-				this.$v.$touch()
-
-			  } else {
-
-				 this.$store.dispatch('spplrInq/confirmAward_a', {
-						inq_id: this.inquiry.id,
-						formData: this.formData,
-					})
-					.catch(error => {
-						console.log(error);
-					});
-
-					// this.$emit('update:openInquiry', false)
-					this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
-					
-			  }
-
-			},
 
 			isFocus(bid_id){
 				return bid_id == this.focus_bid_id;

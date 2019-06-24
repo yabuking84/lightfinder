@@ -1,5 +1,6 @@
 import Vue from 'vue';
-const InquiryEventBus = new Vue({
+// const InquiryEventBus = new Vue({
+export default new Vue({
 
 	data:{
 		inquiry : null,
@@ -9,7 +10,6 @@ const InquiryEventBus = new Vue({
 
 
 		emitFormSubmitted(){
-			
 			this.$emit('inquiry-form-submitted');
 		},
 		onFormSubmitted(func){
@@ -31,6 +31,17 @@ const InquiryEventBus = new Vue({
 
 
 
+
+
+
+
+
+
+
+
+		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 		/* on the buyer award */
 		// emitAwardSubmitted(){
 		// 	this.$emit('award-bid-form-submitted');
@@ -41,12 +52,36 @@ const InquiryEventBus = new Vue({
 		// 	});
 		// },
 
+		/* on the buyer award */
+		emitBidAwarded(){
+			this.$emit('bid-awarded');
+		},
+		onBidAwarded(func) {
+			this.$on('bid-awarded', () => {
+				func();
+			});
+		},
+
+		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+
+
+
+
+
+
 
 		// on admin approved inquiry
 		emitApproved() {
 			this.$emit('approved-submitted');
 		},
-		OnApproved(func) {
+		onApproved(func) {
 			this.$on('approved-submitted', () => {
 				func();
 			});
@@ -78,7 +113,7 @@ const InquiryEventBus = new Vue({
 
 });
 
-export default InquiryEventBus;
+// export default InquiryEventBus;
 
 
 

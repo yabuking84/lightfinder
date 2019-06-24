@@ -7,50 +7,99 @@
 	<v-card 
 	class="pa-3">
 		
-		<!-- <h1 class="font-weight-light subheading">Layout</h1> -->
-  
-	  <!-- <v-divider></v-divider> -->
+
+
 
 		<!-- waiting for verification -->
+		<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 		<v-layout v-if="verified" align-center justify-center row fill-height>
 
-					
-					<v-flex xs12 mx-5 mt-3 mb-3>
-						 <div>
-							<div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-							<div class="blue-grey--text">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
-							</div>
-						</div>  
-					</v-flex>
+			<v-flex xs12 mx-5 mt-3 mb-3>
+				 <div>
+					<div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
+					<div class="blue-grey--text">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+					</div>
+				</div>  
+			</v-flex>
 		</v-layout>
+		<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+		<!-- waiting for verification -->
+
+
+
+
+
+
 		
 		<!-- rejected inquiry -->
+		<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 		<v-layout v-else-if="rejected" align-center justify-center row wrap fill-height>
-			
-				  <v-flex xs12 mx-5 mt-3 mb-3>
-						<div>
-							<div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
-							<div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> has been declined, please refer on the message box if you have concerns. thanks!
-							</div>
-						</div>
 
-					  <v-layout row wrap justify>
-						  <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
-								<span class="font-weight-bold ml-1 white--text">Edit Now</span>
-							</v-btn>
-					  </v-layout>
-				  </v-flex>
+			<v-flex xs12 mx-5 mt-3 mb-3>
+				<div>
+					<div class="headline font-weight-bold red--text darken-3">REJECTED INQUIRY</div>
+					<div class="blue-grey--text">Your INQUIRY <b>#{{ inquiry.id }}</b> has been declined, please refer on the message box if you have concerns. thanks!
+					</div>
+				</div>
 
-				  <v-flex xs12>
-						<messaging 
-						type="inquiry.buyer.admin"
-						:inquiry="inquiry"> </messaging>
-				  </v-flex>
+			  <v-layout row wrap justify>
+				  <v-btn flat block dark large class="red darken-2" @click="EditInquiry()">
+						<span class="font-weight-bold ml-1 white--text">Edit Now</span>
+					</v-btn>
+			  </v-layout>
+			</v-flex>
+
+			<v-flex xs12>
+				<messaging 
+				type="inquiry.buyer.admin"
+				:inquiry="inquiry"> </messaging>
+			</v-flex>
 		</v-layout>
+		<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+		<!-- rejected inquiry -->
 
-		<div v-else>
 
 
+
+
+
+
+
+
+
+
+		<template v-else>
+
+
+
+
+			<!-- BAL Confirmation -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <v-flex xs12 v-if="inquiry.stage_id == 10041">
+                <v-layout row wrap>
+                    <v-flex xs12 pa-0>
+                        <!-- <div class="px-4 py-4" style="border: 1px solid red;">
+                            <div class="headline font-weight-bold red--text darken-3">BAL Confirmation</div>
+                            <div class="blue-grey--text" style="font-style: italic;">The awarded BID is currently being confirmed by BAL staff.
+                            </div>
+                        </div> -->
+
+					    <v-alert
+				      	:value="true"
+				      	type="warning">
+					      	<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
+                            <div class="" style="font-style: italic;">The awarded BID is currently being confirmed by our BuyAnyLight staff.</div>
+					    </v-alert>                        
+                    </v-flex>
+
+                </v-layout>
+            </v-flex>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- BAL Confirmation -->
+
+
+			<!-- if has no Bids or Quotes -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<v-layout align-center justify-center row fill-height v-if="!bidItems.length">
 					<v-flex xs12 mx-5 mt-3 mb-3>
 							<div>
@@ -61,27 +110,46 @@
 						  </div>
 					</v-flex>
 			</v-layout>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- if has no Bids or Quotes -->
 		   
 
 			<!-- color="grey lighten-4"  -->
-			<!-- :class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'is_blur' "  -->
-			<v-card 
-			v-else 
-			class="mb-5 ma-3" 
-			v-for="(bidItem, i) in bidItems" 
+			<!-- :class="checkIfAwarded(bidItem) ? 'is_selected' : 'is_blur' "  -->
+			<template v-else >
+			<template v-for="(bidItem, i) in bidItems">
+			<!-- v-if="checkIfAwarded(bidItem)" -->
+			<v-card
+			class="mb-5 ma-3"
 			:hover="true" 
-			:class="checkIfawarded(bidItem.awarded) ? 'is_selected' : 'not_awarded' " 
-			:key="'bidItem_'+i">
+			:class="{
+				'is_selected': checkIfAwarded(bidItem),
+				'not_awarded': !checkIfAwarded(bidItem),
+				'showBid': bidItem.showBid,
+			}" 
+			:key="'bidItem_'+i+'_'+checkIfAwarded(bidItem)">
 			  
 				<v-card-title >
 					<v-layout row wrap>					
 						<v-flex xs12 pt-2 >
-							<h3>BID #{{ bidItem.id }}</h3>
+							<h3>BID #{{ bidItem.id }}  
+							<!-- === {{ checkIfAwarded(bidItem) }}
+							=== {{ 'bidItem_'+i+'_'+checkIfAwarded(bidItem) }}
+							=== {{ bidItem.showBid }}  -->
+
+							<v-btn icon 
+							v-if="!checkIfAwarded(bidItem)"
+							@click="bidItem.showBid=!bidItem.showBid"
+							class="showBidBtn">
+								<v-icon v-if="!bidItem.showBid">fas fa-eye</v-icon>
+								<v-icon v-if="bidItem.showBid">fas fa-eye-slash</v-icon>
+							</v-btn>
+							</h3>
 
 							<v-img 
 							v-if="bidItem.awarded"
 							src="/static/images/award.png" 
-							class="awarded"></v-img>
+							class="awardedRibbon"></v-img>
 
 						</v-flex>
 					</v-layout>
@@ -262,7 +330,11 @@
 							  <v-layout row wrap>
 								  <v-flex xs6>
 									<template v-if="!inquiry.awarded">                                                
-									  	<v-btn flat block :disabled="(inquiry.awarded)?true:false" large class="green darken-2 " @click="openSample(bidItem)">
+									  	<v-btn 
+									  	flat block large 
+									  	class="green darken-2 " 
+									  	:disabled="(inquiry.awarded)?true:false" 
+									  	@click="openSample(bidItem)">
 										  	<i class="fas fa-lightbulb white--text "></i>
 										  	<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
 									  	</v-btn>
@@ -270,7 +342,11 @@
 								  </v-flex>
 								  <v-flex xs6>
 									<template v-if="!inquiry.awarded">                                                
-									  	<v-btn flat block dark :disabled="(inquiry.awarded)?true:false" large class="blue-grey darken-2" @click="openAwardBid(bidItem)">
+									  	<v-btn 
+									  	flat block dark large 
+									  	:disabled="(inquiry.awarded)?true:false" 
+									  	class="blue-grey darken-2" 
+									  	@click="openAwardBid(bidItem)">
 											<i class="fas fa-award white--text"></i>
 											<span class="font-weight-bold ml-1 white--text">Award</span>
 									  	</v-btn>
@@ -279,7 +355,7 @@
 							  </v-layout>
 							</v-flex>
 
-							<v-flex xs12  v-if="checkIfawarded(bidItem.awarded)">
+							<v-flex xs12>
 								<!-- <v-divider></v-divider> -->
 								<!-- message box -->
 								<messaging
@@ -301,13 +377,15 @@
 					<v-spacer></v-spacer>
 				</v-card-actions>
 			</v-card>
-		</div>
+			</template>
+			</template>
+		</template>
 
 	</v-card>
 
-	<inquiry-create v-if="inquiry" :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="inquiry"> </inquiry-create>    
-	<award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"> </award-dialog>
-	<request-sample-dialog v-if="bidToAward" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"> </request-sample-dialog>
+	<inquiry-create v-if="inquiry" :isEdit.sync="isEdit" :dialog.sync="dialog" :inquiry="inquiry"></inquiry-create>    
+	<award-dialog v-if="bidToAward" :inquiry="inquiry" :openAwardDialog.sync="openAwardDialog" :bid="bidToAward"></award-dialog>
+	<request-sample-dialog v-if="bidToAward" :inquiry="inquiry" :openSampleDialog.sync="openSampleDialog" :bid="bidToAward"></request-sample-dialog>
 
 </div>
 </template>
@@ -326,15 +404,16 @@ import Messaging from "@/views/Components/App/MessagingBox"
 
 import helpers from "@/mixins/helpers"
 import inqEvntBs from "@/bus/inquiry"
+import inqMixin from "@/mixins/inquiry"
 
-import VueTimers from 'vue-timers/mixin'
+// import VueTimers from 'vue-timers/mixin'
 import config from "@/config/main"
 
 export default {
 
   mixins: [
 	helpers,
-	VueTimers,
+	// VueTimers,
   ],
 
   components: {
@@ -353,7 +432,7 @@ export default {
 
 	inquiry: {
 
-	  type: Object
+		type: Object
 
 	},
 
@@ -383,43 +462,40 @@ export default {
 	}),
 
 
-	timers: [{
-		name: 'BidTableTimer',
-		time: config.polling.bidTable.time,
-		immediate: true,
-		repeat: true,
-		autostart: false,
-		callback: function() {
-			console.log("BidTableTimer");
-			this.fillBidTable();
-		},
-	}],
+	// timers: [{
+	// 	name: 'BidTableTimer',
+	// 	time: config.polling.bidTable.time,
+	// 	immediate: true,
+	// 	repeat: true,
+	// 	autostart: false,
+	// 	callback: function() {
+	// 		console.log("BidTableTimer");
+	// 		this.fillBidTable();
+	// 	},
+	// }],
   
 
-  methods: {
+  	methods: {
 
 		fillBidTable() {
 
-			this.checkInquiryStatus();
+			console.log('fillBidTable');
 
+			this.checkInquiryStatus();
 			this.$store.dispatch('byrInq/getAllInquiryBids_a', {
-					inq_id: this.inquiry.id
+				inq_id: this.inquiry.id
 			})
 			.then(response => {
-				
-
-			   this.bidItems = response;
-
-			   // console.log(response);
-
-			   // console.log('============================================')
-			   // console.log(this.bidItems);
-			   // console.log('============================================')
-
-			   this.bidItems.sort((a, b) => {
-						// return b.total_price - a.total_price;
-				return a.total_price - b.total_price;
-
+				this.$nextTick(() => {
+				   	this.bidItems = response.map(function(bid){
+				   		return {
+				   			...bid,
+				   			showBid:false,
+				   		}
+				   	});
+				   	this.bidItems.sort((a, b) => {
+						return a.total_price - b.total_price;
+					});
 				});
 
 			})
@@ -430,6 +506,7 @@ export default {
 
 		openAwardBid(bid) {
 
+			// console.log("openAwardBid bid",bid);
 			this.bidToAward = bid;
 			this.openAwardDialog = true;
 		},
@@ -441,27 +518,31 @@ export default {
 		},
 
 		// for the blurring
-		checkIfawarded: function(awarded) {
+		checkIfAwarded(bid) {
 
 			let is_awarded = false;
 
-			// console.log(typeof awarded);
-			// console.log(typeof this.inquiry.awarded)
+			// console.log("xxxxxxxxxxxxxxxxxxxxxx");
+			// console.log("bid.id",bid.id);
+			// console.log("inq.awarded",this.inquiry.awarded);
+			// console.log("bid.awarded",bid.awarded);
 			if (this.inquiry.awarded == 1) {
-				if (awarded == 1)
+				if (bid.awarded == 1)
 				is_awarded = true;
 			} else {
 				// trick here if its not awarded yet i will set it to true
 				is_awarded = true;
 			}
 
+			// console.log("is_awarded",is_awarded);
+			// console.log("xxxxxxxxxxxxxxxxxxxxxx");
 			return is_awarded;
 		},
 
 		EditInquiry() {
 
-			 this.dialog=true 
-			 this.isEdit=true
+			this.dialog=true
+			this.isEdit=true
 
 		},
 
@@ -480,15 +561,18 @@ export default {
 			return bid_id == this.focus_bid_id;
 		},
 
-
+		showBid(bid) {
+			bid.showBid = !bid.showBid;
+		}
 	},
+
+
 
 	created() {        
 		
 		this.fillBidTable();
-		inqEvntBs.$on('award-bid-form-submitted', () => {
+		inqEvntBs.onBidAwarded(() => {
 			this.fillBidTable();
-			$emit('update:inquiry.awarded', 1)
 		});
 		
 	},
@@ -499,27 +583,6 @@ export default {
 				this.fillBidTable();
 			},
 			deep: true,
-		},
-	},
-
-
-	sockets:{
-
-		supplierCreatedBid(){            
-			console.log('Buyer InquiryPostList = supplierCreatedQuote');
-			this.fillBidTable();
-		},
-		supplierModifiedBid(){
-			console.log('Buyer InquiryPostList = supplierModifiedBid');
-			this.fillBidTable();
-		},
-		adminApprovedInquiry(){
-			console.log('Buyer InquiryPostList = adminApprovedInquiry');
-			this.fillBidTable();            
-		},
-		buyerAwardedBid: function (data) {
-			console.log('Buyer InquiryPostList = buyerAwardedQuote')
-			this.fillBidTable();
 		},
 	},
 
@@ -554,40 +617,35 @@ export default {
   min-height: 400px;
 }
 
-.awarded {
-
-  // position: absolute;
-  // height: 50px;
-  // width: 50px;
-  // top:10px;
-  // right: 5px;
-  // font-size: 50px;
-
+.awardedRibbon {
   position: absolute;
   height: 50px;
   width: 50px;
-  top: 0px;
+  top: 5px;
   right: 1px;
   font-size: 30px;
-
-}
-
-.is_blur {
-  opacity: 0.3;
-  filter: alpha(opacity=70);
-  /* For IE8 and earlier */
 }
 
 .is_selected {
-  opacity: 1;
-  filter: alpha(opacity=70);
-  /* For IE8 and earlier */
+    opacity: 1;
+    border: 5px solid black;
 }
 
 .not_awarded {
 	.v-card__text {
 		display: none;
 	}
+}
+.not_awarded.showBid {
+	.v-card__text {
+		display: block;
+	}
+}
+
+.showBidBtn {
+    position: absolute;
+    top: 0;
+    right: 0;	
 }
 
 </style>

@@ -1,14 +1,15 @@
 <template>
 <div>
-	
+
 	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
 	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
 	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
 
 		<v-container fluid grid-list-xl>
+
 			<v-layout row wrap>
 		        <v-flex xs12>
-		             <bar-cards> </bar-cards>
+		            <bar-cards></bar-cards>
 		        </v-flex>
 			</v-layout>
 
@@ -43,11 +44,11 @@
 <script>
 
 
-import BarCards from '@/views/components/App/Buyer/BarCards'
-import InquiriesTableGrid from '@/views/components/App/Buyer/InquiriesTableGrid'
-import PendingPayments from '@/views/components/App/Buyer/PendingPayments'
-import SampleOrderTableGrid from '@/views/components/App/Buyer/SampleOrderTableGrid'
-import ConfirmedOrders from '@/views/components/App/Buyer/ConfirmedOrders'
+import BarCards from '@/views/Components/App/Buyer/BarCards'
+import InquiriesTableGrid from '@/views/Components/App/InquiriesTableGrid'
+import PendingPayments from '@/views/Components/App/Buyer/PendingPayments'
+import SampleOrderTableGrid from '@/views/Components/App/Buyer/SampleOrderTableGrid'
+import ConfirmedOrders from '@/views/Components/App/Buyer/ConfirmedOrders'
 
 export default {
 	

@@ -14,7 +14,7 @@
 
 <script>
 	
-	import SupplierTable from '@/views/components/app/Admin/SupplierTable'
+	import SupplierTable from '@/views/Components/app/Admin/SupplierTable'
 
 	export default {
 

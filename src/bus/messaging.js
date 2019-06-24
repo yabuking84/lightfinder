@@ -1,5 +1,5 @@
 import Vue from 'vue';
-const MessagingEventBus = new Vue({
+export default new Vue({
 
 	data:{
 
@@ -20,7 +20,6 @@ const MessagingEventBus = new Vue({
 
 });
 
-export default MessagingEventBus;
 
 
 

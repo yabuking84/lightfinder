@@ -127,6 +127,12 @@ methods: {
 		return this.numberWithCommas(arg.toFixed(decimals));
 	},
 
+	decimals(arg,decimals=2){
+		// return ceil(arg,2).toFixed(2)
+		// return this.numberWithCommas(arg.toFixed(2));
+		return arg.toFixed(decimals);
+	},
+
 
 	numberWithCommas(x) {
 	    var parts = x.toString().split(".");

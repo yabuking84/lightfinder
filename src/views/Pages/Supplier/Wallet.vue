@@ -22,7 +22,7 @@
 
 <script>
 import BarCard from '@/views/Components/App/BarCard'
-import AwardedInquiries from '@/views/components/App/Supplier/InquiriesTableAwarded'
+import AwardedInquiries from '@/views/Components/App/Supplier/InquiriesTableAwarded'
 
 export default {
 

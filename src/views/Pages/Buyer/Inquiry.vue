@@ -23,7 +23,6 @@
 
 		  	<v-layout row wrap>
 				<v-flex>
-						<inquiries-grid> </inquiries-grid>
 				</v-flex>
 			</v-layout>
 
@@ -56,14 +55,12 @@
 <script>
 
 
-import InquiriesGrid from "@/views/Components/App/Buyer/InquiriesGrid";
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
 export default {
 
 	components: {
 
-	    InquiriesGrid,
 	    InquiryCreate,
 
 	},

@@ -4,7 +4,7 @@
 
 		  	<v-layout row wrap>
 				<v-flex>
-			  		<inquiries-grid></inquiries-grid>
+			  		<inquiries-table-grid></inquiries-table-grid>
 				</v-flex>
 		  	</v-layout>
 
@@ -17,17 +17,16 @@
 
 
 
-import InquiriesGrid from "@/views/Components/App/Supplier/InquiriesGrid"
+import InquiriesTableGrid from "@/views/Components/App/InquiriesTableGrid"
 
 // import OpenInquiry from '@/views/'
 export default {
 
 	components: {
-		InquiriesGrid,
+		InquiriesTableGrid,
 	},
 
 	data: () => ({
-		component: InquiriesGrid,
 		isConnected: false,
 		
 		messages: "",

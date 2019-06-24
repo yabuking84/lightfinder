@@ -8,10 +8,11 @@
 		             <bar-cards> </bar-cards>
 		        </v-flex>
 
-				<v-flex xs12 md3>
+				<v-flex xs12>
+					<inquiries-table-grid gridItemClass="xs6"></inquiries-table-grid>
 			    </v-flex>
 
-	            <v-flex xs12 md9>
+	            <v-flex xs12>
 	            </v-flex>
 
 			</v-layout>
@@ -22,7 +23,8 @@
 </template>
 
 <script>
-import BarCards from '@/views/components/App/Admin/BarCards'
+import BarCards from '@/views/Components/App/Admin/BarCards'
+import InquiriesTableGrid from '@/views/Components/App/InquiriesTableGrid'
 
 export default {
 	
@@ -32,6 +34,7 @@ export default {
 
 	components: {
 	    BarCards,
+	    InquiriesTableGrid,
 	},
 
 	computed: {

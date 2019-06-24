@@ -31,9 +31,10 @@
 							<td class="text-xs-right pa-0">
 
 								<v-btn 
-								@click="viewInquiry(sp.item.data.id)"
+								@click="viewInquiry(sp.item)"
 								color="green" 
 								title="Pay"
+								:loading="sp.item.loading"
 								class="white--text">
 									<v-icon>fas fa-money-check-alt</v-icon> &nbsp; Pay
 								</v-btn>
@@ -78,7 +79,7 @@ mixins: [
 ],
 
 data() { return {
-	  headers: [
+	headers: [
 		{
 			text: 'Inquiry #',
 			align: 'left',
@@ -93,9 +94,10 @@ data() { return {
 			text: '', 
 			align: 'center' ,
 			value: 'action', 
-		}
-	  ],
-	  inquiries : [],
+		},
+	],
+	inquiries : [],
+
 }},
 
 methods: {
@@ -123,6 +125,7 @@ methods: {
 					isRead: true,
 					textSnackbar: null,
 					title: null,
+					loading: false,
 				}				
 			});
 
@@ -134,20 +137,18 @@ methods: {
 		})
 		.catch((e) => {
 			console.log('Error: ' + e);
-			this.loading = false;
-		})
-		.finally(() => {
-			this.loading = false;
 		});
 	},
     
-	viewInquiry(inq_id) {
-		this.showInquiry(inq_id)
+
+
+	viewInquiry(arg) {
+		arg.loading = true;
+		this.showInquiry(arg.data.id)
 		.then((data)=>{
-
+			arg.loading = false;
 		});
-
-	},		
+	},
 
 },
 

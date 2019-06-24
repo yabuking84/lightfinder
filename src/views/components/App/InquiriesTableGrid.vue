@@ -37,9 +37,9 @@
 			    </span> -->
 
 			<!-- <v-spacer></v-spacer> -->
-			<!-- <v-btn icon @click="refresh()" class="white--text">
+			<v-btn icon @click="refresh()" class="white--text">
 			    <v-icon>refresh</v-icon>
-			</v-btn> -->
+			</v-btn>
 		</v-flex>
 		</v-layout>
 
@@ -99,7 +99,7 @@
 
 
 
-	<v-card-text style="height: 500px; overflow: auto;">
+	<v-card-text style="height: 400px; overflow: auto;">
 
 		<transition-group 
 		tag="v-layout" 
@@ -107,13 +107,16 @@
 		name="tiItems" 
 		class="row wrap align-start justify-center">
 	
-			<template v-for="(inquiry, key, index) in tableItems">				
+			<template v-for="(inquiry, key, index) in tableItems">
+
 				<inquiry-table-grid-item
 				:key="inquiry.inq_id"
 				:inquiry="inquiry"
 				:statuses="statuses"
+				:gridItemClass="gridItemClass"
 				class="inquiry">
 				</inquiry-table-grid-item>
+
 			</template>
 
 		</transition-group>
@@ -166,6 +169,7 @@
 import inqEvntBs from "@/bus/inquiry";
 
 import helpers from "@/mixins/helpers";
+import inqMixin from "@/mixins/inquiry";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryTableGridItem from "@/views/Components/App/InquiryTableGridItem";
 import config from "@/config/main"
@@ -176,6 +180,7 @@ export default {
 
 	mixins: [
 		helpers,
+		inqMixin,
 	],
 
 	components: {
@@ -184,17 +189,19 @@ export default {
 		isotope
 	},
 
-	data: () => ({
+	props:[
+		'gridItemClass'
+	],
 
-		statuses: [
-			...config.inquiry_statuses.default,
-			...config.inquiry_statuses.buyers,
-		],
+	data() { return {
+
+		statuses: this.$route.meta.statuses,
 		// search: '1554969763787',
 		// search: '1557905644572',
 		// search: '1553672466844', // 2 bids
-		search: '1559132882113', // 2 bids
-		// search: '',
+		// search: '1559132882113', // 2 bids
+		// search: '1554876629708', // 3 bids
+		search: '708',
 		dialog: false,
 		loading: false,
 		headers: [
@@ -279,7 +286,7 @@ export default {
 		// ttttttttttttttttttttttttt
 		// test
 
-	}),
+	}},
 
 	methods: {
 
@@ -290,11 +297,10 @@ export default {
 				this.loading = true;
 
 			this.allInquiries = [];
-			
-			var storeType = this.$route.meta.storeType.inq;
-			this.$store.dispatch(storeType+'/getInquiries_a')
+						
+			this.$store.dispatch(this.storeType+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
-
+				// console.log('InquiryTableGrid response',response);
 				for (var i = response.length - 1; i >= 0; i--) {
 					var item = {};
 					item.inq_id = response[i].id;
@@ -308,6 +314,7 @@ export default {
 					item.loading = false;
 					this.allInquiries.push(item);
 				}
+				// console.log('InquiryTableGrid this.allInquiries',this.allInquiries);
 
 				// this.tableItems = this.allInquiries;
 				this.filterTable();
@@ -385,6 +392,11 @@ export default {
 		
 		this.fillTable();
 		inqEvntBs.onFormSubmitted(this.fillTable);
+		
+
+		inqEvntBs.onBidAwarded(()=>{
+			this.fillTable();
+		});
 
 		// inqEvntBs.onClosed(this.fillTable);
 
@@ -394,30 +406,31 @@ export default {
 
 		// get categories for category select box
 		this.$store.dispatch('cat/getCategories_a')
-			.then((data) => {
-				this.categoryItems = data;
-				// console.log(this.categoryItems);
-			})
-			.catch((e) => {
-				console.log('Error: ');
-				console.log(e);
-			});
+		.then((data) => {
+			this.categoryItems = data;
+			// console.log(this.categoryItems);
+		})
+		.catch((e) => {
+			console.log('Error: ');
+			console.log(e);
+		});
+
 
 	},
 
 	watch: {
 
-			inquiryStatus(nVal, oVal) {
-				this.filterTable();
-			},
+		inquiryStatus(nVal, oVal) {
+			this.filterTable();
+		},
 
-			categories(nVal, oVal) {
-				this.filterTable();
-			},
+		categories(nVal, oVal) {
+			this.filterTable();
+		},
 
-		   search(nVal, oVal) {
-			 this.filterTable();
-		   },
+	   search(nVal, oVal) {
+		 this.filterTable();
+	   },
 		   
 	},
 

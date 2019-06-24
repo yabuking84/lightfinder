@@ -1,16 +1,15 @@
 <template>
 
-<!-- <div id="test" v-if="openInquiry" :value="openInquiry" @input="$emit('update:openInquiry', false)"></div> -->
 <div>
 
 
-<!-- @input="$emit('update:openInquiry', false)"  -->
 <v-dialog 
+@input="closeOpenInquiry()" 
 :value="openInquiry" 
 lazy
 scrollable>
-    <v-card>
 
+    <v-card>
     	<v-card-title class="black darken-4 ">
 			<h2 v-if="stateInquiry" class="font-weight-bold white--text">
 				INQUIRY # {{ stateInquiry.id }}
@@ -19,20 +18,7 @@ scrollable>
 	        <v-btn dark flat @click="closeOpenInquiry()">
 	            <v-icon>close</v-icon>
 	        </v-btn>
-
-			<!-- <v-toolbar dark color="grey darken-4 ">
-			    <h2 v-if="inquiry" class="font-weight-bold">INQUIRY # {{ inquiry.id }}</h2>
-			    <v-spacer></v-spacer>
-			    <v-toolbar-items>
-			        <v-btn dark flat @click="closeOpenInquiry()">
-			            <v-icon>close</v-icon>
-			        </v-btn>
-			    </v-toolbar-items>
-			</v-toolbar> -->
-
     	</v-card-title>
-
-		<!-- <h4 class="ma-3">{{ $route.params.payment_status }}</h4> -->
 
         <v-divider></v-divider>
 
@@ -62,11 +48,6 @@ scrollable>
 			</v-container>	
 
 	   	</v-card-text>
-
-        <!-- <v-divider></v-divider>
-	   	<v-card-actions></v-card-actions> -->
-
-	
     </v-card>
 
 </v-dialog>   

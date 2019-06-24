@@ -99,7 +99,7 @@
 
 
 
-	<v-card-text style="height: 400px; overflow: auto;">
+	<v-card-text style="height: 500px; overflow: auto;">
 
 		<transition-group 
 		tag="v-layout" 
@@ -194,7 +194,8 @@ export default {
 		// search: '1557905644572',
 		// search: '1553672466844', // 2 bids
 		// search: '1559132882113', // 2 bids
-		search: '',
+		// search: '1554876629708', // 3 bids
+		search: '08',
 		dialog: false,
 		loading: false,
 		headers: [
@@ -292,9 +293,9 @@ export default {
 			this.allInquiries = [];
 			
 			var storeType = this.$route.meta.storeType.inq;
-			this.$store.dispatch(storeType+'/getInquiries_a',{with_bids:1})
+			this.$store.dispatch(storeType+'/getInquiries_a')
 			.then((response) => {
-				// console.log('InquiryTableGrid response',response);
+
 				for (var i = response.length - 1; i >= 0; i--) {
 					var item = {};
 					item.inq_id = response[i].id;
@@ -308,7 +309,6 @@ export default {
 					item.loading = false;
 					this.allInquiries.push(item);
 				}
-				// console.log('InquiryTableGrid this.allInquiries',this.allInquiries);
 
 				// this.tableItems = this.allInquiries;
 				this.filterTable();

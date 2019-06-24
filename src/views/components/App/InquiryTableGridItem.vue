@@ -1,7 +1,7 @@
 <template>
 
 		
-		<v-flex xs12 pa-1>
+		<v-flex pa-1 :class="gridItemClass">
 			
 			<!-- @click="viewInquiry(inquiry)" -->
 			<v-card 
@@ -93,6 +93,11 @@ export default {
 		'statuses': {
 			type:Array,
 		},
+		'gridItemClass': {
+			type:String,
+			default:'xs12',
+		},
+
 	},
 
 	data: function(){return{
