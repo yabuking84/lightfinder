@@ -122,7 +122,7 @@
 </template>
 <script>
 import AdminBuyerBus from "@/bus/admin-buyer";
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import { required, email, maxLength } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
@@ -144,7 +144,7 @@ export default {
 
   mixins: [
     validationMixin,
-    helpers,
+    // helpers,
   ],
 
   validations: {
@@ -248,8 +248,8 @@ export default {
         this.countries = response
     })
     .catch((e) => {
-        console.log('Error: ')
-        console.log(e);
+        this.cnsl('Error: ')
+        this.cnsl(e);
     });
 
   },
@@ -269,7 +269,7 @@ export default {
       this.form.address = this.buyerData.address
       this.form.country_id = this.buyerData.country_id
 
-      console.log(this.form);
+      this.cnsl(this.form);
 
     },
 
@@ -310,7 +310,7 @@ export default {
         "country_id": this.form.country_id,
       };
 
-      console.log(data);
+      this.cnsl(data);
 
       this.$store.dispatch('admnByr/postBuyer_a', {
           data: data,
@@ -318,7 +318,7 @@ export default {
         .then((response) => {
 
           this.formloading = false
-          console.log(response);
+          this.cnsl(response);
 
           // create a event bus 
           this.$emit('update:dialog', false);
@@ -329,7 +329,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log(e);
+          this.cnsl(e);
           this.formloading = false
         })
         .finally(() => {
@@ -377,7 +377,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log(e);
+          this.cnsl(e);
           this.formloading = false
         })
         .finally(() => {

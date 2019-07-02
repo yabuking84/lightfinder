@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import { required, email, sameAs, minLength } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
@@ -115,7 +115,7 @@ export default {
         password: this.form.password
       }
 
-      console.log(data);
+      this.cnsl(data);
       this.$refs.form.reset()
       this.resetForm()
 
@@ -139,7 +139,7 @@ export default {
             this.snackbar = false
             this.snackbar_error = true
             this.loading = false;
-            console.log('Error: '+e);
+            this.cnsl('Error: '+e);
         })
         .finally(() => {
             this.loading = false

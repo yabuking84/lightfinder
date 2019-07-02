@@ -21,7 +21,7 @@ import NtfctnBus from "@/bus/notification";
 
 
 
-const base_url = config.main.appUrl;
+const base_url = config.main.apiURL;
 
 const state = {
 
@@ -299,7 +299,7 @@ const actions = {
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    
 	newMessage_a(context, data){
 
-		console.log('newMessage_a = ',data);
+		// console.log('newMessage_a = ',data);
 		
     	// populate but not show snackbar yet until all notifications are loaded
 		var textSnackbar = '';
@@ -383,11 +383,11 @@ const actions = {
 
     gotoNotfication_a(context,ntfctn){
 
-    	// console.log('gotoNotfication_a ntfctn = ',ntfctn);
+    	// // console.log('this.$route ',vm.$route);
         // if inquiry type
         if(ntfctn.dataType == 'inquiry' || ntfctn.dataType == 'bid') {
 
-            var store = this.$route.meta.storeType.inq;
+            var store = vm.$route.meta.storeType.inq;
 
             // show notification
             /////////////////////////////////////////////////////////
@@ -395,8 +395,8 @@ const actions = {
                 inq_id: ntfctn.data.id
             }, {root:true})
             .then((response) => {
-    			// console.log('response',response);
-    			console.log('ntfctn',ntfctn);
+    			// // console.log('response',response);
+    			// console.log('ntfctn',ntfctn);
 
     			// serach BID
     			// var bid = null;
@@ -410,7 +410,7 @@ const actions = {
                 context.commit('inq/SHOW_OPENINQUIRYVIEW_M', null, {root:true});
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
             });
             /////////////////////////////////////////////////////////
             // show notification
@@ -531,7 +531,7 @@ const actions = {
 
             })
             .catch(error => {
-                // console.log(error);
+                // // console.log(error);
                 // if(actions.checkToken(error)) {
                     reject(error);
                 // }
@@ -555,7 +555,7 @@ const actions = {
                 headers: headers,
             })
             .then(response => {
-    			console.log('populateNotificationsMsgs_a response',response);    			
+    			// console.log('populateNotificationsMsgs_a response',response);    			
 
             	var count = response.data.data.length;
 	        	var notifications = response.data.data;
@@ -572,7 +572,7 @@ const actions = {
 		        // sort by date updated_at
 		        // notifications = _.sortBy(notifications,'created_at');
 
-            	// console.log("getNotificationsMsgs_a notifications = ",notifications);
+            	// // console.log("getNotificationsMsgs_a notifications = ",notifications);
 
 			    var ntfctns = notifications.map((ntfctn)=>{
 
@@ -654,7 +654,7 @@ const actions = {
                 });
             })
             .catch(error => {
-                // console.log(error);
+                // // console.log(error);
                 // if(actions.checkToken(error)) {
                     reject(error);
                 // }
@@ -689,7 +689,7 @@ const actions = {
 
 	            })
 	            .catch(error => {
-	                // console.log(error);
+	                // // console.log(error);
 	                // if(actions.checkToken(error)) {
 	                    reject(error);
 	                // }

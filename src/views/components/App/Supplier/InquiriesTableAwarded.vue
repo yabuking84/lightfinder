@@ -83,7 +83,7 @@ methods: {
 	setInquiries() {
 		this.$store.dispatch('spplrInq/getInquiries_a', {stage_id:'1005'})
 		.then((response)=>{
-			// console.log('response', response);
+			// this.cnsl('response', response);
 
 			var inquiries = response.map((inquiry)=>{
 
@@ -100,14 +100,14 @@ methods: {
 				}				
 			});
 
-			// console.log('inquiries', inquiries);
+			// this.cnsl('inquiries', inquiries);
 
 
 			this.inquiries = inquiries;
 
 		})
 		.catch((e) => {
-			console.log('Error: ' + e);
+			this.cnsl('Error: ' + e);
 			this.loading = false;
 		})
 		.finally(() => {

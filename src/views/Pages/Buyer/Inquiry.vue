@@ -29,24 +29,24 @@
 		</v-container>
 		<inquiry-create :snackBar.sync="successSnackbar" :dialog.sync="openInquiryCreate"></inquiry-create>
 
-    <v-snackbar
-        v-model="successSnackbar"
-        color="green"
-         top
-         multi-line
-         middle
-         :timeout="10000"
-        >
+	    <v-snackbar
+	        v-model="successSnackbar"
+	        color="green"
+	         top
+	         multi-line
+	         middle
+	         :timeout="10000"
+	        >
 
-        Successfully Created Inquiry
-        <v-btn
-          dark
-          flat
-          @click="successSnackbar = false"
-        >
-          Close
-        </v-btn>
-  </v-snackbar>
+	        Successfully Created Inquiry
+	        <v-btn
+	          dark
+	          flat
+	          @click="successSnackbar = false"
+	        >
+	          Close
+	        </v-btn>
+	  </v-snackbar>
 
 	</div>
 </template>

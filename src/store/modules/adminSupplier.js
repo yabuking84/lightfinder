@@ -4,7 +4,7 @@ import router from '@/router'
 import config from '@/config/index'
 
 
-const base_url = config.main.appUrl;
+const base_url = config.main.apiURL;
 
 const state = {
 

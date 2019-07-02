@@ -924,7 +924,7 @@ import vue2Dropzone from 'vue2-dropzone'
 import { required, email, maxLength, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 
 import InquiryLookupDialog from '@/views/Components/App/Buyer/inquirylookup'
 
@@ -932,7 +932,7 @@ export default {
 
   mixins: [
     validationMixin,
-    helpers,
+    // helpers,
   ],
 
 
@@ -1230,8 +1230,8 @@ export default {
         this.categories = data;        
     })
     .catch((e) => {
-        console.log('Error: ');
-        console.log(e);
+        this.cnsl('Error: ');
+        this.cnsl(e);
     });
 
     // -----------------------GET COUNTRY-------------------------------------
@@ -1241,18 +1241,18 @@ export default {
     //     this.countries = response
     //   })
     //   .catch((e) => {
-    //     console.log('Error: ')
-    //     console.log(e);
+    //     this.cnsl('Error: ')
+    //     this.cnsl(e);
     //   });
 
     // this.getCountries()
     // .then((response) => {
-    //     console.log(response)
+    //     this.cnsl(response)
     //     this.countries = response
     // })
     // .catch((e) => {
-    //     console.log('Error: ')
-    //     console.log(e);
+    //     this.cnsl('Error: ')
+    //     this.cnsl(e);
     // });
 
   },
@@ -1266,7 +1266,7 @@ export default {
 
     stepCnt(val) {
 
-      // console.log("step_"+val);
+      // this.cnsl("step_"+val);
       if (val > 1) {
         // remove focus on fields to prevent auto select or display issues, just add no-focus
         if (typeof this.$refs["step_" + val].$attrs['no-focus'] == "undefined") {
@@ -1379,7 +1379,7 @@ export default {
       // return country_id
 
       // const countrys =  this.countries.find( country => country.id = country_id )
-      // console.log(countrys)
+      // this.cnsl(countrys)
 
     },
 
@@ -1400,7 +1400,7 @@ export default {
 
             })
             .catch((error) => {
-                console.log(error);
+                this.cnsl(error);
             });
 
     },
@@ -1460,7 +1460,7 @@ export default {
     // usable for editing the inquiry/ and previewing to sidebar
     fillFormData() {
 
-            // console.log(this.inquiryHolder)
+            // this.cnsl(this.inquiryHolder)
 
             this.inquiry_images = []
             this.inquiry_attachments = []
@@ -1545,7 +1545,7 @@ export default {
               specsValue = (typeof objectHolder !== 'undefined')?objectHolder.value:'';
          }
 
-          // console.log(objectHolder.name +'='+ objectHolder.value)
+          // this.cnsl(objectHolder.name +'='+ objectHolder.value)
           return specsValue;
 
 
@@ -1597,8 +1597,8 @@ export default {
     },
 
     stepUp: function(val = 1) {
-      // console.log("stepCnt = "+this.stepCnt);
-      // console.log("val = "+val);
+      // this.cnsl("stepCnt = "+this.stepCnt);
+      // this.cnsl("val = "+val);
       this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
       // this.stepCnt += val;
     },
@@ -1654,9 +1654,9 @@ export default {
     
       }
 
-      // console.log('--------------------------')
-      // console.log(formData);
-      // console.log('--------------------------')
+      // this.cnsl('--------------------------')
+      // this.cnsl(formData);
+      // this.cnsl('--------------------------')
 
         var action = "";
         var data = {};
@@ -1678,7 +1678,7 @@ export default {
 
       }
 
-      // console.log(data)
+      // this.cnsl(data)
 
       if (this.$v.$invalid) {
 
@@ -1705,7 +1705,7 @@ export default {
 
           }).catch((e) => {
             this.formLoading = false;
-            console.log('Error: ' + e);
+            this.cnsl('Error: ' + e);
           }).finally(() => {
             this.formLoading = false;
           });
@@ -1737,12 +1737,12 @@ export default {
     },
 
     vdz_s3UploadSuccess: function(s3ObjectLocation){
-        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
-        // console.log();
+        // this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
+        // this.cnsl();
     },
     vdz_success(file, upload_group){
-        console.log("vdz_success file = ",file);
-        console.log("vdz_success upload_group = ",upload_group);
+        this.cnsl("vdz_success file = ",file);
+        this.cnsl("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
@@ -1754,7 +1754,7 @@ export default {
                 filesize: _.round((file.size/1000), 2),
             };
 
-            // console.log('attachment',attachment);
+            // this.cnsl('attachment',attachment);
             this.formData.attachments.push(attachment);
 
             // for the preview when uploaded

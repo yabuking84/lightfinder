@@ -35,6 +35,7 @@
 
 <script>
 import config from "@/config/main"
+import inqMixin from "@/mixins/inquiry";
 
 import BarCard from '@/views/Components/App/BarCard'
 
@@ -43,6 +44,10 @@ components:{
 	BarCard,
 },
 
+mixins: [
+	// helpers
+	inqMixin,
+],
 
 data: () => ({
 
@@ -85,27 +90,113 @@ data: () => ({
 
 created(){
 
-	var statuses = this.$route.meta.statuses.map((sts)=>sts.id).join(',');
-	this.getInquiryCount(statuses,this.allInquiries);
+	this.setInquiryBarCard();
+	this.setSampleOrdersBarCard();
+	this.setConfirmedOrdersBarCard();
+	this.setWalletBarCard();
 
-	this.getInquiryCount('2001',this.confirmedOrders);
-
-	
 },
 
 methods: {
 
-	getInquiryCount(statuses, data){
-		var storeType = this.$route.meta.storeType.inq;
-
-		this.$store.dispatch(storeType+'/getInquiries_a', {stage_id:statuses})
-		.then((response)=>{
-			data.count = response.length;
+	// Inquiries
+	///////////////////////////////////////////////////////////////////////////////
+	setInquiryBarCard(){
+		var statuses = this.$route.meta.statuses.map((sts)=>sts.id).join(',');
+		this.getInquiryCount(statuses)
+		.then((rspns)=>{
+			this.allInquiries.count = rspns.length;
 		})
-		.catch((e) => {
-			console.log('Error: ' + e);
-			data.count = 0;
+		.catch((e)=>{
+			this.allInquiries.count = 0;
 		});
+	},
+	///////////////////////////////////////////////////////////////////////////////
+	// Inquiries
+
+
+	// Sample Orders
+	///////////////////////////////////////////////////////////////////////////////
+	setSampleOrdersBarCard(){
+		var statuses = this.$route.meta.statuses.map((sts)=>sts.id).join(',');
+		this.getInquiryCount(statuses)
+		.then((rspns)=>{
+			var inqs = this.setDataTableInquiry(rspns);
+			var inqs = inqs.filter((inq)=>{
+				return (inq.bid_stages.length)?true:false;
+			});
+			this.sampleOrders.count = inqs.length;
+		})
+		.catch((e)=>{
+			this.sampleOrders.count = 0;
+		});
+
+	},
+	///////////////////////////////////////////////////////////////////////////////
+	// Sample Orders
+
+
+	// Confirmed Orders
+	///////////////////////////////////////////////////////////////////////////////
+	setConfirmedOrdersBarCard(){
+		this.getInquiryCount(2001)
+		.then((rspns)=>{
+			var inqs = rspns.filter((inq)=>{
+				return (inq.awarded_to_me)?true:false;
+			});
+			this.confirmedOrders.count = inqs.length;
+		})
+		.catch((e)=>{
+			this.confirmedOrders.count = 0;
+		});
+
+	},
+	///////////////////////////////////////////////////////////////////////////////
+	// Confirmed Orders
+
+
+	// Wallet
+	///////////////////////////////////////////////////////////////////////////////
+	setWalletBarCard(){
+		this.getInquiryCount('2001,2002,2003')
+		.then((rspns)=>{
+			this.cnsl(rspns);
+			var inqs = rspns.filter((inq)=>{
+				return (inq.awarded_to_me)?true:false;
+			});
+			this.cnsl('setWalletBarCard',inqs);
+
+			var walletTotal = 0;
+			inqs.forEach((inq)=>{
+				walletTotal+=inq.shipping_cost;
+				inq.bids.forEach((bid)=>{
+					walletTotal+=bid.total_price;
+				});
+			});
+
+			this.walletAmount.count = '$'+this.currency(walletTotal);
+		})
+		.catch((e)=>{
+			this.walletAmount.count = '$0.00';
+		});
+
+	},
+	///////////////////////////////////////////////////////////////////////////////
+	// Wallet
+
+
+	getInquiryCount(statuses, data){
+		return new Promise((resolve, reject) => {			
+			// var storeType = this.$route.meta.storeType.inq;
+			this.$store.dispatch(this.getStore()+'/getInquiries_a', {stage_id:statuses,with_bids:1})
+			.then((response)=>{				
+				resolve(response);
+			})
+			.catch((e) => {
+				this.cnsl('Error: ' + e);
+				reject(null);
+			});
+		})
 	},
 },
 

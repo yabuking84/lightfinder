@@ -30,11 +30,15 @@ import Vuelidate from "vuelidate";
 
 import App from './App'
 
+import config from '@/config/main'
+
 
 import VueScrollTo from 'vue-scrollto'
 
 // Importing the global css file
 import "@/assets/global.scss"
+// Importing the global js file
+import "@/assets/global.js"
 
 
 // Vue socket.io
@@ -45,7 +49,7 @@ import "@/assets/global.scss"
 import io from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 // const SocketInstance = io('http://192.168.1.202:4113');
-const SocketInstance = io('http://192.168.1.200:3000');
+const SocketInstance = io(config.socketURL);
 
 Vue.use(new VueSocketIO({
     debug: true,
@@ -183,9 +187,10 @@ router.beforeEach(middleware)
 
 
 
-const mixins = [
-	helpers,
-];
+
+
+
+Vue.mixin(helpers);
 
 
 
@@ -217,19 +222,11 @@ const mixins = [
 
 
 
-
-
-
-
-
-
-// Vue.mixin(helpers);
 
 
 
 /* eslint-disable no-new */
-export default new Vue({  
-  mixins,
+export default new Vue({ 
   el: '#app',
   router,
   store,

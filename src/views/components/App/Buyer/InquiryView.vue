@@ -85,7 +85,7 @@ import InquiryDetailsCard from "@/views/Components/App/Buyer/InquiryDetailsCard"
 import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
 
 import inqEvntBs from "@/bus/inquiry"
-// import helpers from "@/mixins/helpers";
+// // import helpers from "@/mixins/helpers";
 
 import inqMixin from "@/mixins/inquiry"
 
@@ -143,8 +143,8 @@ export default {
         //         return this.$store.state.inq.inquiry;
         //     },
         //     set(nVal) {
-        //         // console.log('setVal');
-        //         // console.log(nVal);
+        //         // this.cnsl('setVal');
+        //         // this.cnsl(nVal);
         //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
 
         //     },
@@ -163,7 +163,7 @@ export default {
 	created() {
 
 
-		// console.log(this.inquiry);
+		// this.cnsl(this.inquiry);
         inqEvntBs.$on('edited-inquiry', () => {
             this.successSnackbar = true;
         });
@@ -172,14 +172,14 @@ export default {
         // if route has inquiry id
         if(this.$route.params.inquiry_id) {
         	this.$nextTick(() => {
-				console.log('nextTick $route.params.inquiry_id CREATED', this.$route.params.inquiry_id);
+				this.cnsl('nextTick $route.params.inquiry_id', this.$route.params.inquiry_id);
 				var inq_id = this.$route.params.inquiry_id;	
 				this.showInquiry(inq_id)
 				.then((data)=>{
-					console.log("data",data);
+					this.cnsl("data",data);
 				})
 				.catch((error)=>{
-					console.log("error",error);
+					this.cnsl("error",error);
 				});
         	});
         }
@@ -187,14 +187,14 @@ export default {
 	},
 
 	mounted(){
-		// console.log('querySelector',this.$refs);
-		// console.log('querySelector',this.$refs.inquiryView);
-		// console.log('querySelector',this.$el);
+		// this.cnsl('querySelector',this.$refs);
+		// this.cnsl('querySelector',this.$refs.inquiryView);
+		// this.cnsl('querySelector',this.$el);
 	}, 
 
 	watch: {
 		// '$route.params.inquiry_id' () {
-		// 	console.log('$route.params.inquiry_id WATCH');
+		// 	this.cnsl('$route.params.inquiry_id WATCH');
 		// }
 	},
 }

@@ -127,7 +127,7 @@
         return '/static/doc-images/HexesisMaterial03.png'
       },
       cardHeight () {
-        console.log(this.height)
+        this.cnsl(this.height)
         const height = this.height < 700 ? this.height - 100 + 'px' : 'auto'
         return height
       }

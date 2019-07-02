@@ -29,11 +29,11 @@ const meta = {
             name: 'SupplierHome',
             icon: 'fas fa-th-large',
         },            
-        {
-            title: 'Inquiries',
-            name: 'SupplierInquiry',
-            icon: 'fas fa-clipboard',
-        },            
+        // {
+        //     title: 'Inquiries',
+        //     name: 'SupplierInquiry',
+        //     icon: 'fas fa-clipboard',
+        // },            
     ], 
     profileItems: [
         {
@@ -41,11 +41,11 @@ const meta = {
             name: 'SupplierProfile',
             icon: 'person',
         },           
-        {
-            title: 'Wallet',
-            name: 'SupplierWallet',
-            icon: 'fas fa-wallet',
-        },    
+        // {
+        //     title: 'Wallet',
+        //     name: 'SupplierWallet',
+        //     icon: 'fas fa-wallet',
+        // },    
     ],
     statuses: [
     	...config.main.inquiry_statuses.default,
@@ -53,13 +53,14 @@ const meta = {
     ],
     storeType: {
     	inq: "spplrInq",
+    	profile: "admnSpplr",
     },
 }
 
 export default [
     {
         name: 'SupplierHome',
-        path: '/supplier/dashboard',
+        path: '/',
         components: {
             default:SupplierHome,
             sidebar: AppSidebar, 
@@ -72,7 +73,7 @@ export default [
 
     {
         name: 'SupplierInquiry',
-        path: '/supplier/inquiry',
+        path: '/inquiry',
         components: {
             default:SupplierInquiry,
             sidebar: AppSidebar, 
@@ -85,7 +86,7 @@ export default [
 
     {
         name: 'SupplierProfile',
-        path: '/supplier/profile',
+        path: '/profile',
         components: {
             // default: BuyerHome, 
             default: AppProfile, 
@@ -100,7 +101,7 @@ export default [
 
     {
         name: 'SupplierWallet',
-        path: '/supplier/wallet',
+        path: '/wallet',
         components: {
             default: SupplierWallet, 
             sidebar: AppSidebar, 

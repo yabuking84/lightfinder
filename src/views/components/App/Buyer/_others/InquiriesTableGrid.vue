@@ -165,7 +165,7 @@
 <script>
 import inqEvntBs from "@/bus/inquiry";
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryTableGridItem from "@/views/Components/App/InquiryTableGridItem";
 import config from "@/config/main"
@@ -175,7 +175,7 @@ import isotope from 'vueisotope'
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
 	],
 
 	components: {
@@ -295,7 +295,7 @@ export default {
 			var storeType = this.$route.meta.storeType.inq;
 			this.$store.dispatch(storeType+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
-				// console.log('InquiryTableGrid response',response);
+				// this.cnsl('InquiryTableGrid response',response);
 				for (var i = response.length - 1; i >= 0; i--) {
 					var item = {};
 					item.inq_id = response[i].id;
@@ -309,7 +309,7 @@ export default {
 					item.loading = false;
 					this.allInquiries.push(item);
 				}
-				// console.log('InquiryTableGrid this.allInquiries',this.allInquiries);
+				// this.cnsl('InquiryTableGrid this.allInquiries',this.allInquiries);
 
 				// this.tableItems = this.allInquiries;
 				this.filterTable();
@@ -319,7 +319,7 @@ export default {
 
 			})
 			.catch((e) => {
-				console.log('Error: ' + e);
+				this.cnsl('Error: ' + e);
 				this.loading = false;
 			})
 			.finally(() => {
@@ -367,7 +367,7 @@ export default {
 					  // add key to search in the dom
 					  return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
 				  })            
-				  // console.log(this.search);
+				  // this.cnsl(this.search);
 			  }
 
 			  this.tableItems = items;
@@ -403,11 +403,11 @@ export default {
 		this.$store.dispatch('cat/getCategories_a')
 		.then((data) => {
 			this.categoryItems = data;
-			// console.log(this.categoryItems);
+			// this.cnsl(this.categoryItems);
 		})
 		.catch((e) => {
-			console.log('Error: ');
-			console.log(e);
+			this.cnsl('Error: ');
+			this.cnsl(e);
 		});
 
 

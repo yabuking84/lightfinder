@@ -382,7 +382,7 @@
 
 import config from '@/config/index'
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import UploadFile from "@/views/Components/App/UploadFile";
 import inqEvntBs from "@/bus/inquiry";
 
@@ -394,7 +394,7 @@ import validationMixin from '@/mixins/validationMixin'
 
 export default {
 mixins: [
-  helpers,
+  // helpers,
   validationMixin
 ],
 
@@ -617,7 +617,7 @@ methods: {
                   this.$emit('update:openQuoteDialog', false);
               }).catch((e) => {
                   this.loading = false;
-                  console.log('Error: ' + e);
+                  this.cnsl('Error: ' + e);
                   alert("ERROR!!");
               }).finally(() => {
                   this.loading = false;
@@ -639,7 +639,7 @@ methods: {
 
       if (e.target.querySelector("#QuoteDialog"))
           this.$emit('update:openQuoteDialog', false)
-          // console.log(e.target);
+          // this.cnsl(e.target);
     },
 
 
@@ -766,14 +766,14 @@ methods: {
     },
 
     vdz_s3UploadSuccess: function(s3ObjectLocation){
-        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
-        // console.log();
+        // this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
+        // this.cnsl();
     },
 
     vdz_success(file, upload_group){
 
-        console.log("vdz_success file = ",file);
-        console.log("vdz_success upload_group = ",upload_group);
+        this.cnsl("vdz_success file = ",file);
+        this.cnsl("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
@@ -787,7 +787,7 @@ methods: {
             };
 
 
-            console.log('attachment',attachment);
+            this.cnsl('attachment',attachment);
             // this.formData.attachments.push(attachment);
             // this.formData.attachments.concat(attachment);
             this.pushImage(attachment)
@@ -827,12 +827,12 @@ watch: {
         if (nVal) {
             this.quoteAction = "Edit";
             this.fillFormData()
-          	console.log('-edit-')
+          	this.cnsl('-edit-')
         } else {
             this.quoteAction = "Add";
             this.formData = this.initBid;
             this.clearData();
-            console.log('-add-')
+            this.cnsl('-add-')
         }
 
     },

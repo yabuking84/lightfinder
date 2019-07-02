@@ -6,7 +6,7 @@
 				<v-layout 
 				row wrap justify-space-between
 				class="grey darken-4 heading-title">
-					<h3 class="white--text ma-3">Wallet</h3>
+					<h3 class="white--text ma-3">Confirmed Orders</h3>
 					<v-btn 
 					@click="fillTable()" 
 					class="white--text ma-2"
@@ -20,7 +20,7 @@
 
 
 			<!-- <v-divider></v-divider> -->
-			<v-card-text class="pa-0"  style="height: 506px; overflow: auto;">
+			<v-card-text class="pa-0"  style="height: 300px; overflow: auto;">
 				<template>
 
 					<v-data-table 
@@ -35,19 +35,11 @@
 
 							<td>{{ sp.item.id }}</td>
 
-							<!-- <td>$ {{ currency(sp.item.unit_cost) }}</td> -->
+							<td>$ {{ currency(sp.item.unit_cost) }}</td>
 
+							<td>{{ sp.item.quantity }} pcs</td>
 
-							<td>$ {{ currency(sp.item.amount) }}</td>
-
-							<td>
-								<template v-if="[2001,2002,2003].indexOf(sp.item.stage_id)>=0">
-									In Wallet
-								</template>
-								<template v-if="sp.item.stage_id==3001">
-									Proccessing Bank Transfer
-								</template>
-							</td>
+							<td>$ {{ currency(sp.item.amount+sp.item.shipping_cost) }}</td>
 
 							<td class="text-xs-right pa-0">
 								<v-btn 
@@ -97,20 +89,20 @@ data() { return {
 			align: 'left',
 			value: 'id',
 		},
-		// {
-		// 	text: 'Unit Cost',
-		// 	align: 'left',
-		// 	value: 'unit_cost',
-		// },
+		{
+			text: 'Unit Cost',
+			align: 'left',
+			value: 'unit_cost',
+		},
+		{
+			text: 'Quantity',
+			align: 'left',
+			value: 'quantity',
+		},
 		{
 			text: 'Amount',
 			align: 'left',
 			value: 'amount',
-		},
-		{
-			text: 'Status',
-			align: 'left',
-			value: 'status',
 		},
 		{ 
 			text: '', 
@@ -119,13 +111,12 @@ data() { return {
 		}
 	  ],
 	  inquiries : [],
-
 }},
 
 methods: {
 	fillTable() {
 		// var storeType = this.$route.meta.storeType.inq;
-		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'2001,',with_bids:1})
+		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'2001',with_bids:1})
 		// this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1006'})
 		.then((response)=>{
 			this.cnsl('supplier COT response',response);

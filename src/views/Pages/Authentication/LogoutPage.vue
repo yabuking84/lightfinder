@@ -19,7 +19,7 @@ export default {
         this.$store.dispatch('auth/logout_a')
         .then(response=>{
 
-            // console.log("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
+            // this.cnsl("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
             // alert("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
                         
             // this.$router.push("/login");
@@ -27,7 +27,7 @@ export default {
 
         })
         .catch(error=>{
-            console.log(error);           
+            this.cnsl(error);           
             // this.$router.push("/login");
             window.location.href = "/login";
         });

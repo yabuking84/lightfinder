@@ -6,9 +6,7 @@
     <v-container fill-height pa-0>
       <v-layout align-center>
         <v-flex xs12>
-          <v-card
-            class="text-xs-center margin-auto border-radius6 box-white-500-glow elevation-10 auth-box"
-          >
+          	<v-card class="text-xs-center margin-auto border-radius6 box-white-500-glow elevation-10 auth-box">
             <v-layout align-center justify-center row fill-height wrap>
               <v-flex xs12 class="text-xs-center mt-3">
                 
@@ -76,9 +74,45 @@
                   </v-layout>
                 </v-form>
               </v-flex>
+
             </v-layout>
-          </v-card>
+          	</v-card>          	
         </v-flex>
+
+
+
+
+        <!-- for dev -->
+        <!-- /////////////////////////////////////////////// -->
+        <v-flex xs12>
+        <div style="background-color: #fff;" class="pa-3">
+        		
+        	<v-layout row wrap>
+        		<h5 style="width: 100%;" class="ml-2 mb-2">ADMIN</h5>
+            	<v-btn small @click="form.email='info@bal.com'">info@bal.com</v-btn>
+        	</v-layout>
+        	
+        	<v-divider class="my-2"></v-divider>
+        	
+        	<v-layout row wrap mt-3>
+        		<h5 style="width: 100%;" class="ml-2 mb-2">BUYER</h5>
+            	<v-btn small @click="form.email='buyer@bal.com'">buyer@bal.com</v-btn>
+            	<v-btn small @click="form.email='lucychao@gmail.com'">lucychao@gmail.com</v-btn>
+        	</v-layout>
+        	
+        	<v-divider class="my-2"></v-divider>
+
+        	<v-layout row wrap mt-3>
+        		<h5 style="width: 100%;" class="ml-2 mb-2">SUPPLIER</h5>
+            	<v-btn small @click="form.email='supplier@bal.com'">supplier@bal.com</v-btn>
+            	<v-btn small @click="form.email='info@almani.ae'">info@almani.ae</v-btn>
+        	</v-layout>
+        </div>
+        </v-flex>
+        <!-- /////////////////////////////////////////////// -->
+        <!-- for dev -->
+
+
       </v-layout>
     </v-container>
 
@@ -119,9 +153,10 @@
   const defaultForm = {
     // email: 'info@bal.com',
     // email: 'buyer@bal.com',
-    email: 'supplier@bal.com',
+    // email: 'supplier@bal.com',
     // email: 'm.ozil@philips.com',
     // email: 'z.abdin@almani.ae',
+    email: '',
     password: '123456',
     rememberme: false
   }
@@ -195,9 +230,9 @@
                 this.snackbar = false
                 this.snackbar_error = true
                 this.loading = false;
-                console.log('Error: '+e);
+                this.cnsl('Error: '+e);
             }).finally(()=>{
-                // console.log('finally');
+                // this.cnsl('finally');
                 this.loading = false;
             });
 

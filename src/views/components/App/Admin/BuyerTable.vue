@@ -62,7 +62,7 @@
 </template>
 <script>
 import adminBuyerBus from "@/bus/admin-buyer"
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import BuyerDialog from '@/views/Components/app/Admin/BuyerDialog'
 
 
@@ -75,7 +75,7 @@ export default {
     BuyerDialog
   },
   mixins: [
-    helpers,
+    // helpers,
     VueTimers
   ],
   data: function() {
@@ -195,7 +195,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log('Error: ' + e);
+          this.cnsl('Error: ' + e);
           this.loading = false;
         })
         .finally(() => {

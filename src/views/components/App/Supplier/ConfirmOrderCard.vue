@@ -99,12 +99,12 @@ export default {
 	methods:{
 
 		confirmQuote() {
-			// console.log("confirm");
+			// this.cnsl("confirm");
 
+			this.$v.$touch();
 
 		  if (this.$v.$invalid) {
 
-			this.$v.$touch()
 
 		  } else {
 
@@ -116,11 +116,11 @@ export default {
 					},
 				})
 				.catch(error => {
-					console.log(error);
+					this.cnsl(error);
 				});
 
 				// this.$emit('update:openInquiry', false)
-				this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+				this.hideInquiry();
 				
 		  }
 

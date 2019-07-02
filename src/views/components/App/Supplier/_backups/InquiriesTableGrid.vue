@@ -165,7 +165,7 @@
 <script>
 import inqEvntBs from "@/bus/inquiry";
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryTableGridItem from "@/views/Components/App/InquiryTableGridItem";
 import config from "@/config/main"
@@ -175,7 +175,7 @@ import isotope from 'vueisotope'
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
 	],
 
 	components: {
@@ -318,7 +318,7 @@ export default {
 
 			})
 			.catch((e) => {
-				console.log('Error: ' + e);
+				this.cnsl('Error: ' + e);
 				this.loading = false;
 			})
 			.finally(() => {
@@ -366,7 +366,7 @@ export default {
 					  // add key to search in the dom
 					  return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
 				  })            
-				  // console.log(this.search);
+				  // this.cnsl(this.search);
 			  }
 
 			  this.tableItems = items;
@@ -397,11 +397,11 @@ export default {
 		this.$store.dispatch('cat/getCategories_a')
 			.then((data) => {
 				this.categoryItems = data;
-				// console.log(this.categoryItems);
+				// this.cnsl(this.categoryItems);
 			})
 			.catch((e) => {
-				console.log('Error: ');
-				console.log(e);
+				this.cnsl('Error: ');
+				this.cnsl(e);
 			});
 
 	},

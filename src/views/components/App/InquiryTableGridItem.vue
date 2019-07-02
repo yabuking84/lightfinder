@@ -11,7 +11,10 @@
 				<v-layout row wrap>
 					<slot name="inquiry-section" :inquiry="inquiry">				
 					<v-flex xs3 py-1>
-						<h4 class="black--text lighten-4">Inquiry</h4>
+						<h4 class="black--text lighten-4">
+							Inquiry 
+							<span style="font-size: 0.7em;" class="ml-2">{{ inquiry.bid_count }} bid/s</span>
+						</h4>
 						<h5 class="mt-0 font-weight-medium ">{{ inquiry.inq_id }}</h5>
 					</v-flex>
 					</slot>
@@ -40,10 +43,11 @@
 					</slot>
 
 					<slot name="button-section" :inquiry="inquiry">
-					<v-flex xs2 py-1 style="text-align: right;">
+					<v-flex xs2 py-1 style="position: relative;">
 							<v-btn 
 							@click="viewInquiry(inquiry)" 
 							:loading="loading" 
+							style="position: absolute; right: 0; top:0;"
 							class=" v-btn--active black darken-2 font-weight-light text-decoration-none">
 								<v-icon class="white--text">fas fa-search</v-icon>
 								<!-- <i class="fas fa-search white--text"></i> -->
@@ -72,13 +76,13 @@
 
 <script>
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import inqMixin from "@/mixins/inquiry";
 
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
 		inqMixin,
 	],
 

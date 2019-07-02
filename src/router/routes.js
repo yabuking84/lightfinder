@@ -47,10 +47,10 @@ import AdminRoutes from '@/router/AdminRoutes.js'
 import BuyerRoutes from '@/router/BuyerRoutes.js'
 import SupplierRoutes from '@/router/SupplierRoutes.js'
 
-// console.log('store.state.auth.auth_user.role')
-// console.log(store.state.auth.auth_user.role)
-// console.log(config.auth.role.admin.id)
-// console.log('store.state.auth.auth_user.role')
+// this.cnsl('store.state.auth.auth_user.role')
+// this.cnsl(store.state.auth.auth_user.role)
+// this.cnsl(config.auth.role.admin.id)
+// this.cnsl('store.state.auth.auth_user.role')
 
 // Push routes here
 // var i;
@@ -88,7 +88,7 @@ import SupplierRoutes from '@/router/SupplierRoutes.js'
 // }
 
 
-// console.log(routes);
+// this.cnsl(routes);
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // PAGES

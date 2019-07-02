@@ -120,8 +120,8 @@ computed: {
     //         return this.$store.state.inq.inquiry;
     //     },
     //     set(nVal) {
-    //         // console.log('setVal');
-    //         // console.log(nVal);
+    //         // this.cnsl('setVal');
+    //         // this.cnsl(nVal);
     //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
     //     },
     // },       
@@ -143,12 +143,12 @@ methods: {
     },
 
     closeOpenInquiry() {
-        this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+        this.hideInquiry();
     },
 
     keyPress(e) {
         if (e.target.querySelector("#InquiryView"))
-        this.$store.commit('inq/HIDE_OPENINQUIRYVIEW_M');
+        this.hideInquiry();
     },
 },
 

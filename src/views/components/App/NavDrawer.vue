@@ -22,18 +22,18 @@
         <v-list>
             <v-list-tile>
 
-              <v-list-tile-avatar >
-                <img src="/static/logos/logo-white.png" id="nav_logo_square" :title="title">
-              </v-list-tile-avatar>
-              
-              <v-list-tile-content>
-                <!-- <img src="/static/logos/logo-white.png" id="nav_logo" :title="title"> -->
-                <v-list-tile-title class="headline">BuyAnyLight.com</v-list-tile-title>
-              </v-list-tile-content>
+            	<v-list-tile-avatar >
+            		<img src="/static/logos/logo-white.png" id="nav_logo_square" :title="title">
+            	</v-list-tile-avatar>
+            	
+            	<v-list-tile-content>
+            		<!-- <img src="/static/logos/logo-white.png" id="nav_logo" :title="title"> -->
+            		<v-list-tile-title class="headline">BuyAnyLight.com</v-list-tile-title>
+            	</v-list-tile-content>
 
-              <!-- <v-list-tile-content>
-                <img src="/static/logos/liliwaters-logo-white.png" id="nav_logo">
-              </v-list-tile-content> -->
+            	<!-- <v-list-tile-content>
+            		<img src="/static/logos/liliwaters-logo-white.png" id="nav_logo">
+            	</v-list-tile-content> -->
 
             </v-list-tile>
         </v-list>
@@ -67,19 +67,19 @@
 
         <!-- single items -->
         <v-list-tile
-            :to="!item.href ? { name: item.name } : null"
-            :href="item.href"
-            :disabled="item.disabled"
-            :target="item.target"
-            :key="`${i}-item`"
-            ripple
-            rel="noopener"
-            class="list__tile-solo">
-          
+        :to="!item.href ? { name: item.name } : null"
+        :href="item.href"
+        :disabled="item.disabled"
+        :target="item.target"
+        :key="`${i}-item`"
+        ripple
+        rel="noopener"
+        class="list__tile-solo">
+
             <v-list-tile-action>
                 <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
                 <v-avatar size="28" v-else>
-                    <span>{{ item.title | first2Char }}</span>
+                    <span>{{ item.title | first2Char }}</span>                    
                 </v-avatar>
             </v-list-tile-action>
 
@@ -216,9 +216,9 @@
             //     }
             // },
 
-            activemenu() {
-                return this.$vuetify.theme.activemenu
-            },
+            // activemenu() {
+            //     return this.$vuetify.theme.activemenu
+            // },
             drawer: {
                 get() {
                     return this.navDrawer
@@ -234,7 +234,7 @@
                 this.$store.dispatch('toggleMiniVariantMode')
                 this.$store.dispatch('toggleMiniVarient')
 
-                console.log(this.navMiniVarient);
+                this.cnsl(this.navMiniVarient);
             },
 
             // miniEnterVariantHandler() {
@@ -253,23 +253,21 @@
             //         // container.scrollTop = 0
             //     }
             // },
-            genChildTarget(item, subItem) {
-                if (subItem.href) return
-                if (item.component) {
-                    return {
-                        name: item.component,
-                        params: {
-                            section: item.group,
-                            component: subItem.name
-                        }
-                    }
-                }
-                // console.log(`Sidebar:`)
-                // console.log({ name: `${item.group}/${camel(subItem.name)}` })
-                return {
-                    name: `${item.group}/${camel(subItem.name)}`
-                }
-            },
+            // genChildTarget(item, subItem) {
+            //     if (subItem.href) return
+            //     if (item.component) {
+            //         return {
+            //             name: item.component,
+            //             params: {
+            //                 section: item.group,
+            //                 component: subItem.name
+            //             }
+            //         }
+            //     }
+            //     return {
+            //         name: `${item.group}/${camel(subItem.name)}`
+            //     }
+            // },
 
             logout() {
                 this.$router.push({name:'Logout'});                

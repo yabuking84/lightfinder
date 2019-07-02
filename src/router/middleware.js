@@ -1,65 +1,80 @@
 import { store } from '@/store'
 import config from '@/config/index'
+import helpers from '@/mixins/helpers'
 
 
 
 export default  (to, from, next) => {
 
-    // console.log('auth/isLoggedIn_g xxxxxxxxx');
-    // console.log(store.getters['auth/isLoggedIn_g']);
-    
-    // console.log('auth/role xxxxxxxxx');
-    // console.log(store.state.auth.auth_user.role);
-    
-    // console.log('meta role xxxxxxxxx');
-    // console.log(to.matched[to.matched.length-1].meta.role);
+	// this.cnsl('auth/isLoggedIn_g xxxxxxxxx');
+	// this.cnsl(store.getters['auth/isLoggedIn_g']);
+	
+	// this.cnsl('auth/role xxxxxxxxx');
+	// this.cnsl(store.state.auth.auth_user.role);
+	
+	// this.cnsl('meta role xxxxxxxxx');
+	// this.cnsl(to.matched[to.matched.length-1].meta.role);
 
-    // console.log('meta redirectToRole xxxxxxxxx');
-    // console.log(to.matched[to.matched.length-1].meta.redirectToRole);
+	// this.cnsl('meta redirectToRole xxxxxxxxx');
+	// this.cnsl(to.matched[to.matched.length-1].meta.redirectToRole);
 
-    // console.log('to.matched xxxxxxxxx');
-    // console.log(to.matched);
+	// this.cnsl('to.matched xxxxxxxxx');
+	// this.cnsl(to.matched);
 
-    // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
-    // console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+	// this.cnsl('zzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+	// this.cnsl('zzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+		// console.log('xxxxxxxxxxxxxxxxxxxxx');
 
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+	if (to.matched.some(record => record.meta.requiresAuth)) {
 
-        // if not logged in then logout user
-        if (!store.getters['auth/isLoggedIn_g']) {
-            next({name: 'Logout'})
-        } 
-        
-        // when / is accessed it should redirect to homepage of logged in user
-        else if(to.matched[to.matched.length-1].meta.redirectToRole){
-            if(store.state.auth.auth_user.role==config.auth.role.admin.id)
-            next({name: 'AdminHome'})
-            if(store.state.auth.auth_user.role==config.auth.role.buyer.id)
-            next({name: 'BuyerHome'})
-            if(store.state.auth.auth_user.role==config.auth.role.supplier.id)
-            next({name: 'SupplierHome'})
-            else
-            next({name: 'Logout'})
-        }
+		// console.log('xxxxxxxxx');
+		// if not logged in then logout user
+		if (!store.getters['auth/isLoggedIn_g']) {
+			// console.log('LOGOUT!!!!!!!!!!!!!!!!!!!!!! 1');
+			next({name: 'Logout'});
+		}		
+		// when / is accessed it should redirect to homepage of logged in user
+		else if(to.matched[to.matched.length-1].meta.redirectToRole){
 
-        // if route is not for current user then logout user
-        else if(to.matched[to.matched.length-1].meta.role != store.state.auth.auth_user.role){
-            next({name: 'Logout'})
-        }
+			// console.log('store.state.auth.auth_user.role',store.state.auth.auth_user.role);
+			// console.log('config.auth.role.buyer.id',config.auth.role.buyer.id);
 
-        else {
-            next()
-        }
+			if(store.state.auth.auth_user.role==config.auth.role.admin.id){            	
+				// console.log('AdminHome');
+				next({name: 'AdminHome'})
+			}
+			else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) {
+				// console.log('BuyerHome');
+				next({name: 'BuyerHome'});
+			}
+			else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) {
+				// console.log('SupplierHome');
+				next({name: 'SupplierHome'})
+			}
+			else {
+				// console.log('LOGOUT!!!!!!!!!!!!!!!!!!!!!!');
+				next({name: 'Logout'})
+			}
+		}
 
-    } 
+		// if route is not for current user then logout user
+		else if(to.matched[to.matched.length-1].meta.role != store.state.auth.auth_user.role){
+			// console.log('LOGOUT!!!!!!!!!!!!!!!!!!!!!! 3');
+			next({name: 'Logout'})
+		}
 
-    else if(!to.matched.length) {
-        // console.log("Rote does not exist!");
-        next({name: 'Home'});
-    } 
+		else {
+			next()
+		}
 
-    else {
-        next() // make sure to always call next()!
-    }
+	} 
+
+	else if(!to.matched.length) {
+		next({name: 'Home'});
+	} 
+
+	else {
+		next() // make sure to always call next()!
+	}
 }
 

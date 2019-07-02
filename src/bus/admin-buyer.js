@@ -10,12 +10,12 @@ export default new Vue({
 
 		emitFormSubmitted(){
 			this.$emit('buyer-form-submitted');
-			// console.log('emitFormSubmitted');
+			// this.cnsl('emitFormSubmitted');
 		},
 		onFormSubmitted(func){
 			this.$on('buyer-form-submitted',()=>{
 				func();
-				// console.log('onFormSubmitted');
+				// this.cnsl('onFormSubmitted');
 	        });
 		},
 

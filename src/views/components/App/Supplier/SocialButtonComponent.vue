@@ -68,7 +68,7 @@
 
                       }
                   } catch(e) {
-                    console.log(e)
+                    this.cnsl(e)
                   }
               }, 100);
 

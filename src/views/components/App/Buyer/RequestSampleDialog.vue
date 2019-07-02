@@ -16,7 +16,7 @@
 			<v-card class="pa-1 grey lighten-4">
 				<v-card-text>
 					<v-layout row wrap pa-0 mx-3>
-						<h2 class="font-weight-light"> INQUIRY# <span class="font-weight-bold">1029381212312</span></h2>
+						<h2 class="font-weight-light"> BID# <span class="font-weight-bold">{{ bid.id }}</span></h2>
 						<v-spacer></v-spacer>
 						<!-- <v-btn @click="isEditAddress=true" flat small class="blue-grey darken-2">
 							<i class="ml-1 font-weight-light  fas fa-edit white--text"></i>
@@ -37,6 +37,8 @@
 											<v-flex xs12 ml-2>
 												<v-autocomplete
 												v-model="form.shipping_country_id"
+												:error-messages="fieldErrors('form.shipping_country_id')" 
+					  							@blur="$v.form.shipping_country_id.$touch()"
 												:items="countries"
 												item-text="name" 
 												item-value="id"
@@ -48,16 +50,26 @@
 											<v-flex xs12 ml-2>
 												<v-text-field 
 												label="Street Address"
-												v-model="form.shipping_address"></v-text-field>
+												v-model="form.shipping_address"
+					  							@blur="$v.form.shipping_address.$touch()"
+												:error-messages="fieldErrors('form.shipping_address')">
+												</v-text-field>
 											</v-flex>
 											<v-flex xs12 ml-2>
-												<v-text-field label="City"
-												v-model="form.shipping_city"></v-text-field>
+												<v-text-field 
+												label="City"
+												v-model="form.shipping_city"
+					  							@blur="$v.form.shipping_city.$touch()"
+												:error-messages="fieldErrors('form.shipping_city')">
+												</v-text-field>
 											</v-flex>
 											<v-flex xs12 ml-2>
 												<v-text-field 
 												label="Zip/Postal Code"
-												v-model="form.shipping_postal"></v-text-field>
+												v-model="form.shipping_postal"
+					  							@blur="$v.form.shipping_postal.$touch()"
+												:error-messages="fieldErrors('form.shipping_postal')">													
+												</v-text-field>
 											</v-flex>
 										</div>
 									</v-flex>
@@ -144,7 +156,7 @@
 							</v-card>
 							<v-layout row wrap mt-2>
 								<v-flex xs12>
-									<v-btn large :disabled="$v.$invalid" :loading="formLoading" @click="submit()" flat block class="red">
+									<v-btn large :loading="formLoading" @click="submit()" flat block class="red">
 										<span class="ml-1 white--text font-weight-bold">Pay Now</span>
 									</v-btn>
 								</v-flex>
@@ -155,6 +167,12 @@
 			</v-card>
 		 </v-form>
 
+			<form method="post" :action="creditCard.url" ref="creditCardForm">
+				<input 
+				type="hidden" 
+				name="requestParameter" 
+				:value="creditCard.requestParameter">
+			</form>									
 
 	  </v-dialog>
 	</div>
@@ -164,7 +182,7 @@
 
 	import { required, email, maxLength } from 'vuelidate/lib/validators'
 	import validationMixin from '@/mixins/validationMixin'
-	import helpers from "@/mixins/helpers"
+	// import helpers from "@/mixins/helpers"
 	import config from '@/config/index'
 	import { ceil } from 'lodash'
 
@@ -177,37 +195,28 @@
 
 	   mixins: [
 
-			helpers,
+			// helpers,
 			validationMixin
 
 		],
 
 		validations: {
-
 			form: {
-
-				shipping_method_id : { required },
-				payment_method_id  : { required },
-				// shipping_date 	   : { required },
+				shipping_country_id : { required },
 				shipping_address   : { required },
-
+				shipping_city   : { required },
+				shipping_postal   : { required },
 			}
-
 		},
 
 		validationMessages: {
-
-
-
 			form: {
 
-				shipping_method_id : { required: 'Please select shipping method.' },
-				payment_method_id  : { required: 'Please select payment method.' },
-				// shipping_date 	   : { required: 'Please select your desire shipment date.' },
-				shipping_address   : { required: 'Please put your shipping address' },
+				shipping_country_id   : { required: 'Please select country.' },
+				shipping_address      : { required: 'Please put your address.' },
+				shipping_city         : { required: 'Please put your city.' },
+				shipping_postal       : { required: 'Please put your postal.' },
 			}
-
-
 		},
 
 
@@ -217,12 +226,10 @@
 			payment_methods: config.main.payment_methods,
 
 			form: {
-
+				shipping_country_id: null,
 				shipping_address: null,
 				shipping_city: null,
-				shipping_country_id: null,
 				shipping_postal: null,
-
 			},
 
 			calendar_menu: false,
@@ -231,6 +238,10 @@
 			odUnitprice:null,
 			odTotalprice:null,
 
+			creditCard:{
+				url: null,
+				requestParameter: null,
+			},
 		}),
 
 
@@ -257,23 +268,47 @@
 			},
 
 			submit() {
+				this.formLoading = true;
+				this.$v.$touch();
 
-
-					this.formLoading = true
-
+			  	if (this.$v.$invalid) {
+						this.formLoading = false;
+			  	} else {		
 					var payload = {
-						shipping_address: this.form.shipping_address,
-						shipping_city: this.form.shipping_city,
-						shipping_country_id: this.form.shipping_country_id,
-						shipping_postal: this.form.shipping_postal,
+					    "id": this.bid.id,
+					    "type": "sample",
+					    "payment_method_id": 1,
+					    "data": {
+					        "country_id": this.form.shipping_country_id,
+					        "address": this.form.shipping_address,
+					        "city": this.form.shipping_city,
+					        "postal": this.form.shipping_postal,
+					    },	
+					};
+					this.cnsl(payload);
+					this.cnsl(localStorage.access_token);
 
-						bid_id: this.bid.id,
-						inquiry_id: this.inquiry.id,
-					};					
+					this.$store.dispatch(this.getStore()+'/getSampleOrderCreditCardResource', payload)
+					.then((response) => {
+						this.creditCard.requestParameter = response.request_parameter;
+						this.creditCard.url = response.request_url;
+
+						this.cnsl(this.creditCard);
+						this.$nextTick().then(() => {
+							this.formLoading = false;
+							this.$refs.creditCardForm.submit();
+						});
+					})
+					.catch((e) => {
+						this.formLoading = false;
+						this.cnsl(e);
+					});
 
 
+				};
 
 			},
+
 
 			resetForm() {
 
@@ -300,9 +335,7 @@
 			},
 
 			closeDialog() {
-
 				this.$emit('update:openSampleDialog',false)
-
 			},
 
 

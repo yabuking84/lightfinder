@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import config from '@/config/index'
 
-const base_url = config.main.appUrl;
+const base_url = config.main.apiURL;
 
 const state= {
 
@@ -48,11 +48,19 @@ const state= {
 			method: 'put',
 		},
 
+
+		setSampleStage: {
+			method: 'put',
+			url: base_url + `/v1/admin/inquiries`,
+			url2: 'bids',
+			url3: 'stage',
+		},
+
 	},
 
 
-	
-	
+
+
 	token: localStorage.getItem('access_token') || null,
 	axios: {
 		config: {
@@ -66,14 +74,14 @@ const state= {
 	// inquiry: null,
 	// openInquiryView: false,
 
-}
+	}
 
-const getters = {
+	const getters = {
 
-}
+	}
 
 
-const mutations = {
+	const mutations = {
 	// SHOW_OPENINQUIRYVIEW_M(state){
 	// 	state.openInquiryView = true;
 	// },
@@ -85,74 +93,74 @@ const mutations = {
 	// UPDATE_INQUIRY_M(state,data){
 	// 	state.inquiry = data.inquiry;
 	// },
-}
+	}
 
-const actions = {
+	const actions = {
 
-  /* GET  */
+	/* GET  */
 
-  getInquiry_a(context, data) {
+	getInquiry_a(context, data) {
 
-	return new Promise((resolve, reject) => {
-	  var headers = {
-		token: localStorage.access_token,
-		"content-type": "application/json",
-	  };
-	  axios({
-		  // method: state.api.get.method,
-		  // url: state.api.get.getInquiry.url + '/' + data.inq_id,
-		  method: state.api.getInquiry.method,
-		  url: state.api.getInquiry.url + '/' + data.inq_id,
-		  
-		  headers: headers
-		})
-		.then(response => {
-		  resolve(response.data);
-		})
-		.catch(error => {
-		  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-			console.log("EXPIRED");
-			router.push({ 'name': 'Logout' })
-		  } else {
-			reject(error);
-		  }
-		})
-	});
-  },
-
-
-  getInquiries_a() {
-
-	return new Promise((resolve, reject) => {
-	  var headers = {
-		token: localStorage.access_token,
-		"content-type": "application/json",
-	  };
-
-	  axios({
-		  // method: state.api.get.method,
-		  // url: state.api.get.getAllInquiries.url,
-		  method: state.api.getAllInquiries.method,
-		  url: state.api.getAllInquiries.url,
-		  headers: headers
-		})
-		.then(response => {
-		  resolve(response.data);
-		})
-		.catch(error => {
-		  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-			console.log("EXPIRED");
-			router.push({ 'name': 'Logout' })
-		  } else {
-			reject(error);
-		  }
-		})
-	});
-
-  },
+		return new Promise((resolve, reject) => {
+		  var headers = {
+			token: localStorage.access_token,
+			"content-type": "application/json",
+		  };
+		  axios({
+			  // method: state.api.get.method,
+			  // url: state.api.get.getInquiry.url + '/' + data.inq_id,
+			  method: state.api.getInquiry.method,
+			  url: state.api.getInquiry.url + '/' + data.inq_id,
+			  
+			  headers: headers
+			})
+			.then(response => {
+			  resolve(response.data);
+			})
+			.catch(error => {
+			  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+				console.log("EXPIRED");
+				router.push({ 'name': 'Logout' })
+			  } else {
+				reject(error);
+			  }
+			})
+		});
+	},
 
 
-   getAllInquiryBids_a(context,data){
+	getInquiries_a() {
+
+		return new Promise((resolve, reject) => {
+		  var headers = {
+			token: localStorage.access_token,
+			"content-type": "application/json",
+		  };
+
+		  axios({
+			  // method: state.api.get.method,
+			  // url: state.api.get.getAllInquiries.url,
+			  method: state.api.getAllInquiries.method,
+			  url: state.api.getAllInquiries.url,
+			  headers: headers
+			})
+			.then(response => {
+			  resolve(response.data);
+			})
+			.catch(error => {
+			  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+				console.log("EXPIRED");
+				router.push({ 'name': 'Logout' })
+			  } else {
+				reject(error);
+			  }
+			})
+		});
+
+	},
+
+
+	getAllInquiryBids_a(context,data){
 
 
 		return new Promise((resolve, reject) => {
@@ -187,37 +195,37 @@ const actions = {
 	},
 
 
-  /* PUT  */
+	/* PUT  */
 
 
 	approvedBid_a(context, data) {
 
-	// console.log(data.inquiry_id);
-	return new Promise((resolve, reject) => {
-	  var headers = {
-		token: localStorage.access_token,
-		"content-type": "application/json",
-	  };
-	  axios({
-		  method: state.api.approveBid.method,
-		  url: state.api.approveBid.url +'/'+ data.inquiry_id +'/bids/' + data.bid_id + '/evaluation',
-		  headers: headers,
-		  data: JSON.stringify({ 'approve': 1 })
-		})
-		.then(response => {
-		  resolve(response.data);
-		})
-		.catch(error => {
-		  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-			console.log("EXPIRED");
-			router.push({ 'name': 'Logout' })
-		  } else {
-			reject(error);
-		  }
-		})
-	});
+		// console.log(data.inquiry_id);
+		return new Promise((resolve, reject) => {
+		  var headers = {
+			token: localStorage.access_token,
+			"content-type": "application/json",
+		  };
+		  axios({
+			  method: state.api.approveBid.method,
+			  url: state.api.approveBid.url +'/'+ data.inquiry_id +'/bids/' + data.bid_id + '/evaluation',
+			  headers: headers,
+			  data: JSON.stringify({ 'approve': 1 })
+			})
+			.then(response => {
+			  resolve(response.data);
+			})
+			.catch(error => {
+			  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+				console.log("EXPIRED");
+				router.push({ 'name': 'Logout' })
+			  } else {
+				reject(error);
+			  }
+			})
+		});
 
-  },
+	},
 
 
 
@@ -225,14 +233,7 @@ const actions = {
 
 		// console.log(data.inquiry_id);
 		return new Promise((resolve, reject) => {
-			var payload = {
-			    "shipping_date": "2019-12-12",
-			    "eta": "2019-12-12",
-			    "etd": "2019-12-12",
-			    "shipping_cost": 69
-			};
-
-
+			var payload = data.formData;
 			var headers = {
 				token: localStorage.access_token,
 				"content-type": "application/json",
@@ -261,87 +262,126 @@ const actions = {
 
 
 
-  approvedInquiry_a(context, data) {
+	approvedInquiry_a(context, data) {
 
-	return new Promise((resolve, reject) => {
-	  var headers = {
-		token: localStorage.access_token,
-		"content-type": "application/json",
-	  };
-	  axios({
-		  method: state.api.approvedInquiry.method,
-		  url: state.api.approvedInquiry.url + '/' + data.inquiry_id + '/evaluation',
-		  headers: headers,
-		  data: JSON.stringify({ 'approve': 1 })
-		})
-		.then(response => {
-		  resolve(response.data);
-		})
-		.catch(error => {
-		  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-			console.log("EXPIRED");
-			router.push({ 'name': 'Logout' })
-		  } else {
-			reject(error);
-		  }
-		})
-	});
+		return new Promise((resolve, reject) => {
+		  var headers = {
+			token: localStorage.access_token,
+			"content-type": "application/json",
+		  };
+		  axios({
+			  method: state.api.approvedInquiry.method,
+			  url: state.api.approvedInquiry.url + '/' + data.inquiry_id + '/evaluation',
+			  headers: headers,
+			  data: JSON.stringify({ 'approve': 1 })
+			})
+			.then(response => {
+			  resolve(response.data);
+			})
+			.catch(error => {
+			  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+				console.log("EXPIRED");
+				router.push({ 'name': 'Logout' })
+			  } else {
+				reject(error);
+			  }
+			})
+		});
 
-  },
+	},
 
 
-  declinedInquiry_a(context, data) {
-	return new Promise((resolve, reject) => {
-	  var headers = {
-		token: localStorage.access_token,
-		"content-type": "application/json",
-	  };
-	  axios({
-		  method: state.api.declinedInquiry.method,
-		  url: state.api.declinedInquiry.url + '/' + data.inquiry_id + '/evaluation',
-		  headers: headers,
-		  data: JSON.stringify({ 'approve': 0 })
-		})
-		.then(response => {
-		  resolve(response.data);
-		})
-		.catch(error => {
-		  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
-			console.log("EXPIRED");
-			router.push({ 'name': 'Logout' })
-		  } else {
-			reject(error);
-		  }
-		})
-	});
+	declinedInquiry_a(context, data) {
+		return new Promise((resolve, reject) => {
+		  var headers = {
+			token: localStorage.access_token,
+			"content-type": "application/json",
+		  };
+		  axios({
+			  method: state.api.declinedInquiry.method,
+			  url: state.api.declinedInquiry.url + '/' + data.inquiry_id + '/evaluation',
+			  headers: headers,
+			  data: JSON.stringify({ 'approve': 0 })
+			})
+			.then(response => {
+			  resolve(response.data);
+			})
+			.catch(error => {
+			  if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+				console.log("EXPIRED");
+				router.push({ 'name': 'Logout' })
+			  } else {
+				reject(error);
+			  }
+			})
+		});
+	},
 
-  },
+	confirmBankTransfer_a(context, data) {
+		return new Promise((resolve, reject) => {
+		  var headers = {
+			token: localStorage.access_token,
+			"content-type": "application/json",
+		  };
+		  axios({
+			  method: state.api.confirmBankTransfer.method,
+			  url: state.api.confirmBankTransfer.url + '/' + data.inquiry_id + '/' +state.api.confirmBankTransfer.url2,
+			  headers: headers,
+			  data: JSON.stringify({ 'received': 1 })
+			})
+			.then(response => {
+			  resolve(response.data);
+			})
+			.catch(error => {
+				if(actions.checkToken(error)) {
+					reject(error);
+				}
+			})
+		});
 
-  confirmBankTransfer_a(context, data) {
-	return new Promise((resolve, reject) => {
-	  var headers = {
-		token: localStorage.access_token,
-		"content-type": "application/json",
-	  };
-	  axios({
-		  method: state.api.confirmBankTransfer.method,
-		  url: state.api.confirmBankTransfer.url + '/' + data.inquiry_id + '/' +state.api.confirmBankTransfer.url2,
-		  headers: headers,
-		  data: JSON.stringify({ 'received': 1 })
-		})
-		.then(response => {
-		  resolve(response.data);
-		})
-		.catch(error => {
-            if(actions.checkToken(error)) {
-                reject(error);
-            }
-		})
-	});
+	},
 
-  },
+	setSampleStage_a(context, data) {
+		return new Promise((resolve, reject) => {
+			var method = state.api.setSampleStage.method;
+			var url = state.api.setSampleStage.url+
+			"/"+data.inq_id+
+			"/"+state.api.setSampleStage.url2;
+			"/"+data.bid_id+
+			"/"+state.api.setSampleStage.url3;
 
-   checkToken(context,error){
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			setTimeout(()=>{
+			 	resolve('Success set stage_id = '+data.stage_id);
+			}, 3000);
+
+
+			// axios({
+			// 	method: method,
+			// 	url: url,
+			// 	headers: headers,
+			// 	data: JSON.stringify({ 
+			// 		'stage_id': data.stage_id,
+			// 	}),
+			// })
+			// .then(response => {
+			//   resolve(response.data);
+			// })
+			// .catch(error => {
+			// 	if(actions.checkToken(error)) {
+			// 		reject(error);
+			// 	}
+			// });
+
+		});
+
+	},
+
+	checkToken(context,error){
 		
 		// console.log("checkToken = ",error);
 		if(typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
@@ -361,9 +401,9 @@ const actions = {
 }
 
 export default {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions
+	namespaced: true,
+	state,
+	getters,
+	mutations,
+	actions
 }

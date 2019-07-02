@@ -197,7 +197,7 @@
 
 import { required, email, maxLength } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import config from '@/config/index'
 
 import inqEvntBs from "@/bus/inquiry";
@@ -213,7 +213,7 @@ export default {
 
 
 	mixins: [ 
-		helpers,
+		// helpers,
 		validationMixin,
 		inqMixin,
 	],
@@ -315,7 +315,7 @@ export default {
 			this.form.shipping_city=this.inquiry.shipping_city;
 			this.form.shipping_country_id=this.inquiry.shipping_country_id;
 			this.form.shipping_postal=this.inquiry.shipping_postal;
-			// console.log(this.inquiry);
+			// this.cnsl(this.inquiry);
 		},
 
 		closeDialog() {

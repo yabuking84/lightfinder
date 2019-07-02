@@ -110,11 +110,14 @@ lazy>
 </template>
 
 <script>
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
+import inqMixin from "@/mixins/inquiry"
+import inqEvntBs from "@/bus/inquiry"
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
+		inqMixin,
 	],
 
 	props:[
@@ -128,24 +131,25 @@ export default {
 
 	methods:{
 		payByBankTransfer(){
+
 			this.$store.dispatch('byrInq/payByBankTransfer', {
 				inquiry_id: this.inquiry.id
 			})
 			.then((response) => {
 
-				console.log('payByBankTransfer', response);
+				this.cnsl('payByBankTransfer', response);
 				this.confirmed = true;
-
+				inqEvntBs.emitPaymentMade();
 			})
 			.catch((e) => {
-				  console.log(e);				
+				  this.cnsl(e);				
 			});			
 		},
 
 		closeDialog(){
 
 			this.confirmed = false;
-			this.$emit('update:openDialog', false);
+			this.hideInquiry();
 		},
 	},
 

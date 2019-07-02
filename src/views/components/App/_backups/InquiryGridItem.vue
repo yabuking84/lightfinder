@@ -78,13 +78,13 @@
 
 <script>
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import inqMixin from "@/mixins/inquiry";
 
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
 		inqMixin,
 	],
 

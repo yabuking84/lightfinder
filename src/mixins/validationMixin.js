@@ -13,9 +13,9 @@ methods: {
 		const messages = get(this.$options.validationMessages, name)
 
 		if(!field.$dirty) {
-			// console.log(name)
-			// console.log('fieldErrors if(!field.$dirty) errors = ',errors)
-			// console.log("")
+			// this.cnsl(name)
+			// this.cnsl('fieldErrors if(!field.$dirty) errors = ',errors)
+			// this.cnsl("")
 			return errors
 		}
 
@@ -26,9 +26,9 @@ methods: {
 				}
 			}
 		}
-		// console.log(name)
-		// console.log('fieldErrors if(messages) errors = ',errors)
-		// console.log("")
+		// this.cnsl(name)
+		// this.cnsl('fieldErrors if(messages) errors = ',errors)
+		// this.cnsl("")
 		return errors
 	},	
 

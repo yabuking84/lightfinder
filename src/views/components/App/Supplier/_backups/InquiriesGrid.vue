@@ -158,7 +158,7 @@
   </div>
 </template>
 <script>
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryGridItem from "@/views/Components/App/InquiryGridItem";
 
@@ -178,7 +178,7 @@ export default {
     },
 
     mixins: [ 
-        helpers,
+        // helpers,
     ],
 
 
@@ -222,7 +222,7 @@ export default {
     //     time: config.polling.inquiryTable.time,
     //     repeat: true, // autostart: true,
     //     callback: function() {
-    //         console.log("InquiryTableTimer");
+    //         this.cnsl("InquiryTableTimer");
     //         this.fillTable(false);
     //     }
     //     ,
@@ -233,12 +233,12 @@ export default {
 
 
         fillTable(withLoading=true) {
-            // console.log("fillTable");
+            // this.cnsl("fillTable");
             this.loading=withLoading;
             this.allInquiries=[];
             this.$store.dispatch('spplrInq/getInquiries_a')
             .then((response)=> {
-                // console.log(response);
+                // this.cnsl(response);
                 var buffer = [];
                 for (var i=response.length - 1; i >=0; i--) {
                     var item= {};
@@ -271,7 +271,7 @@ export default {
 
             })
             .catch((e)=> {
-                console.log('Error: ' + e);
+                this.cnsl('Error: ' + e);
                 this.loading=false;
             })
             .finally(()=> {
@@ -316,7 +316,7 @@ export default {
                     // add key to search in the dom
                     return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
                 })            
-                // console.log(this.search);
+                // this.cnsl(this.search);
             }
 
             this.tableItems = items;
@@ -345,8 +345,8 @@ export default {
             this.categoryItems = data;
         })
         .catch((e) => {
-            console.log('Error: ');
-            console.log(e);
+            this.cnsl('Error: ');
+            this.cnsl(e);
         });
 
     },

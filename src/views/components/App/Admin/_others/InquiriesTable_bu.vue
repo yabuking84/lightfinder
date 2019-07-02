@@ -270,7 +270,7 @@
 <script>
 import inqEvntBs from "@/bus/inquiry";
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import inqMixin from "@/mixins/inquiry";
 
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
@@ -287,7 +287,7 @@ import InquiryView from "@/views/Components/App/admin/InquiryView";
 export default {
 
   mixins: [
-    helpers,
+    // helpers,
     VueTimers,
     inqMixin,
 
@@ -423,7 +423,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log('Error: ' + e);
+          this.cnsl('Error: ' + e);
           this.loading = false;
         })
         .finally(() => {
@@ -500,10 +500,10 @@ export default {
     this.$store.dispatch('cat/getCategories_a')
       .then((data) => {
         this.categoryItems = data;
-        // console.log(this.categoryItems);
+        // this.cnsl(this.categoryItems);
       })
       .catch((e) => {
-        console.log('Error: ');
+        this.cnsl('Error: ');
       });
 
   },
@@ -539,7 +539,7 @@ export default {
                           return (buff.length) ? buff.includes(inquiry.status) : true
                       });
 
-                      // console.log(items);
+                      // this.cnsl(items);
 
 
                   return items;
@@ -564,8 +564,8 @@ export default {
         //         return this.$store.state.inq.inquiry;
         //     },
         //     set(nVal) {
-        //         // console.log('setVal');
-        //         // console.log(nVal);
+        //         // this.cnsl('setVal');
+        //         // this.cnsl(nVal);
         //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
         //     },
         // },

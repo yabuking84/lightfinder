@@ -288,7 +288,7 @@
 
 	import ImageGallerySmall from "@/views/Components/App/ImageGallery"
 
-	import helpers from "@/mixins/helpers";
+	// import helpers from "@/mixins/helpers";
 	import inqEvntBs from "@/bus/inquiry";
 	import InquiryPostList from "@/views/Components/App/Supplier/InquiryPostList"
 
@@ -296,7 +296,7 @@
 
 	export default {
 		mixins: [
-			helpers,
+			// helpers,
 		],
 
 		components: {
@@ -397,7 +397,7 @@
 
 		created() {
 
-			// console.log(this.inquiry);
+			// this.cnsl(this.inquiry);
 			   this.SortAttachments();    
 
 

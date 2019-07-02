@@ -8,37 +8,41 @@ import config from '@/config/index'
 import vm from '@/main.js';
 
 import hlprs from '@/mixins/helpers'
-const base_url = config.main.appUrl;
+const base_url = config.main.apiURL;
 
 const state = {
 
-    api: {
+	api: {
 
-        login: {
-            method: 'post',
-            url: base_url+'/v1/login',  
-        },
+		login: {
+			method: 'post',
+			url: base_url+'/v1/login',  
+		},
 
-        logout: {
-            method: 'post',
-            url: base_url+'/v1/logout',
-        },
+		logout: {
+			method: 'post',
+			url: base_url+'/v1/logout',
+		},
 
-        buyerRegistration: {
-        	method: 'post',
-        	url: base_url+'/v1/buyer/register'
-        },
+		buyerRegistration: {
+			method: 'post',
+			url: base_url+'/v1/buyer/register'
+		},
 
-        supplierRegistration: {
-        	method: 'post',
-        	url: base_url+'/v1/supplier/register'
-        },
+		supplierRegistration: {
+			method: 'post',
+			url: base_url+'/v1/supplier/register'
+		},
 
-        getInquiryStatuses: {
-            method: 'get',
-            url: base_url+'/v1/inquiry-stages',
-        },
+		getInquiryStatuses: {
+			method: 'get',
+			url: base_url+'/v1/inquiry-stages',
+		},
 
+		isEmailExist: {
+			method: 'post',
+			url: base_url+'/v1/validate-email',
+		},
 
 	},
 	token: localStorage.getItem('access_token') || null,
@@ -288,61 +292,93 @@ const actions = {
 	},
 
 
-    buyerRegistration_a(context, data) {
+	buyerRegistration_a(context, data) {
 
-    	 return new Promise((resolve, reject) => {
+		 return new Promise((resolve, reject) => {
 
-            var headers = {
-                "content-type": "application/json",
-            };
+			var headers = {
+				"content-type": "application/json",
+			};
 
-            axios({
-                method: state.api.buyerRegistration.method,
-                url: state.api.buyerRegistration.url,
-                headers: headers,
-                data: JSON.stringify(data.data),
-            })
-            .then(response => {
-	            resolve(response);
-            })
-            .catch(error => {
-                // console.log(error);
-                // if(context.dispatch('checkToken',error))
-                reject(error);
-                
-            })
-        });
-
-
-    },
+			axios({
+				method: state.api.buyerRegistration.method,
+				url: state.api.buyerRegistration.url,
+				headers: headers,
+				data: JSON.stringify(data.data),
+			})
+			.then(response => {
+				resolve(response);
+			})
+			.catch(error => {
+				console.log(error.response);
+				// if(context.dispatch('checkToken',error))
+				reject(error.response);
+				
+			})
+		});
 
 
-    supplierRegistration_a(context, data) {
+	},
 
-    	 return new Promise((resolve, reject) => {
-    	 	
-            var headers = {
-                "content-type": "application/json",
-            };
 
-            axios({
-                method: state.api.supplierRegistration.method,
-                url: state.api.supplierRegistration.url,
-                headers: headers,
-                data: JSON.stringify(data.data),
-            })
-            .then(response => {
-                resolve(response);
-            })
-            .catch(error => {
-                // console.log(error);
-                if(context.dispatch('checkToken',error))
-                reject(error);
-                
-            })
-        });
 
-    },
+	isEmailExist_a(context, data) {
+
+		 return new Promise((resolve, reject) => {
+
+			var headers = {
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.isEmailExist.method,
+				url: state.api.isEmailExist.url,
+				headers: headers,
+				data: JSON.stringify({
+					'email': data.email,
+				}),
+			})
+			.then(response => {
+				// console.log('response',response)
+				resolve(!response.data);
+			})
+			.catch(error => {
+				console.log(error.response);
+				reject(error.response);
+			})
+
+
+		});
+
+	},
+
+
+	supplierRegistration_a(context, data) {
+
+		 return new Promise((resolve, reject) => {
+			
+			var headers = {
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.supplierRegistration.method,
+				url: state.api.supplierRegistration.url,
+				headers: headers,
+				data: JSON.stringify(data.data),
+			})
+			.then(response => {
+				resolve(response);
+			})
+			.catch(error => {
+				// console.log(error);
+				if(context.dispatch('checkToken',error))
+				reject(error);
+				
+			})
+		});
+
+	},
 
 	loginSuccess_a(context){
 

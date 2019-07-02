@@ -63,14 +63,14 @@
     import InquiryDialog from "@/views/Components/App/Buyer/BuyerInquiryViewDialog"
     import BidDialog from "@/views/Components/App/Supplier/BidDialog"
     import inqEvntBs from "@/bus/inquiry";
-    import helpers from "@/mixins/helpers";
+    // import helpers from "@/mixins/helpers";
 
     import config from "@/config/main";
 
 
     export default {
         mixins: [
-            helpers,
+            // helpers,
         ],
 
 
@@ -105,7 +105,7 @@
                             inq_id: this.inquiry.id
                         })
                         .then(response => {
-                            // console.log(response);
+                            // this.cnsl(response);
                             this.bidItems = response;
 
                             this.bidItems.sort((a, b) => {
@@ -113,7 +113,7 @@
                             });
                         })
                         .catch(error => {
-                            console.log(error);
+                            this.cnsl(error);
                         });
 
                 },

@@ -5,7 +5,7 @@ import router from '@/router'
 
 import config from '@/config/index'
 
-const base_url = config.main.appUrl;
+const base_url = config.main.apiURL;
 
 const state = {
 	api: {
@@ -56,6 +56,21 @@ const state = {
 			url     : base_url+'/v1/pay/bank-transfer',
 		},
 
+		payByBankTransfer: {
+			method  : 'post',
+			url     : base_url+'/v1/pay/bank-transfer',
+		},
+
+		updateProfile: {
+			method  : 'patch',
+			url     : base_url+'/v1/profile',
+		},
+
+		updatePassword: {
+			method  : 'patch',
+			url     : base_url+'/v1/password',
+		},
+
 	},
 
 	paymentMethod: {
@@ -89,7 +104,73 @@ const mutations = {
 	
 const actions = {
 
-	getInquiries_a(context, data){    	
+
+
+
+	updateProfile_a(context, data) {
+		return new Promise((resolve, reject) => {
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.updateProfile.method,
+				url: state.api.updateProfile.url,
+				headers: headers,
+				data: JSON.stringify(data.data)
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+					console.log("EXPIRED")
+					router.push({'name': 'Logout'});
+				} else {
+					console.log("normal error!")
+					reject(error)
+				}
+			});
+		})
+	},
+
+	updatePassword_a(context, data) {
+		return new Promise((resolve, reject) => {
+
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.updatePassword.method,
+				url: state.api.updatePassword.url,
+				headers: headers,
+				data: JSON.stringify(data.data)
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+					console.log("EXPIRED")
+					router.push({'name': 'Logout'});
+				} else {
+					console.log("normal error!")
+					reject(error)
+				}
+			});
+
+		})
+	},
+
+
+
+
+
+
+	getInquiries_a(context, data){
 		return new Promise((resolve, reject) => {
 			var headers = {token:localStorage.access_token};
 			// console.log(state.api.getInquiries.url);
@@ -285,6 +366,30 @@ const actions = {
 					type:    "inquiry",
 					payment_method_id: state.paymentMethod.creditCard,
 				},
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+		}) 
+	},
+
+
+	getSampleOrderCreditCardResource(context, data) {
+		return new Promise((resolve, reject) => {
+
+			var headers = { token: localStorage.access_token }
+			axios({
+				method  : state.api.getCreditCardResource.method,
+				url     : state.api.getCreditCardResource.url,
+				headers : headers,
+				data 	: data,
 			})
 			.then(response => {
 				resolve(response.data);

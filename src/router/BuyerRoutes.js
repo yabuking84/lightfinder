@@ -56,8 +56,21 @@ const meta = {
 export default [
 
     {
+        name: 'BuyerHome2',
+        path: '',
+        components: { 
+            default: BuyerHome, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: BuyerInquiryView,
+        },
+        meta: meta,
+    },
+
+    {
         name: 'BuyerHome',
-        path: '/buyer/dashboard',
+        path: '/',
         components: { 
             default: BuyerHome, 
             sidebar: AppSidebar, 
@@ -70,8 +83,8 @@ export default [
 
     {
         name: 'BuyerInquiry',
-        path: '/buyer/inquiry',
-        components: {
+        path: '/inquiries',
+        components: { 
             default: BuyerInquiry, 
             sidebar: AppSidebar, 
             header: AppToolbar, 
@@ -79,27 +92,25 @@ export default [
             dialog: BuyerInquiryView,
         },
         meta: meta,
-        children:[
-		    {
-		        name: 'BuyerInquiryView',
-		        path: ':inquiry_id',
-		        meta: meta,
-		        children:[
-		        	{
-				        name: 'BuyerInquiryViewPayment',
-				        path: 'payment/:payment_status',		        	
-				        meta: meta,
-		        	},
-		        ],
-		    },
+    },
 
-        ],
+    {
+        name: 'BuyerInquiryViewPayment',
+        path: '/inquiry/:inquiry_id/payment/:payment_status',
+        components: {
+            default: BuyerHome, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: BuyerInquiryView,
+        },
+        meta: meta,
     },
 
 
     {
         name: 'BuyerProfile',
-        path: '/buyer/profile',
+        path: '/profile',
         components: {
             // default: BuyerHome, 
             default: AppProfile, 
@@ -113,7 +124,7 @@ export default [
 
     {
         name: 'BuyerInvoice',
-        path: '/buyer/invoice',
+        path: '/invoice',
         components: {
             // default: BuyerHome, 
             default: BuyerInvoice, 

@@ -62,14 +62,14 @@
 </template>
 <script>
 import adminSupplierBus from "@/bus/admin-supplier"
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
 import SupplierDialog from '@/views/Components/app/Admin/SupplierDialog'
 
 
 export default {
   mixins: [
-    helpers,
+    // helpers,
   ],
   data: function() {
     return {
@@ -160,7 +160,7 @@ export default {
 
         .then((response) => {
 
-          console.log(response);
+          this.cnsl(response);
 
           for (var i = response.length - 1; i >= 0; i--) {
 
@@ -181,7 +181,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log('Error: ' + e);
+          this.cnsl('Error: ' + e);
           this.loading = false;
         })
         .finally(() => {

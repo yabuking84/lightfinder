@@ -168,11 +168,11 @@
 			          }
 
      				  // this.tableItems = items;
-			        //   console.log(this.allInquiries);
+			        //   this.cnsl(this.allInquiries);
 
 			        })
 			        .catch((e) => {
-			          console.log('Error: ' + e);
+			          this.cnsl('Error: ' + e);
 			          this.loading = false;
 			        })
 			        .finally(() => {

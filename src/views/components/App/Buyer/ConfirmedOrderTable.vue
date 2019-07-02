@@ -3,10 +3,18 @@
 		<v-card>
 
 			<v-card-title>
-				<v-layout row wrap class="grey darken-4 heading-title" style="width:100%;">
-				<v-flex xs12>
-					<h3 class="white--text ma-1">Confirmed Orders</h3>
-				</v-flex>								 
+				<v-layout 
+				row wrap justify-space-between
+				class="grey darken-4 heading-title">
+					<h3 class="white--text ma-3">Confirmed Orders</h3>
+					<v-btn 
+					@click="fillTable()" 
+					class="white--text ma-2"
+					icon 
+					style="margin: 0;">
+					    <v-icon>refresh</v-icon>
+					</v-btn>						
+				
 				</v-layout>
 			</v-card-title>
 
@@ -20,26 +28,28 @@
 					:items="inquiries" 
 					hide-actions 
 					class="elevation-0 pending-payments">
-						<template v-slot:items="props">
+						<template v-slot:items="sp">
 						<tr>
-							
-							<!-- <td><pre>{{ props.item }}</pre></td> -->
 
-							<td>{{ props.item.data.id }}</td>
+							<!-- <td><pre>{{ sp.item }}</pre></td> -->
 
-							<td>$5677.99</td>
+							<td>{{ sp.item.id }}</td>
+
+							<td>$ {{ currency(sp.item.unit_cost) }}</td>
+
+							<td>{{ sp.item.quantity }} pcs</td>
+
+							<td>$ {{ currency(sp.item.amount+sp.item.shipping_cost) }}</td>
 
 							<td class="text-xs-right pa-0">
-
 								<v-btn 
-								@click="gotoNotfication(props.item)"
+								@click="viewInquiry(sp.item)"
 								small
 								color="black" 
 								title="Pay"
 								class="white--text">
 									<v-icon>fas fa-search</v-icon>
 								</v-btn>
-
 							</td>
 
 						</tr>
@@ -60,7 +70,18 @@
 </template>
 <script>
 import { Projects } from '@/data/widgets/project'
+
+// import helpers from "@/mixins/helpers"
+import inqMixin from "@/mixins/inquiry";
+
+
 export default {
+
+mixins: [
+	// helpers,
+	inqMixin,
+],
+
 data() { return {
 	  headers: [
 		{
@@ -69,9 +90,19 @@ data() { return {
 			value: 'id',
 		},
 		{
+			text: 'Unit Cost',
+			align: 'left',
+			value: 'unit_cost',
+		},
+		{
+			text: 'Quantity',
+			align: 'left',
+			value: 'quantity',
+		},
+		{
 			text: 'Amount',
 			align: 'left',
-			value: 'name',
+			value: 'amount',
 		},
 		{ 
 			text: '', 
@@ -83,37 +114,15 @@ data() { return {
 }},
 
 methods: {
-	setInquiries() {
-		var storeType = this.$route.meta.storeType.inq;
-
-		this.$store.dispatch(storeType+'/getInquiries_a', {stage_id:'2001'})
+	fillTable() {
+		// var storeType = this.$route.meta.storeType.inq;
+		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'2001',with_bids:1})
 		// this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1006'})
 		.then((response)=>{
-			// console.log('response', response);
-
-			var inquiries = response.map((inquiry)=>{
-
-				return {
-					data: {
-						'id': inquiry.id,
-						'bid_id': null,
-						'notification_id': null,
-					},
-					dataType: "inquiry",
-					isRead: true,
-					textSnackbar: null,
-					title: null,
-				}				
-			});
-
-			// console.log('inquiries', inquiries);
-
-
-			this.inquiries = inquiries;
-
+			this.inquiries = this.setDataTableInquiry(response);
 		})
 		.catch((e) => {
-			console.log('Error: ' + e);
+			this.cnsl('Error: ' + e);
 			this.loading = false;
 		})
 		.finally(() => {
@@ -121,21 +130,20 @@ methods: {
 		});
 	},
     
-    // gotonotification
-    // /////////////////////////////////////////////////////////
 
-    gotoNotfication(ntfctn){
-        this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
-    },
-
-    // /////////////////////////////////////////////////////////
-    // gotonotification
+	viewInquiry(arg) {
+		arg.loading = true;
+		this.showInquiry(arg.id)
+		.then((data)=>{
+			arg.loading = false;
+		});
+	},
 
 
 },
 
 created(){
-	this.setInquiries();
+	this.fillTable();
 },
 
 }

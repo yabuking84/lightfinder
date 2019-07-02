@@ -129,7 +129,7 @@ export default {
       if (e.target.querySelector("#InquiryView"))
         this.$emit('update:openInquiry', false)
 
-      // console.log(e.target);
+      // this.cnsl(e.target);
 
     },
   },

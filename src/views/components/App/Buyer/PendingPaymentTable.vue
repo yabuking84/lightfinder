@@ -3,16 +3,23 @@
 		<v-card>
 
 			<v-card-title>
-				<v-layout row wrap class="grey darken-4 heading-title" style="width:100%;">
-				<v-flex xs12>
-					<h3 class="white--text ma-1">Pending Payments</h3>
-				</v-flex>								 
+				<v-layout 
+				row wrap justify-space-between
+				class="grey darken-4 heading-title">
+					<h3 class="white--text ma-3">Pending Payments</h3>			
+					<v-btn 
+					@click="fillTable()" 
+					class="white--text ma-2"
+					icon 
+					style="margin: 0;">
+					    <v-icon>refresh</v-icon>
+					</v-btn>							
 				</v-layout>
 			</v-card-title>
 
 
 			<!-- <v-divider></v-divider> -->
-			<v-card-text class="pa-0"  style="height: 509px; overflow: auto;">
+			<v-card-text class="pa-0"  style="height: 454px; overflow: auto;">
 				<template>
 
 					<v-data-table 
@@ -23,10 +30,24 @@
 						<template v-slot:items="sp">
 						<tr>
 							
+							<!-- <td><pre>{{ sp.item }}</pre></td> -->
 
-							<td>{{ sp.item.data.id }}</td>
+							<td>{{ sp.item.id }}</td>
 
-							<td>$ {{ currency(sp.item.amount) }}</td>
+							<td>$ {{ currency(sp.item.amount+sp.item.shipping_cost) }}</td>
+
+							<td class="px-1">
+								<span 
+								v-if="sp.item.stage_id==1005"
+								class="font-weight-bold">
+									Pending
+								</span>
+								<span 
+								v-if="sp.item.stage_id==1006"
+								class="font-weight-bold">
+									Confirming Payment
+								</span>
+							</td>
 
 							<td class="text-xs-right pa-0">
 
@@ -36,7 +57,8 @@
 								title="Pay"
 								:loading="sp.item.loading"
 								class="white--text">
-									<v-icon>fas fa-money-check-alt</v-icon> &nbsp; Pay
+									<!-- <v-icon>fas fa-money-check-alt</v-icon> &nbsp;  -->
+									Pay
 								</v-btn>
 
 								<!-- <v-btn 
@@ -68,13 +90,14 @@
 <script>
 import { Projects } from '@/data/widgets/project'
 
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import inqMixin from "@/mixins/inquiry";
+import inqEvntBs from "@/bus/inquiry";
 
 export default {
 
 mixins: [
-	helpers,
+	// helpers,
 	inqMixin,
 ],
 
@@ -88,12 +111,19 @@ data() { return {
 		{
 			text: 'Amount',
 			align: 'left',
-			value: 'name',
+			value: 'amount',
 		},
-		{ 
+		{
+			text: 'Status',
+			align: 'left',
+			value: 'stage_id',
+			class: 'px-1',
+		},
+		{
 			text: '', 
 			align: 'center' ,
 			value: 'action', 
+			sortable: false,
 		},
 	],
 	inquiries : [],
@@ -101,42 +131,17 @@ data() { return {
 }},
 
 methods: {
-	setInquiries() {
-
-		var storeType = this.$route.meta.storeType.inq;
-		this.$store.dispatch(storeType+'/getInquiries_a', {stage_id:'1005',with_bids:1})
+	fillTable() {
+		// var storeType = this.$route.meta.storeType.inq;
+		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'1005,1006',with_bids:1})
 		.then((response)=>{
-			// console.log('response', response);
-			var inquiries = response.map((inquiry)=>{
-				
-				var bid = inquiry.bids.filter(function(item) {
-					return item.awarded;
-				});
-				var amount = (bid.length)?bid[0].total_price:0.0;
-
-				return {
-					data: {
-						'id': inquiry.id,
-						'bid_id': null,
-						'notification_id': null,
-					},
-					amount: amount,
-					dataType: "inquiry",
-					isRead: true,
-					textSnackbar: null,
-					title: null,
-					loading: false,
-				}				
-			});
-
-			// console.log('inquiries', inquiries);
-
-
-			this.inquiries = inquiries;
-
+			this.inquiries = this.setDataTableInquiry(response);
 		})
 		.catch((e) => {
-			console.log('Error: ' + e);
+			this.cnsl('Error: ' + e);
+		})
+		.finally(() => {
+			this.loading = false;
 		});
 	},
     
@@ -144,7 +149,7 @@ methods: {
 
 	viewInquiry(arg) {
 		arg.loading = true;
-		this.showInquiry(arg.data.id)
+		this.showInquiry(arg.id)
 		.then((data)=>{
 			arg.loading = false;
 		});
@@ -153,7 +158,11 @@ methods: {
 },
 
 created(){
-	this.setInquiries();
+	this.fillTable();
+
+	inqEvntBs.onPaymentMade(()=>{
+		this.fillTable();		
+	});
 },
 
 }

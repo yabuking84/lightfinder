@@ -98,6 +98,47 @@
 			<!-- BAL Confirmation -->
 
 
+			<!-- Production -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <v-flex xs12 v-if="inquiry.stage_id == 2001">
+                <v-layout row wrap>
+                    <v-flex xs12 pa-0>
+					    <v-alert
+				      	:value="true"
+				      	type="success">
+					      	<div class="headline font-weight-bold">In Production</div>
+                            <div class="" style="font-style: italic;">The order is in production.</div>
+                            
+							<table class="amountBreakdown mt-3 ">
+								<!-- <tr><td><pre>{{ bidItems }}</pre></td></tr> -->
+								<tr>
+									<td class="pr-4">Inquiry Amount:</td>
+									<td>$ {{ currency(inquiryAmount) }}</td>
+								</tr>
+								<tr>
+									<td class="pr-4">Shipping Cost:</td>
+									<td>$ {{ currency(inquiry.shipping_cost) }}</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<v-divider style="border-color: #fff;"></v-divider>
+									</td>
+								</tr>
+								<tr class="totalRow">
+									<td class="pr-4">Total Amount to Pay:</td>
+									<td>$ {{ currency(inquiryAmount+inquiry.shipping_cost) }}</td>
+								</tr>
+							</table>
+
+					    </v-alert>                        
+                    </v-flex>
+
+                </v-layout>
+            </v-flex>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- Production -->
+
+
 			<!-- if has no Bids or Quotes -->
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<v-layout align-center justify-center row fill-height v-if="!bidItems.length">
@@ -120,7 +161,7 @@
 			<template v-for="(bidItem, i) in bidItems">
 			<!-- v-if="checkIfAwarded(bidItem)" -->
 			<v-card
-			class="mb-5 ma-3"
+			class="mb-3 ma-3"
 			:hover="true" 
 			:class="{
 				'is_selected': checkIfAwarded(bidItem),
@@ -328,30 +369,66 @@
 
 						   	<v-flex xs12>
 							  <v-layout row wrap>
-								  <v-flex xs6>
-									<template v-if="!inquiry.awarded">                                                
-									  	<v-btn 
-									  	flat block large 
-									  	class="green darken-2 " 
-									  	:disabled="(inquiry.awarded)?true:false" 
-									  	@click="openSample(bidItem)">
-										  	<i class="fas fa-lightbulb white--text "></i>
-										  	<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-									  	</v-btn>
+									<template v-if="inquiry.awarded"> 
+										<template v-if="bidItem.stage_id==2001">											
+											<v-flex xs6>
+											    <v-alert
+										      	:value="true"
+										      	icon="fas fa-industry"
+										      	class="alert1"
+										      	color="error">
+												  		Sample Order in Production
+										      	</v-alert>
+											</v-flex> 
+										</template>
+										<template v-if="bidItem.stage_id==2002">
+											<v-flex xs6>
+										    <v-alert
+									      	:value="true"
+									      	icon="fas fa-shipping-fast"
+										    class="alert1"
+									      	color="success">
+											  		Sample Order Sent
+									      	</v-alert>
+											</v-flex>
+										</template>
+										<template v-if="bidItem.stage_id==3001">
+											<v-flex xs6>
+										    <v-alert
+									      	:value="true"
+									      	icon="fas fa-check-circle"
+										    class="alert1"
+									      	color="success">
+											  		Sample Order Received
+									      	</v-alert>
+											</v-flex> 
+										</template>
 									</template>
-								  </v-flex>
-								  <v-flex xs6>
-									<template v-if="!inquiry.awarded">                                                
-									  	<v-btn 
-									  	flat block dark large 
-									  	:disabled="(inquiry.awarded)?true:false" 
-									  	class="blue-grey darken-2" 
-									  	@click="openAwardBid(bidItem)">
-											<i class="fas fa-award white--text"></i>
-											<span class="font-weight-bold ml-1 white--text">Award</span>
-									  	</v-btn>
+
+
+									<template v-else-if="!inquiry.awarded"> 
+										<v-flex v-if="!bidItem.stage_id" xs6>
+											<pre>{{ bidItem }}</pre> -->
+											<v-btn 
+											flat block large 
+											class="green darken-2 " 
+											:disabled="(inquiry.awarded)?true:false" 
+											@click="openSample(bidItem)">
+												<i class="fas fa-lightbulb white--text "></i>
+												<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
+											</v-btn>
+										</v-flex>
+									  	<v-flex xs6>
+										  	<v-btn 
+										  	flat block dark large 
+										  	:disabled="(inquiry.awarded)?true:false" 
+										  	class="blue-grey darken-2" 
+										  	@click="openAwardBid(bidItem)">
+												<i class="fas fa-award white--text"></i>
+												<span class="font-weight-bold ml-1 white--text">Award</span>
+										  	</v-btn>
+									  	</v-flex>
 									</template>
-								  </v-flex>
 							  </v-layout>
 							</v-flex>
 
@@ -402,7 +479,7 @@ import Messaging from "@/views/Components/App/MessagingBox"
 
 // import Comment from "@/views/Components/App/Buyer/InquiryPostListComment"
 
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import inqEvntBs from "@/bus/inquiry"
 import inqMixin from "@/mixins/inquiry"
 
@@ -412,8 +489,8 @@ import config from "@/config/main"
 export default {
 
   mixins: [
-	helpers,
-	// VueTimers,
+	// helpers,
+	inqMixin,	
   ],
 
   components: {
@@ -469,7 +546,7 @@ export default {
 	// 	repeat: true,
 	// 	autostart: false,
 	// 	callback: function() {
-	// 		console.log("BidTableTimer");
+	// 		this.cnsl("BidTableTimer");
 	// 		this.fillBidTable();
 	// 	},
 	// }],
@@ -479,7 +556,7 @@ export default {
 
 		fillBidTable() {
 
-			console.log('fillBidTable');
+			this.cnsl('fillBidTable');
 
 			this.checkInquiryStatus();
 			this.$store.dispatch('byrInq/getAllInquiryBids_a', {
@@ -493,20 +570,29 @@ export default {
 				   			showBid:false,
 				   		}
 				   	});
-				   	this.bidItems.sort((a, b) => {
-						return a.total_price - b.total_price;
-					});
+				   	
+				   	if(this.inquiry.awarded){
+				   		this.bidItems.sort((bid_a, bid_b) => {
+							return bid_a.awarded - bid_b.awarded;
+						});
+						this.bidItems = this.bidItems.reverse();
+				   	}
+				   	else {				   		
+					   	this.bidItems.sort((bid_a, bid_b) => {
+							return bid_a.total_price - bid_b.total_price;
+						});
+				   	}
 				});
 
 			})
 			.catch(error => {
-				console.log(error);
+				this.cnsl(error);
 			});
 		},
 
 		openAwardBid(bid) {
 
-			// console.log("openAwardBid bid",bid);
+			// this.cnsl("openAwardBid bid",bid);
 			this.bidToAward = bid;
 			this.openAwardDialog = true;
 		},
@@ -522,10 +608,10 @@ export default {
 
 			let is_awarded = false;
 
-			// console.log("xxxxxxxxxxxxxxxxxxxxxx");
-			// console.log("bid.id",bid.id);
-			// console.log("inq.awarded",this.inquiry.awarded);
-			// console.log("bid.awarded",bid.awarded);
+			// this.cnsl("xxxxxxxxxxxxxxxxxxxxxx");
+			// this.cnsl("bid.id",bid.id);
+			// this.cnsl("inq.awarded",this.inquiry.awarded);
+			// this.cnsl("bid.awarded",bid.awarded);
 			if (this.inquiry.awarded == 1) {
 				if (bid.awarded == 1)
 				is_awarded = true;
@@ -534,8 +620,8 @@ export default {
 				is_awarded = true;
 			}
 
-			// console.log("is_awarded",is_awarded);
-			// console.log("xxxxxxxxxxxxxxxxxxxxxx");
+			// this.cnsl("is_awarded",is_awarded);
+			// this.cnsl("xxxxxxxxxxxxxxxxxxxxxx");
 			return is_awarded;
 		},
 
@@ -551,9 +637,9 @@ export default {
 			this.verified = (this.inquiry.stage_id == 1001)?true:false;
 			this.rejected = (this.inquiry.stage_id == 1003)?true:false;
 
-			// console.log("this.inquiry.stage_id = "+this.inquiry.stage_id);
-			// console.log("this.verified = "+this.verified);
-			// console.log("this.rejected = "+this.rejected);
+			// this.cnsl("this.inquiry.stage_id = "+this.inquiry.stage_id);
+			// this.cnsl("this.verified = "+this.verified);
+			// this.cnsl("this.rejected = "+this.rejected);
 
 		},
 
@@ -596,6 +682,19 @@ export default {
    
 		focus_bid_id(){
 			return this.$store.state.inq.bid_id;
+		},
+		
+		inquiryAmount(){
+			var retVal = 0;
+			
+			this.cnsl('this.bidItems',this.bidItems);
+			this.bidItems.forEach((bid)=>{				
+				if(bid.active && bid.awarded) {
+					retVal=bid.total_price;					
+				}
+			});
+
+			return retVal;
 		},
 
 	},
@@ -647,5 +746,22 @@ export default {
     top: 0;
     right: 0;	
 }
+.amountBreakdown {
+	width: 100%;
+	td {
+		text-align: left;
+		font-size: 1em;
+	}
+	.totalRow {
+		td {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+	}
+}
 
+
+// .v-alert /deep/ .v-alert__icon.v-icon {
+// 	color: #fff;
+// }
 </style>

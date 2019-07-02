@@ -1,15 +1,19 @@
-const appUrl = 'http://192.168.1.200:8000';
-// const appUrl = 'http://almani.ddns.net:18000';
+// const apiURL = 'http://almani.ddns.net:8000';
+// const socketURL = 'http://almani.ddns.net:3000';
+const apiURL = 'http://192.168.1.200:8000';
+const socketURL = 'http://192.168.1.200:3000';
 
 
 export default {
 
 	devMode: true,
 
-	appUrl: appUrl,
+	socketURL: socketURL,
+
+	apiURL: apiURL,
 
 	awss3: {
-		signingURL:appUrl+"/v1/aws-s3-signature",
+		signingURL:apiURL+"/v1/aws-s3-signature",
         urls: {
         	inquiry: 'https://httpbin.org/post',
         },
@@ -90,8 +94,10 @@ export default {
 				name: "Shipment",
 				class: "light-green",
 				icon: "fas fa-truck",
-
 			},
+
+
+
 			{
 				id: 2003, 
 				name: "Receiving",

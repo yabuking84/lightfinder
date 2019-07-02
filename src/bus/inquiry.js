@@ -67,6 +67,20 @@ export default new Vue({
 
 
 
+		emitPaymentMade(){
+			this.$emit('payment-made');
+		},
+		onPaymentMade(func) {
+			this.$on('payment-made', () => {
+				func();
+			});
+		},
+
+
+
+
+
+
 
 
 

@@ -49,7 +49,7 @@
 							</v-layout>
 
 							<!-- v-if="showSaveProfileImage" -->
-							<v-btn 
+							<!-- <v-btn 
 							class="mt-2 ml-0"
 							color="success"
 							dark  
@@ -57,7 +57,7 @@
 							@click="saveProfileImage()"
 							:loading="formloading">
 								<v-icon class="mr-3">far fa-save</v-icon> Save New Profile Image
-							</v-btn>
+							</v-btn> -->
 
 							</template>
 						</v-flex>
@@ -89,21 +89,22 @@
 						<v-flex xs10 offset-xs1>
 							<v-text-field 
 							color="black" 
-							v-model="form.email" 
-							:error-messages="fieldErrors('form.email')" 
-							@blur="$v.form.email.$touch()" 
-							label="Email Address" 
-							required></v-text-field>
-						</v-flex>
-						<v-flex xs10 offset-xs1>
-							<v-text-field 
-							color="black" 
 							v-model="form.job_title" 
 							:error-messages="fieldErrors('form.job_title')" 
 							@blur="$v.form.job_title.$touch()" 
 							label="Job Title" 
 							required>
 							</v-text-field>
+						</v-flex>						
+						<v-flex xs10 offset-xs1>
+							<!-- readonly disabled -->
+							<v-text-field 
+							color="black" 
+							v-model="form.email" 
+							:error-messages="fieldErrors('form.email')" 
+							@blur="$v.form.email.$touch()" 
+							label="Email Address" 
+							required></v-text-field>
 						</v-flex>
 						<v-flex xs10 offset-xs1>
 							<v-text-field 
@@ -119,8 +120,6 @@
 							<v-text-field 
 							color="black" 
 							v-model="form.fax" 
-							:error-messages="fieldErrors('form.fax')" 
-							@blur="$v.form.fax.$touch()" 
 							label="Fax"
 							required>
 							</v-text-field>
@@ -136,9 +135,19 @@
 							</v-text-field>
 						</v-flex>
 						<v-flex xs10 offset-xs1>
+							<v-text-field 
+							color="black" 
+							v-model="form.postal" 
+							:error-messages="fieldErrors('form.postal')" 
+							@blur="$v.form.postal.$touch()" 
+							label="Postal" 
+							required>
+							</v-text-field>
+						</v-flex>
+						<v-flex xs10 offset-xs1>
 							<!-- v-model="testSelect" -->
 							<v-select 
-							v-model="form.sel_country_id"
+							v-model="form.country_id"
 							:items="countries"
 							item-text="name" 
 							item-value="id" 
@@ -226,17 +235,24 @@
 			</v-layout>
 		</v-container>
 
+		<profile-update-dialog :openDialog.sync="openDialog" :message="message"></profile-update-dialog>
+
+
 	</div>
 </template>
 <script>
 import AdminBuyerBus from "@/bus/admin-buyer";
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import { required, email, minValue, minLength, maxLength, sameAs } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
 import config from '@/config/index'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import vue2Dropzone from 'vue2-dropzone'
+
+
+import ProfileUpdateDialog from '@/views/Components/App/ProfileUpdateDialog'
+
 
 const dform = {
 
@@ -247,6 +263,7 @@ const dform = {
 	phone: '',
 	fax: '',
 	address: '',
+	postal: '',
 	country_id: '',
 
 }
@@ -255,25 +272,43 @@ export default {
 
 	mixins: [
 		validationMixin,
-		helpers,
+		// helpers,
 	],
 
 	
 	components: {
-	    vueDropzone: vue2Dropzone,		
+		vueDropzone: vue2Dropzone,		
+		ProfileUpdateDialog,
 	},
 
 
 	validations: {
 
 		form: {
-			email:       { required, email },
+			email:       { 
+				required, 
+				email,
+				isUnique(value,components){
+					// standalone validator ideally should not assume a field is required
+					if (value === '') 
+					return true;
+
+					this.cnsl(value+' ?= '+this.authUser.email);				
+
+					if(this.authUser.email==value)
+					return true;
+					else
+					// no then and catch because validator need the Promise instance
+					return this.$store.dispatch('auth/isEmailExist_a',{email:value});
+				},
+			},
 			first_name:  { required },
 			last_name:   { required },
 			job_title:   { required },
 			phone:       { required },
-			fax:         { required },
+			// fax:         { required },
 			address:     { required },
+			postal:      { required },
 			country_id:  { required },
 		}, 
 
@@ -287,6 +322,7 @@ export default {
 				minLen: minLength(6),
 			},
 			newPasswordConfirm: {
+				required,
 				sameAs: sameAs(function(){					
 					return this.passwords.newPassword;
 				}),
@@ -299,26 +335,28 @@ export default {
 	validationMessages: {
 
 		form: {
-			email:      { required: 'Email is Required. ', email: 'Email is Invalid.' },
+			email:      { required: 'Email is Required. ', email: 'Email is Invalid.', isUnique: 'Email already exist..' },
 			first_name: { required: 'First Name is Required.' },
 			last_name:  { required: 'Last Name is Required.' },
 			job_title:  { required: 'Job Title is Required.' },
 			phone:      { required: 'Phone is Required.' },
-			fax:        { required: 'fax is Required.' },
+			// fax:        { required: 'fax is Required.' },
 			address:    { required: 'Address is Required.' },
+			postal:    { required: 'Postal is Required.' },
 			country:    { required: 'Country is Required.' },
 		},
 
 		passwords: {
 			oldPassword: {
-				required: 'Password is required.',
+				required: 'Old Password is required.',
 				minLen: 'Minimum of 6 characters.',
 			},
 			newPassword: {
-				required: 'Password is required.',
+				required: 'New Password is required.',
 				minLen: 'Minimum of 6 characters.',
 			},
 			newPasswordConfirm: {
+				required: 'Confirm Password is required.',
 				sameAs: 'Passwords are not the same.',
 			},
 		},
@@ -330,12 +368,14 @@ export default {
 		form: {
 
 			email:       '',
+			avatar:       '',
 			first_name:  '',
 			last_name:   '',
 			job_title:   '',
 			phone:       '',
 			fax:         '',
 			address:     '',
+			postal:     '',
 			country_id:  '',
 
 		},
@@ -356,30 +396,37 @@ export default {
 		search: '',
 		formloading: false,
 
-	    // Dropzone
-	    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
-	    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+		avatarImg:"",
+
+		openDialog: false,
+		message: null,
+
+		testCountry: 225,
+
+		// Dropzone
+		// dddddddddddddddddddddddddddddddddddddddddddddddddddd
+		// dddddddddddddddddddddddddddddddddddddddddddddddddddd
 		attachment: null,
-        showUploadProfileImage: false,
-        showSaveProfileImage: false,
-        useCustomSlot: true,
-        dropzoneOptions: {
-            url: config.main.awss3.urls.inquiry,
-            thumbnailWidth: 250,
-            maxFilesize: 5,
-            maxFiles: 1,
-            autoProcessQueue: false,
+		showUploadProfileImage: false,
+		showSaveProfileImage: false,
+		useCustomSlot: true,
+		dropzoneOptions: {
+			url: config.main.awss3.urls.inquiry,
+			thumbnailWidth: 250,
+			maxFilesize: 5,
+			maxFiles: 1,
+			autoProcessQueue: true,
 			maxfilesexceeded: function(file) {
 				this.removeAllFiles();
 				this.addFile(file);
 			},
-            headers: {},
-            addRemoveLinks: true,            
-            dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
-        },
-	    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
-	    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
-	    // Dropzone
+			headers: {},
+			addRemoveLinks: true,            
+			dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
+		},
+		// dddddddddddddddddddddddddddddddddddddddddddddddddddd
+		// dddddddddddddddddddddddddddddddddddddddddddddddddddd
+		// Dropzone
 
 	}),
 
@@ -397,20 +444,20 @@ export default {
 			return this.$store.state.auth.auth_user;
 		},
 
-		avatarImg() {
-		  
-		  if(!this.$store.state.auth.auth_user.avatar)
-		  // default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
-		  this.$store.state.auth.auth_user.avatar = 'https://image.flaticon.com/icons/svg/149/149071.svg'
+		// avatarImg: {
+		//   	get(){
+		// 	  	if(!this.form.avatar)
+		// 	  	// default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
+		// 	  	return 'https://image.flaticon.com/icons/svg/149/149071.svg'
+		// 	  	else
+		// 		return this.form.avatar;
+		//   	},
+		//   	set(nVal){
+		//   		this.form.avatar = nVal;
+		//   	},
+		// },
 
-			return this.$store.state.auth.auth_user.avatar;
-		},
-
-		testSelect() {
-			return { 
-				id: this.authUser.country_id,
-			}
-		},
+		
 
 	},
 
@@ -424,12 +471,14 @@ export default {
 
 		this.getCountries()
 		.then((response) => {
-			this.countries = response;			
-			this.fillForm();			
+			this.countries = response;
+			this.$nextTick(()=>{
+				this.fillForm();
+			});
 		})
 		.catch((e) => {
-			console.log('Error: ')
-			console.log(e);
+			this.cnsl('Error: ')
+			this.cnsl(e);
 		});
 
 		// setTimeout(()=>{
@@ -446,112 +495,65 @@ export default {
 
 
 		fillForm() {
-			this.form.email =       this.authUser.email;
-			this.form.first_name =  this.authUser.firstname;
-			this.form.last_name =   this.authUser.lastname;
-			this.form.job_title =   this.authUser.job_title;
-			this.form.phone =       this.authUser.phone;
-			this.form.fax =         this.authUser.fax;
-			this.form.address =     this.authUser.address;
-			this.form.country_id =  this.authUser.country_id;
-			this.form.sel_country_id =  {id:this.authUser.country_id};
-			console.log("form",this.form);
-			console.log("testSelect",this.testSelect);
+			this.form.email =       	this.authUser.email;
+			this.form.first_name =  	this.authUser.firstname;
+			this.form.last_name =   	this.authUser.lastname;
+			this.form.job_title =   	this.authUser.job_title;
+			this.form.phone =       	this.authUser.phone;
+			this.form.fax =         	this.authUser.fax;
+			this.form.address =     	this.authUser.address;
+			this.form.postal =     		this.authUser.postal;			
+			this.form.country_id =  	parseInt(this.authUser.country_id);
+			// this.form.sel_country_id =  {id:this.authUser.country_id};
+			this.cnsl("fillForm",this.form);
+			// this.cnsl("this.countries",this.countries);
 
 			// reset profile upload_group
 			this.showUploadProfileImage = false;
 			this.showSaveProfileImage = false;
 			this.attachment = null;
 
+			this.avatarImg = this.authUser.avatar;
 		},
 
 		resetForm() {
-
-		  this.form = Object.assign({}, dform)
-		  this.$refs.form.reset()
-		  this.$v.$reset()
-
+			this.form = Object.assign({}, dform)
+			this.$refs.form.reset()
+			this.$v.$reset()
 		},
 
-		submitForm() {		
+		submitForm() {
 
-			alert("submitForm!!");
-			// if (this.is_new) {
-			// 	this.addBuyer()
-			// } else {
-			// 	this.updateBuyer();
-			// }
-
-		},
-
-
-		addBuyer() {
-
-
-		  this.formloading = true
-
-		  let data = {
-
-			"email": this.form.email,
-			"password": this.form.password,
-			"first_name": this.form.first_name,
-			"last_name": this.form.last_name,
-			"job_title": this.form.job_title,
-			"phone": this.form.phone,
-			"fax": this.form.fax,
-			"address": this.form.address,
-			"country_id": this.form.country_id,
-		  };
-
-		  console.log(data);
-
-		  this.$store.dispatch('admnByr/postBuyer_a', {
-			  data: data,
-			})
-			.then((response) => {
-
-			  this.formloading = false
-			  console.log(response);
-
-			  // create a event bus 
-			  this.$emit('update:dialog', false);
-			  AdminBuyerBus.emitFormSubmitted()
-
-			  this.resetForm();
-
-
-			})
-			.catch((e) => {
-			  console.log(e);
-			  this.formloading = false
-			})
-			.finally(() => {
-			  this.formloading = false
-			})
-
-		},
-
-
-		updateBuyer() {
-
-			this.formloading = true
+			this.formloading = true;
 
 			let data = {
-
+				"avatar": this.avatarImg,
 				"email": this.form.email,
-				"password": this.form.password,
 				"first_name": this.form.first_name,
 				"last_name": this.form.last_name,
 				"job_title": this.form.job_title,
 				"phone": this.form.phone,
 				"fax": this.form.fax,
 				"address": this.form.address,
+				"postal": this.form.postal,
 				"country_id": this.form.country_id,
-				"id": this.buyer_id
+			};
 
-			}
+			this.authUser.avatar = 		this.avatarImg;
+			this.authUser.email = 		this.form.email;
+			this.authUser.firstname = 	this.form.first_name;
+			this.authUser.lastname = 	this.form.last_name;
+			this.authUser.job_title = 	this.form.job_title;
+			this.authUser.phone = 		this.form.phone;
+			this.authUser.fax = 		this.form.fax;
+			this.authUser.address = 	this.form.address;
+			this.authUser.postal = 		this.form.postal;
+			this.authUser.country_id = 	this.form.country_id;
 
-			this.$store.dispatch('admnByr/updateBuyer_a', {
+			this.cnsl('data',data);
+			this.formloading = false
+
+			this.$store.dispatch(this.getStore()+'/updateProfile_a', {
 				data: data,
 			})
 			.then((response) => {
@@ -559,10 +561,12 @@ export default {
 				// create a event bus 
 				this.$emit('update:dialog', false);
 				AdminBuyerBus.emitFormSubmitted()
-				this.resetForm();
+				// this.fillForm();
+				this.openDialog = true;
+
 			})
 			.catch((e) => {
-				console.log(e);
+				this.cnsl(e);
 				this.formloading = false
 			})
 			.finally(() => {
@@ -570,6 +574,7 @@ export default {
 			})
 
 		},
+
 
 		closeDialog() {
 			this.$emit('update:dialog', false);
@@ -580,7 +585,38 @@ export default {
 
 
 		submitChangePassword(){
-			alert("Submit Change Passsword!!");
+			// alert("Submit Change Passsword!!");
+
+			this.formloading = true;
+
+			let data = {
+				"old_password": this.passwords.oldPassword,
+				"new_password": this.passwords.newPassword,
+			};
+
+			this.formloading = false
+
+			this.$store.dispatch(this.getStore()+'/updatePassword_a', {
+				data: data,
+			})
+			.then((response) => {
+				this.cnsl(response);
+				if(!response.updated)
+				this.message = "Password Incorrect! Please try again..";
+				else
+				this.message = null;
+				
+				this.openDialog = true;
+				this.formloading = false;
+			})
+			.catch((e) => {
+				this.cnsl(e);
+				this.formloading = false
+			})
+			.finally(() => {
+				this.formloading = false
+			})
+
 		},
 
 
@@ -607,7 +643,7 @@ export default {
 		},
 
 		vdz_removedFile: function(file, error, xhr){
-			console.log("file",file);
+			this.cnsl("file",file);
 
 			// clear attachment
 			this.showSaveProfileImage = false;
@@ -615,12 +651,12 @@ export default {
 		},
 
 		vdz_s3UploadSuccess: function(s3ObjectLocation){
-			// console.log("vdz_s3UploadSuccess",s3ObjectLocation);
+			// this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
 		},
 
 		vdz_success(file, upload_group){
-			// console.log("vdz_success file = ",file);
-			// console.log("vdz_success upload_group = ",upload_group);
+			// this.cnsl("vdz_success file = ",file);
+			// this.cnsl("vdz_success upload_group = ",upload_group);
 
 			if(file.status=='success') {
 
@@ -634,11 +670,10 @@ export default {
 
 				this.showSaveProfileImage = true;
 
-				console.log('UPLOADED!');
-				console.log('this.attachment',this.attachment);
+				this.cnsl('UPLOADED!');
+				this.cnsl('this.attachment',this.attachment);
 
-
-
+				this.avatarImg = file.s3ObjectLocation;
 			}
 
 			// if(upload_group=='attachments')    
@@ -659,8 +694,8 @@ export default {
 		saveProfileImage(){
 			this.$refs.dropzone_profileimage.processQueue();
 			
-			// console.log('saveProfileImage()');
-			// console.log('getQueuedFiles',this.$refs.dropzone_profileimage.getQueuedFiles());
+			// this.cnsl('saveProfileImage()');
+			// this.cnsl('getQueuedFiles',this.$refs.dropzone_profileimage.getQueuedFiles());
 
 		},
 		// dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -674,4 +709,17 @@ export default {
 
 
 
-<style></style>
+<style scoped lang="scss">
+
+.v-avatar {
+	overflow: hidden;
+	background-color: #000 !important;
+	img  {
+
+	    height: auto;
+	    width: 100%;
+	    border-radius: 0;
+	}
+}
+	
+</style>

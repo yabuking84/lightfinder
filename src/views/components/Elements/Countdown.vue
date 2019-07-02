@@ -36,7 +36,7 @@ export default {
     interval = setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000)
     }, 1000)
-    // console.log(interval)
+    // this.cnsl(interval)
   },
   computed: {
     seconds () {

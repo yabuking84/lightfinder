@@ -14,7 +14,7 @@ const state = {
     get: {
 
       getCountries: {
-        url: config.main.appUrl
+        url: config.main.apiURL
       }
 
     },

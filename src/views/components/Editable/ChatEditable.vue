@@ -31,8 +31,8 @@
 		// this.$nextTick(() => {
 		// 	if(this.isFocused) {
 		// 		this.$refs.chateditable.focus();
-		// 		console.log("UPDATED this.$refs.chateditable",this.$refs.chateditable);
-		// 		console.log("UPDATED ISFOCUSED CHANGED!!");
+		// 		this.cnsl("UPDATED this.$refs.chateditable",this.$refs.chateditable);
+		// 		this.cnsl("UPDATED ISFOCUSED CHANGED!!");
 		// 	}
 		// });
     },
@@ -92,7 +92,7 @@
 	    // by tawing
 	    resetChatEditor() {
 	        if (this.$refs.chateditable) this.$refs.chateditable.innerHTML = '';
-	        // console.log('resetChatEditor');
+	        // this.cnsl('resetChatEditor');
 	    },
 
     },

@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import config from '@/config/index'
 
-let base_url = config.main.appUrl;
+let base_url = config.main.apiURL;
 const state= {
 	// api: {
 	// 	/* GET */

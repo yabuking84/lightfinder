@@ -9,7 +9,7 @@
 		        </v-flex>
 
 				<v-flex xs12>
-					<inquiries-table-grid gridItemClass="xs6"></inquiries-table-grid>
+					<inquiries-table-grid gridItemClass="xs6 md4"></inquiries-table-grid>
 			    </v-flex>
 
 	            <v-flex xs12>

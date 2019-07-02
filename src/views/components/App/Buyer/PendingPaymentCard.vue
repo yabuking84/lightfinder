@@ -36,11 +36,30 @@
 						<v-flex xs12>
 							<v-layout row wrap>
 
-								<v-flex xs12 mt-3>
-									<h3>
+								<v-flex xs12 mt-3 mx-3>
+									<!-- <h3 style="text-align: left;">
 										<span class="font-weight-light">Amount to Pay: </span>
-										$ {{ currency(inquiry.amount) }}
-									</h3>
+									</h3> -->
+									<table class="amountBreakdown mt-3">
+										<tr>
+											<td class="pr-4">Inquiry Amount:</td>
+											<td>$ {{ currency(inquiry.amount) }}</td>
+										</tr>
+										<tr>
+											<td class="pr-4">Shipping Cost:</td>
+											<td>$ {{ currency(inquiry.shipping_cost) }}</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<v-divider></v-divider>
+											</td>
+										</tr>
+										<tr class="totalRow">
+											<td class="pr-4">Total Amount to Pay:</td>
+											<td>$ {{ currency(amountToPay) }}</td>
+										</tr>
+									</table>										
+
 								</v-flex>
 								<v-flex xs6>
 									<v-btn block 
@@ -90,12 +109,12 @@
 	</v-alert>	
 </template>
 <script>
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import BankTransferDetails from "@/views/Components/App/Buyer/BankTransferDetails";
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
 	],
 
 	components: {
@@ -110,26 +129,25 @@ export default {
 		showBankTransferDetails: false,
 		creditCard:{
 			url: null,
-			url: 'https://google.com',
 			requestParameter: null,
 		},
-		amountToPay:0.0,
+		amountToPay: this.inquiry.amount + this.inquiry.shipping_cost,
 	}},
 
 	created(){
-		console.log('created inquiry',this.inquiry);
+		this.cnsl('inquiry',this.inquiry);        
 	},
 
 	methods:{
 
 		payByCreditCard() {
 
-			this.$store.dispatch('byrInq/getCreditCardResource', {
+			this.$store.dispatch(this.getStore()+'/getCreditCardResource', {
 				inquiry_id: this.inquiry.id
 			})
 			.then((response) => {
 
-				// console.log('getCreditCardResource', response);
+				// this.cnsl('getCreditCardResource', response);
 
 				this.creditCard.requestParameter = response.request_parameter;
 				this.creditCard.url = response.request_url;
@@ -141,7 +159,7 @@ export default {
 
 			})
 			.catch((e) => {
-				  console.log(e);				
+				  this.cnsl(e);				
 			});
 
 		},
@@ -149,12 +167,37 @@ export default {
 
 	},
 
+	watch:{
+		inquiry:{
+            handler(nVal, oVal) {
+	            if(nVal) 
+                 this.amountToPay = this.inquiry.amount + this.inquiry.shipping_cost;
+            },
+            deep: true,
+		},
+	},	
+
 }	
 </script>
 
 <style scoped lang="scss">
 .payBtn {
-	height: 65px};
+	height: 65px
+};
+
+.amountBreakdown {
+	width: 100%;
+	td {
+		text-align: left;
+		font-size: 0.8em;
+	}
+	.totalRow {
+		td {
+			font-size: 1em;
+			font-weight: bold;
+		}
+	}
+}
 
 </style>
 

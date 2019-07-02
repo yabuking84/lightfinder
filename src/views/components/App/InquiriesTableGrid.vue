@@ -1,50 +1,54 @@
 <template>
-  <!-- <div> -->
+  <div>
 <v-card>
 
 	<v-card-title>
 
 		<v-layout 
-		row wrap 
+		row wrap justify-space-between 
 		class="grey darken-4 heading-title" 
 		style="width:100%;">
-		<v-flex xs12>
-			
-			<v-btn-toggle 
-			multiple light
-			v-model="inquiryStatus" 
-			class="grey darken-4 px-2 py-1"
-			style="box-shadow: none;">
-			    <span v-for="(status, index) in statuses" class="white--text">
-					<v-btn 
-					flat 
-					:value="status.id" 
-					:title="status.name"  
-					class="white--text status-btn">
-						<v-icon style="font-size: 1em;">{{ status.icon }}</v-icon>
-				    </v-btn>
-			    </span>
-			</v-btn-toggle>
 
-			    <!-- <span v-for="(status, index) in statuses" class="white--text">
-					<v-btn 
-					flat 
-					:value="status.id" 
-					:title="status.name"  
-					class="white--text status-btn">
-						<v-icon style="font-size: 1em;">{{ status.icon }}</v-icon>
-				    </v-btn>
-			    </span> -->
+			<v-flex xs12 mb-0 pb-0 pl-3> 
+				<h3 class="white--text">
+					Inquiries				
+				</h3>
+			</v-flex>
+
+			<slot name="statuses" :statuses="statuses">
+			<v-flex xs11 my-1 pa-0>
+				<v-btn-toggle 
+				multiple light
+				v-model="inquiryStatus" 
+				class="grey darken-4 px-2 py-1 status_buttons"
+				style="">
+				    <span 
+				    v-for="(status, index) in statuses" 
+				    class="white--text ma-1">
+						<v-btn 
+						flat 
+						:value="status.id" 
+						:title="status.name"  
+						class="white--text status-btn">
+							<v-icon style="font-size: 1em;" class="ma-0">{{ status.icon }}</v-icon>
+							<!-- {{ status.name }} -->
+					    </v-btn>
+				    </span>
+				</v-btn-toggle>
+			</v-flex>
+			</slot>
+
 
 			<!-- <v-spacer></v-spacer> -->
+			<v-flex xs1>
 			<v-btn 
 			@click="refresh()" 
-			class="white--text"
+			class="white--text ma-2"
 			icon 
-			style="margin: 0;">
+			style="margin: 0; position: absolute; top: 0; right: 0;">
 			    <v-icon>refresh</v-icon>
 			</v-btn>
-		</v-flex>
+			</v-flex>
 		</v-layout>
 
 
@@ -79,7 +83,7 @@
 
 		<v-spacer></v-spacer>
 
-		   <v-flex xs4 class="">
+		<v-flex xs4 class="">
 			<v-text-field label="Search Inquiry #" v-model="search"  prepend-inner-icon="search" clearable>
 			</v-text-field>
 		</v-flex>
@@ -103,13 +107,13 @@
 
 
 
-	<v-card-text style="height: 400px; overflow: auto;">
+	<v-card-text :style="{height:height}" style="overflow: auto;">
 
 		<transition-group 
 		tag="v-layout" 
 		v-if="tableItems.length > 0" 
 		name="tiItems" 
-		class="row wrap align-start justify-center">
+		class="row wrap align-start justify-start">
 	
 			<template v-for="(inquiry, key, index) in tableItems">
 
@@ -167,15 +171,18 @@
 
 
 
- <!-- </div> -->
+</div>
+
+
 </template>
 <script>
 import inqEvntBs from "@/bus/inquiry";
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import inqMixin from "@/mixins/inquiry";
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryTableGridItem from "@/views/Components/App/InquiryTableGridItem";
+
 import config from "@/config/main"
 
 import isotope from 'vueisotope'
@@ -183,19 +190,26 @@ import isotope from 'vueisotope'
 export default {
 
 	mixins: [
-		helpers,
+		// helpers,
 		inqMixin,
 	],
 
 	components: {
 		InquiryStatusButtons,
 		InquiryTableGridItem,
-		isotope
+		isotope,
 	},
 
-	props:[
-		'gridItemClass'
-	],
+	props:{
+		'gridItemClass':{
+			type:String,
+		},
+		'height': {
+			type:String,
+			default:'357px',
+		},
+
+	},
 
 	data() { return {
 
@@ -205,9 +219,14 @@ export default {
 		// search: '1553672466844', // 2 bids
 		// search: '1559132882113', // 2 bids
 		// search: '1554876629708', // 3 bids
-		search: '708',
+		// search: '708',
+		// search: '1554723725801',
+		// search: '287',
+		search: '',
 		dialog: false,
 		loading: false,
+
+
 		headers: [
 			{
 				text: 'Select',
@@ -301,24 +320,31 @@ export default {
 				this.loading = true;
 
 			this.allInquiries = [];
+			
+			this.cnsl('test');
 						
 			this.$store.dispatch(this.storeType+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
-				// console.log('InquiryTableGrid response',response);
-				for (var i = response.length - 1; i >= 0; i--) {
-					var item = {};
-					item.inq_id = response[i].id;
-					item.keywords = this.ucwords(response[i].keyword);
-					item.message = response[i].message+"";
-					item.categories = response[i].categories.join(', ');
-					item.quantity = response[i].quantity;
-					item.shipping_date = response[i].desired_shipping_date;
-					item.created_at = response[i].created_at;
-					item.status = response[i].stage_id;
-					item.loading = false;
-					this.allInquiries.push(item);
-				}
-				// console.log('InquiryTableGrid this.allInquiries',this.allInquiries);
+				// this.cnsl('InquiryTableGrid response',response);
+
+				// for (var i = response.length - 1; i >= 0; i--) {
+				// 	var item = {};
+				// 	item.inq_id = response[i].id;
+				// 	item.keywords = this.ucwords(response[i].keyword);
+				// 	item.message = response[i].message+"";
+				// 	item.categories = response[i].categories.join(', ');
+				// 	item.quantity = response[i].quantity;
+				// 	item.shipping_date = response[i].desired_shipping_date;
+				// 	item.created_at = response[i].created_at;
+				// 	item.status = response[i].stage_id;
+				// 	item.loading = false;
+				// 	this.allInquiries.push(item);
+				// }
+
+				this.allInquiries = this.setDataTableGrid(response);
+
+
+				// this.cnsl('InquiryTableGrid this.allInquiries',this.allInquiries);
 
 				// this.tableItems = this.allInquiries;
 				this.filterTable();
@@ -328,7 +354,7 @@ export default {
 
 			})
 			.catch((e) => {
-				console.log('Error: ' + e);
+				this.cnsl('Error: ' + e);
 				this.loading = false;
 			})
 			.finally(() => {
@@ -376,7 +402,7 @@ export default {
 					  // add key to search in the dom
 					  return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
 				  })            
-				  // console.log(this.search);
+				  // this.cnsl(this.search);
 			  }
 
 			  this.tableItems = items;
@@ -412,11 +438,11 @@ export default {
 		this.$store.dispatch('cat/getCategories_a')
 		.then((data) => {
 			this.categoryItems = data;
-			// console.log(this.categoryItems);
+			// this.cnsl(this.categoryItems);
 		})
 		.catch((e) => {
-			console.log('Error: ');
-			console.log(e);
+			this.cnsl('Error: ');
+			this.cnsl(e);
 		});
 
 
@@ -530,17 +556,31 @@ export default {
 
 }
 
-.status-btn {
-	height: auto;
-	padding: 5px 15px;
+.status_buttons {
+	// max-width: 600px;
+    box-shadow: none;
+    align-items: center;
+    justify-content: start;
+    width: auto;
+    display: inline-flex;
+    height: auto;
+    flex-wrap: wrap;	
+    > * {
+    	flex: none;
+    }
+	.status-btn {
+		height: auto;
+		min-width: 50px;
+		padding: 5px 15px;
+	}
+
+
 }
-
-
 
 // transitions
 // ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 .inquiry {
-	transition: all 1s;
+	transition: all 0.5s;
 }
 
 // .tiItems-enter-active, .tiItems-leave-active {
@@ -557,5 +597,7 @@ export default {
 }
 // ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 // transitions
+
+
 
 </style>

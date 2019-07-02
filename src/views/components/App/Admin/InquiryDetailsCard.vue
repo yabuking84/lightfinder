@@ -33,34 +33,8 @@
 
 
 
-                        		
-	  							<!-- Approvingbank transfer -->
-	  							<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-	  							<template v-if="inquiry.stage_id == 1006">	  								
-	  							<v-flex xs12>
-					                <v-layout row wrap pa-0 align-center justify-center>
-					                        <v-btn 
-					                        @click="approveBankTransfer(inquiry.id)" 
-					                        style="height: auto;"
-					                        class="green darken-1 large font-weight-light white--text py-3 mx-4"
-					                        block large>
-					                            <v-icon class="mr-3">far fa-check-circle</v-icon>
-					                            <h4 
-					                            style="text-align: left;" 
-					                            class="ml-1 white--text font-weight-light">
-					                            	Approve Inquiry #<strong>{{ inquiry.id }}</strong> <br>
-					                            	Bank Transfer Payment
-					                            </h4>
-					                        </v-btn>
-					                </v-layout>
-	  							</v-flex>
-	  							</template>
-	  							<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-	  							<!-- Approvingbank transfer -->
 
-
-
-	  							<v-flex xs12>
+	  							<v-flex xs12 v-if="inquiry.status">
 									<inquiry-status-buttons 
 									:status-id="inquiry.status" 
 									:statuses="statuses">
@@ -275,12 +249,16 @@
         </v-layout>
       </v-container>
     </v-card>
-      <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
+    <message-box :CommentData="CommentData" :openMessageDialog.sync="openMessageDialog" :inquiry="inquiry"> </message-box>
+
+
+	<!-- <confirm-payment-dialog v-if="bidToAward"></confirm-payment-dialog> -->
+
   </div>
 </template>
 <script>
 
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import inqMixin from "@/mixins/inquiry"
 import inqEvntBs from "@/bus/inquiry"
 import MessageBox from '@/views/Components/App/Admin/MessageDialog'
@@ -291,188 +269,163 @@ import config from '@/config/index'
 
 export default {
 
-  mixins: [
-    helpers,
-    inqMixin,
-  ],
+  	mixins: [
+    	// helpers,
+    	inqMixin,
+  	],
 
     // 'inquiry',
     // 'isClosed'
-  components: {
+  	components: {
 
-    MessageBox,
-    ImageGallerySmall,
-	InquiryStatusButtons,
-  },
-
-
-  props: {
-    
-    inquiry: {
-      type: Object
-    },
+    	MessageBox,
+    	ImageGallerySmall,
+		InquiryStatusButtons,
+  	},
 
 
-    isClosed: {
-      type: Boolean
-    }      
-
-  },
-
-  data: () => ({
-
-    onVerification: 1001,
-    openMessageDialog: false,
-    CommentData: [],
-
-    inquiryImages:[],
-    inquiryAttachments:[],
-    inquiryOEM:[],
+	props: {
+	    
+	    inquiry: {
+	      type: Object
+	    },
 
 
-  }),
+	    isClosed: {
+	      type: Boolean
+	    }      
+
+	},
+
+	data: () => ({
+
+	    onVerification: 1001,
+	    openMessageDialog: false,
+	    CommentData: [],
+
+	    inquiryImages:[],
+	    inquiryAttachments:[],
+	    inquiryOEM:[],
+
+
+	}),
 
 
 
-  methods: {
+  	methods: {
 
-    getCountryName(country_id) {
+	    getCountryName(country_id) {
 
-          var countryselect = this.countries.filter(country => {
-              return country.id == country_id;
-          });
+	          var countryselect = this.countries.filter(country => {
+	              return country.id == country_id;
+	          });
 
-          return (countryselect.length)?countryselect[0].name:null;
-    },
+	          return (countryselect.length)?countryselect[0].name:null;
+	    },
 
-    // if query selected is set to true
-    openMessageBox(inquiry_id) {
+	    // if query selected is set to true
+	    openMessageBox(inquiry_id) {
 
-      this.$store.dispatch('admnInq/approvedInquiry_a', {
-          inquiry_id: inquiry_id
-        })
-        .then((response) => {
+	      this.$store.dispatch('admnInq/approvedInquiry_a', {
+	          inquiry_id: inquiry_id
+	        })
+	        .then((response) => {
 
-          // create a event bus 
-          // this.$emit('update:isClosed', true);
-             this.hideInquiry();
+	          // create a event bus 
+	          // this.$emit('update:isClosed', true);
+	             this.hideInquiry();
 
-          // inqEvntBs.emitApproved();
+	          // inqEvntBs.emitApproved();
 
-        })
-        .catch((e) => {
-          console.log(e);
-          // this.$emit('update:isClosed', true);
-             this.hideInquiry();
-
-
-        })
-        .finally(() => {
-          // this.$emit('update:isClosed', true);
-            this.hideInquiry();
-
-        });
-    },
-
-    rejectInquiry(inquiry_id) {
-
-      this.$store.dispatch('admnInq/declinedInquiry_a', {
-          inquiry_id: inquiry_id
-        })
-        .then((response) => {
-          // create a event bus 
-          // this.$emit('update:isClosed', true);
-             this.hideInquiry();
+	        })
+	        .catch((e) => {
+	          this.cnsl(e);
+	          // this.$emit('update:isClosed', true);
+	             this.hideInquiry();
 
 
-          // inqEvntBs.emitApproved();
-        })
-        .catch((e) => {
-          // this.$emit('update:isClosed', true);
-             this.hideInquiry();
+	        })
+	        .finally(() => {
+	          // this.$emit('update:isClosed', true);
+	            this.hideInquiry();
 
-          console.log(e);
-        })
-        .finally(() => {
+	        });
+	    },
 
-        });
-    },
+	    rejectInquiry(inquiry_id) {
 
-    approveBankTransfer(inquiry_id) {
-
-      	this.$store.dispatch('admnInq/confirmBankTransfer_a', {
-          inquiry_id: inquiry_id
-        })
-        .then((response) => {
-          // create a event bus 
-          // this.$emit('update:isClosed', true);
-             this.hideInquiry();
+	      this.$store.dispatch('admnInq/declinedInquiry_a', {
+	          inquiry_id: inquiry_id
+	        })
+	        .then((response) => {
+	          // create a event bus 
+	          // this.$emit('update:isClosed', true);
+	             this.hideInquiry();
 
 
-          // inqEvntBs.emitApproved();
-        })
-        .catch((e) => {
-          // this.$emit('update:isClosed', true);
-             this.hideInquiry();
+	          // inqEvntBs.emitApproved();
+	        })
+	        .catch((e) => {
+	          // this.$emit('update:isClosed', true);
+	             this.hideInquiry();
 
-          console.log(e);
-        })
-        .finally(() => {
+	          this.cnsl(e);
+	        })
+	        .finally(() => {
 
-        });
-    },
-
-    SortAttachments() {
+	        });
+	    },
 
 
-    	// console.log('aslllllllllllllllllllllllllllllllllllllllllllllllllllllll');
-    	// console.log(this.inquiry.attachments);
+	    SortAttachments() {
 
-            var attachmentHolder = this.inquiry.attachments;
 
-            this.inquiryImages = []
-            this.inquiryAttachments = []
-            this.inquiryOEM = []
+	    	// this.cnsl('aslllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+	    	// this.cnsl(this.inquiry.attachments);
 
-            if(attachmentHolder) {
+	            var attachmentHolder = this.inquiry.attachments;
 
-            	 for (var i = attachmentHolder.length - 1; i >= 0; i--) {
+	            this.inquiryImages = []
+	            this.inquiryAttachments = []
+	            this.inquiryOEM = []
 
-            	 
-                    switch (attachmentHolder[i].filegroup) {
+	            if(attachmentHolder) {
 
-                          case 'add-inquiry-oems':
+	            	 for (var i = attachmentHolder.length - 1; i >= 0; i--) {
 
-                                this.inquiryOEM.push(attachmentHolder[i])
+	            	 
+	                    switch (attachmentHolder[i].filegroup) {
 
-                          break;
+	                          case 'add-inquiry-oems':
 
-                          case 'add-inquiry-attachments':
+	                                this.inquiryOEM.push(attachmentHolder[i])
 
-                                this.inquiryAttachments.push(attachmentHolder[i])
+	                          break;
 
-                          break;
+	                          case 'add-inquiry-attachments':
 
-                          case 'add-inquiry-images':
+	                                this.inquiryAttachments.push(attachmentHolder[i])
 
-                                this.inquiryImages.push(attachmentHolder[i])
-                              
-                          break;
-            
-                    }
-                }
+	                          break;
 
-            }
-               
-    } ,
+	                          case 'add-inquiry-images':
 
+	                                this.inquiryImages.push(attachmentHolder[i])
+	                              
+	                          break;
+	            
+	                    }
+	                }
+
+	            }
+	               
+	    },
   
-  },
-
-  watch: {
+  	},
 
 
-         inquiry: {
+  	watch: {
+        inquiry: {
 
             handler(nVal, oVal) {
 	            if(nVal) 
@@ -480,8 +433,9 @@ export default {
             },
             deep: true,
         },
+   	},
 
-   },
+
 
     computed: {
 
@@ -497,7 +451,7 @@ export default {
 
 
   created() {
-            // console.log(this.inquiry);
+            // this.cnsl(this.inquiry);
              this.SortAttachments();    
     },
 

@@ -140,3 +140,20 @@
 .v-card .v-card--hover {
     cursor: unset;	
 }
+
+.v-alert {	
+	.v-alert__icon.v-icon {
+		color: #fff;
+	}
+}
+.v-alert.alert1 {	
+	> div {
+		align-items: center;
+		display: flex;		
+	}
+}
+
+
+button .v-btn__loading {
+	color: white;
+}

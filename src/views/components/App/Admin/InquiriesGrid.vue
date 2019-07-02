@@ -133,7 +133,7 @@
 <script>
 import inqEvntBs from "@/bus/inquiry";
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons";
 import InquiryGridItem from "@/views/Components/App/InquiryGridItem";
@@ -149,7 +149,7 @@ import isotope from 'vueisotope'
 export default {
 
   mixins: [
-    helpers,
+    // helpers,
     VueTimers,
   ],
 
@@ -274,7 +274,7 @@ export default {
       // this.allInquiries = [];
       this.$store.dispatch('admnInq/getInquiries_a')
         .then((response) => {
-        	// console.log('response',response);
+        	// this.cnsl('response',response);
             var buffer = [];
             for (var i = response.length - 1; i >= 0; i--) {
                 var item = {};
@@ -302,7 +302,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log('Error: ' + e);
+          this.cnsl('Error: ' + e);
           this.loading = false;
         })
         .finally(() => {
@@ -348,7 +348,7 @@ export default {
                 // add key to search in the dom
                 return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
             })            
-            // console.log(this.search);
+            // this.cnsl(this.search);
         }
 
         this.tableItems = items;
@@ -380,10 +380,10 @@ export default {
     this.$store.dispatch('cat/getCategories_a')
       .then((data) => {
         this.categoryItems = data;
-        // console.log(this.categoryItems);
+        // this.cnsl(this.categoryItems);
       })
       .catch((e) => {
-        console.log('Error: ');
+        this.cnsl('Error: ');
       });
 
   },

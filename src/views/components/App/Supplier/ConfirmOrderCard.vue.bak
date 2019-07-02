@@ -218,7 +218,7 @@ export default {
 	methods:{
 
 		confirmQuote() {
-			// console.log("confirm");
+			// this.cnsl("confirm");
 
 
 		  if (this.$v.$invalid) {
@@ -232,7 +232,7 @@ export default {
 					formData: this.formData,
 				})
 				.catch(error => {
-					console.log(error);
+					this.cnsl(error);
 				});
 
 				// this.$emit('update:openInquiry', false)

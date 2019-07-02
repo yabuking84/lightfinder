@@ -87,7 +87,7 @@ export default {
 
 	created() {
 
-		// console.log(this.inquiry);
+		// this.cnsl(this.inquiry);
 
 	},
 }

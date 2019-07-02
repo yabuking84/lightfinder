@@ -121,7 +121,7 @@
 <script>
 import adminSupplierBus from "@/bus/admin-supplier";
 import { required, email, maxLength } from 'vuelidate/lib/validators'
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import validationMixin from '@/mixins/validationMixin'
 
 
@@ -147,7 +147,7 @@ export default {
 
   mixins: [ 
     validationMixin,
-    helpers,
+    // helpers,
   ],
 
   validations: {
@@ -274,8 +274,8 @@ export default {
         this.countries = response
     })
     .catch((e) => {
-        console.log('Error: ')
-        console.log(e);
+        this.cnsl('Error: ')
+        this.cnsl(e);
     });
 
 
@@ -285,8 +285,8 @@ export default {
         this.categoryItems = data;
       })
       .catch((e) => {
-        console.log('Error: ');
-        console.log(e);
+        this.cnsl('Error: ');
+        this.cnsl(e);
       });
 
 
@@ -334,7 +334,7 @@ export default {
 
     submit() {
 
-      // console.log(this.form);
+      // this.cnsl(this.form);
       if (this.is_new) {
         this.addSupplier();
       } else {
@@ -369,7 +369,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log(e);
+          this.cnsl(e);
           this.formloading = false
         })
         .finally(() => {
@@ -422,7 +422,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log(e);
+          this.cnsl(e);
           this.formloading = false
         })
         .finally(() => {
@@ -472,7 +472,7 @@ export default {
 
         })
         .catch((e) => {
-          console.log(e);
+          this.cnsl(e);
           this.formloading = false
         })
         .finally(() => {

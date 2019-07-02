@@ -311,7 +311,7 @@ import { mapGetters } from 'vuex'
 import config from '@/config/index'
 
 import hlprs from "@/mixins/helpers";
-// console.log(config);
+// this.cnsl(config);
 
 import NtfctnBus from "@/bus/notification";
 import MsgBus from "@/bus/messaging";
@@ -472,7 +472,7 @@ methods: {
     },
 
     bounce(type){
-    	console.log('type = ',type)
+    	this.cnsl('type = ',type)
 
     	if(type=='notifications') {
     		this.isBounceNtfctns = true;
@@ -489,7 +489,7 @@ methods: {
     // notifications
     // /////////////////////////////////////////////////////////
     resetNotifications() {
-		console.log('resetNotifications');
+		this.cnsl('resetNotifications');
     	var options = {
     		offset: 0,
     		limit: this.limit,
@@ -502,7 +502,7 @@ methods: {
 			this.offsetNtfctns = this.limit;
         })
         .catch((e) => {
-            console.log(e);
+            this.cnsl(e);
         });
 
     },
@@ -515,7 +515,7 @@ methods: {
     // notifications messages
     // /////////////////////////////////////////////////////////
     resetNotificationsMsgs() {
-		console.log('resetNotificationsMsgs');
+		this.cnsl('resetNotificationsMsgs');
         var options = {
     		offset: 0,
     		limit: this.limit,
@@ -529,7 +529,7 @@ methods: {
 			this.offsetMsgs = this.limit;
         })
         .catch((e) => {
-            console.log(e);
+            this.cnsl(e);
         });
 
     },
@@ -551,11 +551,11 @@ methods: {
     // /////////////////////////////////////////////////////////
 
     gotoNotfication(ntfctn){
-    	// console.log('ntfctn',ntfctn);
+    	this.cnsl('ntfctn',ntfctn);
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
     	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
-        // console.log(this.$refs);
+        // this.cnsl(this.$refs);
 
     },
 
@@ -568,7 +568,7 @@ methods: {
     // infinite-scroll
     //////////////////////////////////////////////////////////
 	fetchNtfctns () {
-		console.log('fetchNtfctns');
+		this.cnsl('fetchNtfctns');
 		this.ntfctnsIsLoading = true
 
     	var options = {
@@ -591,13 +591,13 @@ methods: {
             
         })
         .catch((e) => {
-            console.log(e);
+            this.cnsl(e);
         });		
 
 	},
 
 	fetchMsgs () {
-		console.log('fetchMsgs');
+		this.cnsl('fetchMsgs');
         this.msgsIsLoading = true
 
         var options = {
@@ -606,7 +606,7 @@ methods: {
     	};
     	this.$store.dispatch('ntfctns/populateNotificationsMsgs_a', options)
         .then((response) => {
-            // console.log('fetchMsgs response',response);
+            // this.cnsl('fetchMsgs response',response);
 
             if(response.count>0) {
 	        	// Now notifications are done populating show snackbar
@@ -618,10 +618,10 @@ methods: {
 	        else 
 	        this.showMsgsLoading = false;
 
-            // console.log("this.offsetMsgs",this.offsetMsgs);
+            // this.cnsl("this.offsetMsgs",this.offsetMsgs);
         })
         .catch((e) => {
-            console.log(e);
+            this.cnsl(e);
         });      
 
 
@@ -643,7 +643,7 @@ methods: {
 
         })
         .catch((e) => {
-            console.log(e);
+            this.cnsl(e);
         });      
 
 
@@ -662,14 +662,14 @@ created()  {
 	this.fetchMsgs();
 
     NtfctnBus.onNewNotification((data)=>{
-    	// console.log('toolbar onNewNotification data',data);
+    	// this.cnsl('toolbar onNewNotification data',data);
     	this.bounce('notifications');
     	this.offsetNtfctns++;
 		this.insertLatestNtfctn();
 		// this.resetNotificationsMsgs();
     });
 	MsgBus.onNewMessage((data)=>{
-    	// console.log('toolbar onNewMessage data',data);
+    	// this.cnsl('toolbar onNewMessage data',data);
     	this.bounce('messages');
     	this.offsetMsgs++;
 		this.insertLatestMsg();

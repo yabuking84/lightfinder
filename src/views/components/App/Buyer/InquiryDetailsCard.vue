@@ -22,6 +22,9 @@
 
 			<v-container>
 
+				
+				<!-- bal confirming payment -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 				<v-alert 				
 				:value="inquiry.stage_id==1006"
 				color="green darken-3" 
@@ -29,13 +32,23 @@
 				class="mb-2">
 					Confirming Payment!
 				</v-alert>
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- bal confirming payment -->
 
-				<!-- <pre>{{ inquiry }}</pre> -->
+				
+				
+				<!-- pending payment -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 				<pending-payment-card 
-				v-if="inquiry.etd != null && inquiry.eta != null"
+				v-if="inquiry.etd != null && inquiry.eta != null && inquiry.stage_id==1005"
 				:inquiry="inquiry">
 				</pending-payment-card>
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- pending payment -->
 
+				
+				<!-- Confirmation -->
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 				<v-alert
 				:value="inquiry.awarded && inquiry.stage_id==1004"
 				type="success"
@@ -43,15 +56,13 @@
 				style="font-size:20px;">
 					You have awarded a bid on this inquiry.
 				</v-alert>
+				<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+				<!-- Confirmation -->
 
 
 				<v-layout row wrap>
 					
-					<!--
-					 <pre>
-						{{ inquiry }}
-					</pre>
-					-->
+		
 
 					<v-flex xs12>
 
@@ -262,7 +273,7 @@
 	import InquiryAwardCard from "@/views/Components/App/Buyer/InquiryAwardCard"
 	import PendingPaymentCard from "@/views/Components/App/Buyer/PendingPaymentCard"
 
-	import helpers from "@/mixins/helpers";
+	// import helpers from "@/mixins/helpers";
 	import inqEvntBs from "@/bus/inquiry";
 	import config from '@/config/index'
 
@@ -280,7 +291,7 @@
 		},
 
 		mixins: [
-			helpers,
+			// helpers,
 		],
 
 		props: [
@@ -374,7 +385,7 @@
 		},
 
 		created() {
-			// console.log(this.inquiry);
+			// this.cnsl(this.inquiry);
 			 this.SortAttachments();    
 
 		},

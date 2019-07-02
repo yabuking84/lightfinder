@@ -17,7 +17,7 @@
 										Please select another inquiry.
 									</div>
 								</div>
-						</v-flex> 
+						</v-flex>
 				</v-layout>
 			</v-card-title>
 		</v-card>
@@ -27,7 +27,8 @@
 		<v-toolbar color="white darken-4" dark class="black--text" >
 
 			<v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
-				Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span>
+				<!-- Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span> -->
+				BID# <span class="font-weight-bold">{{ bid.id }}</span>
 			</v-toolbar-title>
 
 			<v-spacer></v-spacer>
@@ -98,23 +99,76 @@
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 					<!-- new -->
 
+
+					<!-- Production -->
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<template v-if="inquiry.stage_id == 2001">
+					<v-flex xs12>
+						<v-layout row wrap>
+							<v-flex xs12 pa-0>
+								<v-alert
+								v-if="this.hasBid"
+								:value="true"
+								type="success">
+									<div class="headline font-weight-bold">In Production</div>
+									<div class="" style="font-style: italic;">This order is in production.</div>
+									<table class="amountBreakdown mt-3 ">
+										<!-- <tr><td><pre>{{ bid }}</pre></td></tr> -->
+										<tr>
+											<td class="pr-4">Inquiry Amount:</td>
+											<td>$ {{ currency(bid.total_price) }}</td>
+										</tr>
+										<tr>
+											<td class="pr-4">Shipping Cost:</td>
+											<td>$ {{ currency(inquiry.shipping_cost) }}</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<v-divider style="border-color: #fff;"></v-divider>
+											</td>
+										</tr>
+										<tr class="totalRow">
+											<td class="pr-4">Total Amount Paid:</td>
+											<td>$ {{ currency(bid.total_price+inquiry.shipping_cost) }}</td>
+										</tr>
+									</table>
+								</v-alert>
+
+								<v-alert
+								v-else
+								:value="true"
+								type="error">
+									<div class="headline font-weight-bold">In Production</div>
+									<div class="" style="font-style: italic;">This order is already awarded and in production.</div>									
+								</v-alert>
+
+
+
+							</v-flex>
+						</v-layout>
+					</v-flex>
+					</template>
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<!-- Production -->
+
+
 					<!-- BAL Confirmation -->
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 					<template v-if="inquiry.stage_id == 10041">
-			            <v-flex xs12 >
-			                <v-layout row wrap>
-			                    <v-flex xs12 pa-0>
-			                    	
-								    <v-alert
-							      	:value="true"
-							      	type="warning">
-								      	<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
-			                            <div class="" style="font-style: italic;">The awarded BID is currently being confirmed by our BuyAnyLight staff.</div>
-								    </v-alert>                        
-			                    </v-flex>
+						<v-flex xs12 >
+							<v-layout row wrap>
+								<v-flex xs12 pa-0>
+									
+									<v-alert
+									:value="true"
+									type="warning">
+										<div class="headline font-weight-bold">BuyAnyLight Confirmation</div>
+										<div class="" style="font-style: italic;">The awarded BID is currently being confirmed by our BuyAnyLight staff.</div>
+									</v-alert>                        
+								</v-flex>
 
-			                </v-layout>
-			            </v-flex>
+							</v-layout>
+						</v-flex>
 					</template>
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 					<!-- BAL Confirmation -->
@@ -137,7 +191,7 @@
 
 							<v-flex xs12>
 							
-								<v-layout row wrap>
+								<v-layout row wrap>									
 									<v-flex xs4 pa-2>
 										<h5 class="font-weight-thin">Quantity</h5>
 										<h3>{{ inquiry.quantity }} pcs</h3>
@@ -213,6 +267,55 @@
 								 
 								</v-layout>
 							</v-flex>
+							
+
+							<v-flex xs12 mt-3 mb-0 pb-0>
+									<template v-if="bid.stage_id==2001">
+										<!-- <v-chip label color="red" class="white--text">Sample Order in Production</v-chip> -->
+										<!-- <v-btn 
+										flat block large disabled outline 
+										class="red darken-2">
+											<span class="font-weight-bold ml-1 red--text ">
+												Sample Order in Production
+											</span>
+										</v-btn> -->
+									    <v-alert
+								      	:value="true"
+								      	icon="fas fa-industry"
+								      	class="alert1"
+								      	color="error">
+										  	<span class="mr-4 title">
+										  		Sample Order in Production
+										  	</span>
+										  	<v-btn
+										  	:loading="setSampleAsProductionDoneBtn"
+											@click="setSampleAsProductionDone(inquiry,bid)" 
+											class="green darken-2 ml-0">
+												<span class="font-weight-bold ml-1 white--text ">
+													Production done!
+												</span>
+											</v-btn>
+								      	</v-alert>
+									</template>
+									<template v-else-if="bid.stage_id==2002">																				
+									    <v-alert
+								      	:value="true"
+								      	icon="fas fa-shipping-fast"
+								      	color="success">
+										  		Sample Order Sent
+								      	</v-alert>
+									</template>
+									<template v-else-if="bid.stage_id==3001">
+									    <v-alert
+								      	:value="true"
+								      	icon="fas fa-check-circle"
+								      	color="success">
+										  		Sample Order Received
+								      	</v-alert>										
+									</template>
+							</v-flex>
+
+
 							<!-- chat -->
 							<!-- ccccccccccccccccccccccccccccccccccccccccccccc -->
 							<v-flex xs12 mt-3>
@@ -230,7 +333,7 @@
 						<!-- message box -->
 					</template>				
 					
-					<template v-else>
+					<template v-else-if="inquiry.stage_id != 2001">
 						<v-flex xs12>
 							<v-layout justify-center row fill-height>
 
@@ -319,7 +422,8 @@ export default {
 
 
 		minDate: null,
-
+		
+		setSampleAsProductionDoneBtn: false,
 
 	}),
 
@@ -330,37 +434,64 @@ export default {
 	methods: {
 
 
-		 reloadBid() {
+	 	reloadBid() {
+			this.$store.dispatch(this.getStore()+'/getInquiryBid_a', {
+				inq_id: this.inquiry.id
+			})
+			.then((data) => {
+				this.bid = (data) ? data : null;
+				// check if  already has bid
+				this.hasBid = (this.bid) ? true : false;
 
-				this.$store.dispatch('spplrInq/getInquiryBid_a', {
-						inq_id: this.inquiry.id
-					})
-					.then((data) => {
+	 			// console.log('reloadBid data',data);
+	 			// this.cnsl('reloadBid data',data);
+	 			// this.cnsl('reloadBid this.hasBid',this.hasBid);
+	 			// this.cnsl('reloadBid this.bid',this.bid);
+			})
+			.catch((error) => {
+				this.cnsl(error);
+			});
 
-						this.bid = (data) ? data : null;
-						// check if  already has bid
-						this.hasBid = (this.bid) ? true : false;
-					})
-					.catch((error) => {
-						console.log(error);
-					});
-
-			},
+		},
 
 
-			isFocus(bid_id){
-				return bid_id == this.focus_bid_id;
-			},
+		isFocus(bid_id){
+			return bid_id == this.focus_bid_id;
+		},
 
-			openEditQuote() {
-				this.openQuoteDialog = true;
-				this.editQuote = true;
-			},
+		openEditQuote() {
+			this.openQuoteDialog = true;
+			this.editQuote = true;
+		},
 
-			openCreateQuote() {
-				this.openQuoteDialog = true;
-				this.editQuote = false;
-			},
+		openCreateQuote() {
+			this.openQuoteDialog = true;
+			this.editQuote = false;
+		},
+
+		setSampleAsProductionDone(inquiry,bid){
+			var payload = {
+				inq_id: inquiry.id,
+				bid_id: bid.id,
+				stage_id: 20011,
+			};
+			// this.cnsl('payload',payload);
+
+			this.setSampleAsProductionDoneBtn = true;
+
+			this.$store.dispatch(this.getStore()+'/setSampleStage_a',payload)
+			.then((data)=>{
+				this.cnsl(data);
+				this.reloadBid();
+				this.setSampleAsProductionDoneBtn = false;
+			})
+			.catch(e=>{
+				this.cnsl(e);
+				this.reloadBid();
+				this.setSampleAsProductionDoneBtn = false;
+			});
+
+		},
 	},
 
 	watch: {
@@ -369,7 +500,7 @@ export default {
 
 			handler(nVal, oVal) {
 				this.reloadBid();
-				console.log('watch inquiry');
+				this.cnsl('watch inquiry');
 			},
 
 			deep: true,
@@ -394,10 +525,24 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-	.minh-500 {
-		min-height: 300px;
-		overflow-y: auto;
+.minh-500 {
+	min-height: 300px;
+	overflow-y: auto;
+}
+
+.amountBreakdown {
+	width: 100%;
+	td {
+		text-align: left;
+		font-size: 1em;
 	}
-	
+	.totalRow {
+		td {
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+	}
+}
+
 
 </style>

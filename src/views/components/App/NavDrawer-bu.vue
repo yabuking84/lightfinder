@@ -337,8 +337,8 @@
                         }
                     }
                 }
-                // console.log(`Sidebar:`)
-                // console.log({ name: `${item.group}/${camel(subItem.name)}` })
+                // this.cnsl(`Sidebar:`)
+                // this.cnsl({ name: `${item.group}/${camel(subItem.name)}` })
                 return {
                     name: `${item.group}/${camel(subItem.name)}`
                 }

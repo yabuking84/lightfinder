@@ -449,12 +449,12 @@
 
 <script>
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import ReviewInquiry from "@/views/Components/App/Buyer/ReviewInquiry";
 
 export default {
     mixins: [
-        helpers,
+        // helpers,
     ],
     data () {
       return {
@@ -512,8 +512,8 @@ export default {
             this.categories = response;
         })
         .catch((e) => {
-            console.log('Error: ');
-            console.log(e);
+            this.cnsl('Error: ');
+            this.cnsl(e);
         });
     
     },
@@ -525,7 +525,7 @@ export default {
 
         stepCnt(val) {
 
-            // console.log("step_"+val);
+            // this.cnsl("step_"+val);
             
             if(val>1) {
 
@@ -546,8 +546,8 @@ export default {
 
     methods: {
         stepUp: function(val=1) {
-            // console.log("stepCnt = "+this.stepCnt);
-            // console.log("val = "+val);
+            // this.cnsl("stepCnt = "+this.stepCnt);
+            // this.cnsl("val = "+val);
             this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
             // this.stepCnt += val;
         },
