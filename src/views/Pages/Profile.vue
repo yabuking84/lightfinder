@@ -512,8 +512,10 @@ export default {
 			this.showUploadProfileImage = false;
 			this.showSaveProfileImage = false;
 			this.attachment = null;
+			
+			var avatarPlaceholder = config.main.websiteURL+'/static/gender-neutral.png';
 
-			this.avatarImg = this.authUser.avatar;
+			this.avatarImg = (this.authUser.avatar)?this.authUser.avatar:tempAvatar;
 		},
 
 		resetForm() {
@@ -713,7 +715,7 @@ export default {
 
 .v-avatar {
 	overflow: hidden;
-	background-color: #000 !important;
+	background-color: #fff !important;
 	img  {
 
 	    height: auto;

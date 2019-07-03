@@ -61,6 +61,11 @@ const state = {
 			url     : base_url+'/v1/pay/bank-transfer',
 		},
 
+		paySubscription: {
+			method  : 'post',
+			url     : base_url+'/v1/pay/credit-card',
+		},
+
 		updateProfile: {
 			method  : 'patch',
 			url     : base_url+'/v1/profile',
@@ -70,6 +75,14 @@ const state = {
 			method  : 'patch',
 			url     : base_url+'/v1/password',
 		},
+
+
+		getActiveSubscriptions: {
+			method  : 'get',
+			url     : base_url+'/v1/active-packages',
+		},
+
+
 
 	},
 
@@ -105,6 +118,32 @@ const mutations = {
 const actions = {
 
 
+	getActiveSubscriptions_a(context,data){
+		return new Promise((resolve, reject) => {
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.getActiveSubscriptions.method,
+				url: state.api.getActiveSubscriptions.url,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+					console.log("EXPIRED")
+					router.push({'name': 'Logout'});
+				} else {
+					console.log("normal error!")
+					reject(error)
+				}
+			});
+		})
+	},
 
 
 	updateProfile_a(context, data) {
@@ -424,6 +463,37 @@ const actions = {
 			})
 			.then(response => {
 				resolve(response);
+			})
+			.catch(error => {
+				// if(actions.checkToken(error)) {
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+		}) 
+	},
+
+
+	paySubscription_a(context, data) {
+		return new Promise((resolve, reject) => {
+
+			var headers = { token: localStorage.access_token }
+
+			axios({
+
+				method  : state.api.paySubscription.method,
+				url     : state.api.paySubscription.url,
+				headers : headers,
+				data 	: {
+					"id" : data.buyer_id,
+					"type" : "subscribe",
+					"payment_method_id" : 1,
+					"plan" : data.plan,
+				},
+			})
+			.then(response => {				
+				resolve(response.data);
 			})
 			.catch(error => {
 				// if(actions.checkToken(error)) {

@@ -148,7 +148,6 @@ export default {
 			.then((response) => {
 
 				// this.cnsl('getCreditCardResource', response);
-
 				this.creditCard.requestParameter = response.request_parameter;
 				this.creditCard.url = response.request_url;
 

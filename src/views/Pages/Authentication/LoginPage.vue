@@ -96,6 +96,7 @@
         	
         	<v-layout row wrap mt-3>
         		<h5 style="width: 100%;" class="ml-2 mb-2">BUYER</h5>
+            	<v-btn small @click="form.email='rayniraymell@gmail.com'">rayniraymell@gmail.com</v-btn>
             	<v-btn small @click="form.email='buyer@bal.com'">buyer@bal.com</v-btn>
             	<v-btn small @click="form.email='lucychao@gmail.com'">lucychao@gmail.com</v-btn>
         	</v-layout>

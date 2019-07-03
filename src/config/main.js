@@ -3,10 +3,14 @@
 const apiURL = 'http://192.168.1.200:8000';
 const socketURL = 'http://192.168.1.200:3000';
 
+const websiteURL = 'http://almani.ddns.net:1984';
+
 
 export default {
 
 	devMode: true,
+
+	websiteURL: websiteURL,
 
 	socketURL: socketURL,
 

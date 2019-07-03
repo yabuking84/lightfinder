@@ -373,10 +373,15 @@ computed: {
     },
 
     avatarBgImage() {
+
+    	// this.cnsl(config.main.websiteURL);
       
-      if(!this.$store.state.auth.auth_user.avatar)
-      // default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
-      this.$store.state.auth.auth_user.avatar = 'https://image.flaticon.com/icons/svg/149/149071.svg'
+      	if(!this.$store.state.auth.auth_user.avatar || this.$store.state.auth.auth_user.avatar == 'null' ) {
+	      	// default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
+	      	this.$store.state.auth.auth_user.avatar = config.main.websiteURL+'/static/gender-neutral.png';
+      	}
+
+    	this.cnsl('this.$store.state.auth.auth_user.avatar',this.$store.state.auth.auth_user.avatar);
 
         return {
             backgroundImage:'url('+this.$store.state.auth.auth_user.avatar+')',

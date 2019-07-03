@@ -323,7 +323,7 @@ export default {
 			
 			this.cnsl('test');
 						
-			this.$store.dispatch(this.storeType+'/getInquiries_a',{with_bids:1})
+			this.$store.dispatch(this.getStore()+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
 				// this.cnsl('InquiryTableGrid response',response);
 
