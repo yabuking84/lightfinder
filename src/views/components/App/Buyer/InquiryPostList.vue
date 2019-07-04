@@ -232,7 +232,7 @@
 
 						<v-flex xs12 pl-2 v-if="bidItem.attachments.length">
 						<!-- <v-flex xs12 pl-2 > -->
-
+							<!-- <pre>{{ bidItem.attachments }}</pre> -->
 							<image-gallery-small 
 							:images="bidItem.attachments && bidItem.attachments.length > 1 ? bidItem.attachments : [] " 
 							noThumbnails height="120px"></image-gallery-small> 
@@ -408,7 +408,7 @@
 
 									<template v-else-if="!inquiry.awarded"> 
 										<v-flex v-if="!bidItem.stage_id" xs6>
-											<pre>{{ bidItem }}</pre> -->
+											<!-- <pre>{{ bidItem }}</pre>  -->
 											<v-btn 
 											flat block large 
 											class="green darken-2 " 

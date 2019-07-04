@@ -815,6 +815,7 @@ export default {
 		eta_menu: false,
 		etd_menu: false,
 
+
 		formData: {
 			eta:null,
 			etd:null,
@@ -857,19 +858,6 @@ export default {
 		}
 	},
 
-	computed: {
-
-		// sortArray: function() {
-		//  if(a.name < b.name) {
-		//      return < b
-		//  }
-		// }
-
-		minDate(){
-			return new Date().toISOString().substr(0, 10);
-		},
-
-	},
 
 	methods: {
 
@@ -1082,6 +1070,10 @@ export default {
 			});
 
 			return retVal;
+		},
+
+		minDate(){
+			return new Date().toISOString().substr(0, 10);
 		},
 
 	},

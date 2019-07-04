@@ -25,14 +25,23 @@
 				    <span 
 				    v-for="(status, index) in statuses" 
 				    class="white--text ma-1">
+
+	        		<v-tooltip bottom>
+		        	<template #activator="{ on }">
+
 						<v-btn 
 						flat 
 						:value="status.id" 
-						:title="status.name"  
+						v-on="on"
 						class="white--text status-btn">
 							<v-icon style="font-size: 1em;" class="ma-0">{{ status.icon }}</v-icon>
 							<!-- {{ status.name }} -->
 					    </v-btn>
+
+					</template>
+					<span>{{ status.name }}</span>
+					</v-tooltip>
+
 				    </span>
 				</v-btn-toggle>
 			</v-flex>
@@ -54,6 +63,13 @@
 
 
 		<v-layout row wrap>
+
+		<!-- <v-flex xs4>
+			<h5 v-for="stats in statuses" class="black--text">
+				{{ stats.name }}
+			</h5>
+		</v-flex> -->
+
 		<v-flex xs4>
 			<v-autocomplete 
 			v-model="categories" 
@@ -122,6 +138,7 @@
 				:inquiry="inquiry"
 				:statuses="statuses"
 				:gridItemClass="gridItemClass"
+				:hideBidCount="hideBidCount"
 				class="inquiry">
 				</inquiry-table-grid-item>
 
@@ -201,6 +218,9 @@ export default {
 	},
 
 	props:{
+		'hideBidCount':{
+			type:Boolean,
+		},
 		'gridItemClass':{
 			type:String,
 		},

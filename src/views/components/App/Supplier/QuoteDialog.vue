@@ -150,9 +150,17 @@
                     <v-layout row wrap>
 
                       <v-flex xs12>
-                        <!-- change to product code  -->
-                        <v-text-field label="Product Code" v-model="formData.product_name">
-                        </v-text-field>
+                      	<v-tooltip bottom>
+                      	<template #activator="{on}">                      		
+	                        <!-- change to product code  -->
+	                        <v-text-field 
+	                        v-on="on"
+	                        label="Product Code" 
+	                        v-model="formData.product_name">
+	                        </v-text-field>
+                      	</template>                      	  
+                        <span>This code will be used as reference for you and will not be displayed anywhere to the buyer.</span>
+                      	</v-tooltip>
                       </v-flex>
 
                       <!--    <v-flex xs12>
@@ -161,18 +169,48 @@
                       </v-flex> -->
 
                       <v-flex xs4 pa-1>
-                        <v-text-field label="Quantity" placeholder="0" readonly :value="inquiry.quantity" style="color: #000;" suffix="pcs">
+                        <v-text-field 
+                        label="Quantity" 
+                        placeholder="0" 
+                        readonly 
+                        :value="inquiry.quantity" 
+                        style="color: #000;" 
+                        suffix="pcs">
+                        </v-text-field>
+                      </v-flex>
+
+
+                      <v-flex xs4 pa-1>
+                        <v-text-field 
+                        label="Unit Prices" 
+                        v-model="formData.price" 
+                        :error-messages="fieldErrors('formData.price')" 
+                        @blur="$v.formData.price.$touch()" 
+                        placeholder="0.00" 
+                        type="number" 
+                        min="0" 
+                        step="0.01" 
+                        prefix="$"
+                        persistent-hint
+                        :hint="'Desired Unit Price: $ '+currency(inquiry.desired_unit_price)">
                         </v-text-field>
                       </v-flex>
                       <v-flex xs4 pa-1>
-                        <v-text-field label="Unit Price" v-model="formData.price" :error-messages="fieldErrors('formData.price')" @blur="$v.formData.price.$touch()" placeholder="0.00" type="number" min="0" step="0.01" prefix="$">
-                        </v-text-field>
-                      </v-flex>
-                      <v-flex xs4 pa-1>
-                        <v-text-field label="Total Price" v-model="formData.total_price" placeholder="0.00" :error-messages="fieldErrors('formData.total_price')" @blur="$v.formData.total_price.$touch()" type="number" min="0" step="0.01" prefix="$">
+                        <v-text-field 
+                        label="Total Prices" 
+                        v-model="formData.total_price" 
+                        placeholder="0.00" 
+                        :error-messages="fieldErrors('formData.total_price')" 
+                        @blur="$v.formData.total_price.$touch()" 
+                        type="number" 
+                        min="0" 
+                        step="0.01" 
+                        prefix="$"
+                        persistent-hint
+                        :hint="'Desired Total Price: $ '+currency(inquiry.desired_price)">
                         </v-text-field>
                       </v-flex>	
-						
+
 		
                       <v-flex xs12 pa-1 v-if="formData.attachments && formData.attachments.length > 0">
                       	<v-layout row wrap>
@@ -194,6 +232,7 @@
                         <!-- IMAGE QUOTE DROPZONE  -->
                               <vue-dropzone 
                                   id="dropzone_oem" 
+                                  ref="dropzone_oem" 
                                   :options="dropzoneOptions" 
                                   :useCustomSlot="useCustomSlot"
                                   :awss3="getAWSS3('images')"
@@ -541,7 +580,7 @@ data: () => ({
     dropzoneOptions: {
         url: config.main.awss3.urls.inquiry,
         thumbnailWidth: 200,
-        maxFilesize: 0.5,
+        maxFilesize: 50,
         headers: {},
         addRemoveLinks: true,            
         dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
@@ -696,9 +735,10 @@ methods: {
       // clear existing object
     clearData() {
 
-           for (const prop of Object.keys(this.formData)) {
-              delete this.formData[prop];
-            }
+        for (const prop of Object.keys(this.formData)) {
+            delete this.formData[prop];
+        }
+        this.$refs.dropzone_oem.removeAllFiles();
 
     },
 
@@ -824,16 +864,20 @@ watch: {
 
     editQuote(nVal, oVal) {
 
-        if (nVal) {
-            this.quoteAction = "Edit";
-            this.fillFormData()
-          	this.cnsl('-edit-')
-        } else {
-            this.quoteAction = "Add";
-            this.formData = this.initBid;
-            this.clearData();
-            this.cnsl('-add-')
-        }
+        // if (nVal) {
+        //     this.quoteAction = "Edit";
+        //     this.clearData();
+        //     this.$v.$reset();
+        //     this.fillFormData();
+        //   	this.cnsl('this.formData.price',this.formData.price)
+        //   	this.cnsl('-edit-')
+        // } else {
+        //     this.quoteAction = "Add";
+        //     this.formData = this.initBid;
+        //     this.$v.$reset();
+        //     this.clearData();
+        //     this.cnsl('-add-')
+        // }
 
     },
 
@@ -841,6 +885,23 @@ watch: {
     openQuoteDialog(nVal, oVal) {
         if (!nVal)
         this.$emit('update:editQuote', false);
+
+
+        if (this.editQuote) {
+            this.quoteAction = "Edit";
+            this.clearData();
+            this.$v.$reset();
+            this.fillFormData();
+          	this.cnsl('this.formData.price',this.formData.price)
+          	this.cnsl('-edit-')
+        } else {
+            this.quoteAction = "Add";
+            this.formData = this.initBid;
+            this.$v.$reset();
+            this.clearData();
+            this.cnsl('-add-')
+        }
+
     },
 
     // check if inquiry has required to put sample cost
@@ -852,10 +913,23 @@ watch: {
           } else {
             this.is_sample = false
           }
-
-
     },
 
+
+    'formData.price': function(nVal,oVal){
+
+    	this.cnsl('formData.price nVal',nVal);
+
+    	if(nVal) {
+    		this.cnsl('GOOOO',this.formData.quantity);
+    		this.formData.total_price = parseFloat(this.inquiry.quantity) * parseFloat(nVal);
+    	}
+    },
+
+
+    'formData.total_price': function(nVal,oVal){
+    	this.cnsl('formData.total_price nVal',nVal);
+    },
 
 },
 

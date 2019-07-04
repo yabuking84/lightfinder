@@ -176,7 +176,10 @@
 					<template v-if="hasBid">
 
 						<v-flex xs12>
-								<image-gallery-small :images="bid.attachments && bid.attachments.length > 0 ? bid.attachments : []" noThumbnails height="120px"></image-gallery-small> 
+							<!-- <pre>{{ bid.attachments }}</pre> -->
+							<image-gallery-small 
+							:images="bid.attachments && bid.attachments.length > 0 ? bid.attachments : []" 
+							noThumbnails height="120px"></image-gallery-small> 
 						</v-flex>
 
 
@@ -185,24 +188,34 @@
 							<v-divider></v-divider>
 
 							<v-flex xs12>
-								<h5 class="font-weight-thin">Product code</h5>
-								<h2>{{ bid.product_name }}</h2>
+								<v-tooltip bottom>
+								<template #activator="{on}">
+
+								<h5 v-on="on" class="font-weight-thin">Product code</h5>
+								<h2 v-on="on" >{{ bid.product_name }}</h2>
+
+								</template>
+								<span>This code will be used as reference for you and will not be displayed anywhere to the buyer.</span>
+								</v-tooltip>
 							</v-flex>
 
 							<v-flex xs12>
 							
 								<v-layout row wrap>									
+									<v-flex xs12>
+										<!-- <pre>{{ inquiry }}</pre> -->
+									</v-flex>
 									<v-flex xs4 pa-2>
 										<h5 class="font-weight-thin">Quantity</h5>
 										<h3>{{ inquiry.quantity }} pcs</h3>
 									</v-flex>
 									<v-flex xs4 pa-2>
-										<h5 class="font-weight-thin">Unit Price</h5>
-										<h3>${{ bid.price }}</h3>
+										<h5 class="font-weight-thin">Unit Price / Target Unit Price</h5>
+										<h3>${{ bid.price }} / ${{ currency(inquiry.desired_unit_price) }}</h3>
 									</v-flex>
 									<v-flex xs4 pa-2>
-										<h5 class="font-weight-thin">Total Price</h5>
-										<h3>${{ bid.total_price }}</h3>
+										<h5 class="font-weight-thin">Total Price / Target Total Price</h5>
+										<h3>${{ bid.total_price }} / ${{ currency(inquiry.desired_price) }}</h3>
 									</v-flex>
 
 									<v-flex xs4 pa-2 v-show="inquiry.sample_quantity">

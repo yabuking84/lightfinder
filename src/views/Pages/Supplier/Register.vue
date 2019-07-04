@@ -796,7 +796,7 @@ export default {
 		dropzoneOptions: {
 			url: config.main.awss3.urls.inquiry,
 			thumbnailWidth: 200,
-			maxFilesize: 0.5,
+			maxFilesize: 50,
 			headers: {},
 			addRemoveLinks: true,            
 			dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",

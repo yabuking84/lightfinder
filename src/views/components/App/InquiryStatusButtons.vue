@@ -13,22 +13,46 @@
 
 
 
+
+
 		<template v-if="statusId">
+
+
 			<slot name="statusText" :status="status">
-				<h5 
+
+        		<v-tooltip 
+			    :disabled="!(status.desc.length)"
+        		bottom>
+	        	<template #activator="{ on }">
+
+				<h5
+				v-on="on"
 				class="statuses px-0 mx-0 " 
 				:class="status.class+'--text'">
 					{{ status.name.trim() }}
 				</h5>
+
+				</template>
+				<span v-if="status.desc">{{ status.desc }}</span>
+				</v-tooltip>
+
 			</slot>
+
+
 		</template>
-		<template v-else>	
+		<template v-else>
+
 			<h5 
 			:color="color"
 			class="statuses px-0 mx-0 ">
-				<slot></slot> &nbsp;
+				<slot></slot> &nbsp; ss
 			</h5>
+
 		</template>
+
+
+        
+
 
 
 </span>

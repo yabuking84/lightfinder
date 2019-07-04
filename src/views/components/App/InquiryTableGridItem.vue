@@ -13,7 +13,9 @@
 					<v-flex xs3 py-1>
 						<h4 class="black--text lighten-4">
 							Inquiry 
-							<span style="font-size: 0.7em;" class="ml-2">{{ inquiry.bid_count }} bid/s</span>
+							<span v-if="!hideBidCount" style="font-size: 0.7em;" class="ml-2">
+								{{ inquiry.bid_count }} bid/s
+							</span>
 						</h4>
 						<h5 class="mt-0 font-weight-medium ">{{ inquiry.inq_id }}</h5>
 					</v-flex>
@@ -30,15 +32,32 @@
 					<v-flex xs4 py-1>
 						<h4 class="black--text">Status</h4>
 						
+
 						<inquiry-status-buttons 
 						:status-id="inquiry.status" 
 						:statuses="statuses">
 							<template v-slot:statusText="sp">
-								<h4 class="mt-0 font-weight-medium red--text">
+
+			        		<v-tooltip 
+			        		:disabled="!(sp.status.desc.length)"
+			        		bottom>
+				        	<template #activator="{ on }">
+
+								<h4 
+								v-on="on"
+								class="mt-0 font-weight-medium red--text">
 									{{ sp.status.name.trim() }}
 								</h4>
+
+							</template>
+						    <span>{{ sp.status.desc }}</span>
+					        </v-tooltip>
+
 							</template>							
 						</inquiry-status-buttons>
+
+						
+
 					</v-flex>
 					</slot>
 
@@ -100,6 +119,10 @@ export default {
 		'gridItemClass': {
 			type:String,
 			default:'xs12',
+		},
+		'hideBidCount':{
+			type:Boolean,
+			default:false,
 		},
 
 	},

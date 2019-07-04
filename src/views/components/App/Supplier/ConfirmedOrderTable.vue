@@ -35,7 +35,7 @@
 
 							<td>{{ sp.item.id }}</td>
 
-							<td>$ {{ currency(sp.item.unit_cost) }}</td>
+							<!-- <td>$ {{ currency(sp.item.unit_cost) }}</td> -->
 
 							<td>{{ sp.item.quantity }} pcs</td>
 
@@ -89,11 +89,11 @@ data() { return {
 			align: 'left',
 			value: 'id',
 		},
-		{
-			text: 'Unit Cost',
-			align: 'left',
-			value: 'unit_cost',
-		},
+		// {
+		// 	text: 'Unit Cost',
+		// 	align: 'left',
+		// 	value: 'unit_cost',
+		// },
 		{
 			text: 'Quantity',
 			align: 'left',

@@ -119,6 +119,8 @@ export default {
 			arg = 0.0;
 			else if(!arg)
 			arg = 0.0;
+			else
+			arg = parseFloat(arg);
 
 			// this.cnsl('arg 2',arg);
 
@@ -129,7 +131,7 @@ export default {
 			// return ceil(arg,2).toFixed(2)
 			// return this.numberWithCommas(arg.toFixed(2));
 			if(arg)
-			return arg.toFixed(decimals);
+			return parseFloat(arg).toFixed(decimals);
 			else
 			return 0;
 		},

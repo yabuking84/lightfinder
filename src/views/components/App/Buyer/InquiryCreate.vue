@@ -87,15 +87,24 @@
                                   <v-flex xs12>
                                     <v-layout row wrap>
                                       <v-flex xs5>
-                                        <h4 title="this is for your reference">Your Subject</h4>
+
+			        				<v-tooltip bottom>
+				        			<template #activator="{ on }">
+
+                                        <h4 v-on="on">Your Subject</h4>
                                         <v-text-field 
-                                        title="this is for your reference"
+                                        v-on="on"                                        
                                         v-model="formData.keywords" 
                                         @keyup.enter="stepUp()" 
                                         :error-messages="fieldErrors('formData.keywords')" 
                                         @blur="$v.formData.keywords.$touch()" 
                                         label="Subject">
                                         </v-text-field>
+                                    
+                                    </template>
+						    		<span>This is for your reference</span>
+                                	</v-tooltip>
+
                                       </v-flex>
 
                                       <v-flex xs1>
@@ -162,7 +171,7 @@
                               Quantity & Price
                               <small v-show="$v.formData.quantity.$error && !$v.formData.quantity.required">Quantity is required.</small>
                               <small v-show="$v.formData.quantity.$error && !$v.formData.quantity.minValue">Quantity is below MOQ.</small>
-                              <small v-show="$v.formData.desired_price.$error">Preffered Price is required.</small>
+                              <small v-show="$v.formData.desired_price.$error">Preferred Price is required.</small>
                             </v-stepper-step>
 
                             <v-stepper-content step="3" ref="step_3">
@@ -185,27 +194,23 @@
                                   <v-flex xs4>
                                     <v-text-field 
                                       class="mr-1" 
-                                        mask="######"
-                                      label="Target Unit Price" 
-                                      :error-messages="fieldErrors('formData.desired_price')" 
-                                      @blur="$v.formData.desired_price.$touch()" 
-                                      v-model="formData.desired_price" 
+                                      label="Target Unit Price"                                       
+                                      v-model="formData.desired_unit_price" 
                                       @keyup.enter="stepUp()" 
-                                      :value="formData.desired_price" 
                                       suffix="USD">
                                     </v-text-field>
                                   </v-flex>
                                 <v-flex xs1>
                                   </v-flex>
-                                        <v-flex xs4>
+                                    <v-flex xs4>
                                     <v-text-field 
-                                      class="mr-1"                                       
-                                      label="Target Total Price" 
-                                      @keyup.enter="stepUp()" 
-                                      :value="formData.quantity * formData.desired_price" 
-                                      suffix="USD">
+                                    class="mr-1"
+                                    label="Target Total Price" 
+                                    @keyup.enter="stepUp()" 
+                                    v-model="formData.desired_price" 
+                                    suffix="USD">
                                     </v-text-field>
-                                  </v-flex>
+                                  	</v-flex>
 
                                 </v-layout>
                               </v-container>
@@ -685,7 +690,7 @@
 
                                 <v-layout row wrap justify-center>
                                     <!-- <h2 class="text-xs-center">Inquiry Preview</h2> -->
-                                    <h2 class="grey--text lighten-5">Inquiry Preview </h2>
+                                    <h2 class="grey--text lighten-5">Inquiry Preview</h2>
                                 </v-layout>
 
 
@@ -727,14 +732,14 @@
                                                 <small v-html="formData.quantity"></small>
                                             </v-flex>
 
-                                            <v-flex xs4 v-show="formData.desired_price">
-                                                <h4>Price per unit</h4>
-                                                <small v-html="formData.desired_price"></small>
+                                            <v-flex xs4 v-show="formData.desired_unit_price">
+                                                <h4>Target Price per Unit</h4>
+                                                <small v-html="'$'+currency(formData.desired_unit_price)"></small>
                                             </v-flex>
 
                                             <v-flex xs4 v-show="formData.quantity && formData.desired_price">
-                                                <h4>Total Price</h4>
-                                                <small v-html="formData.quantity * formData.desired_price"></small>
+                                                <h4>Target Total Price</h4>
+                                                <small v-html="'$'+currency(formData.quantity * formData.desired_unit_price)"></small>
                                             </v-flex>
 
                                         </v-layout>
@@ -1143,6 +1148,7 @@ export default {
         dimmable: null,
         quantity: null,
         desired_price: null,
+        desired_unit_price: null,
         shipping_date: null,
         payment_method: null,
         message: null,
@@ -1340,6 +1346,18 @@ export default {
 
     },
 
+    'formData.desired_unit_price': function (nVal, oVal) {
+    	if(nVal && this.formData.quantity) {
+    		this.formData.desired_price = this.formData.quantity * nVal;
+    	}
+    },
+
+    'formData.quantity': function (nVal, oVal) {
+    	if(nVal && this.formData.desired_unit_price) {
+    		this.formData.desired_price = this.formData.desired_unit_price * nVal;
+    	}
+    },
+
     'formData.power': function (nVal, oVal) {
 
     	this.cnsl('formData.power');
@@ -1521,6 +1539,7 @@ export default {
 
             this.formData.quantity = this.inquiryHolder.quantity
             this.formData.desired_price = this.inquiryHolder.desired_price
+            this.formData.desired_unit_price = this.inquiryHolder.desired_unit_price
 
             this.formData.shipping_date = this.inquiryHolder.desired_shipping_date
             this.formData.payment_method = this.inquiryHolder.payment_method_id
@@ -1616,6 +1635,7 @@ export default {
       this.formData.dimmable = null;
       this.formData.quantity = null;
       this.formData.desired_price = null;
+      this.formData.desired_unit_price = null;
       this.formData.shipping_date = this.getDateTime();
       this.formData.shipment_method = null;
       this.formData.payment_method = null;
@@ -1665,6 +1685,7 @@ export default {
         "warranty": this.formData.warranty ? this.formData.warranty : 0,
         "quantity": this.formData.quantity,
         "desired_price": this.formData.desired_price,
+        "desired_unit_price": this.formData.desired_unit_price,
         "desired_shipping_date": this.formData.shipping_date,
         "message": this.formData.message,
 

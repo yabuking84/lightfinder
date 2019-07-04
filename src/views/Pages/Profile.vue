@@ -413,7 +413,7 @@ export default {
 		dropzoneOptions: {
 			url: config.main.awss3.urls.inquiry,
 			thumbnailWidth: 250,
-			maxFilesize: 5,
+			maxFilesize: 50,
 			maxFiles: 1,
 			autoProcessQueue: true,
 			maxfilesexceeded: function(file) {

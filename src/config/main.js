@@ -60,12 +60,14 @@ export default {
 				name: "Open",
 				class: "green",
 				icon: "far fa-envelope-open",
+				desc:"Inquiry is ready for bids.",
 			},
 			{
 				id: 1004, 
 				name: "Confirmation",
 				class: "teal",
 				icon: "fas fa-handshake",
+				desc:"",
 			},
 
 			{
@@ -73,6 +75,7 @@ export default {
 				name: "BAL Confirmation",
 				class: "purple",
 				icon: "fas fa-handshake",
+				desc:"",
 			},
 
 			{
@@ -80,24 +83,28 @@ export default {
 				name: "Pending Payment",
 				class: "deep-orange",
 				icon: "far fa-credit-card",
+				desc:"",
 			},
 			{
 				id: 1006, 
 				name: "Confirming Payment",
 				class: "green",
 				icon: "far fa-credit-card",
+				desc:"",
 			},
 			{
 				id: 2001, 
 				name: "Production",
 				class: "blue",
 				icon: "fas fa-industry",
+				desc:"",
 			},
 			{
 				id: 2002, 
 				name: "Shipment",
 				class: "light-green",
 				icon: "fas fa-truck",
+				desc:"",
 			},
 
 
@@ -107,26 +114,28 @@ export default {
 				name: "Receiving",
 				class: "orange",
 				icon: "fas fa-sign-in-alt",
-
+				desc:"",
 			},
 			{
 				id: 2004, 
 				name: "Return",
 				class: "red",
 				icon: "fas fa-exchange-alt",
+				desc:"",
 			},
 			{
 				id: 3001, 
 				name: "Success",
 				class: "light-blue",
 				icon: "far fa-check-circle",
-
+				desc:"",
 			},
 			{
 				id: 3002, 
 				name: "Cancelled",
 				class: "red red darken-2",
 				icon: "fas fa-ban",
+				desc:"",
 			},
 		],		
 
@@ -136,13 +145,14 @@ export default {
 				name: "Verifying",
 				class: "orange",
 				icon: "fas fa-hourglass-half",
-
+				desc:"",
 			},
 			{
 				id: 1003, 
 				name: "Rejected",
 				class: "red",
 				icon: "far fa-times-circle",
+				desc:"",
 			},
 		],
 
@@ -151,16 +161,19 @@ export default {
 			// 	id: 'all', 
 			// 	name: "All",
 			// 	icon: "fas fa-envelope-open-text",
+			// 	desc:"",
 			// },
 			// {
 			// 	id: 'priority', 
 			// 	name: "Priority",
 			// 	icon: "fas fa-exclamation-circle",
+			// 	desc:"",
 			// },
 			{
 				id: 'closed', 
 				name: "Closed",
 				icon: "fas fa-envelope",
+				desc:"",
 			},
 		],
 

@@ -95,21 +95,24 @@ export default {
 
 	watch: {
 		
-		// images: {
+		images: {
 
-		// 	handler(nVal, oVal) {
-		// 	  	if(nVal) {
-		// 	  		this.getImages();
-		// 	  	}
-  //           },
-		// 	deep: true,
-		// }
+			handler(nVal, oVal) {
+			  	
+			  	// if(nVal) {
+			  	// 	this.getImages();
+			  	// }
+
+			  	this.getImages();
+            },
+			deep: true,
+		}
 	},
 
 	methods: {
 
 		getImages() {
-			this.cnsl('images',this.images)
+			// this.cnsl('images',this.images)
 
 			if(this.images.length == 0) {
 				this.imagesLocal.push({
