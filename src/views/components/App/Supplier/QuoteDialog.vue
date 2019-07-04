@@ -513,7 +513,7 @@ props: {
 
 
 
-data: () => ({
+data() { return {
     loading: false,
 
     formData: {
@@ -593,7 +593,7 @@ data: () => ({
 
 
 
-}),
+}},
 
 
 
@@ -670,9 +670,9 @@ methods: {
         // alert("this.bid.reference = "+this.bid.reference); 
     },
     
-    resetForm() {
-        this.formData = this.initBid;
-    },
+    // resetForm() {
+    //     this.formData = this.initBid;
+    // },
 
     keyPress(e) {
 
@@ -735,34 +735,61 @@ methods: {
       // clear existing object
     clearData() {
 
-        for (const prop of Object.keys(this.formData)) {
-            delete this.formData[prop];
-        }
+        // for (const prop of Object.keys(this.formData)) {
+        //     delete this.formData[prop];
+        // }
+
+        this.formData = {
+	        price: null,
+	        total_price: null,
+	        product_name: null,
+	        remarks: null,
+	        description: null,
+
+	        sample_cost:null,
+	        sample_shipment_cost:null,
+
+	        lumen:null,
+	        power:null,
+	        efficiency:null,
+	        beam_angle: null,
+	        cct: null,
+	         ip: null,
+	        finish: null,
+	        size: null,
+	        dimmable: null,
+	        attachments: [],
+        };
         this.$refs.dropzone_oem.removeAllFiles();
 
     },
 
     fillFormData() {
 
-          this.formData.price = this.bid.price
-          this.formData.total_price = this.bid.total_price
-          this.formData.product_name = this.bid.product_name
-          this.formData.remarks = this.bid.remarks
-          this.formData.description = this.bid.description
-          this.formData.sample_cost = this.bid.sample_cost
-          this.formData.sample_shipment_cost = this.bid.sample_shipment_cost
+          this.cnsl('bid  xxxxxxxxxxxxxx',this.bid);
+          this.cnsl('formData  xxxxxxxxxxxxxx',this.formData);
 
-          this.formData.lumen = this.getSpefications('Lumen')
-          this.formData.power = this.getSpefications('Power')
-          this.formData.efficiency = this.getSpefications('Efficiency')
-          this.formData.beam_angle = this.getSpefications('Beam Angle')
-          this.formData.cct = this.getSpefications('CCT')
-          this.formData.ip = this.getSpefications('IP')
-          this.formData.finish = this.getSpefications('Finish')
-          this.formData.size = this.getSpefications('Size')
-          this.formData.dimmable = this.getSpefications('Dimmable')
+          
+          this.formData.total_price = this.bid.total_price;
+          this.formData.price = this.bid.price;
+          this.formData.product_name = this.bid.product_name;
+          this.formData.remarks = this.bid.remarks;
+          this.formData.description = this.bid.description;
+          this.formData.sample_cost = this.bid.sample_cost;
+          this.formData.sample_shipment_cost = this.bid.sample_shipment_cost;
 
-          this.formData.attachments = this.bid.attachments
+          this.formData.lumen = this.getSpefications('Lumen');
+          this.formData.power = this.getSpefications('Power');
+          this.formData.efficiency = this.getSpefications('Efficiency');
+          this.formData.beam_angle = this.getSpefications('Beam Angle');
+          this.formData.cct = this.getSpefications('CCT');
+          this.formData.ip = this.getSpefications('IP');
+          this.formData.finish = this.getSpefications('Finish');
+          this.formData.size = this.getSpefications('Size');
+          this.formData.dimmable = this.getSpefications('Dimmable');
+
+          this.formData.attachments = this.bid.attachments;
+          
 
     },
 
@@ -892,13 +919,12 @@ watch: {
             this.clearData();
             this.$v.$reset();
             this.fillFormData();
-          	this.cnsl('this.formData.price',this.formData.price)
           	this.cnsl('-edit-')
         } else {
+            // this.formData = this.initBid;
             this.quoteAction = "Add";
-            this.formData = this.initBid;
-            this.$v.$reset();
             this.clearData();
+            this.$v.$reset();
             this.cnsl('-add-')
         }
 
@@ -916,20 +942,28 @@ watch: {
     },
 
 
-    'formData.price': function(nVal,oVal){
+    'formData.price': {
+    	handler(nVal,oVal){
+	    	this.cnsl('formData.price nVal',nVal);
+	    	if(nVal) {
+	    		this.cnsl('GOOOO',this.formData.quantity);
+	    		this.formData.total_price = this.currency(parseFloat(this.inquiry.quantity) * parseFloat(nVal));
+	    	}
+	    	// this.$v.formData.total_price.$touch();
+		},
 
-    	this.cnsl('formData.price nVal',nVal);
-
-    	if(nVal) {
-    		this.cnsl('GOOOO',this.formData.quantity);
-    		this.formData.total_price = parseFloat(this.inquiry.quantity) * parseFloat(nVal);
-    	}
-    },
+		deep: true,
+	},
 
 
-    'formData.total_price': function(nVal,oVal){
-    	this.cnsl('formData.total_price nVal',nVal);
-    },
+    	
+
+    'formData.total_price': {    	
+		handler(nVal,oVal){
+			this.cnsl('formData.total_price nVal',nVal);
+		},
+		deep: true,
+    }
 
 },
 
