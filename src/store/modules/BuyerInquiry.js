@@ -118,7 +118,7 @@ const mutations = {
 const actions = {
 
 
-	getActiveSubscriptions_a(context,data){
+	getActiveSubscription_a(context,data){
 		return new Promise((resolve, reject) => {
 			var headers = {
 				token: localStorage.access_token,
@@ -131,7 +131,7 @@ const actions = {
 				headers: headers,
 			})
 			.then(response => {
-				resolve(response.data);
+				resolve(response.data[0]);
 			})
 			.catch(error => {
 				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {

@@ -125,7 +125,7 @@ methods:{
 
 		this.setMaxInqs().then((rspns)=>{			
 			this.setTotalInqs().then((rspns)=>{
-				this.cnsl(this.maxInqs+" - "+this.totalInqs);
+				// this.cnsl(this.maxInqs+" - "+this.totalInqs);
 				if(this.maxInqs-this.totalInqs > 0)
 				this.openInquiryCreate = true;
 				else {
@@ -141,13 +141,20 @@ methods:{
 
 	setMaxInqs(){
 		return new Promise((resolve, reject) => {			
-			this.$store.dispatch(this.getStore()+'/getActiveSubscriptions_a')
+			this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
 			.then((rspns)=>{
 				this.cnsl('rspns',rspns);
-				if(!rspns.length) {
+				
+				if(rspns) {
+					this.maxInqs = rspns.inclusions.max_inquiry;
+					this.package_type = rspns.package_type;
+				}
+				else {
+					// if no / free subscription
 					this.maxInqs = this.defaultMaxInqs;
 					this.package_type = 'free';
 				}
+
 				resolve();
 			})
 			.catch((e)=>{
@@ -161,7 +168,7 @@ methods:{
 		return new Promise((resolve, reject) => {			
 			this.$store.dispatch(this.getStore()+'/getInquiries_a')
 			.then((rspns)=>{
-				this.cnsl('Inquiries ',rspns);
+				// this.cnsl('Inquiries ',rspns);
 				if(rspns.length)
 				this.totalInqs = rspns.length;
 				else

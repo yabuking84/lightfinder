@@ -96,7 +96,7 @@ export default {
 
 	    getStore(type='inq'){
 
-	    	this.cnsl('$route',this.$route.meta.storeType[type]);
+	    	// this.cnsl('$route',this.$route.meta.storeType[type]);
 
 	        // return this.$route.meta.storeType.inq;
 	        return this.$route.meta.storeType[type];
@@ -128,7 +128,10 @@ export default {
 		decimals(arg,decimals=2){
 			// return ceil(arg,2).toFixed(2)
 			// return this.numberWithCommas(arg.toFixed(2));
+			if(arg)
 			return arg.toFixed(decimals);
+			else
+			return 0;
 		},
 
 

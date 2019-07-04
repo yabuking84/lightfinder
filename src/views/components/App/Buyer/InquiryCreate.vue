@@ -87,8 +87,9 @@
                                   <v-flex xs12>
                                     <v-layout row wrap>
                                       <v-flex xs5>
-                                        <h4>Your Subject</h4>
+                                        <h4 title="this is for your reference">Your Subject</h4>
                                         <v-text-field 
+                                        title="this is for your reference"
                                         v-model="formData.keywords" 
                                         @keyup.enter="stepUp()" 
                                         :error-messages="fieldErrors('formData.keywords')" 
@@ -159,7 +160,8 @@
                             <!-- Sub category here if there is -->
                             <v-stepper-step step="3" :rules="[() => !$v.formData.quantity.$error &&  !$v.formData.desired_price.$error ]" editable>
                               Quantity & Price
-                              <small v-show="$v.formData.quantity.$error">Quantity is required.</small>
+                              <small v-show="$v.formData.quantity.$error && !$v.formData.quantity.required">Quantity is required.</small>
+                              <small v-show="$v.formData.quantity.$error && !$v.formData.quantity.minValue">Quantity is below MOQ.</small>
                               <small v-show="$v.formData.desired_price.$error">Preffered Price is required.</small>
                             </v-stepper-step>
 
@@ -169,7 +171,7 @@
                                   <v-flex xs4>
                                     <v-text-field 
                                     v-model="formData.quantity" 
-                                    label="Quantity" 
+                                    :label="'Quantity ('+moq+' MOQ)'" 
                                     @keyup.enter="stepUp()" 
                                     :error-messages="fieldErrors('formData.quantity')" 
                                     @blur="$v.formData.quantity.$touch()" 
@@ -184,7 +186,7 @@
                                     <v-text-field 
                                       class="mr-1" 
                                         mask="######"
-                                      label="Price Per Piece" 
+                                      label="Target Unit Price" 
                                       :error-messages="fieldErrors('formData.desired_price')" 
                                       @blur="$v.formData.desired_price.$touch()" 
                                       v-model="formData.desired_price" 
@@ -197,9 +199,8 @@
                                   </v-flex>
                                         <v-flex xs4>
                                     <v-text-field 
-                                      class="mr-1" 
-                                      readonly
-                                      label="Total Price" 
+                                      class="mr-1"                                       
+                                      label="Target Total Price" 
                                       @keyup.enter="stepUp()" 
                                       :value="formData.quantity * formData.desired_price" 
                                       suffix="USD">
@@ -241,11 +242,10 @@
                                     </v-layout>
                                     <v-layout row ml-4 >
                                       <v-text-field 
-                                        label="Efficiency" 
-                                        v-model="formData.efficiency" 
-                                        @keyup.enter="stepUp()" 
-                                        :value="formData.efficiency" 
-                                        suffix="lm/w" mask="######">
+                                        label="Efficiency"                                         
+                                        :value="decimals(formData.efficiency,3)" 
+                                        readonly
+                                        suffix="lm/w">
                                       </v-text-field>
                                     </v-layout>
                                     <v-layout row ml-4 >
@@ -597,7 +597,7 @@
                               <v-container>
 
                               		 <v-flex xs12 class="mb-5" v-show="inquiry_attachments.length">
-		                                	<v-layout row wrap>
+		                                	<v-layout row wrap>                              		 		
 												<v-flex xs4 v-for="(file, i) in inquiry_attachments" :key="'image'+i">
 													<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
 													   <div class="image-area">
@@ -611,8 +611,11 @@
 		                                </v-flex>
 
 
-                                <v-layout row>
+                                <v-layout row wrap>
 
+                                  <v-flex xs12>
+									<p class="mb-4">Additional files can be added here that could help our bidders in this inquiry.</p>
+                                  </v-flex>
                                   <v-flex xs12>
                                     <vue-dropzone 
                                     id="dropzone_attachments" 
@@ -758,7 +761,7 @@
                                             </v-flex>
 
                                             <v-flex xs3 v-show="formData.efficiency">
-                                                <small>Efficiency: <span v-html="formData.efficiency"></span> </small>  
+                                                <small>Efficiency: <span v-html="decimals(formData.efficiency,3)"></span> </small>  
                                             </v-flex>
 
                                             <v-flex xs3 v-show="formData.beam_angle">
@@ -921,7 +924,7 @@ import config from '@/config/index'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import vue2Dropzone from 'vue2-dropzone'
 
-import { required, email, maxLength, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
+import { required, email, maxLength, minValue, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
 // import helpers from "@/mixins/helpers"
@@ -949,7 +952,13 @@ export default {
       },
 
       quantity: {
-        required
+        required,
+        minValue: function(value,component){
+        	if(value<this.moq)
+        	return false;
+        	else
+        	return true;
+        },
       },
 
       desired_price: {
@@ -957,7 +966,7 @@ export default {
       },
 
       message: {
-        required
+        // required
       },
 
       warranty: {
@@ -1040,9 +1049,9 @@ export default {
 
     formData: {
 
-      keywords: { required: 'Please enter an Subject' },
-      category: { required: 'Please enter an category.' },
-      quantity: { required: 'Please enter an Quantity.' },
+      keywords: { required: 'Please enter Subject' },
+      category: { required: 'Please enter Category.' },
+      quantity: { required: 'Please enter Quantity.', minValue: 'Quantity is below MOQ.',  },
       desired_price: { required: 'Please enter your Preferred Price.' },
       message: { required: 'Please enter an Additional Details.' },
       warranty: { required: 'Please enter a Warranty' },
@@ -1116,6 +1125,8 @@ export default {
       cnt: 0,
       stepCnt: 1,
 
+      moq: 0,
+
      formData: {
 
         keywords: null,
@@ -1188,7 +1199,7 @@ export default {
         dropzoneOptions: {
             url: config.main.awss3.urls.inquiry,
             thumbnailWidth: 200,
-            maxFilesize: 0.5,
+            maxFilesize: 100,
             headers: {},
             addRemoveLinks: true,            
             dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
@@ -1254,6 +1265,9 @@ export default {
     //     this.cnsl('Error: ')
     //     this.cnsl(e);
     // });
+  	
+
+  	this.setMOQ();
 
   },
 
@@ -1295,9 +1309,10 @@ export default {
     dialog(nVal, oVal) {
 
         if(!nVal) {
-          // this.$emit('update:isEdit', false);
-          this.$emit('update:isEdit', false)
-          this.clearData();
+          	// this.$emit('update:isEdit', false);
+          	this.$emit('update:isEdit', false)
+          	this.clearData();
+  			this.setMOQ();
         }
 
     },
@@ -1321,11 +1336,26 @@ export default {
        if(nVal) {
           this.getInquiry(this.useInquiry);
        }
-
+ 
 
     },
 
-    deep: true
+    'formData.power': function (nVal, oVal) {
+
+    	this.cnsl('formData.power');
+    	if(this.formData.lumen>0 && nVal>0) {
+
+	    	this.formData.efficiency = this.formData.lumen / this.formData.power;
+    	}
+    },
+
+
+    'formData.lumen': function (nVal, oVal) {
+    	if(nVal>0 && this.formData.power>0)
+    	this.formData.efficiency = this.formData.lumen / this.formData.power;
+    },
+
+    // deep: true
 
   },
 
@@ -1334,11 +1364,30 @@ export default {
        countries(){
             return config.countries;
         },
-   
+ 
   },
 
 
   methods: {
+
+  	setMOQ(){
+
+			this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
+			.then((rspns)=>{
+				this.cnsl(rspns);
+				if(rspns) {					
+					this.moq = rspns.inclusions.moq;
+				}
+				else {
+					// if no / free subscription
+					this.moq = 10;
+				}
+			})
+			.catch((e)=>{
+				this.cnsl(e);
+				this.moq = 0;
+			});  		
+		},
 
     /* use for editing or updating the inquiry
      when it's rejected from the verificator */

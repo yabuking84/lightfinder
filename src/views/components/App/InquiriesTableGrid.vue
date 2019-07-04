@@ -320,7 +320,7 @@ export default {
 				this.loading = true;
 
 			this.allInquiries = [];
-			
+			// 
 			this.cnsl('test');
 						
 			this.$store.dispatch(this.getStore()+'/getInquiries_a',{with_bids:1})

@@ -33,6 +33,30 @@ methods: {
 	},	
 
 
+	fieldErrorsMOQ (name, moq) {
+		let rule
+		const errors = []
+		const field = get(this.$v, name)
+		const messages = get(this.$options.validationMessages, name)
+		
+		errors.push('=='+moq)
+
+		if(!field.$dirty) {
+			return errors
+		}
+
+		if(messages) {
+			for (rule in messages) {
+				if (field[rule] === false && messages[rule]) {
+					// errors.push(messages[rule])
+					errors.push('=='+moq)
+				}
+			}
+		}
+		return errors
+	},	
+
+
 },
 
 
