@@ -50,7 +50,7 @@
 						            </td> -->
 
 						            <td class="text-xs-center">
-						              <v-btn @click="setuseInquiry(props.item.inq_id)" :loading="props.item.loading" small flat value="left" class="red darken-2 v-btn--active font-weight-light text-decoration-none">
+						              <v-btn @click="setUseInquiry(props.item.inq_id)" :loading="props.item.loading" small flat value="left" class="red darken-2 v-btn--active font-weight-light text-decoration-none">
 						                <i class="fas fa-eye white--text"></i>
 						                <span class="ml-1 white--text font-weight-light ">Use</span>
 						              </v-btn>
@@ -181,7 +181,7 @@
 
 		    },
 
-		    setuseInquiry(inquiry) {
+		    setUseInquiry(inquiry) {
 
 		    	this.$emit('update:useInquiry', inquiry)
 		    	this.$emit('update:inquirylookup',false)
@@ -212,7 +212,16 @@
 
      
 
-         	deep: true
+         	useInquiry: {
+	         	handler(nVal, oVal) {
+	         		if(nVal) {
+	         			this.fillTable();
+	         		}
+	         	},
+	         	deep: true,
+         	},
+     
+
 
          }
 

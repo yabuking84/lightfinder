@@ -37,9 +37,11 @@
 
 							<!-- <td>$ {{ currency(sp.item.unit_cost) }}</td> -->
 
-							<td>{{ sp.item.quantity }} pcs</td>
+							<!-- <td>{{ sp.item.quantity }} pcs</td> -->
 
 							<td>$ {{ currency(sp.item.amount+sp.item.shipping_cost) }}</td>
+							
+							<td>{{ getStatus(sp.item.stage_id).name }}</td>
 
 							<td class="text-xs-right pa-0">
 								<v-btn 
@@ -74,6 +76,9 @@ import { Projects } from '@/data/widgets/project'
 // import helpers from "@/mixins/helpers"
 import inqMixin from "@/mixins/inquiry";
 
+import tblBs from "@/bus/table";
+
+import config from "@/config/main";
 
 export default {
 
@@ -94,15 +99,20 @@ data() { return {
 		// 	align: 'left',
 		// 	value: 'unit_cost',
 		// },
-		{
-			text: 'Quantity',
-			align: 'left',
-			value: 'quantity',
-		},
+		// {
+		// 	text: 'Quantity',
+		// 	align: 'left',
+		// 	value: 'quantity',
+		// },
 		{
 			text: 'Amount',
 			align: 'left',
 			value: 'amount',
+		},
+		{
+			text: 'Status',
+			align: 'left',
+			value: 'stage_id',
 		},
 		{ 
 			text: '', 
@@ -116,7 +126,9 @@ data() { return {
 methods: {
 	fillTable() {
 		// var storeType = this.$route.meta.storeType.inq;
-		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'2001',with_bids:1})
+		var statuses = config.inquiry_statuses.confirmed_orders.join(',');
+		// console.log('statuses',statuses);
+		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:statuses,with_bids:1})
 		// this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1006'})
 		.then((response)=>{
 			this.cnsl('supplier COT response',response);
@@ -150,6 +162,12 @@ methods: {
 
 created(){
 	this.fillTable();
+
+	// for refresh tableItems
+	tblBs.onRefreshTablePolling(()=>{
+		this.fillTable();
+	});
+	
 },
 
 }

@@ -1,3 +1,5 @@
+import config from '@/config/main';
+
 export default {
 	
 	methods:{
@@ -132,6 +134,17 @@ export default {
 
 			return retVal;
 		},
+
+		getStatus(status_id){
+
+			var retVal = this.$route.meta.statuses.filter((stts)=>{
+				return (stts.id==status_id);
+			});
+
+			retVal = (retVal.length)?retVal[0]:"---";
+
+			return retVal;
+		},	
 
 	},
 

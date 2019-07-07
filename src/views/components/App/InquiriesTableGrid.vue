@@ -194,6 +194,7 @@
 </template>
 <script>
 import inqEvntBs from "@/bus/inquiry";
+import tblBs from "@/bus/table";
 
 // import helpers from "@/mixins/helpers";
 import inqMixin from "@/mixins/inquiry";
@@ -341,7 +342,7 @@ export default {
 
 			this.allInquiries = [];
 			// 
-			this.cnsl('test');
+			// this.cnsl('test');
 						
 			this.$store.dispatch(this.getStore()+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
@@ -463,6 +464,12 @@ export default {
 		.catch((e) => {
 			this.cnsl('Error: ');
 			this.cnsl(e);
+		});
+
+
+		// for refresh tableItems
+		tblBs.onRefreshTablePolling(()=>{
+			this.refresh();
 		});
 
 
@@ -590,8 +597,8 @@ export default {
     }
 	.status-btn {
 		height: auto;
-		min-width: 50px;
-		padding: 5px 15px;
+	    min-width: 30px;
+	    padding: 5px 5px;
 	}
 
 

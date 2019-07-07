@@ -584,89 +584,88 @@ import config from '@/config/index'
 
 
 const dform = {
-  // 1st step 	
-  email: 'maderfahkaer@gmail.com',
-  password: '123456',
-  confirmpassword: '123456',
-  username: 'kabayan06',
-  // 2nd step
-  // can add multiple contacts if he/she wanted
-  firstname: 'Mader',
-  lastname: 'Fahkaer',
-  designation: 'lighther Designer Manager',
-  companyname: 'MF Lighting LCC',
-  country: 'United Arab Emirates',
-  city: 'Dubai',
-  street: '171 Tower 69',
-  zipcode: '6969',
-  phonenumber: '+12312',
-  mobilenumber: '123817',
-  designation: '589647869',
-  wechatid: '69696969',
-  companywebsite: 'almani.ae',
-  factoryaddress: '171 Tower 69',
-  // optional
-  managername: 'Zain Abdin',
-  manageremail: 'zain@almani.ae',
-  managerphone: '696969',
-  // 3rd
-  companyestablishedyear: '2017',
-  numberofemployees: '20',
-  numberofworkersinfactory: '100',
-  factoryphotoinside: [],
-  factoryphotooutside: [],
+  // // 1st step 	
+  // email: 'maderfahkaer@gmail.com',
+  // password: '123456',
+  // confirmpassword: '123456',
+  // username: 'kabayan06',
+  // // 2nd step
+  // // can add multiple contacts if he/she wanted
+  // firstname: 'Mader',
+  // lastname: 'Fahkaer',
+  // designation: 'lighther Designer Manager',
+  // companyname: 'MF Lighting LCC',
+  // country: 'United Arab Emirates',
+  // city: 'Dubai',
+  // street: '171 Tower 69',
+  // zipcode: '6969',
+  // phonenumber: '+12312',
+  // mobilenumber: '123817',
+  // designation: '589647869',
+  // wechatid: '69696969',
+  // companywebsite: 'almani.ae',
+  // factoryaddress: '171 Tower 69',
+  // // optional
+  // managername: 'Zain Abdin',
+  // manageremail: 'zain@almani.ae',
+  // managerphone: '696969',
+  // // 3rd
+  // companyestablishedyear: '2017',
+  // numberofemployees: '20',
+  // numberofworkersinfactory: '100',
+  // factoryphotoinside: [],
+  // factoryphotooutside: [],
 
-  // category list : what kind of led lights do you offer ?
-  // 4RTH
-  accountname: 'accountname',
-  accountnumber: 'accountnumber',
-  iban: 'iban',
-  bankname: 'bankname',
-  bankaddress: 'bankaddress',
-  swiftcode: 'swiftcode',
+  // // category list : what kind of led lights do you offer ?
+  // // 4RTH
+  // accountname: 'accountname',
+  // accountnumber: 'accountnumber',
+  // iban: 'iban',
+  // bankname: 'bankname',
+  // bankaddress: 'bankaddress',
+  // swiftcode: 'swiftcode',
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// // 1st step 	
- //  email: '',
- //  password: '',
- //  confirmpassword: '',
- //  username: '',
- //  // 2nd step
- //  // can add multiple contacts if he/she wanted
- //  firstname: '',
- //  lastname: '',
- //  designation: '',
- //  companyname: '',
- //  country: '',
- //  city: '',
- //  street: '',
- //  zipcode: '',
- //  phonenumber: '',
- //  mobilenumber: '',
- //  designation: '',
- //  wechatid: '',
- //  companywebsite: '',
- //  factoryaddress: '',
- //  // optional
- //  managername: '',
- //  manageremail: '',
- //  managerphone: '',
- //  // 3rd
- //  companyestablishedyear: '',
- //  numberofemployees: '',
- //  numberofworkersinfactory: '',
- //  factoryphotoinside: [],
- //  factoryphotooutside: [],
-
- //  // category list : what kind of led lights do you offer ?
- //  // 4RTH
- //  accountname: '',
- //  accountnumber: '',
- //  iban: '',
- //  bankname: '',
- //  bankaddress: '',
- //  swiftcode: '',
+	// 1st step 	
+	email: '',
+	password: '',
+	confirmpassword: '',
+	username: '',
+	// 2nd step
+	// can add multiple contacts if he/she wanted
+	firstname: '',
+	lastname: '',
+	designation: '',
+	companyname: '',
+	country: '',
+	city: '',
+	street: '',
+	zipcode: '',
+	phonenumber: '',
+	mobilenumber: '',
+	designation: '',
+	wechatid: '',
+	companywebsite: '',
+	factoryaddress: '',
+	// optional
+	managername: '',
+	manageremail: '',
+	managerphone: '',
+	// 3rd
+	companyestablishedyear: '',
+	numberofemployees: '',
+	numberofworkersinfactory: '',
+	factoryphotoinside: [],
+	factoryphotooutside: [],
+	// category list : what kind of led lights do you offer ?
+	// 4RTH
+	accountname: '',
+	accountnumber: '',
+	iban: '',
+	bankname: '',
+	bankaddress: '',
+	swiftcode: '',
 
 
 

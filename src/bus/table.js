@@ -16,6 +16,19 @@ export default new Vue({
 	        });
 		},
 
+		emitRefreshTablePolling(data){
+			this.$emit('refresh-table-polling',data);
+			// console.log('EMIT RefreshTablePolling');
+		},
+		onRefreshTablePolling(func){
+			this.$on('refresh-table-polling',(data)=>{
+				// console.log('ON RefreshTablePolling');
+				func(data);
+	        });
+		},
+		
+
+
 	},
 
 });

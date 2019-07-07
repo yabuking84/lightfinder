@@ -112,7 +112,8 @@ export default {
 	methods: {
 
 		getImages() {
-			// this.cnsl('images',this.images)
+			// this.cnsl('images getImages',this.images);
+			// this.cnsl('images.filename getImages',this.images[0].filename);
 
 			if(this.images.length == 0) {
 				this.imagesLocal.push({

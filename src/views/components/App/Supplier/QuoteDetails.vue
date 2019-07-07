@@ -102,7 +102,8 @@
 
 					<!-- Production -->
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-					<template v-if="inquiry.stage_id == 2001">
+					<template v-if="inquiry.stage_id == 2001 && inquiry.awarded_to_me">
+
 					<v-flex xs12>
 						<v-layout row wrap>
 							<v-flex xs12 pa-0>
@@ -132,19 +133,49 @@
 											<td>$ {{ currency(bid.total_price+inquiry.shipping_cost) }}</td>
 										</tr>
 									</table>
-								</v-alert>
 
-								<v-alert
-								v-else
-								:value="true"
-								type="error">
-									<div class="headline font-weight-bold">In Production</div>
-									<div class="" style="font-style: italic;">This order is already awarded and in production.</div>									
-								</v-alert>
 
+									  	
+									<v-btn
+									style="position:absolute; top:0; right:0; "
+								  	large
+								  	:loading="setProductionAsDoneBtn"
+									@click="setProductionAsDone()" 
+									class="indigo darken-2 ma-3 white--text">
+								  			SET PRODUCTION AS DONE!
+									</v-btn>										
+
+
+								</v-alert>
 
 
 							</v-flex>
+
+							<!-- Production Actions (should be awarded to supplier) -->
+							<!-- ///////////////////////////////////////////////////////////////////////// -->
+							<v-flex xs12 mt-0 mb-0 pt-0 pb-0>
+
+							</v-flex>
+							<!-- ///////////////////////////////////////////////////////////////////////// -->
+							<!-- Production Actions (should be awarded to supplier) -->
+
+
+						</v-layout>
+					</v-flex>
+					</template>
+					
+
+					<!-- if awarded to another supplier -->
+					<template v-if="!inquiry.awarded_to_me && inquiry.awarded">
+					<v-flex xs12>
+						<v-layout row wrap>
+								<v-alert
+								style="width:100%;"
+								:value="true"
+								type="error">
+									<div class="headline font-weight-bold">In Production</div>
+									<div class="" style="font-style: italic;">This order is already awarded to another supplier and is in production.</div>									
+								</v-alert>							
 						</v-layout>
 					</v-flex>
 					</template>
@@ -282,6 +313,8 @@
 							</v-flex>
 							
 
+							<!-- Sample Actions -->
+							<!-- ///////////////////////////////////////////////////////////////////////// -->
 							<v-flex xs12 mt-3 mb-0 pb-0>
 									<template v-if="bid.stage_id==2001">
 										<!-- <v-chip label color="red" class="white--text">Sample Order in Production</v-chip> -->
@@ -302,7 +335,7 @@
 										  	</span>
 										  	<v-btn
 										  	:loading="setSampleAsProductionDoneBtn"
-											@click="setSampleAsProductionDone(inquiry,bid)" 
+											@click="setSampleAsProductionDone()" 
 											class="green darken-2 ml-0">
 												<span class="font-weight-bold ml-1 white--text ">
 													Production done!
@@ -327,6 +360,9 @@
 								      	</v-alert>										
 									</template>
 							</v-flex>
+							<!-- ///////////////////////////////////////////////////////////////////////// -->
+							<!-- Sample Actions -->
+
 
 
 							<!-- chat -->
@@ -437,6 +473,7 @@ export default {
 		minDate: null,
 		
 		setSampleAsProductionDoneBtn: false,
+		setProductionAsDoneBtn: false,
 
 	}),
 
@@ -482,17 +519,14 @@ export default {
 			this.editQuote = false;
 		},
 
-		setSampleAsProductionDone(inquiry,bid){
-			var payload = {
-				inq_id: inquiry.id,
-				bid_id: bid.id,
-				stage_id: 20011,
-			};
+		setSampleAsProductionDone(){
 			// this.cnsl('payload',payload);
 
 			this.setSampleAsProductionDoneBtn = true;
 
-			this.$store.dispatch(this.getStore()+'/setSampleStage_a',payload)
+			this.$store.dispatch(this.getStore()+'/setSampleProductionAsDone_a',{
+				inq_id: this.inquiry.id
+			})
 			.then((data)=>{
 				this.cnsl(data);
 				this.reloadBid();
@@ -504,6 +538,28 @@ export default {
 				this.setSampleAsProductionDoneBtn = false;
 			});
 
+		},
+
+		setProductionAsDone() {
+			this.setProductionAsDoneBtn = true;
+
+			// this.cnsl(this.inquiry);
+
+			this.$store.dispatch(this.getStore()+'/setProductionAsDone_a',{
+				inq_id: this.inquiry.id,
+			})
+			.then((rspns)=>{
+				this.setProductionAsDoneBtn = false;
+
+			})
+			.catch((e)=>{
+				this.cnsl(e);
+				this.setProductionAsDoneBtn = false;
+
+			});
+
+
+			// alert('production is done!');
 		},
 	},
 

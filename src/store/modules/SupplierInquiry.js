@@ -45,11 +45,17 @@ const state = {
 			url: base_url+'/v1/supplier/inquiries',
 			url2: 'confirm-award',
 		},
-		setSampleStage: {
+
+		setSampleProductionAsDone: {
 			method: 'put',
 			url: base_url+'/v1/supplier/inquiries',
-			url2: 'bids',
-			url3: 'stage',
+			url2: 'sample-production-done',
+		},
+
+		setProductionAsDone: {
+			method: 'put',
+			url: base_url+'/v1/supplier/inquiries',
+			url2: 'production-done',
 		},
 		
 		updateProfile: {
@@ -347,21 +353,58 @@ const actions = {
 
 
 
+ 
 
-
-	setSampleStage_a(context,data){
+	setSampleProductionAsDone_a(context,data){
 		return new Promise((resolve, reject) => {
-			var method = state.api.setSampleStage.method;
-			var url = state.api.setSampleStage.url+
+			var method = state.api.setSampleProductionAsDone.method;
+			var url = state.api.setSampleProductionAsDone.url+
 			"/"+data.inq_id+
-			"/"+state.api.setSampleStage.url2;
-			"/"+data.bid_id+
-			"/"+state.api.setSampleStage.url3;
+			"/"+state.api.setSampleProductionAsDone.url2;
 			var headers = {
 				token:localStorage.access_token,
 				"content-type": "application/json",
 			};
 
+			console.log(url);
+
+			axios({
+				method: method,
+				url: url,
+				headers: headers,
+				data: JSON.stringify({
+					stage_id: data.stage_id,
+				}),
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				if(actions.checkToken(error)) {
+					reject(error);
+				}
+			});
+
+			setTimeout(()=>{ 
+				resolve('Success Stage_id = '+data.stage_id);
+			}, 3000);
+		});
+	},
+
+ 
+
+	setProductionAsDone_a(context,data){
+		return new Promise((resolve, reject) => {
+			var method = state.api.setProductionAsDone.method;
+			var url = state.api.setProductionAsDone.url+
+			"/"+data.inq_id+
+			"/"+state.api.setProductionAsDone.url2;
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			console.log(url);
 
 			axios({
 				method: method,

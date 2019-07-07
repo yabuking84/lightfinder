@@ -42,11 +42,14 @@
 	size="50px">
 	</vuse-card-mini-widget> -->
 
+	<!-- :icon-color="status.iconColor" -->
+
 	<vuse-card-mini-widget
 	:icon="status.icon"
 	:headline="status.count+''"
 	:subheader="'<strong>'+status.name+'</strong>'"
-	:icon-color="status.iconColor"
+	icon-color="black"
+	style="background-color: white; color: black;"
 	right-icon
 	tile
 	height="110px"

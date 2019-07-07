@@ -354,13 +354,23 @@
 
                              <!-- optional data  -->
                              <v-layout row wrap mt-3>
-                                    <h4 v-show="is_sample" class="mb-2">Product Sample Details</h4>&nbsp&nbsp
+                                    <h4 v-show="is_sample" class="mb-2">
+                                    	Product Sample Details ({{ inquiry.sample_quantity }} pc/s required)
+                                    </h4>&nbsp;&nbsp;
                                     <!-- <small v-show="is_sample	">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small> -->
                                     <v-flex xs12 v-show="is_sample">
                                       <v-layout row wrap>
 
                                         <v-flex xs5 mr-5>
-                                          <v-text-field label="Sample Cost" :error-messages="fieldErrors('formData.sample_cost')" @blur="$v.formData.sample_cost.$touch()" v-model="formData.sample_cost" style="color: #000;" prefix="$" suffix="USD"> </v-text-field>
+                                          <v-text-field 
+                                          label="Sample Cost" 
+                                          :error-messages="fieldErrors('formData.sample_cost')" 
+                                          @blur="$v.formData.sample_cost.$touch()" 
+                                          v-model="formData.sample_cost" 
+                                          style="color: #000;" 
+                                          prefix="$" 
+                                          suffix="USD">
+                                          ></v-text-field>
                                         </v-flex>
 
                                         <v-flex xs5 ml-3>

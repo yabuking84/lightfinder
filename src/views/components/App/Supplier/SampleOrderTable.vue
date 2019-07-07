@@ -82,7 +82,7 @@
 													<td>{{ bid.id }}</td>													
 													<td>$ {{ currency(bid.sample_cost) }}</td>
 													<td> 
-														<template v-if="bid.stage_id==2001">
+														<!-- <template v-if="bid.stage_id==2001">
 															Production
 														</template>
 														<template v-if="bid.stage_id==2002">
@@ -90,7 +90,9 @@
 														</template>
 														<template v-if="bid.stage_id==3001">
 															Received
-														</template>
+														</template> -->
+														
+														{{ getStatus(bid.stage_id).name }}														
 													</td>
 												</tr>
 											</tbody>
@@ -130,6 +132,7 @@ import { Projects } from '@/data/widgets/project'
 // import helpers from "@/mixins/helpers"
 import inqMixin from "@/mixins/inquiry";
 
+import tblBs from "@/bus/table";
 
 export default {
 
@@ -197,6 +200,12 @@ methods: {
 
 created(){
 	this.fillTable();
+
+	// for refresh tableItems
+	tblBs.onRefreshTablePolling(()=>{
+		this.fillTable();
+	});
+
 },
 
 }

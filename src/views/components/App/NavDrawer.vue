@@ -93,6 +93,45 @@
     </template>
 
 
+    <v-list-tile>
+	<v-subheader class="heading-text">
+		<div style="width: 100%; height: 150px;"></div>
+	</v-subheader>
+    </v-list-tile>
+	
+
+
+
+    <template v-for="(item, i) in items2">
+
+        <!-- single items -->
+        <v-list-tile
+        :to="!item.href ? { name: item.name } : null"
+        :href="item.href"
+        :disabled="item.disabled"
+        :target="item.target"
+        :key="`${i}-item2`"
+        ripple
+        rel="noopener"
+        class="list__tile-solo">
+
+            <v-list-tile-action>
+                <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+                <v-avatar size="28" v-else>
+                    <span>{{ item.title | first2Char }}</span>                    
+                </v-avatar>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+
+        </v-list-tile>
+
+
+    </template>
+
+
 
 
 
@@ -174,6 +213,7 @@
     export default {
         data() { return {
                 items: this.$route.meta.items,
+                items2: this.$route.meta.items2,
                 dark: false,
                 // navMiniVarientData: this.navMiniVarient,
                 title: "BuyAnyLight.com",
@@ -204,7 +244,7 @@
                 navDrawerVariant: 'navDrawerVariant',
                 fixedFooter: 'fixedFooter',
                 showFooter: 'showFooter',
-                miniview: 'miniview'
+                miniview: 'miniview',
             }),
 
             // navMiniVarient:{

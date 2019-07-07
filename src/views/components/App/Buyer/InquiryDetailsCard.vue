@@ -67,11 +67,12 @@
 					<v-flex xs12>
 
 						<v-layout row wrap>
+								<!-- <v-flex xs12><pre>{{ inquiry }}</pre></v-flex> -->
 
 								<v-flex xs12 v-if="inquiryImages.length > 0">
 									<!-- <h4 class="font-weight-medium">Image</h4> -->
 									<!-- <v-flex xs10 offset-xs1> -->
-										 <image-gallery-small :images="inquiryImages" noThumbnails height="250px"></image-gallery-small> 
+										 <image-gallery :images="inquiryImages" noThumbnails height="250px"></image-gallery> 
 									<!-- </v-flex> -->
 								</v-flex>
 
@@ -95,6 +96,22 @@
 									<h4 class="font-weight-light">
 									<span>{{ inquiry.quantity }} pcs</span>
 								  </h4>
+								</v-flex>
+
+						   
+								<v-flex xs6>
+									<h4 class="font-weight-medium">Desired Unit Price</h4>
+									<h4 class="font-weight-light">
+									<span>${{ currency(inquiry.desired_unit_price) }}</span>
+								  	</h4>
+								</v-flex>
+
+						   
+								<v-flex xs6>
+									<h4 class="font-weight-medium">Desired Total Price</h4>
+									<h4 class="font-weight-light">
+									<span>${{ currency(inquiry.desired_price) }}</span>
+								  	</h4>
 								</v-flex>
 
 								<v-flex xs12>
@@ -277,7 +294,7 @@
 	import inqEvntBs from "@/bus/inquiry";
 	import config from '@/config/index'
 
-	import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+	import ImageGallery from "@/views/Components/App/ImageGallery"
 
 
 	export default {
@@ -285,7 +302,7 @@
 		components: {
 
 			InquiryAwardCard,
-			ImageGallerySmall,
+			ImageGallery,
 			PendingPaymentCard,
 
 		},

@@ -26,15 +26,42 @@
 import BarCards from '@/views/Components/App/Admin/BarCards'
 import InquiriesTableGrid from '@/views/Components/App/InquiriesTableGrid'
 
+import config from "@/config/main"
+import tblBs from "@/bus/table"
+import VueTimers from 'vue-timers/mixin'
+
+
 export default {
-	
-	data: () => ({
-		title: 'Home',
-	}),
+	mixins: [
+		VueTimers,
+	],
 
 	components: {
 	    BarCards,
 	    InquiriesTableGrid,
+	},
+
+
+
+	// so there tables will refresh every 5min regardless
+	timers: [{
+	    name: 'RefershTables',
+	    time: config.polling.default.time,
+	    repeat: true,
+	    autostart: true,
+	    callback: function() {
+	    	tblBs.emitRefreshTablePolling();
+	    },
+	}],
+
+	data: () => ({
+		title: 'Home',
+	}),
+
+
+	created(){
+		// start polling
+		this.$timer.start('RefershTables');
 	},
 
 	computed: {

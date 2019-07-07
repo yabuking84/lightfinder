@@ -104,6 +104,7 @@ const routes =
             default: SuperChat,             
         },        
     },
+
     {
         path: '/',
         name: 'Home',
@@ -123,9 +124,14 @@ const routes =
         component: LogoutPage,
     },
 
+
+
+
+
     ...AdminRoutes,
     ...BuyerRoutes,
     ...SupplierRoutes,
+
 ]
 
 

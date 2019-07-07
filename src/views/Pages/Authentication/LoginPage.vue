@@ -84,7 +84,7 @@
 
         <!-- for dev -->
         <!-- /////////////////////////////////////////////// -->
-        <v-flex xs12>
+        <v-flex xs12 v-if="false">
         <div style="background-color: #fff;" class="pa-3">
         		
         	<v-layout row wrap>
@@ -158,7 +158,7 @@
     // email: 'm.ozil@philips.com',
     // email: 'z.abdin@almani.ae',
     email: '',
-    password: '123456',
+    password: '',
     rememberme: false
   }
   export default {

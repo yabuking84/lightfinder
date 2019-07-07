@@ -93,6 +93,7 @@ import { Projects } from '@/data/widgets/project'
 // import helpers from "@/mixins/helpers"
 import inqMixin from "@/mixins/inquiry";
 import inqEvntBs from "@/bus/inquiry";
+import tblBs from "@/bus/table";
 
 export default {
 
@@ -163,6 +164,13 @@ created(){
 	inqEvntBs.onPaymentMade(()=>{
 		this.fillTable();		
 	});
+
+	// for refresh tableItems
+	tblBs.onRefreshTablePolling(()=>{
+		this.fillTable();
+	});
+
+
 },
 
 }

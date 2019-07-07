@@ -1300,14 +1300,14 @@ export default {
       }
     },
 
-    inquiry(nVal, oVal) {
-
-        if(!nVal) {
-
-           this.inquiryHolder = this.inquiry
-           this.fillFormData();  
-
-        }
+    inquiry:{
+    	handler(nVal, oVal) {
+	        if(!nVal) {
+	           this.inquiryHolder = this.inquiry
+	           this.fillFormData();  
+	        }
+        },
+        deep:true,
 
     },
   
@@ -1348,13 +1348,13 @@ export default {
 
     'formData.desired_unit_price': function (nVal, oVal) {
     	if(nVal && this.formData.quantity) {
-    		this.formData.desired_price = this.formData.quantity * nVal;
+    		this.formData.desired_price = this.currency(this.formData.quantity * nVal);
     	}
     },
 
     'formData.quantity': function (nVal, oVal) {
     	if(nVal && this.formData.desired_unit_price) {
-    		this.formData.desired_price = this.formData.desired_unit_price * nVal;
+    		this.formData.desired_price = this.currency(this.formData.desired_unit_price * nVal);
     	}
     },
 
@@ -1392,13 +1392,13 @@ export default {
 
 			this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
 			.then((rspns)=>{
-				this.cnsl(rspns);
+				// this.cnsl(rspns);
 				if(rspns) {					
 					this.moq = rspns.inclusions.moq;
 				}
 				else {
 					// if no / free subscription
-					this.moq = 10;
+					this.moq = 20;
 				}
 			})
 			.catch((e)=>{
@@ -1476,13 +1476,53 @@ export default {
       // clear existing object
     clearData() {
           
-          for (const prop of Object.keys(this.formData)) {
-            delete this.formData[prop];
-          }
+          // for (const prop of Object.keys(this.formData)) {
+          //   delete this.formData[prop];
+          // }
 
-          this.is_sample = false
-          this.is_oem = false
-          this.$v.$reset()
+		
+		this.formData.keywords					 	= null;			
+		this.formData.category					 	= null;			
+		this.formData.warranty					 	= null;			
+		this.formData.power						 	= null;		
+		this.formData.lumen						 	= null;		
+		this.formData.efficiency				 	= null;			
+		this.formData.beam_angle				 	= null;			
+		this.formData.cct						 	= null;		
+		this.formData.ip						 	= null;	
+		this.formData.finish					 	= null;		
+		this.formData.size						 	= null;		
+		this.formData.dimmable					 	= null;			
+		this.formData.quantity					 	= null;			
+		this.formData.desired_price				 	= null;				
+		this.formData.desired_unit_price		 	= null;					
+		this.formData.shipping_date				 	= null;				
+		this.formData.payment_method			 	= null;				
+		this.formData.message					 	= null;			
+		this.formData.oem						 	= null;		
+		this.formData.oem_service				 	= null;				
+		this.formData.oem_description			 	= null;					
+		this.formData.sample_quantity			 	= null;					
+		this.formData.sample_shipping_address	 	= null;							
+		this.formData.sample_shipping_city		 	= null;						
+		this.formData.sample_shipping_country_id 	= null;							
+		this.formData.sample_shipping_postal	 	= null;						
+		this.formData.shipping_address			 	= null;					
+		this.formData.shipping_country_id		 	= null;						
+		this.formData.shipping_city				 	= null;				
+		this.formData.shipping_postal			 	= null;					
+		this.formData.attachments				 	= [];				
+		
+        this.useInquiry = null;
+        
+      	this.inquiry_images = [];
+      	this.inquiry_attachments = [];
+      	this.inquiry_oems = [];
+
+
+        this.is_sample = false
+        this.is_oem = false
+        this.$v.$reset()
 
     },
 
@@ -1491,7 +1531,9 @@ export default {
 
 
 			// remove from  tep
-			if(type == 'image') {
+			if(type == 'image' && this.inquiry_images.length) {
+
+					this.cnsl('this.inquiry_images',);
 
 					this.inquiry_images = this.inquiry_images.filter(function(attachments) {
 						return attachments != file;
@@ -1499,7 +1541,7 @@ export default {
 
 			} 
 
-			 if(type == 'attachments') {
+			 if(type == 'attachments' && this.inquiry_attachments.length) {
 
 					this.inquiry_attachments = this.inquiry_attachments.filter(function(attachments) {
 						return attachments != file;
@@ -1508,7 +1550,7 @@ export default {
 			} 
 
 
-			 if(type == 'oems') {
+			 if(type == 'oems' && this.inquiry_oems.length) {
 
 					this.inquiry_oems = this.inquiry_oems.filter(function(attachments) {
 						return attachments != file;
@@ -1516,7 +1558,7 @@ export default {
 			}
 
 
-				// delete from the attachment data
+			// delete from the attachment data
 			this.formData.attachments = this.formData.attachments.filter(function(attachments){
 			    return attachments != file;
 			});
@@ -1678,14 +1720,16 @@ export default {
 
     submitForm: function() {
 
+    	this.cnsl('this.formData.attachments zzzzzzzzzz',this.formData.attachments);
+
       var formData = {
 
         "subject": " ",
         "keyword": this.formData.keywords,
         "warranty": this.formData.warranty ? this.formData.warranty : 0,
         "quantity": this.formData.quantity,
-        "desired_price": this.formData.desired_price,
-        "desired_unit_price": this.formData.desired_unit_price,
+        "desired_price": parseFloat(this.formData.desired_price),
+        "desired_unit_price": parseFloat(this.formData.desired_unit_price),
         "desired_shipping_date": this.formData.shipping_date,
         "message": this.formData.message,
 
@@ -1824,20 +1868,22 @@ export default {
                 filesize: _.round((file.size/1000), 2),
             };
 
-            // this.cnsl('attachment',attachment);
+            this.cnsl('attachment xxxxx',attachment);
+            this.cnsl('this.formData.attachments xxxxx',this.formData.attachments);
             this.formData.attachments.push(attachment);
 
             // for the preview when uploaded
             // this.inquiry_images.push(attachment);
 
+
         	if(upload_group == 'add-inquiry-images') {
-        		this.inquiry_images.push(attachments);
+        		this.inquiry_images.push(attachment);
         	}
         	if(upload_group == 'add-inquiry-attachments') {
-				this.inquiry_attachments.push(attachments);
+				this.inquiry_attachments.push(attachment);
         	}
         	if(upload_group == 'add-inquiry-oems') {
-        		this.inquiry_oems.push(attachments);        		
+        		this.inquiry_oems.push(attachment);        		
         	}            
 
         }

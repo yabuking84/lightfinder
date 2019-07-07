@@ -1,14 +1,21 @@
 // const apiURL = 'http://almani.ddns.net:8000';
 // const socketURL = 'http://almani.ddns.net:3000';
-const apiURL = 'http://192.168.1.200:8000';
-const socketURL = 'http://192.168.1.200:3000';
 
-const websiteURL = 'http://almani.ddns.net:1984';
+// const apiURL = 'http://192.168.1.200:8000';
+// const socketURL = 'http://192.168.1.200:3000';
+// const websiteURL = 'http://almani.ddns.net:1984';
+
+
+// const apiURL = 'https://sandbox-api.buyanylight.com';
+const apiURL = 'https://api.buyanylight.com';
+const socketURL = 'https://data.buyanylight.com/socket.io';
+const websiteURL = 'http://lightfinder.buyanylight.com';
+// const websiteURL = 'http://almani.ddns.net:1984';
 
 
 export default {
 
-	devMode: true,
+	devMode: false,
 
 	websiteURL: websiteURL,
 
@@ -63,8 +70,9 @@ export default {
 				desc:"Inquiry is ready for bids.",
 			},
 			{
+				// before this was Confirmation
 				id: 1004, 
-				name: "Confirmation",
+				name: "Awarded",
 				class: "teal",
 				icon: "fas fa-handshake",
 				desc:"",
@@ -95,6 +103,13 @@ export default {
 			{
 				id: 2001, 
 				name: "Production",
+				class: "blue",
+				icon: "fas fa-industry",
+				desc:"",
+			},
+			{
+				id: 20011, 
+				name: "Production Done",
 				class: "blue",
 				icon: "fas fa-industry",
 				desc:"",
@@ -177,6 +192,12 @@ export default {
 			},
 		],
 
+		confirmed_orders: [
+			2001,
+			20011,
+			2002,
+		]
+
 	},
 
 	polling: {
@@ -185,7 +206,10 @@ export default {
 		},
 		inquiryTable: {
 			time: 10000,
-		}
+		},
+		default: {
+			time: 30000,
+		},
 	},
 
 }

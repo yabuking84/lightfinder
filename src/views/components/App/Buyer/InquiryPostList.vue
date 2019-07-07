@@ -138,6 +138,25 @@
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<!-- Production -->
 
+			<!-- Production -->
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <v-flex xs12 v-if="inquiry.stage_id == 20011 || inquiry.stage_id == 2002">
+                <v-layout row wrap>
+                    <v-flex xs12 pa-0>
+					    <v-alert
+				      	:value="true"
+				      	type="success">
+					      	<div class="headline font-weight-bold">Production is Done!</div>
+                            <div class="" style="font-style: italic;">The order is ready for shipment.</div>
+
+					    </v-alert>                        
+                    </v-flex>
+
+                </v-layout>
+            </v-flex>
+			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+			<!-- Production -->
+
 
 			<!-- if has no Bids or Quotes -->
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -154,6 +173,56 @@
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<!-- if has no Bids or Quotes -->
 		   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- bid -->
+<!-- /////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
 
 			<!-- color="grey lighten-4"  -->
 			<!-- :class="checkIfAwarded(bidItem) ? 'is_selected' : 'is_blur' "  -->
@@ -232,10 +301,9 @@
 
 						<v-flex xs12 pl-2 v-if="bidItem.attachments.length">
 						<!-- <v-flex xs12 pl-2 > -->
-							<!-- <pre>{{ bidItem.attachments }}</pre> -->
-							<image-gallery-small 
-							:images="bidItem.attachments && bidItem.attachments.length > 1 ? bidItem.attachments : [] " 
-							noThumbnails height="120px"></image-gallery-small> 
+							<image-gallery 
+							:images="bidItem.attachments && bidItem.attachments.length >= 1 ? bidItem.attachments : [] " 
+							noThumbnails height="120px"></image-gallery> 
 						  
 						</v-flex>
 
@@ -369,7 +437,8 @@
 
 						   	<v-flex xs12>
 							  <v-layout row wrap>
-									<template v-if="inquiry.awarded"> 
+									<!-- <template v-if="inquiry.awarded"> 
+									</template> -->
 										<template v-if="bidItem.stage_id==2001">											
 											<v-flex xs6>
 											    <v-alert
@@ -403,10 +472,9 @@
 									      	</v-alert>
 											</v-flex> 
 										</template>
-									</template>
 
 
-									<template v-else-if="!inquiry.awarded"> 
+									<template v-if="!inquiry.awarded"> 
 										<v-flex v-if="!bidItem.stage_id" xs6>
 											<!-- <pre>{{ bidItem }}</pre>  -->
 											<v-btn 
@@ -456,6 +524,89 @@
 			</v-card>
 			</template>
 			</template>
+
+
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////// -->
+<!-- bid -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		</template>
 
 	</v-card>
@@ -469,7 +620,7 @@
 <script>
 
 // import ImageGallerySmall from "@/views/Components/App/ImageGallerySmall"
-import ImageGallerySmall from "@/views/Components/App/ImageGallery"
+import ImageGallery from "@/views/Components/App/ImageGallery"
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate"
 
 import AwardDialog from "@/views/Components/App/Buyer/AwardDialog"
@@ -495,7 +646,7 @@ export default {
 
   components: {
 
-	ImageGallerySmall,
+	ImageGallery,
 	AwardDialog,
 	RequestSampleDialog,
 	Messaging,
@@ -687,7 +838,7 @@ export default {
 		inquiryAmount(){
 			var retVal = 0;
 			
-			this.cnsl('this.bidItems',this.bidItems);
+			// this.cnsl('this.bidItems',this.bidItems);
 			this.bidItems.forEach((bid)=>{				
 				if(bid.active && bid.awarded) {
 					retVal=bid.total_price;					

@@ -10,13 +10,13 @@
 
 	<v-layout 
 	style="border: 1px solid #000;"
-	column justify-center align-start mx-3 my-0 px-4 py-2>
+	row justify-center align-center mx-3 my-0 px-4 py-2>
 		
-		<v-flex>		  
+		<v-flex pr-4>
 			<v-layout row wrap justify-center align-center>		  
 				<h3 
 				class="mr-3">
-					{{ packageType(package_type) }}
+					PACKAGE: {{ packageType(package_type) }}
 				</h3>				
 
 				<v-btn 
@@ -28,15 +28,16 @@
 			</v-layout>
 		</v-flex>
 
-		<v-flex py-1>
+		<v-flex py-1 pl-5>
 			<h3 class="mr-3">
 				<template v-if="maxInqs - totalInqs > 1 || maxInqs - totalInqs == 0">
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
-					{{ maxInqs - totalInqs }} out of {{ maxInqs }} Inquiries remaining.
+					LightFinder Inquiries: {{ maxInqs - totalInqs }} out {{ maxInqs }} remaining
 				</template>
 				<template v-if="maxInqs - totalInqs == 1">
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
-					Only 1 Inquiry remaining.
+					<!-- Only 1 Inquiry remaining. -->
+					LightFinder Inquiries: {{ maxInqs - totalInqs }} out {{ maxInqs }} remaining
 				</template>
 			</h3>			
 		</v-flex>

@@ -6,7 +6,7 @@
 				<v-layout 
 				row wrap justify-space-between
 				class="grey darken-4 heading-title">
-					<h3 class="white--text ma-3">Confirmed Orders</h3>
+					<h3 class="white--text ma-3">Awarded Orders</h3>
 					<v-btn 
 					@click="fillTable()" 
 					class="white--text ma-2"
@@ -20,7 +20,9 @@
 
 
 			<!-- <v-divider></v-divider> -->
-			<v-card-text class="pa-0"  style="height: 476px; overflow: auto;">
+			<v-card-text class="pa-0"  
+			:style="{height:height}" 
+			style="overflow: auto;">
 				<template>
 
 					<v-data-table 
@@ -37,9 +39,11 @@
 
 							<!-- <td>$ {{ currency(sp.item.unit_cost) }}</td> -->
 
-							<td>{{ sp.item.quantity }} pcs</td>
+							<!-- <td>{{ sp.item.quantity }} pcs</td> -->
 
 							<td>$ {{ currency(sp.item.amount+sp.item.shipping_cost) }}</td>
+
+							<td>{{ getStatus(sp.item.stage_id).name }}</td>
 
 							<td class="text-xs-right pa-0">
 								<v-btn 
@@ -76,14 +80,19 @@ import inqMixin from "@/mixins/inquiry";
 
 import tblBs from "@/bus/table";
 
-import config from "@/config/main";
-
 export default {
 
 mixins: [
 	// helpers,
 	inqMixin,
 ],
+
+props:{
+	'height': {
+		type:String,
+		default:'300px',
+	},	
+},
 
 data() { return {
 	  headers: [
@@ -97,15 +106,20 @@ data() { return {
 		// 	align: 'left',
 		// 	value: 'unit_cost',
 		// },
-		{
-			text: 'Quantity',
-			align: 'left',
-			value: 'quantity',
-		},
+		// {
+		// 	text: 'Quantity',
+		// 	align: 'left',
+		// 	value: 'quantity',
+		// },
 		{
 			text: 'Amount',
 			align: 'left',
 			value: 'amount',
+		},
+		{
+			text: 'Status',
+			align: 'left',
+			value: 'stage_id',
 		},
 		{ 
 			text: '', 
@@ -119,11 +133,16 @@ data() { return {
 methods: {
 	fillTable() {
 		// var storeType = this.$route.meta.storeType.inq;
-		var statuses = config.inquiry_statuses.confirmed_orders.join(',');		
-		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:statuses,with_bids:1})
+		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'1004,10041',with_bids:1})
 		// this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1006'})
 		.then((response)=>{
-			this.inquiries = this.setDataTableInquiry(response);
+			this.cnsl('supplier COT response',response);
+			var inqs = this.setDataTableInquiry(response);
+			this.cnsl('supplier COT inqs',inqs);
+			inqs = inqs.filter((inq)=>{
+				return (inq.awarded_to_me)?true:false;
+			});
+			this.inquiries = inqs;
 		})
 		.catch((e) => {
 			this.cnsl('Error: ' + e);
@@ -153,6 +172,7 @@ created(){
 	tblBs.onRefreshTablePolling(()=>{
 		this.fillTable();
 	});
+	
 },
 
 }
@@ -173,4 +193,13 @@ created(){
 	font-size: 15px;
 }
 
+
+/deep/ table.v-table {
+	tbody td {
+		padding: 10px;
+	}
+	thead th {
+		padding: 10px;
+	}
+}
 </style>

@@ -8,8 +8,6 @@ import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
 import BuyerInvoice from '@/views/Components/App/Invoice'
 
-import BuyerMyHome from '@/views/Pages/Buyer/MyHome'
-import BuyerMyTower from '@/views/Pages/Buyer/MyTower'
 
 import config from '@/config/index'
 
@@ -31,19 +29,12 @@ const meta = {
             title: 'Dashboard',
             name: 'BuyerHome',
             icon: 'fas fa-th-large',
-        },
-    ],
-    items2: [
-        {
-            title: 'My Home',
-            name: 'BuyerMyHome',
-            icon: 'fas fa-home',
-        },
-        {
-            title: 'My Tower',
-            name: 'BuyerMyTower',
-            icon: 'fas fa-building',
-        },
+        },            
+        // {
+        //     title: 'Inquiries',
+        //     name: 'BuyerInquiry',
+        //     icon: 'fas fa-clipboard',
+        // },
     ],
     profileItems: [
         {
@@ -177,34 +168,6 @@ export default [
 
 
 
-    {
-        name: 'BuyerMyHome',
-        path: '/my-home',
-        components: { 
-            default: BuyerMyHome, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
-
-
-
-
-    {
-        name: 'BuyerMyTower',
-        path: '/my-tower',
-        components: { 
-            default: BuyerMyTower, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
 
 
 

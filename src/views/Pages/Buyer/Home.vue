@@ -7,7 +7,7 @@
 
 		<v-container fluid grid-list-xl>
 
-			<v-layout row wrap justify-space-between align-center>
+			<v-layout row wrap justify-space-between align-center mb-3>
 				
 				<inquiry-counter :totalInqs="totalInqs" :maxInqs="maxInqs" :package_type="package_type"></inquiry-counter>
 				
@@ -77,7 +77,16 @@ import InquiryCounter from "@/views/Components/App/Buyer/InquiryCounter";
 import NoInqRemainingDialog from "@/views/Components/App/Buyer/NoInqRemainingDialog";
 import inqEvntBs from "@/bus/inquiry"
 
+import config from "@/config/main"
+import tblBs from "@/bus/table"
+import VueTimers from 'vue-timers/mixin'
+
+
 export default {
+
+mixins: [
+	VueTimers,
+],
 	
 components: {
     BarCards,
@@ -87,8 +96,20 @@ components: {
     ConfirmedOrderTable,
     InquiryCreate,
     InquiryCounter,
-    NoInqRemainingDialog,
+    NoInqRemainingDialog,    
 },
+
+
+// so there tables will refresh every 5min regardless
+timers: [{
+    name: 'RefershTables',
+    time: config.polling.default.time,
+    repeat: true,
+    autostart: true,
+    callback: function() {
+    	tblBs.emitRefreshTablePolling();
+    },
+}],
 
 data: () => ({
 	title: 'Home',
@@ -114,8 +135,11 @@ created() {
 
 	inqEvntBs.onFormSubmitted(()=>{
 		this.setMaxInqs();
-		this.setTotalInqs();		
+		this.setTotalInqs();
 	});	
+
+	// start polling
+	this.$timer.start('RefershTables');
 },
 
 methods:{
