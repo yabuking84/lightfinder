@@ -24,233 +24,254 @@ import test from '@/views/Components/App/test'
 
 
 const meta = { 
-    requiresAuth: true,
-    role: config.auth.role.buyer.id,
-    items: [
-        {
-            title: 'Dashboard',
-            name: 'BuyerHome',
-            icon: 'fas fa-th-large',
-        },
-    ],
-    items2: [
-        {
-            title: 'My Home',
-            name: 'BuyerMyHome',
-            icon: 'fas fa-home',
-        },
-        {
-            title: 'My Tower',
-            name: 'BuyerMyTower',
-            icon: 'fas fa-building',
-        },
-    ],
-    profileItems: [
-        {
-            title: 'Edit Profile',
-            name: 'BuyerProfile',
-            icon: 'person',
-        },    
-    ],
-    statuses: [
-    	...config.main.inquiry_statuses.default,
-    	...config.main.inquiry_statuses.buyers,
-    ],
-    storeType: {
-    	inq: "byrInq",
-    }
+	requiresAuth: true,
+	role: config.auth.role.buyer.id,
+	items: [
+		{
+			title: 'LightFinder',
+			name: 'BuyerHome',
+			icon: 'fas fa-th-large',
+		},
+	],
+	items2: [
+		{
+			title: 'My Home',
+			name: 'BuyerMyHome',
+			icon: 'fas fa-home',
+		},
+		{
+			title: 'My Tower',
+			name: 'BuyerMyTower',
+			icon: 'fas fa-building',
+		},
+	],
+	profileItems: [
+		{
+			title: 'Edit Profile',
+			name: 'BuyerProfile',
+			icon: 'person',
+		},    
+	],
+	statuses: [
+		...config.main.inquiry_statuses.default,
+		...config.main.inquiry_statuses.buyers,
+	],
+	storeType: {
+		inq: "byrInq",
+	}
 }
 
 
 export default [
 
-    {
-        name: 'BuyerHome2',
-        path: '',
-        components: { 
-            default: BuyerHome, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	{
+		name: 'BuyerHome2',
+		path: '',
+		components: { 
+			default: BuyerHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta,
+	},
 
-    {
-        name: 'BuyerHome',
-        path: '/',
-        components: { 
-            default: BuyerHome, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	{
+		name: 'BuyerHome',
+		path: '/',
+		components: { 
+			default: BuyerHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: {
+			...meta,
+			// style:{
+			// 	backgroundImage:'url(/static/bg-image2.png)',
+			// 	backgroundSize: '100% auto ',
+			// 	backgroundPositionY: '-20vh',
+			// },     	
+		},
+	},
 
-    {
-        name: 'BuyerInquiry',
-        path: '/inquiries',
-        components: { 
-            default: BuyerInquiry, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	{
+		name: 'BuyerInquiry',
+		path: '/inquiries',
+		components: { 
+			default: BuyerInquiry, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta,
+	},
 
-    {
-        name: 'BuyerInquiryViewPayment',
-        path: '/inquiry/:inquiry_id/payment/:payment_status',
-        components: {
-            default: BuyerHome, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
-
-
-    {
-        name: 'BuyerInquiryViewSamplePayment',
-        path: '/inquiry/:inquiry_id/bids/:bid_id/payment/:payment_status',
-        components: {
-            default: BuyerHome, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	{
+		name: 'BuyerInquiryViewPayment',
+		path: '/inquiry/:inquiry_id/payment/:payment_status',
+		components: {
+			default: BuyerHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta,
+	},
 
 
-    {
-        name: 'BuyerProfile',
-        path: '/profile',
-        components: {
-            // default: BuyerHome, 
-            default: AppProfile, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
-
-    {
-        name: 'BuyerInvoice',
-        path: '/invoice',
-        components: {
-            // default: BuyerHome, 
-            default: BuyerInvoice, 
-            // sidebar: AppSidebar, 
-            // header: AppToolbar, 
-            // footer: AppFooter,
-            // dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	{
+		name: 'BuyerInquiryViewSamplePayment',
+		path: '/inquiry/:inquiry_id/bids/:bid_id/payment/:payment_status',
+		components: {
+			default: BuyerHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta,
+	},
 
 
-    // {
-    //     name: 'BuyerInquiryView',
-    //     path: '/buyer/inquiry/:inq_id',
-    //     components: { 
-    //         default: BuyerInquiryView, 
-    //         sidebar: AppSidebar, 
-    //         header: AppToolbar, 
-    //         footer: AppFooter,
-    //         testview: test, 
-    //     },
-    //     meta: meta,
-    //     props: { default:true },
+	{
+		name: 'BuyerProfile',
+		path: '/profile',
+		components: {
+			// default: BuyerHome, 
+			default: AppProfile, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta,
+	},
 
-    // },    
+	{
+		name: 'BuyerInvoice',
+		path: '/invoice',
+		components: {
+			// default: BuyerHome, 
+			default: BuyerInvoice, 
+			// sidebar: AppSidebar, 
+			// header: AppToolbar, 
+			// footer: AppFooter,
+			// dialog: BuyerInquiryView,
+		},
+		meta: meta,
+	},
 
 
+	// {
+	//     name: 'BuyerInquiryView',
+	//     path: '/buyer/inquiry/:inq_id',
+	//     components: { 
+	//         default: BuyerInquiryView, 
+	//         sidebar: AppSidebar, 
+	//         header: AppToolbar, 
+	//         footer: AppFooter,
+	//         testview: test, 
+	//     },
+	//     meta: meta,
+	//     props: { default:true },
 
-    {
-        name: 'BuyerMyHome',
-        path: '/my-home',
-        components: { 
-            default: BuyerMyHome, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	// },    
 
 
 
-
-    {
-        name: 'BuyerMyTower',
-        path: '/my-tower',
-        components: { 
-            default: BuyerMyTower, 
-            sidebar: AppSidebar, 
-            header: AppToolbar, 
-            footer: AppFooter,
-            dialog: BuyerInquiryView,
-        },
-        meta: meta,
-    },
+	{
+		name: 'BuyerMyHome',
+		path: 'my-home',
+		components: { 
+			default: BuyerMyHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: {
+			...meta,
+			style:{
+				backgroundImage:'url(/static/bg-image.png)',
+				backgroundSize: '100% auto ',
+				backgroundPositionY: '-20vh',
+			},
+		},
+	},
 
 
 
 
+	{
+		name: 'BuyerMyTower',
+		path: 'my-tower',
+		components: { 
+			default: BuyerMyTower, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: {
+			...meta,
+			style:{
+				backgroundImage:'url(/static/bg-image.png)',
+				backgroundSize: '100% auto',
+				backgroundPositionY: '-20vh',
+			},        	
+		},
+	},
+
+
+
+  
 
 
 
 
 
 
-    /*
-        public views
-    */
+	/*
+		public views
+	*/
 
-    {
-        name: 'BuyerRegistration',
-        path: '/buyer/register',
-        components: {
-            default: BuyerRegistration
-        }
-    },
+	{
+		name: 'BuyerRegistration',
+		path: '/buyer/register',
+		components: {
+			default: BuyerRegistration
+		}
+	},
 
-    {
-        name: 'BuyerRegistrationDetails',
-        path: '/buyer/details',
-        components: {
-            default: BuyerRegistrationDetails
-        }
-    },
+	{
+		name: 'BuyerRegistrationDetails',
+		path: '/buyer/details',
+		components: {
+			default: BuyerRegistrationDetails
+		}
+	},
 
-    {
-        name: 'BuyerRegisterTerms',
-        path: '/buyer/terms',
-        components: {
-            default: BuyerRegistrationTerms
-        }
-    },
+	{
+		name: 'BuyerRegisterTerms',
+		path: '/buyer/terms',
+		components: {
+			default: BuyerRegistrationTerms
+		}
+	},
 
 
-    {
-        name: 'BuyerPackages',
-        path: '/buyer/packages',
-        components: {
-            default: BuyerPackages
-        }
-    },
+	{
+		name: 'BuyerPackages',
+		path: '/buyer/packages',
+		components: {
+			default: BuyerPackages
+		}
+	},
 
 ]
 

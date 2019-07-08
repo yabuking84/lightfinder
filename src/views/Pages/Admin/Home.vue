@@ -2,6 +2,9 @@
 
 	<div>
 		<v-container fluid grid-list-xl>
+			
+			<user-details-dev></user-details-dev>			
+			
 			<v-layout row wrap>
 
 		        <v-flex xs12>

@@ -10,7 +10,7 @@ export default {
 			return new Promise((resolve,reject)=>{
 				this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
 				.then((rspns)=>{
-					this.cnsl('setMaxInqs rspns',rspns);
+					// this.cnsl('setMaxInqs rspns',rspns);
 					var retVal = {
 						max_inquiry: 0,
 						package_type: 0,

@@ -136,9 +136,9 @@ methods: {
 		this.$store.dispatch(this.storeType+'/getInquiries_a', {stage_id:'1004,10041',with_bids:1})
 		// this.$store.dispatch('byrInq/getInquiries_a', {stage_id:'1006'})
 		.then((response)=>{
-			this.cnsl('supplier COT response',response);
+			// this.cnsl('supplier COT response',response);
 			var inqs = this.setDataTableInquiry(response);
-			this.cnsl('supplier COT inqs',inqs);
+			// this.cnsl('supplier COT inqs',inqs);
 			inqs = inqs.filter((inq)=>{
 				return (inq.awarded_to_me)?true:false;
 			});

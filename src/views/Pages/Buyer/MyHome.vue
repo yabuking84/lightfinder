@@ -4,7 +4,9 @@
 			<v-layout row wrap>
 				<v-flex>
 
-					<div style="margin-top: 10%; margin-left: 10%;">						
+					<div 
+					class="white--text" 
+					style="margin-top: 10%; margin-left: 10%;">
 						<h1 class="display-1">My Home Section</h1>
 						<h2 class="display-3" style="font-weight:bold;">COMING SOON</h2>
 						<p class="pl-1 headline">Meanwhile feel free to explore our dashboard.</p>

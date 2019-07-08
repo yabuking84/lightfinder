@@ -164,7 +164,7 @@ methods: {
 			var inqs = rspns.filter((inq)=>{
 				return (inq.awarded_to_me)?true:false;
 			});
-			this.cnsl('setWalletBarCard',inqs);
+			// this.cnsl('setWalletBarCard',inqs);
 
 			var walletTotal = 0;
 			inqs.forEach((inq)=>{

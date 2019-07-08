@@ -437,6 +437,7 @@ const actions = {
 	        	var notifications = response.data.data;
 	        	var unreadCount = response.data.unread;
 
+	        	console.log('response noitofications',response);
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

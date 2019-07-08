@@ -4,7 +4,8 @@
         <router-view name="header"/>
         <router-view name="sidebar"/>
 
-        <v-content>
+        <v-content :style="style">
+
             <router-view/>
         </v-content>
 
@@ -20,21 +21,36 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
-    return {
-      subDrawer: false
-    }
-  },
-  computed: {
-    ...mapGetters({
-      colorScheme: 'colorScheme'
-    })
-  },
-  components: {
 
-  },
-  methods: {
-    
-  }
+components: {
+
+},
+
+data () { return {
+	subDrawer: false
+}},
+
+computed: {
+	...mapGetters({
+		colorScheme: 'colorScheme'
+	}),
+
+	style(){
+		
+		if(this.$route.meta.style) {			
+			return this.$route.meta.style;
+		} 
+		else {			
+			return {};
+		}
+	},
+
+},
+
+
+methods: {
+
+}
+
 }
 </script>

@@ -1360,7 +1360,7 @@ export default {
 
     'formData.power': function (nVal, oVal) {
 
-    	this.cnsl('formData.power');
+    	// this.cnsl('formData.power');
     	if(this.formData.lumen>0 && nVal>0) {
 
 	    	this.formData.efficiency = this.formData.lumen / this.formData.power;
@@ -1520,9 +1520,9 @@ export default {
       	this.inquiry_oems = [];
 
 
-        this.is_sample = false
-        this.is_oem = false
-        this.$v.$reset()
+        this.is_sample = 0;
+        this.is_oem = 0;
+        this.$v.$reset();
 
     },
 
@@ -1533,7 +1533,7 @@ export default {
 			// remove from  tep
 			if(type == 'image' && this.inquiry_images.length) {
 
-					this.cnsl('this.inquiry_images',);
+					// this.cnsl('this.inquiry_images',);
 
 					this.inquiry_images = this.inquiry_images.filter(function(attachments) {
 						return attachments != file;
@@ -1590,10 +1590,13 @@ export default {
             this.is_oem = this.inquiryHolder.oem
             this.formData.oem_service = this.inquiryHolder.oem_service
             this.formData.oem_description = this.inquiryHolder.oem_description
+            
+            this.is_sample = (this.inquiryHolder.sample_quantity)?1:0;
             this.formData.sample_quantity = this.inquiryHolder.sample_quantity
             this.formData.sample_shipping_address = this.inquiryHolder.sample_shipping_address
             this.formData.sample_shipping_city = this.inquiryHolder.sample_shipping_city
             this.formData.sample_shipping_country_id = this.inquiryHolder.sample_shipping_country_id
+
             this.formData.shipping_postal = this.inquiryHolder.shipping_postal
             this.formData.shipping_address = this.inquiryHolder.shipping_address
             this.formData.shipping_country_id = this.inquiryHolder.shipping_country_id
@@ -1663,27 +1666,37 @@ export default {
 
     clearForm() {
 
-      this.formData.keywords = null;
-      this.formData.category = null;
-      this.formData.warranty = null;
-      this.formData.power = null;
-      this.formData.lumen = null;
-      this.formData.efficiency = null;
-      this.formData.beam_angle = null;
-      this.formData.cct = null;
-      this.formData.ip = null;
-      this.formData.finish = null;
-      this.formData.size = null;
-      this.formData.dimmable = null;
-      this.formData.quantity = null;
-      this.formData.desired_price = null;
-      this.formData.desired_unit_price = null;
-      this.formData.shipping_date = this.getDateTime();
-      this.formData.shipment_method = null;
-      this.formData.payment_method = null;
-      this.formData.message = null;
-      this.stepCnt = 1;
+      // this.formData.keywords = null;
+      // this.formData.category = null;
+      // this.formData.warranty = null;
+      // this.formData.power = null;
+      // this.formData.lumen = null;
+      // this.formData.efficiency = null;
+      // this.formData.beam_angle = null;
+      // this.formData.cct = null;
+      // this.formData.ip = null;
+      // this.formData.finish = null;
+      // this.formData.size = null;
+      // this.formData.dimmable = null;
+      // this.formData.quantity = null;
+      // this.formData.desired_price = null;
+      // this.formData.desired_unit_price = null;
+      // this.formData.shipping_date = this.getDateTime();
+      // this.formData.shipment_method = null;
 
+      // this.formData.sample_quantity = null;
+      // this.formData.sample_shipping_address = null;
+      // this.formData.sample_shipping_city = null;
+      // this.formData.sample_shipping_country_id = null;
+      // this.formData.sample_shipping_postal = null;
+
+      // this.formData.payment_method = null;
+      // this.formData.message = null;
+      // this.stepCnt = 1;
+
+      // this.is_sample = false;
+
+      this.clearData();
 
       let options = {
         container: '#inquiryCreate_scrollable_cont',

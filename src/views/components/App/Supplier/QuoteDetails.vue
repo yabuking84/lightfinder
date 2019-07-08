@@ -213,7 +213,7 @@
 
 					<!-- BAL Confirmation -->
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-					<template v-if="inquiry.stage_id == 10041">
+					<template v-if="inquiry.stage_id == 10041 && inquiry.awarded_to_me">
 						<v-flex xs12 >
 							<v-layout row wrap>
 								<v-flex xs12 pa-0>

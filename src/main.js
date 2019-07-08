@@ -173,6 +173,9 @@ const i18n = createI18n()
 import OwlCarousel from 'v-owl-carousel'
 Vue.component('carousel', OwlCarousel)
 
+import UserDetailsDev from "@/views/Components/App/UserDetailsDev";
+Vue.component('user-details-dev', UserDetailsDev)
+
 
 
 

@@ -179,26 +179,6 @@ app flat>
 
 
     <v-spacer></v-spacer>
-    
-    <!-- devMode -->
-    <!-- dddddddddddddddddddddddddddddddddddddddddd -->
-    <template v-if="devMode">
-    <v-btn 
-    absolute
-    bottom
-    center
-    style="text-transform: none;"
-	:style="style">
-        <h3 class="mr-4 ml-4">{{ authUser.email }}</h3>
-        <h3 class="mr-4">{{ authUser.name }}</h3>
-        <!-- <h3 class="mr-4">{{ authUser.uuid }}</h3> -->
-        <h3 class="mr-4" v-if="authUser.role==roles.admin.id">ADMIN</h3>
-        <h3 class="mr-4" v-else-if="authUser.role==roles.buyer.id">BUYER</h3>
-        <h3 class="mr-4" v-else-if="authUser.role==roles.supplier.id">SUPPLIER</h3>
-    </v-btn>
-    </template>
-    <!-- dddddddddddddddddddddddddddddddddddddddddd -->
-    <!-- devMode -->
 
     <v-menu offset-x>
         <v-avatar slot="activator" size="40">
@@ -391,17 +371,12 @@ computed: {
 	      	this.$store.state.auth.auth_user.avatar = config.main.websiteURL+'/static/gender-neutral.png';
       	}
 
-    	this.cnsl('this.$store.state.auth.auth_user.avatar',this.$store.state.auth.auth_user.avatar);
+    	// this.cnsl('this.$store.state.auth.auth_user.avatar',this.$store.state.auth.auth_user.avatar);
 
         return {
             backgroundImage:'url('+this.$store.state.auth.auth_user.avatar+')',
         };
     },
-
-    devMode(){
-    	return config.main.devMode;
-    },
-
 
     // bell ntfctns
 	unread() {
@@ -438,22 +413,6 @@ computed: {
         return this.$store.state.ntfctns.dataSnackbar;
     },
 
-    style(){
-        var style = '';
-        
-        
-        // Dev mode, some markers for easier to know the user and type.
-        if(this.devMode) {
-            if(hlprs.methods.isRole("admin"))
-            style = 'background-color:yellow !important; color:#fff; text-shadow: 1px 1px 7px black;';
-            else if(hlprs.methods.isRole("buyer"))
-            style = 'background-color:blue !important; color:#fff; text-shadow: 1px 1px 7px black;';
-            else if(hlprs.methods.isRole("supplier"))
-            style = 'background-color:red !important; color:#fff; text-shadow: 1px 1px 7px black;';
-        }
-        
-        return style;
-    },
 },
 
 

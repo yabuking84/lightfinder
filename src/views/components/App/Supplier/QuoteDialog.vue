@@ -143,6 +143,39 @@
                  <v-divider vertical></v-divider>
             </v-layout>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!-- BID form -->
+			<!-- //////////////////////////////////////////////// -->
+			<!-- //////////////////////////////////////////////////////////////////////////////////////////////// -->
+			<!-- //////////////////////////////////////////////////////////////////////////////////////////////// -->
               <v-flex xs7 pa-2 mr-4>
                 <h4>Product Details</h4>
                 <v-layout row wrap>
@@ -168,7 +201,7 @@
                         </v-textarea>
                       </v-flex> -->
 
-                      <v-flex xs4 pa-1>
+                      <v-flex xs4 pr-5>
                         <v-text-field 
                         label="Quantity" 
                         placeholder="0" 
@@ -180,7 +213,7 @@
                       </v-flex>
 
 
-                      <v-flex xs4 pa-1>
+                      <v-flex xs4 pr-3>
                         <v-text-field 
                         label="Unit Prices" 
                         v-model="formData.price" 
@@ -195,7 +228,8 @@
                         :hint="'Desired Unit Price: $ '+currency(inquiry.desired_unit_price)">
                         </v-text-field>
                       </v-flex>
-                      <v-flex xs4 pa-1>
+
+                      <v-flex xs4 pr-3>
                         <v-text-field 
                         label="Total Prices" 
                         v-model="formData.total_price" 
@@ -210,6 +244,43 @@
                         :hint="'Desired Total Price: $ '+currency(inquiry.desired_price)">
                         </v-text-field>
                       </v-flex>	
+                      
+
+
+                       	<!-- sample details  -->
+                       	<!-- //////////////////////////////////////////////////////// -->
+                      	<v-flex mt-3 v-if="inquiry.sample_quantity">
+                        <v-layout row wrap mt-3 mb-3>
+
+                                <h4 class="mb-2">
+                                	Product Sample Details <span style="font-weight: normal;">({{ inquiry.sample_quantity }} pc/s required)</span>
+                                </h4>&nbsp;&nbsp;
+                                <!-- <small v-show="is_sample	">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small> -->
+                                <v-flex xs12 v-if="inquiry.sample_quantity">
+                                  <v-layout row wrap>
+
+                                    <v-flex xs5 mr-5>
+                                      <v-text-field 
+                                      label="Sample Cost" 
+                                      :error-messages="fieldErrors('formData.sample_cost')" 
+                                      @blur="$v.formData.sample_cost.$touch()" 
+                                      v-model="formData.sample_cost" 
+                                      style="color: #000;" 
+                                      prefix="$" 
+                                      suffix="USD">
+                                      ></v-text-field>
+                                    </v-flex>
+
+                                    <v-flex xs5 ml-3>
+                                      <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
+                                    </v-flex>
+                                  </v-layout>
+                              </v-flex>
+                        </v-layout>
+                      	</v-flex>
+                       	<!-- //////////////////////////////////////////////////////// -->
+                       	<!-- sample details  -->
+
 
 		
                       <v-flex xs12 pa-1 v-if="formData.attachments && formData.attachments.length > 0">
@@ -225,9 +296,6 @@
                       </v-flex>
 
                       <v-flex xs12>
-
-                      	
-
                          <h4 class="font-weight-thin">Images </h4>
                         <!-- IMAGE QUOTE DROPZONE  -->
                               <vue-dropzone 
@@ -352,34 +420,6 @@
                         </v-flex>
 
 
-                             <!-- optional data  -->
-                             <v-layout row wrap mt-3>
-                                    <h4 v-show="is_sample" class="mb-2">
-                                    	Product Sample Details ({{ inquiry.sample_quantity }} pc/s required)
-                                    </h4>&nbsp;&nbsp;
-                                    <!-- <small v-show="is_sample	">Note: for the developer this is required when the buyer put sample details on the inquiry: to be delete later</small> -->
-                                    <v-flex xs12 v-show="is_sample">
-                                      <v-layout row wrap>
-
-                                        <v-flex xs5 mr-5>
-                                          <v-text-field 
-                                          label="Sample Cost" 
-                                          :error-messages="fieldErrors('formData.sample_cost')" 
-                                          @blur="$v.formData.sample_cost.$touch()" 
-                                          v-model="formData.sample_cost" 
-                                          style="color: #000;" 
-                                          prefix="$" 
-                                          suffix="USD">
-                                          ></v-text-field>
-                                        </v-flex>
-
-                                        <v-flex xs5 ml-3>
-                                          <v-text-field label="Sample Shipment Cost"  :error-messages="fieldErrors('formData.sample_shipment_cost')" @blur="$v.formData.sample_shipment_cost.$touch()" prefix="$" suffix="USD" v-model="formData.sample_shipment_cost" style="color: #000;"> </v-text-field>
-                                        </v-flex>
-                                      </v-layout>
-                                  </v-flex>
-                             </v-layout>
-                   
 
                       <v-flex xs12>
                         <v-textarea label="Message" placeholder="Enter Remarks Here" v-model="formData.remarks">
@@ -407,6 +447,53 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
+			<!-- //////////////////////////////////////////////////////////////////////////////////////////////// -->
+			<!-- //////////////////////////////////////////////////////////////////////////////////////////////// -->
+			<!-- //////////////////////////////////////////////// -->
+			<!-- BID form -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             </v-layout>
           </v-form>
@@ -929,27 +1016,34 @@ watch: {
             this.clearData();
             this.$v.$reset();
             this.fillFormData();
-          	this.cnsl('-edit-')
+          	// this.cnsl('-edit-')
         } else {
             // this.formData = this.initBid;
             this.quoteAction = "Add";
             this.clearData();
             this.$v.$reset();
-            this.cnsl('-add-')
+            // this.cnsl('-add-')
         }
 
     },
 
     // check if inquiry has required to put sample cost
-    inquiry(nVal, oVal) {
+    // inquiry: {
 
-           // check if sample cost && and sample shipment cost is 
-          if(this.inquiry.sample_quantity > 0) {
-            this.is_sample = true
-          } else {
-            this.is_sample = false
-          }
-    },
+	   //  handler(nVal, oVal) {
+
+	   //  	console.log('nVal',nVal);
+	   //  	console.log('nVal.sample_quantity',nVal.sample_quantity);
+	   //  	console.log('this.inquiry.sample_quantity',this.inquiry.sample_quantity);
+	   //      // check if sample cost && and sample shipment cost is 
+	   //      if(nVal.sample_quantity > 0) {
+	   //      	this.is_sample = true
+	   //      } else {
+	   //      	this.is_sample = false
+	   //      }
+	   //  },
+	   //  deep: true,
+    // },
 
 
     'formData.price': {

@@ -66,7 +66,7 @@
 
 					<v-flex xs12>
 
-						<v-layout row wrap>
+						<v-layout row wrap class="inquiry_details">
 								<!-- <v-flex xs12><pre>{{ inquiry }}</pre></v-flex> -->
 
 								<v-flex xs12 v-if="inquiryImages.length > 0">
@@ -76,14 +76,14 @@
 									<!-- </v-flex> -->
 								</v-flex>
 
-								<v-flex xs12>
+								<v-flex xs6 pb-0>
 									<h4 class="font-weight-medium">Keywords </h4>
 									<h4 class="font-weight-light">
 									  <p class="mb-0">{{ inquiry.keyword }}</p>
 									</h4>
 								</v-flex>
 
-								<v-flex xs6>
+								<v-flex xs6 pb-0>
 									<h4 class="font-weight-medium">Category</h4>
 									<h4 class="font-weight-light">
 									  <span style="text-transform:uppercase;">{{ inquiry.categories.join(', ') }}</span>
@@ -91,28 +91,38 @@
 								</v-flex>
 
 						   
-								<v-flex xs6>
+								<v-flex xs6 pb-0>
 									<h4 class="font-weight-medium">Quantity</h4>
 									<h4 class="font-weight-light">
 									<span>{{ inquiry.quantity }} pcs</span>
 								  </h4>
 								</v-flex>
 
+								<v-flex xs6 pb-0>
+									<h4 class="font-weight-medium">Sample Quantity</h4>
+									<h4 class="font-weight-light">
+									<span>{{ inquiry.sample_quantity }} pc/s</span>
+								  	</h4>
+								</v-flex>
+
+
+
 						   
-								<v-flex xs6>
+								<v-flex xs6 pb-0>
 									<h4 class="font-weight-medium">Desired Unit Price</h4>
 									<h4 class="font-weight-light">
 									<span>${{ currency(inquiry.desired_unit_price) }}</span>
 								  	</h4>
-								</v-flex>
-
-						   
-								<v-flex xs6>
+								</v-flex>						   
+								<v-flex xs6 pb-0>
 									<h4 class="font-weight-medium">Desired Total Price</h4>
 									<h4 class="font-weight-light">
 									<span>${{ currency(inquiry.desired_price) }}</span>
 								  	</h4>
 								</v-flex>
+
+
+
 
 								<v-flex xs12>
 									<h4 class="font-weight-medium">Message </h4>
@@ -168,11 +178,17 @@
 								<v-flex xs12 class="mb-10">
 								  <v-divider></v-divider>
 								</v-flex>
-													
+								
+								<!-- shipping details -->
+								<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
+								<template>
+									<v-flex xs12 pb-0>
+									<h4 class="font-weight-medium ">Shipping Addresses</h4>
+									</v-flex>
 
-									<v-flex xs12 v-show="inquiry.shipping_country_id">
+									<v-flex xs12 >
 										<small class="blue-grey--text">Mass Shipping Address</small>
-										<h4 class="font-weight-medium">Shipping Address</h4>
+										<!-- <h4 class="font-weight-medium">Shipping Address</h4> -->
 										<h4 class="font-weight-light">
 										  <span>{{ getCountryName(inquiry.shipping_country_id) }} </span>
 										  <span>{{ inquiry.shipping_address }} </span>
@@ -182,20 +198,21 @@
 									</v-flex>
 
 			   
-								<v-flex xs12 class="mb-10">
+								<!-- <v-flex xs12 class="mb-10">
 								  <v-divider></v-divider>
-								</v-flex>
+								</v-flex> -->
 										   
 
 
 									<v-flex xs12 v-show="inquiry.sample_quantity">
-										<small class="blue-grey--text">Sample Order Information</small>
+										<!-- <small class="blue-grey--text">Sample Order Information</small>
 										<h4 class="font-weight-medium">Sample Orders Quantity </h4>
 										<h4 class="font-weight-light">
 										<span>{{ inquiry.sample_quantity }} </span>
-									   </h4>
+									   </h4> -->
 
-									   <h4 class="font-weight-medium mt-2"> Shipping Address</h4>
+										<small class="blue-grey--text">Sample Shipping Address</small>
+									   	<!-- <h4 class="font-weight-medium ">Shipping Address</h4> -->
 										<h4 class="font-weight-light">
 										   <span>{{ getCountryName(inquiry.sample_shipping_country_id) }} </span>
 										   <span>{{ inquiry.sample_shipping_address }}</span>
@@ -206,10 +223,12 @@
 
 
 			   
-								<v-flex xs12 class="mb-10" v-show="inquiry.sample_quantity">
-									<v-divider></v-divider>
-								</v-flex>
-										   
+									<v-flex xs12 class="mb-10">
+										<v-divider></v-divider>
+									</v-flex>
+								</template>	   
+								<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
+								<!-- shipping details -->
 
 
 									<v-flex xs12 v-show="inquiry.oem">
@@ -411,19 +430,21 @@
 </script>
 
 <style scoped lang="scss">
-	.specifications {
-		.v-chip {
-			width: 220px;
-		}
+.specifications {
+	.v-chip {
+		width: 220px;
 	}
-	
-	.attachments {
-		.v-icon {
-			width: 50px;
-			margin-right: 15px;
-			margin-top: 15px;
-			font-size: 60px !important;
-			cursor: pointer;
-		}
+}
+
+.attachments {
+	.v-icon {
+		width: 50px;
+		margin-right: 15px;
+		margin-top: 15px;
+		font-size: 60px !important;
+		cursor: pointer;
 	}
+}
+
+
 </style>

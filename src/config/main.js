@@ -1,24 +1,33 @@
+// DEVELOPEMENT
+//////////////////////////////////////////////////////////////
 const apiURL = 'http://192.168.1.200:8000';
 const socketURL = 'http://192.168.1.200:3000';
 const websiteURL = 'http://almani.ddns.net:1984';
+const devMode =  true;
+const defaultMaxInqs =  99;
+//////////////////////////////////////////////////////////////
+// DEVELOPEMENT
 
 
-// // const apiURL = 'https://sandbox-api.buyanylight.com';
+// PRODUCTION
+//////////////////////////////////////////////////////////////
 // const apiURL = 'https://api.buyanylight.com';
 // const socketURL = 'https://data.buyanylight.com/socket.io';
-// const websiteURL = 'http://lightfinder.buyanylight.com';
+// const websiteURL = 'https://lightfinder.buyanylight.com';
+// const devMode =  false;
+// const defaultMaxInqs =  1;
+//////////////////////////////////////////////////////////////
+// PRODUCTION
 
 
 
 export default {
 
-	devMode: true,
-
-	websiteURL: websiteURL,
-
-	socketURL: socketURL,
-
 	apiURL: apiURL,
+	socketURL: socketURL,
+	websiteURL: websiteURL,
+	devMode: devMode,
+	defaultMaxInqs: defaultMaxInqs,
 
 	awss3: {
 		signingURL:apiURL+"/v1/aws-s3-signature",
@@ -225,11 +234,10 @@ export default {
 			time: 10000,
 		},
 		default: {
-			time: 30000,
+			time: 8000,
 		},
 	},
 
-	defaultMaxInqs: 3,
 
 }
 

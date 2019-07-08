@@ -145,10 +145,13 @@ export default {
 
 
 		cnsl(output1,output2=null){
-			if(output2)
-			console.log(output1,output2);
-			else
-			console.log(output1);
+
+			if(config.main.devMode) {
+				if(output2)
+				console.log(output1,output2);
+				else
+				console.log(output1);
+			}
 		},
 
 

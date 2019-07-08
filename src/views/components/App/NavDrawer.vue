@@ -66,11 +66,13 @@
     <template v-for="(item, i) in items">
 
         <!-- single items -->
-        <v-list-tile
-        :to="!item.href ? { name: item.name } : null"
+        <!-- 
         :href="item.href"
         :disabled="item.disabled"
         :target="item.target"
+         -->
+        <v-list-tile
+        :to="!item.href ? { name: item.name } : null"
         :key="`${i}-item`"
         ripple
         rel="noopener"
@@ -105,11 +107,13 @@
     <template v-for="(item, i) in items2">
 
         <!-- single items -->
-        <v-list-tile
-        :to="!item.href ? { name: item.name } : null"
+        <!-- 
         :href="item.href"
         :disabled="item.disabled"
         :target="item.target"
+		 -->
+        <v-list-tile
+        :to="!item.href ? { name: item.name } : null"
         :key="`${i}-item2`"
         ripple
         rel="noopener"
@@ -146,7 +150,7 @@
 
 
         <v-list-tile>
-        <v-layout align-end justify-end fill-height/>
+        <v-layout align-end justify-end fill-height>
             <v-btn icon light class="hidden-md-and-down" @click.stop="toggleMiniVariantMode">
                 <v-tooltip bottom v-if="navMiniVarient" color="sidebar">
                     <v-icon slot="activator">fas fa-arrow-circle-right</v-icon>

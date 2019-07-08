@@ -172,8 +172,8 @@ methods: {
 				return (inq.bid_stages.length)?true:false;
 				// return 1;
 			});
-			this.cnsl('so response', response);
-			this.cnsl('so inqs', inqs);
+			// this.cnsl('so response', response);
+			// this.cnsl('so inqs', inqs);
 
 			this.inquiries = inqs;
 		})

@@ -62,7 +62,7 @@
 			      				<v-btn 
 			      				@click="paySubscription('yearly.mini')"
 			      				:loading="loadingBtn"
-			      				class="mt-2"
+			      				class="mt-2 darken-3"
 			      				color="success">
 			      					Pay Yearly
 			      				</v-btn>
@@ -73,8 +73,8 @@
 			      				<v-btn 			      				
 			      				@click="paySubscription('monthly.mini')"
 			      				:loading="loadingBtn"
-			      				class="mt-2"
-			      				color="warning">
+			      				class="mt-2 white--text"
+			      				color="black">
 			      					Pay Monthly
 			      				</v-btn>		      					
 		      				</v-flex>
@@ -117,7 +117,7 @@
 			      				<v-btn 
 			      				@click="paySubscription('yearly.standard')"
 			      				:loading="loadingBtn"
-			      				class="mt-2"
+			      				class="mt-2 darken-3"
 			      				color="success">
 			      					Pay Yearly
 			      				</v-btn>
@@ -128,8 +128,8 @@
 			      				<v-btn 			      				
 			      				@click="paySubscription('monthly.standard')"
 			      				:loading="loadingBtn"
-			      				class="mt-2"
-			      				color="warning">
+			      				class="mt-2 white--text"
+			      				color="black">
 			      					Pay Monthly
 			      				</v-btn>		      					
 		      				</v-flex>
@@ -172,7 +172,7 @@
 			      				<v-btn 
 			      				@click="paySubscription('yearly.9899')"
 			      				:loading="loadingBtn"
-			      				class="mt-2"
+			      				class="mt-2 darken-3"
 			      				color="success">
 			      					Pay Yearly
 			      				</v-btn>
@@ -183,8 +183,8 @@
 			      				<v-btn 			      				
 			      				@click="paySubscription('monthly.premium')"
 			      				:loading="loadingBtn"
-			      				class="mt-2"
-			      				color="warning">
+			      				class="mt-2 white--text"
+			      				color="black">
 			      					Pay Monthly
 			      				</v-btn>		      					
 		      				</v-flex>

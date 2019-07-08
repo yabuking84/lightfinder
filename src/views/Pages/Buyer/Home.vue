@@ -5,6 +5,8 @@
 
 		<v-layout row wrap justify-end align-center mb-0 mt-0>
 
+				<user-details-dev></user-details-dev>
+
 				<v-btn 
 				large
 				value="Create Inquiry" 
@@ -70,6 +72,7 @@ import PendingPaymentTable from '@/views/Components/App/Buyer/PendingPaymentTabl
 import SampleOrderTable from '@/views/Components/App/Buyer/SampleOrderTable'
 import ConfirmedOrderTable from '@/views/Components/App/Buyer/ConfirmedOrderTable'
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
+
 
 
 import NoInqRemainingDialog from "@/views/Components/App/Buyer/NoInqRemainingDialog";
