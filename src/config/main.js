@@ -1,21 +1,18 @@
-// const apiURL = 'http://almani.ddns.net:8000';
-// const socketURL = 'http://almani.ddns.net:3000';
-
-// const apiURL = 'http://192.168.1.200:8000';
-// const socketURL = 'http://192.168.1.200:3000';
-// const websiteURL = 'http://almani.ddns.net:1984';
+const apiURL = 'http://192.168.1.200:8000';
+const socketURL = 'http://192.168.1.200:3000';
+const websiteURL = 'http://almani.ddns.net:1984';
 
 
-// const apiURL = 'https://sandbox-api.buyanylight.com';
-const apiURL = 'https://api.buyanylight.com';
-const socketURL = 'https://data.buyanylight.com/socket.io';
-const websiteURL = 'http://lightfinder.buyanylight.com';
-// const websiteURL = 'http://almani.ddns.net:1984';
+// // const apiURL = 'https://sandbox-api.buyanylight.com';
+// const apiURL = 'https://api.buyanylight.com';
+// const socketURL = 'https://data.buyanylight.com/socket.io';
+// const websiteURL = 'http://lightfinder.buyanylight.com';
+
 
 
 export default {
 
-	devMode: false,
+	devMode: true,
 
 	websiteURL: websiteURL,
 
@@ -196,7 +193,27 @@ export default {
 			2001,
 			20011,
 			2002,
-		]
+		],
+
+		bid_non_editable: [
+			2001,
+			20011,
+			2002,
+			2003,
+			2004,
+			3001,
+			3002,
+		],
+
+		bid_sample_disabled: [
+			2001,
+			20011,
+			2002,
+			2003,
+			2004,
+			3001,
+			3002,
+		],
 
 	},
 
@@ -211,6 +228,8 @@ export default {
 			time: 30000,
 		},
 	},
+
+	defaultMaxInqs: 3,
 
 }
 

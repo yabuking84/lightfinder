@@ -200,9 +200,25 @@
 						</v-flex>
 
 						<v-flex xs12 pl-5>
-							<v-layout column wrap align-start >
-								<h3>Supplier's Estimated Production Time: </h3>
-								<h1>{{ inquiry.estimated_no_days }} Days</h1>
+							<v-layout row wrap>
+								<v-flex xs6>								  
+									<h3>Supplier's Estimated Production Time: </h3>
+									<h1>
+										{{ inquiry.estimated_no_days }} Days 
+										<span style="font-size: 0.6em;">after payment</span>
+									</h1>
+								</v-flex>
+								<v-flex xs6>
+									<v-text-field
+									ref="name"
+									v-model="formData.edt"
+									:error-messages="fieldErrors('formData.edt')" 
+									@blur="$v.formData.edt.$touch()"
+									label="Estimated Delivery Time "
+									placeholder="# of Days"
+									required></v-text-field>									
+
+								</v-flex>
 							</v-layout>
 						</v-flex>
 
@@ -412,6 +428,27 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -446,13 +483,15 @@
 
 
 					<v-card-text>
+
+						<!-- <pre>{{ bidItem }}</pre> -->
 						
 						<div v-if="bidItem.active == 0">
 							<v-btn 
 							class="green darken-4"
 							@click="approvedBid(bidItem)" 
 							large flat block>
-								<span class="mr-1 white--text font-weight-bold">Approved Bid</span>
+								<span class="mr-1 white--text font-weight-bold">Approve Bid</span>
 								<i class="ml-1 white--text font-weight-light  far fa-check-circle white--text"></i>
 							</v-btn>	
 						</div>
@@ -747,6 +786,27 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				</template>
 
 			</v-card-text>
@@ -819,6 +879,7 @@ export default {
 		formData: {
 			eta:null,
 			etd:null,
+			edt:null,
 			shipping_date:null,
 			shipping_cost:null,
 		},
@@ -833,6 +894,7 @@ export default {
 		  shipping_cost: { required,decimal },
 		  eta: { required },
 		  etd: { required },
+		  edt: { required },
 		}
 	},
 
@@ -844,6 +906,7 @@ export default {
 				decimal: 'must be numeric. ',
 			},
 			shipping_date: { required: 'Please specify your Shipping Date. ' },
+			edt: { required: 'Please specify your Shipping Date. ' },
 			eta: { required: "Please specify your ETA." },
 			etd: { required: "Please specify your ETD." },
 		}
@@ -876,9 +939,23 @@ export default {
 							showBid:false,
 						}));
 
-						this.bidItems.sort((a, b) => {
-							return a.total_price - b.total_price;
-						});
+						// this.bidItems.sort((a, b) => {
+						// 	return a.total_price - b.total_price;
+						// });
+
+						console.log('this.bidItems',this.bidItems);
+
+					   	if(this.inquiry.awarded){
+					   		this.bidItems.sort((bid_a, bid_b) => {
+								return bid_a.awarded - bid_b.awarded;
+							});
+							this.bidItems = this.bidItems.reverse();
+					   	}
+					   	else {				   		
+						   	this.bidItems.sort((bid_a, bid_b) => {
+								return bid_a.total_price - bid_b.total_price;
+							});
+					   	}						
 					});
 				})
 

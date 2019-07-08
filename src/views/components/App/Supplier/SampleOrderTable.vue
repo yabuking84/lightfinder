@@ -38,7 +38,7 @@
 
 								<!-- <td>$ {{ currency(sp.item.amount) }}</td> -->
 
-								<td>{{ sp.item.bid_stages_string.join(', ') }}</td>
+								<td>{{ sp.item.bid_sample_stages_string.join(', ') }}</td>
 
 								<td>
 									<v-icon 
@@ -92,7 +92,7 @@
 															Received
 														</template> -->
 														
-														{{ getStatus(bid.stage_id).name }}														
+														{{ getStatus(bid.sample_stage_id).name }}														
 													</td>
 												</tr>
 											</tbody>
@@ -151,7 +151,7 @@ data() { return {
 		{
 			text: 'Status',
 			align: 'left',
-			value: 'status',
+			value: 'bid_sample_stages_string',
 		},
 		{
 			text: '',
@@ -172,8 +172,8 @@ methods: {
 				return (inq.bid_stages.length)?true:false;
 				// return 1;
 			});
-			// this.cnsl('so response', response);
-			// this.cnsl('so inqs', inqs);
+			this.cnsl('so response', response);
+			this.cnsl('so inqs', inqs);
 
 			this.inquiries = inqs;
 		})

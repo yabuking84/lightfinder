@@ -28,7 +28,10 @@
 					hide-actions 
 					class="elevation-0 pending-payments">
 						<template v-slot:items="sp">
-						<tr>
+
+		<!-- <transition-group name="trans"> -->
+
+						<tr :key="sp.item.id" class="inq">
 							
 							<!-- <td><pre>{{ sp.item }}</pre></td> -->
 
@@ -72,6 +75,9 @@
 							</td>
 
 						</tr>
+						
+		<!-- </transition-group> -->
+
 						</template>
 
 
@@ -190,4 +196,25 @@ created(){
 .v-icon.fa-search {
 	font-size: 15px;
 }
+
+
+
+
+// transitions
+// ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+.inq {
+	transition: all 0.5s;
+
+}
+.trans-enter, .trans-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  // transform: translateX(30px);
+}
+
+.trans-leave-active {
+  position: absolute;
+}
+// ttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+// transitions
+
 </style>

@@ -473,10 +473,10 @@
 											</v-flex> 
 										</template>
 
-
-									<template v-if="!inquiry.awarded"> 
-										<v-flex v-if="!bidItem.stage_id" xs6>
-											<!-- <pre>{{ bidItem }}</pre>  -->
+									<!-- x<pre>{{ bidItem.sample_stage_id }}</pre>xx -->
+									<template v-if="!inquiry.awarded"> 										
+										<!-- <v-flex v-if="bidItem.sample_stage_id!=2001" xs6> -->
+										<v-flex v-if="!isBidSampleDisabled(bidItem.sample_stage_id)" xs6>
 											<v-btn 
 											flat block large 
 											class="green darken-2 " 
@@ -486,6 +486,21 @@
 												<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
 											</v-btn>
 										</v-flex>
+
+										<v-flex v-if="bidItem.sample_stage_id==2001" xs6>
+											<div class="sign">
+												<v-icon class="mr-2">fas fa-industry</v-icon>
+												<span class="font-weight-bold ml-1">Sample in Production</span>
+											</div>
+										</v-flex>
+
+										<v-flex v-if="bidItem.sample_stage_id==20011" xs6>
+											<div class="sign">
+												<v-icon class="mr-2">fas fa-check-circle</v-icon>
+												<span class="font-weight-bold ml-1">Sample Production Done</span>
+											</div>
+										</v-flex>
+
 									  	<v-flex xs6>
 										  	<v-btn 
 										  	flat block dark large 
@@ -497,6 +512,21 @@
 										  	</v-btn>
 									  	</v-flex>
 									</template>
+
+										<!-- sample orders -->
+										<!-- /////////////////////////////////////////////////////////////// -->
+										<v-flex v-else-if="bidItem.stage_id==2002" xs6>
+											<v-btn 
+											flat block large 
+											class="green darken-2 " 
+											@click="openSample(bidItem)">
+												<i class="fas fa-lightbulb white--text "></i>
+												<span class="font-weight-bold ml-1 white--text ">Sample Shipped</span>
+											</v-btn>
+										</v-flex>
+										<!-- /////////////////////////////////////////////////////////////// -->
+										<!-- sample orders -->
+
 							  </v-layout>
 							</v-flex>
 
@@ -714,6 +744,7 @@ export default {
 				inq_id: this.inquiry.id
 			})
 			.then(response => {
+				// console.log('response',response);
 				this.$nextTick(() => {
 				   	this.bidItems = response.map(function(bid){
 				   		return {
@@ -800,7 +831,12 @@ export default {
 
 		showBid(bid) {
 			bid.showBid = !bid.showBid;
-		}
+		},
+
+
+		isBidSampleDisabled(stage_id){
+			return config.inquiry_statuses.bid_sample_disabled.includes(parseInt(stage_id));
+		},		
 	},
 
 

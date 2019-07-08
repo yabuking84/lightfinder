@@ -175,6 +175,7 @@ app flat>
 	<!-- ttttttttttttttttttttttttttttttttttttttttt -->
 	<!-- test -->
 
+	<inquiry-counter v-if="isRole('buyer')"></inquiry-counter>
 
 
     <v-spacer></v-spacer>
@@ -183,6 +184,9 @@ app flat>
     <!-- dddddddddddddddddddddddddddddddddddddddddd -->
     <template v-if="devMode">
     <v-btn 
+    absolute
+    bottom
+    center
     style="text-transform: none;"
 	:style="style">
         <h3 class="mr-4 ml-4">{{ authUser.email }}</h3>
@@ -301,11 +305,12 @@ style="cursor: pointer;">
 
 
 
-
+G:\xampp-php7.2\htdocs\buyanylight_final\src\views\Components\App\Buyer\InquiryCounter.vue
 
 
 <script>
 
+import InquiryCounter from "@/views/Components/App/Buyer/InquiryCounter";
 
 import { mapGetters } from 'vuex'
 import config from '@/config/index'
@@ -320,8 +325,13 @@ import MugenScroll from 'vue-mugen-scroll'
 
 export default {
 mixins:[
-	hlprs
+	hlprs,
 ],
+
+components: {
+	MugenScroll,
+	InquiryCounter,
+},
 
 data() { return {
     title: 'BuyAnyLight.com',
@@ -348,11 +358,11 @@ data() { return {
     offsetMsgs:0,
 
     limit: 20,
-}},
 
-components: {
-	MugenScroll,
-},
+
+
+
+}},
 
 computed: {
     ...mapGetters({

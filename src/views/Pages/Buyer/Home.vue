@@ -1,61 +1,60 @@
 <template>
 <div>
 
-	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
-	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
-	<!-- CHANGE THIS!! THIS IS HOME VIEW FROM ADMIN -->
+	<v-container fluid grid-list-xl pt-3>
 
-		<v-container fluid grid-list-xl>
+		<v-layout row wrap justify-end align-center mb-0 mt-0>
 
-			<v-layout row wrap justify-space-between align-center mb-3>
-				
-				<inquiry-counter :totalInqs="totalInqs" :maxInqs="maxInqs" :package_type="package_type"></inquiry-counter>
-				
 				<v-btn 
-				flat
+				large
 				value="Create Inquiry" 
 				title="Create Inquiry"  
 				@click="checkUserInquiry()"
-				style=""
+				style="width:170px; height:55px;"
 				:loading="inqBtnLoading"
 				class="black white--text">
-					<v-icon style="font-size: 1em;" class="ma-0">fas fa-plus-circle</v-icon>
-					Create Inquiry
-			    </v-btn>		            
-		        
-			</v-layout>
+					<v-icon style="font-size: 1.7em;" class="ma-0 mr-4">
+						fas fa-plus-circle
+					</v-icon>
+					<span style="text-align:left; line-height: 1em;">
+						CREATE<br>&nbsp;INQUIRY
+					</span>
+			    </v-btn>
 
-			<v-layout row wrap>
-		        <v-flex xs12>
-		            <bar-cards></bar-cards>
-		        </v-flex>
-			</v-layout>
+		</v-layout>
 
+		<v-layout row wrap>
+	        <v-flex xs12 style="position: relative;">
 
-			<v-layout row wrap align-space-around justify-space-between fill-height>
-	            <v-flex xs7>
-	           		<inquiries-table-grid>
-	           			<template v-slot:statuses>&nbsp;</template>
-	           		</inquiries-table-grid>
-	            </v-flex>
-
-				<v-flex xs5>
-	           		 <pending-payment-table> </pending-payment-table>	
-			    </v-flex>
-			</v-layout>
+	            <bar-cards></bar-cards>
+	        </v-flex>
+		</v-layout>
 
 
-			<v-layout row wrap align-space-around justify-space-between fill-height>
-	            <v-flex xs6>
-	           		<sample-order-table></sample-order-table>
-	            </v-flex>
+		<v-layout row wrap align-space-around justify-space-between fill-height>
+            <v-flex xs7>
+           		<inquiries-table-grid>
+           			<template v-slot:statuses>&nbsp;</template>
+           		</inquiries-table-grid>
+            </v-flex>
 
-				<v-flex xs6>
-	           		<confirmed-order-table> </confirmed-order-table>	
-			    </v-flex>
-			</v-layout>
+			<v-flex xs5>
+           		 <pending-payment-table> </pending-payment-table>	
+		    </v-flex>
+		</v-layout>
 
-		</v-container>
+
+		<v-layout row wrap align-space-around justify-space-between fill-height>
+            <v-flex xs6>
+           		<sample-order-table></sample-order-table>
+            </v-flex>
+
+			<v-flex xs6>
+           		<confirmed-order-table> </confirmed-order-table>	
+		    </v-flex>
+		</v-layout>
+
+	</v-container>
 
 
 <inquiry-create :snackBar.sync="successSnackbar" :dialog.sync="openInquiryCreate"></inquiry-create>
@@ -72,7 +71,6 @@ import SampleOrderTable from '@/views/Components/App/Buyer/SampleOrderTable'
 import ConfirmedOrderTable from '@/views/Components/App/Buyer/ConfirmedOrderTable'
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
-import InquiryCounter from "@/views/Components/App/Buyer/InquiryCounter";
 
 import NoInqRemainingDialog from "@/views/Components/App/Buyer/NoInqRemainingDialog";
 import inqEvntBs from "@/bus/inquiry"
@@ -81,11 +79,13 @@ import config from "@/config/main"
 import tblBs from "@/bus/table"
 import VueTimers from 'vue-timers/mixin'
 
+import inqMixin from "@/mixins/inquiry"
 
 export default {
 
 mixins: [
 	VueTimers,
+	inqMixin,
 ],
 	
 components: {
@@ -95,7 +95,6 @@ components: {
     SampleOrderTable,
     ConfirmedOrderTable,
     InquiryCreate,
-    InquiryCounter,
     NoInqRemainingDialog,    
 },
 
@@ -116,11 +115,6 @@ data: () => ({
 	openInquiryCreate: false,
 	successSnackbar:false,
 	noInqRemainingDialog: false,
-	
-	'defaultMaxInqs': 1,
-	'totalInqs': 0,
-	'maxInqs': 0,
-	'package_type': 'free',
 
 	inqBtnLoading: false,
 }),
@@ -130,13 +124,6 @@ computed: {
 },
 
 created() {
-	this.setMaxInqs();
-	this.setTotalInqs();
-
-	inqEvntBs.onFormSubmitted(()=>{
-		this.setMaxInqs();
-		this.setTotalInqs();
-	});	
 
 	// start polling
 	this.$timer.start('RefershTables');
@@ -147,11 +134,16 @@ methods:{
 	checkUserInquiry(){
 		this.inqBtnLoading = true;
 
-		this.setMaxInqs().then((rspns)=>{			
-			this.setTotalInqs().then((rspns)=>{
-				// this.cnsl(this.maxInqs+" - "+this.totalInqs);
-				if(this.maxInqs-this.totalInqs > 0)
-				this.openInquiryCreate = true;
+		this.getMaxInqs().then((rspns)=>{
+			var max_inquiry = rspns.max_inquiry;
+			var package_type = rspns.package_type;
+
+			this.getTotalInqs().then((rspns)=>{
+				var totalInqs = rspns;
+
+				if(max_inquiry-totalInqs > 0) {
+					this.openInquiryCreate = true;					
+				}
 				else {
 					this.openInquiryCreate = false;
 					this.noInqRemainingDialog = true;					
@@ -162,49 +154,7 @@ methods:{
 		});
 	},
 
-
-	setMaxInqs(){
-		return new Promise((resolve, reject) => {			
-			this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
-			.then((rspns)=>{
-				this.cnsl('rspns',rspns);
-				
-				if(rspns) {
-					this.maxInqs = rspns.inclusions.max_inquiry;
-					this.package_type = rspns.package_type;
-				}
-				else {
-					// if no / free subscription
-					this.maxInqs = this.defaultMaxInqs;
-					this.package_type = 'free';
-				}
-
-				resolve();
-			})
-			.catch((e)=>{
-				this.cnsl(e);
-				reject(e);
-			});
-		});
-	},
-
-	setTotalInqs(){
-		return new Promise((resolve, reject) => {			
-			this.$store.dispatch(this.getStore()+'/getInquiries_a')
-			.then((rspns)=>{
-				// this.cnsl('Inquiries ',rspns);
-				if(rspns.length)
-				this.totalInqs = rspns.length;
-				else
-				this.totalInqs = 0;
-				resolve();
-			})
-			.catch((e)=>{
-				this.cnsl(e);
-				reject(e);
-			});
-		});
-	},	
+	
 },
 
 

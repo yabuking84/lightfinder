@@ -1,8 +1,58 @@
 import config from '@/config/main';
 
+const defaultMaxInqs = config.defaultMaxInqs;
+
 export default {
 	
 	methods:{
+
+		getMaxInqs(){
+			return new Promise((resolve,reject)=>{
+				this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
+				.then((rspns)=>{
+					this.cnsl('setMaxInqs rspns',rspns);
+					var retVal = {
+						max_inquiry: 0,
+						package_type: 0,
+					};
+					if(rspns) {
+						retVal.max_inquiry = rspns.inclusions.max_inquiry;
+						retVal.package_type = rspns.package_type;
+					}
+					else {
+						// if no / free subscription
+						retVal.max_inquiry = defaultMaxInqs;
+						retVal.package_type = 'free';
+					}
+
+					resolve(retVal);
+				})
+				.catch((e)=>{
+					this.cnsl(e);
+					reject(e);
+				});		
+			});
+		},
+
+		getTotalInqs(){
+			return new Promise((resolve, reject) => {			
+				this.$store.dispatch(this.getStore()+'/getInquiries_a')
+				.then((rspns)=>{
+					// this.cnsl('Inquiries ',rspns);
+					var retVal = 0;
+
+					if(rspns.length)
+					retVal = rspns.length;
+
+					resolve(retVal);
+				})
+				.catch((e)=>{
+					this.cnsl(e);
+					reject(e);
+				});
+			});
+		},
+
 
 		showInquiry(inq_id) {
 			return new Promise((resolve, reject) => {
@@ -40,7 +90,14 @@ export default {
 
 		setDataTableInquiry(inquiries){
 
-			var sttss = this.$route.meta.statuses;
+			// var sttss = this.$route.meta.statuses;
+			var sttss = [
+				...config.inquiry_statuses.default,
+				...config.inquiry_statuses.buyers,
+				...config.inquiry_statuses.suppliers,
+			];
+
+			// console.log(sttss);
 
 			var retVal = inquiries.map((inquiry)=>{
 
@@ -51,7 +108,7 @@ export default {
 
 				var bids = [];
 				var bid_stages = [];
-				var bid_stages_string = [];
+				var bid_sample_stages_string = [];
 				if(inquiry.bids && inquiry.bids.length) {
 
 					// amount and price only for bids that are awarded
@@ -70,15 +127,16 @@ export default {
 					// amount and price only for bids that are awarded
 
 					inquiry.bids.forEach((bid,index)=>{
-						if(bid.stage_id) {
-							var stts = sttss.find((stts)=>stts.id==bid.stage_id);
-							if(stts) {								
+						// console.log('bid.sample_stage_id',bid.sample_stage_id);
+						if(bid.sample_stage_id) {
+							var stts = sttss.find((stts)=>stts.id==bid.sample_stage_id);
+							if(stts) {
 								bid_stages.push(stts);
-								bid_stages_string.push(stts.name);
+								bid_sample_stages_string.push(stts.name);
 							}
 							else {
-								bid_stages.push({name:'not found..'});
-								bid_stages_string.push('not found..');
+								bid_stages.push({name:'---'});
+								bid_sample_stages_string.push('---');
 							}
 						}
 					});
@@ -89,7 +147,7 @@ export default {
 					// bid_id: null,
 					bids: bids,
 					bid_stages: bid_stages,
-					bid_stages_string: bid_stages_string,
+					bid_sample_stages_string: bid_sample_stages_string,
 					awarded: inquiry.awarded,
 					awarded_to_me: inquiry.awarded_to_me,
 					notification_id: null,

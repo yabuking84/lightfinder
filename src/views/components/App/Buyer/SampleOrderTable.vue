@@ -38,7 +38,7 @@
 
 								<!-- <td>$ {{ currency(sp.item.amount) }}</td> -->
 
-								<td>{{ sp.item.bid_stages_string.join(', ') }}</td>
+								<td>{{ sp.item.bid_sample_stages_string.join(', ') }}</td>
 
 								<td>
 									<v-icon 
@@ -68,6 +68,7 @@
 						    		<v-layout px-4 mt-1 row wrap align-center justify-end>
 										<!-- {{ displayBids() }} -->
 										<!-- <pre>{{ sp.item.bids }}</pre> -->										
+										<!-- x<pre>{{ sp.item.bid_stages }}</pre>xd -->
 										<table class="bidTable">
 											<thead>
 												<tr>
@@ -77,24 +78,24 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr v-for="(bid,i) in sp.item.bids">
-													<td>{{ bid.id }}</td>													
-													<td>$ {{ currency(bid.sample_cost) }}</td>
-													<td> 
-														<!-- <template v-if="bid.stage_id==2001">
-															Production
-														</template>
-														<template v-if="bid.stage_id==2002">
-															Sent
-														</template>
-														<template v-if="bid.stage_id==3001">
-															Received
-														</template> -->
-
-														{{ getStatus(bid.stage_id).name }}
-
-													</td>
-												</tr>
+												<template v-for="(bid,i) in sp.item.bids">
+													<tr v-if="bid.sample_stage_id">
+														<td>{{ bid.id }}</td>
+														<td>$ {{ currency(bid.sample_cost) }}</td>
+														<td> 
+															<!-- <template v-if="bid.stage_id==2001">
+																Production
+															</template>
+															<template v-if="bid.stage_id==2002">
+																Sent
+															</template>
+															<template v-if="bid.stage_id==3001">
+																Received
+															</template> -->
+															{{ getStatus(bid.sample_stage_id).name }}
+														</td>
+													</tr>
+												</template>
 											</tbody>
 										</table>
 
@@ -151,7 +152,7 @@ data() { return {
 		{
 			text: 'Status',
 			align: 'left',
-			value: 'status',
+			value: 'bid_sample_stages_string',
 		},
 		{
 			text: '',
@@ -244,6 +245,7 @@ created(){
 	thead th {
 		height:30px;		
 		border-bottom: 1px solid #000;		
+
 	} 
 	
 	thead tr {
@@ -253,13 +255,12 @@ created(){
 	thead th {
 		color: #fff;
 		font-weight: bold;
+	    background: #000;				
+		text-align: left;
 	}
 	tbody tr:last-child td {
 		border-bottom: 0px solid #000;		
 	}
 
-	thead th {
-		text-align: left;
-	}
 }
 </style>

@@ -24,26 +24,34 @@
 	</template>
 
 	<template v-else>
+			<!-- <pre>hasBid = {{ hasBid }}</pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			<!-- <pre>bid.stage_id = {{ bid.stage_id }}</pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+			<!-- <pre>bid.sample_stage_id = {{ bid.sample_stage_id }}</pre> -->
+						
 		<v-toolbar color="white darken-4" dark class="black--text" >
 
 			<v-toolbar-title class="subheading font-weight-light" v-if="hasBid">
 				<!-- Your Current Quote is <span class="font-weight-bold">${{ bid.total_price }} </span> -->
 				BID# <span class="font-weight-bold">{{ bid.id }}</span>
+
 			</v-toolbar-title>
 
 			<v-spacer></v-spacer>
 
 			<!-- edit quote -->
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-			<v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2">
-
-					<v-btn v-if="hasBid && !inquiry.awarded" @click="openEditQuote()" class="font-weight-light" color="light-blue lighten-1" dark small >
+			<!-- <v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2"> -->
+			<!-- {{ hasBid }} {{ bid.stage_id }} {{ bid.sample_stage_id }} -->
+			<v-toolbar-title class="subheading font-weight-light pa-2">
+					<template v-if="!inquiry.awarded">
+					<v-btn v-if="hasBid && bid.stage_id==1001" @click="openEditQuote()" class="font-weight-light" color="light-blue lighten-1" dark small >
 						<i class="fas fa-edit  white--text ma-2"> </i> Edit Quote
 					</v-btn>
 	
-					<v-btn v-else-if="!inquiry.awarded" @click="openCreateQuote()" class="font-weight-light" color="green" dark small >
+					<v-btn v-else-if="!hasBid" @click="openCreateQuote()" class="font-weight-light" color="green" dark small >
 						<i class="fas fa-plus  white--text ma-2"> </i> Create Quote
 					</v-btn>
+					</template>
 
 			</v-toolbar-title>
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -164,6 +172,26 @@
 					</v-flex>
 					</template>
 					
+
+					<!-- Bid for verification -->
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<!-- <pre>{{ bid }}</pre> -->
+					<template v-if="bid && bid.stage_id==1001">
+					<v-flex xs12>
+						<v-layout row wrap>
+								<v-alert
+								style="width:100%;"
+								:value="true"
+								type="warning">
+									<div class="headline font-weight-bold">BID Verification</div>
+									<div class="" style="font-style: italic;">This BID is under verification from our BAL staff.</div>
+								</v-alert>							
+						</v-layout>
+					</v-flex>
+					</template>
+					<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<!-- Bid for verification -->
+
 
 					<!-- if awarded to another supplier -->
 					<template v-if="!inquiry.awarded_to_me && inquiry.awarded">
@@ -316,7 +344,7 @@
 							<!-- Sample Actions -->
 							<!-- ///////////////////////////////////////////////////////////////////////// -->
 							<v-flex xs12 mt-3 mb-0 pb-0>
-									<template v-if="bid.stage_id==2001">
+									<template v-if="bid.sample_stage_id==2001">
 										<!-- <v-chip label color="red" class="white--text">Sample Order in Production</v-chip> -->
 										<!-- <v-btn 
 										flat block large disabled outline 
@@ -325,7 +353,8 @@
 												Sample Order in Production
 											</span>
 										</v-btn> -->
-									    <v-alert
+
+									    <!-- <v-alert
 								      	:value="true"
 								      	icon="fas fa-industry"
 								      	class="alert1"
@@ -341,23 +370,47 @@
 													Production done!
 												</span>
 											</v-btn>
-								      	</v-alert>
+								      	</v-alert> -->
+
+										<div class="sign pa-2" style="border: 1px solid; height: auto;">
+										  	<span class="mr-4 title black--text">
+										  		<v-icon color="black" class="mr-2">fas fa-industry</v-icon>
+										  		Sample Order in Production
+										  	</span>
+										  	<v-btn
+										  	:loading="setSampleAsProductionDoneBtn"
+											@click="setSampleAsProductionDone()" 
+											class="green darken-2 ml-0">
+												<span class="font-weight-bold ml-1 white--text ">
+													Production done!
+												</span>
+											</v-btn>											
+										</div>
 									</template>
-									<template v-else-if="bid.stage_id==2002">																				
-									    <v-alert
-								      	:value="true"
-								      	icon="fas fa-shipping-fast"
-								      	color="success">
+									<template v-else-if="bid.sample_stage_id==20011">
+										<div class="sign pa-3" style="border: 1px solid; height: auto;">
+										  	<span class="mr-4 title black--text">
+										  		<v-icon color="black" class="mr-2">fas fa-industry</v-icon>
+										  		Sample Production Done
+										  	</span>									
+										</div>
+									</template>
+									<template v-else-if="bid.sample_stage_id==2002">
+										<div class="sign pa-3" style="border: 1px solid; height: auto;">
+										  	<span class="mr-4 title black--text">
+										  		<v-icon color="black" class="mr-2">fas fa-shipping-fast</v-icon>
 										  		Sample Order Sent
-								      	</v-alert>
+										  	</span>									
+										</div>
 									</template>
-									<template v-else-if="bid.stage_id==3001">
-									    <v-alert
-								      	:value="true"
-								      	icon="fas fa-check-circle"
-								      	color="success">
+									<template v-else-if="bid.sample_stage_id==3001">
+										<div class="sign pa-3" style="border: 1px solid; height: auto;">
+										  	<span class="mr-4 title black--text">
+										  		<v-icon color="black" class="mr-2">fas fa-check-circle</v-icon>
 										  		Sample Order Received
-								      	</v-alert>										
+										  	</span>									
+										</div>
+								
 									</template>
 							</v-flex>
 							<!-- ///////////////////////////////////////////////////////////////////////// -->
@@ -560,6 +613,10 @@ export default {
 
 
 			// alert('production is done!');
+		},
+
+		isBidNonEditable(stage_id){
+			return config.inquiry_statuses.bid_non_editable.includes(parseInt(stage_id));
 		},
 	},
 

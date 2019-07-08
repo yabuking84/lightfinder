@@ -9,7 +9,7 @@
 	</v-alert> -->
 
 	<v-layout 
-	style="border: 1px solid #000;"
+	style=""
 	row justify-center align-center mx-3 my-0 px-4 py-2>
 		
 		<v-flex pr-4>
@@ -30,14 +30,19 @@
 
 		<v-flex py-1 pl-5>
 			<h3 class="mr-3">
-				<template v-if="maxInqs - totalInqs > 1 || maxInqs - totalInqs == 0">
+				<template v-if="max_inquiry - totalInqs > 1 || max_inquiry - totalInqs == 0">
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
-					LightFinder Inquiries: {{ maxInqs - totalInqs }} out {{ maxInqs }} remaining
+					LightFinder Inquiries: {{ max_inquiry - totalInqs }} remaining out of {{ max_inquiry }}
 				</template>
-				<template v-if="maxInqs - totalInqs == 1">
+				<template v-else-if="max_inquiry - totalInqs == 1">
 					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
 					<!-- Only 1 Inquiry remaining. -->
-					LightFinder Inquiries: {{ maxInqs - totalInqs }} out {{ maxInqs }} remaining
+					LightFinder Inquiries: {{ max_inquiry - totalInqs }} remaining out of {{ max_inquiry }}
+				</template>
+				<template v-else>
+					<v-icon class="mr-2">fas fa-clipboard-list</v-icon>
+					<!-- Only 1 Inquiry remaining. -->
+					LightFinder Inquiries: {{ max_inquiry - totalInqs }} remaining out of {{ max_inquiry }}
 				</template>
 			</h3>			
 		</v-flex>
@@ -52,24 +57,39 @@
 <script>
 
 import UpgradeAccountDialog from "@/views/Components/App/Buyer/UpgradeAccountDialog";
+import inqMixin from "@/mixins/inquiry";
+import inqEvntBs from "@/bus/inquiry"
 
 export default {
+mixins:[
+	inqMixin,
+],
+
 components:{
 	UpgradeAccountDialog,
 },
 
+
 props:[	
-	'totalInqs',
-	'maxInqs',
-	'package_type',
 ],
 
 data(){return{
 	openDialog:false,
+
+	
+	
+	'totalInqs': 0,
+	'max_inquiry': 0,
+	'package_type': 'free',
+
 }},
 
 created(){
+	this.setMaxAndTotalInqs();	
 
+	inqEvntBs.onFormSubmitted(()=>{
+		this.setMaxAndTotalInqs();
+	});
 },
 
 
@@ -96,6 +116,21 @@ methods:{
 		return retVal;
 	},
 
+
+	setMaxAndTotalInqs(){
+		this.getMaxInqs().then((rspns)=>{
+			this.max_inquiry = rspns.max_inquiry;
+			this.package_type = rspns.package_type;
+
+			this.getTotalInqs().then((rspns)=>{
+				this.totalInqs = rspns;
+			});
+		});
+	},
+
+	setTotalInqs(){
+		
+	},
 },
 
 

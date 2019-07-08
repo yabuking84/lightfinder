@@ -365,7 +365,7 @@ const state= {
 			// 	url: url,
 			// 	headers: headers,
 			// 	data: JSON.stringify({ 
-			// 		'stage_id': data.stage_id,
+			// 		'sample_stage_id': data.stage_id,
 			// 	}),
 			// })
 			// .then(response => {
