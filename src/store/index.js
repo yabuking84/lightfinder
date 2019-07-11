@@ -16,6 +16,8 @@ import admnByr from './modules/AdminBuyer'
 import admnSpplr from './modules/AdminSupplier'
 import admnInq from './modules/AdminInquiries'
 
+import byrMyHm from './modules/BuyerMyHome'
+
 import inq from './modules/Inquiry'
 
 import sckts from './modules/Sockets'
@@ -40,6 +42,7 @@ export const store = new Vuex.Store({
     cat,
     inq,
     byrInq,
+    byrMyHm,
     spplrInq,
     admnByr,
     admnSpplr,

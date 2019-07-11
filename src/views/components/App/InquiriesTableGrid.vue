@@ -149,20 +149,22 @@
 
 		<v-layout 
 		v-else 
-		justify-center  
+		justify-center
+		align-center
 		row wrap pa-5>
 
 		   <v-flex xs2>
 				  <!-- will download this later when going live -->
-				  <v-img src="https://image.flaticon.com/icons/svg/751/751381.svg" height="90px" contain></v-img>  
+				  <!-- <v-img src="https://image.flaticon.com/icons/svg/751/751381.svg" height="90px" contain></v-img>   -->
 			</v-flex>
 
-			<v-flex xs12 mt-4>
+			<v-flex xs12 mt-2  style="text-align: center;">
 					<span v-if="search">
-						<h1 class="text-xs-center red--text">Nothing Found on "{{ search }}"</h1>  
+				  		<v-icon style="font-size: 4em;">fas fa-search</v-icon>
+						<h1 class="text-xs-center mt-4 black--text">Nothing Found on "{{ search }}"</h1>  
 					</span>
 					<span v-else>
-					 <h1 class="text-xs-center red--text">Haven't Found Something</h1>
+					 <h2 class="text-xs-center black--text">No inquiries..</h2>
 				   </span>
 			 </v-flex>
 		</v-layout>

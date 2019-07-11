@@ -34,7 +34,6 @@ export default {
         urls: {
         	inquiry: 'https://httpbin.org/post',
         },
-
 	},
 
 	shipping_methods: [
@@ -75,6 +74,7 @@ export default {
 				icon: "far fa-envelope-open",
 				desc:"Inquiry is ready for bids.",
 			},
+
 			{
 				// before this was Confirmation
 				id: 1004, 
@@ -99,6 +99,7 @@ export default {
 				icon: "far fa-credit-card",
 				desc:"",
 			},
+
 			{
 				id: 1006, 
 				name: "Confirming Payment",
@@ -106,6 +107,7 @@ export default {
 				icon: "far fa-credit-card",
 				desc:"",
 			},
+
 			{
 				id: 2001, 
 				name: "Production",
@@ -113,6 +115,7 @@ export default {
 				icon: "fas fa-industry",
 				desc:"",
 			},
+
 			{
 				id: 20011, 
 				name: "Production Done",
@@ -120,6 +123,7 @@ export default {
 				icon: "fas fa-industry",
 				desc:"",
 			},
+
 			{
 				id: 2002, 
 				name: "Shipment",
@@ -127,8 +131,6 @@ export default {
 				icon: "fas fa-truck",
 				desc:"",
 			},
-
-
 
 			{
 				id: 2003, 
@@ -234,7 +236,7 @@ export default {
 			time: 10000,
 		},
 		default: {
-			time: 8000,
+			time: 5000,
 		},
 	},
 

@@ -944,6 +944,15 @@ export default {
   ],
 
 
+
+
+
+  components: {
+    vueDropzone: vue2Dropzone,
+    InquiryLookupDialog
+  },
+
+
   validations: {
 
     formData: {
@@ -1224,15 +1233,6 @@ export default {
 
 
 
-
-
-
-
-
-  components: {
-    vueDropzone: vue2Dropzone,
-    InquiryLookupDialog
-  },
 
   created: function() {
 

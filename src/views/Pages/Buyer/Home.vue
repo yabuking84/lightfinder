@@ -74,6 +74,7 @@ import ConfirmedOrderTable from '@/views/Components/App/Buyer/ConfirmedOrderTabl
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
 
+import UserDetailsDev from '@/views/Components/App/UserDetailsDev'
 
 import NoInqRemainingDialog from "@/views/Components/App/Buyer/NoInqRemainingDialog";
 import inqEvntBs from "@/bus/inquiry"
@@ -99,6 +100,7 @@ components: {
     ConfirmedOrderTable,
     InquiryCreate,
     NoInqRemainingDialog,    
+	UserDetailsDev,
 },
 
 

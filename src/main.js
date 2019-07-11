@@ -24,7 +24,6 @@ import Vuebar from 'vuebars'
 import Trend from 'vuetrend'
 import {truncate} from 'lodash'
 
-import helpers from "@/mixins/helpers"
 
 import Vuelidate from "vuelidate";
 
@@ -173,8 +172,8 @@ const i18n = createI18n()
 import OwlCarousel from 'v-owl-carousel'
 Vue.component('carousel', OwlCarousel)
 
-import UserDetailsDev from "@/views/Components/App/UserDetailsDev";
-Vue.component('user-details-dev', UserDetailsDev)
+// import UserDetailsDev from "@/views/Components/App/UserDetailsDev";
+// Vue.component('user-details-dev', UserDetailsDev)
 
 
 
@@ -192,7 +191,7 @@ router.beforeEach(middleware)
 
 
 
-
+import helpers from "@/mixins/helpers"
 Vue.mixin(helpers);
 
 

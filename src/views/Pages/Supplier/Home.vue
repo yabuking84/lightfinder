@@ -51,6 +51,7 @@ import config from "@/config/main"
 import tblBs from "@/bus/table"
 import VueTimers from 'vue-timers/mixin'
 
+import UserDetailsDev from '@/views/Components/App/UserDetailsDev'
 
 export default {
 
@@ -69,18 +70,19 @@ export default {
 	    },
 	}],
 
-		
-	data: () => ({
-		title: 'Home',
-	}),
-
 	components: {
 		BarCards,
 		InquiriesTableGrid,
 		SampleOrderTable,
 		ConfirmedOrderTable,
 		AwardedTable,
+		UserDetailsDev,
 	},
+		
+	data: () => ({
+		title: 'Home',
+	}),
+
 
 	created(){
 

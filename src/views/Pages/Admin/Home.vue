@@ -33,6 +33,8 @@ import config from "@/config/main"
 import tblBs from "@/bus/table"
 import VueTimers from 'vue-timers/mixin'
 
+import UserDetailsDev from '@/views/Components/App/UserDetailsDev'
+
 
 export default {
 	mixins: [
@@ -42,6 +44,7 @@ export default {
 	components: {
 	    BarCards,
 	    InquiriesTableGrid,
+		UserDetailsDev,
 	},
 
 

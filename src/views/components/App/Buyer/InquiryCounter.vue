@@ -15,8 +15,8 @@
 		<v-flex pr-4>
 			<v-layout row wrap justify-center align-center>		  
 				<h3 
-				class="mr-3">
-					PACKAGE: {{ packageType(package_type) }}
+				style="width: 200px;text-align: left;" 
+				class="mr-3">PACKAGE: {{ packageType(package_type) }}
 				</h3>				
 
 				<v-btn 

@@ -9,6 +9,8 @@ import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 import BuyerInvoice from '@/views/Components/App/Invoice'
 
 import BuyerMyHome from '@/views/Pages/Buyer/MyHome'
+import BuyerMyHomeProject from '@/views/Components/App/Buyer/MyHome/ProjectView'
+
 import BuyerMyTower from '@/views/Pages/Buyer/MyTower'
 
 import config from '@/config/index'
@@ -58,24 +60,36 @@ const meta = {
 	],
 	storeType: {
 		inq: "byrInq",
+		myHm: "byrMyHm",
 	}
+}
+
+const meta2 = {
+	...meta,
+	style:{
+		backgroundImage:'url(/static/bg-image.png)',
+		backgroundSize: '100% auto ',
+		backgroundPositionY: '-20vh',
+		backgroundAttachment: 'fixed',
+	},
+
 }
 
 
 export default [
 
-	{
-		name: 'BuyerHome2',
-		path: '',
-		components: { 
-			default: BuyerHome, 
-			sidebar: AppSidebar, 
-			header: AppToolbar, 
-			footer: AppFooter,
-			dialog: BuyerInquiryView,
-		},
-		meta: meta,
-	},
+	// {
+	// 	name: 'BuyerHome2',
+	// 	path: '',
+	// 	components: { 
+	// 		default: BuyerHome, 
+	// 		sidebar: AppSidebar, 
+	// 		header: AppToolbar, 
+	// 		footer: AppFooter,
+	// 		dialog: BuyerInquiryView,
+	// 	},
+	// 	meta: meta,
+	// },
 
 	{
 		name: 'BuyerHome',
@@ -87,14 +101,7 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: {
-			...meta,
-			// style:{
-			// 	backgroundImage:'url(/static/bg-image2.png)',
-			// 	backgroundSize: '100% auto ',
-			// 	backgroundPositionY: '-20vh',
-			// },     	
-		},
+		meta: meta,
 	},
 
 	{
@@ -184,9 +191,30 @@ export default [
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// My Home
+	//////////////////////////////////////////////////////
+
 	{
 		name: 'BuyerMyHome',
-		path: 'my-home',
+		path: '/my-home',
 		components: { 
 			default: BuyerMyHome, 
 			sidebar: AppSidebar, 
@@ -194,22 +222,30 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: {
-			...meta,
-			style:{
-				backgroundImage:'url(/static/bg-image.png)',
-				backgroundSize: '100% auto ',
-				backgroundPositionY: '-20vh',
-			},
-		},
+		meta: meta2,
 	},
 
+	{
+		name: 'BuyerMyHomeProject',
+		path: '/my-home/project/:proj_ref',
+		components: { 
+			default: BuyerMyHomeProject, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta2,
+	},
+	//////////////////////////////////////////////////////
+	// My Home
 
 
-
+	// My Tower
+	//////////////////////////////////////////////////////
 	{
 		name: 'BuyerMyTower',
-		path: 'my-tower',
+		path: '/my-tower',
 		components: { 
 			default: BuyerMyTower, 
 			sidebar: AppSidebar, 
@@ -217,19 +253,22 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: {
-			...meta,
-			style:{
-				backgroundImage:'url(/static/bg-image.png)',
-				backgroundSize: '100% auto',
-				backgroundPositionY: '-20vh',
-			},        	
-		},
+		meta: meta2,
 	},
+	//////////////////////////////////////////////////////
+	// My Tower
 
 
 
   
+
+
+
+
+
+
+
+
 
 
 
@@ -243,6 +282,14 @@ export default [
 	{
 		name: 'BuyerRegistration',
 		path: '/buyer/register',
+		components: {
+			default: BuyerRegistration
+		}
+	},
+
+	{
+		name: 'BuyerRegistrationMI',
+		path: '/buyer/register/:main_interest',
 		components: {
 			default: BuyerRegistration
 		}

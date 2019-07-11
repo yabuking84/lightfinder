@@ -16,6 +16,15 @@ export default new Vue({
 	        });
 		},
 
+		emitNewProjectMessage(data){
+			this.$emit('new-project-message',data);
+		},
+		onNewProjectMessage(func){
+			this.$on('new-project-message',(data)=>{
+				func(data);
+	        });
+		},
+
 	},
 
 });

@@ -94,6 +94,16 @@ export default {
 	    },
 
 
+	    getRole(){
+	        var retVal = false;
+	        var roleId = this.$store.state.auth.auth_user.role;
+	        return {
+	        	id: roleId,
+	        	name: config.auth.roleIndex[roleId],
+	        };
+	    },
+
+
 	    getStore(type='inq'){
 
 	    	// this.cnsl('$route',this.$route.meta.storeType[type]);

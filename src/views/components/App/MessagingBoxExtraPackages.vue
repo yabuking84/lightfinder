@@ -1,7 +1,7 @@
 <template>
 <div>
 
-	<div class="messaging-box" :id="'mb_'+bid.id" :ref="'mb_'+bid.id">
+	<div class="messaging-box" :id="'mb_'+proj_ref" :ref="'mb_'+proj_ref">
 		<v-card color="transparent" style="" class="chat-container">
 			<v-card-text class="" id="chatscroll-thread">  
 
@@ -13,13 +13,21 @@
 								<div 
 								class="chat-thread" 
 								:class="[message.own?'end':'start']">
-									<!-- <div class="user-avatar">
-										<v-avatar size="40px" color="grey lighten-4">
-											<img :src="[authUser.id === message.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="avatar">
+									<div class="user-avatar">
+										<v-avatar 
+										v-if="message.own"
+										size="40px" 
+										color="grey lighten-4">
+											<img :src="[authUser.id === message.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="User">
 										</v-avatar>
-									</div> -->
+										<v-avatar 
+										v-else
+										size="40px" 
+										color="grey lighten-4">
+											<img src="/static/logos/logo-white.png" alt="BAL">
+										</v-avatar>
+									</div>                                
 									<div class="chat-message pa-2 border-radius6">
-										<!-- <div class="chat-message-name">{{ message.name }}</div> -->
 										<div v-html="message.content" class="chat-message-text dont-break-out"></div>
 									</div>
 								</div>
@@ -31,7 +39,6 @@
 
 				<v-layout row wrap v-if="!messages.length">
 					<v-flex xs12>
-						<!-- <h2 class="font-weight-medium grey--text mt-1 mb-1 text-xs-center">Start A Conversation Now</h2> -->
 						<h2 class="font-weight-medium grey--text mt-1 mb-1 text-xs-center">&nbsp;</h2>
 					</v-flex>
 				</v-layout>
@@ -46,7 +53,7 @@
 					
 					<chat-editable 
 					ref="cme"
-					:id="'ce_'+bid.id" 
+					:id="'ce_'+proj_ref" 
 					readonly
 					disable
 					disabled
@@ -54,7 +61,7 @@
 					@update="chatMessageEditor = $event" 
 					type="innerHTML"
 					@onEnter="sendMessage()" 
-					placeholder="Type you message .."></chat-editable>
+					placeholder="Type you message here..."></chat-editable>
 
 					<v-btn color="green" 
 					:loading="loading"
@@ -79,8 +86,14 @@ import ChatEditable from '@/views/Components/Editable/ChatEditable'
 import Vue from 'vue'
 import MsgBus from "@/bus/messaging";
 
+import hlprs from "@/mixins/helpers";
+
 
 	export default {
+
+		mixins:[
+			'hlprs',
+		],
 
 		components: {
 			ChatEditable
@@ -88,28 +101,10 @@ import MsgBus from "@/bus/messaging";
 
 		props: {
 
-			type: {
-				type: String,
+		   proj_ref: {
+				type: [String, Number],
 				default: null,
 			},
-
-			inquiry: {
-				type: Object,
-				default: null,
-			},
-
-			bid: {
-				type: Object,
-				default: ()=>({
-					id: 0,
-				}),
-			},
-
-			isFocused: {
-				type: Boolean,
-				default: false,
-			},
-
 
 		},
 
@@ -117,25 +112,6 @@ import MsgBus from "@/bus/messaging";
 			messages:  [],
 			chatMessageEditor:  null,
 			loading: false,
-			scrollToOptions: {
-				container: '#inquiryView',
-				easing: 'ease-in',
-				offset: -20,
-				force: true,
-				cancelable: true,
-				onStart: function(element) {
-					// scrolling started
-				},
-				onDone: function(element) {
-					// scrolling is done
-				},
-				onCancel: function() {
-					// scrolling has been interrupted
-				},
-				x: false,
-				y: true
-			},
-
 		}),
 
 		created() {
@@ -144,25 +120,12 @@ import MsgBus from "@/bus/messaging";
 			// this.cnsl("bid",this.bid);
 			// this.cnsl("type",this.type);
 
-			var self = this;
-			MsgBus.onNewMessage(function(data){
-
-				// if message box is bid
-				if(self.bid.id!=0 && self.bid.id == data.id) {
-					// this.cnsl("BID onNewMessage = ",data);
-					self.updateChat();
-				}				
-				else if(self.inquiry!=null && self.inquiry.id == data.id) {
-					// this.cnsl("INQUIRY onNewMessage = ",data);
-					self.updateChat();
-				}
-
+			var ths = this;
+			MsgBus.onNewProjectMessage(function(data){
+					ths.updateChat();
 			});
 		},
 
-		mounted(){
-			this.scrolling();
-		},
 
 		methods: {
 
@@ -175,30 +138,16 @@ import MsgBus from "@/bus/messaging";
 				
 					var payload = {};
 					payload.content = this.chatMessageEditor;
-					payload.type = "";
+					payload.type = this.getRole().name;
+					payload.type_id = this.getRole().id;
 					payload.id = "";
 
-					if(this.type=='bid.buyer.admin' && this.bid.id!=0) {
-						payload.type = this.type;
-						payload.id = this.bid.id;
-					}
-					else if(this.type=='inquiry.buyer.admin' && this.inquiry!=null) {					
-						payload.type = this.type;
-						payload.id = this.inquiry.id;					
-					}
-					else if(this.type=='bid.supplier.admin' && this.bid.id!=0) {
-						payload.type = this.type;
-						payload.id = this.bid.id;
-					}
-					// else if(this.type=='inquiry.supplier.admin' && this.inquiry!=null) {					
-					// 	payload.type = this.type;
-					// 	payload.id = this.inquiry.id;					
-					// }
+					
 
 
 					this.cnsl('payload',payload);
 
-					this.$store.dispatch('msg/sendMessage_a', payload)
+					this.$store.dispatch('msg/sendProjectMessage_a', payload)
 					.then(response=>{
 						this.updateChat();
 					})
@@ -218,26 +167,8 @@ import MsgBus from "@/bus/messaging";
 				payload.type = "";
 				payload.id = "";
 
-				if(this.type=='bid.buyer.admin' && this.bid.id!=0) {
-					payload.type = this.type;
-					payload.id = this.bid.id;
-				}
-				else if(this.type=='inquiry.buyer.admin' && this.inquiry!=null) {					
-					payload.type = this.type;
-					payload.id = this.inquiry.id;					
-				}
-				else if(this.type=='bid.supplier.admin' && this.bid.id!=0) {
-					payload.type = this.type;
-					payload.id = this.bid.id;
-				}
-				// else if(this.type=='inquiry.supplier.admin' && this.inquiry!=null) {					
-				// 	payload.type = this.type;
-				// 	payload.id = this.inquiry.id;					
-				// }
 
-
-
-				this.$store.dispatch('msg/getMessages_a', payload).then(response=>{
+				this.$store.dispatch('msg/getProjectMessages_a', payload).then(response=>{
 					this.messages = response;
 
 					// console.table(response);
@@ -256,7 +187,6 @@ import MsgBus from "@/bus/messaging";
 
 			resetChatEditor(){
 				this.chatMessageEditor = null;
-				// this.$eventBus.$emit('resetChatEditor');
 				this.$refs.cme.resetChatEditor();
 			},
 
@@ -267,20 +197,6 @@ import MsgBus from "@/bus/messaging";
 						container.scrollTop = container.scrollHeight;
 					})
 				}
-			},
-
-			scrolling(){
-				this.$nextTick(() => {
-					if(this.isFocused  && this.bid.id!=0) {
-						this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
-						this.$el.querySelector('#ce_'+this.bid.id).focus();
-					} 
-					else if(this.bid.id==0) {
-						// this.cnsl("'#mb_'+this.bid.id",this.bid.id);
-					// 	this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
-					// 	this.$el.querySelector('#ce_'+this.bid.id).focus();
-					}
-				});            	
 			},
 
 
@@ -310,24 +226,12 @@ import MsgBus from "@/bus/messaging";
 
 		watch: {
 
-			bid: {
+			proj_ref: {
 				handler(nVal, oVal) {			    	
 					this.updateChat();
 				},
 				deep: true,
 			},
-
-			inquiry: {
-				handler(nVal, oVal) {			    	
-					this.updateChat();
-				},
-				deep: true,
-			},
-
-
-			openInquiryView(nVal, oVal){		
-				this.scrolling();
-			},			
 
 		},
 
@@ -340,12 +244,12 @@ import MsgBus from "@/bus/messaging";
 <style scoped lang="scss">
 
 .messaging-box {
-	border: 1px solid gainsboro;
+	// border: 1px solid gainsboro;
 
 	.chat-container {
 
 		// max-height: 300px; 
-		max-height: 200px; 
+		height: 283px; 
 		overflow-y: scroll;
 		box-shadow: none;
 
@@ -353,6 +257,12 @@ import MsgBus from "@/bus/messaging";
 			// max-height: 400px;
 			// overflow: scroll;
 			background-color:#fff;
+			.chat-thread.end {
+				// flex-direction: row;
+				// .user-avatar {
+				// 	text-align: left !important;
+				// }
+			}
 			.chat-message {
 				max-width: calc(90% - 50px);		
 				.chat-message-name {
@@ -364,7 +274,6 @@ import MsgBus from "@/bus/messaging";
 				}
 			}
 		}
-
 	}
 
 
@@ -375,7 +284,6 @@ import MsgBus from "@/bus/messaging";
 			background-color: #fff;	
 		}
 	}
-
 }
 
 
