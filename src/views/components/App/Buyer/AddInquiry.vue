@@ -511,9 +511,8 @@ export default {
         .then((response)=>{
             this.categories = response;
         })
-        .catch((e) => {
-            this.cnsl('Error: ');
-            this.cnsl(e);
+        .catch((e) => {            
+            console.log(e);
         });
     
     },

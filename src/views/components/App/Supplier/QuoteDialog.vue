@@ -753,8 +753,8 @@ methods: {
                   this.$emit('update:openQuoteDialog', false);
               }).catch((e) => {
                   this.loading = false;
-                  this.cnsl('Error: ' + e);
-                  alert("ERROR!!");
+                  console.log('Error: ' + e);
+                  // alert("ERROR!!");
               }).finally(() => {
                   this.loading = false;
               });

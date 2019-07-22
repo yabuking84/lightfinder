@@ -14,9 +14,9 @@ import SupplierHome from '@/views/Pages/Supplier/Home'
 import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
 import SupplierInquiryView from "@/views/Components/App/Supplier/InquiryView";
 
-import Register from '@/views/Pages/Supplier/Register'
-import RegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
-import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
+import SupplierRegister from '@/views/Pages/Supplier/Register'
+import SupplierRegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
+import SupplierRegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
 
 
 
@@ -112,30 +112,6 @@ export default [
         meta: meta,
     },
 
-
-    {
-        name: 'SupplierRegistration' ,
-        path: '/supplier/register',
-        components: { 
-            default: Register,             
-        }
-    },
-
-    {
-        name: 'SupplierRegistrationDetails',
-        path: '/supplier/details',
-        components: {
-            default: RegisterCompanyDetails
-        }
-    },
-
-    {
-        name: 'SupplierRegistrationTerms',
-        path: '/register/terms',
-        components: {
-            default: RegisterTermsandCondition
-        }
-    },
 
 
     // ==========================================================================================================

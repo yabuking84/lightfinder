@@ -552,7 +552,7 @@ export default {
 	 			// this.cnsl('reloadBid this.bid',this.bid);
 			})
 			.catch((error) => {
-				this.cnsl(error);
+				console.log(error);
 			});
 
 		},
@@ -586,7 +586,7 @@ export default {
 				this.setSampleAsProductionDoneBtn = false;
 			})
 			.catch(e=>{
-				this.cnsl(e);
+				console.log(e);
 				this.reloadBid();
 				this.setSampleAsProductionDoneBtn = false;
 			});
@@ -606,7 +606,7 @@ export default {
 
 			})
 			.catch((e)=>{
-				this.cnsl(e);
+				console.log(e);
 				this.setProductionAsDoneBtn = false;
 
 			});

@@ -145,7 +145,7 @@ methods: {
 			this.inquiries = this.setDataTableInquiry(response);
 		})
 		.catch((e) => {
-			this.cnsl('Error: ' + e);
+			console.log('Error: ' + e);
 		})
 		.finally(() => {
 			this.loading = false;

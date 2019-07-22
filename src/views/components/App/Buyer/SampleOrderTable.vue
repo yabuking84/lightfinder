@@ -179,7 +179,7 @@ methods: {
 			this.inquiries = inqs;
 		})
 		.catch((e) => {
-			this.cnsl('so Error: ' + e);
+			console.log('so Error: ' + e);
 			this.loading = false;
 		})
 		.finally(() => {

@@ -241,5 +241,16 @@ export default {
 	},
 
 
+	myHome:{
+		psf: 949,
+		balFee: 0.1,
+	},
+
+	myTower:{
+		psf: 1949,
+		balFee: 0.1,
+	},
+
+
 }
 

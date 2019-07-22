@@ -57,7 +57,7 @@
 	      				</ul>
 	      				<v-layout mt-4 row wrap justify-space-around>
 
-		      				<v-flex xs6>
+		      				<!-- <v-flex xs6>
 		      					<span class="prices brown--text">$5499</span> /Yearly
 			      				<v-btn 
 			      				@click="paySubscription('yearly.mini')"
@@ -77,7 +77,31 @@
 			      				color="black">
 			      					Pay Monthly
 			      				</v-btn>		      					
+		      				</v-flex> -->
+							
+							
+							<v-flex xs6>
+		      					<span class="prices brown--text">$5499</span> /Yearly
 		      				</v-flex>
+
+		      				<v-flex xs6>		      				  
+		      					<span class="prices brown--text">$499</span> /Monthly 					
+		      				</v-flex>
+							
+							
+							
+		      				<v-flex xs12>
+			      				<v-btn 
+			      				disabled block
+			      				style="font-size: 15px; color: #000 !important;"
+			      				class="mt-2">
+			      					Coming Soon!
+			      				</v-btn>		      					
+		      				</v-flex>
+
+
+
+
 
 	      				</v-layout>
 	      				<div class="side-note mt-3">
@@ -112,7 +136,8 @@
 	      					<li><v-icon>fas fa-times</v-icon> Markup feature</li>
 	      				</ul>
 	      				<v-layout mt-4 row wrap justify-space-around>
-		      				<v-flex xs6>
+
+		      				<!-- <v-flex xs6>
 		      					<span class="prices indigo--text">$7699</span> /Yearly
 			      				<v-btn 
 			      				@click="paySubscription('yearly.standard')"
@@ -131,6 +156,23 @@
 			      				class="mt-2 white--text"
 			      				color="black">
 			      					Pay Monthly
+			      				</v-btn>		      					
+		      				</v-flex> -->
+
+		      				<v-flex xs6>
+		      					<span class="prices indigo--text">$7699</span> /Yearly
+		      				</v-flex>
+
+		      				<v-flex xs6>		      				  
+		      					<span class="prices indigo--text">$699</span> /Monthly		      					
+		      				</v-flex>
+
+		      				<v-flex xs12>
+			      				<v-btn 
+			      				disabled block
+			      				style="font-size: 15px; color: #000 !important;"
+			      				class="mt-2">
+			      					Coming Soon!
 			      				</v-btn>		      					
 		      				</v-flex>
 
@@ -167,7 +209,8 @@
 	      					<li><v-icon>fas fa-check</v-icon> Markup feature</li>
 	      				</ul>
 	      				<v-layout mt-4 row wrap justify-space-around>
-		      				<v-flex xs6>
+
+		      				<!-- <v-flex xs6>
 		      					<span class="prices red--text">$5499</span> /Yearly
 			      				<v-btn 
 			      				@click="paySubscription('yearly.9899')"
@@ -186,6 +229,23 @@
 			      				class="mt-2 white--text"
 			      				color="black">
 			      					Pay Monthly
+			      				</v-btn>		      					
+		      				</v-flex> -->
+	      					
+		      				<v-flex xs6>
+		      					<span class="prices red--text">$9899</span> /Yearly
+		      				</v-flex>
+
+		      				<v-flex xs6>
+		      					<span class="prices red--text">$899</span> /Monthly				
+		      				</v-flex>
+
+		      				<v-flex xs12>
+			      				<v-btn 
+			      				disabled block
+			      				style="font-size: 15px; color: #000 !important;"
+			      				class="mt-2">
+			      					Coming Soon!
 			      				</v-btn>		      					
 		      				</v-flex>
 
@@ -278,7 +338,7 @@ export default {
 
     		})
     		.catch((e)=>{
-    			this.cnsl(e);
+    			console.log(e);
     		});
     	}
     },

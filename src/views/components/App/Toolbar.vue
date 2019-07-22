@@ -446,7 +446,7 @@ methods: {
     },
 
     bounce(type){
-    	this.cnsl('type = ',type)
+    	// this.cnsl('type = ',type)
 
     	if(type=='notifications') {
     		this.isBounceNtfctns = true;
@@ -463,7 +463,7 @@ methods: {
     // notifications
     // /////////////////////////////////////////////////////////
     resetNotifications() {
-		this.cnsl('resetNotifications');
+		// this.cnsl('resetNotifications');
     	var options = {
     		offset: 0,
     		limit: this.limit,
@@ -476,7 +476,7 @@ methods: {
 			this.offsetNtfctns = this.limit;
         })
         .catch((e) => {
-            this.cnsl(e);
+            console.log(e);
         });
 
     },
@@ -489,7 +489,7 @@ methods: {
     // notifications messages
     // /////////////////////////////////////////////////////////
     resetNotificationsMsgs() {
-		this.cnsl('resetNotificationsMsgs');
+		// this.cnsl('resetNotificationsMsgs');
         var options = {
     		offset: 0,
     		limit: this.limit,
@@ -503,7 +503,7 @@ methods: {
 			this.offsetMsgs = this.limit;
         })
         .catch((e) => {
-            this.cnsl(e);
+            console.log(e);
         });
 
     },
@@ -525,7 +525,7 @@ methods: {
     // /////////////////////////////////////////////////////////
 
     gotoNotfication(ntfctn){
-    	this.cnsl('ntfctn',ntfctn);
+    	// this.cnsl('ntfctn',ntfctn);
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
     	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
@@ -542,7 +542,7 @@ methods: {
     // infinite-scroll
     //////////////////////////////////////////////////////////
 	fetchNtfctns () {
-		this.cnsl('fetchNtfctns');
+		// this.cnsl('fetchNtfctns');
 		this.ntfctnsIsLoading = true
 
     	var options = {
@@ -565,13 +565,13 @@ methods: {
             
         })
         .catch((e) => {
-            this.cnsl(e);
+            console.log(e);
         });		
 
 	},
 
 	fetchMsgs () {
-		this.cnsl('fetchMsgs');
+		// this.cnsl('fetchMsgs');
         this.msgsIsLoading = true
 
         var options = {
@@ -595,7 +595,7 @@ methods: {
             // this.cnsl("this.offsetMsgs",this.offsetMsgs);
         })
         .catch((e) => {
-            this.cnsl(e);
+            console.log(e);
         });      
 
 
@@ -617,7 +617,7 @@ methods: {
 
         })
         .catch((e) => {
-            this.cnsl(e);
+            console.log(e);
         });      
 
 

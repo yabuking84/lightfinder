@@ -27,7 +27,7 @@ export default {
 
         })
         .catch(error=>{
-            this.cnsl(error);           
+            console.log(error);           
             // this.$router.push("/login");
             window.location.href = "/login";
         });

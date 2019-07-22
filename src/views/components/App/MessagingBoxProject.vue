@@ -1,7 +1,7 @@
 <template>
 <div>
 
-	<div class="messaging-box" :id="'mb_'+proj_ref" :ref="'mb_'+proj_ref">
+	<div class="messaging-box" :id="'mb_'+proj_id" :ref="'mb_'+proj_id">
 		<v-card color="transparent" style="" class="chat-container">
 			<v-card-text class="" id="chatscroll-thread">  
 
@@ -53,7 +53,7 @@
 					
 					<chat-editable 
 					ref="cme"
-					:id="'ce_'+proj_ref" 
+					:id="'ce_'+proj_id" 
 					readonly
 					disable
 					disabled
@@ -101,7 +101,7 @@ import hlprs from "@/mixins/helpers";
 
 		props: {
 
-		   proj_ref: {
+		   proj_id: {
 				type: [String, Number],
 				default: null,
 			},
@@ -153,7 +153,7 @@ import hlprs from "@/mixins/helpers";
 					})
 					.catch(error => {
 						this.loading = false;
-						this.cnsl(error);
+						console.log(error);
 					});
 
 				}
@@ -226,7 +226,7 @@ import hlprs from "@/mixins/helpers";
 
 		watch: {
 
-			proj_ref: {
+			proj_id: {
 				handler(nVal, oVal) {			    	
 					this.updateChat();
 				},

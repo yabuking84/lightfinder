@@ -204,7 +204,7 @@ import MsgBus from "@/bus/messaging";
 					})
 					.catch(error => {
 						this.loading = false;
-						this.cnsl(error);
+						console.log(error);
 					});
 
 				}

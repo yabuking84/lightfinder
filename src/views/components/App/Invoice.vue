@@ -137,13 +137,26 @@ export default {
 	methods:{
 		convertToPDF: function() {
 			// var element = document.getElementById(test);
-			html2pdf(this.$refs.invoiceBox, {
-				margin:       [0.5, 0, 0, 0,],
-				filename:     'invoice_5612332479.pdf',
-				image:        { type: 'jpeg', quality: 1 },
-				html2canvas:  { dpi: 192, letterRendering: true },
-				jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-			});
+			// html2pdf(this.$refs.invoiceBox, {
+			// 	margin:       [0.5, 0, 0, 0,],
+			// 	filename:     'invoice_5612332479.pdf',
+			// 	image:        { type: 'jpeg', quality: 1 },
+			// 	html2canvas:  { dpi: 192, letterRendering: true },
+			// 	jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+			// });
+
+			const doc = new jsPDF();
+			/** WITHOUT CSS */
+			const contentHtml = this.$refs.content.innerHTML;
+			doc.fromHTML(
+				contentHtml, 
+				15, 
+				15, 
+				{
+					width: 170
+				},
+			);
+			doc.save("invoice_5612332479.pdf");
 		}	
 	},
 

@@ -158,7 +158,7 @@ export default {
 
 			})
 			.catch((e) => {
-				  this.cnsl(e);				
+				  console.log(e);				
 			});
 
 		},

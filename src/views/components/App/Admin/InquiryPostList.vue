@@ -128,8 +128,7 @@
 					<v-flex xs12 mx-5 mt-3 mb-3>
 							<div>
 								<div class="headline font-weight-bold darken-3" color="#BF4653">NO QUOTE FOR NOW!</div>
-								<div class="blue-grey--text">INQUIRY <b>#{{ inquiry.id }}</b>
-								</div>
+								<div class="blue-grey--text">INQUIRY <b>#{{ inquiry.id }}</b></div>
 
 							</div>
 					</v-flex>
@@ -1054,7 +1053,7 @@ export default {
 				.catch((e)=>{
 					this.fillBidTable();
 					this.setSampleAsShippedBtn = false;
-					this.cnsl(e);
+					console.log(e);
 				});
 			},
 
@@ -1074,7 +1073,7 @@ export default {
 		          // this.$emit('update:isClosed', true);
 		             this.hideInquiry();
 
-		          this.cnsl(e);
+		          console.log(e);
 		        })
 		        .finally(() => {
 

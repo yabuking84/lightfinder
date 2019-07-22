@@ -680,6 +680,30 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
@@ -880,6 +904,22 @@
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
                     <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+
+
+
+                    
+
+
+                    
+
+
+                    
+
+
+                    
+
+
+                    
                 </v-flex>
             </v-layout>
         </v-card-text>
@@ -1247,8 +1287,7 @@ export default {
         this.categories = data;        
     })
     .catch((e) => {
-        this.cnsl('Error: ');
-        this.cnsl(e);
+        console.log(e);
     });
 
     // -----------------------GET COUNTRY-------------------------------------
@@ -1259,7 +1298,7 @@ export default {
     //   })
     //   .catch((e) => {
     //     this.cnsl('Error: ')
-    //     this.cnsl(e);
+    //     console.log(e);
     //   });
 
     // this.getCountries()
@@ -1269,7 +1308,7 @@ export default {
     // })
     // .catch((e) => {
     //     this.cnsl('Error: ')
-    //     this.cnsl(e);
+    //     console.log(e);
     // });
   	
 
@@ -1402,7 +1441,7 @@ export default {
 				}
 			})
 			.catch((e)=>{
-				this.cnsl(e);
+				console.log(e);
 				this.moq = 0;
 			});  		
 		},
@@ -1467,7 +1506,7 @@ export default {
 
             })
             .catch((error) => {
-                this.cnsl(error);
+                console.log(error);
             });
 
     },
@@ -1831,8 +1870,8 @@ export default {
             this.clearData();
 
           }).catch((e) => {
-            this.formLoading = false;
-            this.cnsl('Error: ' + e);
+            this.formLoading = false;        	
+            console.log('Error: ' + e);
           }).finally(() => {
             this.formLoading = false;
           });

@@ -34,7 +34,7 @@ export default {
   }),
   methods: {
     handleClick: (e) => {
-      this.cnsl(e)
+      console.log(e)
     }
   }
 }

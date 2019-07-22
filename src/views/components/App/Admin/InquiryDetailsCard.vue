@@ -339,7 +339,7 @@ export default {
 
 	        })
 	        .catch((e) => {
-	          this.cnsl(e);
+	          console.log(e);
 	          // this.$emit('update:isClosed', true);
 	             this.hideInquiry();
 
@@ -369,7 +369,7 @@ export default {
 	          // this.$emit('update:isClosed', true);
 	             this.hideInquiry();
 
-	          this.cnsl(e);
+	          console.log(e);
 	        })
 	        .finally(() => {
 

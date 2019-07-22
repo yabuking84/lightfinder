@@ -21,9 +21,9 @@
 	opacity: 0;
 }
 
-// .v-card {
-// 	border: 1px solid #212121;
-// }
+.v-card {
+    border-radius: 0 !important;
+}
 
 // animation
 // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -85,18 +85,18 @@
 // dropzone upload
 // dropdropdropdropdropdropdropdropdropdropdropdropdropdropdropdropdrop
 .dropzone-custom-content {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
-  text-align: center;
-  padding: 10px 20px;
+	// position: absolute;
+	// top: 50%;
+	// left: 50%;
+	// transform: translate(-50%, -50%);
+	text-align: center;
+	padding: 10px 20px;
 
 }
 
 .dropzone-custom-title {
-  margin-top: 0;
-  color: #00b782;
+	margin-top: 0;
+	color: #00b782;
 }
 
 .dropzone .dz-preview.dz-error .dz-error-message {
@@ -165,3 +165,11 @@ div.sign {
     align-items: center;
     margin: 6px;
 }
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+	-webkit-appearance: none !important;
+	margin: 0 !important; 
+}
+

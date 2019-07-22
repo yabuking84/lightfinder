@@ -975,7 +975,7 @@ export default {
 			})
 			.catch(e => {
 
-			  this.cnsl(e);
+			  console.log(e);
 			  this.formloading = false;
 
 			})
@@ -1059,8 +1059,7 @@ export default {
 		this.categoryItems = data;
 	  })
 	  .catch((e) => {
-		this.cnsl('Error: ');
-		this.cnsl(e);
+		console.log(e);
 	  });
 
   },

@@ -13,6 +13,12 @@
                 <!-- <img src="/static/vuse-circle-white.svg" alt="Vuse" class="text-xs-center" height="100"> -->
                 <img src="/static/logos/logo-black.png" alt="Buy Any Light" class="text-xs-center" id="logo" >
                 
+
+
+
+				<!-- if not mobile -->
+				<!-- //////////////////////////////////////////////////////////// -->
+				<template v-if="!isInMobile()">					
                 <div class="headline">Sign in to your account</div>
                 <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
                   <v-layout wrap row pa-4>
@@ -73,6 +79,35 @@
                     </v-flex>
                   </v-layout>
                 </v-form>
+				</template>
+				<!-- //////////////////////////////////////////////////////////// -->
+				<!-- if not mobile -->
+
+
+                <v-layout 
+                v-else
+                wrap row pa-4>
+                	<v-flex xs12>
+						
+						<p style="font-size: 1.2em; text-align: left;">
+							Currently we are still in the process of making BuyAnyLight available on mobile. 
+						</p>
+						<p style="font-size: 1.2em; text-align: left;">
+							In the mean time please use a <strong>Desktop / Laptop browser</strong> to fully use BuyAnyLight's features.
+						</p>
+
+						<p style="font-size: 1.5em; text-align: center;">
+							Thank you.
+						</p>
+
+                	</v-flex>
+                </v-layout>
+
+
+
+
+
+
               </v-flex>
 
             </v-layout>
@@ -117,6 +152,9 @@
       </v-layout>
     </v-container>
 
+	<two-weeks-dialog :dialog.sync="showTwoWeeksDialog">
+	</two-weeks-dialog>
+
     <v-snackbar
       v-model="snackbar"
       absolute
@@ -151,6 +189,8 @@
 <script>
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
+  import TwoWeeksDialog from '@/views/Components/App/Login/TwoWeeksDialog'
+
   const defaultForm = {
     // email: 'info@bal.com',
     // email: 'buyer@bal.com',
@@ -161,8 +201,15 @@
     password: '',
     rememberme: false
   }
+
+
   export default {
     mixins: [validationMixin],
+
+    components: {
+    	TwoWeeksDialog,
+    },
+
     validations: {
       form: {
         email: { required, email },
@@ -182,6 +229,8 @@
       }
     },
 
+
+
     data: () => ({      
         form: Object.assign({}, defaultForm),
         snackbar: false,
@@ -193,23 +242,34 @@
         loading: false,
         test: 'testes',
         test2: 'testes2',
-    }),
-    components: {
 
-    },
+        showTwoWeeksDialog:false,
+    }),
+
+
+	created(){
+
+		// if(this.isMobile())
+		// alert('IS MOBILE!! < 760');
+		// else
+		// alert('IS NOT MOBILE!! > 760');
+
+		// if(this.isIE())
+		// alert('IS IE!!');
+		// else
+		// alert('IS NOT IE!!');
+	},
+
     methods: {
 
+        twoWeeksDialog () {
+        	this.showTwoWeeksDialog = true;
+        },
+
+        // Login is disabled until further notice (2 weeks)
         submit () {
 
-            // setTimeout(() => {
-            //   this.$router.push({
-            //     name: 'dashboard/Dashboardv1'
-            //   })
-            // }, 2000)
-
-
-            this.loading = true;
-            
+            this.loading = true;            
             this.$store.dispatch('auth/retrieveToken_a',{
                 username: this.form.email,
                 password: this.form.password,
@@ -224,8 +284,6 @@
                     vueThis.$store.dispatch('auth/loginSuccess_a');
                     vueThis.loading = false;
                 }, 1500);
-
-
 
             }).catch((e) => {
                 this.snackbar = false

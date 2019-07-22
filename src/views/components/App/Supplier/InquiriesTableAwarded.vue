@@ -107,7 +107,7 @@ methods: {
 
 		})
 		.catch((e) => {
-			this.cnsl('Error: ' + e);
+			console.log('Error: ' + e);
 			this.loading = false;
 		})
 		.finally(() => {

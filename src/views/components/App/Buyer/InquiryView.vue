@@ -176,10 +176,10 @@ export default {
 				var inq_id = this.$route.params.inquiry_id;	
 				this.showInquiry(inq_id)
 				.then((data)=>{
-					this.cnsl("data",data);
+					// this.cnsl("data",data);
 				})
 				.catch((error)=>{
-					this.cnsl("error",error);
+					console.log("error",error);
 				});
         	});
         }

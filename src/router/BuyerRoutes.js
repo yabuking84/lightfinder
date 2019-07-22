@@ -9,9 +9,13 @@ import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 import BuyerInvoice from '@/views/Components/App/Invoice'
 
 import BuyerMyHome from '@/views/Pages/Buyer/MyHome'
-import BuyerMyHomeProject from '@/views/Components/App/Buyer/MyHome/ProjectView'
+import BuyerMyHomeUnderConstruction from '@/views/Pages/Buyer/MyHomeUnderConstruction'
+import BuyerMyHomeProject from '@/views/Components/App/Buyer/MyHome/Project/ProjectView'
+import BuyerMyHomePayQuotation from '@/views/Components/App/Buyer/MyHome/PayQuotation/PayQuotationView'
+import BuyerMyHomeOrderSamples from "@/views/Components/App/Buyer/MyHome/OrderSamples/OrderSamplesView"
 
-import BuyerMyTower from '@/views/Pages/Buyer/MyTower'
+// import BuyerMyTower from '@/views/Pages/Buyer/MyTower'
+import BuyerMyTowerUnderConstruction from '@/views/Pages/Buyer/MyTowerUnderConstruction'
 
 import config from '@/config/index'
 
@@ -19,10 +23,11 @@ import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
 import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerPackages from '@/views/Pages/Buyer/Packages'
+
 import BuyerInquiryView from "@/views/Components/App/Buyer/InquiryView";
 
 
-import test from '@/views/Components/App/test'
+import test from '@/views/Components/App/test' 
 
 
 const meta = { 
@@ -61,7 +66,8 @@ const meta = {
 	storeType: {
 		inq: "byrInq",
 		myHm: "byrMyHm",
-	}
+		auth: "auth",
+	},
 }
 
 const meta2 = {
@@ -217,6 +223,7 @@ export default [
 		path: '/my-home',
 		components: { 
 			default: BuyerMyHome, 
+			// default: BuyerMyHomeUnderConstruction, 
 			sidebar: AppSidebar, 
 			header: AppToolbar, 
 			footer: AppFooter,
@@ -227,7 +234,7 @@ export default [
 
 	{
 		name: 'BuyerMyHomeProject',
-		path: '/my-home/project/:proj_ref',
+		path: '/my-home/project/:proj_id',
 		components: { 
 			default: BuyerMyHomeProject, 
 			sidebar: AppSidebar, 
@@ -237,6 +244,33 @@ export default [
 		},
 		meta: meta2,
 	},
+
+	{
+		name: 'BuyerMyHomePayQuotation',
+		path: '/my-home/project/:proj_id/payment',
+		components: { 
+			default: BuyerMyHomePayQuotation, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta2,
+	},
+
+	{
+		name: 'BuyerMyHomeOrderSamples',
+		path: '/my-home/project/:proj_id/order-samples',
+		components: { 
+			default: BuyerMyHomeOrderSamples, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta2,
+	},
+
 	//////////////////////////////////////////////////////
 	// My Home
 
@@ -247,7 +281,7 @@ export default [
 		name: 'BuyerMyTower',
 		path: '/my-tower',
 		components: { 
-			default: BuyerMyTower, 
+			default: BuyerMyTowerUnderConstruction, 
 			sidebar: AppSidebar, 
 			header: AppToolbar, 
 			footer: AppFooter,
@@ -273,52 +307,6 @@ export default [
 
 
 
-
-
-	/*
-		public views
-	*/
-
-	{
-		name: 'BuyerRegistration',
-		path: '/buyer/register',
-		components: {
-			default: BuyerRegistration
-		}
-	},
-
-	{
-		name: 'BuyerRegistrationMI',
-		path: '/buyer/register/:main_interest',
-		components: {
-			default: BuyerRegistration
-		}
-	},
-
-	{
-		name: 'BuyerRegistrationDetails',
-		path: '/buyer/details',
-		components: {
-			default: BuyerRegistrationDetails
-		}
-	},
-
-	{
-		name: 'BuyerRegisterTerms',
-		path: '/buyer/terms',
-		components: {
-			default: BuyerRegistrationTerms
-		}
-	},
-
-
-	{
-		name: 'BuyerPackages',
-		path: '/buyer/packages',
-		components: {
-			default: BuyerPackages
-		}
-	},
 
 ]
 

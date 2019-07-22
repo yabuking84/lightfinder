@@ -28,7 +28,7 @@ export default {
 					resolve(retVal);
 				})
 				.catch((e)=>{
-					this.cnsl(e);
+					console.log(e);
 					reject(e);
 				});		
 			});
@@ -47,7 +47,7 @@ export default {
 					resolve(retVal);
 				})
 				.catch((e)=>{
-					this.cnsl(e);
+					console.log(e);
 					reject(e);
 				});
 			});
@@ -78,7 +78,7 @@ export default {
 		  			resolve(data);
 				})
 				.catch((error) => { 
-					this.cnsl(error);
+					console.log(error);
 		  			reject(error);
 				});
 			});

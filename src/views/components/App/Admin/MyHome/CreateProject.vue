@@ -102,64 +102,89 @@ import validationMixin from '@/mixins/validationMixin'
 import { required, decimal } from 'vuelidate/lib/validators'
 
 export default {
-mixins:[
-	validationMixin,
-],
 
-	
-validations: {
-	formData: {
-		project_name: { required, },
-		target_budget: { decimal, },
-	},
-},
+	mixins:[
+		validationMixin,
+	],
 
-validationMessages: {
-	formData: {
-		project_name: { required: 'Project name required.', },
-		target_budget: { decimal: 'Numbers only please.', },
-	},
-},
-
-
-data() { return {
-
-	dialog: false,
-
-	btnLdng: false,
-
-	formData :{
-		project_name: null,
-		project_type: null,
-		project_type_others: null,
-		target_budget: null,
-		shipping_method: null,
-		description: null,
-	},
-
-}},
-
-
-watch:{
-	'formData.project_type': {
-		handler(nVal,oVal){
-			if(nVal!='Others')
-			this.formData.project_type_others = null;
+		
+	validations: {
+		formData: {
+			project_name: { required, },
+			target_budget: { decimal, },
 		},
 	},
-},
+
+	validationMessages: {
+		formData: {
+			project_name: { required: 'Project name required.', },
+			target_budget: { decimal: 'Numbers only please.', },
+		},
+	},
+
+
+	data() { return {
+
+		dialog: false,
+
+		btnLdng: false,
+
+		formData :{
+			project_name: null,
+			project_type: null,
+			project_type_others: null,
+			target_budget: null,
+			shipping_method: null,
+			description: null,
+		},
+
+	}},
+
+
+	watch:{
+		'formData.project_type': {
+			handler(nVal,oVal){
+				if(nVal!='Others')
+				this.formData.project_type_others = null;
+			},
+		},
+	},
 
 
 
-methods: {
-	submitForm(){
-		this.$v.$touch();
+	methods: {
+		submitForm(){
+			this.$v.$touch();
 
-		if(!this.$v.formData.$error)
-		alert('submit');
+			if(!this.$v.formData.$error) {
 
-	}
-},
+				this.$store.dispatch(this.getStore()+'/addProject_a',{
+					"name": "Project Test",
+					"type": "my-home",
+					"budget": 0,
+					"shipping_method_id": 1,
+					
+					'shipping_address': null,
+					'shipping_street': null,
+					'shipping_city': null,
+					'shipping_postal': null,
+					'sample_shipping_address': null,
+					'sample_shipping_street': null,
+					'sample_shipping_city': null,
+					'sample_shipping_postal': null,
+
+					"attachments": [],
+				})
+				.then((rspns)=>{
+
+				})
+				.catch((e)=>{
+					console.log(e);
+				});
+
+			}
+		}
+	},
 
 
 }	

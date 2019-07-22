@@ -481,7 +481,7 @@ export default {
 
             })
             .catch((error) => {
-                this.cnsl(error);
+                console.log(error);
             });
         },
 
@@ -564,7 +564,7 @@ export default {
             })
             .catch((e) => {
                 this.cnsl('Error: ');
-                this.cnsl(e);
+                console.log(e);
             });
 
     },

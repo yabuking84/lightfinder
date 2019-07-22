@@ -7,7 +7,12 @@ import AdminHome from '@/views/Pages/Admin/Home'
 import AdminInquiry from '@/views/Pages/Admin/Inquiry'
 import AdminBuyer from '@/views/Pages/Admin/Buyer'
 import AdminSupplier from '@/views/Pages/Admin/Supplier'
-import AdminInquiryView from "@/views/Components/App/admin/InquiryView";
+import AdminInquiryView from "@/views/Components/App/Admin/InquiryView"
+
+import AdminMyTower from '@/views/Pages/Admin/MyTower'
+import AdminMyHome from '@/views/Pages/Admin/MyHome'
+import AdminMyHomeProject from '@/views/Components/App/Admin/MyHome/ProjectView'
+
 
 import config from '@/config/index'
 
@@ -31,12 +36,24 @@ const meta = {
 			name: 'AdminBuyer',
 			icon: 'fas fa-user',
 		},
-		  {
+		{
 			title: 'Supplier',
 			name: 'AdminSupplier',
 			icon: 'fas fa-user-tie',
 		},
 	], 
+	items2: [
+		{
+			title: 'My Home',
+			name: 'AdminMyHome',
+			icon: 'fas fa-home',
+		},
+		{
+			title: 'My Tower',
+			name: 'AdminMyTower',
+			icon: 'fas fa-building',
+		},
+	],	
 	profileItems: [
 		{
 			title: 'Edit Profile',
@@ -53,8 +70,21 @@ const meta = {
 		byr: 'admnByr',
 		spplr: 'admnSpplr',
 		inq: 'admnInq',
+		myHm: "admnMyHm",
 	},
 }
+
+const meta2 = {
+	...meta,
+	style:{
+		backgroundImage:'url(/static/bg-image.png)',
+		backgroundSize: '100% auto ',
+		backgroundPositionY: '-20vh',
+		backgroundAttachment: 'fixed',
+	},
+
+}
+
 
 export default [
 	{
@@ -126,5 +156,73 @@ export default [
 		meta: meta,
 		 props: { default:true },
 	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// My Home
+	//////////////////////////////////////////////////////
+
+	{
+		name: 'AdminMyHome',
+		path: '/my-home',
+		components: { 
+			default: AdminMyHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+
+	{
+		name: 'AdminMyHomeProject',
+		path: '/my-home/project/:proj_id',
+		components: { 
+			default: AdminMyHomeProject, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+	//////////////////////////////////////////////////////
+	// My Home
+
+
+	// My Tower
+	//////////////////////////////////////////////////////
+	{
+		name: 'AdminMyTower',
+		path: '/my-tower',
+		components: { 
+			default: AdminMyTower, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+	//////////////////////////////////////////////////////
+	// My Tower
+
+
+
+
+
+
 ]
 

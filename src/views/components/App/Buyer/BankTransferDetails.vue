@@ -142,7 +142,7 @@ export default {
 				inqEvntBs.emitPaymentMade();
 			})
 			.catch((e) => {
-				  this.cnsl(e);				
+				  console.log(e);				
 			});			
 		},
 

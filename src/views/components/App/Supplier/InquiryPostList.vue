@@ -113,7 +113,7 @@
                             });
                         })
                         .catch(error => {
-                            this.cnsl(error);
+                            console.log(error);
                         });
 
                 },

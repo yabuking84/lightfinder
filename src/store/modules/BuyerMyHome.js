@@ -5,13 +5,23 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+import {projectsTest,filesTest,itemsTest} from '@/data/ProjectDummyData'
+
 const base_url = config.main.apiURL;
 
 const state = {
 	api: {
-		getProjectInquiries: {
+		addProject: {
+			method  : 'post',
+			url     : base_url+'/v1/buyer/projects',
+		},
+		getProjects: {
 			method  : 'get',
-			url     : base_url+'/v1/buyer/project-inquiries',
+			url     : base_url+'/v1/buyer/projects',
+		},
+		getProject: {
+			method  : 'get',
+			url     : base_url+'/v1/buyer/projects',
 		},
 	},
 
@@ -19,9 +29,7 @@ const state = {
 }
 
 
-
 const mutations = {
-
 
 
 }
@@ -30,9 +38,91 @@ const actions = {
 
 
 
-	getProjectInquiries_a(context, data){
+	addProject_a(context, data){
 		return new Promise((resolve, reject) => {
 
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.addProject.method,
+				url: state.api.addProject.url,
+				headers: headers,
+				data: JSON.stringify(data)
+			})
+			.then(response => {
+				resolve(response);
+			})
+			.catch(error => {
+				console.log('error ',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+
+		});
+	},
+
+
+	getProjects_a(context, data){
+		return new Promise((resolve, reject) => {
+
+			var headers = {token:localStorage.access_token};
+			axios({
+				method: state.api.getProjects.method,
+				url: state.api.getProjects.url,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+
+			// resolve(projectsTest);
+
+		});
+	},
+
+	getProject_a(context, data){
+		return new Promise((resolve, reject) => {
+
+			var headers = {token:localStorage.access_token};
+
+			axios({
+				method: state.api.getProject.method,
+				url: state.api.getProject.url+"/"+data.proj_id,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+
+			// resolve(projectsTest[0]);
+
+		});
+	},
+
+	getProjectFiles_a(context, data){
+		return new Promise((resolve, reject) => {
 			// var headers = {token:localStorage.access_token};
 			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
 			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
@@ -53,28 +143,99 @@ const actions = {
 			// 	}
 			// })
 
-
-			resolve([
-				{
-					project_name: '2 Bedroom House',
-					project_no: '122322455',
-					project_type: 'House',
-					target_budget: '2036',
-					shipping_method: 'sea',
-					description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.',
-				},
-				{
-					project_name: '5 Bedroom Villa',
-					project_no: '334322734',
-					project_type: 'Villa',
-					target_budget: '10500',
-					shipping_method: 'sea',
-					description: 'Sed ut perspiciati accusantium doloremque laudantium, totam rs et quxplicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, squia dolor sit amet, consectetur.',
-				},
-			]);
+			resolve(filesTest);
 
 		});
 	},
+
+	getSamples_a(context, data){
+		return new Promise((resolve, reject) => {
+			// var headers = {token:localStorage.access_token};
+			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
+			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+
+			// axios({
+			// 	method: state.api.getInquiries.method,
+			// 	url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
+			// 	headers: headers,
+			// })
+			// .then(response => {
+			// 	resolve(response.data);
+			// })
+			// .catch(error => {
+			// 	console.log('error getInquiries_a',error);
+			// 	// if(actions.checkToken(error)) {                
+			// 	if(context.dispatch('checkToken',error)) {
+			// 		reject(error);
+			// 	}
+			// })
+
+			resolve(itemsTest);
+
+		});
+	},
+
+	getOrderedSamples_a(context, data){
+		return new Promise((resolve, reject) => {
+			// var headers = {token:localStorage.access_token};
+			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
+			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+
+			// axios({
+			// 	method: state.api.getInquiries.method,
+			// 	url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
+			// 	headers: headers,
+			// })
+			// .then(response => {
+			// 	resolve(response.data);
+			// })
+			// .catch(error => {
+			// 	console.log('error getInquiries_a',error);
+			// 	// if(actions.checkToken(error)) {                
+			// 	if(context.dispatch('checkToken',error)) {
+			// 		reject(error);
+			// 	}
+			// })
+
+			resolve(itemsTest);
+
+		});
+	},
+
+
+
+	getItems_a(context, data){
+		return new Promise((resolve, reject) => {
+			// var headers = {token:localStorage.access_token};
+			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
+			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+
+			// axios({
+			// 	method: state.api.getInquiries.method,
+			// 	url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
+			// 	headers: headers,
+			// })
+			// .then(response => {
+			// 	resolve(response.data);
+			// })
+			// .catch(error => {
+			// 	console.log('error getInquiries_a',error);
+			// 	// if(actions.checkToken(error)) {                
+			// 	if(context.dispatch('checkToken',error)) {
+			// 		reject(error);
+			// 	}
+			// })
+
+			resolve(itemsTest);
+
+		});
+	},
+
+
+
+
+
+
 
 
 
@@ -135,3 +296,9 @@ export default {
 //         avatar,
 //     },
 // }
+
+
+
+
+
+

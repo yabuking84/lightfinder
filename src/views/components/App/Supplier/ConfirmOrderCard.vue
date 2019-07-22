@@ -116,7 +116,7 @@ export default {
 					},
 				})
 				.catch(error => {
-					this.cnsl(error);
+					console.log(error);
 				});
 
 				// this.$emit('update:openInquiry', false)

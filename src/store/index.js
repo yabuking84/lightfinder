@@ -15,6 +15,7 @@ import spplrInq from './modules/SupplierInquiry'
 import admnByr from './modules/AdminBuyer'
 import admnSpplr from './modules/AdminSupplier'
 import admnInq from './modules/AdminInquiries'
+import admnMyHm from './modules/AdminMyHome'
 
 import byrMyHm from './modules/BuyerMyHome'
 
@@ -46,7 +47,8 @@ export const store = new Vuex.Store({
     spplrInq,
     admnByr,
     admnSpplr,
-    admnInq
+    admnInq,
+    admnMyHm,
 
   }
 })

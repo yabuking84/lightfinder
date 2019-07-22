@@ -28,7 +28,14 @@ import ProfileView from '@/views/Pages/Profile'
 
 
 
+import BuyerRegistration from '@/views/Pages/Buyer/Register'
+import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
+import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
+import BuyerPackages from '@/views/Pages/Buyer/Packages'
 
+import SupplierRegister from '@/views/Pages/Supplier/Register'
+import SupplierRegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
+import SupplierRegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
 
 import Home from '@/views/Pages/Home'
 import LoginPage from '@/views/Pages/Authentication/LoginPage'
@@ -47,51 +54,28 @@ import AdminRoutes from '@/router/AdminRoutes.js'
 import BuyerRoutes from '@/router/BuyerRoutes.js'
 import SupplierRoutes from '@/router/SupplierRoutes.js'
 
-// this.cnsl('store.state.auth.auth_user.role')
-// this.cnsl(store.state.auth.auth_user.role)
-// this.cnsl(config.auth.role.admin.id)
-// this.cnsl('store.state.auth.auth_user.role')
 
-// Push routes here
-// var i;
-// for (i = 0; i < AdminRoutes.length; i++) {     
-//     routes.push(AdminRoutes[i]);
-// }
-// for (i = 0; i < BuyerRoutes.length; i++) {     
-//     routes.push(BuyerRoutes[i]);
-// }
-// for (i = 0; i < SupplierRoutes.length; i++) {
-//     routes.push(SupplierRoutes[i]);
-// }
+// console.log('route.js store.user.role')
+// console.log(store.state.auth.auth_user.role)
+// console.log('route.js store.user.role')
 
+var userRoutes = [];
 
+// This is needed because some routes of each of these users have the same path, there will conflict
+if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
+    userRoutes = AdminRoutes;
+}
+else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) { 
+    userRoutes = BuyerRoutes;
+}
+else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) { 
+    userRoutes = SupplierRoutes;
+}
 
-// if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
-//     for (i = 0; i < AdminRoutes.length; i++) {     
-//         routes.push(AdminRoutes[i]);
-//     }
-// }
-// else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) {    
-//     for (i = 0; i < BuyerRoutes.length; i++) {     
-//         routes.push(BuyerRoutes[i]);
-//     }
-// }
-// else {
-//     // so that when logged out and / is accessed it will got to logout.
-//     routes.push({
-//         path: '/',
-//         name: 'Home',
-//         meta: {
-//             requiresAuth: true,
-//         },
-//     });
-// }
-
-
-// this.cnsl(routes);
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // PAGES
+
 
 
 const routes = 
@@ -105,14 +89,14 @@ const routes =
         },        
     },
 
-    {
-        path: '/',
-        name: 'Home',
-        meta: {
-            requiresAuth: true,
-            redirectToRole: true,
-        },
-    },
+    // {
+    //     path: '/',
+    //     name: 'Home',
+    //     meta: {
+    //         requiresAuth: true,
+    //         redirectToRole: true,
+    //     },
+    // },
     {
         path: '/login',
         name: 'Login',
@@ -127,15 +111,89 @@ const routes =
 
 
 
+	/*
+		public views
+	*/
 
-    ...AdminRoutes,
-    ...BuyerRoutes,
-    ...SupplierRoutes,
+	{
+		name: 'BuyerRegistration',
+		path: '/buyer/register',
+		components: {
+			default: BuyerRegistration
+		}
+	},
 
+	{
+		name: 'BuyerRegistrationMI',
+		path: '/buyer/register/:main_interest',
+		components: {
+			default: BuyerRegistration
+		}
+	},
+
+	{
+		name: 'BuyerRegistrationDetails',
+		path: '/buyer/details',
+		components: {
+			default: BuyerRegistrationDetails
+		}
+	},
+
+	{
+		name: 'BuyerRegisterTerms',
+		path: '/buyer/terms',
+		components: {
+			default: BuyerRegistrationTerms
+		}
+	},
+
+
+	{
+		name: 'BuyerPackages',
+		path: '/buyer/packages',
+		components: {
+			default: BuyerPackages
+		}
+	},
+
+
+
+    {
+        name: 'SupplierRegistration' ,
+        path: '/supplier/register',
+        components: { 
+            default: SupplierRegister,             
+        }
+    },
+
+    {
+        name: 'SupplierRegistrationDetails',
+        path: '/supplier/details',
+        components: {
+            default: SupplierRegisterCompanyDetails
+        }
+    },
+
+    {
+        name: 'SupplierRegistrationTerms',
+        path: '/register/terms',
+        components: {
+            default: SupplierRegisterTermsandCondition
+        }
+    },
+
+	    
+
+    ...userRoutes,
 ]
 
 
 
+
+
+// console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+// console.log(routes)
+// console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
 
 

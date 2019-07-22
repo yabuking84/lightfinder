@@ -4,6 +4,7 @@ import axios from 'axios';
 import router from '@/router'
 
 import config from '@/config/index'
+import { store } from '@/store'
 
 import vm from '@/main.js';
 
@@ -42,6 +43,11 @@ const state = {
 		isEmailExist: {
 			method: 'post',
 			url: base_url+'/v1/validate-email',
+		},
+
+		sendContactUs: {
+			method: 'post',
+			url: base_url+'/v1/contact-us',
 		},
 
 	},
@@ -249,9 +255,9 @@ const actions = {
 
 	logout_a(context){
 		var headers = {token:localStorage.access_token};
-		console.log("headers");
-		console.log(headers);
-		console.log(localStorage.getItem('access_token'));
+		// console.log("headers");
+		// console.log(headers);
+		// console.log(localStorage.getItem('access_token'));
 
 		// if(context.getters.isLoggedIn_g) {
 			return new Promise((resolve, reject) => {
@@ -382,16 +388,69 @@ const actions = {
 
 	loginSuccess_a(context){
 
+		// if(hlprs.methods.isRole('admin')) 
+		// router.push({name:'AdminHome'});
+		// else if(hlprs.methods.isRole('buyer')) 
+		// router.push({name:'BuyerHome'});
+		// else if(hlprs.methods.isRole('supplier')) 
+		// router.push({name:'SupplierHome'});
+		// else
+		// router.push({name:'Login'});
+		// console.log('store.state.auth.auth_user.role')
+		// console.log(store.state.auth.auth_user.role)
+		// console.log('store.state.auth.auth_user.role')
+		// console.log('router')
+		// console.log(router)
+		// console.log('router')
+
+		// router.push("/");
+
 		if(hlprs.methods.isRole('admin')) 
-		router.push({name:'AdminHome'});
+		window.location.href = '/'
 		else if(hlprs.methods.isRole('buyer')) 
-		router.push({name:'BuyerHome'});
+		window.location.href = '/'
 		else if(hlprs.methods.isRole('supplier')) 
-		router.push({name:'SupplierHome'});
+		window.location.href = '/'
 		else
 		router.push({name:'Login'});
 
 	},
+
+
+
+	sendContactUs_a(context, data){
+		return new Promise((resolve, reject) => {
+
+			// console.log(JSON.stringify(data));
+			var headers = {
+				"content-type": "application/json",
+			};
+			var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
+			var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+
+			axios({
+				method: state.api.sendContactUs.method,
+				url: state.api.sendContactUs.url,
+				headers: headers,
+				data: JSON.stringify(data),
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+		});
+	},
+
+
+
+
 }
 
 

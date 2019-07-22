@@ -477,8 +477,7 @@ export default {
 			});
 		})
 		.catch((e) => {
-			this.cnsl('Error: ')
-			this.cnsl(e);
+			console.log(e);
 		});
 
 		// setTimeout(()=>{
@@ -568,7 +567,7 @@ export default {
 
 			})
 			.catch((e) => {
-				this.cnsl(e);
+				console.log(e);
 				this.formloading = false
 			})
 			.finally(() => {
@@ -612,7 +611,7 @@ export default {
 				this.formloading = false;
 			})
 			.catch((e) => {
-				this.cnsl(e);
+				console.log(e);
 				this.formloading = false
 			})
 			.finally(() => {

@@ -193,7 +193,7 @@ methods: {
 				resolve(response);
 			})
 			.catch((e) => {
-				this.cnsl('Error: ' + e);
+				console.log('Error: ' + e);
 				reject(null);
 			});
 		})

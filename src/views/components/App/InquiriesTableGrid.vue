@@ -377,7 +377,7 @@ export default {
 
 			})
 			.catch((e) => {
-				this.cnsl('Error: ' + e);
+				console.log('Error: ' + e);
 				this.loading = false;
 			})
 			.finally(() => {
@@ -464,8 +464,8 @@ export default {
 			// this.cnsl(this.categoryItems);
 		})
 		.catch((e) => {
-			this.cnsl('Error: ');
-			this.cnsl(e);
+			console.log('Error: ');
+			console.log(e);
 		});
 
 
