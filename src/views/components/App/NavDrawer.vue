@@ -62,7 +62,7 @@
     >
 
 
-
+	<!-- //////////////////////////////////////////////////////// -->
     <template v-for="(item, i) in items">
 
         <!-- single items -->
@@ -71,7 +71,16 @@
         :disabled="item.disabled"
         :target="item.target"
          -->
+	    
+
+	    <v-list-tile v-if="item.type=='spacer'">
+		<v-subheader class="heading-text">
+			<div style="width: 100%; height: 150px;"></div>
+		</v-subheader>
+	    </v-list-tile>
+
         <v-list-tile
+		v-else
         :to="!item.href ? { name: item.name } : null"
         :key="`${i}-item`"
         ripple
@@ -92,18 +101,14 @@
         </v-list-tile>
 
 
-    </template>
-
-
-    <v-list-tile>
-	<v-subheader class="heading-text">
-		<div style="width: 100%; height: 150px;"></div>
-	</v-subheader>
-    </v-list-tile>
 	
+    </template>
+	<!-- //////////////////////////////////////////////////////// -->
 
 
 
+
+	<!-- //////////////////////////////////////////////////////// -->
     <template v-for="(item, i) in items2">
 
         <!-- single items -->
@@ -134,6 +139,50 @@
 
 
     </template>
+	<!-- //////////////////////////////////////////////////////// -->
+
+
+
+    <v-list-tile>
+	<v-subheader class="heading-text">
+		<div style="width: 100%; height: 150px;"></div>
+	</v-subheader>
+    </v-list-tile>
+	
+
+
+	<!-- //////////////////////////////////////////////////////// -->
+    <template v-for="(item, i) in items3">
+
+        <!-- single items -->
+        <!-- 
+        :href="item.href"
+        :disabled="item.disabled"
+        :target="item.target"
+		 -->
+        <v-list-tile
+        :to="!item.href ? { name: item.name } : null"
+        :key="`${i}-item4`"
+        ripple
+        rel="noopener"
+        class="list__tile-solo">
+
+            <v-list-tile-action>
+                <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+                <v-avatar size="28" v-else>
+                    <span>{{ item.title | first2Char }}</span>                    
+                </v-avatar>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+
+        </v-list-tile>
+
+
+    </template>
+	<!-- //////////////////////////////////////////////////////// -->
 
 
 
@@ -218,6 +267,7 @@
         data() { return {
                 items: this.$route.meta.items,
                 items2: this.$route.meta.items2,
+                items3: this.$route.meta.items3,
                 dark: false,
                 // navMiniVarientData: this.navMiniVarient,
                 title: "BuyAnyLight.com",

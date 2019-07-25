@@ -1,0 +1,94 @@
+<template>
+<span>
+
+
+		<v-list class="revision-list">
+		    <template v-for="(revision,i) in revisions">
+				<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:proj_id,rev_id:revision.id}}">
+
+			        <v-list-tile :key="'rev_'+i" avatar @click="">
+
+			            <v-list-tile-avatar>
+							<v-icon>far fa-file-pdf</v-icon>
+			            </v-list-tile-avatar>
+						
+			            <v-list-tile-content>
+			                <v-list-tile-title>			    				
+			                	<span class="mr-3">{{ revision.revision }}</span>
+			                </v-list-tile-title>
+			            </v-list-tile-content>
+
+
+						<v-list-tile-action>
+		                    <router-link :to="{name:'BuyerMyHomeOrderSamples', params:{proj_id:proj_id,rev_id:revision.id}}">
+
+		        			<v-tooltip right>
+			        		<template #activator="{ on }">
+								<v-btn v-on="on" class="black white--text" small style="min-width: 50px;">
+									<v-icon style="font-size: 16px;">fas fa-shopping-cart</v-icon>
+								</v-btn>                                    
+                            </template>
+				    		<span>Order Samples</span>
+                        	</v-tooltip>
+
+		                    </router-link>						  
+						</v-list-tile-action>
+
+			        </v-list-tile>
+
+				</router-link>
+
+		    </template>
+		</v-list>
+
+	
+</span>
+</template>
+
+
+<script>
+
+
+export default {
+props:[
+	'proj_id',
+],
+
+data(){return{
+	revisions: [],
+}},
+
+created(){
+	this.getRevisions();
+},
+
+methods: {
+
+	getRevisions(){
+
+		// console.log('this.proj_id',this.proj_id);
+		this.$store.dispatch(this.getStore('myHm')+'/getQuotations_a',{
+			proj_id: this.proj_id,
+		})
+		.then((rspns)=>{
+			// console.log(rspns);
+			this.revisions = rspns;
+		})
+		.catch((e)=>{
+			console.log(e);
+		});
+	},
+
+},
+
+
+}
+</script>
+
+<style scoped lang="scss">
+.revision-list	/deep/ {
+	a {
+		text-decoration: none;
+	}
+}
+</style>

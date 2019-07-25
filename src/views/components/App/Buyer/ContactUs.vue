@@ -162,6 +162,14 @@ export default {
 		},
 	},
 
+	watch:{
+		subject:{
+			handler(nVal,oVal){
+				this.formData.subject = nVal;
+			},
+		},
+	},
+
 
 }
 </script>

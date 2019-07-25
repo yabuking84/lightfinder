@@ -13,7 +13,7 @@
 						<!-- <span class="ml-1 font-weight-light white--text">{{ status.name }}</span> -->
 					</v-btn>
 					<!-- <span>{{ status.name }}</span> -->
-					</v-tooltip>
+					<!-- </v-tooltip> -->
 				</span>
 			</v-btn-toggle>
 			<v-spacer></v-spacer>

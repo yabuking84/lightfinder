@@ -3,15 +3,19 @@
 	<v-flex xs12>
 		<vue-dropzone 
 		id="dropzone_images" 
+		ref="dropzone_images" 
 		:options="dropzoneOptions" 
 		:useCustomSlot="useCustomSlot"
-		:awss3="getAWSS3('add-project-files')"
-		@vdropzone-success="vdz_success($event,'add-project-files')">
+		:awss3="getAWSS3(filegroup)"
+		@vdropzone-success="vdz_success($event,filegroup)">
 			<div class="dropzone-custom-content">
 				<h3 class="dropzone-custom-title">Drag and drop to upload your image here</h3>
 				<!-- <div class="subtitle">...or click to select a file from your computer</div> -->
 			</div>
 		</vue-dropzone>
+		<v-btn class="black white--text" @click="clearImages()">
+			clear images
+		</v-btn>
 	</v-flex>
 
 	</v-layout>	
@@ -29,6 +33,13 @@ components:{
     vueDropzone: vue2Dropzone,
 },
 
+props:{
+	filegroup:{
+		type: String,
+		default: 'add-project-files',
+	},
+},
+
 data() { return {
 
     projectFiles:[],
@@ -40,8 +51,10 @@ data() { return {
         useCustomSlot: true,
         dropzoneOptions: {
             url: config.main.awss3.urls.inquiry,
+            thumbnailHeight: 100,
             thumbnailWidth: 100,
             maxFilesize: 100,
+            maxFiles: 1,
             headers: {},
             addRemoveLinks: true,            
             dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
@@ -88,8 +101,8 @@ methods: {
         // this.cnsl();
     },
     vdz_success(file, upload_group){
-        this.cnsl("vdz_success file = ",file);
-        this.cnsl("vdz_success upload_group = ",upload_group);
+        // console.log("vdz_success file = ",file);
+        // console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
@@ -97,17 +110,13 @@ methods: {
                 location: file.s3ObjectLocation,
                 filename: file.name,
                 filetype: file.type,
-                filegroup: 'add-project-files',
+                filegroup: this.filegroup,
                 filesize: _.round((file.size/1000), 2),
             };
 
-            this.cnsl('attachment xxxxx',attachment);
+            // console.log('attachment xxxxx',attachment);
 
-            // for the preview when uploaded
-            // this.inquiry_images.push(attachment);
-
-        	
-        	this.projectFiles.push(attachment);
+            this.$emit('update:image',file.s3ObjectLocation)
 
 
         }
@@ -117,6 +126,13 @@ methods: {
     // dddddddddddddddddddddddddddddddddddddddddddddddddddd
     // Dropzone
 
+
+    clearImages(){
+
+    	console.log(this);
+		this.$refs.dropzone_images.removeAllFiles();
+        this.$emit('update:image',null);
+    },
 
 },
 

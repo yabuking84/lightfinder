@@ -5,14 +5,14 @@
 <v-btn 
 @click.stop="dialog=true"
 small class="black white--text">
-	create quotation
+	<span>Add/Edit Items</span>
 </v-btn>
 
-<v-dialog v-model="dialog" width="1200px">
+<v-dialog v-model="dialog" fullscreen>
 	<v-card>
 		<v-card-title class="headline black white--text py-2" primary-title>
 			<v-layout row wrap justify-space-between align-center>
-				<span>Create Quotation</span>
+				<span>Add/Edit Items</span>
 				<v-btn 
 				@click="dialog=false"
 				fab small class="black white--text">
@@ -21,15 +21,24 @@ small class="black white--text">
 			</v-layout>
 		</v-card-title>
 
-		<v-card-text>
+		<v-card-text style="min-height: 80vh;">
 
 			<v-form>
 			<v-container>
 
 				<v-layout row wrap>
+					<v-flex xs4>					  
+						<v-text-field
+						v-model="formData.revision"
+						label="Revision Reference name">
+						</v-text-field>
+					</v-flex>
+				</v-layout>
+
+				<v-layout row wrap>
 
 					<quotation-items 
-					@update:items="formData.items = $event"
+					:items.sync="formData.items"
 					:bus="bus"></quotation-items>
 
 				</v-layout>
@@ -48,12 +57,23 @@ small class="black white--text">
 
 		<v-card-actions>
 			<v-btn 
-			class="black white--text" 
+			class="black white--text mr-3" 
 			:loading="btnLdng"
 			@click="submitForm()">
 				submit
-			</v-btn>
+			</v-btn>			
+
 			<v-spacer></v-spacer>
+
+			<v-btn 
+			class="red white--text" 
+			:loading="btnLdng"
+			@click="clearItems()">
+				clear items
+			</v-btn>
+
+			<v-spacer></v-spacer>
+
 			<v-btn @click="addItem()" color="success">
 				Add Item
 			</v-btn>				
@@ -70,7 +90,7 @@ small class="black white--text">
 import validationMixin from '@/mixins/validationMixin'
 import { required, decimal } from 'vuelidate/lib/validators'
 
-import QuotationItems from '@/views/Components/App/Admin/MyHome/CreateQuotationItems'
+import QuotationItems from '@/views/Components/App/Admin/MyHome/Project/CreateQuotation/CreateQuotationItems'
 
  import Vue from 'vue'
 
@@ -83,7 +103,7 @@ components: {
 	QuotationItems,	
 },
 
-
+props:['proj_id'],
 
 data() { return {
 
@@ -92,6 +112,10 @@ data() { return {
 	btnLdng: false,
 
 	formData :{
+		revision: null,
+		"shipping_cost": 0,
+		"eta": null,
+		"etd": null,
 		items:[],
 	},
 
@@ -109,8 +133,8 @@ watch:{
 
 	dialog:{
 		handler(nVal,oVal){
-			this.formData.items = [];
-			this.bus.$emit('reset-items');
+			// this.formData.items = [];
+			// this.bus.$emit('reset-items');
 		},
 	},
 },
@@ -119,17 +143,26 @@ watch:{
 
 methods: {
 	submitForm(){
-		this.$v.$touch();
+		// this.$v.$touch();
 
-		if(!this.$v.formData.$error)
-		alert('submit');
+		// if(!this.$v.formData.$error) {
+		// }	
+
+		this.$store.dispatch(this.getStore('myHm')+'/createQuotation_a',{
+			proj_id: this.proj_id,
+			formData: this.formData,
+		})
+		.then((rspns)=>{
+			this.clearItems();
+			this.dialog = false;
+		});
 
 	},
 
-	testChange(){
-		this.formData.items[1].ref = 'asdsd';
-	},
 
+	clearItems(){		
+		this.bus.$emit('reset-items');
+	},			
 
 	addItem(){		
 		this.bus.$emit('add-item');

@@ -4,7 +4,7 @@
 
 <v-layout mb-3 mt-2 row wrap justify-space-between align-center>
 	<h4 class="white--text">Project Inquiries</h4>
-	<create-project></create-project>
+	<create-project ></create-project>
 </v-layout>
 
 
@@ -28,11 +28,8 @@ row wrap justify-space-between align-center>
 		                    	<span style="font-size: 0.8em; font-weight: normal;">{{ sp.item.id }}</span>
 		                    </h2>
 
-		                    <router-link :to="{name:'BuyerMyHomeProject', params:{proj_id:sp.item.id}}">
-			                    <v-btn color="black" class="white--text" style="min-width:50px;">
-			                    	<v-icon style="font-size: 1em;">fas fa-search</v-icon>
-			                    </v-btn>
-		                    </router-link >
+		                    <slot name="project-link" :item="sp.item"></slot>
+
 	                	</v-layout>
 	                </v-card-title>
 	                

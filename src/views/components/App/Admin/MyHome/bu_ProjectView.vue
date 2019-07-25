@@ -12,7 +12,7 @@
 						</h3>
 					</router-link> 
 					/
-					<h3 class="d-inline-block ml-2">Project Inquiry</h3>
+					<h3 class="d-inline-block ml-2">Project</h3>
 				</v-flex>
 				
 				<v-flex xs8>

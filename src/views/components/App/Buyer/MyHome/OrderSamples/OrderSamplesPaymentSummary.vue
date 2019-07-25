@@ -20,7 +20,7 @@
 				<template v-for="(sample, i) in samples" >				
 					<tr v-if="sample.formData.totalPrice && sample.formData.ordered"
 					:key="'sample_'+i">					
-						<td class="px-4">{{ sample.item_no }} - {{ sample.item_name }}</td>
+						<td class="px-4">{{ sample.item_number }} - {{ sample.name }}</td>
 						<td class="currency">$ {{ currency(sample.formData.totalPrice) }}</td>
 					</tr>
 				</template>

@@ -45,17 +45,17 @@ export default  (to, from, next) => {
 			if(store.state.auth.auth_user.role==config.auth.role.admin.id){
 				// console.log('AdminHome');
 				// next({name: 'Home'})
-				next("/")
+				next({name: 'AdminHome'})
 			}
 			else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) {
 				// console.log('BuyerHome');
 				// next({name: 'Home'});
-				next("/")
+				next({name: 'BuyerHome'})
 			}
 			else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) {
 				// console.log('SupplierHome');
 				// next({name: 'Home'})				
-				next("/")
+				next({name: 'SupplierHome'})
 			}
 			else {
 				// console.log('LOGOUT!!!!!!!!!!!!!!!!!!!!!!');

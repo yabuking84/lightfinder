@@ -18,22 +18,24 @@
 <tr :key="'item_'+i">
 	<td width="20%">
 		<h3>Image</h3>
-		<image-upload></image-upload>
+		<image-upload
+		@update:image="atInput(item, 'image', $event)">
+		</image-upload>
 	</td>
 	<td width="20%">
 		<v-text-field outline flat
 		label="Item No."
-		@input="atInput(item, 'item_no', $event)">
+		@input="atInput(item, 'item_number', $event)">
 		</v-text-field>
 
 		<v-text-field outline flat
 		label="Reference"
-		@input="atInput(item, 'ref', $event)">
+		@input="atInput(item, 'reference', $event)">
 		</v-text-field>
 
 		<v-text-field outline flat
 		label="Title"
-		@input="atInput(item, 'title', $event)">
+		@input="atInput(item, 'name', $event)">
 		</v-text-field>
 
 		<v-text-field outline flat
@@ -56,7 +58,7 @@
 		label="Unit Price"
 		prefix="$"
 		placeholder="0.00"		
-		@input="atInput(item, 'unit_price', $event)">
+		@input="atInput(item, 'price', $event)">
 		</v-text-field>
 	</td>
 	
@@ -64,24 +66,24 @@
 		<v-textarea outline flat
 		label="Description"
 		:value="item.desc"
-		@input="atInput(item, 'desc', $event)">
+		@input="atInput(item, 'description', $event)">
 		</v-textarea>		
 	</td>
 
 	<td width="20%">
 
-		<v-text-field outline flat
+		<!-- <v-text-field outline flat
 		type="number"
 		label="Sample Quantity"
 		@input="atInput(item, 'sample_quantity', $event)">
-		</v-text-field>
+		</v-text-field> -->
 
 		<v-text-field outline flat		
 		type="number"
 		label="Sample Unit Price"
 		prefix="$"
 		placeholder="0.00"		
-		@input="atInput(item, 'sample_unit_price', $event)">
+		@input="atInput(item, 'sample_price', $event)">
 		</v-text-field>
 
 		<v-text-field outline flat		
@@ -128,24 +130,27 @@
 import validationMixin from '@/mixins/validationMixin'
 import { required, decimal } from 'vuelidate/lib/validators'
 
-import ImageUpload from "@/views/Components/App/Admin/MyHome/QuotationItemFile"
+import ImageUpload from "@/views/Components/App/Admin/MyHome/Project/CreateQuotation/CreateQuotationItemFile"
 
 import Vue from 'vue'
 
 function item() { 	
-	this.image_url =  null;
-	this.item_no =  null;
-	this.ref =  null;
-	this.title =  null;
-	this.desc =  null;
-	this.field =  null;
-	this.quantity =  0;
-	this.unit_price =  0.00;
+  
+    this.item_number                      = null;
+    this.image                            = null;
+    this.reference                        = null;
+    this.name                             = null;
+    this.description                      = null;
+    this.field                            = null;
+    this.price                            = 0;
+    this.quantity                         = 0;
+    this.discount                         = 0;
+    this.sample_price                     = 0;
+    this.sample_quantity                  = 0;
+    this.sample_shipment_price_less_5     = 0;
+    this.sample_shipment_price_5_10       = 0;
+        
 
-	this.sample_unit_price =  0.00;	
-	this.sample_quantity =  0;
-	this.sample_shipment_price_less_5 =  0.00;	
-	this.sample_shipment_price_5_10 =  0.00;	
 };
 
 
@@ -163,9 +168,9 @@ components: {
 
 	
 validations: {
-	formData: {
-		items: { required, },
-	},
+	// formData: {
+	// 	items: { required, },
+	// },
 },
 
 
@@ -177,10 +182,11 @@ data() { return {
 created(){
 	this.bus.$on('add-item',()=>{
 		this.items.push(new item());
-		this.emitData();		
+		this.emitData();
 	});
 	this.bus.$on('reset-items',()=>{
 		this.items = [];
+		this.emitData();
 	});
 },
 
@@ -191,9 +197,6 @@ watch:{
 
 
 methods: {
-	checkErrors(){
-
-	},
 
 	atInput(item, property, value){
 		item[property] = value;

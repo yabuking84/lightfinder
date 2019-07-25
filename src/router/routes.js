@@ -27,6 +27,7 @@ import ProfileView from '@/views/Pages/Profile'
 
 
 
+import BuyerInvoice from '@/views/Components/App/Invoice'
 
 import BuyerRegistration from '@/views/Pages/Buyer/Register'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
@@ -182,6 +183,25 @@ const routes =
         }
     },
 
+
+
+	// test pdf
+	////////////////////////////////////////
+	{
+		name: 'BuyerInvoice',
+		path: '/invoice',
+		components: {
+			// default: BuyerHome, 
+			default: BuyerInvoice, 
+			// sidebar: AppSidebar, 
+			// header: AppToolbar, 
+			// footer: AppFooter,
+			// dialog: BuyerInquiryView,
+		},
+	},
+	
+	////////////////////////////////////////
+	// test pdf
 	    
 
     ...userRoutes,

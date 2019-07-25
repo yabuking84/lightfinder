@@ -21,6 +21,7 @@
           </v-text-field>
         </v-flex>
         <v-divider></v-divider>
+
         <v-data-table :headers="headers" :items="dataItems" :loading="loading" :search="search">
           <template slot="items" slot-scope="props">
             <tr class="th-heading">
@@ -52,6 +53,7 @@
             Your search for "{{ search }}" found no results.
           </v-alert>
         </v-data-table>
+        
       </div>
       <!-- component  -->
     </v-card>

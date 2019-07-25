@@ -11,7 +11,11 @@ import AdminInquiryView from "@/views/Components/App/Admin/InquiryView"
 
 import AdminMyTower from '@/views/Pages/Admin/MyTower'
 import AdminMyHome from '@/views/Pages/Admin/MyHome'
-import AdminMyHomeProject from '@/views/Components/App/Admin/MyHome/ProjectView'
+
+import AdminMyHomeProject from '@/views/Components/App/Admin/MyHome/Project/ProjectView'
+
+
+import AdminMyHomeOrderedSamples from '@/views/Components/App/Admin/MyHome/OrderedSamples/OrderedSamplesView'
 
 
 import config from '@/config/index'
@@ -41,8 +45,16 @@ const meta = {
 			name: 'AdminSupplier',
 			icon: 'fas fa-user-tie',
 		},
-	], 
-	items2: [
+
+
+
+		///////////////////////////////////////
+		{
+			type: 'spacer',			
+		},		
+		///////////////////////////////////////
+
+
 		{
 			title: 'My Home',
 			name: 'AdminMyHome',
@@ -53,6 +65,9 @@ const meta = {
 			name: 'AdminMyTower',
 			icon: 'fas fa-building',
 		},
+
+
+
 	],	
 	profileItems: [
 		{
@@ -89,7 +104,7 @@ const meta2 = {
 export default [
 	{
 		name: 'AdminHome',
-		path: '/',
+		path: '/lightfinder',
 		components: {
 			default: AdminHome, 
 			sidebar: AppSidebar, 
@@ -103,7 +118,7 @@ export default [
 	},
 	{
 		name: 'AdminInquiry',
-		path: '/inquiry',
+		path: '/lightfinder/inquiry',
 		components: {
 			default: AdminInquiry, 
 			sidebar: AppSidebar, 
@@ -193,6 +208,18 @@ export default [
 		path: '/my-home/project/:proj_id',
 		components: { 
 			default: AdminMyHomeProject, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+
+	{
+		name: 'AdminMyHomeOrderedSamples',
+		path: '/my-home/project/:proj_id',
+		components: { 
+			default: AdminMyHomeOrderedSamples, 
 			sidebar: AppSidebar, 
 			header: AppToolbar, 
 			footer: AppFooter,

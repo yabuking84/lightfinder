@@ -19,8 +19,8 @@
 				
 				<template v-for="(item, i) in items" >				
 					<tr :key="'item_'+i">
-						<td class="px-4">{{ item.item_no }} - {{ item.item_name }}</td>
-						<td class="currency">$ {{ currency(item.unit_price*item.quantity) }}</td>
+						<td class="px-4">{{ item.item_number }} - {{ item.name }}</td>
+						<td class="currency">$ {{ currency(item.price*item.quantity) }}</td>
 					</tr>
 				</template>
 
@@ -92,7 +92,7 @@ export default {
 			var retVal = 0;
 
 			this.items.forEach((item)=>{				
-				retVal = retVal + (item.unit_price*item.quantity);
+				retVal = retVal + (item.price*item.quantity);
 			});
 
 			return retVal;

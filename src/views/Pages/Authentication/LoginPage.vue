@@ -19,7 +19,7 @@
 				<!-- if not mobile -->
 				<!-- //////////////////////////////////////////////////////////// -->
 				<template v-if="!isInMobile()">					
-                <div class="headline">Sign in to your account</div>
+                <!-- <div class="headline">Sign in to your account</div> -->
                 <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
                   <v-layout wrap row pa-4>
                     <v-flex xs12 pa-0>
@@ -27,6 +27,7 @@
                         color="primary"
                         label="Email"
                         v-model="form.email"
+                        placeholder=" "
                         required
                         :error-messages="fieldErrors('form.email')"
                         @blur="$v.form.email.$touch()"
@@ -36,6 +37,7 @@
                         color="primary"
                         label="Password"
                         v-model="form.password"
+                        placeholder=" "
                         type="password"
                         required
                         :error-messages="fieldErrors('form.password')"
@@ -89,15 +91,15 @@
                 wrap row pa-4>
                 	<v-flex xs12>
 						
-						<p style="font-size: 1.2em; text-align: left;">
-							Currently we are still in the process of making BuyAnyLight available on mobile. 
+						<p style="font-size: 1.2em; text-align: center;">
+							BuyAnyLight will be available for your mobile device soon. 
 						</p>
-						<p style="font-size: 1.2em; text-align: left;">
-							In the mean time please use a <strong>Desktop / Laptop browser</strong> to fully use BuyAnyLight's features.
+						<p style="font-size: 1.2em; text-align: center;">
+							Please use <strong>a Desktop or a Laptop</strong> browser to access BuyAnyLight.
 						</p>
 
 						<p style="font-size: 1.5em; text-align: center;">
-							Thank you.
+							<strong>Thank You!</strong>
 						</p>
 
                 	</v-flex>
@@ -190,6 +192,7 @@
   import { required, email, minLength } from 'vuelidate/lib/validators'
   import validationMixin from '@/mixins/validationMixin'
   import TwoWeeksDialog from '@/views/Components/App/Login/TwoWeeksDialog'
+  
 
   const defaultForm = {
     // email: 'info@bal.com',

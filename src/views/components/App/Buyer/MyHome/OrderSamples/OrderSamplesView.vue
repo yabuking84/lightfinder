@@ -16,7 +16,15 @@
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
-						Project Inquiry {{ proj_id }}
+						Project {{ proj_id }}
+					</h3>
+				</router-link> 
+				/
+				<router-link :to="{name:'BuyerMyHomeRevisionView', params:{proj_id:proj_id,rev_id:rev_id}}">
+					<h3 
+					class="white--text d-inline-block mr-2"
+					style="border-bottom: 1px solid;">
+						Revision {{ rev_id }}
 					</h3>
 				</router-link> 
 				/
@@ -81,6 +89,9 @@ export default {
 		proj_id(){
 			return this.$route.params.proj_id;
 		},
+		rev_id(){
+			return this.$route.params.rev_id;
+		},
 	},
 
 	created(){
@@ -90,11 +101,13 @@ export default {
 	methods: {
 
 	    getSamples(){
-	    	this.$store.dispatch(this.getStore('myHm')+'/getSamples_a',{
+	    	this.$store.dispatch(this.getStore('myHm')+'/getQuotation_a',{
 		    	proj_id: this.proj_id,
+		    	rev_id: this.rev_id,
 		    })
 	    	.then((rspns)=>{
-	    		this.samples = rspns.map((sample)=>{
+	    		
+	    		this.samples = rspns.items.map((sample)=>{
 	    			return {
 	    				...sample,
 	    				formData:{
@@ -105,6 +118,9 @@ export default {
 	    				},
 	    			}
 	    		});
+
+	    		console.log('getSamples',this.samples);
+
 	    	})
 	    	.catch((e)=>{
 	    		console.log(e);

@@ -17,6 +17,12 @@ const state = {
 			method  : 'get',
 			url     : base_url+'/v1/admin/projects',
 		},
+		createQuotation: {
+			method  : 'post',
+			url     : base_url+'/v1/admin/projects',
+			url2    : 'quotations',
+		},
+
 	},
 
 
@@ -196,6 +202,35 @@ const actions = {
 		});
 	},
 
+
+	createQuotation_a(context,data) {
+		return new Promise((resolve,reject)=>{
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.createQuotation.method,
+				url: state.api.createQuotation.url+"/"+data.proj_id+"/"+state.api.createQuotation.url2,
+				headers: headers,
+				data: data.formData,
+			})
+			.then(response => {
+				resolve(response);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+
+
+		});
+	},
 
 
 

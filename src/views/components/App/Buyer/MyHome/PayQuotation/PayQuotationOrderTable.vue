@@ -31,10 +31,12 @@
 										row wrap 
 										align-center
 										justify-start>
-											<img :src="item.image_url">
+											
+											<image-view :src="item.image"></image-view>
+											
 											<div class="item-details">
-												<h5>{{ item.item_no }}</h5>
-												<h5>{{ item.item_name }}</h5>
+												<h5>{{ item.item_number }}</h5>
+												<h5>{{ item.name }}</h5>
 											</div>
 										</v-layout>
 									</td>
@@ -44,7 +46,7 @@
 										row wrap 
 										align-center
 										justify-start>
-											<h3 class="unit_price">${{ currency(item.unit_price) }}</h3> 
+											<h3 class="unit_price">${{ currency(item.price) }}</h3> 
 										</v-layout>
 									</td>
 											
@@ -62,7 +64,7 @@
 										row wrap 
 										align-center
 										justify-start>
-											<h3 class="unit_price">${{ currency(item.unit_price*item.quantity) }}</h3>
+											<h3 class="unit_price">${{ currency(item.price*item.quantity) }}</h3>
 										</v-layout>
 									</td>
 									
@@ -89,9 +91,14 @@
 	</v-card>	
 </template>
 <script>
+import ImageView from "@/views/Components/App/Buyer/MyHome/ImageView";
 
 
 export default {
+	components:{
+		ImageView,
+	},
+
 	props:[
 		'proj_id',
 		'items',

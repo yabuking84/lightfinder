@@ -11,6 +11,7 @@ import BuyerInvoice from '@/views/Components/App/Invoice'
 import BuyerMyHome from '@/views/Pages/Buyer/MyHome'
 import BuyerMyHomeUnderConstruction from '@/views/Pages/Buyer/MyHomeUnderConstruction'
 import BuyerMyHomeProject from '@/views/Components/App/Buyer/MyHome/Project/ProjectView'
+import BuyerMyHomeRevisionView from '@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionView'
 import BuyerMyHomePayQuotation from '@/views/Components/App/Buyer/MyHome/PayQuotation/PayQuotationView'
 import BuyerMyHomeOrderSamples from "@/views/Components/App/Buyer/MyHome/OrderSamples/OrderSamplesView"
 
@@ -27,6 +28,9 @@ import BuyerPackages from '@/views/Pages/Buyer/Packages'
 import BuyerInquiryView from "@/views/Components/App/Buyer/InquiryView";
 
 
+import UnderConstruction from '@/views/Pages/UnderConstruction'
+
+
 import test from '@/views/Components/App/test' 
 
 
@@ -39,8 +43,14 @@ const meta = {
 			name: 'BuyerHome',
 			icon: 'fas fa-th-large',
 		},
-	],
-	items2: [
+
+
+		///////////////////////////////////////
+		{
+			type: 'spacer',			
+		},		
+		///////////////////////////////////////
+
 		{
 			title: 'My Home',
 			name: 'BuyerMyHome',
@@ -51,7 +61,30 @@ const meta = {
 			name: 'BuyerMyTower',
 			icon: 'fas fa-building',
 		},
+
+		///////////////////////////////////////
+		{
+			type: 'spacer',			
+		},				
+		///////////////////////////////////////
+
+		{
+			title: 'General Lighting Consultation',
+			name: 'BuyerGLC',
+			icon: 'fas fa-chalkboard-teacher',
+		},
+		{
+			title: 'Lux Calculation',
+			name: 'BuyerLC',
+			icon: 'fas fa-calculator',
+		},
+		{
+			title: '3D Lighting Design',
+			name: 'Buyer3DLD',
+			icon: 'fas fa-cubes',
+		},
 	],
+
 	profileItems: [
 		{
 			title: 'Edit Profile',
@@ -99,7 +132,7 @@ export default [
 
 	{
 		name: 'BuyerHome',
-		path: '/',
+		path: '/lightfinder',
 		components: { 
 			default: BuyerHome, 
 			sidebar: AppSidebar, 
@@ -112,7 +145,7 @@ export default [
 
 	{
 		name: 'BuyerInquiry',
-		path: '/inquiries',
+		path: '/lightfinder/inquiries',
 		components: { 
 			default: BuyerInquiry, 
 			sidebar: AppSidebar, 
@@ -125,7 +158,7 @@ export default [
 
 	{
 		name: 'BuyerInquiryViewPayment',
-		path: '/inquiry/:inquiry_id/payment/:payment_status',
+		path: '/lightfinder/inquiry/:inquiry_id/payment/:payment_status',
 		components: {
 			default: BuyerHome, 
 			sidebar: AppSidebar, 
@@ -139,7 +172,7 @@ export default [
 
 	{
 		name: 'BuyerInquiryViewSamplePayment',
-		path: '/inquiry/:inquiry_id/bids/:bid_id/payment/:payment_status',
+		path: '/lightfinder/inquiry/:inquiry_id/bids/:bid_id/payment/:payment_status',
 		components: {
 			default: BuyerHome, 
 			sidebar: AppSidebar, 
@@ -165,19 +198,19 @@ export default [
 		meta: meta,
 	},
 
-	{
-		name: 'BuyerInvoice',
-		path: '/invoice',
-		components: {
-			// default: BuyerHome, 
-			default: BuyerInvoice, 
-			// sidebar: AppSidebar, 
-			// header: AppToolbar, 
-			// footer: AppFooter,
-			// dialog: BuyerInquiryView,
-		},
-		meta: meta,
-	},
+	// {
+	// 	name: 'BuyerInvoice',
+	// 	path: '/invoice',
+	// 	components: {
+	// 		// default: BuyerHome, 
+	// 		default: BuyerInvoice, 
+	// 		// sidebar: AppSidebar, 
+	// 		// header: AppToolbar, 
+	// 		// footer: AppFooter,
+	// 		// dialog: BuyerInquiryView,
+	// 	},
+	// 	meta: meta,
+	// },
 
 
 	// {
@@ -259,8 +292,21 @@ export default [
 	},
 
 	{
+		name: 'BuyerMyHomeRevisionView',
+		path: '/my-home/project/:proj_id/revision/:rev_id',
+		components: { 
+			default: BuyerMyHomeRevisionView, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta2,
+	},
+
+	{
 		name: 'BuyerMyHomeOrderSamples',
-		path: '/my-home/project/:proj_id/order-samples',
+		path: '/my-home/project/:proj_id/revision/:rev_id/order-samples',
 		components: { 
 			default: BuyerMyHomeOrderSamples, 
 			sidebar: AppSidebar, 
@@ -297,6 +343,60 @@ export default [
   
 
 
+
+
+
+
+	// Addons
+	//////////////////////////////////////////////////////
+	{
+		name: 'BuyerGLC',
+		path: '/general-lighting-consultation',
+		components: { 
+			default: UnderConstruction, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: {
+			...meta2,
+			title: 'General Lighting Consultation',
+		},
+	},
+	{
+		name: 'BuyerLC',
+		path: '/lux-calculation',
+		components: { 
+			default: UnderConstruction, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: {
+			...meta2,
+			title: 'Lux Calculation',
+		},
+	},
+	{
+		name: 'Buyer3DLD',
+		path: '/3d-lighting-design',
+		components: { 
+			default: UnderConstruction, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: {
+			...meta2,
+			title: '3D Design',			
+		},
+	},
+
+	//////////////////////////////////////////////////////
+	// Addons
 
 
 

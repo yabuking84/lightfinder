@@ -35,10 +35,12 @@
 										row wrap 
 										align-center
 										justify-start>
-											<img :src="sample.image_url">
+											<!-- <img :src="sample.image"> -->
+											
+											<image-view :src="sample.image" width="70px" height="70px" custom-class="my-2 mr-3"></image-view>
 											<div class="sample-details">
-												<h5>{{ sample.item_no }}</h5>
-												<h5>{{ sample.item_name }}</h5>
+												<h5>{{ sample.item_number }}</h5>
+												<h5>{{ sample.name }}</h5>
 											</div>
 										</v-layout>
 									</td>
@@ -48,14 +50,14 @@
 										column wrap 
 										align-center
 										justify-center>
-											<h3 class="unit_price">${{ currency(sample.sample_unit_price) }}</h3> 
+											<h3 class="unit_price">${{ currency(sample.sample_price) }}</h3> 
 											<h4 class="unit_price font-weight-regular">(${{ currency(sample.sample_shipment_price_less_5) }})</h4>
 										</v-layout>
 									</td>
 											
 									<td>
 										<v-layout 
-										style="width: 140px;"
+										style="width: 140px; margin: auto;"
 										row wrap 
 										align-center
 										justify-center>
@@ -139,9 +141,15 @@
 	</v-card>	
 </template>
 <script>
+import ImageView from "@/views/Components/App/Buyer/MyHome/ImageView";
 
 
 export default {
+
+components: {
+	ImageView,
+},
+
 props:[
 	'samples',
 ],
@@ -160,7 +168,7 @@ methods:{
     changeQty(sample,operation){
     	if (operation=='minus' && sample.formData.quantity > 0) {
     		sample.formData.quantity--;
-    		sample.formData.totalPrice = (sample.sample_unit_price * sample.formData.quantity);
+    		sample.formData.totalPrice = (sample.sample_price * sample.formData.quantity);
     		sample.formData.totalPrice = (sample.formData.totalPrice)?sample.formData.totalPrice+sample.sample_shipment_price_less_5:0;
 			sample.formData.disabled = false;
 
@@ -169,7 +177,7 @@ methods:{
     	} 
     	else if (operation=='plus' && sample.formData.quantity < 2) {
     		sample.formData.quantity++;
-    		sample.formData.totalPrice = (sample.sample_unit_price * sample.formData.quantity);
+    		sample.formData.totalPrice = (sample.sample_price * sample.formData.quantity);
     		sample.formData.totalPrice = (sample.formData.totalPrice)?sample.formData.totalPrice+sample.sample_shipment_price_less_5:0;
 			sample.formData.disabled = false;
     	}
@@ -210,6 +218,7 @@ table.sample-table {
 	width: 100%;
 	thead {		
 		th:first-child {
+ 			text-align: left;
 		}
 		th {
 			padding: 10px;
@@ -246,11 +255,11 @@ table.sample-table {
 		}
 	}
 
-	img {
-		width: 70px;
-		margin-right: 10px;
-		height: auto;
-	}
+	// img {
+	// 	width: 70px;
+	// 	margin-right: 10px;
+	// 	height: auto;
+	// }
 
 
 }

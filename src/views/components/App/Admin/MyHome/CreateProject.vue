@@ -8,14 +8,14 @@ color="black"
 style="height:40px; border: 1px solid #fff !important;"
 class="white--text">
 	<v-icon class="mr-2">fas fa-plus-circle</v-icon>
-	Create Project Inquiry
+	Create Project
 </v-btn>   
 
 <v-dialog v-model="dialog" width="800px">
     <v-card>
         <v-card-title class="headline black white--text py-2" primary-title>
         	<v-layout row wrap justify-space-between align-center>
-            	<span>Create Project Inquiry</span>
+            	<span>Create Project</span>
             	<v-btn 
             	@click="dialog=false"
             	fab small class="black white--text">

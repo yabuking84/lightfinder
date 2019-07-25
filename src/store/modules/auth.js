@@ -3,6 +3,8 @@
 import axios from 'axios';
 import router from '@/router'
 
+import {routes} from '@/router/routes'
+
 import config from '@/config/index'
 import { store } from '@/store'
 
@@ -405,12 +407,17 @@ const actions = {
 
 		// router.push("/");
 
+
+		// console.log('routes')
+		// console.log(routes)
+
+
 		if(hlprs.methods.isRole('admin')) 
-		window.location.href = '/'
+		window.location.href = '/lightfinder'
 		else if(hlprs.methods.isRole('buyer')) 
-		window.location.href = '/'
+		window.location.href = '/lightfinder'
 		else if(hlprs.methods.isRole('supplier')) 
-		window.location.href = '/'
+		window.location.href = '/lightfinder'
 		else
 		router.push({name:'Login'});
 

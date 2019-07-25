@@ -23,6 +23,17 @@ const state = {
 			method  : 'get',
 			url     : base_url+'/v1/buyer/projects',
 		},
+		getQuotations: {
+			method  : 'get',
+			url     : base_url+'/v1/buyer/projects',
+			url2    : 'quotations',
+		},
+		getQuotation: {
+			method  : 'get',
+			url     : base_url+'/v1/buyer/projects',
+			url2    : 'quotations',
+		},
+
 	},
 
 
@@ -108,7 +119,7 @@ const actions = {
 				resolve(response.data);
 			})
 			.catch(error => {
-				console.log('error getInquiries_a',error);
+				console.log('error',error);
 				// if(actions.checkToken(error)) {                
 				if(context.dispatch('checkToken',error)) {
 					reject(error);
@@ -148,29 +159,50 @@ const actions = {
 		});
 	},
 
-	getSamples_a(context, data){
+	getQuotations_a(context, data){
 		return new Promise((resolve, reject) => {
-			// var headers = {token:localStorage.access_token};
-			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
-			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+			var headers = {token:localStorage.access_token};
+			axios({
+				method: state.api.getQuotations.method,
+				url: state.api.getQuotations.url+"/"+data.proj_id+"/"+state.api.getQuotations.url2,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
 
-			// axios({
-			// 	method: state.api.getInquiries.method,
-			// 	url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
-			// 	headers: headers,
-			// })
-			// .then(response => {
-			// 	resolve(response.data);
-			// })
-			// .catch(error => {
-			// 	console.log('error getInquiries_a',error);
-			// 	// if(actions.checkToken(error)) {                
-			// 	if(context.dispatch('checkToken',error)) {
-			// 		reject(error);
-			// 	}
-			// })
+			// resolve(itemsTest);
 
-			resolve(itemsTest);
+		});
+	},
+
+	getQuotation_a(context, data){
+		return new Promise((resolve, reject) => {
+			var headers = {token:localStorage.access_token};
+			axios({
+				method: state.api.getQuotation.method,
+				url: state.api.getQuotation.url+"/"+data.proj_id+"/"+state.api.getQuotation.url2+"/"+data.rev_id,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+			// resolve(itemsTest);
 
 		});
 	},

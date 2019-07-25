@@ -16,7 +16,7 @@
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
-						Project Inquiry {{ proj_id }}
+						Project {{ proj_id }}
 					</h3>
 				</router-link> 
 				/
@@ -34,11 +34,11 @@
 						</v-flex>
 
 						<v-flex xs5>
-							<payment-summary :proj_id="proj_id" :items="items"></payment-summary>
+							<payment-summary v-if="items.length" :proj_id="proj_id" :items="items"></payment-summary>
 						</v-flex>
 
 						<v-flex xs7>
-							<items-table :proj_id="proj_id" :items="items"></items-table>
+							<items-table v-if="items.length" :proj_id="proj_id" :items="items"></items-table>
 						</v-flex>
 					</v-layout>
 
@@ -81,25 +81,15 @@ export default {
 	methods: {
 
 	    getItems(){
-	    	this.$store.dispatch(this.getStore('myHm')+'/getItems_a',{
+	    	this.$store.dispatch(this.getStore('myHm')+'/getQuotations_a',{
 	    		proj_id: this.proj_id,
 	    	})
 	    	.then((rspns)=>{
-	    		this.cnsl(rspns);
+	    		console.log(rspns);
 
-	    		this.items = rspns;
+	    		if(rspns[0])
+	    		this.items = rspns[0].items;
 
-	    		// this.items = rspns.map((item)=>{
-	    		// 	return {
-	    		// 		...item,
-	    		// 		formData:{
-	    		// 			quantity:0,
-	    		// 			totalPrice:0,
-	    		// 			disabled:true,
-	    		// 			ordered:false,
-	    		// 		},
-	    		// 	}
-	    		// });
 	    	})
 	    	.catch((e)=>{
 	    		console.log(e);
