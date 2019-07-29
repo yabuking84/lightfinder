@@ -97,8 +97,8 @@ methods: {
     },
 
     vdz_s3UploadSuccess: function(s3ObjectLocation){
-        // this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
-        // this.cnsl();
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
     },
     vdz_success(file, upload_group){
         // console.log("vdz_success file = ",file);

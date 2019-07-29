@@ -43,10 +43,12 @@
 		                	</v-layout>
 						</v-flex>
 
-						<v-flex xs12>
+						<v-flex xs4>
+							<revision-view-summary :items="revision.items"></revision-view-summary>
+						</v-flex>
 
-
-
+						<v-flex xs8>
+							<revision-view-table :items="revision.items"></revision-view-table>
 						</v-flex>
 					</v-layout>
 
@@ -65,52 +67,19 @@
 </template>
 
 <script>
-import ImageView from "@/views/Components/App/Buyer/MyHome/ImageView";
 import RevisionViewTable from "@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionViewTable";
+import RevisionViewSummary from "@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionViewSummary";
 
 export default {
 
 	components:{
-		ImageView,
 		RevisionViewTable,
+		RevisionViewSummary,
 	},
 
 	data() { return {
 
 		revision: {},
-		dialog: false,		
-		dialogImage: '',
-		tableSettings: {
-
-	        headers: [
-	        	{
-	        	  text: 'Details',
-	        	  align: 'left',
-	        	  value: 'item_number',
-	        	  sortable: true,
-	        	},
-	        	{
-	        	  text: 'Unit Price',
-	        	  align: 'left',
-	        	  value: 'price',
-	        	  sortable: true,
-	        	},
-	        	{
-	        	  text: 'Quantity',
-	        	  align: 'left',
-	        	  value: 'quantity',
-	        	  sortable: true,
-	        	},
-	        	{
-	        	  text: 'Total Price',
-	        	  align: 'left',
-	        	  value: 'price',
-	        	  sortable: true,
-	        	},
-	        ],
-
-		},
-
 	}},
 
 	computed:{
@@ -134,8 +103,6 @@ export default {
 	    		rev_id: this.rev_id,
 	    	})
 	    	.then((rspns)=>{
-	    		console.log(rspns);
-
 	    		this.revision = rspns;
 	    	})
 	    	.catch((e)=>{

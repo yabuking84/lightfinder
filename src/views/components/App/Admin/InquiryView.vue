@@ -110,8 +110,8 @@ export default {
     //         return this.$store.state.inq.inquiry;
     //     },
     //     set(nVal) {
-    //         // this.cnsl('setVal');
-    //         // this.cnsl(nVal);
+    //         // console.log('setVal');
+    //         // console.log(nVal);
     //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
     //     },
     // },       
@@ -131,7 +131,7 @@ export default {
             if(e.target.querySelector("#InquiryView"))
             this.hideInquiry();
             
-            // this.cnsl(e.target);
+            // console.log(e.target);
 
         },
     },

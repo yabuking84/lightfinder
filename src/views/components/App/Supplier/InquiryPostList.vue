@@ -105,7 +105,7 @@
                             inq_id: this.inquiry.id
                         })
                         .then(response => {
-                            // this.cnsl(response);
+                            // console.log(response);
                             this.bidItems = response;
 
                             this.bidItems.sort((a, b) => {

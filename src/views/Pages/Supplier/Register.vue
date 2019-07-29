@@ -821,7 +821,7 @@ export default {
 
 	FirstStep() {
 
-		this.cnsl('firststep');
+		console.log('firststep');
 
 		this.$v.form.firstname.$touch();
 		this.$v.form.lastname.$touch();  	
@@ -834,7 +834,7 @@ export default {
 			// hide the step one 
 			this.isStepOne = false
 			this.isSteptwo = true
-			this.cnsl(' hide the step one ');
+			console.log(' hide the step one ');
 			this.e1 = 1
 		}
 
@@ -951,7 +951,7 @@ export default {
 					'categories': this.categories
 			};
 
-			// this.cnsl(data);
+			// console.log(data);
 
 			this.formloading = true;
 
@@ -1014,8 +1014,8 @@ export default {
 
 	vdz_success(file, upload_group){
 
-		this.cnsl("vdz_success file = ",file);
-		this.cnsl("vdz_success upload_group = ",upload_group);
+		console.log("vdz_success file = ",file);
+		console.log("vdz_success upload_group = ",upload_group);
 
 		if(file.status=='success') {
 
@@ -1027,7 +1027,7 @@ export default {
 				filesize: _.round((file.size/1000), 2),
 			};
 
-			// this.cnsl('attachment',attachment);
+			// console.log('attachment',attachment);
 			this.formData.attachments.push(attachment);
 			// for the preview when uploaded
 			this.inquiry_images.push(attachment);

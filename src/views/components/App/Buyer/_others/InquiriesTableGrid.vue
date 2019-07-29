@@ -295,7 +295,7 @@ export default {
 			var storeType = this.$route.meta.storeType.inq;
 			this.$store.dispatch(storeType+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
-				// this.cnsl('InquiryTableGrid response',response);
+				// console.log('InquiryTableGrid response',response);
 				for (var i = response.length - 1; i >= 0; i--) {
 					var item = {};
 					item.inq_id = response[i].id;
@@ -309,7 +309,7 @@ export default {
 					item.loading = false;
 					this.allInquiries.push(item);
 				}
-				// this.cnsl('InquiryTableGrid this.allInquiries',this.allInquiries);
+				// console.log('InquiryTableGrid this.allInquiries',this.allInquiries);
 
 				// this.tableItems = this.allInquiries;
 				this.filterTable();
@@ -319,7 +319,7 @@ export default {
 
 			})
 			.catch((e) => {
-				this.cnsl('Error: ' + e);
+				console.log('Error: ' + e);
 				this.loading = false;
 			})
 			.finally(() => {
@@ -367,7 +367,7 @@ export default {
 					  // add key to search in the dom
 					  return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
 				  })            
-				  // this.cnsl(this.search);
+				  // console.log(this.search);
 			  }
 
 			  this.tableItems = items;
@@ -403,10 +403,10 @@ export default {
 		this.$store.dispatch('cat/getCategories_a')
 		.then((data) => {
 			this.categoryItems = data;
-			// this.cnsl(this.categoryItems);
+			// console.log(this.categoryItems);
 		})
 		.catch((e) => {
-			this.cnsl('Error: ');
+			console.log('Error: ');
 			console.log(e);
 		});
 

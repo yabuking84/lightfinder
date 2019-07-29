@@ -88,7 +88,7 @@ export default {
 
 			var inquiry_statuses = this.$route.meta.statuses;
 
-			// this.cnsl('inquiry_statuses',inquiry_statuses);
+			// console.log('inquiry_statuses',inquiry_statuses);
 
 			var status = inquiry_statuses.find(valObj => valObj.id+"" == this.statusId+"");
 

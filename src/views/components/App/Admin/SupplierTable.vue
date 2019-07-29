@@ -162,7 +162,7 @@ export default {
 
         .then((response) => {
 
-          this.cnsl(response);
+          console.log(response);
 
           for (var i = response.length - 1; i >= 0; i--) {
 
@@ -183,7 +183,7 @@ export default {
 
         })
         .catch((e) => {
-          this.cnsl('Error: ' + e);
+          console.log('Error: ' + e);
           this.loading = false;
         })
         .finally(() => {

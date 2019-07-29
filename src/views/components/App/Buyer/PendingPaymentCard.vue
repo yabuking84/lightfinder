@@ -135,7 +135,7 @@ export default {
 	}},
 
 	created(){
-		this.cnsl('inquiry',this.inquiry);        
+		console.log('inquiry',this.inquiry);        
 	},
 
 	methods:{
@@ -147,7 +147,7 @@ export default {
 			})
 			.then((response) => {
 
-				// this.cnsl('getCreditCardResource', response);
+				// console.log('getCreditCardResource', response);
 				this.creditCard.requestParameter = response.request_parameter;
 				this.creditCard.url = response.request_url;
 

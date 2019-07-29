@@ -285,15 +285,15 @@
 					        "postal": this.form.shipping_postal,
 					    },	
 					};
-					this.cnsl(payload);
-					this.cnsl(localStorage.access_token);
+					console.log(payload);
+					console.log(localStorage.access_token);
 
 					this.$store.dispatch(this.getStore()+'/getSampleOrderCreditCardResource', payload)
 					.then((response) => {
 						this.creditCard.requestParameter = response.request_parameter;
 						this.creditCard.url = response.request_url;
 
-						this.cnsl(this.creditCard);
+						console.log(this.creditCard);
 						this.$nextTick().then(() => {
 							this.formLoading = false;
 							this.$refs.creditCardForm.submit();

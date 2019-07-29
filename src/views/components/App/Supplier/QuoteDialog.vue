@@ -775,7 +775,7 @@ methods: {
 
       if (e.target.querySelector("#QuoteDialog"))
           this.$emit('update:openQuoteDialog', false)
-          // this.cnsl(e.target);
+          // console.log(e.target);
     },
 
 
@@ -863,8 +863,8 @@ methods: {
 
     fillFormData() {
 
-          this.cnsl('bid  xxxxxxxxxxxxxx',this.bid);
-          this.cnsl('formData  xxxxxxxxxxxxxx',this.formData);
+          console.log('bid  xxxxxxxxxxxxxx',this.bid);
+          console.log('formData  xxxxxxxxxxxxxx',this.formData);
 
           
           this.formData.total_price = this.bid.total_price;
@@ -930,14 +930,14 @@ methods: {
     },
 
     vdz_s3UploadSuccess: function(s3ObjectLocation){
-        // this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
-        // this.cnsl();
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
     },
 
     vdz_success(file, upload_group){
 
-        this.cnsl("vdz_success file = ",file);
-        this.cnsl("vdz_success upload_group = ",upload_group);
+        console.log("vdz_success file = ",file);
+        console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
@@ -951,7 +951,7 @@ methods: {
             };
 
 
-            this.cnsl('attachment',attachment);
+            console.log('attachment',attachment);
             // this.formData.attachments.push(attachment);
             // this.formData.attachments.concat(attachment);
             this.pushImage(attachment)
@@ -993,14 +993,14 @@ watch: {
         //     this.clearData();
         //     this.$v.$reset();
         //     this.fillFormData();
-        //   	this.cnsl('this.formData.price',this.formData.price)
-        //   	this.cnsl('-edit-')
+        //   	console.log('this.formData.price',this.formData.price)
+        //   	console.log('-edit-')
         // } else {
         //     this.quoteAction = "Add";
         //     this.formData = this.initBid;
         //     this.$v.$reset();
         //     this.clearData();
-        //     this.cnsl('-add-')
+        //     console.log('-add-')
         // }
 
     },
@@ -1016,13 +1016,13 @@ watch: {
             this.clearData();
             this.$v.$reset();
             this.fillFormData();
-          	// this.cnsl('-edit-')
+          	// console.log('-edit-')
         } else {
             // this.formData = this.initBid;
             this.quoteAction = "Add";
             this.clearData();
             this.$v.$reset();
-            // this.cnsl('-add-')
+            // console.log('-add-')
         }
 
     },
@@ -1048,9 +1048,9 @@ watch: {
 
     'formData.price': {
     	handler(nVal,oVal){
-	    	this.cnsl('formData.price nVal',nVal);
+	    	console.log('formData.price nVal',nVal);
 	    	if(nVal) {
-	    		this.cnsl('GOOOO',this.formData.quantity);
+	    		console.log('GOOOO',this.formData.quantity);
 	    		this.formData.total_price = this.currency(parseFloat(this.inquiry.quantity) * parseFloat(nVal));
 	    	}
 	    	// this.$v.formData.total_price.$touch();
@@ -1064,7 +1064,7 @@ watch: {
 
     'formData.total_price': {    	
 		handler(nVal,oVal){
-			this.cnsl('formData.total_price nVal',nVal);
+			console.log('formData.total_price nVal',nVal);
 		},
 		deep: true,
     }

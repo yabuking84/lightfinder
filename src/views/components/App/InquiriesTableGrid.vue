@@ -344,11 +344,11 @@ export default {
 
 			this.allInquiries = [];
 			// 
-			// this.cnsl('test');
+			// console.log('test');
 						
 			this.$store.dispatch(this.getStore()+'/getInquiries_a',{with_bids:1})
 			.then((response) => {
-				// this.cnsl('InquiryTableGrid response',response);
+				// console.log('InquiryTableGrid response',response);
 
 				// for (var i = response.length - 1; i >= 0; i--) {
 				// 	var item = {};
@@ -367,7 +367,7 @@ export default {
 				this.allInquiries = this.setDataTableGrid(response);
 
 
-				// this.cnsl('InquiryTableGrid this.allInquiries',this.allInquiries);
+				// console.log('InquiryTableGrid this.allInquiries',this.allInquiries);
 
 				// this.tableItems = this.allInquiries;
 				this.filterTable();
@@ -425,7 +425,7 @@ export default {
 					  // add key to search in the dom
 					  return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
 				  })            
-				  // this.cnsl(this.search);
+				  // console.log(this.search);
 			  }
 
 			  this.tableItems = items;
@@ -461,7 +461,7 @@ export default {
 		this.$store.dispatch('cat/getCategories_a')
 		.then((data) => {
 			this.categoryItems = data;
-			// this.cnsl(this.categoryItems);
+			// console.log(this.categoryItems);
 		})
 		.catch((e) => {
 			console.log('Error: ');

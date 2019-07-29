@@ -322,9 +322,9 @@ export default {
     			plan : plan,
     		})
     		.then((rspns)=>{
-    			this.cnsl(rspns);
+    			console.log(rspns);
 
-				// this.cnsl('getCreditCardResource', response);
+				// console.log('getCreditCardResource', response);
 				this.creditCard.requestParameter = rspns.request_parameter;
 				this.creditCard.url = rspns.request_url;
 
@@ -332,7 +332,7 @@ export default {
 				.then(() => {
     				this.loadingBtn = false;
 
-    				// this.cnsl('creditCard',this.creditCard);
+    				// console.log('creditCard',this.creditCard);
 					this.$refs.creditCardForm.submit();
 				});
 

@@ -34,11 +34,11 @@
 						</v-flex>
 
 						<v-flex xs5>
-							<payment-summary v-if="items.length" :proj_id="proj_id" :items="items"></payment-summary>
+							<payment-summary :items="items"></payment-summary>
 						</v-flex>
 
 						<v-flex xs7>
-							<items-table v-if="items.length" :proj_id="proj_id" :items="items"></items-table>
+							<items-table :items="items"></items-table>
 						</v-flex>
 					</v-layout>
 

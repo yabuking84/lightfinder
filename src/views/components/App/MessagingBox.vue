@@ -141,19 +141,19 @@ import MsgBus from "@/bus/messaging";
 		created() {
 			this.updateChat();
 
-			// this.cnsl("bid",this.bid);
-			// this.cnsl("type",this.type);
+			// console.log("bid",this.bid);
+			// console.log("type",this.type);
 
 			var self = this;
 			MsgBus.onNewMessage(function(data){
 
 				// if message box is bid
 				if(self.bid.id!=0 && self.bid.id == data.id) {
-					// this.cnsl("BID onNewMessage = ",data);
+					// console.log("BID onNewMessage = ",data);
 					self.updateChat();
 				}				
 				else if(self.inquiry!=null && self.inquiry.id == data.id) {
-					// this.cnsl("INQUIRY onNewMessage = ",data);
+					// console.log("INQUIRY onNewMessage = ",data);
 					self.updateChat();
 				}
 
@@ -196,7 +196,7 @@ import MsgBus from "@/bus/messaging";
 					// }
 
 
-					this.cnsl('payload',payload);
+					// console.log('payload',payload);
 
 					this.$store.dispatch('msg/sendMessage_a', payload)
 					.then(response=>{
@@ -249,7 +249,7 @@ import MsgBus from "@/bus/messaging";
 				}).catch(error => {
 
 					this.loading = false;
-					// this.cnsl('error xxx',error);
+					// console.log('error xxx',error);
 
 				});
 			},
@@ -276,7 +276,7 @@ import MsgBus from "@/bus/messaging";
 						this.$el.querySelector('#ce_'+this.bid.id).focus();
 					} 
 					else if(this.bid.id==0) {
-						// this.cnsl("'#mb_'+this.bid.id",this.bid.id);
+						// console.log("'#mb_'+this.bid.id",this.bid.id);
 					// 	this.$scrollTo('#mb_'+this.bid.id, 500, this.scrollToOptions);
 					// 	this.$el.querySelector('#ce_'+this.bid.id).focus();
 					}

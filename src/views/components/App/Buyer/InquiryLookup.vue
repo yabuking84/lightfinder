@@ -168,7 +168,7 @@
 			          }
 
      				  // this.tableItems = items;
-			        //   this.cnsl(this.allInquiries);
+			        //   console.log(this.allInquiries);
 
 			        })
 			        .catch((e) => {

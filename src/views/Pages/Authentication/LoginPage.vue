@@ -292,9 +292,9 @@
                 this.snackbar = false
                 this.snackbar_error = true
                 this.loading = false;
-                this.cnsl('Error: '+e);
+                console.log('Error: '+e);
             }).finally(()=>{
-                // this.cnsl('finally');
+                // console.log('finally');
                 this.loading = false;
             });
 

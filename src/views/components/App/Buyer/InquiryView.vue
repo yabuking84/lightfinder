@@ -143,8 +143,8 @@ export default {
         //         return this.$store.state.inq.inquiry;
         //     },
         //     set(nVal) {
-        //         // this.cnsl('setVal');
-        //         // this.cnsl(nVal);
+        //         // console.log('setVal');
+        //         // console.log(nVal);
         //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
 
         //     },
@@ -163,7 +163,7 @@ export default {
 	created() {
 
 
-		// this.cnsl(this.inquiry);
+		// console.log(this.inquiry);
         inqEvntBs.$on('edited-inquiry', () => {
             this.successSnackbar = true;
         });
@@ -172,11 +172,11 @@ export default {
         // if route has inquiry id
         if(this.$route.params.inquiry_id) {
         	this.$nextTick(() => {
-				this.cnsl('nextTick $route.params.inquiry_id', this.$route.params.inquiry_id);
+				console.log('nextTick $route.params.inquiry_id', this.$route.params.inquiry_id);
 				var inq_id = this.$route.params.inquiry_id;	
 				this.showInquiry(inq_id)
 				.then((data)=>{
-					// this.cnsl("data",data);
+					// console.log("data",data);
 				})
 				.catch((error)=>{
 					console.log("error",error);
@@ -187,14 +187,14 @@ export default {
 	},
 
 	mounted(){
-		// this.cnsl('querySelector',this.$refs);
-		// this.cnsl('querySelector',this.$refs.inquiryView);
-		// this.cnsl('querySelector',this.$el);
+		// console.log('querySelector',this.$refs);
+		// console.log('querySelector',this.$refs.inquiryView);
+		// console.log('querySelector',this.$el);
 	}, 
 
 	watch: {
 		// '$route.params.inquiry_id' () {
-		// 	this.cnsl('$route.params.inquiry_id WATCH');
+		// 	console.log('$route.params.inquiry_id WATCH');
 		// }
 	},
 }

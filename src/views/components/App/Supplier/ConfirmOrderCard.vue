@@ -99,7 +99,7 @@ export default {
 	methods:{
 
 		confirmQuote() {
-			// this.cnsl("confirm");
+			// console.log("confirm");
 
 			this.$v.$touch();
 

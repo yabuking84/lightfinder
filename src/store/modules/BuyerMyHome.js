@@ -23,6 +23,10 @@ const state = {
 			method  : 'get',
 			url     : base_url+'/v1/buyer/projects',
 		},
+		editProject: {
+			method  : 'patch',
+			url     : base_url+'/v1/buyer/projects',
+		},
 		getQuotations: {
 			method  : 'get',
 			url     : base_url+'/v1/buyer/projects',
@@ -62,6 +66,36 @@ const actions = {
 				url: state.api.addProject.url,
 				headers: headers,
 				data: JSON.stringify(data)
+			})
+			.then(response => {
+				resolve(response);
+			})
+			.catch(error => {
+				console.log('error ',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+
+		});
+	},
+
+
+	editProject_a(context, data){
+		return new Promise((resolve, reject) => {
+
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.editProject.method,
+				url: state.api.editProject.url+'/'+data.proj_id,
+				headers: headers,
+				data: JSON.stringify(data.formData)
 			})
 			.then(response => {
 				resolve(response);
@@ -132,32 +166,6 @@ const actions = {
 		});
 	},
 
-	getProjectFiles_a(context, data){
-		return new Promise((resolve, reject) => {
-			// var headers = {token:localStorage.access_token};
-			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
-			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
-
-			// axios({
-			// 	method: state.api.getInquiries.method,
-			// 	url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
-			// 	headers: headers,
-			// })
-			// .then(response => {
-			// 	resolve(response.data);
-			// })
-			// .catch(error => {
-			// 	console.log('error getInquiries_a',error);
-			// 	// if(actions.checkToken(error)) {                
-			// 	if(context.dispatch('checkToken',error)) {
-			// 		reject(error);
-			// 	}
-			// })
-
-			resolve(filesTest);
-
-		});
-	},
 
 	getQuotations_a(context, data){
 		return new Promise((resolve, reject) => {

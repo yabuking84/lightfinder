@@ -101,7 +101,7 @@ data:() => ({
 }),
 
 created(){
-	// this.cnsl('PIT');
+	// console.log('PIT');
 	this.getProjects();
 },
 

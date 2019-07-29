@@ -115,7 +115,7 @@ export default {
         password: this.form.password
       }
 
-      this.cnsl(data);
+      console.log(data);
       this.$refs.form.reset()
       this.resetForm()
 
@@ -139,7 +139,7 @@ export default {
             this.snackbar = false
             this.snackbar_error = true
             this.loading = false;
-            this.cnsl('Error: '+e);
+            console.log('Error: '+e);
         })
         .finally(() => {
             this.loading = false

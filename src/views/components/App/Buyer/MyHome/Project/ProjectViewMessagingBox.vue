@@ -117,8 +117,8 @@ import hlprs from "@/mixins/helpers";
 		created() {
 			this.updateChat();
 
-			// this.cnsl("bid",this.bid);
-			// this.cnsl("type",this.type);
+			// console.log("bid",this.bid);
+			// console.log("type",this.type);
 
 			var ths = this;
 			MsgBus.onNewProjectMessage(function(data){
@@ -138,14 +138,10 @@ import hlprs from "@/mixins/helpers";
 				
 					var payload = {};
 					payload.content = this.chatMessageEditor;
-					payload.type = this.getRole().name;
-					payload.type_id = this.getRole().id;
-					payload.id = "";
+					payload.type = 'project.buyer.admin';
+					payload.id =  this.proj_id;
 
-					
-
-
-					this.cnsl('payload',payload);
+					console.log('payload',payload);
 
 					this.$store.dispatch('msg/sendProjectMessage_a', payload)
 					.then(response=>{
@@ -164,23 +160,25 @@ import hlprs from "@/mixins/helpers";
 			updateChat(){
 				
 				var payload = {};
-				payload.type = "";
-				payload.id = "";
+				payload.type = 'project.buyer.admin';
+				payload.id = this.proj_id;
 
 
-				this.$store.dispatch('msg/getProjectMessages_a', payload).then(response=>{
-					this.messages = response;
+				this.$store.dispatch('msg/getProjectMessages_a', payload)
+				.then(rspns=>{
+					this.messages = rspns;
 
-					// console.table(response);
+					// console.table(rspns);
 					
 					this.resetChatEditor();
 					this.scrollChat();
 
 					this.loading = false;
-				}).catch(error => {
+				})
+				.catch(error => {
 
 					this.loading = false;
-					// this.cnsl('error xxx',error);
+					// console.log('error xxx',error);
 
 				});
 			},

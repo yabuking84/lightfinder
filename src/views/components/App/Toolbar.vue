@@ -296,7 +296,7 @@ import { mapGetters } from 'vuex'
 import config from '@/config/index'
 
 import hlprs from "@/mixins/helpers";
-// this.cnsl(config);
+// console.log(config);
 
 import NtfctnBus from "@/bus/notification";
 import MsgBus from "@/bus/messaging";
@@ -364,14 +364,14 @@ computed: {
 
     avatarBgImage() {
 
-    	// this.cnsl(config.main.websiteURL);
+    	// console.log(config.main.websiteURL);
       
       	if(!this.$store.state.auth.auth_user.avatar || this.$store.state.auth.auth_user.avatar == 'null' ) {
 	      	// default image to be download later - https://image.flaticon.com/icons/svg/149/149071.svg
 	      	this.$store.state.auth.auth_user.avatar = config.main.websiteURL+'/static/gender-neutral.png';
       	}
 
-    	// this.cnsl('this.$store.state.auth.auth_user.avatar',this.$store.state.auth.auth_user.avatar);
+    	// console.log('this.$store.state.auth.auth_user.avatar',this.$store.state.auth.auth_user.avatar);
 
         return {
             backgroundImage:'url('+this.$store.state.auth.auth_user.avatar+')',
@@ -446,7 +446,7 @@ methods: {
     },
 
     bounce(type){
-    	// this.cnsl('type = ',type)
+    	// console.log('type = ',type)
 
     	if(type=='notifications') {
     		this.isBounceNtfctns = true;
@@ -463,7 +463,7 @@ methods: {
     // notifications
     // /////////////////////////////////////////////////////////
     resetNotifications() {
-		// this.cnsl('resetNotifications');
+		// console.log('resetNotifications');
     	var options = {
     		offset: 0,
     		limit: this.limit,
@@ -489,7 +489,7 @@ methods: {
     // notifications messages
     // /////////////////////////////////////////////////////////
     resetNotificationsMsgs() {
-		// this.cnsl('resetNotificationsMsgs');
+		// console.log('resetNotificationsMsgs');
         var options = {
     		offset: 0,
     		limit: this.limit,
@@ -525,11 +525,11 @@ methods: {
     // /////////////////////////////////////////////////////////
 
     gotoNotfication(ntfctn){
-    	// this.cnsl('ntfctn',ntfctn);
+    	// console.log('ntfctn',ntfctn);
         this.showSnackbar = false;
         this.$store.dispatch('ntfctns/gotoNotfication_a',ntfctn);
     	this.$store.dispatch('ntfctns/markNotifasRead_a',ntfctn);
-        // this.cnsl(this.$refs);
+        // console.log(this.$refs);
 
     },
 
@@ -542,7 +542,7 @@ methods: {
     // infinite-scroll
     //////////////////////////////////////////////////////////
 	fetchNtfctns () {
-		// this.cnsl('fetchNtfctns');
+		// console.log('fetchNtfctns');
 		this.ntfctnsIsLoading = true
 
     	var options = {
@@ -571,7 +571,7 @@ methods: {
 	},
 
 	fetchMsgs () {
-		// this.cnsl('fetchMsgs');
+		// console.log('fetchMsgs');
         this.msgsIsLoading = true
 
         var options = {
@@ -580,7 +580,7 @@ methods: {
     	};
     	this.$store.dispatch('ntfctns/populateNotificationsMsgs_a', options)
         .then((response) => {
-            // this.cnsl('fetchMsgs response',response);
+            // console.log('fetchMsgs response',response);
 
             if(response.count>0) {
 	        	// Now notifications are done populating show snackbar
@@ -592,7 +592,7 @@ methods: {
 	        else 
 	        this.showMsgsLoading = false;
 
-            // this.cnsl("this.offsetMsgs",this.offsetMsgs);
+            // console.log("this.offsetMsgs",this.offsetMsgs);
         })
         .catch((e) => {
             console.log(e);
@@ -636,14 +636,14 @@ created()  {
 	this.fetchMsgs();
 
     NtfctnBus.onNewNotification((data)=>{
-    	// this.cnsl('toolbar onNewNotification data',data);
+    	// console.log('toolbar onNewNotification data',data);
     	this.bounce('notifications');
     	this.offsetNtfctns++;
 		this.insertLatestNtfctn();
 		// this.resetNotificationsMsgs();
     });
 	MsgBus.onNewMessage((data)=>{
-    	// this.cnsl('toolbar onNewMessage data',data);
+    	// console.log('toolbar onNewMessage data',data);
     	this.bounce('messages');
     	this.offsetMsgs++;
 		this.insertLatestMsg();

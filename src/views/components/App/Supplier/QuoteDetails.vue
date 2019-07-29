@@ -547,9 +547,9 @@ export default {
 				this.hasBid = (this.bid) ? true : false;
 
 	 			// console.log('reloadBid data',data);
-	 			// this.cnsl('reloadBid data',data);
-	 			// this.cnsl('reloadBid this.hasBid',this.hasBid);
-	 			// this.cnsl('reloadBid this.bid',this.bid);
+	 			// console.log('reloadBid data',data);
+	 			// console.log('reloadBid this.hasBid',this.hasBid);
+	 			// console.log('reloadBid this.bid',this.bid);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -573,7 +573,7 @@ export default {
 		},
 
 		setSampleAsProductionDone(){
-			// this.cnsl('payload',payload);
+			// console.log('payload',payload);
 
 			this.setSampleAsProductionDoneBtn = true;
 
@@ -581,7 +581,7 @@ export default {
 				inq_id: this.inquiry.id
 			})
 			.then((data)=>{
-				this.cnsl(data);
+				console.log(data);
 				this.reloadBid();
 				this.setSampleAsProductionDoneBtn = false;
 			})
@@ -596,7 +596,7 @@ export default {
 		setProductionAsDone() {
 			this.setProductionAsDoneBtn = true;
 
-			// this.cnsl(this.inquiry);
+			// console.log(this.inquiry);
 
 			this.$store.dispatch(this.getStore()+'/setProductionAsDone_a',{
 				inq_id: this.inquiry.id,
@@ -626,7 +626,7 @@ export default {
 
 			handler(nVal, oVal) {
 				this.reloadBid();
-				this.cnsl('watch inquiry');
+				console.log('watch inquiry');
 			},
 
 			deep: true,

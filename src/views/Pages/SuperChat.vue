@@ -119,7 +119,7 @@ export default {
 
 	watch: {
 		isConnected(nVal){
-			this.cnsl("socket connection = "+nVal);
+			console.log("socket connection = "+nVal);
 		},
 	},
 

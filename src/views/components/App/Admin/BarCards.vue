@@ -102,7 +102,7 @@ methods: {
 			data.count = response.length;
 		})
 		.catch((e) => {
-			this.cnsl('Error: ' + e);
+			console.log('Error: ' + e);
 			data.count = 0;
 		});
 	},

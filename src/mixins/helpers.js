@@ -106,15 +106,15 @@ export default {
 
 	    getStore(type='inq'){
 
-	    	// this.cnsl('$route',this.$route.meta.storeType[type]);
+	    	// console.log('$route',this.$route.meta.storeType[type]);
 
 	        // return this.$route.meta.storeType.inq;
 	        return this.$route.meta.storeType[type];
 	    },
 
 	    getAttachments(attachments) {
-	        this.cnsl(attachments.filegroup);
-	        this.cnsl(attachments.filename)
+	        console.log(attachments.filegroup);
+	        console.log(attachments.filename)
 	        return attachments.filegroup
 	    },
 
@@ -123,7 +123,7 @@ export default {
 			// return ceil(arg,2).toFixed(2)
 			// return this.numberWithCommas(arg.toFixed(2));
 			
-			// this.cnsl('arg 1',arg);
+			// console.log('arg 1',arg);
 
 			if(typeof arg === 'undefined')
 			arg = 0.0;
@@ -132,7 +132,7 @@ export default {
 			else
 			arg = parseFloat(arg);
 
-			// this.cnsl('arg 2',arg);
+			// console.log('arg 2',arg);
 
 			return this.numberWithCommas(arg.toFixed(decimals));
 		},

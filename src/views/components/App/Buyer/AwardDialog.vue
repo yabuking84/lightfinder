@@ -315,7 +315,7 @@ export default {
 			this.form.shipping_city=this.inquiry.shipping_city;
 			this.form.shipping_country_id=this.inquiry.shipping_country_id;
 			this.form.shipping_postal=this.inquiry.shipping_postal;
-			// this.cnsl(this.inquiry);
+			// console.log(this.inquiry);
 		},
 
 		closeDialog() {

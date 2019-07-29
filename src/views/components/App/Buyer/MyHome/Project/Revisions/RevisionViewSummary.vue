@@ -10,33 +10,18 @@
 			</tr>
 
 			<!-- //////////////////////////////////////////////////////////////// -->
-			<template v-if="sampleLength">				
+			<template v-if="items.length">				
 				<tr>
 					<td colspan="2" class="px-4 pt-3">
 						<span>Items: </span>
 					</td>
 				</tr>			
 				
-				<template v-for="(sample, i) in samples" >				
-        			<v-tooltip right>
-	        		<template #activator="{ on }">
-
-					<tr 
-					v-if="sample.formData.totalPrice && sample.formData.ordered"
-					v-on="on"
-					:key="'sample_'+i">					
-						<td class="px-4">							
-							{{ sample.item_number }} - {{ sample.name }}
-						</td>
-						<td class="currency">$ {{ currency(sample.formData.totalPrice) }}</td>
+				<template v-for="(item, i) in items" >				
+					<tr :key="'item_'+i">
+						<td class="px-4">{{ item.item_number }} - {{ item.name }}</td>
+						<td class="currency">$ {{ currency(item.price*item.quantity) }}</td>
 					</tr>
-
-                    </template>
-					<span style="font-size: 1.8em;">
-						({{ sample.formData.quantity }} x ${{ currency(sample.sample_price) }}) + ${{ currency(sample.sample_shipment_price_less_5) }}
-					</span>
-                	</v-tooltip>
-
 				</template>
 
 			<tr>
@@ -47,7 +32,7 @@
 			</tr>
 
 			<tr>
-				<td class="px-4 pt-2 font-weight-bold">Sample Ordered Amount:</td>
+				<td class="px-4 pt-2 font-weight-bold">Ordered Amount:</td>
 				<td class="font-weight-bold currency">$ {{ currency(itemTotal) }}</td>
 			</tr>
 			</template>
@@ -72,7 +57,7 @@
 		class="black white--text" 
 		block
 		:loading="btnLdng">
-			Pay samples
+			Pay Quotation
 		</v-btn>
 	</v-flex>
 
@@ -94,9 +79,12 @@ import config from '@/config/main';
 
 export default {
 	props: {
-		proj_id: String,
-		samples: Array,
+		'items':{
+			type: Array,
+			default: ()=>[],
+		},
 	},
+
 
 	data(){ return {
 		btnLdng: false,
@@ -106,9 +94,8 @@ export default {
 		itemTotal(){
 			var retVal = 0;
 
-			this.samples.forEach((sample)=>{
-				if(sample.formData.ordered)
-				retVal = retVal + sample.formData.totalPrice;
+			this.items.forEach((item)=>{				
+				retVal = retVal + (item.price*item.quantity);
 			});
 
 			return retVal;
@@ -117,15 +104,6 @@ export default {
 		psf(){
 			return config.myHome.psf;
 		},
-
-		sampleLength(){
-			var rslt = this.samples.filter((sample)=>{
-				return (sample.formData.totalPrice && sample.formData.ordered)
-			});
-
-			return rslt.length;
-		},
-
 
 		overAllTotal(){
 			return this.psf + this.itemTotal;
@@ -150,13 +128,13 @@ export default {
 	}
 	.totalRow {
 		td {
-			font-size: 1.3em;
+			font-size: 1.2em;
 			font-weight: bold;
 		}
 	}
 
 	td.currency {
-		padding-left: 5px;
+		padding-left: 15px;
 	}
 
 }

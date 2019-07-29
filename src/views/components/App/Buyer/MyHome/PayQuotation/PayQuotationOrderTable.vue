@@ -99,10 +99,12 @@ export default {
 		ImageView,
 	},
 
-	props:[
-		'proj_id',
-		'items',
-	],
+	props:{
+		'items':{
+			type: Array,
+			default: ()=>[],
+		},
+	},
 
 	data(){ return {
 

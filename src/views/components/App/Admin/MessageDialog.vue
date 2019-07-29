@@ -105,7 +105,7 @@ export default {
     	sendMessage() {
 
     		if(this.chatMessageEditor)
-    			this.cnsl(this.chatMessageEditor);
+    			console.log(this.chatMessageEditor);
     		    this.hideInquiry();
 
 

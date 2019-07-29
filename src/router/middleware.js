@@ -6,20 +6,20 @@ import helpers from '@/mixins/helpers'
 
 export default  (to, from, next) => {
 
-	// this.cnsl('auth/isLoggedIn_g xxxxxxxxx');
-	// this.cnsl(store.getters['auth/isLoggedIn_g']);
+	// console.log('auth/isLoggedIn_g xxxxxxxxx');
+	// console.log(store.getters['auth/isLoggedIn_g']);
 	
-	// this.cnsl('auth/role xxxxxxxxx');
-	// this.cnsl(store.state.auth.auth_user.role);
+	// console.log('auth/role xxxxxxxxx');
+	// console.log(store.state.auth.auth_user.role);
 	
-	// this.cnsl('meta role xxxxxxxxx');
-	// this.cnsl(to.matched[to.matched.length-1].meta.role);
+	// console.log('meta role xxxxxxxxx');
+	// console.log(to.matched[to.matched.length-1].meta.role);
 
-	// this.cnsl('meta redirectToRole xxxxxxxxx');
-	// this.cnsl(to.matched[to.matched.length-1].meta.redirectToRole);
+	// console.log('meta redirectToRole xxxxxxxxx');
+	// console.log(to.matched[to.matched.length-1].meta.redirectToRole);
 
-	// this.cnsl('to.matched xxxxxxxxx');
-	// this.cnsl(to.matched);
+	// console.log('to.matched xxxxxxxxx');
+	// console.log(to.matched);
 
 	// console.log('TOTOTOTOTO');
 	// console.log(to);

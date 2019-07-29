@@ -52,7 +52,7 @@
 										<!-- <v-card-title primary-title class="pt-3 pb-0">
 											<h3>Revisions</h3>
 										</v-card-title> -->
-										<v-card-text>									  
+										<v-card-text class="mb-3" style="height: 252px; overflow-y: auto;">
 											<revision-list :proj_id="project.id"></revision-list>										  
 										</v-card-text>									
 									</v-card>
@@ -61,13 +61,13 @@
 							</v-layout>
 
 						</v-card-text>
-						<v-card-actions>
+						<!-- <v-card-actions>
 		                    <router-link :to="{name:'BuyerMyHomePayQuotation', params:{proj_id:proj_id}}">
 								<v-btn class="black white--text">
 									pay quotation
 								</v-btn>
 		                    </router-link>
-						</v-card-actions>
+						</v-card-actions> -->
 					</v-card>
 				</v-flex>
 
@@ -96,8 +96,9 @@
 						<v-card-title>
 						  	<h3>Attached Files</h3>
 						</v-card-title>
-						<v-card-text style="height:300px">
-							<files></files>
+						<!-- <v-card-text style="height:300px"> -->
+						<v-card-text style="">
+							<files :proj_id="proj_id"></files>
 						</v-card-text>
 					</v-card>
 				</v-flex>

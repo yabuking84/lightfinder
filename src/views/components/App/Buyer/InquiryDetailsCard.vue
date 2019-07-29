@@ -421,7 +421,7 @@
 		},
 
 		created() {
-			// this.cnsl(this.inquiry);
+			// console.log(this.inquiry);
 			 this.SortAttachments();    
 
 		},

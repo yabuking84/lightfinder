@@ -1041,14 +1041,14 @@ export default {
 				};
 				this.setSampleAsShippedBtn = true;
 
-				this.cnsl('payload',payload);
+				console.log('payload',payload);
 
 				// 1556169091285
 				this.$store.dispatch(this.getStore()+'/setSampleStage_a',payload)
 				.then((rspns)=>{
 					this.fillBidTable();
 					this.setSampleAsShippedBtn = false;
-					this.cnsl(rspns);
+					console.log(rspns);
 				})
 				.catch((e)=>{
 					this.fillBidTable();
@@ -1138,7 +1138,7 @@ export default {
 		inquiryAmount(){
 			var retVal = 0;
 			
-			this.cnsl('this.bidItems',this.bidItems);
+			console.log('this.bidItems',this.bidItems);
 			this.bidItems.forEach((bid)=>{				
 				if(bid.active && bid.awarded) {
 					retVal=bid.total_price;					

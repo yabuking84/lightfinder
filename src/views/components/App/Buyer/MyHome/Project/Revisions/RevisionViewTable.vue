@@ -1,7 +1,7 @@
 <template>															
 <v-data-table
 :headers="tableSettings.headers"
-:items="revision.items"
+:items="items"
 class="elevation-1 item-table">
 
 <template #items="sp">
@@ -9,7 +9,7 @@ class="elevation-1 item-table">
         <td>
         	<v-layout row wrap justify-start align-center>							        	    
 				
-				<image-view :src="sp.item.image"></image-view>
+				<image-view width="70px" height="70px" :src="sp.item.image"></image-view>
 
 				<div>
 					<h4>{{ sp.item.item_number }} - {{ sp.item.name }}</h4>
@@ -20,13 +20,13 @@ class="elevation-1 item-table">
         	</v-layout>
         </td>
         <td>
-            <h3>${{ sp.item.quantity }}</h3>
+            <h4>{{ sp.item.quantity }} pcs</h4>
         </td>        
         <td>
-            <h3>${{ currency(sp.item.price) }}</h3>
+            <h4>${{ currency(sp.item.price) }}</h4>
         </td>
         <td>
-            <h3>${{ currency(sp.item.quantity*sp.item.price) }}</h3>
+            <h4>${{ currency(sp.item.quantity*sp.item.price) }}</h4>
         </td>
     </tr>
 </template>
@@ -35,5 +35,55 @@ class="elevation-1 item-table">
 
 
 <script>
+import ImageView from "@/views/Components/App/Buyer/MyHome/ImageView";
 
+export default {
+	components:{
+		ImageView,		
+	},
+
+	props: {
+		'items': {
+			type: Array,
+			default: ()=>[],
+		}
+	},
+
+	data(){return{
+
+		tableSettings: {
+	        headers: [
+	        	{
+	        	  text: 'Details',
+	        	  align: 'left',
+	        	  value: 'item_number',
+	        	  sortable: true,
+	        	},
+	        	{
+	        	  text: 'Unit Price',
+	        	  align: 'left',
+	        	  value: 'price',
+	        	  sortable: true,
+	        	  width: '50px',
+	        	},
+	        	{
+	        	  text: 'Quantity',
+	        	  align: 'left',
+	        	  value: 'quantity',
+	        	  sortable: true,
+	        	  width: '50px',
+	        	},
+	        	{
+	        	  text: 'Total Price',
+	        	  align: 'left',
+	        	  value: 'price',
+	        	  sortable: true,
+	        	  width: '50px',
+	        	},
+	        ],
+		},	
+
+	}},
+
+}
 </script>

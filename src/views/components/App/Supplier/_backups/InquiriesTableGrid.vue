@@ -318,7 +318,7 @@ export default {
 
 			})
 			.catch((e) => {
-				this.cnsl('Error: ' + e);
+				console.log('Error: ' + e);
 				this.loading = false;
 			})
 			.finally(() => {
@@ -366,7 +366,7 @@ export default {
 					  // add key to search in the dom
 					  return (inquiry.inq_id.includes(this.search) || inquiry.inq_id.toLowerCase().includes(this.search))
 				  })            
-				  // this.cnsl(this.search);
+				  // console.log(this.search);
 			  }
 
 			  this.tableItems = items;
@@ -397,10 +397,10 @@ export default {
 		this.$store.dispatch('cat/getCategories_a')
 			.then((data) => {
 				this.categoryItems = data;
-				// this.cnsl(this.categoryItems);
+				// console.log(this.categoryItems);
 			})
 			.catch((e) => {
-				this.cnsl('Error: ');
+				console.log('Error: ');
 				console.log(e);
 			});
 

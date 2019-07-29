@@ -120,8 +120,8 @@ computed: {
     //         return this.$store.state.inq.inquiry;
     //     },
     //     set(nVal) {
-    //         // this.cnsl('setVal');
-    //         // this.cnsl(nVal);
+    //         // console.log('setVal');
+    //         // console.log(nVal);
     //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
     //     },
     // },       

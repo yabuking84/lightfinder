@@ -117,8 +117,8 @@ import hlprs from "@/mixins/helpers";
 		created() {
 			this.updateChat();
 
-			// this.cnsl("bid",this.bid);
-			// this.cnsl("type",this.type);
+			// console.log("bid",this.bid);
+			// console.log("type",this.type);
 
 			var ths = this;
 			MsgBus.onNewProjectMessage(function(data){
@@ -145,7 +145,7 @@ import hlprs from "@/mixins/helpers";
 					
 
 
-					this.cnsl('payload',payload);
+					console.log('payload',payload);
 
 					this.$store.dispatch('msg/sendProjectMessage_a', payload)
 					.then(response=>{
@@ -180,7 +180,7 @@ import hlprs from "@/mixins/helpers";
 				}).catch(error => {
 
 					this.loading = false;
-					// this.cnsl('error xxx',error);
+					// console.log('error xxx',error);
 
 				});
 			},

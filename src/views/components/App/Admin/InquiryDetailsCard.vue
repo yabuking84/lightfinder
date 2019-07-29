@@ -380,8 +380,8 @@ export default {
 	    SortAttachments() {
 
 
-	    	// this.cnsl('aslllllllllllllllllllllllllllllllllllllllllllllllllllllll');
-	    	// this.cnsl(this.inquiry.attachments);
+	    	// console.log('aslllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+	    	// console.log(this.inquiry.attachments);
 
 	            var attachmentHolder = this.inquiry.attachments;
 
@@ -451,7 +451,7 @@ export default {
 
 
   created() {
-            // this.cnsl(this.inquiry);
+            // console.log(this.inquiry);
              this.SortAttachments();    
     },
 

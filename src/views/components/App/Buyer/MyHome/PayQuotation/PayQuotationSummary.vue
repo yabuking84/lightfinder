@@ -79,9 +79,12 @@ import config from '@/config/main';
 
 export default {
 	props: {
-		proj_id: String,
-		items: Array,
+		'items':{
+			type: Array,
+			default: ()=>[],
+		},
 	},
+
 
 	data(){ return {
 		btnLdng: false,

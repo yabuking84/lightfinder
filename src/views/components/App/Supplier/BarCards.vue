@@ -160,11 +160,11 @@ methods: {
 	setWalletBarCard(){
 		this.getInquiryCount('2001,2002,2003')
 		.then((rspns)=>{
-			this.cnsl(rspns);
+			console.log(rspns);
 			var inqs = rspns.filter((inq)=>{
 				return (inq.awarded_to_me)?true:false;
 			});
-			// this.cnsl('setWalletBarCard',inqs);
+			// console.log('setWalletBarCard',inqs);
 
 			var walletTotal = 0;
 			inqs.forEach((inq)=>{

@@ -727,7 +727,7 @@ export default {
 	// 	repeat: true,
 	// 	autostart: false,
 	// 	callback: function() {
-	// 		this.cnsl("BidTableTimer");
+	// 		console.log("BidTableTimer");
 	// 		this.fillBidTable();
 	// 	},
 	// }],
@@ -737,7 +737,7 @@ export default {
 
 		fillBidTable() {
 
-			this.cnsl('fillBidTable');
+			console.log('fillBidTable');
 
 			this.checkInquiryStatus();
 			this.$store.dispatch('byrInq/getAllInquiryBids_a', {
@@ -774,7 +774,7 @@ export default {
 
 		openAwardBid(bid) {
 
-			// this.cnsl("openAwardBid bid",bid);
+			// console.log("openAwardBid bid",bid);
 			this.bidToAward = bid;
 			this.openAwardDialog = true;
 		},
@@ -790,10 +790,10 @@ export default {
 
 			let is_awarded = false;
 
-			// this.cnsl("xxxxxxxxxxxxxxxxxxxxxx");
-			// this.cnsl("bid.id",bid.id);
-			// this.cnsl("inq.awarded",this.inquiry.awarded);
-			// this.cnsl("bid.awarded",bid.awarded);
+			// console.log("xxxxxxxxxxxxxxxxxxxxxx");
+			// console.log("bid.id",bid.id);
+			// console.log("inq.awarded",this.inquiry.awarded);
+			// console.log("bid.awarded",bid.awarded);
 			if (this.inquiry.awarded == 1) {
 				if (bid.awarded == 1)
 				is_awarded = true;
@@ -802,8 +802,8 @@ export default {
 				is_awarded = true;
 			}
 
-			// this.cnsl("is_awarded",is_awarded);
-			// this.cnsl("xxxxxxxxxxxxxxxxxxxxxx");
+			// console.log("is_awarded",is_awarded);
+			// console.log("xxxxxxxxxxxxxxxxxxxxxx");
 			return is_awarded;
 		},
 
@@ -819,9 +819,9 @@ export default {
 			this.verified = (this.inquiry.stage_id == 1001)?true:false;
 			this.rejected = (this.inquiry.stage_id == 1003)?true:false;
 
-			// this.cnsl("this.inquiry.stage_id = "+this.inquiry.stage_id);
-			// this.cnsl("this.verified = "+this.verified);
-			// this.cnsl("this.rejected = "+this.rejected);
+			// console.log("this.inquiry.stage_id = "+this.inquiry.stage_id);
+			// console.log("this.verified = "+this.verified);
+			// console.log("this.rejected = "+this.rejected);
 
 		},
 
@@ -874,7 +874,7 @@ export default {
 		inquiryAmount(){
 			var retVal = 0;
 			
-			// this.cnsl('this.bidItems',this.bidItems);
+			// console.log('this.bidItems',this.bidItems);
 			this.bidItems.forEach((bid)=>{				
 				if(bid.active && bid.awarded) {
 					retVal=bid.total_price;					

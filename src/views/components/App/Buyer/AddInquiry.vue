@@ -524,7 +524,7 @@ export default {
 
         stepCnt(val) {
 
-            // this.cnsl("step_"+val);
+            // console.log("step_"+val);
             
             if(val>1) {
 
@@ -545,8 +545,8 @@ export default {
 
     methods: {
         stepUp: function(val=1) {
-            // this.cnsl("stepCnt = "+this.stepCnt);
-            // this.cnsl("val = "+val);
+            // console.log("stepCnt = "+this.stepCnt);
+            // console.log("val = "+val);
             this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
             // this.stepCnt += val;
         },

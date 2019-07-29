@@ -1297,17 +1297,17 @@ export default {
     //     this.countries = response
     //   })
     //   .catch((e) => {
-    //     this.cnsl('Error: ')
+    //     console.log('Error: ')
     //     console.log(e);
     //   });
 
     // this.getCountries()
     // .then((response) => {
-    //     this.cnsl(response)
+    //     console.log(response)
     //     this.countries = response
     // })
     // .catch((e) => {
-    //     this.cnsl('Error: ')
+    //     console.log('Error: ')
     //     console.log(e);
     // });
   	
@@ -1325,7 +1325,7 @@ export default {
 
     stepCnt(val) {
 
-      // this.cnsl("step_"+val);
+      // console.log("step_"+val);
       if (val > 1) {
         // remove focus on fields to prevent auto select or display issues, just add no-focus
         if (typeof this.$refs["step_" + val].$attrs['no-focus'] == "undefined") {
@@ -1399,7 +1399,7 @@ export default {
 
     'formData.power': function (nVal, oVal) {
 
-    	// this.cnsl('formData.power');
+    	// console.log('formData.power');
     	if(this.formData.lumen>0 && nVal>0) {
 
 	    	this.formData.efficiency = this.formData.lumen / this.formData.power;
@@ -1431,7 +1431,7 @@ export default {
 
 			this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
 			.then((rspns)=>{
-				// this.cnsl(rspns);
+				// console.log(rspns);
 				if(rspns) {					
 					this.moq = rspns.inclusions.moq;
 				}
@@ -1485,7 +1485,7 @@ export default {
       // return country_id
 
       // const countrys =  this.countries.find( country => country.id = country_id )
-      // this.cnsl(countrys)
+      // console.log(countrys)
 
     },
 
@@ -1572,7 +1572,7 @@ export default {
 			// remove from  tep
 			if(type == 'image' && this.inquiry_images.length) {
 
-					// this.cnsl('this.inquiry_images',);
+					// console.log('this.inquiry_images',);
 
 					this.inquiry_images = this.inquiry_images.filter(function(attachments) {
 						return attachments != file;
@@ -1608,7 +1608,7 @@ export default {
     // usable for editing the inquiry/ and previewing to sidebar
     fillFormData() {
 
-            // this.cnsl(this.inquiryHolder)
+            // console.log(this.inquiryHolder)
 
             this.inquiry_images = []
             this.inquiry_attachments = []
@@ -1697,7 +1697,7 @@ export default {
               specsValue = (typeof objectHolder !== 'undefined')?objectHolder.value:'';
          }
 
-          // this.cnsl(objectHolder.name +'='+ objectHolder.value)
+          // console.log(objectHolder.name +'='+ objectHolder.value)
           return specsValue;
 
 
@@ -1760,8 +1760,8 @@ export default {
     },
 
     stepUp: function(val = 1) {
-      // this.cnsl("stepCnt = "+this.stepCnt);
-      // this.cnsl("val = "+val);
+      // console.log("stepCnt = "+this.stepCnt);
+      // console.log("val = "+val);
       this.stepCnt = parseInt(this.stepCnt) + parseInt(val);
       // this.stepCnt += val;
     },
@@ -1772,7 +1772,7 @@ export default {
 
     submitForm: function() {
 
-    	this.cnsl('this.formData.attachments zzzzzzzzzz',this.formData.attachments);
+    	console.log('this.formData.attachments zzzzzzzzzz',this.formData.attachments);
 
       var formData = {
 
@@ -1820,9 +1820,9 @@ export default {
     
       }
 
-      // this.cnsl('--------------------------')
-      // this.cnsl(formData);
-      // this.cnsl('--------------------------')
+      // console.log('--------------------------')
+      // console.log(formData);
+      // console.log('--------------------------')
 
         var action = "";
         var data = {};
@@ -1844,7 +1844,7 @@ export default {
 
       }
 
-      // this.cnsl(data)
+      // console.log(data)
 
       if (this.$v.$invalid) {
 
@@ -1903,12 +1903,12 @@ export default {
     },
 
     vdz_s3UploadSuccess: function(s3ObjectLocation){
-        // this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
-        // this.cnsl();
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
     },
     vdz_success(file, upload_group){
-        this.cnsl("vdz_success file = ",file);
-        this.cnsl("vdz_success upload_group = ",upload_group);
+        console.log("vdz_success file = ",file);
+        console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
@@ -1920,8 +1920,8 @@ export default {
                 filesize: _.round((file.size/1000), 2),
             };
 
-            this.cnsl('attachment xxxxx',attachment);
-            this.cnsl('this.formData.attachments xxxxx',this.formData.attachments);
+            console.log('attachment xxxxx',attachment);
+            console.log('this.formData.attachments xxxxx',this.formData.attachments);
             this.formData.attachments.push(attachment);
 
             // for the preview when uploaded

@@ -137,7 +137,7 @@ export default {
 			})
 			.then((response) => {
 
-				this.cnsl('payByBankTransfer', response);
+				console.log('payByBankTransfer', response);
 				this.confirmed = true;
 				inqEvntBs.emitPaymentMade();
 			})

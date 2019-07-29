@@ -19,7 +19,7 @@ export default {
         this.$store.dispatch('auth/logout_a')
         .then(response=>{
 
-            // this.cnsl("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
+            // console.log("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
             // alert("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
                         
             // this.$router.push("/login");

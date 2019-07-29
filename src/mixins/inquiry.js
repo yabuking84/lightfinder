@@ -10,7 +10,7 @@ export default {
 			return new Promise((resolve,reject)=>{
 				this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
 				.then((rspns)=>{
-					// this.cnsl('setMaxInqs rspns',rspns);
+					// console.log('setMaxInqs rspns',rspns);
 					var retVal = {
 						max_inquiry: 0,
 						package_type: 0,
@@ -38,7 +38,7 @@ export default {
 			return new Promise((resolve, reject) => {			
 				this.$store.dispatch(this.getStore()+'/getInquiries_a')
 				.then((rspns)=>{
-					// this.cnsl('Inquiries ',rspns);
+					// console.log('Inquiries ',rspns);
 					var retVal = 0;
 
 					if(rspns.length)
@@ -61,7 +61,7 @@ export default {
 					inq_id: inq_id
 				})
 				.then((data) => {
-					// this.cnsl('data',data);
+					// console.log('data',data);
 
 					if(data.bids){
 						var awarded_bid_id = data.id+'-'+data.awarded_bid_id
@@ -104,7 +104,7 @@ export default {
 				var amount = 0.0;
 				var price = 0.0;
 				
-				// this.cnsl('bids ',bids[0]);
+				// console.log('bids ',bids[0]);
 
 				var bids = [];
 				var bid_stages = [];

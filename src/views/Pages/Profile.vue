@@ -293,7 +293,7 @@ export default {
 					if (value === '') 
 					return true;
 
-					this.cnsl(value+' ?= '+this.authUser.email);				
+					console.log(value+' ?= '+this.authUser.email);				
 
 					if(this.authUser.email==value)
 					return true;
@@ -504,8 +504,8 @@ export default {
 			this.form.postal =     		this.authUser.postal;			
 			this.form.country_id =  	parseInt(this.authUser.country_id);
 			// this.form.sel_country_id =  {id:this.authUser.country_id};
-			this.cnsl("fillForm",this.form);
-			// this.cnsl("this.countries",this.countries);
+			console.log("fillForm",this.form);
+			// console.log("this.countries",this.countries);
 
 			// reset profile upload_group
 			this.showUploadProfileImage = false;
@@ -551,7 +551,7 @@ export default {
 			this.authUser.postal = 		this.form.postal;
 			this.authUser.country_id = 	this.form.country_id;
 
-			this.cnsl('data',data);
+			console.log('data',data);
 			this.formloading = false
 
 			this.$store.dispatch(this.getStore()+'/updateProfile_a', {
@@ -601,7 +601,7 @@ export default {
 				data: data,
 			})
 			.then((response) => {
-				this.cnsl(response);
+				console.log(response);
 				if(!response.updated)
 				this.message = "Password Incorrect! Please try again..";
 				else
@@ -644,7 +644,7 @@ export default {
 		},
 
 		vdz_removedFile: function(file, error, xhr){
-			this.cnsl("file",file);
+			console.log("file",file);
 
 			// clear attachment
 			this.showSaveProfileImage = false;
@@ -652,12 +652,12 @@ export default {
 		},
 
 		vdz_s3UploadSuccess: function(s3ObjectLocation){
-			// this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
+			// console.log("vdz_s3UploadSuccess",s3ObjectLocation);
 		},
 
 		vdz_success(file, upload_group){
-			// this.cnsl("vdz_success file = ",file);
-			// this.cnsl("vdz_success upload_group = ",upload_group);
+			// console.log("vdz_success file = ",file);
+			// console.log("vdz_success upload_group = ",upload_group);
 
 			if(file.status=='success') {
 
@@ -671,8 +671,8 @@ export default {
 
 				this.showSaveProfileImage = true;
 
-				this.cnsl('UPLOADED!');
-				this.cnsl('this.attachment',this.attachment);
+				console.log('UPLOADED!');
+				console.log('this.attachment',this.attachment);
 
 				this.avatarImg = file.s3ObjectLocation;
 			}
@@ -695,8 +695,8 @@ export default {
 		saveProfileImage(){
 			this.$refs.dropzone_profileimage.processQueue();
 			
-			// this.cnsl('saveProfileImage()');
-			// this.cnsl('getQueuedFiles',this.$refs.dropzone_profileimage.getQueuedFiles());
+			// console.log('saveProfileImage()');
+			// console.log('getQueuedFiles',this.$refs.dropzone_profileimage.getQueuedFiles());
 
 		},
 		// dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd

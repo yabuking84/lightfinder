@@ -328,7 +328,7 @@
                 this.$store.dispatch('toggleMiniVariantMode')
                 this.$store.dispatch('toggleMiniVarient')
 
-                this.cnsl(this.navMiniVarient);
+                console.log(this.navMiniVarient);
             },
 
             // miniEnterVariantHandler() {

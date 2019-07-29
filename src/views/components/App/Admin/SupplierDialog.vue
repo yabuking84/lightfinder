@@ -274,7 +274,7 @@ export default {
         this.countries = response
     })
     .catch((e) => {
-        this.cnsl('Error: ')
+        console.log('Error: ')
         console.log(e);
     });
 
@@ -285,7 +285,7 @@ export default {
         this.categoryItems = data;
       })
       .catch((e) => {
-        this.cnsl('Error: ');
+        console.log('Error: ');
         console.log(e);
       });
 
@@ -334,7 +334,7 @@ export default {
 
     submit() {
 
-      // this.cnsl(this.form);
+      // console.log(this.form);
       if (this.is_new) {
         this.addSupplier();
       } else {

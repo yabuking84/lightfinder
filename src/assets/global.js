@@ -1,6 +1,6 @@
 // function cnsl(output,title=""){
 // 	if(title)
-// 	this.cnsl(output);
+// 	console.log(output);
 // 	else
-// 	this.cnsl(title,output);
+// 	console.log(title,output);
 // }

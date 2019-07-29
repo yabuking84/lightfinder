@@ -39,7 +39,7 @@
 						<v-layout row wrap>
 
 							<v-flex xs12>							  
-								<h1 class="d-inline-block ml-2">Order Samples</h1>
+								<h1 class="d-inline-block ml-2">Order Samples from {{ revision.revision }}</h1>
 							</v-flex>
 
 							<v-flex xs4>							
@@ -78,6 +78,7 @@ export default {
 
 	data() { return {
 
+		revision: {},
 		samples: [],
 		formData :{
 			items:[],
@@ -106,7 +107,7 @@ export default {
 		    	rev_id: this.rev_id,
 		    })
 	    	.then((rspns)=>{
-	    		
+	    		this.revision = rspns;
 	    		this.samples = rspns.items.map((sample)=>{
 	    			return {
 	    				...sample,
@@ -119,7 +120,7 @@ export default {
 	    			}
 	    		});
 
-	    		console.log('getSamples',this.samples);
+	    		// console.log('getSamples',this.samples);
 
 	    	})
 	    	.catch((e)=>{

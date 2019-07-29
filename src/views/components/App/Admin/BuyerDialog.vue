@@ -248,7 +248,7 @@ export default {
         this.countries = response
     })
     .catch((e) => {
-        this.cnsl('Error: ')
+        console.log('Error: ')
         console.log(e);
     });
 
@@ -269,7 +269,7 @@ export default {
       this.form.address = this.buyerData.address
       this.form.country_id = this.buyerData.country_id
 
-      this.cnsl(this.form);
+      console.log(this.form);
 
     },
 
@@ -310,7 +310,7 @@ export default {
         "country_id": this.form.country_id,
       };
 
-      this.cnsl(data);
+      console.log(data);
 
       this.$store.dispatch('admnByr/postBuyer_a', {
           data: data,
@@ -318,7 +318,7 @@ export default {
         .then((response) => {
 
           this.formloading = false
-          this.cnsl(response);
+          console.log(response);
 
           // create a event bus 
           this.$emit('update:dialog', false);

@@ -107,12 +107,12 @@ methods: {
     },
 
     vdz_s3UploadSuccess: function(s3ObjectLocation){
-        // this.cnsl("vdz_s3UploadSuccess",s3ObjectLocation);
-        // this.cnsl();
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
     },
     vdz_success(file, upload_group){
-        // this.cnsl("vdz_success file = ",file);
-        // this.cnsl("vdz_success upload_group = ",upload_group);
+        // console.log("vdz_success file = ",file);
+        // console.log("vdz_success upload_group = ",upload_group);
 
         if(file.status=='success') {
 
@@ -124,8 +124,8 @@ methods: {
                 filesize: _.round((file.size/1000), 2),
             };
 
-            // this.cnsl('attachment xxxxx',attachment);
-            // this.cnsl('this.formData.attachments xxxxx',this.formData.attachments);
+            // console.log('attachment xxxxx',attachment);
+            // console.log('this.formData.attachments xxxxx',this.formData.attachments);
 
             // for the preview when uploaded
             // this.inquiry_images.push(attachment);
@@ -144,7 +144,7 @@ methods: {
     getProjectFiles(){
     	this.$store.dispatch(this.getStore('myHm')+'/getProjectFiles_a')
     	.then((rspns)=>{
-    		// this.cnsl(rspns);
+    		// console.log(rspns);
     		this.projectFiles = rspns;
     	})
     	.catch((e)=>{
