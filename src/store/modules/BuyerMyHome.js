@@ -38,6 +38,12 @@ const state = {
 			url2    : 'quotations',
 		},
 
+		requestSample: {
+			method  : 'post',
+			url     : base_url+'/v1/buyer/projects',
+			url2    : 'sample-order',			
+		}
+
 	},
 
 
@@ -211,6 +217,35 @@ const actions = {
 			})
 
 			// resolve(itemsTest);
+
+		});
+	},
+
+	requestSample_a(context, data){
+		return new Promise((resolve, reject) => {
+			var headers = {
+				token:localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			axios({
+				method: state.api.requestSample.method,
+				url: state.api.requestSample.url+"/"+data.proj_id+"/"+state.api.requestSample.url,
+				headers: headers,
+				data: JSON.stringify(data.formData),
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+			resolve(itemsTest);
 
 		});
 	},

@@ -151,12 +151,12 @@ const actions = {
 	joinRoom_a(context, data){
 		var uuid = data;
         
-        console.log('joinRoom_a = '+uuid);
+        // console.log('joinRoom_a = '+uuid);
         vm.$socket.emit('join', uuid);
 	},
 
     unsubscribeSocket_a() {
-        console.log('unsubscribeSocket_a');
+        // console.log('unsubscribeSocket_a');
         vm.$socket.emit('logout');
     },
 

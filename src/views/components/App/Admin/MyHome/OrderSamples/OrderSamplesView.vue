@@ -4,7 +4,7 @@
 		<v-layout row wrap>
 			
 			<v-flex xs12 class="white--text">
-				<router-link :to="{name:'BuyerMyHome'}">
+				<router-link :to="{name:'AdminMyHome'}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -20,7 +20,15 @@
 					</h3>
 				</router-link> 
 				/
-				<h3 class="d-inline-block ml-2">Order Samples</h3>
+				<router-link :to="{name:'AdminMyHomeRevisionView', params:{proj_id:proj_id,rev_id:rev_id}}">
+					<h3 
+					class="white--text d-inline-block mr-2"
+					style="border-bottom: 1px solid;">
+						Revision {{ rev_id }}
+					</h3>
+				</router-link> 
+				/
+				<h3 class="d-inline-block ml-2">Samples Ordered</h3>
 			</v-flex>
 
 			<v-flex xs12>
@@ -31,7 +39,7 @@
 						<v-layout row wrap>
 
 							<v-flex xs12>							  
-								<h1 class="d-inline-block ml-2">Order Samples</h1>
+								<h1 class="d-inline-block ml-2">Samples Ordered from {{ revision.revision }}</h1>
 							</v-flex>
 
 							<v-flex xs4>							
@@ -39,7 +47,7 @@
 							</v-flex>
 
 							<v-flex xs8>
-								<payment-sample-order-table :samples.sync="samples"></payment-sample-order-table>
+								<payment-sample-order-table :samples="samples"></payment-sample-order-table>
 							</v-flex>
 
 						</v-layout>
@@ -57,8 +65,8 @@
 
 <script>
 
-import PaymentSampleSummary from "@/views/Components/App/Buyer/MyHome/OrderSamples/OrderSamplesPaymentSummary"
-import PaymentSampleOrderTable from "@/views/Components/App/Buyer/MyHome/OrderSamples/OrderSamplesTable"
+import PaymentSampleSummary from "@/views/Components/App/Admin/MyHome/OrderSamples/OrderSamplesPaymentSummary"
+import PaymentSampleOrderTable from "@/views/Components/App/Admin/MyHome/OrderSamples/OrderSamplesTable"
 
 export default {
 
@@ -70,6 +78,7 @@ export default {
 
 	data() { return {
 
+		revision: {},
 		samples: [],
 		formData :{
 			items:[],
@@ -81,6 +90,9 @@ export default {
 		proj_id(){
 			return this.$route.params.proj_id;
 		},
+		rev_id(){
+			return this.$route.params.rev_id;
+		},
 	},
 
 	created(){
@@ -90,11 +102,13 @@ export default {
 	methods: {
 
 	    getSamples(){
-	    	this.$store.dispatch(this.getStore('myHm')+'/getSamples_a',{
+	    	this.$store.dispatch(this.getStore('myHm')+'/getQuotation_a',{
 		    	proj_id: this.proj_id,
+		    	rev_id: this.rev_id,
 		    })
 	    	.then((rspns)=>{
-	    		this.samples = rspns.map((sample)=>{
+	    		this.revision = rspns;
+	    		this.samples = rspns.items.map((sample)=>{
 	    			return {
 	    				...sample,
 	    				formData:{
@@ -105,6 +119,9 @@ export default {
 	    				},
 	    			}
 	    		});
+
+	    		// console.log('getSamples',this.samples);
+
 	    	})
 	    	.catch((e)=>{
 	    		console.log(e);

@@ -11,17 +11,27 @@
         <v-container grid-list-xl fluid>
           <v-layout wrap pa-4>
             <v-flex xs12 pa-0>
-              <password v-model="password" :badge="false" hint="" @next="handlePasswordScoreEvent" required></password>
-              <v-text-field
+
+              	<v-text-field
+                class="box-input"
+                placeholder="New Password"
+                type="password"
+                v-model="passwords.newPassword"
+                @blur="$v.passwords.newPassword.$touch()"
+                :error-messages="fieldErrors('passwords.newPassword')"
+                required></v-text-field>
+
+
+              	<v-text-field
                 class="box-input"
                 placeholder="Confirm New Password"
                 type="password"
-                v-model="repeatPassword"
-                :error-messages="fieldErrors('repeatPassword')"
-                @input="$v.repeatPassword.$touch()"
-                @blur="$v.repeatPassword.$touch()"
-                required
-              ></v-text-field>
+                v-model="passwords.newPasswordConfirm"
+                @blur="$v.passwords.newPasswordConfirm.$touch()"                
+                :error-messages="fieldErrors('passwords.newPasswordConfirm')"
+                required></v-text-field>
+
+
             </v-flex>
 
             <v-flex xs12 px-2>
@@ -32,8 +42,9 @@
                     color="act"
                     type="submit"
                     :loading="loader"
-                    :disabled="(passwordScore < 50 || $v.$invalid)"
+                    :disabled="$v.$invalid"
                     block
+                    flat class="black white--text mt-4"
                     :class="$v.$invalid ? '' : 'white--text'"
                   >Set New Password</v-btn>
                 </v-flex>
@@ -46,58 +57,98 @@
   </v-layout>
 </template>
 <script>
-  import validationLangMixin from '@/mixins/validationLangMixin'
-  import { required, sameAs } from 'vuelidate/lib/validators'
-  import Password from '@/views/Components/PasswordStrength.vue'
+import validationLangMixin from '@/mixins/validationLangMixin'
+import { required, sameAs, minLength } from 'vuelidate/lib/validators'
+// import Password from '@/views/Components/PasswordStrength.vue'
 
-  export default {
-    props: ['email', 'code'],
-    mixins: [validationLangMixin],
-    validations: {
-      password: { required },
-      repeatPassword: {
-        sameAsPassword: sameAs('password')
-      }
-    },
-    validationMessages: {
-      password: { required: 'validation.password.required' },
-      repeatPassword: {
-        sameAsPassword: 'validation.password.confirm'
-      }
-    },
-    components: {
-      Password
-    },
-    created () {
-    },
-    data () {
-      return {
-        errors: null,
-        password: null,
-        repeatPassword: null,
-        passwordScore: 0,
-        loader: false
-      }
-    },
-    methods: {
-      handlePasswordScoreEvent (data) {
-        this.passwordScore = data.score
-      },
-      submit () {
-        this.loader = true
-        setTimeout(() => {
-          this.loader = false
-          this.$emit('next', { next: true })
-        }, 2000)
-      },
-      resetForm () {
-        // this.form = Object.assign({}, defaultForm)
-        // this.$refs.sendpasscode.reset()
-        // this.$v.$reset()
-      }
-    },
-    watch: {
+export default {
 
-    }
-  }
+	components: {
+	    // Password
+	},
+	mixins: [
+		validationLangMixin
+	],
+
+	props: [
+		'email',
+		'code',
+	],
+
+
+	validations: {
+		passwords: {			
+		    newPassword: {
+		        required,
+				minLen: minLength(6),
+		    },
+		    newPasswordConfirm: {
+		        sameAs: sameAs(function() {
+		            return this.passwords.newPassword;
+		        }),
+		    },
+		}
+	},
+
+	validationMessages: {
+		passwords:{
+		    newPassword: {
+		        required: 'Password required.',
+		        minLen: "Password min length invalid.",
+		    },
+		    newPasswordConfirm: {
+		        sameAs: 'Password confirmation invalid.',
+			},
+	    }
+	},
+
+	created () {
+
+	},
+
+	data () {
+	    return {
+	        errors: null, 
+	        passwords:{
+		        newPassword: '', 
+		        newPasswordConfirm: '', 
+	        },
+	        loader: false
+	    }
+	},
+
+	methods: {
+	    
+	    submit () {
+	        this.loader=true;
+	        setTimeout(()=> {
+	            this.loader=false; 
+	            this.$emit('next', {
+	                next: true
+	            });
+	        }, 2000);
+	    },
+
+	    resetForm () {
+	        // this.form = Object.assign({}, defaultForm)
+	        // this.$refs.sendpasscode.reset()
+	        // this.$v.$reset()
+	    }
+	},
+
+	watch: {
+
+	},
+
+}
 </script>
+
+<style scoped lang="scss">
+.theme--light.v-btn.v-btn--disabled {
+	color: rgba(255, 255, 255, 0.31) !important;
+}
+
+.theme--light.v-btn.v-btn--disabled /deep/ .v-btn__loading {
+    color: rgba(255, 255, 255, 1) !important;
+}
+</style>

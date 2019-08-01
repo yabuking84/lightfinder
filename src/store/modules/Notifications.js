@@ -309,10 +309,16 @@ const actions = {
 		textSnackbar = 'New Message on INQUIRY #'+data.id+'!';
     	else if(data.type == 'bid.supplier.admin')
 		textSnackbar = 'New Message on INQUIRY #'+data.id+'!';
+    	else if(data.type == 'project.buyer.admin')
+		textSnackbar = 'New Message on Project '+data.id+'!';
     	else
 		textSnackbar = 'New Message!';
 
     	context.commit('UPDATE_SNACKBAR_M',textSnackbar);
+
+    	if(data.type == 'project.buyer.admin')
+		MsgBus.emitNewProjectMessage(data);
+    	else
 		MsgBus.emitNewMessage(data);
 		
         // var ntfctn = {
@@ -437,7 +443,7 @@ const actions = {
 	        	var notifications = response.data.data;
 	        	var unreadCount = response.data.unread;
 
-	        	console.log('response noitofications',response);
+	        	// console.log('response noitofications',response);
 
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             	// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

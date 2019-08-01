@@ -1,5 +1,5 @@
 <template>
-	<div>
+<div>
 		<v-container fluid grid-list-xl>
 			<v-layout row wrap>
 				
@@ -53,7 +53,8 @@
 											<h3>Revisions</h3>
 										</v-card-title> -->
 										<v-card-text class="mb-3" style="height: 252px; overflow-y: auto;">
-											<revision-list :proj_id="project.id"></revision-list>										  
+											<!-- <revision-list :proj_id="project.id"></revision-list>										   -->
+											<revision-list :project="project"></revision-list>										  
 										</v-card-text>									
 									</v-card>
 								</v-flex>
@@ -105,7 +106,9 @@
 
 			</v-layout>
 		</v-container>
-	</div>	
+
+	
+</div>	
 </template>
 
 <script> 

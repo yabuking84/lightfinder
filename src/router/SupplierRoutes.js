@@ -60,7 +60,7 @@ const meta = {
 export default [
     {
         name: 'SupplierHome',
-        path: '/',
+        path: '/lightfinder',
         components: {
             default:SupplierHome,
             sidebar: AppSidebar, 
@@ -73,7 +73,7 @@ export default [
 
     {
         name: 'SupplierInquiry',
-        path: '/inquiry',
+        path: '/lightfinder/inquiry',
         components: {
             default:SupplierInquiry,
             sidebar: AppSidebar, 
@@ -86,7 +86,7 @@ export default [
 
     {
         name: 'SupplierProfile',
-        path: '/profile',
+        path: '/lightfinder/profile',
         components: {
             // default: BuyerHome, 
             default: AppProfile, 
@@ -101,7 +101,7 @@ export default [
 
     {
         name: 'SupplierWallet',
-        path: '/wallet',
+        path: '/lightfinder/wallet',
         components: {
             default: SupplierWallet, 
             sidebar: AppSidebar, 

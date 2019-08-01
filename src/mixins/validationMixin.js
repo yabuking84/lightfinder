@@ -12,7 +12,7 @@ methods: {
 		const field = get(this.$v, name)
 		const messages = get(this.$options.validationMessages, name)
 
-		if(!field.$dirty) {
+		if(!field.$dirty || field.$pending) {
 			// console.log(name)
 			// console.log('fieldErrors if(!field.$dirty) errors = ',errors)
 			// console.log("")
@@ -28,7 +28,6 @@ methods: {
 		}
 		// console.log(name)
 		// console.log('fieldErrors if(messages) errors = ',errors)
-		// console.log("")
 		return errors
 	},	
 

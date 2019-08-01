@@ -78,6 +78,7 @@ row wrap justify-space-between align-center>
 
 <script>
 import CreateProject from '@/views/Components/App/Buyer/MyHome/CreateProject'
+import prjctEvntBs from '@/bus/project'
 
 
 
@@ -103,6 +104,9 @@ data:() => ({
 created(){
 	// console.log('PIT');
 	this.getProjects();
+	prjctEvntBs.onRefreshProjectTable(() => {
+		this.getProjects();
+	});
 },
 
 methods:{
@@ -110,7 +114,7 @@ methods:{
 	getProjects(){
 		this.$store.dispatch(this.getStore('myHm')+'/getProjects_a')
 		.then((rspns)=>{
-			console.log(rspns);
+			// console.log(rspns);
 			this.items = rspns;
 		})
 		.catch((e)=>{

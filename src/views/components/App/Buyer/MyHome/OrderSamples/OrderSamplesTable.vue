@@ -37,7 +37,12 @@
 										justify-start>
 											<!-- <img :src="sample.image"> -->
 											
-											<image-view :src="sample.image" width="70px" height="70px" custom-class="my-2 mr-3"></image-view>
+											<image-view 
+											v-if="sample.image"
+											:src="sample.image" 
+											width="70px" height="70px" 
+											custom-class="my-2 mr-3"></image-view>
+
 											<div class="sample-details">
 												<h5>{{ sample.item_number }}</h5>
 												<h5>{{ sample.name }}</h5>

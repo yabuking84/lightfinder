@@ -29,6 +29,7 @@
                     :loading="loader"
                     :disabled="($v.$invalid || loader)"
                     block
+                    flat class="black white--text  mt-4"
                     :class="$v.$invalid ? '' : 'white--text'"
                   >Reset Password</v-btn>
                 </v-flex>
@@ -84,3 +85,13 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+.theme--light.v-btn.v-btn--disabled {
+	color: rgba(255, 255, 255, 0.31) !important;
+}
+
+.theme--light.v-btn.v-btn--disabled /deep/ .v-btn__loading {
+    color: rgba(255, 255, 255, 1) !important;
+}
+</style>

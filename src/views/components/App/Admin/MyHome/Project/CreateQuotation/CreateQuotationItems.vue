@@ -278,6 +278,11 @@ td {
 
 
 
+.v-text-field /deep/ {
+	.v-text-field__prefix {
+		margin-top:22px;
+	}
+}
 
 
 

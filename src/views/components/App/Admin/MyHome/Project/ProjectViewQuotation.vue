@@ -12,11 +12,7 @@
 			<span class="subheading font-weight-bold">${{ currency(project.budget) }}</span>
 		</v-flex>
 		<v-flex xs12>
-			<p class="mt-2" style="min-height: 150px;">{{ project.description }}</p>
-		</v-flex>
-		
-		<v-flex xs12>
-
+			<p class="mt-2">{{ project.description }}</p>
 		</v-flex>
 	</v-layout>
 
@@ -26,22 +22,20 @@
 
 <script>
 
-
 export default {
 
-props:[
-	'project',
-],
+components:{
+},
+
+props:{
+	'project':{
+		type: Object,
+		required: true,
+	},
+},
 
 data(){return{
-	// project: {
-	// 	project_name: null,
-	// 	project_no: null,
-	// 	project_type: null,
-	// 	target_budget: null,
-	// 	shipping_method: null,
-	// 	description: null,
-	// },
+
 }},
 
 

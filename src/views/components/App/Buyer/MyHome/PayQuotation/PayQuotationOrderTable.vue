@@ -32,7 +32,7 @@
 										align-center
 										justify-start>
 											
-											<image-view :src="item.image"></image-view>
+											<image-view v-if="item.image" :src="item.image"></image-view>
 											
 											<div class="item-details">
 												<h5>{{ item.item_number }}</h5>

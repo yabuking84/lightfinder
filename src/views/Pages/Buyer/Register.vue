@@ -4,7 +4,6 @@
 
 	<div class="registration_container" id="">
 
-			<img class="logo" src="/static/logos/logo-white.png">
 				<div class="registration-first" v-show="isStepOne">
 				  <v-container>
 					<v-flex lg12 xs12>
@@ -14,10 +13,14 @@
 							<div>
 							  <v-card class="pa-5">
 								<div class="headline font-weight-medium text-xs-center">SIGN UP</div>
-								<h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4>
+								<!-- <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4> -->
 								<v-layout row wrap>
 								  <v-form @submit.prevent="$v.$invalid ? null : '' " ref="form" class="mt-3">
 									<v-layout wrap row>
+
+
+
+									  <!-- <v-flex xs12 pa-0><h1><pre>{{ $v.form }}</pre></h1></v-flex> -->
 
 									  <v-flex xs12 pa-0>
 
@@ -26,8 +29,7 @@
 										label="First Name" 
 										v-model="form.first_name" 
 										required 
-										:error-messages="fieldErrors('form.first_name')" 
-										@blur="$v.form.first_name.$touch()">
+										:error-messages="fieldErrors('form.first_name')" >
 										</v-text-field>
 
 										<v-text-field 
@@ -35,26 +37,29 @@
 										label="Last Name" 
 										v-model="form.last_name" 
 										required 
-										:error-messages="fieldErrors('form.last_name')" 
-										@blur="$v.form.last_name.$touch()">
+										validate-on-blur
+										:error-messages="fieldErrors('form.last_name')" >
 										</v-text-field>
 
 										<v-text-field 
 										color="black" 
 										label="Email Address" 
 										v-model="form.email" 
-										required 
-										:error-messages="fieldErrors('form.email')" 
-										@blur="$v.form.email.$touch()">
+										placeholder=" "
+										required
+										:error-messages="fieldErrors('form.email')">
 										</v-text-field>
+
+
+
 
 										<v-text-field 
 										color="black" 
 										label="Password" 
 										v-model="form.password" 
+										placeholder=" "
 										required type="password" 
-										:error-messages="fieldErrors('form.password')" 
-										@blur="$v.form.password.$touch()">
+										:error-messages="fieldErrors('form.password')" >
 										</v-text-field>
 
 										<v-text-field 
@@ -62,8 +67,7 @@
 										label="Confirm Password" 
 										v-model="form.confirmpassword" 
 										required type="password" 
-										:error-messages="fieldErrors('form.confirmpassword')" 
-										@blur="$v.form.confirmpassword.$touch()">
+										:error-messages="fieldErrors('form.confirmpassword')" >
 										</v-text-field>
 
 									  </v-flex>
@@ -77,9 +81,12 @@
 										</v-layout>
 									  </v-flex>
 									  <v-flex xs12 mt-3>
-										<router-link :to="{ name: 'Login' }">
-										  <p class="black--text text-xs-center font-weight-bold"><strong>Existing User ? Click here to login</strong></p>
-										</router-link>
+										<p class="black--text text-xs-center font-weight-bold">
+											<strong>
+												Existing User ? Click 
+												<router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link> 
+												to login.</strong>
+										</p>
 									  </v-flex>
 									</v-layout>
 								  </v-form>
@@ -89,22 +96,30 @@
 							<!-- FOR 1ST STEP -->
 						</v-flex>
 						 <v-flex lg4 xs12  class="page-wrap">
-							<v-layout row wrap>
+							<v-layout row wrap fill-height>
 							  <div >
 								<!-- heading message -->
 								  <div class="page-content">
 									<h1 class="white--text header-title">Ready to get the best price the market can offer? </h1>
-									<h4 class="white--text font-weight-light sub-header-title">
+									<h4 class="white--text font-weight-light sub-header-title mt-4">
 								  Please take a few moments to register and find out what we can do for your next LED lighting project! Rest assured, we’ll be with you every step of the way.</h4>
 								  <!-- heading message -->
 
-									<div class=" videocontent mt-5">
+									<!-- <div class=" videocontent mt-5">
 										<div id="player-wrapper">
 										 <iframe width="560" height="315"  src="https://www.youtube.com/embed/aaJQLTaSgLk?autoplay=0&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&playsinline=1&widget_referrer=https%3A%2F%2Fplyr.io%2F%23youtube&cc_load_policy=0&cc_lang_pref=auto&enablejsapi=1&origin=https%3A%2F%2Fplyr.io&widgetid=1?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
 										</div>
-									</div>
+									</div> -->
+									<v-container fluid>
+									<v-layout row wra justify-center align-center fill-height>
+										<a href="https://buyanylight.com" target="_blank">
+											<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
+										</a>
+									</v-layout>
+									</v-container>
 
-											</div>
+
+									</div>
 
 
 							  </div>
@@ -356,12 +371,11 @@ validations: {
 		email: { 
 			required, 
 			email, 
-			isUnique(value){
+			isUnq(value){				
 				// standalone validator ideally should not assume a field is required
-				if (value === '') 
-				return true;
-
-				// no then and catch because validator need the Promise instance
+				if (value === '' || value === null) 
+				return true
+				else
 				return this.$store.dispatch('auth/isEmailExist_a',{email:value});
 			}, 
 		},
@@ -382,7 +396,7 @@ validationMessages: {
 
 	   first_name: { required: 'Please enter your first name.'},
 	   last_name: { required: 'Please enter your last name.' },
-	   email: { required: 'Please enter email', email: 'Email must be valid', isUnique: 'Email is already registered.' },
+	   email: { required: 'Please enter email', email: 'Email must be valid', isUnq: 'Email is already registered.' },
 	   password: { required: 'Please enter password', minLength: 'Password must be of 6 characters' },	
 	   confirmpassword: { required: 'Please confirm your Password.', sameAsPassword: 'Password does not match' },
 		
@@ -425,6 +439,15 @@ data () {
   }
 
 },
+
+
+computed:{
+	emailPending(){
+		return this.$v.form.email.$pending;
+	}, 
+
+},
+
 methods: {
 
 	save() {
@@ -469,7 +492,7 @@ methods: {
 
 	},
 
-}
+},
 
 
 
@@ -551,8 +574,8 @@ methods: {
 
 
 .logo {
-  margin: 22px 29px 15px;
-  width: 81px;
+  margin: 50px 29px -30px;
+  width: 180px;
 
 }
 
@@ -574,9 +597,10 @@ methods: {
 
 .page-content {
   position: relative;
-  top: 8%;
+  // top: 8%;
   padding: 20px;
   // padding: 100px;
+    height: 100%;
 
 }
 
@@ -669,19 +693,19 @@ methods: {
 
 </style>
 
-<style scoped>
+<style scoped lang="scss">
 
 @media only screen and (max-width: 959px) {
 
-	.container {
-		padding: 16px;
-		height: 100vh;
-		overflow-y: scroll;
-	}
 
 	.registration-first {
+		> .container {
+			padding: 16px;
+			height: 100vh;
+			overflow-y: scroll;
+		}
 
-	  top: 64%;
+	  // top: 64%;
 
 	}
 
@@ -727,6 +751,7 @@ methods: {
  a {
 	cursor: pointer;
 	text-decoration: none;
+
 }
 
 ul {

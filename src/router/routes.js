@@ -183,6 +183,14 @@ const routes =
         }
     },
 
+    {
+        name: 'ForgotPasswordPage',
+        path: '/forgot-password',
+        components: {
+            default: ForgotPasswordPage
+        }
+    },
+
 
 
 	// test pdf

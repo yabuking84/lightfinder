@@ -5,7 +5,7 @@
 <v-btn 
 @click.stop="dialog=true"
 small class="black white--text">
-	<span>Add/Edit Items</span>
+	<span>Create Revision</span>
 </v-btn>
 
 <v-dialog v-model="dialog" fullscreen>
@@ -32,6 +32,15 @@ small class="black white--text">
 						v-model="formData.revision"
 						label="Revision Reference name">
 						</v-text-field>
+					</v-flex>
+					<v-flex xs4>					  
+						<v-text-field
+						v-model="formData.shipping_cost"						
+						label="Shipping Cost"
+						type="number"
+						placeholder="0.00"
+						prefix="$">
+						</v-text-field>						
 					</v-flex>
 				</v-layout>
 
@@ -91,8 +100,9 @@ import validationMixin from '@/mixins/validationMixin'
 import { required, decimal } from 'vuelidate/lib/validators'
 
 import QuotationItems from '@/views/Components/App/Admin/MyHome/Project/CreateQuotation/CreateQuotationItems'
+import prjctEvntBs from '@/bus/project'
 
- import Vue from 'vue'
+import Vue from 'vue'
 
 export default {
 mixins:[
@@ -113,9 +123,9 @@ data() { return {
 
 	formData :{
 		revision: null,
-		"shipping_cost": 0,
-		"eta": null,
-		"etd": null,
+		shipping_cost: null,
+		eta: null,
+		etd: null,
 		items:[],
 	},
 
@@ -134,7 +144,8 @@ watch:{
 	dialog:{
 		handler(nVal,oVal){
 			// this.formData.items = [];
-			// this.bus.$emit('reset-items');
+			console.log('dialog',nVal);
+			this.clearItems();
 		},
 	},
 },
@@ -154,6 +165,7 @@ methods: {
 		})
 		.then((rspns)=>{
 			this.clearItems();
+			prjctEvntBs.emiRefreshRevisionTable();
 			this.dialog = false;
 		});
 
@@ -161,6 +173,10 @@ methods: {
 
 
 	clearItems(){		
+		this.formData.revision = null;
+		this.formData.shipping_cost = 0.00;
+		this.formData.eta = null;
+		this.formData.etd = null;
 		this.bus.$emit('reset-items');
 	},			
 

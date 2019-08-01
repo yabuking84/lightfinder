@@ -330,6 +330,18 @@ const actions = {
 
 
 
+	isTest_a(context, data) {
+        return new Promise((resolve, reject) => {
+          	setTimeout(() => {
+          		// console.log('data.email.length',data.email.length);
+          		if(data.email.length<10)
+            	resolve(true);
+            	else
+            	resolve(false);
+          	}, 3500)
+        })
+	},
+
 	isEmailExist_a(context, data) {
 
 		 return new Promise((resolve, reject) => {
@@ -347,7 +359,7 @@ const actions = {
 				}),
 			})
 			.then(response => {
-				// console.log('response',response)
+				console.log('response',response)
 				resolve(!response.data);
 			})
 			.catch(error => {

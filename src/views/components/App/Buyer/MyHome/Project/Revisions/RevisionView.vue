@@ -20,7 +20,7 @@
 					</h3>
 				</router-link> 
 				/
-				<h3 class="d-inline-block ml-2">Revision {{ rev_id }} </h3>
+				<h3 class="d-inline-block ml-2">Revision {{ revision.revision }} </h3>
 			</v-flex>
 
 			<v-flex xs12>
@@ -44,12 +44,21 @@
 						</v-flex>
 
 						<v-flex xs4>
-							<revision-view-summary :items="revision.items"></revision-view-summary>
+							<revision-view-summary :revision="revision"></revision-view-summary>
 						</v-flex>
 
 						<v-flex xs8>
-							<revision-view-table :items="revision.items"></revision-view-table>
+							<revision-view-table :revision="revision"></revision-view-table>
 						</v-flex>
+
+						<v-flex xs12>
+							<v-card>
+								<v-card-text>
+									<messaging :proj_id="proj_id"></messaging>
+								</v-card-text>
+							</v-card>					
+						</v-flex>
+
 					</v-layout>
 
 					</v-card-text>
@@ -67,12 +76,14 @@
 </template>
 
 <script>
+import Messaging from "@/views/Components/App/Buyer/MyHome/Project/ProjectViewMessagingBox"
 import RevisionViewTable from "@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionViewTable";
 import RevisionViewSummary from "@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionViewSummary";
 
 export default {
 
 	components:{
+		Messaging,
 		RevisionViewTable,
 		RevisionViewSummary,
 	},

@@ -47,7 +47,7 @@
                     @update="chatMessageEditor = $event" 
                     type="innerHTML"                     
                     @onEnter="sendMessage()" 
-                    placeholder="Type you message .."></chat-editable>
+                    placeholder="Type your message .."></chat-editable>
 
                     <v-btn color="green" 
                     @click="sendMessage()" 

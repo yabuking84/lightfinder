@@ -61,7 +61,7 @@
 					@update="chatMessageEditor = $event" 
 					type="innerHTML"
 					@onEnter="sendMessage()" 
-					placeholder="Type you message here..."></chat-editable>
+					placeholder="Type your message here..."></chat-editable>
 
 					<v-btn color="green" 
 					:loading="loading"
@@ -120,9 +120,9 @@ import hlprs from "@/mixins/helpers";
 			// console.log("bid",this.bid);
 			// console.log("type",this.type);
 
-			var ths = this;
-			MsgBus.onNewProjectMessage(function(data){
-					ths.updateChat();
+			// var ths = this;
+			MsgBus.onNewProjectMessage((data)=>{
+				this.updateChat();
 			});
 		},
 

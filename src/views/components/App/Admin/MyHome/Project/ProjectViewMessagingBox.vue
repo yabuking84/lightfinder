@@ -13,18 +13,12 @@
 								<div 
 								class="chat-thread" 
 								:class="[message.own?'end':'start']">
-									<div class="user-avatar">
-										<v-avatar 
-										v-if="message.own"
-										size="40px" 
-										color="grey lighten-4">
-											<img :src="[authUser.id === message.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="User">
-										</v-avatar>
-										<v-avatar 
-										v-else
+									<div v-if="message.own" class="user-avatar">
+										<v-avatar 										
 										size="40px" 
 										color="grey lighten-4">
 											<img src="/static/logos/logo-white.png" alt="BAL">
+											<!-- <img :src="[authUser.id === message.user_id ? authUser.avatar : 'http://i.pravatar.cc/32' ]" alt="User">xx -->
 										</v-avatar>
 									</div>                                
 									<div class="chat-message pa-2 border-radius6">
@@ -61,7 +55,7 @@
 					@update="chatMessageEditor = $event" 
 					type="innerHTML"
 					@onEnter="sendMessage()" 
-					placeholder="Type you message here..."></chat-editable>
+					placeholder="Type your message here..."></chat-editable>
 
 					<v-btn color="green" 
 					:loading="loading"
@@ -120,9 +114,8 @@ import hlprs from "@/mixins/helpers";
 			// console.log("bid",this.bid);
 			// console.log("type",this.type);
 
-			var ths = this;
-			MsgBus.onNewProjectMessage(function(data){
-					ths.updateChat();
+			MsgBus.onNewProjectMessage((data)=>{
+				this.updateChat();
 			});
 		},
 
@@ -138,12 +131,8 @@ import hlprs from "@/mixins/helpers";
 				
 					var payload = {};
 					payload.content = this.chatMessageEditor;
-					payload.type = this.getRole().name;
-					payload.type_id = this.getRole().id;
-					payload.id = "";
-
-					
-
+					payload.type = 'project.buyer.admin';
+					payload.id =  this.proj_id;
 
 					console.log('payload',payload);
 
@@ -164,20 +153,22 @@ import hlprs from "@/mixins/helpers";
 			updateChat(){
 				
 				var payload = {};
-				payload.type = "";
-				payload.id = "";
+				payload.type = 'project.buyer.admin';
+				payload.id = this.proj_id;
 
 
-				this.$store.dispatch('msg/getProjectMessages_a', payload).then(response=>{
-					this.messages = response;
+				this.$store.dispatch('msg/getProjectMessages_a', payload)
+				.then(rspns=>{
+					this.messages = rspns;
 
-					// console.table(response);
+					// console.table(rspns);
 					
 					this.resetChatEditor();
 					this.scrollChat();
 
 					this.loading = false;
-				}).catch(error => {
+				})
+				.catch(error => {
 
 					this.loading = false;
 					// console.log('error xxx',error);

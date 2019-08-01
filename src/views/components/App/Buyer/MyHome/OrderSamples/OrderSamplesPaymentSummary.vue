@@ -18,24 +18,29 @@
 				</tr>			
 				
 				<template v-for="(sample, i) in samples" >				
-        			<v-tooltip right>
-	        		<template #activator="{ on }">
 
 					<tr 
-					v-if="sample.formData.totalPrice && sample.formData.ordered"
-					v-on="on"
-					:key="'sample_'+i">					
+					v-if="sample.formData.totalPrice && sample.formData.ordered"					
+					:key="'sample_'+i">
+
+		        	<v-tooltip right>
+			        <template #activator="{ on }">
+
 						<td class="px-4">							
 							{{ sample.item_number }} - {{ sample.name }}
 						</td>
-						<td class="currency">$ {{ currency(sample.formData.totalPrice) }}</td>
-					</tr>
+
+						<td class="currency">
+							<span v-on="on">$ {{ currency(sample.formData.totalPrice) }}</span>
+						</td>
 
                     </template>
 					<span style="font-size: 1.8em;">
 						({{ sample.formData.quantity }} x ${{ currency(sample.sample_price) }}) + ${{ currency(sample.sample_shipment_price_less_5) }}
 					</span>
                 	</v-tooltip>
+
+					</tr>
 
 				</template>
 
@@ -71,6 +76,7 @@
 		<v-btn 
 		class="black white--text" 
 		block
+		@click="paySamples()"
 		:loading="btnLdng">
 			Pay samples
 		</v-btn>
@@ -130,6 +136,34 @@ export default {
 		overAllTotal(){
 			return this.psf + this.itemTotal;
 		},
+	},
+
+	methods:{
+		paySamples(){
+
+			var samplesToRequest = [];
+
+			this.samples.forEach((sample)=>{
+				if(sample.formData.quantity>0 && sample.formData.ordered) {				
+					samplesToRequest.push({
+						id:sample.id,
+						quantity:sample.formData.quantity,
+					});
+				}
+			});
+
+			console.log(samplesToRequest);
+
+			this.$store.disptach(this.getStore('myHome')+"/requestSample_a",samplesToRequest)
+			.then((rspns)=>{
+				console.log(rspns);
+			})
+			.catch((e)=>{
+				console.log(e);
+			});
+
+
+		},		
 	},
 
 }

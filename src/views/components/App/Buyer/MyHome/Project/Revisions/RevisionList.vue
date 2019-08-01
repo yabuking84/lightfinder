@@ -4,7 +4,7 @@
 
 		<v-list class="revision-list">
 		    <template v-for="(revision,i) in revisions">
-				<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:proj_id,rev_id:revision.id}}">
+				<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:project.id,rev_id:revision.id}}">
 
 			        <v-list-tile :key="'rev_'+i" avatar @click="">
 
@@ -20,18 +20,34 @@
 
 
 						<v-list-tile-action>
-		                    <router-link :to="{name:'BuyerMyHomeOrderSamples', params:{proj_id:proj_id,rev_id:revision.id}}">
+						<v-layout row wrap>
 
-		        			<v-tooltip right>
+
+		                    <router-link :to="{name:'BuyerMyHomeOrderSamples', params:{proj_id:project.id,rev_id:revision.id}}">
+		        			<v-tooltip bottom>
 			        		<template #activator="{ on }">
-								<v-btn v-on="on" class="black white--text" small style="min-width: 50px;">
+								<v-btn v-on="on" class="black white--text" small style="min-width: 35px;">
 									<v-icon style="font-size: 16px;">fas fa-shopping-cart</v-icon>
 								</v-btn>                                    
                             </template>
 				    		<span>Order Samples</span>
                         	</v-tooltip>
+		                    </router-link>
 
-		                    </router-link>						  
+
+							<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:project.id,rev_id:revision.id}}">
+		        			<v-tooltip bottom dark style="background-color: red;">
+			        		<template #activator="{ on }">
+								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
+									<v-icon style="font-size: 16px;">fas fa-search</v-icon>
+								</v-btn>                                    
+                            </template>
+				    		<span>View Revision</span>
+                        	</v-tooltip>
+							</router-link>
+
+
+						</v-layout>
 						</v-list-tile-action>
 
 			        </v-list-tile>
@@ -39,6 +55,10 @@
 				</router-link>
 
 		    </template>
+		    <template v-if="!revisions.length">
+				<h3 class="mt-5 text-xs-center">No quotations...</h3>
+		    </template>
+
 		</v-list>
 
 	
@@ -51,7 +71,7 @@
 
 export default {
 props:[
-	'proj_id',
+	'project',
 ],
 
 data(){return{
@@ -68,7 +88,7 @@ methods: {
 
 		// console.log('this.proj_id',this.proj_id);
 		this.$store.dispatch(this.getStore('myHm')+'/getQuotations_a',{
-			proj_id: this.proj_id,
+			proj_id: this.project.id,
 		})
 		.then((rspns)=>{
 			// console.log(rspns);
@@ -91,4 +111,5 @@ methods: {
 		text-decoration: none;
 	}
 }
+
 </style>

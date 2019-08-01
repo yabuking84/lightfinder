@@ -1,10 +1,8 @@
 <template>
-  <v-img
-    :src="backgroundImg"
-    class="page-vimg"
-  >
-    <v-container fill-height pa-0>
-      <v-layout align-center>
+<v-img :src="backgroundImg" class="page-vimg">
+
+    <v-container  justify-center align-center fill-height pa-0>
+      <v-layout row wrap justify-center align-center style="width: 100%;">
         <v-flex xs12>
           	<v-card class="text-xs-center margin-auto border-radius6 box-white-500-glow elevation-10 auth-box">
             <v-layout align-center justify-center row fill-height wrap>
@@ -70,12 +68,13 @@
                           >Login</v-btn>
                         </v-flex>
                         <!-- Forgot password -->
-                        <v-flex xs12>
-                          <!-- <router-link :to="{ name: 'pages/authentication/ForgotPasswordPage' }" tag="div"
-                            class="grey--text cursor-pointer"
-                          >
-                            <strong>Forgot Password ?</strong>
-                          </router-link> -->
+                        <v-flex xs12 mt-3>
+                          	<router-link 
+                          	:to="{ name: 'ForgotPasswordPage' }" 
+                          	tag="div" 
+                          	class="grey--text cursor-pointer">
+                            	<strong>Forgot Password ?</strong>
+                          	</router-link>
                         </v-flex>
                       </v-layout>
                     </v-flex>
@@ -150,6 +149,18 @@
         <!-- /////////////////////////////////////////////// -->
         <!-- for dev -->
 
+        <v-flex xs12>
+        	<div class="doc-links">
+        		<div class="cont">
+		        	<a target="_blank" href="">Help</a>
+		        	<a target="_blank" href="https://buyanylight.com/terms">Terms of Use</a>
+		        	<a target="_blank" href="https://buyanylight.com/privacy">Privacy & Cookies</a>
+		        </div>
+        	</div>
+        </v-flex>
+        
+      </v-layout>
+      <v-layout row wrap>
 
       </v-layout>
     </v-container>
@@ -179,7 +190,7 @@
       <v-icon dark>error</v-icon>
     </v-snackbar>
 
-  </v-img>
+</v-img>
 </template>
 
 
@@ -313,9 +324,30 @@
 
 
 
-<style scoped>
+<style scoped lang="scss">
 #logo {
     width: 75%;
     margin: 15px 0 30px 15px;
 }  
+
+.doc-links {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    left: 0;
+    text-align: center;    
+    background-color: rgba(0, 0, 0, 0.45);
+    .cont {
+    	// background-color: rgba(0, 0, 0, 0.7);
+		width: 350px;
+		margin: auto;
+		padding: 5px 0px;
+	    a {
+	    	margin: 20px 10px 30px;
+	    	color: #fff;
+	    	text-decoration: none;
+	    	font-size: 1em;
+	    }
+    }
+}
 </style>

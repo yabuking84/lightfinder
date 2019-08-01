@@ -37,7 +37,7 @@
         <v-layout row wrap class="no-mrpd">
             <v-flex xs12 class="no-mrpd">
                 <div class="pos-relative vuse-chat-message-container">
-                    <chat-editable v-model="chatMessageEditor" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage()" placeholder="Type you message .."></chat-editable>
+                    <chat-editable v-model="chatMessageEditor" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage()" placeholder="Type your message .."></chat-editable>
                     <v-btn color="green" @click="sendMessage()" class="ma-0 send-message-btn pa-0" :disabled="chatMessageEditor === null || chatMessageEditor === ''">
                         <v-icon color="white">fa-paper-plane</v-icon>
                     </v-btn>

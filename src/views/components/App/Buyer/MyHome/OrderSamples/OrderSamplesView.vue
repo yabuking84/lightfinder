@@ -24,7 +24,7 @@
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
-						Revision {{ rev_id }}
+						Revision {{ revision.revision }}
 					</h3>
 				</router-link> 
 				/
@@ -107,6 +107,7 @@ export default {
 		    	rev_id: this.rev_id,
 		    })
 	    	.then((rspns)=>{
+	    		console.log(rspns);
 	    		this.revision = rspns;
 	    		this.samples = rspns.items.map((sample)=>{
 	    			return {

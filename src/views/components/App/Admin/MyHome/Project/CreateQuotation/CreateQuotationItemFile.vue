@@ -13,7 +13,7 @@
 				<!-- <div class="subtitle">...or click to select a file from your computer</div> -->
 			</div>
 		</vue-dropzone>
-		<v-btn class="black white--text" @click="clearImages()">
+		<v-btn v-if="!disableClearImages" class="black white--text" @click="clearImages()">
 			clear images
 		</v-btn>
 	</v-flex>
@@ -34,6 +34,10 @@ components:{
 },
 
 props:{
+	disableClearImages: {
+		type: Boolean,
+		default: false,
+	},
 	filegroup:{
 		type: String,
 		default: 'add-project-files',

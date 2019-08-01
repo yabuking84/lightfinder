@@ -6,19 +6,27 @@
     <v-container fill-height pa-0>
       <v-layout align-center>
         <v-flex xs12>
-          <v-card
-            class="text-xs-center margin-auto border-radius6 box-white-500-glow elevation-10 auth-box"
-          >
+          <v-card class="text-xs-center margin-auto border-radius6 box-white-500-glow elevation-10 reset-password-cont">
             <v-layout align-center justify-center row fill-height wrap>
-              <v-flex xs12 class="text-xs-center mt-3">
-                <v-toolbar absolute dense flat class="transparent pos-top-1px">
-                  <v-toolbar-title class="body-2 grey--text cursor-pointer"
-                    @click="stageHandler" v-if="stage !== 1">Back</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-btn icon :to="{ name: 'pages/authentication/LoginPage' }">
-                    <v-icon>close</v-icon>
-                  </v-btn>
-                </v-toolbar>
+
+
+
+              	<v-flex xs12 class="text-xs-center mt-3">
+	                <v-toolbar absolute dense flat class="transparent pos-top-1px">
+	                  <v-toolbar-title class="body-2 grey--text cursor-pointer"
+	                    @click="stageHandler" v-if="stage !== 1">Back</v-toolbar-title>
+	                  <v-spacer></v-spacer>
+	                  <!-- <v-btn icon :to="{ name: 'pages/authentication/LoginPage' }">
+	                    <v-icon>close</v-icon>
+	                  </v-btn> -->
+	                </v-toolbar>
+
+					<a href="https://buyanylight.com" target="_blank">
+						<img class="logo" src="/static/logos/logo-black.png" alt="BuyAnyLight.com">
+					</a>
+            	</v-flex>
+
+              	<v-flex xs12 class="text-xs-center mt-3">
                 <v-stepper v-model="stage" class="no-box-shadow reset-top-padding border-radius6">
                   <v-stepper-header class="hide">
                     <v-stepper-step step="1" :complete="stage > 1">Name of step 1</v-stepper-step>
@@ -39,6 +47,8 @@
                   </v-stepper-content>
                 </v-stepper>
               </v-flex>
+
+
             </v-layout>
           </v-card>
         </v-flex>
@@ -74,7 +84,7 @@
         stage: 1,
         email: null,
         code: null,
-        backgroundImg: '/static/doc-images/HexesisMaterial01.png'
+        backgroundImg: '/static/background/buyer-background.jpg',
       }
     },
     methods: {
@@ -97,3 +107,17 @@
     }
   }
 </script>
+
+
+<style scoped lang="scss">
+.logo {
+	width: 150px;
+    margin-right: -15px;
+    margin-top: 25px;	
+}
+
+.reset-password-cont {
+	width: 350px;
+}
+	
+</style>

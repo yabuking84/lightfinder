@@ -3,6 +3,8 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 import AppProfile from '@/views/Pages/Profile'
 
+import AppToolbarMyHmMyTwr from '@/views/Components/App/ToolbarMyHmMyTwr'
+
 import AdminHome from '@/views/Pages/Admin/Home'
 import AdminInquiry from '@/views/Pages/Admin/Inquiry'
 import AdminBuyer from '@/views/Pages/Admin/Buyer'
@@ -13,9 +15,14 @@ import AdminMyTower from '@/views/Pages/Admin/MyTower'
 import AdminMyHome from '@/views/Pages/Admin/MyHome'
 
 import AdminMyHomeProject from '@/views/Components/App/Admin/MyHome/Project/ProjectView'
+import AdminMyHomeUnderConstruction from '@/views/Pages/UnderConstruction'
+import AdminMyHomeRevisionView from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionView'
+import AdminMyHomePayQuotation from '@/views/Components/App/Admin/MyHome/PayQuotation/PayQuotationView'
+import AdminMyHomeOrderSamples from "@/views/Components/App/Admin/MyHome/OrderSamples/OrderSamplesView"
 
+import AdminMyHomeEditRevision from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionEdit'
 
-import AdminMyHomeOrderedSamples from '@/views/Components/App/Admin/MyHome/OrderedSamples/OrderedSamplesView'
+// import AdminMyHomeOrderedSamples from '@/views/Components/App/Admin/MyHome/Project/OrderedSamples/OrderedSamplesView'
 
 
 import config from '@/config/index'
@@ -215,17 +222,67 @@ export default [
 		meta: meta2,
 	},
 
+	// {
+	// 	name: 'AdminMyHomeOrderedSamples',
+	// 	path: '/my-home/project/:proj_id',
+	// 	components: { 
+	// 		default: AdminMyHomeOrderedSamples, 
+	// 		sidebar: AppSidebar, 
+	// 		header: AppToolbar, 
+	// 		footer: AppFooter,
+	// 	},
+	// 	meta: meta2,
+	// },
+
+
+
 	{
-		name: 'AdminMyHomeOrderedSamples',
-		path: '/my-home/project/:proj_id',
+		name: 'AdminMyHomePayQuotation',
+		path: '/my-home/project/:proj_id/payment',
 		components: { 
-			default: AdminMyHomeOrderedSamples, 
+			default: AdminMyHomePayQuotation, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
 		meta: meta2,
 	},
+
+	{
+		name: 'AdminMyHomeRevisionView',
+		path: '/my-home/project/:proj_id/revision/:rev_id',
+		components: { 
+			default: AdminMyHomeRevisionView, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+
+	{
+		name: 'AdminMyHomeEditRevision',
+		path: '/my-home/project/:proj_id/revision/:rev_id/edit-revision',
+		components: { 
+			default: AdminMyHomeEditRevision, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+
+	{
+		name: 'AdminMyHomeOrderSamples',
+		path: '/my-home/project/:proj_id/revision/:rev_id/order-samples',
+		components: { 
+			default: AdminMyHomeOrderSamples, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},	
 	//////////////////////////////////////////////////////
 	// My Home
 

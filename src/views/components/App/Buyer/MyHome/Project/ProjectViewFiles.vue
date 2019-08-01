@@ -5,6 +5,7 @@
 		<vue-dropzone 
 		id="dropzone_files" 
 		ref="dropzone_files" 
+		class="dropzone_files"
 		:options="dropzoneOptions" 
 		:useCustomSlot="useCustomSlot"
 		:awss3="getAWSS3('add-project-attachments')"
@@ -14,7 +15,7 @@
 				<h3 class="dropzone-custom-title">Drag and drop to upload your files here</h3>
 				<div class="subtitle">...or click to select a file from your computer</div>
 			</div>
-		</vue-dropzone>
+		</vue-dropzone>	
 	</v-flex>
 	<v-flex xs6> 	
 
@@ -84,7 +85,7 @@
 
         <v-card-text>
         	<h3 class="mt-2 ml-3">Are you sure to delete:</h3>
-        	<h1 class="text-sm-center my-3">{{ attachmentToDelete.filename }}</h1>
+        	<h1 class="text-sm-center font-weight-regular my-3">{{ attachmentToDelete.filename }}</h1>
         </v-card-text>
         <v-card-actions>
         	<v-btn 
@@ -153,7 +154,7 @@ data() { return {
             addRemoveLinks: true,            
             dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
             previewTemplate:`
-				<div style="width:100%; min-height: 50px;">
+				<div class="dz-preview dz-file-preview">
 				  	<div class="dz-details">
 				    	<div class="dz-filename"><span data-dz-name></span></div>
 				    	<div class="dz-size" data-dz-size></div>				    	
@@ -269,7 +270,7 @@ methods: {
     		},    		
     	})
     	.then((rspns)=>{
-    		// this.$refs.dropzone_files.removeAllFiles();
+    		this.$refs.dropzone_files.removeAllFiles();
     	})
     	.catch((e)=>{
     		console.log(e);
@@ -334,6 +335,33 @@ methods: {
 /deep/ .dropzone {
 	.dz-preview {
 		width: 100%;
+		min-height: 100px;
+		margin:0px 0px 5px 0px;
+		.dz-details {
+			padding: 5px;
+			opacity: 1;
+			background-color: #fff;
+			color: #000;
+			border: 1px solid;
+			.dz-size {
+				margin: 0px 5px;
+				font-size: inherit;
+			}
+
+		}
+		.dz-progress {
+			border: 1px solid #000;
+			top: 25px;
+			.dz-upload{
+				background: #000;
+			}
+		}
+		.dz-remove {
+			opacity: 1;
+		    color: #000;
+		    border: 1px solid;
+		    background-color: #fff;			
+		}
 	}
 }
 </style>

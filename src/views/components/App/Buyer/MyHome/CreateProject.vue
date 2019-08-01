@@ -183,6 +183,7 @@ class="white--text">
 <script>
 import validationMixin from '@/mixins/validationMixin'
 import { required, decimal } from 'vuelidate/lib/validators'
+import prjctEvntBs from '@/bus/project'
 
 import config from '@/config/main'
 
@@ -291,7 +292,7 @@ export default {
 					
 					description: this.formData.description,
 
-					shipping_cost: 0,
+					// shipping_cost: 0,
 
 					shipping_address: this.formData.shipping_address,
 					shipping_street: this.formData.shipping_street,
@@ -307,6 +308,7 @@ export default {
 				})
 				.then((rspns)=>{
 					console.log(rspns);
+					prjctEvntBs.emiRefreshProjectTable();
 					this.dialog = false;
 
 					

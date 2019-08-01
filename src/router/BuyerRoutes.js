@@ -3,6 +3,10 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 import AppProfile from '@/views/Pages/Profile'
 
+import Payment from '@/views/Pages/Payment/Payment'
+
+import AppToolbarMyHmMyTwr from '@/views/Components/App/ToolbarMyHmMyTwr'
+
 import BuyerHome from '@/views/Pages/Buyer/Home'
 import BuyerInquiry from '@/views/Pages/Buyer/Inquiry'
 
@@ -103,6 +107,11 @@ const meta = {
 	},
 }
 
+const meta1 = {
+	...meta,
+	section:'lightfinder',
+}
+
 const meta2 = {
 	...meta,
 	style:{
@@ -127,7 +136,7 @@ export default [
 	// 		footer: AppFooter,
 	// 		dialog: BuyerInquiryView,
 	// 	},
-	// 	meta: meta,
+	// 	meta: meta1,
 	// },
 
 	{
@@ -140,7 +149,7 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: meta,
+		meta: meta1,
 	},
 
 	{
@@ -153,7 +162,7 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: meta,
+		meta: meta1,
 	},
 
 	{
@@ -166,7 +175,7 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: meta,
+		meta: meta1,
 	},
 
 
@@ -180,7 +189,7 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: meta,
+		meta: meta1,
 	},
 
 
@@ -195,7 +204,7 @@ export default [
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
-		meta: meta,
+		meta: meta1,
 	},
 
 	// {
@@ -209,7 +218,7 @@ export default [
 	// 		// footer: AppFooter,
 	// 		// dialog: BuyerInquiryView,
 	// 	},
-	// 	meta: meta,
+	// 	meta: meta1,
 	// },
 
 
@@ -223,7 +232,7 @@ export default [
 	//         footer: AppFooter,
 	//         testview: test, 
 	//     },
-	//     meta: meta,
+	//     meta: meta1,
 	//     props: { default:true },
 
 	// },    
@@ -258,9 +267,8 @@ export default [
 			default: BuyerMyHome, 
 			// default: BuyerMyHomeUnderConstruction, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
-			dialog: BuyerInquiryView,
 		},
 		meta: meta2,
 	},
@@ -271,9 +279,8 @@ export default [
 		components: { 
 			default: BuyerMyHomeProject, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
-			dialog: BuyerInquiryView,
 		},
 		meta: meta2,
 	},
@@ -284,9 +291,8 @@ export default [
 		components: { 
 			default: BuyerMyHomePayQuotation, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
-			dialog: BuyerInquiryView,
 		},
 		meta: meta2,
 	},
@@ -297,9 +303,8 @@ export default [
 		components: { 
 			default: BuyerMyHomeRevisionView, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
-			dialog: BuyerInquiryView,
 		},
 		meta: meta2,
 	},
@@ -310,9 +315,8 @@ export default [
 		components: { 
 			default: BuyerMyHomeOrderSamples, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
-			dialog: BuyerInquiryView,
 		},
 		meta: meta2,
 	},
@@ -329,11 +333,26 @@ export default [
 		components: { 
 			default: BuyerMyTowerUnderConstruction, 
 			sidebar: AppSidebar, 
-			header: AppToolbar, 
+			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 			dialog: BuyerInquiryView,
 		},
 		meta: meta2,
+	},
+	//////////////////////////////////////////////////////
+	// My Tower
+
+
+
+  
+	// Payment
+	//////////////////////////////////////////////////////
+	{
+		name: 'BuyerMyTower',
+		path: '/payment',
+		components: { 
+			default: Payment, 
+		},
 	},
 	//////////////////////////////////////////////////////
 	// My Tower
