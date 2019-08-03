@@ -348,7 +348,7 @@ export default [
 	// Payment
 	//////////////////////////////////////////////////////
 	{
-		name: 'BuyerMyTower',
+		name: 'PaymentFoloosi',
 		path: '/payment',
 		components: { 
 			default: Payment, 

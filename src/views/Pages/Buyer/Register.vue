@@ -504,7 +504,7 @@ methods: {
 <style scoped lang="scss">
 
 .registration_container {
-	overflow-y: scroll;
+	overflow-y: auto;
 	height: 100vh;
 }
 

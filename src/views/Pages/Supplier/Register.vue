@@ -2,7 +2,7 @@
 
   <v-img :src="backgroundImg" class="page-vimg with-header" style="background: rgba(0,0,0,0.4);">
 		
-		<img class="logo" src="/static/logos/logo-white.png">
+		<!-- <img class="logo" src="/static/logos/logo-white.png"> -->
 
 		<div class="registration-first" v-show="isStepOne">
 		  <v-container>
@@ -11,35 +11,33 @@
 
 				<v-flex lg4 xs12 offset-lg2 class="page-wrap">
 					<v-layout row wrap>
-					  <div >
 						<!-- heading message -->
-						  <div class="page-content mt-5">
+						<div class="page-content mt-5">
 
 							<h1 class="white--text header-title">How to become a BAL supplier?</h1>
-							<h4 class="white--text font-weight-light sub-header-title">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe. </h4>
-						  
-							 <v-flex xs12 mt-4 mb-4>
-									<div class=" videocontent">
-										<div id="player-wrapper">
-<!-- 				                                <iframe src="https://www.youtube.com/embed/7N3FqFyASC0" allowfullscreen allowtransparency allow="autoplay"></iframe>
- -->				                         <iframe width="560" height="315"  src="https://www.youtube.com/embed/7N3FqFyASC0?autoplay=0&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&playsinline=1&widget_referrer=https%3A%2F%2Fplyr.io%2F%23youtube&cc_load_policy=0&cc_lang_pref=auto&enablejsapi=1&origin=https%3A%2F%2Fplyr.io&widgetid=1?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
-										</div>
-									</div>
-							 </v-flex>
+							<h4 class="white--text font-weight-light sub-header-title mt-4">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe. </h4>
 
-						  </div>
+							<v-container fluid>
+							<v-layout row wra justify-center align-center fill-height>
+								<a href="https://buyanylight.com" target="_blank">
+									<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
+								</a>
+							</v-layout>
+							</v-container>
+
+
+						</div>
 						  <!-- heading message -->
-					  </div>
 					</v-layout>
 				</v-flex>
 
 				<v-flex lg4 xs12>
-				  <v-layout row wrap fill>
+				  <v-layout row wrap fill-height>
 					<!-- FOR 1ST STEP -->
 					<div class="frmcontainer">
 					  <v-card class="pa-5">
 						<div class="headline font-weight-medium text-xs-center">SIGN UP</div>
-						<h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4>
+						<!-- <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4> -->
 						<v-layout row wrap>
 						  <v-form @submit.prevent="$v.$invalid ? null : FirstStep() " ref="form" class="mt-3">
 							<v-layout wrap row>
@@ -69,6 +67,7 @@
 								color="black"  
 								label="Email Address" 
 								v-model="form.email" 
+								placeholder=" "
 								required 
 								:error-messages="fieldErrors('form.email')" 
 								@blur="$v.form.email.$touch()">
@@ -78,6 +77,7 @@
 								color="black" 
 								label="Password" 
 								v-model="form.password" 
+								placeholder=" "
 								required type="password" 
 								:error-messages="fieldErrors('form.password')" 
 								@blur="$v.form.password.$touch()">
@@ -1071,6 +1071,11 @@ export default {
 </script>
 <style scoped lang="scss">
 
+.registration_container {
+	overflow-y: auto;
+	height: 100vh;
+}
+
 .registration-first {
 
   position: absolute;
@@ -1266,21 +1271,19 @@ export default {
 
 </style>
 
-<style scoped>
+<style scoped lang="scss">
 
 
 @media only screen and (max-width: 959px) {
 
-	.container {
-		padding: 16px;
-		height: 100vh;
-		overflow-y: scroll;
-	}
 
 	.registration-first {
-
-	  top: 61%;
-
+		.container {
+			padding: 16px;
+			height: 100vh;
+			overflow-y: scroll;
+		}
+	  	// top: 61%;
 	}
 
 	.frmcontainer {
@@ -1291,7 +1294,7 @@ export default {
 		top: 8%;
 		padding: 20px;
 		margin-bottom: 164px;
-		display: none;
+		// display: none;
 	}
 
 	.registration-success {
@@ -1334,4 +1337,11 @@ export default {
 }
 
 
+
+
+.logo {
+  margin: 50px 29px -30px;
+  width: 180px;
+
+}
 </style>
