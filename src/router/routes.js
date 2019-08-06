@@ -35,6 +35,7 @@ import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerPackages from '@/views/Pages/Buyer/Packages'
 
 import SupplierRegister from '@/views/Pages/Supplier/Register'
+import SupplierRegister2 from '@/views/Pages/Supplier/Register2'
 import SupplierRegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
 import SupplierRegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
 
@@ -164,6 +165,15 @@ const routes =
         path: '/supplier/register',
         components: { 
             default: SupplierRegister,             
+        }
+    },
+
+
+    {
+        name: 'SupplierRegistration2' ,
+        path: '/supplier/register2',
+        components: { 
+            default: SupplierRegister2,             
         }
     },
 

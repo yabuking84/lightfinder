@@ -30,7 +30,7 @@
 					</h3>
 				</router-link> 
 				/
-				<h3 class="d-inline-block ml-2">Edit Revision</h3>
+				<h3 class="d-inline-block ml-2">Copy Revision</h3>
 			</v-flex>
 
 			<v-flex xs12>
@@ -73,7 +73,7 @@
 						class="black white--text mr-3" 
 						:loading="btnLdng"
 						@click="submitForm()">
-							submit
+							Copy
 						</v-btn>			
 
 						<v-spacer></v-spacer>
@@ -187,21 +187,22 @@ methods: {
 
 	submitForm(){
 
+		console.log('submit');
 		console.log(this.formData);
 
-		this.$store.dispatch(this.getStore('myHm')+'/editQuotation_a',{
+		this.$store.dispatch(this.getStore('myHm')+'/createQuotation_a',{
 			proj_id: this.proj_id,
-			rev_id: this.rev_id,
 			formData: this.formData,
 		})
 		.then((rspns)=>{
+			console.log(rspns);
 			this.clearItems();
 			prjctEvntBs.emiRefreshRevisionTable();
 			this.$router.push({
 				name:'AdminMyHomeRevisionView',
 				params:{
 					proj_id: this.proj_id,
-					rev_id: this.rev_id,
+					rev_id: rspns.data.id,
 				},
 			});
 		});

@@ -27,7 +27,7 @@
 		        			<v-tooltip bottom>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text" small style="min-width: 35px;">
-									<v-icon style="font-size: 16px;">fas fa-shopping-cart</v-icon>
+									<v-icon style="font-size: 16px;">fas fa-box-open</v-icon>
 								</v-btn>                                    
                             </template>
 				    		<span>Order Samples</span>

@@ -20,7 +20,7 @@
 					</h3>
 				</router-link> 
 				/
-				<h3 class="d-inline-block ml-2">Revision {{ rev_id }} </h3>
+				<h3 class="d-inline-block ml-2">Revision {{ revision.revision }} </h3>
 			</v-flex>
 
 			<v-flex xs12>
@@ -38,11 +38,12 @@
 								<div>
 									<router-link :to="{name:'AdminMyHomeOrderSamples', params:{proj_id:proj_id,rev_id:rev_id}}">
 										<v-btn class="black white--text">
+											<v-icon class="mr-2" style="font-size: 16px;">fas fa-box-open</v-icon>											
 											Samples Ordered
 										</v-btn>
 				                    </router-link>
 
-									<router-link :to="{name:'AdminMyHomeEditRevision',params:{proj_id:proj_id,rev_id:rev_id}}">
+									<router-link :to="{name:'AdminMyHomeRevisionEdit',params:{proj_id:proj_id,rev_id:rev_id}}">
 										<v-btn class="black white--text">
 											<v-icon class="mr-1" style="font-size: 16px;">fas fa-edit</v-icon>
 											Edit Revision

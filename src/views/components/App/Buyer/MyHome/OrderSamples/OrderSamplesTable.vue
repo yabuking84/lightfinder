@@ -129,6 +129,8 @@
 
 					</v-flex>
 
+
+
 				</v-layout>
 
 
@@ -180,7 +182,7 @@ methods:{
 			if(sample.formData.quantity <= 0)
 			sample.formData.disabled = true;
     	} 
-    	else if (operation=='plus' && sample.formData.quantity < 2) {
+    	else if (operation=='plus' && sample.formData.quantity < 99) {
     		sample.formData.quantity++;
     		sample.formData.totalPrice = (sample.sample_price * sample.formData.quantity);
     		sample.formData.totalPrice = (sample.formData.totalPrice)?sample.formData.totalPrice+sample.sample_shipment_price_less_5:0;

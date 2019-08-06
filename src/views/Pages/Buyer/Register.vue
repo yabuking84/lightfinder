@@ -83,9 +83,9 @@
 									  <v-flex xs12 mt-3>
 										<p class="black--text text-xs-center font-weight-bold">
 											<strong>
-												Existing User ? Click 
-												<router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link> 
-												to login.</strong>
+											Existing User ? Click 
+											<router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link> 
+											to login.</strong>
 										</p>
 									  </v-flex>
 									</v-layout>

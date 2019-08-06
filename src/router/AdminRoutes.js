@@ -17,10 +17,12 @@ import AdminMyHome from '@/views/Pages/Admin/MyHome'
 import AdminMyHomeProject from '@/views/Components/App/Admin/MyHome/Project/ProjectView'
 import AdminMyHomeUnderConstruction from '@/views/Pages/UnderConstruction'
 import AdminMyHomeRevisionView from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionView'
+import AdminMyHomeRevisionCopy from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionCopy'
+import AdminMyHomeRevisionEdit from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionEdit'
+
 import AdminMyHomePayQuotation from '@/views/Components/App/Admin/MyHome/PayQuotation/PayQuotationView'
 import AdminMyHomeOrderSamples from "@/views/Components/App/Admin/MyHome/OrderSamples/OrderSamplesView"
 
-import AdminMyHomeEditRevision from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionEdit'
 
 // import AdminMyHomeOrderedSamples from '@/views/Components/App/Admin/MyHome/Project/OrderedSamples/OrderedSamplesView'
 
@@ -261,10 +263,22 @@ export default [
 	},
 
 	{
-		name: 'AdminMyHomeEditRevision',
+		name: 'AdminMyHomeRevisionEdit',
 		path: '/my-home/project/:proj_id/revision/:rev_id/edit-revision',
 		components: { 
-			default: AdminMyHomeEditRevision, 
+			default: AdminMyHomeRevisionEdit, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: meta2,
+	},
+
+	{
+		name: 'AdminMyHomeRevisionCopy',
+		path: '/my-home/project/:proj_id/revision/:rev_id/copy-revision',
+		components: { 
+			default: AdminMyHomeRevisionCopy, 
 			sidebar: AppSidebar, 
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,

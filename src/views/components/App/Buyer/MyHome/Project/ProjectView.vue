@@ -80,7 +80,6 @@
 						<v-card-text style="height:300px">
 							<ordered-samples v-if="orderedSamples" :ordered-samples="orderedSamples"></ordered-samples>
 						</v-card-text>
-
 					</v-card>
 				</v-flex>
 
@@ -167,9 +166,11 @@ methods: {
 	},
 
 	getOrderedSamples(){
-		this.$store.dispatch(this.getStore('myHm')+'/getOrderedSamples_a')
+		this.$store.dispatch(this.getStore('myHm')+'/getOrderedSamples_a',{
+			proj_id: this.proj_id,
+		})
 		.then((rspns)=>{
-			// console.log(rspns);
+			console.log(rspns);
 			this.orderedSamples = rspns;
 		})
 		.catch((e)=>{

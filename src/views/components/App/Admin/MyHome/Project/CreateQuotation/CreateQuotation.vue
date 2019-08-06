@@ -12,7 +12,7 @@ small class="black white--text">
 	<v-card>
 		<v-card-title class="headline black white--text py-2" primary-title>
 			<v-layout row wrap justify-space-between align-center>
-				<span>Add/Edit Items</span>
+				<span>Create Revision</span>
 				<v-btn 
 				@click="dialog=false"
 				fab small class="black white--text">

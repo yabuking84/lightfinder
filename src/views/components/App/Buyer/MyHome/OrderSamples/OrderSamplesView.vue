@@ -107,7 +107,7 @@ export default {
 		    	rev_id: this.rev_id,
 		    })
 	    	.then((rspns)=>{
-	    		console.log(rspns);
+	    		// console.log(rspns);
 	    		this.revision = rspns;
 	    		this.samples = rspns.items.map((sample)=>{
 	    			return {

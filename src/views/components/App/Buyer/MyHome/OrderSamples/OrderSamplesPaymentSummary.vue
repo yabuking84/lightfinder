@@ -27,7 +27,8 @@
 			        <template #activator="{ on }">
 
 						<td class="px-4">							
-							{{ sample.item_number }} - {{ sample.name }}
+							<!-- {{ sample.formData.quantity }} pc/s ({{ sample.item_number }}) {{ sample.name }} -->
+							{{ sample.formData.quantity }} pc/s {{ sample.name }}
 						</td>
 
 						<td class="currency">
@@ -154,9 +155,18 @@ export default {
 
 			console.log(samplesToRequest);
 
-			this.$store.disptach(this.getStore('myHome')+"/requestSample_a",samplesToRequest)
+			this.$store.dispatch(this.getStore('myHm')+"/requestSample_a",{
+				formData:samplesToRequest,
+				proj_id: this.proj_id,
+			})
 			.then((rspns)=>{
 				console.log(rspns);
+				this.$router.push({
+					name:'BuyerMyHomeProject',
+					params:{
+						proj_id: this.proj_id,
+					},
+				});
 			})
 			.catch((e)=>{
 				console.log(e);

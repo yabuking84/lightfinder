@@ -1,15 +1,13 @@
 <template>
-<span>
-	<!-- <div style="width: 100vw; height: 100vh"></div> -->
 
-  	<v-img :src="backgroundImg" class="" style="background: rgba(0,0,0,0.4);">
+  <v-img :src="backgroundImg" class="page-vimg with-header" style="background: rgba(0,0,0,0.4);">
 		
+		<!-- <img class="logo" src="/static/logos/logo-white.png"> -->
+
 		<div class="registration-first" v-show="isStepOne">
 		  <v-container>
-			<!-- <v-flex lg12 xs12> -->
-			  <v-layout row wrap class="main-wrapper">
-
-
+			<v-flex lg12 xs12>
+			  <v-layout row wrap>
 
 				<v-flex lg4 xs12 offset-lg2 class="page-wrap">
 					<v-layout row wrap>
@@ -105,12 +103,9 @@
 								</v-layout>
 							  </v-flex>
 							  <v-flex xs12 mt-3>
-									<p class="black--text text-xs-center">
-										Existing User ? Click 
-										<strong><router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link></strong>
-										to login.
-									</p>
-								
+								<router-link :to="{ name: 'Login' }">
+								  <p class="black--text text-xs-center font-weight-light"><strong>Existing User ? Click here to login</strong></p>
+								</router-link>
 							  </v-flex>
 							</v-layout>
 						  </v-form>
@@ -120,33 +115,35 @@
 					<!-- FOR 1ST STEP -->
 				  </v-layout>
 				</v-flex>
-
-
 			  </v-layout>
-			<!-- </v-flex> -->
+			</v-flex>
 		  </v-container>
 		</div>
 
 		<div class="registration-stepper" v-show="isSteptwo">
+	   
+		  <v-flex offset-md2 offset-lg2 lg8 md8 xs12 pa-2>	
 
-		  	<v-container>	   
-		  	<!-- <v-flex offset-md2 offset-lg2 lg8 md8 xs12 pa-2>	 -->
-			<v-layout align-center justify-center row fill-height ma-4>
+			<v-layout align-center justify-center row fill-height>
 		  
 				<!-- FOR 2ND 3RD 4RTH STEP -->
 
-				<v-card>
-
-					<v-card-title primary-title>
-						<h2 class="mb-0 pb-0">Supplier Sign Up</h2>
-					</v-card-title>
+				<v-card  style="max-height:80vh; overflow:hidden; overflow-y:auto;">
 
 					<v-card-text id="inquiryCreate_scrollable_cont">
 
-						<v-container>
-						  
-						
-						<v-layout row wrap>
+					   <v-stepper v-model="e1" vertical>
+
+					<v-stepper-step :complete="e1 > 1" step="1">
+						  Contact Details
+						  <small>Summarize if needed</small>
+					</v-stepper-step>
+
+					<v-stepper-content step="1">
+
+							<v-flex xs12>
+
+							  <v-layout row wrap>
 
 								<v-flex md6 xs12 pa-2>
 								  <v-text-field 
@@ -294,27 +291,265 @@
 									</v-text-field>  
 								</v-flex>
 
-						
-						</v-layout>
-						
-						</v-container>
+							  </v-layout>
+							</v-flex> 
+
+					  <v-btn color="primary"  @click="SecondStep()">Continue</v-btn>
+					  <!-- <v-btn   @click="FirstStep()" flat>back</v-btn> -->
+
+					</v-stepper-content>
+
+					<v-stepper-step :complete="e1 > 2" step="2">Company Information</v-stepper-step>
+
+					<v-stepper-content step="2">
+
+
+							 <v-flex xs12>
+
+									<v-layout row wrap>
+
+									<v-flex xs12 lg4 md4 pa-2>
+
+										 <v-text-field 
+											  color="black" 
+											  label="Company established year:" 
+											  v-model="form.companyestablishedyear" 
+											  required 
+											  :error-messages="fieldErrors('form.companyestablishedyear')" 
+											  @blur="$v.form.companyestablishedyear.$touch()">
+										  </v-text-field>
+
+									</v-flex>
+
+									<v-flex xs12 lg4 md4 pa-2>
+
+										  <v-text-field 
+											  color="black" 
+											  label="Number of employees in total" 
+											  v-model="form.numberofemployees" 
+											  required 
+											  :error-messages="fieldErrors('form.numberofemployees')" 
+											  @blur="$v.form.numberofemployees.$touch()">
+										  </v-text-field>
+
+									</v-flex>  
+
+									<v-flex xs12 lg4 md4 pa-2>
+
+										  <v-text-field 
+											  color="black" 
+											  label="Number of workers in factory" 
+											  v-model="form.numberofworkersinfactory" 
+											  required 
+											  :error-messages="fieldErrors('form.numberofworkersinfactory')" 
+											  @blur="$v.form.numberofworkersinfactory.$touch()">
+										  </v-text-field>
+
+									</v-flex>
+
+
+									  <v-flex xs12 mt-2 mb-4>
+
+										<h2 class="font-weight-medium text--grey">PRODUCT QUESTIONS</h2>
+										<h5 class="font-weight-light ">What kind of LED lights do you offer?</h5>
+
+										<v-layout row wrap pa-2>
+											<v-autocomplete v-model="categories" :items="categoryItems" item-text="name" item-value="id" ref="categorySelect" cache-items chips multiple hide-no-data clearable hide-details label="List your Products ">
+											  <template v-slot:selection="slotData">
+												<v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
+												  {{ slotData.item.name }}
+												</v-chip>
+											  </template>
+											</v-autocomplete>
+										</v-layout>	
+
+									</v-flex>
+
+
+									<v-flex xs6 pa-2 style="display: none;">
+
+										  <vue-dropzone 
+												id="dropzone_attachments" 
+												:options="dropzoneOptions" 
+												:useCustomSlot="useCustomSlot"
+												:awss3="getAWSS3('add-inquiry-attachments')"
+												@vdropzone-success="vdz_success($event,'add-inquiry-attachments')">
+												  <div class="dropzone-custom-content">
+													<h3 class="dropzone-custom-title">Drag and drop to images of your Factory photo Inside!</h3>
+													<div class="subtitle">...or click to select a file from your computer</div>
+												  </div>
+										  </vue-dropzone>
+										
+									</v-flex>  
+
+									<v-flex xs6 pa-2 style="display: none;">
+
+										  <vue-dropzone 
+												id="dropzone_attachments" 
+												:options="dropzoneOptions" 
+												:useCustomSlot="useCustomSlot"
+												:awss3="getAWSS3('add-inquiry-attachments')"
+												@vdropzone-success="vdz_success($event,'add-inquiry-attachments')">
+												  <div class="dropzone-custom-content">
+													<h3 class="dropzone-custom-title">Drag and drop to images of your Factory photo Outside!</h3>
+													<div class="subtitle">...or click to select a file from your computer</div>
+												  </div>
+										  </vue-dropzone>
+									  
+									</v-flex>
+
+
+									</v-layout>
+
+							 </v-flex>
+
+					  <v-btn color="primary"  @click="ThirdStep()">Continue</v-btn>
+					  <v-btn @click="FirstStep()" flat>back</v-btn>
+
+					</v-stepper-content>
+
+					<v-stepper-step :complete="e1 > 3" step="3">Bank Details</v-stepper-step>
+
+					<v-stepper-content step="3">
+
+
+							<v-flex xs12>
+							<v-layout row wrap>
+
+								<v-flex xs12 lg4 pa-2>
+
+								  <v-text-field 
+										  color="black" 
+										  label="Account Name:" 
+										  v-model="form.accountname" 
+										  required 
+										  :error-messages="fieldErrors('form.accountname')" 
+										  @blur="$v.form.accountname.$touch()">
+								   </v-text-field>
+
+								</v-flex> 
+
+
+								<v-flex xs12 lg4 pa-2>
+									  
+									  <v-text-field 
+										  color="black" 
+										  label="Account Number:" 
+										  v-model="form.accountnumber" 
+										  required 
+										  :error-messages="fieldErrors('form.accountnumber')" 
+										  @blur="$v.form.accountnumber.$touch()">
+									   </v-text-field>
+
+								</v-flex>
+
+								<v-flex xs12 lg4 pa-2>
+								  
+								   <v-text-field 
+										  color="black" 
+										  label="IBAN:" 
+										  v-model="form.iban" 
+										  required 
+										  :error-messages="fieldErrors('form.iban')" 
+										  @blur="$v.form.iban.$touch()">
+								   </v-text-field>
+
+								</v-flex>
+
+
+								<v-flex xs12 lg4 pa-2>
+								  
+									<v-text-field 
+										  color="black" 
+										  label="Bank Name:" 
+										  v-model="form.bankname" 
+										  required 
+										  :error-messages="fieldErrors('form.bankname')" 
+										  @blur="$v.form.bankname.$touch()">
+								   </v-text-field>
+
+								</v-flex>
+
+								<v-flex xs12 lg4 pa-2>
+
+								  <v-text-field 
+										  color="black" 
+										  label="Bank Address:" 
+										  v-model="form.bankaddress" 
+										  required 
+										  :error-messages="fieldErrors('form.bankaddress')" 
+										  @blur="$v.form.bankaddress.$touch()">
+								   </v-text-field>
+
+								</v-flex>
+
+								<v-flex xs12 lg4 pa-2>
+								  
+									<v-text-field 
+										  color="black" 
+										  label="Swift Code:" 
+										  v-model="form.swiftcode" 
+										  required 
+										  :error-messages="fieldErrors('form.swiftcode')" 
+										  @blur="$v.form.swiftcode.$touch()">
+								   </v-text-field>
+
+								</v-flex>
+
+								<v-flex xs12 mt-4>
+
+									<h4 class="text--grey"> In order that the form will be transmitted to us, you have to agree to the following terms:</h4>
+
+									<div class="agree">
+
+										<p> 
+
+											<span> 1.) We hereby verify that all information and attachments on this form are fully true and correct to the best of my knowledge.</span>
+											<span> 2.) We confirm to provide samples and supply orders from client with no minimum quantity required.</span>
+											<span> 3.) We confirm, that BuyAnyLight Inspector can visit our company/factory to check on all the information given in this form.</span>
+											<span> 4.) We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation!</span>
+											<span> 5.) We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to:</span>
+				
+										</p>
+
+										<p class="mb-1"> 
+											* By clicking the submit button you agree the above conditions.
+										</p>
+										<p class="">
+											* Every lighting manufacturer's registration is subject to approval from BAL
+										</p>
+										
+									
+									</div>
+
+								</v-flex>
+
+
+							   
+
+							</v-layout>
+							</v-flex>
+
+					  <v-btn color="primary" class="white--text" :loading="formloading"  @click="FourthStep()">Submit</v-btn>
+					  <v-btn @click="SecondStep()" flat>back</v-btn>
+					  
+
+					</v-stepper-content>
+
+				
+				  </v-stepper>
+
 				   </v-card-text>
-				   <v-card-actions>
-				    <v-btn color="success">Submit</v-btn>
-				   </v-card-actions>
 				</v-card>
 
 				<!-- FOR 2ND 3RD 4RTH STEP -->
 
 			</v-layout>
 
-		  	<!-- </v-flex> -->
-		  	</v-container>
+		  </v-flex>
 		</div>
 
 		<div class="registration-success" v-show="isComplete">
-		  	<v-container>	   
-			<v-layout align-center justify-center row fill-height>
 			 <v-flex xs8 class="offset-xs2">
 					<v-card class=pa-5>
 						<v-layout row wrap justify-center>
@@ -331,12 +566,10 @@
 						</v-layout>
 					</v-card>  
 			   </v-flex>
-			</v-layout>
-		  	</v-container>
 		</div>
 
-  	</v-img>
-</span>
+  </v-img>
+
 </template>
 
 <script>
@@ -1045,7 +1278,7 @@ export default {
 
 
 	.registration-first {
-		> .container {
+		.container {
 			padding: 16px;
 			height: 100vh;
 			overflow-y: scroll;
@@ -1060,7 +1293,7 @@ export default {
 		position: relative;
 		top: 8%;
 		padding: 20px;
-		margin-bottom: 50px;
+		margin-bottom: 164px;
 		// display: none;
 	}
 
@@ -1076,9 +1309,7 @@ export default {
 	}
 
 
-	.main-wrapper {
-    	flex-direction: column-reverse;		
-	}
+
 }
 
 .v-input--selection-controls.v-input >>> .v-label { 

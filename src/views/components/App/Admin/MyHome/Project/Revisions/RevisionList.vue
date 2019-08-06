@@ -25,7 +25,7 @@
 		        			<v-tooltip bottom dark>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text" small style="min-width: 35px;">
-									<v-icon style="font-size: 16px;">fas fa-shopping-cart</v-icon>
+									<v-icon style="font-size: 16px;">fas fa-box-open</v-icon>
 								</v-btn>                                    
                             </template>
 				    		<span>Samples Ordered</span>
@@ -33,7 +33,7 @@
 		                    </router-link>
 
 
-							<router-link :to="{name:'AdminMyHomeEditRevision',params:{proj_id:proj_id,rev_id:revision.id}}">
+							<router-link :to="{name:'AdminMyHomeRevisionEdit',params:{proj_id:proj_id,rev_id:revision.id}}">
 		        			<v-tooltip bottom dark>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
@@ -41,6 +41,18 @@
 								</v-btn>                                    
                             </template>
 				    		<span>Edit Revision</span>
+                        	</v-tooltip>
+	                        </router-link>
+
+
+							<router-link :to="{name:'AdminMyHomeRevisionCopy',params:{proj_id:proj_id,rev_id:revision.id}}">
+		        			<v-tooltip bottom dark>
+			        		<template #activator="{ on }">
+								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
+									<v-icon style="font-size: 16px;">fas fa-clone</v-icon>
+								</v-btn>                                    
+                            </template>
+				    		<span>Copy Revision</span>
                         	</v-tooltip>
 	                        </router-link>
 
