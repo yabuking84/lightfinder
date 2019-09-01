@@ -30,7 +30,7 @@
 
 <script>
 
-  import TermsConditionComponent from '@/views/components/App/Supplier/Terms&ConditionComponent'
+  import TermsConditionComponent from '@/views/Components/App/Supplier/Terms&ConditionComponent'
 
   export default {
 

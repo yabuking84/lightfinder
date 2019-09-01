@@ -1,34 +1,44 @@
 <template>
   <div>
     <v-layout row wrap>
-
-      <v-card class="pa-5" width="430px">
-
+      <v-card class="pa-5">
         <div class="headline font-weight-medium text-xs-center">SIGN UP</div>
-
         <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4>
-       
         <v-layout row wrap>
-
           <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form" class="mt-3">
-
             <v-layout wrap row>
-
               <v-flex xs12 pa-0>
-
-                <v-text-field color="black" label="Email Address" 
-                v-model="form.email" required
-                 :error-messages="fieldErrors('form.email')" 
-                 @blur="$v.form.email.$touch()"></v-text-field>
-
-                <v-text-field color="black" label="Password"
-                 v-model="form.password" 
-                 required type="password" 
-                 :error-messages="fieldErrors('form.password')"
-                  @blur="$v.form.password.$touch()"></v-text-field>
-
+              	<v-text-field 
+                color="black" 
+                label="Username" 
+                v-model="form.email" 
+                required :error-messages="fieldErrors('form.email')" 
+                @blur="$v.form.email.$touch()">                
+                </v-text-field>
+                <v-text-field 
+                color="black" 
+                label="Email Address" 
+                v-model="form.email" 
+                required :error-messages="fieldErrors('form.email')" 
+                @blur="$v.form.email.$touch()">                
+                </v-text-field>
+                <v-text-field 
+                color="black" 
+                label="Password" 
+                v-model="form.password" 
+                required type="password" 
+                :error-messages="fieldErrors('form.password')" 
+                @blur="$v.form.password.$touch()">              
+                </v-text-field>
+                <v-text-field 
+                color="black" 
+                label="Confirm Password" 
+                v-model="form.password" 
+                required type="password" 
+                :error-messages="fieldErrors('form.password')" 
+                @blur="$v.form.password.$touch()">              
+                </v-text-field>
               </v-flex>
-
               <v-flex xs12 offset-xs4>
                 <v-layout row wrap text-xs-center>
                   <!-- Login form submit -->
@@ -37,27 +47,20 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
-
               <v-flex xs12 mt-3>
-                    <router-link :to="{ name: 'Login' }">
-                           <p class="blue--text text-xs-center font-weight-light"><strong>Existing User ? Click here to login</strong></p>
-                     </router-link>
+                <router-link :to="{ name: 'Login' }">
+                  <p class="blue--text text-xs-center font-weight-light"><strong>Existing User ? Click here to login</strong></p>
+                </router-link>
               </v-flex>
-
             </v-layout>
-
           </v-form>
-
         </v-layout>
       </v-card>
-
     </v-layout>
   </div>
 </template>
-
 <script>
-
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import { required, email, sameAs, minLength } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
@@ -70,12 +73,12 @@ const dform = {
 
 export default {
 
-  mixins: [ validationMixin ],
+  mixins: [validationMixin],
 
   validations: {
 
     form: {
-      email:    { required, email },
+      email: { required, email },
       password: { required, minLength: minLength(6) },
     }
 
@@ -85,9 +88,9 @@ export default {
 
     form: {
 
-      email:    { required: 'Please enter email', email: 'Email must be valid' },
-      password: { required: 'Please enter password', minLength: 'Password must be of 6 characters'  },
-   
+      email: { required: 'Please enter email', email: 'Email must be valid' },
+      password: { required: 'Please enter password', minLength: 'Password must be of 6 characters' },
+
     }
 
   },
@@ -107,14 +110,14 @@ export default {
 
     submit() {
 
-        let data = {
-          email: this.form.email,
-          password: this.form.password
-        }
+      let data = {
+        email: this.form.email,
+        password: this.form.password
+      }
 
-        console.log(data);
-        this.$refs.form.reset()
-        this.resetForm()
+      console.log(data);
+      this.$refs.form.reset()
+      this.resetForm()
 
 
 
@@ -155,10 +158,9 @@ export default {
 }
 
 </script>
-
-
 <style scoped lang="scss">
-  a {
-    text-decoration: none;
-  }
+a {
+  text-decoration: none;
+}
+
 </style>

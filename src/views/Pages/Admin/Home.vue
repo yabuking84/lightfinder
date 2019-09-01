@@ -2,18 +2,20 @@
 
 	<div>
 		<v-container fluid grid-list-xl>
+			
+			<user-details-dev></user-details-dev>			
+			
 			<v-layout row wrap>
 
 		        <v-flex xs12>
-		             <bar-card> </bar-card>
+		             <bar-cards> </bar-cards>
 		        </v-flex>
 
-				<v-flex xs12 md3>
-			           <notification-list> </notification-list>
+				<v-flex xs12>
+					<inquiries-table-grid grid-item-class="xs6 md6"></inquiries-table-grid>
 			    </v-flex>
 
-	            <v-flex xs12 md9>
-	           			<notification-table> </notification-table>
+	            <v-flex xs12>
 	            </v-flex>
 
 			</v-layout>
@@ -24,23 +26,48 @@
 </template>
 
 <script>
+import BarCards from '@/views/Components/App/Admin/BarCards'
+import InquiriesTableGrid from '@/views/Components/App/InquiriesTableGrid'
 
-import NotificationList from '@/views/components/App/Admin/NotificationList'
-import BarCard from '@/views/components/App/Admin/BarCard'
-import NotificationTable from '@/views/components/App/Admin/NotificationTable'
+import config from "@/config/main"
+import tblBs from "@/bus/table"
+import VueTimers from 'vue-timers/mixin'
+
+import UserDetailsDev from '@/views/Components/App/UserDetailsDev'
+
 
 export default {
-	
+	mixins: [
+		VueTimers,
+	],
+
+	components: {
+	    BarCards,
+	    InquiriesTableGrid,
+		UserDetailsDev,
+	},
+
+
+
+	// so there tables will refresh every 5min regardless
+	timers: [{
+	    name: 'RefershTables',
+	    time: config.polling.default.time,
+	    repeat: true,
+	    autostart: true,
+	    callback: function() {
+	    	tblBs.emitRefreshTablePolling();
+	    },
+	}],
+
 	data: () => ({
 		title: 'Home',
 	}),
 
-	components: {
 
-		NotificationList,
-	    BarCard,
-	    NotificationTable
-	    
+	created(){
+		// start polling
+		this.$timer.start('RefershTables');
 	},
 
 	computed: {

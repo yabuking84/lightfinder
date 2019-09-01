@@ -1,5 +1,5 @@
 import Vue from 'vue';
-const InquiryEventBus = new Vue({
+export default new Vue({
 
 	data:{
 		inquiry : null,
@@ -22,8 +22,6 @@ const InquiryEventBus = new Vue({
 	},
 
 });
-
-export default InquiryEventBus;
 
 
 

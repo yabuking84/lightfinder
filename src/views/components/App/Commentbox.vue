@@ -37,7 +37,7 @@
         <v-layout row wrap class="no-mrpd">
             <v-flex xs12 class="no-mrpd">
                 <div class="pos-relative vuse-chat-message-container">
-                    <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage(biditem)" placeholder="Type you message .."></chat-editable>
+                    <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage(biditem)" placeholder="Type your message .."></chat-editable>
                     <v-btn color="green" @click="sendMessage(biditem)" class="ma-0 send-message-btn pa-0" :disabled="chatMessageEditor === null || chatMessageEditor === ''">
                         <v-icon color="white">fa-paper-plane</v-icon>
                     </v-btn>
@@ -137,7 +137,7 @@
     }
 
     .chat-container {
-      height: 250px; 
+      height: 100px; 
       overflow-y: scroll;
     }
 </style>

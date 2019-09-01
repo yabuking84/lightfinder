@@ -27,15 +27,61 @@ import ProfileView from '@/views/Pages/Profile'
 
 
 
+import BuyerInvoice from '@/views/Components/App/Invoice'
 
+import BuyerRegistration from '@/views/Pages/Buyer/Register'
+import BuyerRegistration2 from '@/views/Pages/Buyer/Register2'
+import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
+import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
+import BuyerPackages from '@/views/Pages/Buyer/Packages'
 
+import SupplierRegister from '@/views/Pages/Supplier/Register'
+import SupplierRegister2 from '@/views/Pages/Supplier/Register2'
+import SupplierRegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
+import SupplierRegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
 
 import Home from '@/views/Pages/Home'
 import LoginPage from '@/views/Pages/Authentication/LoginPage'
 import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
+import OAuthPage from '@/views/Pages/Authentication/OAuthPage'
 
+import SocialLogin from '@/views/Pages/Authentication/SocialLogin'
 
 import SuperChat from '@/views/Pages/SuperChat'
+
+import Payment from '@/views/Pages/Payment/Payment'
+
+
+// PAGES
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+import AdminRoutes from '@/router/AdminRoutes.js'
+import BuyerRoutes from '@/router/BuyerRoutes.js'
+import SupplierRoutes from '@/router/SupplierRoutes.js'
+
+
+// console.log('route.js store.user.role')
+// console.log(store.state.auth.auth_user.role)
+// console.log('route.js store.user.role')
+
+var userRoutes = [];
+
+// This is needed because some routes of each of these users have the same path, there will conflict
+if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
+    userRoutes = AdminRoutes;
+}
+else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) { 
+    userRoutes = BuyerRoutes;
+}
+else if(store.state.auth.auth_user.role==config.auth.role.supplier.id) { 
+    userRoutes = SupplierRoutes;
+}
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// PAGES
+
 
 
 const routes = 
@@ -48,14 +94,15 @@ const routes =
             default: SuperChat,             
         },        
     },
-    {
-        path: '/',
-        name: 'Home',
-        meta: {
-            requiresAuth: true,
-            redirectToRole: true,
-        },
-    },
+
+    // {
+    //     path: '/',
+    //     name: 'Home',
+    //     meta: {
+    //         requiresAuth: true,
+    //         redirectToRole: true,
+    //     },
+    // },
     {
         path: '/login',
         name: 'Login',
@@ -66,65 +113,180 @@ const routes =
         name: 'Logout',
         component: LogoutPage,
     },
+
+
+    {
+        path: '/oauth',
+        name: 'OAuth',
+        component: OAuthPage,
+    },
+
+
+	/*
+		public views
+	*/
+
+	{
+		name: 'BuyerRegistration2',
+		path: '/buyer/register2',
+		components: {
+			default: BuyerRegistration2
+		}
+	},
+
+	{
+		name: 'BuyerRegistration',
+		path: '/buyer/register',
+		components: {
+			default: BuyerRegistration
+		}
+	},
+
+	{
+		name: 'BuyerRegistrationMI',
+		path: '/buyer/register/:main_interest',
+		components: {
+			default: BuyerRegistration
+		}
+	},
+
+	{
+		name: 'BuyerRegistrationDetails',
+		path: '/buyer/details',
+		components: {
+			default: BuyerRegistrationDetails
+		}
+	},
+
+	{
+		name: 'BuyerRegisterTerms',
+		path: '/buyer/terms',
+		components: {
+			default: BuyerRegistrationTerms
+		}
+	},
+
+
+	{
+		name: 'BuyerPackages',
+		path: '/buyer/packages',
+		components: {
+			default: BuyerPackages
+		}
+	},
+
+
+
+    {
+        name: 'SupplierRegistration' ,
+        path: '/supplier/register',
+        components: { 
+            default: SupplierRegister,             
+        }
+    },
+
+
+    {
+        name: 'SupplierRegistration2' ,
+        path: '/supplier/register2',
+        components: { 
+            default: SupplierRegister2,             
+        }
+    },
+
+    {
+        name: 'SupplierRegistrationDetails',
+        path: '/supplier/details',
+        components: {
+            default: SupplierRegisterCompanyDetails
+        }
+    },
+
+    {
+        name: 'SupplierRegistrationTerms',
+        path: '/register/terms',
+        components: {
+            default: SupplierRegisterTermsandCondition
+        }
+    },
+
+    {
+        name: 'ForgotPasswordPage',
+        path: '/forgot-password',
+        components: {
+            default: ForgotPasswordPage
+        }
+    },
+
+
+	// social login
+	////////////////////////////////////////
+	{
+		name: 'SocialLogin',
+		path: '/auth/sociallogin/callback',
+		components: {
+			// default: BuyerHome, 
+			default: SocialLogin, 
+			// sidebar: AppSidebar, 
+			// header: AppToolbar, 
+			// footer: AppFooter,
+			// dialog: BuyerInquiryView,
+		},
+	},	
+
+    {
+    	path: '/auth/:provider/callback',
+    	component: {
+    	  template: '<div class="auth-component"></div>'
+    	}
+    },	
+	////////////////////////////////////////
+	// social login
+
+	// test pdf
+	////////////////////////////////////////
+	{
+		name: 'BuyerInvoice',
+		path: '/invoice',
+		components: {
+			// default: BuyerHome, 
+			default: BuyerInvoice, 
+			// sidebar: AppSidebar, 
+			// header: AppToolbar, 
+			// footer: AppFooter,
+			// dialog: BuyerInquiryView,
+		},
+	},
+	
+	////////////////////////////////////////
+	// test pdf
+	    
+
+
+  
+	// // Payment
+	// //////////////////////////////////////////////////////
+	// {
+	// 	name: 'PaymentFoloosi',
+	// 	path: '/payment',
+	// 	components: { 
+	// 		default: Payment, 
+	// 	},
+	// },
+	// //////////////////////////////////////////////////////
+	// // My Tower
+
+
+    ...userRoutes,
 ]
 
 
 
 
-// PAGES
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-var i;
-import AdminRoutes from '@/router/AdminRoutes.js'
-import BuyerRoutes from '@/router/BuyerRoutes.js'
-import SupplierRoutes from '@/router/SupplierRoutes.js'
-
-// console.log('store.state.auth.auth_user.role')
-// console.log(store.state.auth.auth_user.role)
-// console.log(config.auth.role.admin.id)
-// console.log('store.state.auth.auth_user.role')
-
-// Push routes here
-for (i = 0; i < AdminRoutes.length; i++) {     
-    routes.push(AdminRoutes[i]);
-}
-for (i = 0; i < BuyerRoutes.length; i++) {     
-    routes.push(BuyerRoutes[i]);
-}
-for (i = 0; i < SupplierRoutes.length; i++) {
-    routes.push(SupplierRoutes[i]);
-}
-
-
-
-
-// if(store.state.auth.auth_user.role==config.auth.role.admin.id) {
-//     for (i = 0; i < AdminRoutes.length; i++) {     
-//         routes.push(AdminRoutes[i]);
-//     }
-// }
-// else if(store.state.auth.auth_user.role==config.auth.role.buyer.id) {    
-//     for (i = 0; i < BuyerRoutes.length; i++) {     
-//         routes.push(BuyerRoutes[i]);
-//     }
-// }
-// else {
-//     // so that when logged out and / is accessed it will got to logout.
-//     routes.push({
-//         path: '/',
-//         name: 'Home',
-//         meta: {
-//             requiresAuth: true,
-//         },
-//     });
-// }
-
-
-// console.log(routes);
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-// PAGES
+// console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+// console.log(routes)
+// console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
 
 

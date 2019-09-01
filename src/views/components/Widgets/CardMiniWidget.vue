@@ -1,7 +1,7 @@
 <template>
+    <!-- class="cursor-pointer" -->
   <v-card :class="className"
     :dark="dark"
-    class="cursor-pointer"
     @click.native="$emit('click')"
   >
     <v-img

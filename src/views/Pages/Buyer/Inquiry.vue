@@ -23,12 +23,31 @@
 
 		  	<v-layout row wrap>
 				<v-flex>
-						<inquiries-table> </inquiries-table>
 				</v-flex>
 			</v-layout>
 
 		</v-container>
-		<inquiry-create :dialog.sync="openInquiryCreate"></inquiry-create>
+		<inquiry-create :snackBar.sync="successSnackbar" :dialog.sync="openInquiryCreate"></inquiry-create>
+
+	    <v-snackbar
+	        v-model="successSnackbar"
+	        color="green"
+	         top
+	         multi-line
+	         middle
+	         :timeout="10000"
+	        >
+
+	        Successfully Created Inquiry
+	        <v-btn
+	          dark
+	          flat
+	          @click="successSnackbar = false"
+	        >
+	          Close
+	        </v-btn>
+	  </v-snackbar>
+
 	</div>
 </template>
 
@@ -36,14 +55,12 @@
 <script>
 
 
-import InquiriesTable from "@/views/Components/App/Buyer/InquiriesTable";
 import InquiryCreate from "@/views/Components/App/Buyer/InquiryCreate";
 
 export default {
 
 	components: {
 
-	    InquiriesTable,
 	    InquiryCreate,
 
 	},
@@ -55,8 +72,10 @@ export default {
 		icon: null,
 		packageLink: '/buyer/packages',
 		isActive: false,
-		component: 'InquiriesTable',
+		// component: 'InquiriesGrid',
 		openInquiryCreate: false,
+		successSnackbar:false
+
 
 	}),
 
@@ -73,6 +92,14 @@ export default {
 			},			
 		},
 
+	},
+
+	watch: {
+		snackBar(nVal, oVal) {
+			if(nval) {
+				this.snackBar = true
+			}
+		},
 	},
 
 	methods: {

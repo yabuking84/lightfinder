@@ -21,6 +21,7 @@
           </v-text-field>
         </v-flex>
         <v-divider></v-divider>
+
         <v-data-table :headers="headers" :items="dataItems" :loading="loading" :search="search">
           <template slot="items" slot-scope="props">
             <tr class="th-heading">
@@ -52,6 +53,7 @@
             Your search for "{{ search }}" found no results.
           </v-alert>
         </v-data-table>
+        
       </div>
       <!-- component  -->
     </v-card>
@@ -62,14 +64,14 @@
 </template>
 <script>
 import adminSupplierBus from "@/bus/admin-supplier"
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import InquiryStatusButtons from "@/views/Components/App/InquiryStatusButtons"
-import SupplierDialog from '@/views/components/app/Admin/SupplierDialog'
+import SupplierDialog from '@/views/Components/app/Admin/SupplierDialog'
 
 
 export default {
   mixins: [
-    helpers,
+    // helpers,
   ],
   data: function() {
     return {

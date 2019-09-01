@@ -5,7 +5,10 @@ import router from '@/router'
 
 import config from '@/config/index'
 
+import hlprs from '@/mixins/helpers'
+
 import vm from '@/main.js';
+
 
 const state = {
 
@@ -20,12 +23,12 @@ const state = {
 const mutations = {
 
     CONNECTED_M(state) {
-        // console.log("CONNECTED_M auth,js");
+        console.log("CONNECTED_M auth,js");
         state.isConnected = true;
     },
 
     DISCONNECTED_M(state) {
-        // console.log("DISCONNECTED_M auth,js");
+        console.log("DISCONNECTED_M auth,js");
         state.isConnected = false;
     },
 }
@@ -41,7 +44,9 @@ const actions = {
 
     SOCKET_connect(context, data){
         context.commit('CONNECTED_M');
-
+        
+        // console.log(context.rootState.auth.auth_user.uuid);
+        // console.log(typeof context.rootState.auth.auth_user.uuid);
         // set socket user
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         if(
@@ -49,7 +54,6 @@ const actions = {
         	context.rootState.auth.auth_user.uuid
         ) {
 	    	context.dispatch('joinRoom_a', context.rootState.auth.auth_user.uuid);    
-	    	console.log('joinRoom_a');
         }
         // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         // set socket user
@@ -74,27 +78,11 @@ const actions = {
     // admin
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_adminApprovedInquiry(context, data){
-    	// console.log('SOCKET_adminApprovedInquiry');
-		// inquiry_id: "1553672466844"
-		// room: "7e1292c6-3d84-11e9-9c72-0a0027000001"
-		// socket: "PoBz0Huu8uTbp2shAABQ"    	
+		context.dispatch('ntfctns/adminApprovedInquiry_a',data,{root:true});
+    },
 
-		context.dispatch('byrInq/getInquiry_a',{inq_id:data.inquiry_id},{root:true})
-		.then((response)=>{
-			var ntfctn = {
-				title: 			"Inquiry \""+response.keyword+"\" approved!",
-				dataType: 		'inquiry',
-				data: 			response,
-				textSnackbar: 	'Inquiry "'+response.keyword+'" approved!',
-			}
-			context.dispatch('ntfctns/updateNotification_a',ntfctn,{root:true});
-
-        	// context.commit('byrInq/UPDATE_INQUIRY_M',{inquiry:response},{root:true});
-        	// context.commit('byrInq/SHOW_OPENINQUIRYVIEW_M',null,{root:true});
-
-		});
-
-
+    SOCKET_adminRejectedInquiry(context, data){
+		context.dispatch('ntfctns/adminRejectedInquiry_a',data,{root:true});
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // admin
@@ -102,16 +90,33 @@ const actions = {
     // buyer
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     SOCKET_buyerCreatedInquiry(context, data){
+
     },
-    
-    SOCKET_buyerAwardedQuote(context, data){
+
+    SOCKET_buyerAwardedBid(context, data){
+		context.dispatch('ntfctns/buyerAwardedBid_a',data,{root:true});
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // buyer
 
     // supplier
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    SOCKET_supplierCreatedQuote(context, data){
+    // xxxxxxxxxxxxxxx
+    SOCKET_supplierCreatedBid(context, data){
+		context.dispatch('ntfctns/supplierCreatedBid_a',data,{root:true});
+    },
+
+    SOCKET_supplierConfirmedAward(context, data){
+		context.dispatch('ntfctns/supplierConfirmedAward_a',data,{root:true});    	             
+    },
+
+    SOCKET_supplierModifiedBid(context, data){
+    	context.dispatch('ntfctns/supplierModifiedBid_a',data,{root:true});
+    },
+
+    SOCKET_supplierSubmittedBid(context, data){
+    },
+
+    SOCKET_deadlineNear(context, data){
     },
     // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // supplier
@@ -119,6 +124,19 @@ const actions = {
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+// Messaging
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    SOCKET_newMessage(context, data){
+		context.dispatch('ntfctns/newMessage_a',data,{root:true});
+    },
+
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// Messaging
 
 
 
@@ -132,11 +150,17 @@ const actions = {
 
 	joinRoom_a(context, data){
 		var uuid = data;
+        
+        // console.log('joinRoom_a = '+uuid);
         vm.$socket.emit('join', uuid);
 	},
 
-}
+    unsubscribeSocket_a() {
+        // console.log('unsubscribeSocket_a');
+        vm.$socket.emit('logout');
+    },
 
+}
 
 
 
@@ -145,9 +169,13 @@ const getters = {
 }
 
 
+
+
+
+
 export default {
 	namespaced: true,
-	state,
+    state,
 	getters,
 	mutations,
 	actions	

@@ -25,6 +25,8 @@ export function createI18n (ssrContext) {
   return new VueI18n({
     locale: 'en',
     fallbackLocale: 'en',
-    messages
+    messages,
+    // added by tawing
+	silentTranslationWarn: true,
   })
 }

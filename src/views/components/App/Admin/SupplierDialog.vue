@@ -121,7 +121,7 @@
 <script>
 import adminSupplierBus from "@/bus/admin-supplier";
 import { required, email, maxLength } from 'vuelidate/lib/validators'
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 import validationMixin from '@/mixins/validationMixin'
 
 
@@ -147,7 +147,7 @@ export default {
 
   mixins: [ 
     validationMixin,
-    helpers,
+    // helpers,
   ],
 
   validations: {

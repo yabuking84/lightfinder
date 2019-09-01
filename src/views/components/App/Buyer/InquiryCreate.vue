@@ -1,872 +1,957 @@
 <template>
   <div>
-    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable max-width="80%">
+
+    <v-dialog :value="dialog" @input="$emit('update:dialog', false)" scrollable fullscreen lazy>
+
       <v-card>
-        
-        <v-card-title v-if="isEdit" class="headline red darken-1 white--text" primary-title height="45px">
-          Edit
-          <v-spacer></v-spacer>
-          <span class="font-weight-bold">INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
-        </v-card-title>
 
-        <v-card-title v-else class="headline grey darken-4 white--text" primary-title height="45px">
-           Create Inquiry
-        </v-card-title>
+		<!-- When Edit  -->
+	    <v-toolbar v-if="isEdit" class="headline red darken-1 white--text">
+	          <span class="font-weight-bold">EDIT INQUIRY</span>&nbsp&nbsp<span class="font-weight-light">#{{ inquiry.id }}</span>
+	             <v-spacer></v-spacer>
+	            <v-toolbar-items>
+	              <v-btn dark flat @click="$emit('update:dialog', false)">
+	                <v-icon>close</v-icon>
+	              </v-btn>
+	            </v-toolbar-items>
+	    </v-toolbar>
 
-        <v-card-text id="inquiryCreate_scrollable_cont">
+		<!-- When Creating new  -->
+	    <v-toolbar v-else class="headline grey darken-4 white--text">
+	              <v-toolbar-title class="headline font-weight-light">Create Inquiry</v-toolbar-title>
+	              <v-spacer></v-spacer>
+	              <v-toolbar-items>
+	                <v-btn dark flat @click="$emit('update:dialog', false)">
+	                  <v-icon>close</v-icon>
+	                </v-btn>
+	              </v-toolbar-items>
+	    </v-toolbar>
+
+		<!-- Displaying new -->
+        <v-card-text>
+
             <v-layout row wrap>
-              
-            <v-flex xs7>
-                <v-card>
                   
-          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                <v-flex xs7 
+                id="inquiryCreate_scrollable_cont"
+                style="max-height:77vh; overflow:hidden; overflow-y:auto;">
+                   <v-card class="inqCurved">
 
-          <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
+                        <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="formData">
 
-                <v-stepper v-model="stepCnt" class="stepperClass" vertical>
-                  <v-stepper-step step="1" editable class="step_1">
+                          <v-stepper v-model="stepCnt" class="stepperClass" vertical>
 
-                    <h2>Hello {{ $store.state.auth.auth_user.name }}! Tell us what you want.</h2>
-                    <small>The more data you provide the better we can choose suppliers for you.</small>
-                  </v-stepper-step>
+                            <v-stepper-step step="1" editable class="step_1">
 
-                  <v-stepper-content step="1">
-                    
-                    <!-- when is the inquiry is rejected show this -->
-                    <div v-if="isEdit">
-                        <v-layout row wrap>
-                          <v-flex xs1>
-                             <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="50px" contain></v-img>  
-                          </v-flex>
-                          <v-flex xs11 mt-2>
-                              <h4 class="font-weight-medium red--text" style="font-style: italic;">
-                                Your INQUIRY {{ inquiry.id }} is decline by our verifier, please refer on the message box if you have concerns. thanks!
-                              </h4>                    
-                          </v-flex>
-                        </v-layout>
-                    </div>
+                              <h2>Hello {{ $store.state.auth.auth_user.name }}! Tell us what you want.</h2>
+                              <small>The more data you provide the better we can choose suppliers for you.</small>
+                              
+                            </v-stepper-step>
 
-                    <div v-else>
-                      <v-btn color="primary" @click="stepUp()">Start</v-btn>
-                      <v-btn color="primary" @click="inquirylookup=true"> <span>use existing Inquiry ?</span> </v-btn>
-                    </div>
-
-                  </v-stepper-content>
-
-                  <v-stepper-step :rules="[() => 
-                    !$v.formData.keywords.$error && !$v.formData.category.$error ]" 
-                    step="2" 
-                    editable>
-                      <!-- Specific keyword for your Quotation -->
-                      Subject & Category
-                      <small 
-                      v-show="$v.formData.keywords.$error">Subject is required</small>
-                      <small 
-                      v-show="$v.formData.category.$error">Category is required</small>
-                  </v-stepper-step>
-
-                  <v-stepper-content step="2" ref="step_2">
-                      <v-container>
-                        <v-flex xs12>
-                          <v-layout row wrap>
-                            <v-flex xs5>
-                              <h4>Your Subject</h4>
-                              <v-text-field 
-                              v-model="formData.keywords" 
-                              @keyup.enter="stepUp()" 
-                              :error-messages="fieldErrors('formData.keywords')" 
-                              @blur="$v.formData.keywords.$touch()" 
-                              label="Subject">
-                              </v-text-field>
-                            </v-flex>
-                            <v-flex xs1>
-                            </v-flex>
-                            <v-flex xs5>
-                              <h4>Your Chosen Category</h4>
-                              <v-autocomplete 
-                              v-model="formData.category" 
-                              :items="categories" 
-                              item-text="name"
-                              item-value="id"
-                              :error-messages="fieldErrors('formData.category')"
-                              @blur="$v.formData.category.$touch()" 
-                              :search-input.sync="search" 
-                              ref="categorySelect" 
-                              ache-items flat hide-no-data hide-details label="Type here the category.."
-                               solo-inverted>
-                              </v-autocomplete>
-                            </v-flex>
-                          </v-layout>
-                        </v-flex>
-                      </v-container>
-                      <v-btn color="primary" @click="stepUp()">next</v-btn>
-                      <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-                  <!--         <v-stepper-step step="3" :rules="[() => !$v.formData.category.$error ]" editable>
-            Choose a category
-            <small v-show="$v.formData.category.$error">Category is required</small>
-          </v-stepper-step>
-          <v-stepper-content step="3" ref="step_3" no-focus>
-            <v-container>
-              <v-layout row wrap>
-             <v-combobox 
-                v-model="formData.category" 
-                :items="categories" 
-                item-text="name" 
-                item-value="id" 
-                :error-messages="fieldErrors('formData.category')" 
-                @blur="$v.formData.category.$touch()" 
-                :search-input.sync="search" 
-                ref="category" 
-                label="Type here the category..">
-                </v-combobox>
-          
-                  <v-layout row wrap>
-                    <v-autocomplete 
-                        v-model="formData.category" 
-                        :items="categories" 
-                        item-text="name"
-                        item-value="id"
-                        :error-messages="fieldErrors('formData.category')" 
-                        @blur="$v.formData.category.$touch()" 
-                        ref="categorySelect" 
-                        cache-items 
-                        class="mx-3" 
-                        flat 
-                        hide-no-data 
-                        hide-details 
-                        label="Type here the category.." 
-                        solo-inverted>
-                    </v-autocomplete>
-                </v-layout>
-          
-              </v-layout>
-            </v-container>
-            <v-btn color="primary" @click="stepUp()">next</v-btn>
-            <v-btn flat @click="stepDown()">back</v-btn>
-          </v-stepper-content>
-           -->
-                  <!-- Sub category here if there is -->
-                  <v-stepper-step step="3" :rules="[() => !$v.formData.quantity.$error &&  !$v.formData.desired_price.$error ]" editable>
-                    Quantity & Price
-                    <small v-show="$v.formData.quantity.$error">Quantity is required.</small>
-                    <small v-show="$v.formData.desired_price.$error">Preffered Price is required.</small>
-                  </v-stepper-step>
-                  <v-stepper-content step="3" ref="step_3">
-                    <v-container>
-                      <v-layout row>
-                        <v-flex xs4>
-                          <v-text-field 
-                          v-model="formData.quantity" 
-                          label="Quantity" 
-                          @keyup.enter="stepUp()" 
-                          :error-messages="fieldErrors('formData.quantity')" 
-                          @blur="$v.formData.quantity.$touch()" 
-                          :value="formData.quantity" 
-                          suffix="pcs" 
-                          mask="######">
-                          </v-text-field>
-                        </v-flex>
-                        <v-flex xs1>
-                        </v-flex>
-                        <v-flex xs4>
-                          <v-text-field 
-                          class="mr-1" 
-                          label="Price Per Piece" 
-                          :error-messages="fieldErrors('formData.desired_price')" 
-                          @blur="$v.formData.desired_price.$touch()" 
-                          v-model="formData.desired_price" 
-                          @keyup.enter="stepUp()" 
-                          :value="formData.desired_price" 
-                          suffix="USD">
-                          </v-text-field>
-                        </v-flex>
-                      <v-flex xs1>
-                        </v-flex>
-                              <v-flex xs4>
-                          <v-text-field 
-                          class="mr-1" 
-                          label="Total Price" 
-                          @keyup.enter="stepUp()" 
-                          :value="formData.quantity * formData.desired_price" 
-                          suffix="USD">
-                          </v-text-field>
-                        </v-flex>
-
-                      </v-layout>
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-                  <!-- 
-                  <v-stepper-step step="5" :rules="[() => !$v.formData.desired_price.$error ]" editable>
-                    Desire/d Price
-                    Target Price
-                    <small v-show="$v.formData.desired_price.$error">Target Price is required</small>
-                  </v-stepper-step>
-                  <v-stepper-content step="5"  ref="step_5">
-                    <v-container>
-                      <v-layout row>
-                        <v-flex xs3>
-                          <v-text-field 
-                          class="mr-1" label="Price Per Piece" 
-                          :error-messages="fieldErrors('formData.desired_price')" 
-                          @blur="$v.formData.desired_price.$touch()" 
-                          v-model="formData.desired_price"
-                          @keyup.enter="stepUp()"
-                          :value="formData.desired_price" suffix="USD">
-                          </v-text-field>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-
-     -->
-                  <v-stepper-step step="4" editable>
-                    Specifications
-                  </v-stepper-step>
-                  <v-stepper-content step="4" ref="step_4">
-                    <v-container>
-                      <v-layout row wrap>
-                        <v-flex xs6>
-                          <v-layout row class="custom_digits">
-                            <v-text-field 
-                            label="Power" 
-                            v-model="formData.power" 
-                            @keyup.enter="stepUp()" 
-                            :value="formData.power" 
-                            suffix="watts" 
-                            mask="######">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row class="custom_digits">
-                            <v-text-field 
-                            label="Lumen" 
-                            v-model="formData.lumen"
-                            @keyup.enter="stepUp()" 
-                            :value="formData.lumen" 
-                            suffix="lm" 
-                            mask="######">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row class="custom_digits">
-                            <v-text-field 
-                            label="Efficiency" 
-                            v-model="formData.efficiency" 
-                            @keyup.enter="stepUp()" 
-                            :value="formData.efficiency" 
-                            suffix="lm/w" mask="######">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row class="custom_digits">
-                            <v-text-field 
-                            label="Beam Angle" 
-                            v-model="formData.beam_angle" 
-                            @keyup.enter="stepUp()" 
-                            :value="formData.beam_angle" 
-                            suffix="degrees" mask="###">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row wrap>
-                            <v-flex xs6>
-                              <h5 class="font-weight-light"> <strong> Want to include warranty ? </strong> </h5>
-                              <v-radio-group v-model="is_warranty" row>
-                                <v-radio label="Yes" :value="1"></v-radio>
-                                <v-radio label="No" :value="0"></v-radio>
-                              </v-radio-group>
-                            </v-flex>
-                            <v-flex xs3 mt-2 mr-3 v-show="is_warranty">
-                              <v-text-field label="Warranty" v-model="formData.warranty" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.warranty')" @blur="$v.formData.warranty.$touch()" :value="formData.warranty" suffix="yr/s" mask="#">
-                              </v-text-field>
-                            </v-flex>
-                          </v-layout>
-                        </v-flex>
-                        <v-flex xs6>
-                          <v-layout row class="custom_digits">
-                            <v-text-field label="CCT" 
-                            v-model="formData.cct" 
-                            @keyup.enter="stepUp()" 
-                            :value="formData.cct" 
-                            suffix="lm" 
-                            mask="######">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row class="custom_digits">
-                            <v-text-field 
-                            label="IP Rating" 
-                            v-model="formData.ip"
-                            @keyup.enter="stepUp()" 
-                            :value="formData.ip" 
-                            mask="######">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row wrap class="custom_digits">
-                            <v-text-field 
-                            v-model="formData.size" 
-                            @keyup.enter="stepUp()" 
-                            label="Size">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row wrap class="custom_digits">
-                            <v-text-field 
-                            v-model="formData.finish" 
-                            @keyup.enter="stepUp()" 
-                            label="Finish">
-                            </v-text-field>
-                          </v-layout>
-                          <v-layout row wrap class="">
-                            <v-flex xs3>
-                              <v-switch 
-                              color="black" 
-                              v-model="formData.dimmable" 
-                              label="Non-Dim"
-                               value="Non-Dim"
-                               ></v-switch>
-                            </v-flex>
-                            <v-flex xs3>
-                              <v-switch 
-                              color="black" 
-                              v-model="formData.dimmable" 
-                              label="TRIAC" 
-                              value="TRIAC">
-                              </v-switch>
-                            </v-flex>
-                            <v-flex xs3>
-                              <v-switch 
-                              color="black" 
-                              v-model="formData.dimmable" 
-                              label="0-10V" 
-                              value="0-10V">
-                              </v-switch>
-                            </v-flex>
-                            <v-flex xs3>
-                              <v-switch 
-                              color="black" 
-                              v-model="formData.dimmable"
-                              label="DALI" 
-                              value="DALI">
-                              </v-switch>
-                            </v-flex>
-                          </v-layout>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-                  <!--    <v-stepper-step step="5" editable>
-                 Desire/d Price
-                 Total Price
-             </v-stepper-step>
-             <v-stepper-content step="5" ref="step_5">
-                 <v-container>
-                     <v-layout row>
-                         <v-flex xs3>
-                             <v-text-field hint="Target Price Per Unit" v-model="formData.desired_price" @keyup.enter="stepUp()" :value="formData.desired_price" suffix="USD">
-                             </v-text-field>
-                         </v-flex>
-                     </v-layout>
-                 </v-container>
-                 <v-btn color="primary" @click="stepUp()">next</v-btn>
-                 <v-btn flat @click="stepDown()">back</v-btn>
-             </v-stepper-content>
-              -->
-                  <!--       <v-stepper-step step="7" editable>
-                        Preferred Shipment Date
-                    </v-stepper-step>
-                    <v-stepper-content step="7" ref="step_7"  no-focus>
-                        <v-container>
-                            <v-layout row>
-
-                                <v-menu v-model="calendar_menu" :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
-
-                                    <v-text-field slot="activator" v-model="formData.shipping_date" label="Shipment Date" prepend-icon="event" readonly></v-text-field>
-                                    <v-date-picker v-model="formData.shipping_date" header-color="black" :min="minDate" @input="calendar_menu = false">
-
-                                    </v-date-picker>
-
-                                </v-menu>
-
-                            </v-layout>
-                        </v-container>
-                        <v-btn color="primary" @click="stepUp()">next</v-btn>
-                        <v-btn flat @click="stepDown()">back</v-btn>
-                    </v-stepper-content> -->
-                  <!--             <v-stepper-step step="8" editable>
-                        Payment Method
-                    </v-stepper-step>
-                    <v-stepper-content step="8" ref="step_8" no-focus>
-                        <v-container>
-                            <v-layout row wrap>
-                                <v-flex xs4 v-for="(payment_method, index) in payment_methods" :key="`pm-${index}`">
-                                    <v-switch color="black" v-model="formData.payment_method" :label="payment_method.name" :value="payment_method.id"></v-switch>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                        <v-btn color="primary" @click="stepUp()">next</v-btn>
-                        <v-btn flat @click="stepDown()">back</v-btn>
-                    </v-stepper-content> -->
-                  <!--         <v-stepper-step step="9" editable>
-                        Shipping Method
-                    </v-stepper-step>
-                    <v-stepper-content step="9" ref="step_9" no-focus>
-                        <v-container>
-                            <v-layout row wrap>
-
-                                <v-flex xs4 v-for="(shipping_method, index) in shipping_methods" :key="`sm-${index}`">
-                                    <v-switch color="black" v-model="formData.shipping_method" :label="shipping_method.name" :value="shipping_method.id"></v-switch>
-                                </v-flex>                        
-
-                            </v-layout>
-                        </v-container>
-                        <v-btn color="primary" @click="stepUp()">next</v-btn>
-                        <v-btn flat @click="stepDown()">back</v-btn>
-                    </v-stepper-content> -->
-                  <v-stepper-step :rules="[() => !$v.formData.sample_quantity.$error && !$v.formData.sample_shipping_address.$error && !$v.formData.sample_shipping_country_id.$error && !$v.formData.sample_shipping_city.$error ]" step="5" editable>
-                    Request Sample Order
-                    <small v-show="$v.formData.sample_quantity.$error">Quantity is required</small>
-                    <small v-show="$v.formData.sample_shipping_address.$error">Address is required</small>
-                    <small v-show="$v.formData.sample_shipping_country_id.$error">Country is required</small>
-                    <small v-show="$v.formData.sample_shipping_city.$error">City is required</small>
-                  </v-stepper-step>
-                  <v-stepper-content step="5" ref="step_5" no-focus>
-                    <v-container>
-                      <v-layout row wrap>
-
-
-                        <v-flex xs6>
-                          <!-- <v-text-field v-model="formData.street" @keyup.enter="stepUp()" label="Street Name/No.">  </v-text-field>  -->
-                          <h3 class="font-weight-light">Do you want to purchase a sample order ?</h3>
-                          <v-radio-group v-model="is_sample" row>
-                            <v-radio label="Yes" :value="1"></v-radio>
-                            <v-radio label="No" :value="0"></v-radio>
-                          </v-radio-group>
-                        </v-flex>
-
-                        <v-flex xs6 v-show="is_sample">
-                           <h3 class="font-weight-light">Enter your desired quantity.</h3>
-                          <v-layout row wrap>
-                            <v-flex xs7 class="custom_digits">
-                              <v-text-field 
-                              v-model="formData.sample_quantity" 
-                              @keyup.enter="stepUp()" 
-                              :error-messages="fieldErrors('formData.sample_quantity')" 
-                              @blur="$v.formData.sample_quantity.$touch()" 
-                              label="Quantity" 
-                              hint="Note: Quantity can't be change later on. so please be accurate.">
-                              </v-text-field>
-                            </v-flex>
-                          </v-layout>
-
-                          <h3 class="mt-2 font-weight-light">Specify your shipping Address for sample order's.</h3>
-                          <v-layout row wrap>
-                            <v-flex xs6 pa-1>
-                              <v-select 
-                              v-model="formData.sample_shipping_country_id" 
-                              :items="countries" 
-                              item-text="name" 
-                              item-value="id" 
-                              :error-messages="fieldErrors('formData.sample_shipping_country_id')" 
-                              @blur="$v.formData.sample_shipping_country_id.$touch()" 
-                              :search-input.sync="search" 
-                              ref="countrySampleCountry" 
-                              label="Countries">
-                              </v-select>
-                            </v-flex>
-                            <v-flex xs6 pa-1>
-                              <v-text-field 
-                              v-model="formData.sample_shipping_address" 
-                              @keyup.enter="stepUp()" 
-                              :error-messages="fieldErrors('formData.sample_shipping_address')" 
-                              @blur="$v.formData.sample_shipping_address.$touch()" 
-                              label="Street Name/No.">
-                              </v-text-field>
-                            </v-flex>
-                            <v-flex xs6 pa-1>
-                              <v-text-field 
-                              v-model="formData.sample_shipping_city" 
-                              :error-messages="fieldErrors('formData.sample_shipping_city')"
-                               @blur="$v.formData.sample_shipping_city.$touch()" 
-                               @keyup.enter="stepUp()"
-                                label="City">
-                              </v-text-field>
-                            </v-flex>
-                            <v-flex xs6 pa-1>
-                              <v-text-field 
-                              v-model="formData.sample_shipping_postal" 
-                              @keyup.enter="stepUp()" 
-                              label="State">
-                              </v-text-field>
-                            </v-flex>
-                          </v-layout>
-                        </v-flex>
-
-
-                      </v-layout>
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-                  <v-stepper-step step="6" :rules="[() => !$v.formData.oem_service.$error && !$v.formData.oem_description.$error ]" editable>
-                    Original Equipment Manufacturer (OEM)
-                  </v-stepper-step>
-                  <v-stepper-content step="6" ref="step_6" no-focus>
-                    <v-container>
-                      <v-layout row wrap>
-
-                        <v-flex xs4>
-                          <h3 class="font-weight-light">Do you require OEM ?</h3>
-                          <v-radio-group v-model="is_oem" row>
-                            <v-radio label="Yes" :value="1"></v-radio>
-                            <v-radio label="No" :value="0"></v-radio>
-                          </v-radio-group>
-                        </v-flex>
-                          
-                          <v-flex xs7>
-
-                        <v-layout row wrap v-show="is_oem">
-                                <h3 class="font-weight-light">Please be accurate as possible.</h3>
-
-                                  <v-flex xs12 class="custom_digits" >
-                              <v-text-field 
-                              v-model="formData.oem_service" 
-                              @keyup.enter="stepUp()" 
-                              :error-messages="fieldErrors('formData.oem_service')" 
-                              @blur="$v.formData.oem_service.$touch()" 
-                              label="What kind of Original Equipment Manufacturer (OEM) Service ?">
-                              </v-text-field>
-                          </v-flex>
-                          <v-flex xs12 class="custom_digits" >
-                              <v-textarea 
-                              label="Description" 
-                              :error-messages="fieldErrors('formData.oem_description')" 
-                              @blur="$v.formData.oem_description.$touch()" 
-                              v-model="formData.oem_description">
-                              </v-textarea>
-                          </v-flex>
-                          <v-flex xs12 >
-                            <vue-dropzone id="dropzone-oem" :options="dropzoneOptions" :useCustomSlot=true>
-                              <div class="dropzone-custom-content">
-                                <h3 class="dropzone-custom-title">Drag and drop to upload Logo's and Label</h3>
-                                <div class="subtitle">...or click to select a file from your computer</div>
+                            <v-stepper-content step="1">
+                              
+                              <!-- when is the inquiry is rejected show this -->
+                              <div v-if="isEdit">
+                                  <v-layout row wrap>
+                                    <v-flex xs1>
+                                       <v-img src="https://image.flaticon.com/icons/svg/1497/1497760.svg" height="50px" contain></v-img>  
+                                    </v-flex>
+                                    <v-flex xs11 mt-2>
+                                        <h4 class="font-weight-medium red--text" style="font-style: italic;">
+                                          Your INQUIRY {{ inquiry.id }} is decline by our verifier, please refer on the message box if you have concerns. thanks!
+                                        </h4>                    
+                                    </v-flex>
+                                  </v-layout>
                               </div>
-                            </vue-dropzone>
-                          </v-flex>
-                        </v-layout>
-                            </v-flex>
 
-                       
+                              <div v-else>
+                                <v-btn color="primary" @click="stepUp()">Start</v-btn>
+                                <v-btn color="primary" @click="inquirylookup=true"> <span>use existing Inquiry ?</span> </v-btn>
+                              </div>
+                            </v-stepper-content>
 
+                            <v-stepper-step :rules="[() => 
+                              !$v.formData.keywords.$error && !$v.formData.category.$error ]" 
+                              step="2" 
+                              editable>
+                                <!-- Specific keyword for your Quotation -->
+                                Subject, Category & Upload Images
+                                <small 
+                                v-show="$v.formData.keywords.$error">Subject is required</small>
+                                <small 
+                                v-show="$v.formData.category.$error">Category is required</small>
+                            </v-stepper-step>
 
-
-                      </v-layout>
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-                  <v-stepper-step step="7" :rules="[() => !$v.formData.shipping_country_id.$error && !$v.formData.shipping_address.$error && !$v.formData.shipping_city.$error  ]" editable>
-                    Your Mass Shipping Address
-                    <small v-show="$v.formData.shipping_address.$error">Address is required</small>
-                    <small v-show="$v.formData.shipping_country_id.$error">Country is required</small>
-                    <small v-show="$v.formData.shipping_city.$error">City is required</small>
-                  </v-stepper-step>
-                  <v-stepper-content step="7" ref="step_7" no-focus>
-                    <v-container>
-                      <v-layout row wrap>
-                        <v-flex xs5 ml-2>
-                          <v-select 
-                          v-model="formData.shipping_country_id" 
-                          :items="countries" 
-                          item-text="name" item-value="id" 
-                          :error-messages="fieldErrors('formData.shipping_country_id')" 
-                          @blur="$v.formData.shipping_country_id.$touch()" 
-                          :search-input.sync="search" 
-                          ref="countryMassShipping" 
-                          label="Countries">
-                          </v-select>
-                        </v-flex>
-                        <v-flex xs5 ml-2>
-                          <v-text-field 
-                          v-model="formData.shipping_address" 
-                          @keyup.enter="stepUp()" 
-                          :error-messages="fieldErrors('formData.shipping_address')" 
-                          @blur="$v.formData.shipping_address.$touch()" 
-                          label="Street Address">
-                          </v-text-field>
-                        </v-flex>
-                        <v-flex xs5 ml-2>
-                          <v-text-field 
-                          v-model="formData.shipping_city" 
-                          :error-messages="fieldErrors('formData.shipping_city')" 
-                          @blur="$v.formData.shipping_city.$touch()" 
-                          @keyup.enter="stepUp()" 
-                          label="City">
-                          </v-text-field>
-                        </v-flex>
-                        <v-flex xs5 ml-2>
-                          <v-text-field 
-                          v-model="formData.shipping_postal"
-                           @keyup.enter="stepUp()" 
-                           label="Zip/Postal Code">
-                          </v-text-field>
-                        </v-flex>
-                      </v-layout>
-                      <!-- SSSS -->
-                     <!--  <v-layout row wrap>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="">Add New</v-btn>
-                      </v-layout> -->
-                      <!-- SSSS -->
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-
-                  <v-stepper-step step="8" editable>
-                    Files to attach
-                  </v-stepper-step>
-                  <v-stepper-content step="8" ref="step_8">
-                    <v-container>
-                      <v-layout row class="">
-                        <v-flex xs12>
-                          <vue-dropzone id="dropzone" :options="dropzoneOptions" :useCustomSlot=true>
-                            <div class="dropzone-custom-content">
-                              <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
-                              <div class="subtitle">...or click to select a file from your computer</div>
-                            </div>
-                          </vue-dropzone>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                    <v-btn color="primary" @click="stepUp()">next</v-btn>
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-
-                  <v-stepper-step step="9" :rules="[() => !$v.formData.message.$error ]" editable>
-                    Additional Details
-                    <small v-show="$v.formData.message.$error">Additional details is required</small>
-                  </v-stepper-step>
-                  <v-stepper-content step="9" ref="step_9">
-                    <v-container>
-                      <v-layout row>
-                        <v-textarea label="Type message here.." v-model="formData.message" :error-messages="fieldErrors('formData.message')" @blur="$v.formData.message.$touch()">
-                        </v-textarea>
-                      </v-layout>
-                    </v-container>
-                    <!-- <v-btn color="primary" @click="submitForm()">SUBMIT</v-btn> -->
-                    <v-btn flat @click="stepDown()">back</v-btn>
-                  </v-stepper-content>
-                </v-stepper>
-                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-              </v-form>
-            
-        
-              
-            
-                </v-card>
-            </v-flex>
-
-
-            <v-flex xs4>    
-                    <v-card style="position: absolute; margin-left: 50px; margin-right: 50px; padding-bottom: 30px;"  color="white" class="pa-3">
-                        <v-card-text>
-
-                            <v-layout row wrap justify-center>
-                                <!-- <h2 class="text-xs-center">Inquiry Preview</h2> -->
-                                <h2 class="grey--text lighten-5">Inquiry Preview </h2>
-                            </v-layout>
-
-
-                            <v-layout row wrap style="width: 475px;" >
-
-                                <!-- <h1 class="grey--text lighten-5 mt-3">No Preview </h1> -->
-
-                            </v-layout>
-
-
-                            <v-layout row wrap mt-3>
-
-                                <!-- subject and category -->
-
-                                <v-flex xs6 v-show="formData.keywords">
-                                    <h4>Subject:</h4>
-                                    <small  v-html="formData.keywords" ></small>
-                                </v-flex>
-
-                                <v-flex xs6 v-show="formData.category">
-                                    <h4>Category: </h4>
-                                    <small v-html="formData.category"></small>
-                                </v-flex>
-
-                                <!-- price and quantity -->
-                                <v-flex xs12 mt-3>
-
+                            <v-stepper-content step="2" ref="step_2">
+                                <v-container>
+                                  <v-flex xs12>
                                     <v-layout row wrap>
+                                      <v-flex xs5>
 
-                                        <v-flex xs4 v-show="formData.quantity">
-                                            <h4>Quantity</h4>
-                                            <small v-html="formData.quantity"></small>
-                                        </v-flex>
+			        				<v-tooltip bottom>
+				        			<template #activator="{ on }">
 
-                                        <v-flex xs4 v-show="formData.desired_price">
-                                            <h4>Price per unit</h4>
-                                            <small v-html="formData.desired_price"></small>
-                                        </v-flex>
-
-                                        <v-flex xs4 v-show="formData.quantity && formData.desired_price">
-                                            <h4>Total Price</h4>
-                                            <small v-html="formData.quantity * formData.desired_price"></small>
-                                        </v-flex>
-
-                                    </v-layout>
-                                </v-flex>
-
-                                <!-- specifications -->
-                                <v-flex xs12>
-
-                                     <div class="mt-3" v-show="formData.power || formData.lumen || formData.efficiency || formData.beam_angle || formData.cct ||  formData.ip || formData.finish || formData.size || formData.dimmable || formData.warranty ">
-                                        <h4>Spefications: </h4>
-                                    </div>
+                                        <h4 v-on="on">Your Subject</h4>
+                                        <v-text-field 
+                                        v-on="on"                                        
+                                        v-model="formData.keywords" 
+                                        @keyup.enter="stepUp()" 
+                                        :error-messages="fieldErrors('formData.keywords')" 
+                                        @blur="$v.formData.keywords.$touch()" 
+                                        label="Subject">
+                                        </v-text-field>
                                     
-                                    <v-layout row wrap>
+                                    </template>
+						    		<span>This is for your reference</span>
+                                	</v-tooltip>
 
-                                        <v-flex xs3 v-show="formData.power">
-                                            <small>Power: <span v-html="formData.power"> </span></small>
-                                        </v-flex>
+                                      </v-flex>
 
-                                        <v-flex xs3 v-show="formData.lumen">
-                                            <small>Lumen: <span v-html="formData.lumen"></span></small>  
-                                        </v-flex>
+                                      <v-flex xs1>
+                                      </v-flex>
 
-                                        <v-flex xs3 v-show="formData.efficiency">
-                                            <small>Efficiency: <span v-html="formData.efficiency"></span> </small>  
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.beam_angle">
-                                            <small>Beam Angle: <span v-html="formData.beam_angle"></span> </small>
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.cct">
-                                            <small>CCT: <span v-html="formData.cct"> </span> </small>
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.ip">
-                                            <small>IP: <span v-html="formData.ip"></span> </small>      
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.finish">
-                                            <small>Finish: <span v-html="formData.finish"></span> </small>      
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.size">
-                                            <small>Size: <span v-html="formData.size"></span> </small>      
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.dimmable">
-                                            <small>Dimmable: <span v-html="formData.dimmable"></span> </small>      
-                                        </v-flex>
-
-                                        <v-flex xs3 v-show="formData.warranty">
-                                            <small>Warranty: <span v-html="formData.warranty"></span> </small>      
-                                        </v-flex>
+                                      <v-flex xs5>
+                                        <h4>Your Chosen Category</h4>
+                                        <v-autocomplete 
+	                                        v-model="formData.category" 
+	                                        :items="categories" 
+	                                        item-text="name"
+	                                        item-value="id"
+	                                        :error-messages="fieldErrors('formData.category')"
+	                                        @blur="$v.formData.category.$touch()" 
+	                                        ref="categorySelect" 
+	                                        flat hide-no-data hide-details label="Type here the category.."
+                                         >
+                                        </v-autocomplete>
+                                      </v-flex>
                                       
                                     </v-layout>
- 
-                                </v-flex>
-
-                                <!-- Sample Order -->
-
-                                <v-flex xs12 v-show="is_sample" >
-
-                                    <div class="mt-3">
-                                        <h4>Sample Order Data</h4>
-                                    </div>
-
-                                    <h5 v-show="formData.sample_quantity">Quantity</h5>
-                                    <small v-html="formData.sample_quantity"></small>
-
-                                    <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| formData.sample_shipping_country_id">Sample Cost Shipping Address</h5>
-                                    <small v-html="formData.sample_shipping_country_id +', '+ formData.sample_shipping_address +','+ formData.sample_shipping_city "></small>
-
-                                </v-flex>
-
-                                <v-flex xs12 v-show="is_oem">
-
-                                    <div class="mt-3">
-                                        <h4>Original Equipment Manufacturer (OEM)</h4>
-                                    </div>
-
-                                    <div class="mt-3">
-
-                                        <h5 v-show="formData.oem_service">What kind of OEM ?</h5>
-                                        <small v-html="formData.oem_service"></small>
-
-                                        <h5 v-show="formData.oem_description">Describe what you need and want to happen ?</h5>
-                                        <small v-html="formData.oem_description">LED Downlights</small>
-
-                                    </div>
-
-                                </v-flex>
-
-                                <v-flex xs12 v-show="formData.shipping_address || formData.shipping_country_id || formData.shipping_city">
-
-                                    <div class="mt-3">
-                                        <h4>Shipping Address</h4>
-                                    </div>
-
-                                    <small v-html="formData.shipping_country_id +', '+  formData.shipping_address +', '+ formData.shipping_city + formData.shipping_postal"></small>
-
-                                </v-flex>
-
-                                <v-flex xs12 v-show="formData.message">
-
-                                    <div class="mt-3">
-                                        <h4>Additional Details</h4>
-                                    </div>
-
-                                    <small v-html="formData.message"></small>
-
-                                </v-flex>
-                            </v-layout>
+                                  </v-flex>
 
 
+                                  <!-- preview of the edit images here can be removable -->
+	                                <v-flex xs12 v-show="inquiry_images.length">
+	                                	<v-layout row wrap>
+											<v-flex xs4 v-for="(image, i) in inquiry_images" :key="'image'+i">
+												   <div class="image-area">
+													  <img :src="image.location" alt="Preview">
+
+													  <a class="remove-image" @click="removeFile(image, 'image')" style="display: inline;">&#215;</a>
+													</div>
+											</v-flex>   
+	                                	</v-layout>
+	                                </v-flex>
 
 
-                        </v-card-text>
-                    </v-card>
-            </v-flex>
+                                  <v-flex xs12>                                        
+                                        <h4 class="mb-3 mt-4">Upload Images:</h4>
+                                        <vue-dropzone 
+                                        id="dropzone_images" 
+                                        :options="dropzoneOptions" 
+                                        :useCustomSlot="useCustomSlot"
+                                        :awss3="getAWSS3('add-inquiry-images')"
+                                        @vdropzone-success="vdz_success($event,'add-inquiry-images')">
+                                          <div class="dropzone-custom-content">
+                                            <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
+                                            <div class="subtitle">...or click to select a file from your computer</div>
+                                          </div>
+                                        </vue-dropzone>                                    
+                                  </v-flex>
+								
 
+								<!-- preview of the edit images here can be removable -->
+
+                                </v-container>
+                                <v-btn color="primary" @click="stepUp()">next</v-btn>
+                                <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                            <!-- Sub category here if there is -->
+                            <v-stepper-step step="3" :rules="[() => !$v.formData.quantity.$error &&  !$v.formData.desired_price.$error ]" editable>
+                              Quantity & Price
+                              <small v-show="$v.formData.quantity.$error && !$v.formData.quantity.required">Quantity is required.</small>
+                              <small v-show="$v.formData.quantity.$error && !$v.formData.quantity.minValue">Quantity is below MOQ.</small>
+                              <small v-show="$v.formData.desired_price.$error">Preferred Price is required.</small>
+                            </v-stepper-step>
+
+                            <v-stepper-content step="3" ref="step_3">
+                              <v-container>
+                                <v-layout row>
+                                  <v-flex xs4>
+                                    <v-text-field 
+                                    v-model="formData.quantity" 
+                                    :label="'Quantity ('+moq+' MOQ)'" 
+                                    @keyup.enter="stepUp()" 
+                                    :error-messages="fieldErrors('formData.quantity')" 
+                                    @blur="$v.formData.quantity.$touch()" 
+                                    :value="formData.quantity" 
+                                    suffix="pcs" 
+                                    mask="######">
+                                    </v-text-field>
+                                  </v-flex>
+                                  <v-flex xs1>
+                                  </v-flex>
+                                  <v-flex xs4>
+                                    <v-text-field 
+                                      class="mr-1" 
+                                      label="Target Unit Price"                                       
+                                      v-model="formData.desired_unit_price" 
+                                      @keyup.enter="stepUp()" 
+                                      suffix="USD">
+                                    </v-text-field>
+                                  </v-flex>
+                                <v-flex xs1>
+                                  </v-flex>
+                                    <v-flex xs4>
+                                    <v-text-field 
+                                    class="mr-1"
+                                    label="Target Total Price" 
+                                    @keyup.enter="stepUp()" 
+                                    v-model="formData.desired_price" 
+                                    suffix="USD">
+                                    </v-text-field>
+                                  	</v-flex>
+
+                                </v-layout>
+                              </v-container>
+                              <v-btn color="primary" @click="stepUp()">next</v-btn>
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+                           
+
+                            <v-stepper-step step="4" editable>
+                              Specifications
+                            </v-stepper-step>
+                            <v-stepper-content step="4" ref="step_4">
+                                <v-layout row wrap>
+                                  <v-flex xs12 sm12 md6 lg6>
+                                    <v-layout row ml-4>
+                                      <v-text-field 
+                                        label="Power" 
+                                        v-model="formData.power" 
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.power" 
+                                        suffix="watts" 
+                                        mask="######">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row ml-4 >
+                                      <v-text-field 
+                                        label="Lumen" 
+                                        v-model="formData.lumen"
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.lumen" 
+                                        suffix="lm" 
+                                        mask="######">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row ml-4 >
+                                      <v-text-field 
+                                        label="Efficiency"                                         
+                                        :value="decimals(formData.efficiency,3)" 
+                                        readonly
+                                        suffix="lm/w">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row ml-4 >
+                                      <v-text-field 
+                                        label="Beam Angle" 
+                                        v-model="formData.beam_angle" 
+                                        @keyup.enter="stepUp()" 
+                                        :value="formData.beam_angle" 
+                                        suffix="degrees" mask="###">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row wrap v-if="false">
+                                      <v-flex xs6 ml-4>
+                                        <h5 class="font-weight-light"> <strong> Want to include warranty ? </strong> </h5>
+                                        <v-radio-group v-model="is_warranty" row>
+                                          <v-radio label="Yes" :value="1"></v-radio>
+                                          <v-radio label="No" :value="0"></v-radio>
+                                        </v-radio-group>
+                                      </v-flex>
+                                      <v-flex xs6 ml-4 mt-2 mr-3 v-show="is_warranty">
+                                        <v-text-field label="Warranty" v-model="formData.warranty" @keyup.enter="stepUp()" :error-messages="fieldErrors('formData.warranty')" @blur="$v.formData.warranty.$touch()" :value="formData.warranty" suffix="yr/s" mask="#">
+                                        </v-text-field>
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-flex>
+
+                                  <v-flex xs12 sm12 md16 lg6>
+                                    <v-layout row ml-4>
+                                      <v-text-field label="CCT" 
+                                      v-model="formData.cct" 
+                                      @keyup.enter="stepUp()" 
+                                      :value="formData.cct" 
+                                      suffix="lm" 
+                                      mask="######">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row ml-4 class="">
+                                      <v-text-field 
+                                      label="IP Rating" 
+                                      v-model="formData.ip"
+                                      @keyup.enter="stepUp()" 
+                                      :value="formData.ip" 
+                                      mask="######">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row ml-4 class="">
+                                      <v-text-field 
+                                      v-model="formData.size" 
+                                      @keyup.enter="stepUp()" 
+                                      label="Size">
+                                      </v-text-field>
+                                    </v-layout>
+                                    <v-layout row ml-4 class="">
+                                      <v-text-field 
+                                      v-model="formData.finish" 
+                                      @keyup.enter="stepUp()" 
+                                      label="Finish">
+                                      </v-text-field>
+                                    </v-layout>
+                                  </v-flex>
+
+
+                                  <v-flex xs12 mt-4>
+
+                                    <v-layout row wrap ml-4>
+
+                                      <v-flex xs12>
+                                          <h5 class="font-weight-light"> <strong> Dimmable </strong> </h5>
+                                      </v-flex>
+
+                                        <v-flex xs6 sm4 md4 lg3>
+                                          <v-switch 
+                                            color="black" 
+                                            v-model="formData.dimmable" 
+                                            label="Non-Dim"
+                                             value="Non-Dim"
+                                           ></v-switch>
+                                      </v-flex>
+
+                                      <v-flex xs6 sm4 md4 lg3>
+                                          <v-switch 
+                                            color="black" 
+                                            v-model="formData.dimmable" 
+                                            label="TRIAC" 
+                                            value="TRIAC">
+                                          </v-switch>
+                                        </v-flex>
+
+                                          <v-flex xs6 sm4 md4 lg3>
+                                            <v-switch 
+                                              color="black" 
+                                              v-model="formData.dimmable" 
+                                              label="0-10V" 
+                                              value="0-10V">
+                                            </v-switch>
+                                          </v-flex>
+                                          <v-flex xs6 sm4 md4 lg3>
+                                            <v-switch 
+                                              color="black" 
+                                              v-model="formData.dimmable"
+                                              label="DALI" 
+                                              value="DALI">
+                                            </v-switch>
+                                          </v-flex>
+                                        
+
+                                     
+                                    </v-layout>                                  	
+                                  </v-flex>
+
+                                </v-layout>
+                              <v-btn color="primary" @click="stepUp()">next</v-btn>
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                            
+                            <v-stepper-step :rules="[() => !$v.formData.sample_quantity.$error && !$v.formData.sample_shipping_address.$error && !$v.formData.sample_shipping_country_id.$error && !$v.formData.sample_shipping_city.$error ]" step="5" editable>
+                              Request Sample Order
+                              <small v-show="$v.formData.sample_quantity.$error">Quantity is required</small>
+                              <small v-show="$v.formData.sample_shipping_address.$error">Address is required</small>
+                              <small v-show="$v.formData.sample_shipping_country_id.$error">Country is required</small>
+                              <small v-show="$v.formData.sample_shipping_city.$error">City is required</small>
+                            </v-stepper-step>
+
+                            <v-stepper-content step="5" ref="step_5" no-focus>
+                              <v-container>
+                                <v-layout row wrap>
+
+
+                                  <v-flex xs12 sm6 md6 lg12>
+                                    <!-- <v-text-field v-model="formData.street" @keyup.enter="stepUp()" label="Street Name/No.">  </v-text-field>  -->
+                                    <h3 class="font-weight-light">Do you want to purchase a sample order ?</h3>
+                                    <v-radio-group v-model="is_sample" row>
+                                      <v-radio label="Yes" :value="1"></v-radio>
+                                      <v-radio label="No" :value="0"></v-radio>
+                                    </v-radio-group>
+                                  </v-flex>
+
+                                  <v-flex xs12 sm6 md6 lg12 v-show="is_sample">
+                                     <h3 class="font-weight-light">Enter your desired quantity.</h3>
+                                    <v-layout row wrap>
+                                      <v-flex xs7 class="custom_digits">
+                                        <v-text-field 
+                                        v-model="formData.sample_quantity" 
+                                        @keyup.enter="stepUp()" 
+                                        :error-messages="fieldErrors('formData.sample_quantity')" 
+                                        @blur="$v.formData.sample_quantity.$touch()" 
+                                        label="Quantity" 
+                                        hint="Note: Quantity can't be change later on. so please be accurate.">
+                                        </v-text-field>
+                                      </v-flex>
+                                    </v-layout>
+
+                                    <h3 class="mt-2 font-weight-light">Specify your shipping Address for sample order's.</h3>
+                                    <v-layout row wrap>
+                                      <v-flex xs6 pa-1>
+                  
+
+                                   <v-autocomplete 
+                                        v-model="formData.sample_shipping_country_id" 
+                                        :items="countries" 
+                                        item-text="name"
+                                        item-value="id"
+                                           :error-messages="fieldErrors('formData.sample_shipping_country_id')" 
+                                        @blur="$v.formData.sample_shipping_country_id.$touch()" 
+                                        ref="categorySelect" 
+                                        flat hide-no-data hide-details label="Search Country .."
+                                         >
+                                        </v-autocomplete>
+
+
+                                      </v-flex>
+                                      <v-flex xs6 pa-1>
+                                        <v-text-field 
+                                        v-model="formData.sample_shipping_address" 
+                                        @keyup.enter="stepUp()" 
+                                        :error-messages="fieldErrors('formData.sample_shipping_address')" 
+                                        @blur="$v.formData.sample_shipping_address.$touch()" 
+                                        label="Street Name/No.">
+                                        </v-text-field>
+                                      </v-flex>
+                                      <v-flex xs6 pa-1>
+                                        <v-text-field 
+                                        v-model="formData.sample_shipping_city" 
+                                        :error-messages="fieldErrors('formData.sample_shipping_city')"
+                                         @blur="$v.formData.sample_shipping_city.$touch()" 
+                                         @keyup.enter="stepUp()"
+                                          label="City">
+                                        </v-text-field>
+                                      </v-flex>
+                                      <v-flex xs6 pa-1>
+                                        <v-text-field 
+                                        v-model="formData.sample_shipping_postal" 
+                                        @keyup.enter="stepUp()" 
+                                        label="Zip/Postal Code">
+                                        </v-text-field>
+                                      </v-flex>
+                                    </v-layout>
+                                  </v-flex>
+
+
+                                </v-layout>
+                              </v-container>
+                              <v-btn color="primary" @click="stepUp()">next</v-btn>
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                            <v-stepper-step step="6" :rules="[() => !$v.formData.oem_service.$error && !$v.formData.oem_description.$error ]" editable>
+                              Original Equipment Manufacturer (OEM)
+                            </v-stepper-step>
+
+                            <v-stepper-content step="6" ref="step_6" no-focus>
+                              <v-container>
+                                <v-layout row wrap>
+
+                                  <v-flex xs12 sm12 md12 lg12>
+                                    <h3 class="font-weight-light">Do you require OEM ?</h3>
+                                    <v-radio-group v-model="is_oem" row>
+                                      <v-radio label="Yes" :value="1"></v-radio>
+                                      <v-radio label="No" :value="0"></v-radio>
+                                    </v-radio-group>
+                                  </v-flex>
+                                    
+                                    <v-flex xs12 sm6 md12 lg12>
+
+                                  <v-layout row wrap v-show="is_oem">
+
+                                        <h3 class="font-weight-light">Please be accurate as possible.</h3>
+
+                                     <v-flex xs12 class="custom_digits" >
+                                        <v-text-field 
+                                        v-model="formData.oem_service" 
+                                        @keyup.enter="stepUp()" 
+                                        :error-messages="fieldErrors('formData.oem_service')" 
+                                        @blur="$v.formData.oem_service.$touch()" 
+                                        label="What kind of Original Equipment Manufacturer (OEM) Service ?">
+                                        </v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 class="custom_digits" >
+                                        <v-textarea 
+                                        label="Description" 
+                                        :error-messages="fieldErrors('formData.oem_description')" 
+                                        @blur="$v.formData.oem_description.$touch()" 
+                                        v-model="formData.oem_description">
+                                        </v-textarea>
+                                    </v-flex>
+
+
+							
+
+                                    <v-flex xs12 >
+                                      <!-- OEM DROPZONE  -->
+                                        <vue-dropzone 
+                                            id="dropzone_oem" 
+                                            :options="dropzoneOptions" 
+                                            :useCustomSlot="useCustomSlot"
+                                            :awss3="getAWSS3('add-inquiry-oems')"
+                                            @vdropzone-success="vdz_success($event,'add-inquiry-oems')"
+                                            >
+                                          <div class="dropzone-custom-content">
+                                            <h3 class="dropzone-custom-title">Drag and drop to Upload Files</h3>
+                                            <div class="subtitle">...or click to select a file from your computer</div>
+                                          </div>
+                                        </vue-dropzone>
+                                    <!-- OEM DROPZONE  -->
+                                    </v-flex>
+                                  </v-layout>
+                                      </v-flex>
+
+                                 
+
+
+
+                                </v-layout>
+                              </v-container>
+                              <v-btn color="primary" @click="stepUp()">next</v-btn>
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                            <v-stepper-step step="7" :rules="[() => !$v.formData.shipping_country_id.$error && !$v.formData.shipping_address.$error && !$v.formData.shipping_city.$error  ]" editable>
+                              Your Mass Shipping Address
+                              <small v-show="$v.formData.shipping_address.$error">Address is required</small>
+                              <small v-show="$v.formData.shipping_country_id.$error">Country is required</small>
+                              <small v-show="$v.formData.shipping_city.$error">City is required</small>
+                            </v-stepper-step>
+
+                            <v-stepper-content step="7" ref="step_7" no-focus>
+                              <v-container>
+                                <v-layout row wrap>
+
+                                  <v-flex xs12 pb-3>
+                                   <v-autocomplete 
+                                        v-model="formData.shipping_country_id" 
+                                        :items="countries" 
+                                        item-text="name"
+                                        item-value="id"
+                                        :error-messages="fieldErrors('formData.shipping_country_id')" 
+                                        @blur="$v.formData.shipping_country_id.$touch()" 
+                                        ref="categorySelect" 
+                                        flat hide-no-data hide-details label="Search Country ..."
+                                      >
+                                        </v-autocomplete>
+                                  </v-flex>
+
+                                  <v-flex xs12>
+                                    <v-text-field 
+                                    v-model="formData.shipping_address" 
+                                    @keyup.enter="stepUp()" 
+                                    :error-messages="fieldErrors('formData.shipping_address')" 
+                                    @blur="$v.formData.shipping_address.$touch()" 
+                                    label="Street Address">
+                                    </v-text-field>
+                                  </v-flex>
+
+                                  <v-flex xs12>
+                                    <v-text-field 
+                                    v-model="formData.shipping_city" 
+                                    :error-messages="fieldErrors('formData.shipping_city')" 
+                                    @blur="$v.formData.shipping_city.$touch()" 
+                                    @keyup.enter="stepUp()" 
+                                    label="City">
+                                    </v-text-field>
+                                  </v-flex>
+
+                                  <v-flex xs12>
+                                    <v-text-field 
+                                    v-model="formData.shipping_postal"
+                                     @keyup.enter="stepUp()" 
+                                     label="Zip/Postal Code">
+                                    </v-text-field>
+                                  </v-flex>
+                                </v-layout>
+                                <!-- SSSS -->
+                               <!--  <v-layout row wrap>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="primary" @click="">Add New</v-btn>
+                                </v-layout> -->
+                                <!-- SSSS -->
+                              </v-container>
+                              <v-btn color="primary" @click="stepUp()">next</v-btn>
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                            <v-stepper-step step="8" editable>
+                              Files to attach
+                            </v-stepper-step>
+
+                            <v-stepper-content step="8" ref="step_8">
+                              <v-container>
+
+                              		 <v-flex xs12 class="mb-5" v-show="inquiry_attachments.length">
+		                                	<v-layout row wrap>                              		 		
+												<v-flex xs4 v-for="(file, i) in inquiry_attachments" :key="'image'+i">
+													<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+													   <div class="image-area">
+  														<a :href="file.location" class="mr-3">
+                                                                 <v-icon  color="red" >fas fa-file-pdf</v-icon> {{ file.filename }}
+                                                        </a>
+														  <a class="remove-image" @click="removeFile(file, 'attachments')" style="display: inline;">&#215;</a>
+														</div>
+												</v-flex>   
+		                                	</v-layout>
+		                                </v-flex>
+
+
+                                <v-layout row wrap>
+
+                                  <v-flex xs12>
+									<p class="mb-4">Additional files can be added here that could help our bidders in this inquiry.</p>
+                                  </v-flex>
+                                  <v-flex xs12>
+                                    <vue-dropzone 
+                                    id="dropzone_attachments" 
+                                    :options="dropzoneOptions" 
+                                    :useCustomSlot="useCustomSlot"
+                                    :awss3="getAWSS3('add-inquiry-attachments')"
+                                    @vdropzone-success="vdz_success($event,'add-inquiry-attachments')">
+                                      <div class="dropzone-custom-content">
+                                        <h3 class="dropzone-custom-title">Drag and drop to upload images and other supporting documents for your inquiry!</h3>
+                                        <div class="subtitle">...or click to select a file from your computer</div>
+                                      </div>
+                                    </vue-dropzone>
+                                  </v-flex>
+
+                                </v-layout>
+
+                              </v-container>
+                              <v-btn color="primary" @click="stepUp()">next</v-btn>
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                            <v-stepper-step step="9" :rules="[() => !$v.formData.message.$error ]" editable>
+                              Additional Details
+                              <small v-show="$v.formData.message.$error">Additional details is required</small>
+                            </v-stepper-step>
+
+                            <v-stepper-content step="9" ref="step_9">
+                              <v-container>
+                                <v-layout row>
+                                  <v-textarea label="Type message here.." v-model="formData.message" :error-messages="fieldErrors('formData.message')" @blur="$v.formData.message.$touch()">
+                                  </v-textarea>
+                                </v-layout>
+                              </v-container>
+                              <!-- <v-btn color="primary" @click="submitForm()">SUBMIT</v-btn> -->
+                              <v-btn flat @click="stepDown()">back</v-btn>
+                            </v-stepper-content>
+
+                          </v-stepper>
+                          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                        </v-form>
+                   </v-card>
+                </v-flex>
+              
+              <!-- <v-divider vertical></v-divider> -->
+
+                <v-flex xs5>
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+
+                        <v-card color="white" class="pa-3 ml-3">
+
+                            <v-card-text>
+
+                                <v-layout row wrap justify-center>
+                                    <!-- <h2 class="text-xs-center">Inquiry Preview</h2> -->
+                                    <h2 class="grey--text lighten-5">Inquiry Preview</h2>
+                                </v-layout>
+
+
+                                <v-layout row wrap mt-3>
+
+                                    <!-- subject and category -->
+
+                                    <v-flex xs6 v-show="formData.keywords">
+                                        <h4>Subject:</h4>
+                                        <small  v-html="formData.keywords" ></small>
+                                    </v-flex>
+
+                                    <v-flex xs6 v-show="formData.category">
+                                        <h4>Category: </h4>
+                                        <small v-html="">{{ getCategory(formData.category) }}</small>
+                                    </v-flex>
+
+
+                                    <v-flex xs12 mt-3 v-show="inquiry_images.length">
+                                    	<h4>Image: </h4>
+	                                	<v-layout row wrap>
+											<v-flex xs4 v-for="(image, i) in inquiry_images" :key="'image'+i">
+												<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+												   	<div class="image-area">
+													  <img :src="image.location" alt="Preview">
+													</div>
+											</v-flex>   
+	                                	</v-layout>
+	                                </v-flex>
+
+
+                                    <!-- price and quantity -->
+                                    <v-flex xs12 mt-3>
+
+                                        <v-layout row wrap>
+
+                                            <v-flex xs4 v-show="formData.quantity">
+                                                <h4>Quantity</h4>
+                                                <small v-html="formData.quantity"></small>
+                                            </v-flex>
+
+                                            <v-flex xs4 v-show="formData.desired_unit_price">
+                                                <h4>Target Price per Unit</h4>
+                                                <small v-html="'$'+currency(formData.desired_unit_price)"></small>
+                                            </v-flex>
+
+                                            <v-flex xs4 v-show="formData.quantity && formData.desired_price">
+                                                <h4>Target Total Price</h4>
+                                                <small v-html="'$'+currency(formData.quantity * formData.desired_unit_price)"></small>
+                                            </v-flex>
+
+                                        </v-layout>
+
+                                    </v-flex>
+
+
+
+                                    <!-- specifications -->
+                                    <v-flex xs12>
+
+                                         <div class="mt-3" v-show="formData.power || formData.lumen || formData.efficiency || formData.beam_angle || formData.cct ||  formData.ip || formData.finish || formData.size || formData.dimmable || formData.warranty ">
+                                            <h4>Spefications: </h4>
+                                        </div>
+                                        
+                                        <v-layout row wrap>
+
+                                            <v-flex xs3 v-show="formData.power">
+                                                <small>Power: <span v-html="formData.power"> </span></small>
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.lumen">
+                                                <small>Lumen: <span v-html="formData.lumen"></span></small>  
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.efficiency">
+                                                <small>Efficiency: <span v-html="decimals(formData.efficiency,3)"></span> </small>  
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.beam_angle">
+                                                <small>Beam Angle: <span v-html="formData.beam_angle"></span> </small>
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.cct">
+                                                <small>CCT: <span v-html="formData.cct"> </span> </small>
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.ip">
+                                                <small>IP: <span v-html="formData.ip"></span> </small>      
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.finish">
+                                                <small>Finish: <span v-html="formData.finish"></span> </small>      
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.size">
+                                                <small>Size: <span v-html="formData.size"></span> </small>      
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.dimmable">
+                                                <small>Dimmable: <span v-html="formData.dimmable"></span> </small>      
+                                            </v-flex>
+
+                                            <v-flex xs3 v-show="formData.warranty">
+                                                <small>Warranty: <span v-html="formData.warranty"></span> </small>      
+                                            </v-flex>
+                                          
+                                        </v-layout>
+     
+                                    </v-flex>
+
+                                    <!-- Sample Order -->
+
+                                    <v-flex xs12 v-show="is_sample" >
+
+                                        <div class="mt-3">
+                                            <h4>Sample Order</h4>
+                                        </div>
+
+                                        <h5 v-show="formData.sample_quantity">Quantity</h5>
+                                        <small v-html="formData.sample_quantity"></small>
+
+                                        <h5 v-show="formData.sample_shipping_address || formData.sample_shipping_city|| getCountryName(formData.sample_shipping_country_id) ">Sample Cost Shipping Address</h5>
+
+                                        <small v-html="getCountryName(formData.sample_shipping_country_id) +' '+ getDataStrips(formData.sample_shipping_address) +' '+ getDataStrips(formData.sample_shipping_city) +' '+getDataStrips(formData.sample_shipping_postal) "></small>
+
+                                    </v-flex>
+
+                                    <v-flex xs12 v-show="is_oem">
+
+                                        <div class="mt-3">
+                                            <h4>Original Equipment Manufacturer (OEM)</h4>
+                                        </div>
+
+                                        <div class="mt-3">
+
+                                            <h5 v-show="formData.oem_service">What kind of OEM ?</h5>
+                                            <small v-html="formData.oem_service"></small>
+
+                                            <h5 v-show="formData.oem_description">Describe what you need and want to happen ?</h5>
+                                            <small v-html="formData.oem_description">LED Downlights</small>
+
+                                        </div>
+
+                                    </v-flex>
+
+                                    <v-flex xs12 v-show="formData.shipping_address || getCountryName(formData.shipping_country_id)  || formData.shipping_city">
+
+                                        <div class="mt-3">
+                                            <h4>Shipping Address</h4>
+                                        </div>
+
+                                        <small v-html="getCountryName(formData.shipping_country_id) +' '+ getDataStrips(formData.shipping_address) +' '+ getDataStrips(formData.shipping_city)  +' '+ getDataStrips(formData.shipping_postal) "></small>
+
+                                    </v-flex>
+
+                                    <v-flex xs12 v-show="formData.message">
+
+                                        <div class="mt-3">
+                                            <h4>Additional Details</h4>
+                                        </div>
+
+                                        <small v-html="formData.message"></small>
+
+                                    </v-flex>
+
+                                	 <v-flex xs12 v-show="inquiry_attachments.length">
+                                	 	  <div class="mt-3">
+                                            <h4>Attachments</h4>
+                                        </div>
+	                                	<v-layout row wrap>
+											<v-flex xs6 class="mt-2" v-for="(file, i) in inquiry_attachments" :key="'image'+i">
+												<!-- <v-img :src="image.location" aspect-ratio="1.7"></v-img> -->
+												   <div class="image-area">
+														<a :href="file.location" class="mr-3">
+                                                             <v-icon  color="red" >fas fa-file-pdf</v-icon> {{ file.filename }}
+                                                    </a>
+													  <!-- <a class="remove-image" @click="removeFile(file)" style="display: inline;">&#215;</a> -->
+													</div>
+											</v-flex>   
+	                                	</v-layout>
+	                                </v-flex>
+
+                                </v-layout>
+                            </v-card-text>
+                        </v-card>
+                   
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+                    <!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -->
+
+
+
+                    
+
+
+                    
+
+
+                    
+
+
+                    
+
+
+                    
+                </v-flex>
             </v-layout>
         </v-card-text>
+        <!-- Displaying new -->
 
         <v-divider></v-divider>
+
         <v-card-actions>
-          <v-layout align-center justify-space-between row fill-height wrap>
-            <v-flex xs12 sm6>
-              <v-layout class="ma-3">
-                <v-btn color="primary" @click="$emit('update:dialog', false)">
-                  close
-                </v-btn>
-                <v-btn color="error" @click="clearForm()">
-                  clear
-                </v-btn>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <v-layout align-center justify-end row fill-height class="ma-3">
-                <v-btn color="success" @click="submitForm()" :loading="formLoading">
-                  submit
-                </v-btn>
-              </v-layout>
-            </v-flex>
-          </v-layout>
+
+            <v-layout align-center justify-space-between row fill-height wrap>
+
+              <v-flex xs12 sm6>
+                <v-layout class="ma-3">
+                  <v-btn color="primary" @click="$emit('update:dialog', false)">
+                    close
+                  </v-btn>
+                  <v-btn color="error" @click="clearForm()">
+                    clear
+                  </v-btn>
+                </v-layout>
+              </v-flex>
+
+              <v-flex xs12 sm6>
+                <v-layout align-center justify-end row fill-height class="ma-3">
+                  <v-btn color="success" @click="submitForm()" :loading="formLoading">
+                    submit
+                  </v-btn>
+                </v-layout>
+              </v-flex>
+            </v-layout>
         </v-card-actions>
+
       </v-card>
     </v-dialog>
 
@@ -884,10 +969,10 @@ import config from '@/config/index'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import vue2Dropzone from 'vue2-dropzone'
 
-import { required, email, maxLength, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
+import { required, email, maxLength, minValue, requiredIf, requiredUnless } from 'vuelidate/lib/validators'
 import validationMixin from '@/mixins/validationMixin'
 
-import helpers from "@/mixins/helpers"
+// import helpers from "@/mixins/helpers"
 
 import InquiryLookupDialog from '@/views/Components/App/Buyer/inquirylookup'
 
@@ -895,8 +980,17 @@ export default {
 
   mixins: [
     validationMixin,
-    helpers,
+    // helpers,
   ],
+
+
+
+
+
+  components: {
+    vueDropzone: vue2Dropzone,
+    InquiryLookupDialog
+  },
 
 
   validations: {
@@ -912,7 +1006,13 @@ export default {
       },
 
       quantity: {
-        required
+        required,
+        minValue: function(value,component){
+        	if(value<this.moq)
+        	return false;
+        	else
+        	return true;
+        },
       },
 
       desired_price: {
@@ -920,7 +1020,7 @@ export default {
       },
 
       message: {
-        required
+        // required
       },
 
       warranty: {
@@ -942,8 +1042,6 @@ export default {
         })
 
       },
-
-    // optional /*state: zipcode:*/
 
     sample_shipping_address: {
       required: requiredIf(function() {
@@ -1005,9 +1103,9 @@ export default {
 
     formData: {
 
-      keywords: { required: 'Please enter an Subject' },
-      category: { required: 'Please enter an category.' },
-      quantity: { required: 'Please enter an Quantity.' },
+      keywords: { required: 'Please enter Subject' },
+      category: { required: 'Please enter Category.' },
+      quantity: { required: 'Please enter Quantity.', minValue: 'Quantity is below MOQ.',  },
       desired_price: { required: 'Please enter your Preferred Price.' },
       message: { required: 'Please enter an Additional Details.' },
       warranty: { required: 'Please enter a Warranty' },
@@ -1026,6 +1124,7 @@ export default {
       shipping_address: { required: 'Please enter an Address.' },
       shipping_country_id: { required: 'Please enter a Country.' },
       shipping_city: { required: 'Please enter City.' },
+
       
     }
   },
@@ -1048,16 +1147,39 @@ export default {
     },
 
     inquiry: {
-      type: Object
+      type: Object,
+    },
+
+    snackBar: {
+      type:Boolean,
+      default: false,
+
     }
   
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   data() {
     return {
 
       cnt: 0,
       stepCnt: 1,
+
+      moq: 0,
 
      formData: {
 
@@ -1075,6 +1197,7 @@ export default {
         dimmable: null,
         quantity: null,
         desired_price: null,
+        desired_unit_price: null,
         shipping_date: null,
         payment_method: null,
         message: null,
@@ -1089,9 +1212,14 @@ export default {
         shipping_address: null,
         shipping_country_id: null,
         shipping_city: null,
-        shipping_postal: null
+        shipping_postal: null,
+        attachments: [],
        
       },
+
+      inquiry_images: [],
+      inquiry_attachments:[],
+      inquiry_oems:[],
 
       shipping_methods: config.main.shipping_methods,
       payment_methods: config.main.payment_methods,
@@ -1110,34 +1238,43 @@ export default {
       is_oem: 0,
       is_warranty: 0,
       snackbar: false,
+      successSnackbar: true,
       subject_error: false,
       inquirylookup:false,
       useInquiry: null, // for inquiry lookup then use inquiry
       inquiryHolder:null, // object holder
+      createAction:'add',
 
-      /* -------------------------- dropzone -------------------------- */
 
-      dropzoneOptions: {
-        url: 'https://httpbin.org/post',
-        thumbnailWidth: 200,
-        maxFilesize: 0.5,
-        headers: { "My-Awesome-Header": "header value" },
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME"
-      }
+    // Dropzone
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
 
-      /*  --------------------------  end of dropzone  --------------------------  */
+        useCustomSlot: true,
+        dropzoneOptions: {
+            url: config.main.awss3.urls.inquiry,
+            thumbnailWidth: 200,
+            maxFilesize: 100,
+            headers: {},
+            addRemoveLinks: true,            
+            dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
+        },
+
+
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // Dropzone
 
     }
   },
 
-  components: {
-    vueDropzone: vue2Dropzone,
-    InquiryLookupDialog
-  },
+
+
+
+
+
 
   created: function() {
-
 
     // for shipping_date field
     this.formData.shipping_date = this.getDateTime();
@@ -1146,14 +1283,12 @@ export default {
     // -----------------------GET CATEGORIES-------------------------------------
 
     this.$store.dispatch('cat/getCategories_a')
-      .then((data) => {
-        this.categories = data;
-      })
-      .catch((e) => {
-        console.log('Error: ');
+    .then((data) => {
+        this.categories = data;        
+    })
+    .catch((e) => {
         console.log(e);
-      });
-
+    });
 
     // -----------------------GET COUNTRY-------------------------------------
 
@@ -1175,6 +1310,9 @@ export default {
     //     console.log('Error: ')
     //     console.log(e);
     // });
+  	
+
+  	this.setMOQ();
 
   },
 
@@ -1201,27 +1339,26 @@ export default {
       }
     },
 
-    inquiry(nVal, oVal) {
-
-        if(nVal) {
-
-           this.inquiryHolder = this.inquiry
-           this.fillFormData();  
-   
-        }
+    inquiry:{
+    	handler(nVal, oVal) {
+	        if(!nVal) {
+	           this.inquiryHolder = this.inquiry
+	           this.fillFormData();  
+	        }
+        },
+        deep:true,
 
     },
-
   
 
     dialog(nVal, oVal) {
 
         if(!nVal) {
-          // this.$emit('update:isEdit', false);
-          this.$emit('update:isEdit', false)
-          this.clearData();
+          	// this.$emit('update:isEdit', false);
+          	this.$emit('update:isEdit', false)
+          	this.clearData();
+  			this.setMOQ();
         }
-
 
     },
 
@@ -1229,11 +1366,13 @@ export default {
     // assign props inquiry to data (inquiryHolder) to prefill formData
     isEdit(nVal, oVal) {
 
-        if(!nVal) {
-              this.$emit('update:isEdit', false)
+        if(nVal) {
+
               this.inquiryHolder = this.inquiry
+              this.$emit('update:isEdit', true)
               this.fillFormData();  
         }
+
         
     },
     // if inquiry lookup is click then useInquiry
@@ -1242,34 +1381,118 @@ export default {
        if(nVal) {
           this.getInquiry(this.useInquiry);
        }
-
+ 
 
     },
 
-    deep: true
+    'formData.desired_unit_price': function (nVal, oVal) {
+    	if(nVal && this.formData.quantity) {
+    		this.formData.desired_price = this.currency(this.formData.quantity * nVal);
+    	}
+    },
+
+    'formData.quantity': function (nVal, oVal) {
+    	if(nVal && this.formData.desired_unit_price) {
+    		this.formData.desired_price = this.currency(this.formData.desired_unit_price * nVal);
+    	}
+    },
+
+    'formData.power': function (nVal, oVal) {
+
+    	// console.log('formData.power');
+    	if(this.formData.lumen>0 && nVal>0) {
+
+	    	this.formData.efficiency = this.formData.lumen / this.formData.power;
+    	}
+    },
+
+
+    'formData.lumen': function (nVal, oVal) {
+    	if(nVal>0 && this.formData.power>0)
+    	this.formData.efficiency = this.formData.lumen / this.formData.power;
+    },
+
+    // deep: true
 
   },
 
-  
+  computed: {
 
-
-
-
-    computed: {
-        countries(){
+       countries(){
             return config.countries;
-        },        
-    },
-
-
-
+        },
+ 
+  },
 
 
   methods: {
 
+  	setMOQ(){
+
+			this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
+			.then((rspns)=>{
+				// console.log(rspns);
+				if(rspns) {					
+					this.moq = rspns.inclusions.moq;
+				}
+				else {
+					// if no / free subscription
+					this.moq = 20;
+				}
+			})
+			.catch((e)=>{
+				console.log(e);
+				this.moq = 0;
+			});  		
+		},
+
     /* use for editing or updating the inquiry
      when it's rejected from the verificator */
 
+
+    getCategory(cat_id){
+
+        var cat = this.categories.filter(category => {
+            return category.id == cat_id;
+        });
+
+        return (cat.length)?cat[0].name:null;
+
+    },
+
+    // use for when using existing inquiry and editing.
+    // because api doesnt return id instead text
+    getCategoryId(category_name) {
+
+        var cat = this.categories.filter(category => {
+            return category.name == category_name;
+        });
+
+        return (cat.length)?cat[0].id:null;
+
+    },
+
+
+    getCountryName(country_id) {
+
+
+      var countryselect = this.countries.filter(country => {
+          return country.id == country_id;
+      });
+
+      return (countryselect.length)?countryselect[0].name:'';
+
+      // return country_id
+
+      // const countrys =  this.countries.find( country => country.id = country_id )
+      // console.log(countrys)
+
+    },
+
+
+    getDataStrips(str) {
+      return (str == null || str == undefined) ? '' : str 
+    },
 
     getInquiry(inquiry_id) {
 
@@ -1279,12 +1502,8 @@ export default {
             .then((data) => {
                 
                 this.inquiryHolder = data
-
-                // console.log('-----------------')
-                // console.log(this.inquiryHolder)
-                // console.log('-----------------')
-
                 this.fillFormData()
+
             })
             .catch((error) => {
                 console.log(error);
@@ -1296,26 +1515,112 @@ export default {
       // clear existing object
     clearData() {
           
-          for (const prop of Object.keys(this.formData)) {
-            delete this.formData[prop];
-          }
+          // for (const prop of Object.keys(this.formData)) {
+          //   delete this.formData[prop];
+          // }
 
-          this.is_sample = false
-          this.is_oem = false
-          this.$v.$reset()
+		
+		this.formData.keywords					 	= null;			
+		this.formData.category					 	= null;			
+		this.formData.warranty					 	= null;			
+		this.formData.power						 	= null;		
+		this.formData.lumen						 	= null;		
+		this.formData.efficiency				 	= null;			
+		this.formData.beam_angle				 	= null;			
+		this.formData.cct						 	= null;		
+		this.formData.ip						 	= null;	
+		this.formData.finish					 	= null;		
+		this.formData.size						 	= null;		
+		this.formData.dimmable					 	= null;			
+		this.formData.quantity					 	= null;			
+		this.formData.desired_price				 	= null;				
+		this.formData.desired_unit_price		 	= null;					
+		this.formData.shipping_date				 	= null;				
+		this.formData.payment_method			 	= null;				
+		this.formData.message					 	= null;			
+		this.formData.oem						 	= null;		
+		this.formData.oem_service				 	= null;				
+		this.formData.oem_description			 	= null;					
+		this.formData.sample_quantity			 	= null;					
+		this.formData.sample_shipping_address	 	= null;							
+		this.formData.sample_shipping_city		 	= null;						
+		this.formData.sample_shipping_country_id 	= null;							
+		this.formData.sample_shipping_postal	 	= null;						
+		this.formData.shipping_address			 	= null;					
+		this.formData.shipping_country_id		 	= null;						
+		this.formData.shipping_city				 	= null;				
+		this.formData.shipping_postal			 	= null;					
+		this.formData.attachments				 	= [];				
+		
+        this.useInquiry = null;
+        
+      	this.inquiry_images = [];
+      	this.inquiry_attachments = [];
+      	this.inquiry_oems = [];
+
+
+        this.is_sample = 0;
+        this.is_oem = 0;
+        this.$v.$reset();
 
     },
 
+
+    removeFile(file, type) {
+
+
+			// remove from  tep
+			if(type == 'image' && this.inquiry_images.length) {
+
+					// console.log('this.inquiry_images',);
+
+					this.inquiry_images = this.inquiry_images.filter(function(attachments) {
+						return attachments != file;
+				    })	
+
+			} 
+
+			 if(type == 'attachments' && this.inquiry_attachments.length) {
+
+					this.inquiry_attachments = this.inquiry_attachments.filter(function(attachments) {
+						return attachments != file;
+					})
+
+			} 
+
+
+			 if(type == 'oems' && this.inquiry_oems.length) {
+
+					this.inquiry_oems = this.inquiry_oems.filter(function(attachments) {
+						return attachments != file;
+					})
+			}
+
+
+			// delete from the attachment data
+			this.formData.attachments = this.formData.attachments.filter(function(attachments){
+			    return attachments != file;
+			});
+
+
+    },
+
+    // usable for editing the inquiry/ and previewing to sidebar
     fillFormData() {
 
-            // console.log(this.inquiryHolder.shipping_address)
+            // console.log(this.inquiryHolder)
+
+            this.inquiry_images = []
+            this.inquiry_attachments = []
 
             this.formData.keywords = this.inquiryHolder.keyword
-            this.formData.category = this.inquiryHolder.categories.join(', ') 
+            this.formData.category = this.getCategoryId(this.inquiryHolder.categories.join(', '))  
+
             this.formData.warranty = this.inquiryHolder.warranty
 
             this.formData.quantity = this.inquiryHolder.quantity
             this.formData.desired_price = this.inquiryHolder.desired_price
+            this.formData.desired_unit_price = this.inquiryHolder.desired_unit_price
 
             this.formData.shipping_date = this.inquiryHolder.desired_shipping_date
             this.formData.payment_method = this.inquiryHolder.payment_method_id
@@ -1324,10 +1629,13 @@ export default {
             this.is_oem = this.inquiryHolder.oem
             this.formData.oem_service = this.inquiryHolder.oem_service
             this.formData.oem_description = this.inquiryHolder.oem_description
+            
+            this.is_sample = (this.inquiryHolder.sample_quantity)?1:0;
             this.formData.sample_quantity = this.inquiryHolder.sample_quantity
             this.formData.sample_shipping_address = this.inquiryHolder.sample_shipping_address
             this.formData.sample_shipping_city = this.inquiryHolder.sample_shipping_city
             this.formData.sample_shipping_country_id = this.inquiryHolder.sample_shipping_country_id
+
             this.formData.shipping_postal = this.inquiryHolder.shipping_postal
             this.formData.shipping_address = this.inquiryHolder.shipping_address
             this.formData.shipping_country_id = this.inquiryHolder.shipping_country_id
@@ -1343,10 +1651,42 @@ export default {
             this.formData.finish = this.getSpefications('Finish')
             this.formData.size = this.getSpefications('Size')
             this.formData.dimmable = this.getSpefications('Dimmable')
-          
+
+            this.formData.attachments = this.inquiryHolder.attachments
+
+            // execute this if there's an attachments
+            if(this.formData.attachments.length > 0) {
+
+	            var attachments = this.formData.attachments.map(attachments => { 
+
+			            	if(attachments.filegroup == 'add-inquiry-images') {
+
+			            		this.inquiry_images.push(attachments);
+
+			            	}
+
+			            	if(attachments.filegroup == 'add-inquiry-attachments') {
+
+								this.inquiry_attachments.push(attachments);
+
+			            	}
+
+			            	if(attachments.filegroup == 'add-inquiry-oems') {
+
+			            		this.inquiry_oems.push(attachments);
+
+			            	}
+				});
+
+            }
+
 
       },
 
+    removeAttachments(key) {
+	
+
+    },
 
     getSpefications(key) {
 
@@ -1354,7 +1694,7 @@ export default {
 
          if(this.inquiryHolder.specifications.length > 0) {
                let objectHolder = this.inquiryHolder.specifications.find( specifications => specifications.name === key)
-              specsValue = objectHolder.value
+              specsValue = (typeof objectHolder !== 'undefined')?objectHolder.value:'';
          }
 
           // console.log(objectHolder.name +'='+ objectHolder.value)
@@ -1365,26 +1705,37 @@ export default {
 
     clearForm() {
 
-      this.formData.keywords = null;
-      this.formData.category = null;
-      this.formData.warranty = null;
-      this.formData.power = null;
-      this.formData.lumen = null;
-      this.formData.efficiency = null;
-      this.formData.beam_angle = null;
-      this.formData.cct = null;
-      this.formData.ip = null;
-      this.formData.finish = null;
-      this.formData.size = null;
-      this.formData.dimmable = null;
-      this.formData.quantity = null;
-      this.formData.desired_price = null;
-      this.formData.shipping_date = this.getDateTime();
-      this.formData.shipment_method = null;
-      this.formData.payment_method = null;
-      this.formData.message = null;
-      this.stepCnt = 1;
+      // this.formData.keywords = null;
+      // this.formData.category = null;
+      // this.formData.warranty = null;
+      // this.formData.power = null;
+      // this.formData.lumen = null;
+      // this.formData.efficiency = null;
+      // this.formData.beam_angle = null;
+      // this.formData.cct = null;
+      // this.formData.ip = null;
+      // this.formData.finish = null;
+      // this.formData.size = null;
+      // this.formData.dimmable = null;
+      // this.formData.quantity = null;
+      // this.formData.desired_price = null;
+      // this.formData.desired_unit_price = null;
+      // this.formData.shipping_date = this.getDateTime();
+      // this.formData.shipment_method = null;
 
+      // this.formData.sample_quantity = null;
+      // this.formData.sample_shipping_address = null;
+      // this.formData.sample_shipping_city = null;
+      // this.formData.sample_shipping_country_id = null;
+      // this.formData.sample_shipping_postal = null;
+
+      // this.formData.payment_method = null;
+      // this.formData.message = null;
+      // this.stepCnt = 1;
+
+      // this.is_sample = false;
+
+      this.clearData();
 
       let options = {
         container: '#inquiryCreate_scrollable_cont',
@@ -1421,13 +1772,16 @@ export default {
 
     submitForm: function() {
 
+    	console.log('this.formData.attachments zzzzzzzzzz',this.formData.attachments);
+
       var formData = {
 
         "subject": " ",
         "keyword": this.formData.keywords,
         "warranty": this.formData.warranty ? this.formData.warranty : 0,
         "quantity": this.formData.quantity,
-        "desired_price": this.formData.desired_price,
+        "desired_price": parseFloat(this.formData.desired_price),
+        "desired_unit_price": parseFloat(this.formData.desired_unit_price),
         "desired_shipping_date": this.formData.shipping_date,
         "message": this.formData.message,
 
@@ -1451,10 +1805,7 @@ export default {
         "categories": [
           this.formData.category
         ],
-        "attachments": [
-          "cdn link here later later 1",
-          "cdn link here later later 2"
-        ],
+        "attachments": this.formData.attachments,
         "specifications": {
           power: this.formData.power,
           lumen: this.formData.lumen,
@@ -1473,27 +1824,53 @@ export default {
       // console.log(formData);
       // console.log('--------------------------')
 
+        var action = "";
+        var data = {};
+
+      if(this.isEdit) {
+
+          action = 'byrInq/editInquiry_a';
+          data = {
+            formData: formData,
+            inq_id: this.inquiry.id,
+          }
+
+      } else {
+
+          action = 'byrInq/addInquiry_a';
+          data = {
+            formData: formData,
+          }
+
+      }
+
+      // console.log(data)
+
       if (this.$v.$invalid) {
 
         this.$v.$touch()
 
-
       } else {
 
         this.formLoading = true;
-        this.$store.dispatch('byrInq/addInquiry_a', {
-            formData: formData,
-          })
+        this.$store.dispatch(action, data)
           .then((response) => {
             this.formLoading = false;
             this.$emit('update:dialog', false);
 
             // emit on bus that Inquiry form is submitted
             inqEvntBs.emitFormSubmitted();
+
+            if(this.isEdit) {
+                inqEvntBs.emitEditedInquiry();
+            } else {
+                this.$emit('update:snackBar', true)
+            }
+
             this.clearData();
 
           }).catch((e) => {
-            this.formLoading = false;
+            this.formLoading = false;        	
             console.log('Error: ' + e);
           }).finally(() => {
             this.formLoading = false;
@@ -1503,6 +1880,81 @@ export default {
 
     },
 
+
+    // Dropzone
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    getAWSS3(upload_group){
+
+
+        var awss3 =  {
+            signingURL: config.main.awss3.signingURL,
+            headers: {
+                token:localStorage.access_token,
+            },
+            params : {
+                action: upload_group,
+            },
+            sendFileToServer : true,
+            withCredentials: false
+        };
+
+        return awss3;
+    },
+
+    vdz_s3UploadSuccess: function(s3ObjectLocation){
+        // console.log("vdz_s3UploadSuccess",s3ObjectLocation);
+        // console.log();
+    },
+    vdz_success(file, upload_group){
+        console.log("vdz_success file = ",file);
+        console.log("vdz_success upload_group = ",upload_group);
+
+        if(file.status=='success') {
+
+            var attachment = {
+                location: file.s3ObjectLocation,
+                filename: file.name,
+                filetype: file.type,
+                filegroup: upload_group,
+                filesize: _.round((file.size/1000), 2),
+            };
+
+            console.log('attachment xxxxx',attachment);
+            console.log('this.formData.attachments xxxxx',this.formData.attachments);
+            this.formData.attachments.push(attachment);
+
+            // for the preview when uploaded
+            // this.inquiry_images.push(attachment);
+
+
+        	if(upload_group == 'add-inquiry-images') {
+        		this.inquiry_images.push(attachment);
+        	}
+        	if(upload_group == 'add-inquiry-attachments') {
+				this.inquiry_attachments.push(attachment);
+        	}
+        	if(upload_group == 'add-inquiry-oems') {
+        		this.inquiry_oems.push(attachment);        		
+        	}            
+
+        }
+
+        // if(upload_group=='attachments')    
+        // action = "add-inquiry-attachments";
+        // else if(upload_group=='images')
+        // action = "add-inquiry-images";
+        // else
+        // action = "add-inquiry-attachments";
+
+        // this.formData.attachments.push({
+
+        // });
+
+    },
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // dddddddddddddddddddddddddddddddddddddddddddddddddddd
+    // Dropzone
   },
 
 
@@ -1633,6 +2085,55 @@ export default {
 
 .theme--light.v-icon {
   color: #000;
+}
+
+.cslookup {
+
+  position: absolute; 
+  margin-left: 50px; 
+  margin-right: 50px; 
+  padding-bottom: 30px;
+  // width: 550px;
+
+}
+
+
+.image-area {
+  position: relative;
+  width: 50%;
+  // background: #333;
+}
+.image-area img{
+  max-width: 100%;
+  height: auto;
+}
+.remove-image {
+display: none;
+position: absolute;
+    top: -4px;
+    right: -30px;
+border-radius: 10em;
+padding: 2px 6px 3px;
+text-decoration: none;
+font: 700 21px/20px sans-serif;
+background: #555;
+border: 3px solid #fff;
+color: #FFF;
+box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  -webkit-transition: background 0.5s;
+  transition: background 0.5s;
+}
+.remove-image:hover {
+ background: #E54E4E;
+  padding: 3px 7px 5px;
+     top: -4px;
+    right: -30px;
+}
+.remove-image:active {
+ background: #E54E4E;
+    top: -4px;
+    right: -30px;
 }
 
 </style>

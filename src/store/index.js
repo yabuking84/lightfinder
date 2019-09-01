@@ -12,12 +12,19 @@ import cat from './modules/category'
 import byrInq from './modules/BuyerInquiry'
 import spplrInq from './modules/SupplierInquiry'
 // import adminHelper from './modules/adminHelper'
-import admnByr from './modules/adminBuyer'
-import admnSpplr from './modules/adminSupplier'
-import admnInq from './modules/adminInquiries'
+import admnByr from './modules/AdminBuyer'
+import admnSpplr from './modules/AdminSupplier'
+import admnInq from './modules/AdminInquiries'
+import admnMyHm from './modules/AdminMyHome'
+
+import byrMyHm from './modules/BuyerMyHome'
+
+import inq from './modules/Inquiry'
 
 import sckts from './modules/Sockets'
 import ntfctns from './modules/Notifications'
+
+import msg from './modules/Messaging'
  
 Vue.use(Vuex)
 
@@ -31,13 +38,17 @@ export const store = new Vuex.Store({
     swatch,
     auth,
     sckts,
+    msg,
     ntfctns,
     cat,
+    inq,
     byrInq,
+    byrMyHm,
     spplrInq,
     admnByr,
     admnSpplr,
-    admnInq
+    admnInq,
+    admnMyHm,
 
   }
 })

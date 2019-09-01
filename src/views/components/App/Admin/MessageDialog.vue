@@ -1,8 +1,8 @@
 <template>
 	<div>
 
-	    <v-dialog :value="openMessageDialog" @input="$emit('update:openMessageDialog',false)" width="35%">
-	       
+	    <v-dialog :value="openMessageDialog" @input="$emit('update:openMessageDialog',false)" width="35%"
+>	       
 	        <v-toolbar dark color="red" height="40px">
 	            <v-toolbar-title class="font-weight-light subheading">
 	                Conversation Box
@@ -33,7 +33,7 @@
 						<v-layout row wrap class="no-mrpd">
 			                <v-flex xs12 class="no-mrpd white">
 			                    <div class="pos-relative vuse-chat-message-container">
-			                        <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage()" placeholder="Type you message .."></chat-editable>
+			                        <chat-editable @update="chatMessageEditor = $event" class="chat-message-editor" type="innerHTML" @onEnter="sendMessage()" placeholder="Type your message .."></chat-editable>
 			                        <v-btn color="green" @click="sendMessage()" class="ma-0 send-message-btn pa-0" :disabled="chatMessageEditor === null || chatMessageEditor === ''">
 			                            <v-icon color="white">fa-paper-plane</v-icon>
 			                        </v-btn>
@@ -55,66 +55,73 @@
 
 <script>
 
-	import ChatEditable from '@/views/Components/Editable/ChatEditable'
+import ChatEditable from '@/views/Components/Editable/ChatEditable'
+import inqMixin from "@/mixins/inquiry";
 
-	export default {
+export default {
 
-		data() {
+    mixins: [
+		inqMixin,
+    ],
 
-			return {
+	data() {
 
-				chatMessageEditor: null,
+		return {
 
-			}
+			chatMessageEditor: null,
 
+		}
+
+	},
+
+	props: {
+
+		openMessageDialog: {
+			type: Boolean
 		},
 
-		props: {
-
-			openMessageDialog: {
-				type: Boolean
-			},
-
-			CommentData: {
-				type: Array
-			},
-
-
+		CommentData: {
+			type: Array
 		},
 
-		components: {
 
-			ChatEditable
+	},
 
-		},
-		
+	components: {
 
-		beforeDestroy() {
+		ChatEditable
 
-            this.$eventBus.$off('resetChatEditor')
+	},
+	
 
-        },
+	beforeDestroy() {
 
-        methods: {
+        this.$eventBus.$off('resetChatEditor')
 
-        	sendMessage() {
+    },
 
-        		if(this.chatMessageEditor)
-        			console.log(this.chatMessageEditor);
+    methods: {
 
-        		this.chatMessageEditor = null
-        		this.$eventBus.$emit('resetChatEditor')
+    	sendMessage() {
 
-        	},
-
-        	closeDialog() {
-
-        	}
+    		if(this.chatMessageEditor)
+    			console.log(this.chatMessageEditor);
+    		    this.hideInquiry();
 
 
-        }
+    		this.chatMessageEditor = null
+    		this.$eventBus.$emit('resetChatEditor')
 
-	}
+    	},
+
+    	closeDialog() {
+
+    	}
+
+
+    }
+
+}
 	
 </script>
 

@@ -1,6 +1,7 @@
 import AppSidebar from '@/views/Components/App/NavDrawer'
 import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
+import AppProfile from '@/views/Pages/Profile'
 
 
 import config from '@/config/index'
@@ -8,12 +9,14 @@ import config from '@/config/index'
 
 // SUPPLIER
 
+import SupplierWallet from '@/views/Pages/Supplier/Wallet'
 import SupplierHome from '@/views/Pages/Supplier/Home'
 import SupplierInquiry from '@/views/Pages/Supplier/Inquiry'
+import SupplierInquiryView from "@/views/Components/App/Supplier/InquiryView";
 
-import Register from '@/views/Pages/Supplier/Register'
-import RegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
-import RegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
+import SupplierRegister from '@/views/Pages/Supplier/Register'
+import SupplierRegisterTermsandCondition from '@/views/Pages/Supplier/RegisterTerms'
+import SupplierRegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompanyDetails'
 
 
 
@@ -26,63 +29,89 @@ const meta = {
             name: 'SupplierHome',
             icon: 'fas fa-th-large',
         },            
+        // {
+        //     title: 'Inquiries',
+        //     name: 'SupplierInquiry',
+        //     icon: 'fas fa-clipboard',
+        // },            
+    ], 
+    profileItems: [
         {
-            title: 'Inquiries',
-            name: 'SupplierInquiry',
-            icon: 'fas fa-clipboard',
-        },            
-    ],        
+            title: 'Edit Profile',
+            name: 'SupplierProfile',
+            icon: 'person',
+        },           
+        // {
+        //     title: 'Wallet',
+        //     name: 'SupplierWallet',
+        //     icon: 'fas fa-wallet',
+        // },    
+    ],
+    statuses: [
+    	...config.main.inquiry_statuses.default,
+    	...config.main.inquiry_statuses.suppliers,
+    ],
+    storeType: {
+    	inq: "spplrInq",
+    	profile: "admnSpplr",
+    },
 }
 
 export default [
     {
         name: 'SupplierHome',
-        path: '/supplier/dashboard',
+        path: '/lightfinder',
         components: {
             default:SupplierHome,
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: SupplierInquiryView,
         },
         meta: meta
     },
 
     {
         name: 'SupplierInquiry',
-        path: '/supplier/inquiry',
+        path: '/lightfinder/inquiry',
         components: {
             default:SupplierInquiry,
             sidebar: AppSidebar, 
             header: AppToolbar, 
             footer: AppFooter,
+            dialog: SupplierInquiryView,
         },
         meta: meta
     },
 
-
     {
-        name: 'SupplierRegistration' ,
-        path: '/supplier/register',
-        components: { 
-            default: Register, 
-        }
-    },
-
-    {
-        name: 'SupplierRegistrationDetails',
-        path: '/supplier/details',
+        name: 'SupplierProfile',
+        path: '/lightfinder/profile',
         components: {
-            default: RegisterCompanyDetails
-        }
+            // default: BuyerHome, 
+            default: AppProfile, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: SupplierInquiryView,
+        },
+        meta: meta,
     },
 
+
     {
-        name: 'SupplierRegistrationTerms',
-        path: '/register/terms',
+        name: 'SupplierWallet',
+        path: '/lightfinder/wallet',
         components: {
-            default: RegisterTermsandCondition
-        }
+            default: SupplierWallet, 
+            sidebar: AppSidebar, 
+            header: AppToolbar, 
+            footer: AppFooter,
+            dialog: SupplierInquiryView,
+        },
+        meta: meta,
     },
+
 
 
     // ==========================================================================================================

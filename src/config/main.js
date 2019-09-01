@@ -1,6 +1,49 @@
-// Define authentication static data
+// DEVELOPEMENT
+//////////////////////////////////////////////////////////////
+// const apiURL = 'http://192.168.1.200:8000';
+// const socketURL = 'http://192.168.1.200:3000';
+// const websiteURL = 'http://almani.ddns.net:1984';
+// const devMode =  true;
+// const defaultMaxInqs =  99;
+//////////////////////////////////////////////////////////////
+// DEVELOPEMENT
+
+// DEVELOPEMENT 2
+//////////////////////////////////////////////////////////////
+// const apiURL = 'https://api.buyanylight.com';
+// const socketURL = 'https://data.buyanylight.com/socket.io';
+// const websiteURL = 'https://tawing.net';
+// const devMode =  true;
+// const defaultMaxInqs =  99;
+//////////////////////////////////////////////////////////////
+// DEVELOPEMENT 2
+
+// PRODUCTION
+//////////////////////////////////////////////////////////////
+const apiURL = 'https://api.buyanylight.com';
+const socketURL = 'https://data.buyanylight.com/socket.io';
+const websiteURL = 'https://lightfinder.buyanylight.com';
+const devMode =  false;
+const defaultMaxInqs =  1;
+//////////////////////////////////////////////////////////////
+// PRODUCTION
+
+
 
 export default {
+
+	apiURL: apiURL,
+	socketURL: socketURL,
+	websiteURL: websiteURL,
+	devMode: devMode,
+	defaultMaxInqs: defaultMaxInqs,
+
+	awss3: {
+		signingURL:apiURL+"/v1/aws-s3-signature",
+        urls: {
+        	inquiry: 'https://httpbin.org/post',
+        },
+	},
 
 	shipping_methods: [
 		{
@@ -10,10 +53,6 @@ export default {
 		{
 			id: 2,
 			name: "SEA",
-		},
-		{
-			id: 3,
-			name: "Buyer handles shipment",
 		},
 	],
 
@@ -42,57 +81,93 @@ export default {
 				name: "Open",
 				class: "green",
 				icon: "far fa-envelope-open",
+				desc:"Inquiry is ready for bids.",
 			},
+
 			{
+				// before this was Confirmation
 				id: 1004, 
-				name: "Confirmation",
+				name: "Awarded",
 				class: "teal",
 				icon: "fas fa-handshake",
+				desc:"",
 			},
+
+			{
+				id: 10041, 
+				name: "BAL Confirmation",
+				class: "purple",
+				icon: "fas fa-handshake",
+				desc:"",
+			},
+
 			{
 				id: 1005, 
 				name: "Pending Payment",
 				class: "deep-orange",
 				icon: "far fa-credit-card",
+				desc:"",
 			},
+
+			{
+				id: 1006, 
+				name: "Confirming Payment",
+				class: "green",
+				icon: "far fa-credit-card",
+				desc:"",
+			},
+
 			{
 				id: 2001, 
 				name: "Production",
 				class: "blue",
 				icon: "fas fa-industry",
+				desc:"",
 			},
+
+			{
+				id: 20011, 
+				name: "Production Done",
+				class: "blue",
+				icon: "fas fa-industry",
+				desc:"",
+			},
+
 			{
 				id: 2002, 
 				name: "Shipment",
 				class: "light-green",
 				icon: "fas fa-truck",
-
+				desc:"",
 			},
+
 			{
 				id: 2003, 
 				name: "Receiving",
 				class: "orange",
 				icon: "fas fa-sign-in-alt",
-
+				desc:"",
 			},
 			{
 				id: 2004, 
 				name: "Return",
 				class: "red",
 				icon: "fas fa-exchange-alt",
+				desc:"",
 			},
 			{
 				id: 3001, 
 				name: "Success",
-				class: "light-blue ",
+				class: "light-blue",
 				icon: "far fa-check-circle",
-
+				desc:"",
 			},
 			{
 				id: 3002, 
 				name: "Cancelled",
 				class: "red red darken-2",
 				icon: "fas fa-ban",
+				desc:"",
 			},
 		],		
 
@@ -102,13 +177,14 @@ export default {
 				name: "Verifying",
 				class: "orange",
 				icon: "fas fa-hourglass-half",
-
+				desc:"",
 			},
 			{
 				id: 1003, 
 				name: "Rejected",
 				class: "red",
 				icon: "far fa-times-circle",
+				desc:"",
 			},
 		],
 
@@ -117,29 +193,73 @@ export default {
 			// 	id: 'all', 
 			// 	name: "All",
 			// 	icon: "fas fa-envelope-open-text",
+			// 	desc:"",
 			// },
 			// {
 			// 	id: 'priority', 
 			// 	name: "Priority",
 			// 	icon: "fas fa-exclamation-circle",
+			// 	desc:"",
 			// },
 			{
 				id: 'closed', 
 				name: "Closed",
 				icon: "fas fa-envelope",
+				desc:"",
 			},
+		],
+
+		confirmed_orders: [
+			2001,
+			20011,
+			2002,
+		],
+
+		bid_non_editable: [
+			2001,
+			20011,
+			2002,
+			2003,
+			2004,
+			3001,
+			3002,
+		],
+
+		bid_sample_disabled: [
+			2001,
+			20011,
+			2002,
+			2003,
+			2004,
+			3001,
+			3002,
 		],
 
 	},
 
 	polling: {
 		bidTable:{
-			time: 5000,			
+			time: 5000,
 		},
 		inquiryTable: {
 			time: 10000,
-		}
+		},
+		default: {
+			time: 5000,
+		},
 	},
+
+
+	myHome:{
+		psf: 949,
+		balFee: 0.1,
+	},
+
+	myTower:{
+		psf: 1949,
+		balFee: 0.1,
+	},
+
 
 }
 

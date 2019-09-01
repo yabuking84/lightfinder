@@ -192,7 +192,7 @@
 
 	import { required, email, maxLength } from 'vuelidate/lib/validators'
 	import validationMixin from '@/mixins/validationMixin'
-	import helpers from "@/mixins/helpers"
+	// import helpers from "@/mixins/helpers"
 	import config from '@/config/index'
 
 	import inqEvntBs from "@/bus/inquiry"
@@ -204,7 +204,7 @@
 
 	   mixins: [
 
-	        helpers,
+	        // helpers,
 	        validationMixin
 
 	    ],

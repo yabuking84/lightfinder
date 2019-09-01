@@ -6,6 +6,7 @@ import axios from 'axios'
 import router from '@/router'
 
 import config from '@/config/index'
+const base_url = config.main.apiURL;
 
 const state = {
 
@@ -17,7 +18,7 @@ const state = {
 
 		get: {
 			method: 'get',
-			url: 	'http://192.168.1.200:8000/v1/register'
+			url: 	base_url+'/v1/register'
 		}
 
 		/*
@@ -26,7 +27,7 @@ const state = {
 
 		post: {
 			method: 'post',
-			url: 	'http://192.168.1.200:8000/v1/register'
+			url: 	base_url+'/v1/register'
 		}
 
 

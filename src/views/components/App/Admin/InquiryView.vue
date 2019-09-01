@@ -1,43 +1,50 @@
 <template>
   
-  <v-dialog 
-  :value="openInquiry" 
-  @input="$emit('update:openInquiry', false)" 
-  @keydown.escape="keyPress"
-  fullscreen
-  >
+  <!-- @input="$emit('update:openInquiry', false)"  -->
+<v-dialog 
+@input="closeOpenInquiry()" 
+:value="openInquiry" 
+@keydown.escape="keyPress">
     <!-- <v-dialog :value="openInquiry" @input="$emit('update:openInquiry', false)" fullscreen scrollable> -->
-    <v-card id="InquiryView">
+    <v-card>
 
-        <v-toolbar dark color="primary">         
-            <v-toolbar-title v-if="inquiry">Inquiry # {{ inquiry.id }} </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click="closeOpenInquiry()">
-                    <v-icon>close</v-icon>
-                </v-btn>
-            </v-toolbar-items>
-        </v-toolbar>
+    	<v-card-title class="black darken-4 ">
+			<h2 v-if="stateInquiry" class="font-weight-bold white--text">
+				INQUIRY # {{ stateInquiry.id }}
+			</h2>
 
+			<v-spacer></v-spacer>
+	        <v-btn dark flat @click="closeOpenInquiry()">
+	            <v-icon>close</v-icon>
+	        </v-btn>
+    	</v-card-title>
 
-        <v-container fluid grid-list-xl>
-          <v-layout row wrap>
+        <v-card-text id="inquiryView">
+	        <v-container fluid grid-list-xl  pa-0>
+	          	<v-layout row wrap>
 
-            <!-- inquiry details card -->
-            <v-flex xs5>
-              <inquiry-details-card v-if="inquiry" :isClosed.sync="isClosed" :openInquiry="openInquiry" :inquiry="inquiry"> </inquiry-details-card>
-            </v-flex>
-            <!-- end of detils  -->
+		            <!-- inquiry details card -->
+		            <v-flex xs5>
+		              <inquiry-details-card 
+		              v-if="stateInquiry" 
+		              :inquiry="stateInquiry"
+		              :openInquiry="openInquiry"
+		              :isClosed.sync="isClosed"> </inquiry-details-card>
+		            </v-flex>
+		            <!-- end of detils  -->
 
-            <!-- supplier quote / bids -->
-            <v-flex xs7>
-              <inquiry-post-list v-if="inquiry" :inquiry="inquiry"> </inquiry-post-list>
-            </v-flex>
-            <!-- supplier quote -->
+		            <!-- supplier quote / bids -->
+		            <v-flex xs7>
+		             	<inquiry-post-list 
+		             	v-if="stateInquiry" 
+		             	:inquiry="stateInquiry"> </inquiry-post-list>
+		            </v-flex>
+		            <!-- supplier quote -->
 
-          </v-layout>
-        </v-container>
+	          	</v-layout>
+	        </v-container>
       
+	   	</v-card-text>
     </v-card>
   </v-dialog>
 </template>
@@ -47,7 +54,14 @@ import InquiryDetailsCard from "@/views/Components/App/Admin/InquiryDetailsCard"
 
 import inqEvntBs from "@/bus/inquiry";
 
+import inqMixin from "@/mixins/inquiry";
+
 export default {
+
+	mixins: [
+		inqMixin,
+	],
+
 
   components: {
 
@@ -79,28 +93,28 @@ export default {
     },
 
 
-    openInquiry: {
-        get() {
-            return this.$store.state.admnInq.openInquiryView;
-        },
-        set(nVal){
-            if(nVal)
-            this.$store.commit('admnInq/SHOW_OPENINQUIRYVIEW_M');
-            else
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
-        },
-    },
+    // openInquiry: {
+    //     get() {
+    //         return this.$store.state.inq.openInquiryView;
+    //     },
+    //     set(nVal){
+    //         if(nVal)
+    //         this.$store.commit('inq/SHOW_OPENINQUIRYVIEW_M');
+    //         else
+    //         this.hideInquiry();
+    //     },
+    // },
 
-    inquiry: {
-        get() {
-            return this.$store.state.admnInq.inquiry;
-        },
-        set(nVal) {
-            // console.log('setVal');
-            // console.log(nVal);
-            this.$store.commit('admnInq/UPDATE_INQUIRY_M',{inquiry:nVal});
-        },
-    },       
+    // inquiry: {
+    //     get() {
+    //         return this.$store.state.inq.inquiry;
+    //     },
+    //     set(nVal) {
+    //         // console.log('setVal');
+    //         // console.log(nVal);
+    //         this.$store.commit('inq/UPDATE_INQUIRY_M',{inquiry:nVal});
+    //     },
+    // },       
 
 
 
@@ -109,13 +123,13 @@ export default {
     methods: {
 
         closeOpenInquiry() {
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
         },
 
         keyPress(e){
 
             if(e.target.querySelector("#InquiryView"))
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
             
             // console.log(e.target);
 
@@ -134,7 +148,7 @@ export default {
 
         if (nVal) {
             this.isClosed = false
-            this.$store.commit('admnInq/HIDE_OPENINQUIRYVIEW_M');
+            this.hideInquiry();
         }
 
       },

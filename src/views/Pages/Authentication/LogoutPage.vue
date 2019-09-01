@@ -22,11 +22,14 @@ export default {
             // console.log("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
             // alert("logout_a = "+config.auth.roleIndex[this.$store.state.auth.auth_user.role]);
                         
-            this.$router.push({name:'Login'});
+            // this.$router.push("/login");
+            window.location.href = "/login";
+
         })
         .catch(error=>{
             console.log(error);           
-            // this.$router.push({name:'Login'});
+            // this.$router.push("/login");
+            window.location.href = "/login";
         });
         
 	},

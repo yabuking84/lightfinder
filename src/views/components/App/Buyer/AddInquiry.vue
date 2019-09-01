@@ -449,12 +449,12 @@
 
 <script>
 
-import helpers from "@/mixins/helpers";
+// import helpers from "@/mixins/helpers";
 import ReviewInquiry from "@/views/Components/App/Buyer/ReviewInquiry";
 
 export default {
     mixins: [
-        helpers,
+        // helpers,
     ],
     data () {
       return {
@@ -511,8 +511,7 @@ export default {
         .then((response)=>{
             this.categories = response;
         })
-        .catch((e) => {
-            console.log('Error: ');
+        .catch((e) => {            
             console.log(e);
         });
     

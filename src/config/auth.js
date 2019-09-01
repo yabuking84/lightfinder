@@ -19,7 +19,15 @@ const roleIndex = {
 }
 
 
+const roleName = {
+    'admin':1,
+    'supplier':2,
+    'buyer':3,
+}
+
+
 export default {
     role,
     roleIndex,
+    roleName,
 }

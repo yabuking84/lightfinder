@@ -62,8 +62,8 @@
 </template>
 <script>
 import adminBuyerBus from "@/bus/admin-buyer"
-import helpers from "@/mixins/helpers"
-import BuyerDialog from '@/views/components/app/Admin/BuyerDialog'
+// import helpers from "@/mixins/helpers"
+import BuyerDialog from '@/views/Components/app/Admin/BuyerDialog'
 
 
 import config from "@/config/main"
@@ -75,7 +75,7 @@ export default {
     BuyerDialog
   },
   mixins: [
-    helpers,
+    // helpers,
     VueTimers
   ],
   data: function() {
@@ -149,15 +149,16 @@ export default {
     }
   },
 
-  timers: [{
-    name: 'BuyerTableTimer',
-    time: config.polling.inquiryTable.time,
-    repeat: true,
-    autostart: true,
-    callback: function() {
-      this.fillTable(false);
-    },
-  }],
+  // disable polling
+  // timers: [{
+  //   name: 'BuyerTableTimer',
+  //   time: config.polling.inquiryTable.time,
+  //   repeat: true,
+  //   autostart: true,
+  //   callback: function() {
+  //     this.fillTable(false);
+  //   },
+  // }],
 
 
   methods: {
