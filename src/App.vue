@@ -1,5 +1,7 @@
 <template>
-    <v-app :dark="colorScheme.dark" :class="colorScheme.scheme">
+    <v-app 
+    :dark="colorScheme.dark" 
+    :class="colorScheme.scheme">
 
         <router-view name="header"/>
         <router-view name="sidebar"/>

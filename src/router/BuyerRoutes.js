@@ -3,7 +3,6 @@ import AppToolbar from '@/views/Components/App/Toolbar'
 import AppFooter from '@/views/Components/App/Footer'
 import AppProfile from '@/views/Pages/Profile'
 
-import Payment from '@/views/Pages/Payment/Payment'
 
 import AppToolbarMyHmMyTwr from '@/views/Components/App/ToolbarMyHmMyTwr'
 
@@ -345,21 +344,6 @@ export default [
 
 
   
-	// Payment
-	//////////////////////////////////////////////////////
-	{
-		name: 'PaymentFoloosi',
-		path: '/payment',
-		components: { 
-			default: Payment, 
-		},
-	},
-	//////////////////////////////////////////////////////
-	// My Tower
-
-
-
-  
 
 
 
@@ -401,7 +385,7 @@ export default [
 	{
 		name: 'Buyer3DLD',
 		path: '/3d-lighting-design',
-		components: { 
+		components: {
 			default: UnderConstruction, 
 			sidebar: AppSidebar, 
 			header: AppToolbar, 

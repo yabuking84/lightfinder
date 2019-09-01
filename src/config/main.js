@@ -1,21 +1,30 @@
 // DEVELOPEMENT
 //////////////////////////////////////////////////////////////
-const apiURL = 'http://192.168.1.200:8000';
-const socketURL = 'http://192.168.1.200:3000';
-const websiteURL = 'http://almani.ddns.net:1984';
-const devMode =  true;
-const defaultMaxInqs =  99;
+// const apiURL = 'http://192.168.1.200:8000';
+// const socketURL = 'http://192.168.1.200:3000';
+// const websiteURL = 'http://almani.ddns.net:1984';
+// const devMode =  true;
+// const defaultMaxInqs =  99;
 //////////////////////////////////////////////////////////////
 // DEVELOPEMENT
 
-
-// PRODUCTION
+// DEVELOPEMENT 2
 //////////////////////////////////////////////////////////////
 // const apiURL = 'https://api.buyanylight.com';
 // const socketURL = 'https://data.buyanylight.com/socket.io';
-// const websiteURL = 'https://lightfinder.buyanylight.com';
-// const devMode =  false;
-// const defaultMaxInqs =  1;
+// const websiteURL = 'https://tawing.net';
+// const devMode =  true;
+// const defaultMaxInqs =  99;
+//////////////////////////////////////////////////////////////
+// DEVELOPEMENT 2
+
+// PRODUCTION
+//////////////////////////////////////////////////////////////
+const apiURL = 'https://api.buyanylight.com';
+const socketURL = 'https://data.buyanylight.com/socket.io';
+const websiteURL = 'https://lightfinder.buyanylight.com';
+const devMode =  false;
+const defaultMaxInqs =  1;
 //////////////////////////////////////////////////////////////
 // PRODUCTION
 

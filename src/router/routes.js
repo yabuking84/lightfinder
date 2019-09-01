@@ -30,6 +30,7 @@ import ProfileView from '@/views/Pages/Profile'
 import BuyerInvoice from '@/views/Components/App/Invoice'
 
 import BuyerRegistration from '@/views/Pages/Buyer/Register'
+import BuyerRegistration2 from '@/views/Pages/Buyer/Register2'
 import BuyerRegistrationDetails from '@/views/Pages/Buyer/RegisterDetails'
 import BuyerRegistrationTerms from '@/views/Pages/Buyer/RegisterTerms'
 import BuyerPackages from '@/views/Pages/Buyer/Packages'
@@ -42,10 +43,13 @@ import SupplierRegisterCompanyDetails from '@/views/Pages/Supplier/RegisterCompa
 import Home from '@/views/Pages/Home'
 import LoginPage from '@/views/Pages/Authentication/LoginPage'
 import LogoutPage from '@/views/Pages/Authentication/LogoutPage'
+import OAuthPage from '@/views/Pages/Authentication/OAuthPage'
 
+import SocialLogin from '@/views/Pages/Authentication/SocialLogin'
 
 import SuperChat from '@/views/Pages/SuperChat'
 
+import Payment from '@/views/Pages/Payment/Payment'
 
 
 // PAGES
@@ -111,11 +115,24 @@ const routes =
     },
 
 
+    {
+        path: '/oauth',
+        name: 'OAuth',
+        component: OAuthPage,
+    },
 
 
 	/*
 		public views
 	*/
+
+	{
+		name: 'BuyerRegistration2',
+		path: '/buyer/register2',
+		components: {
+			default: BuyerRegistration2
+		}
+	},
 
 	{
 		name: 'BuyerRegistration',
@@ -202,6 +219,29 @@ const routes =
     },
 
 
+	// social login
+	////////////////////////////////////////
+	{
+		name: 'SocialLogin',
+		path: '/auth/sociallogin/callback',
+		components: {
+			// default: BuyerHome, 
+			default: SocialLogin, 
+			// sidebar: AppSidebar, 
+			// header: AppToolbar, 
+			// footer: AppFooter,
+			// dialog: BuyerInquiryView,
+		},
+	},	
+
+    {
+    	path: '/auth/:provider/callback',
+    	component: {
+    	  template: '<div class="auth-component"></div>'
+    	}
+    },	
+	////////////////////////////////////////
+	// social login
 
 	// test pdf
 	////////////////////////////////////////
@@ -221,6 +261,21 @@ const routes =
 	////////////////////////////////////////
 	// test pdf
 	    
+
+
+  
+	// // Payment
+	// //////////////////////////////////////////////////////
+	// {
+	// 	name: 'PaymentFoloosi',
+	// 	path: '/payment',
+	// 	components: { 
+	// 		default: Payment, 
+	// 	},
+	// },
+	// //////////////////////////////////////////////////////
+	// // My Tower
+
 
     ...userRoutes,
 ]

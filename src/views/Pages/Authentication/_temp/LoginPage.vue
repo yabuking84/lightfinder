@@ -268,38 +268,7 @@ import validationMixin from '@/mixins/validationMixin'
 import TwoWeeksDialog from '@/views/Components/App/Login/TwoWeeksDialog'
 import hlprs from '@/mixins/helpers'
   
-import axios from 'axios'
 
-
-function openWindow (url, title, options = {}) {
-	if (typeof url === 'object') {
-	options = url
-	url = ''
-	}
-
-	options = { url, title, width: 600, height: 720, ...options }
-
-	const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screen.left
-	const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screen.top
-	const width = window.innerWidth || document.documentElement.clientWidth || window.screen.width
-	const height = window.innerHeight || document.documentElement.clientHeight || window.screen.height
-
-	options.left = ((width / 2) - (options.width / 2)) + dualScreenLeft
-	options.top = ((height / 2) - (options.height / 2)) + dualScreenTop
-
-	const optionsStr = Object.keys(options).reduce((acc, key) => {
-	acc.push(`${key}=${options[key]}`)
-	return acc
-	}, []).join(',')
-
-	const newWindow = window.open(url, title, optionsStr)
-
-	if (window.focus) {
-	newWindow.focus()
-	}
-
-	return newWindow
-}
 
 const defaultForm = {
 	// email: 'info@bal.com',
@@ -532,29 +501,6 @@ export default {
 		// Social Login
 		////////////////////////////////////////////////////////////////////////
 		authenticate (provider) {
-			// const newWindow = openWindow('', 'message')
-			// axios({
-			// 	method: 'post',
-			// 	url: 'https://accounts.google.com/o/oauth2/auth',
-			// 	headers: {'content-type': 'application/x-www-form-urlencoded'},
-			// 	data: {
-			// 		code: '',
-			// 		client_id: '357366120684-4kni7uj7n2c86osuce6lf8t9t13m6fu8.apps.googleusercontent.com',
-			// 		client_secret: 'zntZwZ5gc2pnUhDPK1067y36',
-			// 		redirect_uri: 'https://almani.ddns.net:2021/BAL-Landing_Page/public/auth/google/callback',
-			// 		grant_type: 'authorization_code'
-			// 	}
-			// })
-			// .then(response => {
-			// 	newWindow.location.href = response.data;
-			// })
-			// .catch(function (error) {
-			//   console.error(error);
-			// });
-
-
-
-			this.$auth.logout();
 			this.$auth.authenticate(provider)
 			.then(function (rspns) {
 				console.log(rspns);
@@ -562,11 +508,7 @@ export default {
 			.catch((e)=>{
 				console.log('catch e',e);
 			});
-
-
-		
 		},
-
 		onMessage (msg) {
 			if (msg.origin == "https://almani.ddns.net:2021") {
 				console.log('email',msg.data.email);
@@ -574,7 +516,7 @@ export default {
 
 				this.test = msg.data.email+" <br> "+msg.data.fullname;
 			}			
-		},	
+		}		
 		////////////////////////////////////////////////////////////////////////
 		// Social Login
 	},

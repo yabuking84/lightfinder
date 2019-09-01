@@ -228,6 +228,89 @@ const actions = {
 		});
 	},
 
+	retrieveTokenOAuth_a(context,data){
+		return new Promise((resolve, reject) => {
+
+
+			var payload = data.user;
+
+			axios({
+				url: state.api.login.url+"/"+data.loginType,
+				method: state.api.login.method,
+				data: payload,
+			})
+			.then(response => {
+
+				// console.log('dfatadfatadfatadfatadfata');
+				// console.log(response.data);
+				// console.log(response.data.user);
+				// console.log('dfatadfatadfatadfatadfata');
+				
+				var token = response.data.token;
+				var user = response.data.user;
+				user.uuid = response.data.uuid;
+
+
+				// set token
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				localStorage.setItem('access_token',token);
+				context.commit('SET_TOKEN_M',token);
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// set token
+
+				
+
+				// set user details                
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				localStorage.setItem('uuid'       ,user.uuid); // change this later to the real uuid
+				localStorage.setItem('name'       ,user.firstname+" "+user.lastname);
+				localStorage.setItem('firstname'  ,user.firstname);
+				localStorage.setItem('lastname'   ,user.lastname);
+				localStorage.setItem('email'      ,user.email);
+				localStorage.setItem('avatar'     ,user.avatar);
+				localStorage.setItem('role'       ,user.role);
+
+				localStorage.setItem('job_title' 	,user.job_title);
+				localStorage.setItem('phone' 		,user.phone);
+				localStorage.setItem('fax' 			,user.fax);
+				localStorage.setItem('address' 		,user.address);
+				localStorage.setItem('country_id' 	,user.country_id);
+
+				context.commit('SET_AUTHUSER_M',user);
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// set user details 
+
+
+				// reset notifications
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				context.dispatch('ntfctns/resetAllNotification_a', null, { root: true });
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// reset notifications
+
+
+				// set socket user
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				context.dispatch('sckts/joinRoom_a', state.auth_user.uuid, { root: true });
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// set socket user
+
+				
+				// set inquiry statuses
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				context.dispatch('retrieveInquiryStatuses_a').then(function(){                    
+					resolve(response);
+				});
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// set inquiry statuses
+
+			})
+			.catch(error => {
+				reject(error)
+			})
+
+		});
+	},
+
 
 	retrieveInquiryStatuses_a(context){
 		return new Promise((resolve, reject) => {            
@@ -360,7 +443,7 @@ const actions = {
 			})
 			.then(response => {
 				console.log('response',response)
-				resolve(!response.data);
+				resolve((response.data)?false:true);
 			})
 			.catch(error => {
 				console.log(error.response);
@@ -375,7 +458,7 @@ const actions = {
 
 	supplierRegistration_a(context, data) {
 
-		 return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			
 			var headers = {
 				"content-type": "application/json",

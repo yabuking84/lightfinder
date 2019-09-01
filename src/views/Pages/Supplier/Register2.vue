@@ -503,13 +503,11 @@
 									<div class="agree">
 
 										<p> 
-
 											<span> 1.) We hereby verify that all information and attachments on this form are fully true and correct to the best of my knowledge.</span>
 											<span> 2.) We confirm to provide samples and supply orders from client with no minimum quantity required.</span>
 											<span> 3.) We confirm, that BuyAnyLight Inspector can visit our company/factory to check on all the information given in this form.</span>
 											<span> 4.) We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation!</span>
 											<span> 5.) We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to:</span>
-				
 										</p>
 
 										<p class="mb-1"> 
@@ -936,6 +934,11 @@ export default {
 
 					'company_name': this.form.companyname,
 					'job_title': this.form.designation,
+
+
+
+
+
 
 					'factory_address': this.form.factoryaddress,
 					'company_established_year': this.form.companyestablishedyear,

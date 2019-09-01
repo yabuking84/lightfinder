@@ -1,341 +1,648 @@
 <template>
 <span>
 	<!-- <div style="width: 100vw; height: 100vh"></div> -->
+	
+	<v-container 
+	fluid full-height align-center justify-center 
+	id="register-container" 
+	style="overflow-y: auto; display: flex;">
+	<v-layout 
+	row wrap full-height align-center justify-center
+	style="">
+	  
 
-  	<v-img :src="backgroundImg" class="" style="background: rgba(0,0,0,0.4);">
-		
-		<div class="registration-first" v-show="isStepOne">
-		  <v-container>
-			<!-- <v-flex lg12 xs12> -->
-			  <v-layout row wrap class="main-wrapper">
-
-
-
-				<v-flex lg4 xs12 offset-lg2 class="page-wrap">
-					<v-layout row wrap>
-						<!-- heading message -->
-						<div class="page-content mt-5">
-
-							<h1 class="white--text header-title">How to become a BAL supplier?</h1>
-							<h4 class="white--text font-weight-light sub-header-title mt-4">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe. </h4>
-
-							<v-container fluid>
-							<v-layout row wra justify-center align-center fill-height>
-								<a href="https://buyanylight.com" target="_blank">
-									<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
-								</a>
-							</v-layout>
-							</v-container>
+			<v-stepper v-model="e1" non-linear class="register-stepper">
+				<v-stepper-header>
+					<v-stepper-step step="1"></v-stepper-step>
+					<v-divider></v-divider>
+					<v-stepper-step step="2"></v-stepper-step>
+					<v-divider></v-divider>
+					<v-stepper-step step="3"></v-stepper-step>
+				</v-stepper-header>
 
 
-						</div>
-						  <!-- heading message -->
-					</v-layout>
-				</v-flex>
+				<v-stepper-items>
+					
+					<v-stepper-content step="1">
+						<!-- content -->
+						<!-- ///////////////////////////////////// -->
+						<v-layout row wrap justify-center >
 
-				<v-flex lg4 xs12>
-				  <v-layout row wrap fill-height>
-					<!-- FOR 1ST STEP -->
-					<div class="frmcontainer">
-					  <v-card class="pa-5">
-						<div class="headline font-weight-medium text-xs-center">SIGN UP</div>
-						<!-- <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4> -->
-						<v-layout row wrap>
-						  <v-form @submit.prevent="$v.$invalid ? null : FirstStep() " ref="form" class="mt-3">
-							<v-layout wrap row>
+							<v-flex md4 xs12 class="page-wrap2">
+								<v-layout row wrap justify-center>
 
-							  <v-flex xs12 pa-0>
+								<!-- FOR 1ST STEP -->
+								  <v-card class="pa-5">
+									<v-layout row wrap align-center justify-center>
+										<v-icon class="mr-3 black--text">fas fa-user-plus</v-icon>
+										<div class="headline font-weight-medium text-xs-center">SIGN UP</div>
+									</v-layout>
+									<!-- <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4> -->
+									<v-layout row wrap mt-3>
+
+										  	<v-flex xs12 pa-0>
 
 
-								  <v-text-field 
-								  color="black" 
-								  label="First Name" 
-								  v-model="form.firstname" 
-								  required 
-								  :error-messages="fieldErrors('form.firstname')" 
-								  @blur="$v.form.firstname.$touch()">
-								  </v-text-field>
+											<v-text-field 
+											outline
+											color="black" 
+											label="First Name" 
+											v-model="form.firstname" 
+											placeholder=" "
+											prepend-inner-icon="fas fa-user"
+											autocomplete="off" 
+											:error-messages="fieldErrors('form.firstname')">
+											</v-text-field>
 
-								  <v-text-field 
-								  color="black" 
-								  label="Last Name" 
-								  v-model="form.lastname"
-								  required 
-								  :error-messages="fieldErrors('form.lastname')"
-								  @blur="$v.form.lastname.$touch()">
-								  </v-text-field>
+											<v-text-field 
+											outline
+											color="black" 
+											label="Last Name" 
+											v-model="form.lastname"
+											placeholder=" "
+											prepend-inner-icon="fas fa-user"
+											autocomplete="off" 
+											:error-messages="fieldErrors('form.lastname')">
+											</v-text-field>
 
-								<v-text-field 
-								color="black"  
-								label="Email Address" 
-								v-model="form.email" 
-								placeholder=" "
-								required 
-								:error-messages="fieldErrors('form.email')" 
-								@blur="$v.form.email.$touch()">
-								</v-text-field>
+											<v-text-field 
+											outline
+											color="black"  
+											label="Email Address" 
+											v-model="form.email" 
+											placeholder=" "
+											prepend-inner-icon="fas fa-at"
+											autocomplete="disabled" 
+											:error-messages="fieldErrors('form.email')" >
+											</v-text-field>
 
-								<v-text-field 
-								color="black" 
-								label="Password" 
-								v-model="form.password" 
-								placeholder=" "
-								required type="password" 
-								:error-messages="fieldErrors('form.password')" 
-								@blur="$v.form.password.$touch()">
-								</v-text-field>
+											<v-text-field 
+											outline
+											color="black" 
+											label="Password" 
+											v-model="form.password" 
+											placeholder=" "
+											type="password" 
+											prepend-inner-icon="fas fa-key"
+											autocomplete="off" 
+											:error-messages="fieldErrors('form.password')" >
+											</v-text-field>
 
-								<v-text-field 
-								color="black" 
-								label="Confirm Password" 
-								v-model="form.confirmpassword" 
-								required type="password" 
-								:error-messages="fieldErrors('form.confirmpassword')" 
-								@blur="$v.form.confirmpassword.$touch()">
-								</v-text-field>
+											<v-text-field 
+											outline
+											color="black" 
+											label="Confirm Password" 
+											v-model="form.confirmpassword" 
+											type="password" 
+											prepend-inner-icon="fas fa-key"
+											placeholder=" "
+											autocomplete="off" 
+											:error-messages="fieldErrors('form.confirmpassword')" >
+											</v-text-field>
 
-							  </v-flex>
+										  	</v-flex>
 
-							  <v-flex xs12 offset-xs4>
-								<v-layout row wrap text-xs-center>
-								  <!-- Login form submit -->
-								  <v-flex xs6 class="white--text no-mrpd">
-									<v-btn round color="black" type="submit" block @click="FirstStep()"> <span class="white--text font-weight-light ls-1" style="">SIGN UP</span></v-btn>
-								  </v-flex>
+										  <v-flex xs12>
+											<v-layout row wrap text-xs-center justify-center align-center>											
+											  <!-- Login form submit -->
+											  <v-flex xs6 class="white--text no-mrpd">
+												<!-- <v-btn round color="black" type="submit" block @click="FirstStep()"> <span class="white--text font-weight-light ls-1" style="">SIGN UP</span></v-btn> -->
+												<v-btn 
+												style="background-color: #7600ff !important;"
+												color="black" 
+												block 
+												@click="FirstStepDone()"><span class="dark-blue white--text font-weight-light ls-1">SIGN UP</span></v-btn>
+											  </v-flex>
+											</v-layout>
+										  </v-flex>
+										  <v-flex xs12 mt-3>
+												<p class="black--text text-xs-center">
+													Already have an account?
+													Sign in <strong><router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link></strong>.
+													
+												</p>
+											
+										  </v-flex>
+									</v-layout>
+								  </v-card>
+								<!-- FOR 1ST STEP -->
+
 								</v-layout>
-							  </v-flex>
-							  <v-flex xs12 mt-3>
-									<p class="black--text text-xs-center">
-										Existing User ? Click 
-										<strong><router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link></strong>
-										to login.
-									</p>
-								
-							  </v-flex>
-							</v-layout>
-						  </v-form>
+							</v-flex>
+
+
+							<v-flex md4 xs12 class="page-wrap">
+								<v-layout column wrap full-height align-start justify-center pa-3>
+
+										<h1 class="white--text header-title">How to become a BAL supplier?</h1>
+										<p class="white--text mt-4">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe.</p>
+
+										<!-- <v-container fluid>
+										<v-layout row wra justify-center align-center fill-height>
+											<a href="https://buyanylight.com" target="_blank">
+												<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
+											</a>
+										</v-layout>
+										</v-container> -->
+
+								</v-layout>
+							</v-flex>
+
 						</v-layout>
-					  </v-card>
-					</div>
-					<!-- FOR 1ST STEP -->
-				  </v-layout>
-				</v-flex>
+						<!-- ///////////////////////////////////// -->
+						<!-- content -->
+					</v-stepper-content>
 
 
-			  </v-layout>
-			<!-- </v-flex> -->
-		  </v-container>
-		</div>
-
-		<div class="registration-stepper" v-show="isSteptwo">
-
-		  	<v-container>	   
-		  	<!-- <v-flex offset-md2 offset-lg2 lg8 md8 xs12 pa-2>	 -->
-			<v-layout align-center justify-center row fill-height ma-4>
-		  
-				<!-- FOR 2ND 3RD 4RTH STEP -->
-
-				<v-card>
-
-					<v-card-title primary-title>
-						<h2 class="mb-0 pb-0">Supplier Sign Up</h2>
-					</v-card-title>
-
-					<v-card-text id="inquiryCreate_scrollable_cont">
-
-						<v-container>
-						  
-						
-						<v-layout row wrap>
-
-								<v-flex md6 xs12 pa-2>
-								  <v-text-field 
-								  color="black" 
-								  label="First Name" 
-								  v-model="form.firstname" 
-								  required 
-								  :error-messages="fieldErrors('form.firstname')" 
-								  @blur="$v.form.firstname.$touch()">
-								  </v-text-field>
-								</v-flex>
-
-								<v-flex md6 xs12 pa-2>
-								  <v-text-field 
-								  color="black" 
-								  label="Last Name" 
-								  v-model="form.lastname"
-								  required 
-								  :error-messages="fieldErrors('form.lastname')"
-								  @blur="$v.form.lastname.$touch()">
-								  </v-text-field>
-								</v-flex>
-
-								<v-flex md6 xs12 pa-2>
-								  <v-text-field 
-								  color="black" 
-								  label="Designation" 
-								  v-model="form.designation" 
-								  required 
-								  :error-messages="fieldErrors('form.designation')" 
-								  @blur="$v.form.designation.$touch()">
-								  </v-text-field>
-								</v-flex>
-
-								<v-flex md6 xs12 pa-2>
-								  <v-text-field 
-								  color="black" 
-								  label="Company Name" 
-								  v-model="form.companyname" 
-								  required 
-								  :error-messages="fieldErrors('form.companyname')" 
-								  @blur="$v.form.companyname.$touch()">
-								  </v-text-field>
-								</v-flex>
-
-								<v-flex md3 xs12 pa-2>
-								  <v-autocomplete 
-								  v-model="form.country" 
-								  :items="countries" 
-								  item-text="name" 
-								  item-value="id" 
-								  :error-messages="fieldErrors('form.country')" 
-								  @blur="$v.form.country.$touch()" 
-								  ref="categorySelect" flat hide-no-data hide-details 
-								  label="Search Country ..">
-								  </v-autocomplete>
-								</v-flex>
-
-								<v-flex md2 xs12 pa-2>
-								  <v-text-field 
-								  color="black" 
-								  label="City" 
-								  v-model="form.city" 
-								  required 
-								  :error-messages="fieldErrors('form.city')" 
-								  @blur="$v.form.city.$touch()">
-								  </v-text-field>
-								</v-flex>
-
-								<v-flex md5 xs12 pa-2>
-								  <v-text-field 
-								  color="black" 
-								  label="Street" 
-								  v-model="form.street" 
-								  required 
-								  :error-messages="fieldErrors('form.street')" 
-								  @blur="$v.form.street.$touch()">
-								  </v-text-field>           
-								</v-flex>
-
-								<v-flex md2 xs12 pa-2>
-								   <v-text-field 
-									  color="black" 
-									  label="Zip Code" 
-									  v-model="form.zipcode" 
-									  required 
-									  :error-messages="fieldErrors('form.zipcode')" 
-									  @blur="$v.form.zipcode.$touch()">
-									</v-text-field>   
-								</v-flex>
-
-								<v-flex md4 xs12 pa-2>
-									<v-text-field 
-									  color="black" 
-									  label="Phone Number" 
-									  v-model="form.phonenumber" 
-									  required 
-									  :error-messages="fieldErrors('form.phonenumber')" 
-									  @blur="$v.form.phonenumber.$touch()">
-									</v-text-field>   
-								</v-flex>
 
 
-								<v-flex md4 xs12 pa-2>
-									<v-text-field 
-									  color="black" 
-									  label="Mobile Number" 
-									  v-model="form.mobilenumber" 
-									  required 
-									  :error-messages="fieldErrors('form.mobilenumber')" 
-									  @blur="$v.form.mobilenumber.$touch()">
-									</v-text-field>  
-								</v-flex>
 
-								<v-flex md4 xs12 pa-2>
-									<v-text-field 
-									  color="black" 
-									  label="We Chat Id" 
-									  v-model="form.wechatid" 
-									  required 
-									  :error-messages="fieldErrors('form.wechatid')" 
-									  @blur="$v.form.wechatid.$touch()">
-									</v-text-field>  
-								</v-flex>
+					<v-stepper-content step="2">
+						<!-- content -->
+						<!-- ///////////////////////////////////// -->
+						<v-layout row wrap justify-center >
+					  
+							<v-flex md8 xs12 class="page-wrap2">
+								<v-card>
 
-								<v-flex md6 xs12 pa-2>
-									<v-text-field 
-									  color="black" 
-									  label="Company Website" 
-									  v-model="form.companywebsite" 
-									  required 
-									  :error-messages="fieldErrors('form.companywebsite')" 
-									  @blur="$v.form.companywebsite.$touch()">
-									</v-text-field>  
-								</v-flex>
 
-								<v-flex md6 xs12 pa-2>
-									<v-text-field 
-									  color="black" 
-									  label="Factory Address" 
-									  v-model="form.factoryaddress" 
-									  required 
-									  :error-messages="fieldErrors('form.factoryaddress')" 
-									  @blur="$v.form.factoryaddress.$touch()">
-									</v-text-field>  
-								</v-flex>
+									<v-card-text id="inquiryCreate_scrollable_cont">
 
-						
+										<v-container>
+										  
+										
+										<v-layout row wrap>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-text-field 
+												  outline
+												  color="black" 
+												  label="First Name" 
+												  v-model="form.firstname" 
+												  :error-messages="fieldErrors('form.firstname')">
+												  </v-text-field>
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-text-field 
+												  outline
+												  color="black" 
+												  label="Last Name" 
+												  v-model="form.lastname"
+												  :error-messages="fieldErrors('form.lastname')">
+												  </v-text-field>
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-text-field 
+												  outline
+												  color="black" 
+												  label="Designation" 
+												  v-model="form.designation" 
+												  :error-messages="fieldErrors('form.designation')">
+												  </v-text-field>
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-text-field 
+												  outline
+												  color="black" 
+												  label="Company Name" 
+												  v-model="form.companyname" 
+												  :error-messages="fieldErrors('form.companyname')">
+												  </v-text-field>
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-autocomplete 
+												  outline
+												  v-model="form.country" 
+												  :items="countries" 
+												  item-text="name" 
+												  item-value="id" 
+												  :error-messages="fieldErrors('form.country')" 												   
+												  ref="categorySelect" flat hide-no-data hide-details 
+												  label="Search Country ..">
+												  </v-autocomplete>
+												</v-flex>
+
+												<v-flex md4 xs12 pa-2>
+												   <v-text-field 
+													outline
+													color="black" 
+													label="Zip Code" 
+													v-model="form.zipcode"
+													:error-messages="fieldErrors('form.zipcode')">
+													</v-text-field>   
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-text-field 
+												  outline
+												  color="black" 
+												  label="City" 
+												  v-model="form.city" 
+												  :error-messages="fieldErrors('form.city')">
+												  </v-text-field>
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+												  <v-text-field 
+												  outline
+												  color="black" 
+												  label="Street" 
+												  v-model="form.street" 
+												  :error-messages="fieldErrors('form.street')">
+												  </v-text-field>           
+												</v-flex>
+
+
+												<v-flex md4 xs12 pa-2>
+													<v-text-field 
+													outline
+													  color="black" 
+													  label="Phone Number" 
+													  v-model="form.phonenumber" 
+													  :error-messages="fieldErrors('form.phonenumber')">
+													</v-text-field>   
+												</v-flex>
+
+
+												<v-flex md4 xs12 pa-2>
+													<v-text-field 
+													outline
+													  color="black" 
+													  label="Mobile Number" 
+													  v-model="form.mobilenumber" 
+													  :error-messages="fieldErrors('form.mobilenumber')">
+													</v-text-field>  
+												</v-flex>
+
+												<v-flex md4 xs12 pa-2>
+													<v-text-field 
+													outline
+													  color="black" 
+													  label="We Chat Id" 
+													  v-model="form.wechatid"
+													  :error-messages="fieldErrors('form.wechatid')">
+													</v-text-field>  
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+													<v-text-field 
+													outline
+													  color="black" 
+													  label="Company Website" 
+													  v-model="form.companywebsite" 
+													  :error-messages="fieldErrors('form.companywebsite')">
+													</v-text-field>  
+												</v-flex>
+
+												<v-flex md6 xs12 pa-2>
+													<v-text-field 
+													outline
+													  color="black" 
+													  label="Factory Address" 
+													  v-model="form.factoryaddress" 
+													  :error-messages="fieldErrors('form.factoryaddress')">
+													</v-text-field>  
+												</v-flex>
+
+										
+										</v-layout>
+										
+										</v-container>
+								   </v-card-text>
+								   <v-card-actions>
+									<!-- <v-btn color="success">Submit</v-btn> -->
+									<v-btn class="dark-blue white--text ml-3 mb-3" @click="SecondStepDone()">
+										Continue
+									</v-btn>
+									<v-spacer></v-spacer>
+									<v-btn flat class="ml-3 mb-3" @click="e1=e1-1">
+										back
+									</v-btn>
+								   </v-card-actions>
+								</v-card>
+							</v-flex>
+
+
+							<v-flex md4 xs12 class="page-wrap">
+								<v-layout column wrap full-height align-start justify-center pa-3>
+
+										<h1 class="white--text header-title">How to become a BAL supplier?</h1>
+										<p class="white--text mt-4">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe.</p>
+
+										<!-- <v-container fluid>
+										<v-layout row wra justify-center align-center fill-height>
+											<a href="https://buyanylight.com" target="_blank">
+												<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
+											</a>
+										</v-layout>
+										</v-container> -->
+
+								</v-layout>
+							</v-flex>
+
 						</v-layout>
-						
-						</v-container>
-				   </v-card-text>
-				   <v-card-actions>
-				    <v-btn color="success">Submit</v-btn>
-				   </v-card-actions>
-				</v-card>
+						<!-- ///////////////////////////////////// -->
+						<!-- content -->
 
-				<!-- FOR 2ND 3RD 4RTH STEP -->
+					</v-stepper-content>
 
-			</v-layout>
 
-		  	<!-- </v-flex> -->
-		  	</v-container>
-		</div>
 
-		<div class="registration-success" v-show="isComplete">
-		  	<v-container>	   
-			<v-layout align-center justify-center row fill-height>
-			 <v-flex xs8 class="offset-xs2">
-					<v-card class=pa-5>
-						<v-layout row wrap justify-center>
-							<div class="heading">
-								<h1 class="font-weight-bold">THANK YOU!</h1>	
-							</div>
-							<div class="main-content">
-								<i class="fa fa-check"></i>
-								<p class="main-content__body">
-								
-									Thank you for your time, consideration and trust BuyAnyLight! If you have any further questions, please contact us on: info@buyanylight.com
-								</p>
-							</div>
+
+
+
+					<v-stepper-content step="3">
+						<!-- content -->
+						<!-- ///////////////////////////////////// -->
+						<v-layout row wrap justify-center >
+					  
+							<v-flex md8 xs12 class="page-wrap2">
+								<v-card>
+
+									<v-card-text id="inquiryCreate_scrollable_cont">
+										<v-container>										
+										<v-layout row wrap>
+
+
+
+												<v-flex xs12 md4 pa-2>
+
+													 <v-text-field 
+														outline
+														  color="black" 
+														  label="Company established year:" 
+														  v-model="form.companyestablishedyear" 
+														  required 
+														  :error-messages="fieldErrors('form.companyestablishedyear')" 
+														  @blur="$v.form.companyestablishedyear.$touch()">
+													  </v-text-field>
+
+												</v-flex>
+
+												<v-flex xs12 md4 pa-2>
+
+													  <v-text-field 
+														outline
+														  color="black" 
+														  label="Number of employees in total" 
+														  v-model="form.numberofemployees" 
+														  required 
+														  :error-messages="fieldErrors('form.numberofemployees')" 
+														  @blur="$v.form.numberofemployees.$touch()">
+													  </v-text-field>
+
+												</v-flex>  
+
+												<v-flex xs12 md4 pa-2>
+
+													  <v-text-field 
+														outline
+														  color="black" 
+														  label="Number of workers in factory" 
+														  v-model="form.numberofworkersinfactory" 
+														  required 
+														  :error-messages="fieldErrors('form.numberofworkersinfactory')" 
+														  @blur="$v.form.numberofworkersinfactory.$touch()">
+													  </v-text-field>
+
+												</v-flex>
+
+
+												<v-flex xs12 pa-2 mt-2 mb-4>
+													<h2 class="font-weight-medium text--grey">PRODUCT QUESTIONS</h2>
+													<h5 class="font-weight-light mb-2">What kind of LED lights do you offer?</h5>
+													<v-layout row wrap>
+														<v-autocomplete 
+														outline
+														v-model="categories" 
+														:items="categoryItems" 
+														item-text="name" 
+														item-value="id" 
+														ref="categorySelect" 
+														cache-items chips multiple hide-no-data clearable hide-details 
+														label="List your Products ">
+														  <template v-slot:selection="slotData">
+															<v-chip :selected="slotData.selected" close class="chip--select-multi" @input="removeFromCategories(slotData.item)">
+															  {{ slotData.item.name }}
+															</v-chip>
+														  </template>
+														</v-autocomplete>
+													</v-layout>	
+												</v-flex>
+
+
+												<v-flex xs12 pa-2 pt-4>
+													<h2 class="font-weight-medium text--grey">Bank Details:</h2>
+												</v-flex>
+
+												<v-flex xs12 md4 pa-2>
+
+												  <v-text-field 
+														outline
+														  color="black" 
+														  label="Account Name:" 
+														  v-model="form.accountname" 
+														  required 
+														  :error-messages="fieldErrors('form.accountname')" 
+														  @blur="$v.form.accountname.$touch()">
+												   </v-text-field>
+
+												</v-flex> 
+
+
+												<v-flex xs12 md4 pa-2>
+													  
+													  <v-text-field 
+														outline
+														  color="black" 
+														  label="Account Number:" 
+														  v-model="form.accountnumber" 
+														  required 
+														  :error-messages="fieldErrors('form.accountnumber')" 
+														  @blur="$v.form.accountnumber.$touch()">
+													   </v-text-field>
+
+												</v-flex>
+
+												<v-flex xs12 md4 pa-2>
+												  
+												   <v-text-field 
+														outline
+														  color="black" 
+														  label="IBAN:" 
+														  v-model="form.iban" 
+														  required 
+														  :error-messages="fieldErrors('form.iban')" 
+														  @blur="$v.form.iban.$touch()">
+												   </v-text-field>
+
+												</v-flex>
+
+
+												<v-flex xs12 md4 pa-2>
+												  
+													<v-text-field 
+														outline
+														  color="black" 
+														  label="Bank Name:" 
+														  v-model="form.bankname" 
+														  required 
+														  :error-messages="fieldErrors('form.bankname')" 
+														  @blur="$v.form.bankname.$touch()">
+												   </v-text-field>
+
+												</v-flex>
+
+												<v-flex xs12 md4 pa-2>
+
+												  <v-text-field 
+														outline
+														  color="black" 
+														  label="Bank Address:" 
+														  v-model="form.bankaddress" 
+														  required 
+														  :error-messages="fieldErrors('form.bankaddress')" 
+														  @blur="$v.form.bankaddress.$touch()">
+												   </v-text-field>
+
+												</v-flex>
+
+												<v-flex xs12 md4 pa-2>
+												  
+													<v-text-field 
+														outline
+														  color="black" 
+														  label="Swift Code:" 
+														  v-model="form.swiftcode" 
+														  required 
+														  :error-messages="fieldErrors('form.swiftcode')" 
+														  @blur="$v.form.swiftcode.$touch()">
+												   </v-text-field>
+
+												</v-flex>
+
+
+										</v-layout>										
+										</v-container>
+								   </v-card-text>
+								   <v-card-actions>
+									<!-- <v-btn color="success">Submit</v-btn> -->
+									<v-btn 
+									class="dark-blue white--text ml-3 mb-3" 								
+									@click="ThirdStepDone()">
+										Continue
+									</v-btn>
+									<v-spacer></v-spacer>
+									<v-btn flat class="ml-3 mb-3" @click="e1=e1-1">
+										back
+									</v-btn>									
+								   </v-card-actions>
+								</v-card>
+							</v-flex>
+
+
+							<v-flex md4 xs12 class="page-wrap">
+								<v-layout column wrap full-height align-start justify-center pa-3>
+
+										<h1 class="white--text header-title">How to become a BAL supplier?</h1>
+										<p class="white--text mt-4">We are committed to helping you increase your turnover significantly and become as competitive as possible. Sign up now and start receiving inquiries from buyers across the globe.</p>
+
+										<!-- <v-container fluid>
+										<v-layout row wra justify-center align-center fill-height>
+											<a href="https://buyanylight.com" target="_blank">
+												<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
+											</a>
+										</v-layout>
+										</v-container> -->
+
+								</v-layout>
+							</v-flex>
+
 						</v-layout>
-					</v-card>  
-			   </v-flex>
-			</v-layout>
-		  	</v-container>
-		</div>
+						<!-- ///////////////////////////////////// -->
+						<!-- content -->
+					</v-stepper-content>
 
-  	</v-img>
+
+
+
+				</v-stepper-items>
+			</v-stepper>
+
+	</v-layout>
+	</v-container>
+
+
+	<v-dialog v-model="dialog" width="500">
+
+		<v-card class="px-4 py-1">
+
+			<v-card-text>
+				<div class="agree">
+					<h3 class="black--text mb-4"> In order that the form will be transmitted to us, you have to agree to the following terms:</h3>
+					<p style="font-size:0.8em; line-height: normal;"> 
+						<span class="mb-4"> 1.) We hereby verify that all information and attachments on this form are fully true and correct to the best of my knowledge.</span>
+						<span class="mb-4"> 2.) We confirm to provide samples and supply orders from client with no minimum quantity required.</span>
+						<span class="mb-4"> 3.) We confirm, that BuyAnyLight Inspector can visit our company/factory to check on all the information given in this form.</span>
+						<span class="mb-4"> 4.) We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation!</span>
+						<span class="mb-4"> 5.) We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to:</span>
+					</p>
+
+					<p class="mb-1"> 
+						* By clicking the submit button you agree the above conditions.
+					</p>
+					<p class="">
+						* Every lighting manufacturer's registration is subject to approval from BAL
+					</p>				
+				</div>
+			</v-card-text>
+
+			<v-card-actions>
+				<v-spacer></v-spacer>				
+				<v-btn flat @click="dialog=false">
+					cancel
+				</v-btn>
+				<v-btn 
+				class="dark-blue white--text" 
+				flat 
+				:loading="formLoading"
+				@click="acceptTerms()">I accept</v-btn>
+			</v-card-actions>
+		</v-card>
+
+	</v-dialog>
+
+
+	<v-dialog v-model="dialog2" width="500">
+
+		<v-card class="px-4 py-1">
+
+			<v-card-text>
+				<div class="agree">
+					<h2 class="black--text mb-4">VERIFICATION REQUIRED</h2>
+					<p style="font-size:1em;"> 
+						<span class="mb-4">Thank you so much for signing up with Buy Any Light (BAL). You're almost there!</span>
+						<span class="mb-4">Our management is evaluating your application. We will get back to you once we have reviewed all the details.</span>
+						<span class="mb-4">Meanwhile, please verify your e-mail ID by clicking on the link that is sent to your registered e-mail ID.</span>
+					</p>
+				</div>
+			</v-card-text>
+
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn class="dark-blue white--text" flat @click="gotoHomePage()">
+					close
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+
+	</v-dialog>
+
+
 </span>
 </template>
 
@@ -538,21 +845,22 @@ export default {
 
   },
 
-  data() {
 
-	return {
 
-	  type: 'supplier',
-	  backgroundImg: '/static/background/supplier-dashboard.jpg',
-	  form: Object.assign({}, dform),
-	  e1: 0,
+	data() { return {
 
-	  // hide hide show show
-	  isStepOne : true,
-	  isSteptwo : false,
-	  isComplete: false,
+		type: 'supplier',
+		// backgroundImg: '/static/background/supplier-dashboard.jpg',
+		backgroundImg: '/static/background/bg1-blur-compressed.jpg',
+		form: Object.assign({}, dform),
+		e1: 1,
 
-	  formloading: false, 
+		// hide hide show show
+		isStepOne : true,
+		isSteptwo : false,
+		isComplete: false,
+
+		formLoading: false, 
 
 		// Dropzone
 		// dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -568,27 +876,30 @@ export default {
 			dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD ME",
 		},
 
-	   //  checkboxes
-	   isAgreeAllAboveInformation:false,
+		//  checkboxes
+		isAgreeAllAboveInformation:false,
 
 		// dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 		// dddddddddddddddddddddddddddddddddddddddddddddddddddd
 		// Dropzone
 
-	  categories: [],
-	  categoryItems: [],
+		categories: [],
+		categoryItems: [],
 
-	}
+		dialog: false,
+		dialog2: false,
 
-  },
+	}},
+
+
 
   methods: {
 
 	// Validate FORMS
 
-	FirstStep() {
+	FirstStepDone() {
 
-		console.log('firststep');
+		console.log('firststep()');
 
 		this.$v.form.firstname.$touch();
 		this.$v.form.lastname.$touch();  	
@@ -596,18 +907,22 @@ export default {
 		this.$v.form.password.$touch();
 		this.$v.form.confirmpassword.$touch();
 
-		if (!this.$v.form.firstname.$invalid && !this.$v.form.lastname.$invalid && !this.$v.form.email.$invalid && !this.$v.form.password.$invalid && ! this.$v.form.confirmpassword.$invalid) {
+		if (
+			!this.$v.form.firstname.$invalid && 
+			!this.$v.form.lastname.$invalid && 
+			!this.$v.form.email.$invalid && 
+			!this.$v.form.password.$invalid && 
+			!this.$v.form.confirmpassword.$invalid) {
+
 
 			// hide the step one 
-			this.isStepOne = false
-			this.isSteptwo = true
-			console.log(' hide the step one ');
-			this.e1 = 1
+			this.e1 = 2;
 		}
 
 	},
 
-	SecondStep() {
+
+	SecondStepDone() {
 
 		// var fields[] = 
 
@@ -640,28 +955,18 @@ export default {
 			&& !this.$v.form.factoryaddress.$invalid) {
 
 			//  swithching
-			this.e1 = 2
+			this.e1 = 3
 
 		}
+
+
 	},
 
-	ThirdStep() {
+	ThirdStepDone() {
 
 		this.$v.form.companyestablishedyear.$touch();
 		this.$v.form.numberofemployees.$touch();
 		this.$v.form.numberofworkersinfactory.$touch();
-
-		if(!this.$v.form.companyestablishedyear.$invalid 
-			&& !this.$v.form.numberofemployees.$invalid 
-			&& !this.$v.form.numberofworkersinfactory.$invalid) {
-
-			this.e1 = 3
-
-		}
-	},
-
-	FourthStep() {
-
 		this.$v.form.accountname.$touch();
 		this.$v.form.accountnumber.$touch();
 		this.$v.form.iban.$touch();
@@ -669,91 +974,83 @@ export default {
 		this.$v.form.bankaddress.$touch();
 		this.$v.form.swiftcode.$touch();
 
-		if(!this.$v.form.accountname.$invalid 
+		if(!this.$v.form.companyestablishedyear.$invalid 
+			&& !this.$v.form.numberofemployees.$invalid 
+			&& !this.$v.form.numberofworkersinfactory.$invalid
+			&& !this.$v.form.accountname.$invalid 
 			&& !this.$v.form.accountnumber.$invalid 
 			&& !this.$v.form.iban.$invalid
 			&& !this.$v.form.bankname.$invalid 
 			&& !this.$v.form.bankaddress.$invalid 
 			&& !this.$v.form.swiftcode.$invalid) {
 
-				this.save();
+			this.dialog = true;
 		} 
 
-		// validate last then save here
+
+
 	},
 
-	save() {
+	acceptTerms() {
+
+		let data = {
+			'first_name': this.form.firstname,
+			'last_name': this.form.lastname,
+			'email': this.form.email,
+			'password': this.form.password,
+			'confirm_password': this.form.confirmpassword,
+			'website': this.form.companywebsite,
+			'street': this.form.street,
+			'city': this.form.city,
+			'country_id': this.form.country,
+
+			'phone': this.form.phonenumber,
+			'mobile': this.form.mobilenumber,
+			'wechatid': this.form.wechatid,
+
+			'company_name': this.form.companyname,
+			'job_title': this.form.designation,
+
+			'factory_address': this.form.factoryaddress,
+			'company_established_year': this.form.companyestablishedyear,
+			'no_of_employees_factory': this.form.numberofworkersinfactory,
+			'no_of_employees_total': this.form.numberofemployees,
+
+			'bank_account_name': this.form.accountname,
+			'bank_account_no': this.form.accountnumber,
+			'bank_iban': this.form.iban,
+			'bank_name': this.form.bankname,
+			'bank_address': this.form.bankaddress,
+			'bank_swift': this.form.swiftcode,
+			'categories': this.categories,
+			
+			main_interest: (this.main_interest)?this.main_interest:'',
+		};
+
+		// console.log(data);
+
+		this.formLoading = true;
+
+		this.$store.dispatch("auth/supplierRegistration_a", {
+		  data: data
+		})
+		.then(response => {
+		  	this.dialog = false;
+		  	this.dialog2 = true;
+		})
+		.catch(e => {
+		  	console.log(e);
+		  	this.formLoading = false;
+		})
+		.finally(() => {
+		  	this.formLoading = false;
+		});
 
 
-			let data = {
+	},
 
-					'first_name': this.form.firstname,
-					'last_name': this.form.lastname,
-					'email': this.form.email,
-					'password': this.form.password,
-					'confirm_password': this.form.confirmpassword,
-					'website': this.form.companywebsite,
-					'street': this.form.street,
-					'city': this.form.city,
-					'country_id': this.form.country,
-
-					'phone': this.form.phonenumber,
-					'mobile': this.form.mobilenumber,
-					'wechatid': this.form.wechatid,
-
-					'company_name': this.form.companyname,
-					'job_title': this.form.designation,
-
-					'factory_address': this.form.factoryaddress,
-					'company_established_year': this.form.companyestablishedyear,
-					'no_of_employees_factory': this.form.numberofworkersinfactory,
-					'no_of_employees_total': this.form.numberofemployees,
-
-					'bank_account_name': this.form.accountname,
-					'bank_account_no': this.form.accountnumber,
-					'bank_iban': this.form.iban,
-					'bank_name': this.form.bankname,
-					'bank_address': this.form.bankaddress,
-					'bank_swift': this.form.swiftcode,
-					'categories': this.categories
-			};
-
-			// console.log(data);
-
-			this.formloading = true;
-
-			this.$store.dispatch("auth/supplierRegistration_a", {
-			  data: data
-			})
-			.then(response => {
-
-				  if (response.status == 200) {
-
-						this.isSteptwo = false
-						this.isComplete = true
-						this.formloading = false;
-
-				  } else {
-
-						this.$v.$touch();
-
-				  }
-
-			})
-			.catch(e => {
-
-			  console.log(e);
-			  this.formloading = false;
-
-			})
-			.finally(() => {
-
-			  this.formloading = false;
-
-			});
-
-		
-
+	gotoHomePage(){
+		window.location.href = 'https://buyanylight.com'
 	},
 
 	// Validate FORMS
@@ -814,7 +1111,9 @@ export default {
 	countries() {
 	  return config.countries;
 	},
-
+	main_interest(){
+		return this.$route.params.main_interest;
+	},
   }, 
 
   created: function() {
@@ -914,13 +1213,22 @@ export default {
 }
 
 .page-wrap {
-  // top: 50%;
-  // transform: translate(-50%, -50%);
-  // width: 50%;
-  // height: 100%;
-  // padding: 100px;
-  // position: relative;
-  background: rgba(0, 0, 0, 0.6);
+	// top: 50%;
+	// transform: translate(-50%, -50%);
+	// width: 50%;
+	// height: 100%;
+	// padding: 100px;
+	// position: relative;
+	// background: rgba(0, 0, 0, 0.6);
+	.layout {		
+		background: linear-gradient(#7600ff, #aae4ff);
+		border-radius: 0px 10px 10px 0px;	
+	}
+}
+.page-wrap2 {
+	.v-card {
+		border-radius: 10px 0 0 10px !important;		
+	}
 }
 
 .page-content {
@@ -1036,51 +1344,6 @@ export default {
 }
 
 
-</style>
-
-<style scoped lang="scss">
-
-
-@media only screen and (max-width: 959px) {
-
-
-	.registration-first {
-		> .container {
-			padding: 16px;
-			height: 100vh;
-			overflow-y: scroll;
-		}
-	  	// top: 61%;
-	}
-
-	.frmcontainer {
-	}
-
-	.page-content {
-		position: relative;
-		top: 8%;
-		padding: 20px;
-		margin-bottom: 50px;
-		// display: none;
-	}
-
-	.registration-success {
-		position: relative;
-		width: 100%;
-		padding: 10px;
-	}
-
-	.registration-success .heading h1{
-			text-align: center;
-			font-size: 2rem;
-	}
-
-
-	.main-wrapper {
-    	flex-direction: column-reverse;		
-	}
-}
-
 .v-input--selection-controls.v-input >>> .v-label { 
 
 		font-weight: 400;
@@ -1113,4 +1376,167 @@ export default {
   width: 180px;
 
 }
+
+
+#register-container {
+	// background-image: url("static/background/bg1-blur-compressed.jpg");
+	background-image: url("/static/background/bg1-blur-compressed.jpg");
+	background-size: cover;
+	background-position: center;
+
+	// .theme--light.v-stepper {
+	// 	background-color: transparent;
+	// 	box-shadow: none;
+	// 	/deep/ .v-stepper__header {
+	// 		background-color: #fff;
+	// 	}
+	// }
+}
+
+
+.theme--light.v-text-field--outline:not(.v-input--is-focused) /deep/ .v-input__slot:hover,
+.theme--light.v-text-field--outline /deep/ .v-input__slot {
+	border: 1px solid rgba(0,0,0,0.54);	
+}
+
+
+.v-text-field {
+	/deep/ .v-icon {
+		font-size: 20px;
+	}
+}
+
+
+
+.register-stepper.v-stepper /deep/  {
+
+	background-color: transparent;
+	box-shadow: none;
+	box-shadow: none;
+
+	.v-stepper__header {
+		height: 50px;
+		// background-color: #fff;
+		background-color: transparent;
+		box-shadow: none;
+		width: 300px;
+		margin: auto;		
+		.v-stepper__step {
+			padding: 5px 24px;
+			.v-stepper__step__step {
+				background-color: #fff !important;
+				color: #000;
+				font-weight: bold;
+			}
+		}
+		.v-stepper__step.v-stepper__step--editable:hover {
+			background-color: transparent;
+		} 
+
+		.v-stepper__step.v-stepper__step--inactive{
+			.v-stepper__step__step {
+				background-color: #fff !important;
+				color: #000;
+				font-weight: bold;
+			}
+		}
+		.v-stepper__step.v-stepper__step--active{
+			.v-stepper__step__step {
+				background-color: #fff !important;
+				color: #000;
+				font-weight: bold;
+				font-size: 1.3em;
+				height: 35px;			    
+				min-width: 35px;
+				width: 35px;
+				border: 1px solid #fff !important;
+			}
+		}
+
+		.v-divider {
+			border: 2px solid #fff;
+			margin: 0 -40px;
+		}
+	}
+
+	.v-stepper__content {
+		max-width: 1300px;
+	
+	}	
+}
+
+
+.dark-blue {
+	background-color: rgb(118, 0, 255) !important;
+}
+
+
+
+
+
+
+@media only screen and (max-width: 959px) {
+
+
+	.registration-first {
+		> .container {
+			padding: 16px;
+			height: 100vh;
+			overflow-y: scroll;
+		}
+		// top: 61%;
+	}
+
+	.frmcontainer {
+	}
+
+	.page-content {
+		position: relative;
+		top: 8%;
+		padding: 20px;
+		margin-bottom: 50px;
+		// display: none;
+	}
+
+	.registration-success {
+		position: relative;
+		width: 100%;
+		padding: 10px;
+	}
+
+	.registration-success .heading h1{
+			text-align: center;
+			font-size: 2rem;
+	}
+
+
+	.main-wrapper {
+		flex-direction: column-reverse;		
+	}
+
+
+
+	.page-wrap {
+	    margin-top: 20px;
+	    margin-bottom: 20px;			
+		.layout {		
+			border-radius: 10px;	
+		}
+	}
+	.page-wrap2 {
+		.v-card {
+			border-radius: 10px !important;		
+		}
+	}
+
+
+	.register-stepper.v-stepper /deep/  {
+		.v-stepper__content {
+			padding-left: 5px;
+			padding-right: 0px;			
+		}
+	}
+}
+
+
 </style>

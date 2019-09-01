@@ -1,351 +1,222 @@
 <template>
+<span>
 
-  <v-img :src="backgroundImg" class="page-vimg with-header" style="background: rgba(0,0,0,0.4);">
+	<v-container 
+	fluid full-height align-center justify-center 
+	id="register-container" 
+	style="overflow-y: auto; display: flex;">
+	<v-layout row wrap full-height justify-center style="max-height: 720px; max-width: 1200px;">
 
-	<div class="registration_container" id="">
 
-				<div class="registration-first" v-show="isStepOne">
-				  <v-container>
-					<v-flex lg12 xs12>
-					  <v-layout row wrap>
-						<v-flex lg4 xs12 offset-lg2>
-							<!-- FOR 1ST STEP -->
-							<div>
-							  <v-card class="pa-5">
+			<v-flex md4 xs12 class="page-wrap2">
+				<v-layout row wrap full-height justify-center>
+
+				<!-- FOR 1ST STEP -->
+				  <v-card class="pa-5">
+					<!-- <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4> -->
+					<v-layout row wrap full-height>
+
+						<v-flex xs12 pa-0 mb-4>
+							<v-layout row wrap align-center justify-center>
+								<v-icon class="mr-3 black--text">fas fa-user-plus</v-icon>
 								<div class="headline font-weight-medium text-xs-center">SIGN UP</div>
-								<!-- <h4 color="grey--text" class="mt-2 text-xsc font-weight-light">Sign-up to find the lights that you are looking for.</h4> -->
-								<v-layout row wrap>
-								  <v-form @submit.prevent="$v.$invalid ? null : '' " ref="form" class="mt-3">
-									<v-layout wrap row>
-
-
-
-									  <!-- <v-flex xs12 pa-0><h1><pre>{{ $v.form }}</pre></h1></v-flex> -->
-
-									  <v-flex xs12 pa-0>
-
-										<v-text-field 
-										color="black" 
-										label="First Name" 
-										v-model="form.first_name" 
-										required 
-										:error-messages="fieldErrors('form.first_name')" >
-										</v-text-field>
-
-										<v-text-field 
-										color="black" 
-										label="Last Name" 
-										v-model="form.last_name" 
-										required 
-										validate-on-blur
-										:error-messages="fieldErrors('form.last_name')" >
-										</v-text-field>
-
-										<v-text-field 
-										color="black" 
-										label="Email Address" 
-										v-model="form.email" 
-										placeholder=" "
-										required
-										:error-messages="fieldErrors('form.email')">
-										</v-text-field>
-
-
-
-
-										<v-text-field 
-										color="black" 
-										label="Password" 
-										v-model="form.password" 
-										placeholder=" "
-										required type="password" 
-										:error-messages="fieldErrors('form.password')" >
-										</v-text-field>
-
-										<v-text-field 
-										color="black" 
-										label="Confirm Password" 
-										v-model="form.confirmpassword" 
-										required type="password" 
-										:error-messages="fieldErrors('form.confirmpassword')" >
-										</v-text-field>
-
-									  </v-flex>
-
-									  <v-flex xs12 offset-xs4>
-										<v-layout row wrap text-xs-center>
-										  <!-- Login form submit -->
-										  <v-flex xs6 class="white--text no-mrpd mt-3">
-											<v-btn   color="black" type="submit" class="white--text" :loading="formloading" block @click="save()"> <span class="white--text font-weight-light ls-1" style="">SIGN UP</span></v-btn>
-										  </v-flex>
-										</v-layout>
-									  </v-flex>
-									  <v-flex xs12 mt-3>
-										<p class="black--text text-xs-center font-weight-bold">
-											<strong>
-											Existing User ? Click 
-											<router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link> 
-											to login.</strong>
-										</p>
-									  </v-flex>
-									</v-layout>
-								  </v-form>
-								</v-layout>
-							  </v-card>
-							</div>
-							<!-- FOR 1ST STEP -->
-						</v-flex>
-						 <v-flex lg4 xs12  class="page-wrap">
-							<v-layout row wrap fill-height>
-							  <div >
-								<!-- heading message -->
-								  <div class="page-content">
-									<h1 class="white--text header-title">Ready to get the best price the market can offer? </h1>
-									<h4 class="white--text font-weight-light sub-header-title mt-4">
-								  Please take a few moments to register and find out what we can do for your next LED lighting project! Rest assured, we’ll be with you every step of the way.</h4>
-								  <!-- heading message -->
-
-									<!-- <div class=" videocontent mt-5">
-										<div id="player-wrapper">
-										 <iframe width="560" height="315"  src="https://www.youtube.com/embed/aaJQLTaSgLk?autoplay=0&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&playsinline=1&widget_referrer=https%3A%2F%2Fplyr.io%2F%23youtube&cc_load_policy=0&cc_lang_pref=auto&enablejsapi=1&origin=https%3A%2F%2Fplyr.io&widgetid=1?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1" allowfullscreen allowtransparency allow="autoplay"></iframe>
-										</div>
-									</div> -->
-									<v-container fluid>
-									<v-layout row wra justify-center align-center fill-height>
-										<a href="https://buyanylight.com" target="_blank">
-											<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
-										</a>
-									</v-layout>
-									</v-container>
-
-
-									</div>
-
-
-							  </div>
 							</v-layout>
 						</v-flex>
-					  </v-layout>
-					</v-flex>
-				  </v-container>
+
+						<v-flex xs12 pa-0>
+							<v-text-field 
+							outline
+							color="black" 
+							label="First Name" 
+							v-model="form.first_name" 
+							placeholder=" "
+							prepend-inner-icon="fas fa-user"
+							autocomplete="off" 
+							@blur="$v.form.first_name.$touch()"
+							:error-messages="fieldErrors('form.first_name')">
+							</v-text-field>
+
+							<v-text-field 
+							outline
+							color="black" 
+							label="Last Name" 
+							v-model="form.last_name"
+							placeholder=" "
+							prepend-inner-icon="fas fa-user"
+							autocomplete="off" 
+							@blur="$v.form.last_name.$touch()"
+							:error-messages="fieldErrors('form.last_name')">
+							</v-text-field>
+
+							<v-text-field 
+							outline
+							color="black"  
+							label="Email Address" 
+							v-model="form.email" 
+							placeholder=" "
+							prepend-inner-icon="fas fa-at"
+							autocomplete="disabled" 
+							@blur="$v.form.email.$touch()"
+							:error-messages="fieldErrors('form.email')" >
+							</v-text-field>
+
+							<v-text-field 
+							outline
+							color="black" 
+							label="Password" 
+							v-model="form.password" 
+							placeholder=" "
+							type="password" 
+							prepend-inner-icon="fas fa-key"
+							autocomplete="off" 
+							@blur="$v.form.password.$touch()"
+							:error-messages="fieldErrors('form.password')" >
+							</v-text-field>
+
+							<v-text-field 
+							outline
+							color="black" 
+							label="Confirm Password" 
+							v-model="form.confirmpassword" 
+							type="password" 
+							prepend-inner-icon="fas fa-key"
+							placeholder=" "
+							autocomplete="off" 
+							@blur="$v.form.confirmpassword.$touch()"
+							:error-messages="fieldErrors('form.confirmpassword')" >
+							</v-text-field>
+						</v-flex>
+
+						<v-flex xs12>
+							<v-layout row wrap text-xs-center justify-center align-center>
+							  	<!-- Login form submit -->
+							  	<v-flex xs6 class="white--text no-mrpd">
+
+									<v-btn 
+									style="background-color: #7600ff !important;"
+									color="black" 
+									block 
+									:loading="formLoading"
+									@click="save()">
+										<span class="dark-blue white--text font-weight-light ls-1">SIGN UP</span>
+									</v-btn>
+							  	</v-flex>
+							</v-layout>
+						</v-flex>
+
+
+						<v-flex xs12 mt-2>
+							<v-layout row wrap text-xs-center justify-center align-center>
+								<h3>or</h3>
+							</v-layout>
+						</v-flex>
+
+						<v-flex xs12>
+						<!-- google login -->
+						<!-- /////////////////////////////////////////////////// -->
+						<v-layout row wrap text-xs-center justify-center align-center>
+							<v-btn 
+							@click="handleClickSignIn()"
+							:loading="googleLoading"
+							class="google-login px-2 py-1">
+								<!-- <img src="/static/google/buttons/btn_google_signin_light_normal_web.png"> -->
+								<img 
+								style="" 
+								src="/static/google/goggle-logo-transparent.png">
+								<span class="text-transform-none">Sign in with Google</span>
+							</v-btn>
+						</v-layout>
+						<!-- /////////////////////////////////////////////////// -->
+						<!-- google login -->
+						</v-flex>
+
+
+						<v-flex xs12 mt-3>
+							<p class="black--text text-xs-center">
+								Already have an account?
+								Sign in <strong><router-link :to="{ name: 'Login' }" style="border-bottom: 1px solid #000;">here</router-link></strong>.
+							</p>
+						</v-flex>
+
+					</v-layout>
+				  </v-card>
+				<!-- FOR 1ST STEP -->
+
+				</v-layout>
+			</v-flex>
+
+
+			<v-flex md4 xs12 class="page-wrap">
+				<v-layout column wrap full-height align-start justify-center pa-3>
+
+						<h1 class="white--text header-title">Ready to get the best price the market can offer?</h1>
+						<p class="white--text mt-4">Please take a few moments to register and find out what we can do for your next LED lighting project! Rest assured, we’ll be with you every step of the way.</p>
+
+						<!-- <v-container fluid>
+						<v-layout row wra justify-center align-center fill-height>
+							<a href="https://buyanylight.com" target="_blank">
+								<img class="logo" src="/static/logos/logo-white.png" alt="BuyAnyLight.com">
+							</a>
+						</v-layout>
+						</v-container> -->
+
+				</v-layout>
+			</v-flex>
+
+
+
+	</v-layout>
+	</v-container>
+
+
+	<v-dialog v-model="dialog" persistent width="500">
+
+		<v-card class="px-4 py-1">
+
+			<v-card-text>
+				<div class="agree">
+					<h2 class="black--text mb-4">VERIFICATION REQUIRED</h2>
+					<p style="font-size:1em;"> 
+						<span class="mb-4">Thank you so much for signing up with Buy Any Light (BAL). You're almost there!</span>
+						<span class="mb-4">Our management is evaluating your application. We will get back to you once we have reviewed all the details.</span>
+						<span class="mb-4">Meanwhile, please verify your e-mail ID by clicking on the link that is sent to your registered e-mail ID.</span>
+					</p>
 				</div>
+			</v-card-text>
 
-				<div class="registration-success" v-show="isComplete">
-					 <v-flex md6 xs12 class="offset-md3">
-							<v-card class=pa-5>
-								<v-layout row wrap justify-center>
-									<div class="heading">
-										<h1 class="font-weight-bold">THANK YOU <span style="text-transform: uppercase;" v-html="form.first_name"></span>!</h1>	
-									</div>
-									<div class="main-content mt-3">
-										<!-- <i class="fa fa-check"></i> -->
-										<!-- <p class="main-content__body">
-											THANK YOU FOR YOUR TIME, CONSIDERATION AND TRUST BUYANYLIGHT! IF YOU HAVE ANY FURTHER QUESTIONS, PLEASE CONTACT US ON: INFO@BUYANYLIGHT.COM
-										</p> -->
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn class="dark-blue white--text" flat @click="gotoHomePage()">
+					close
+				</v-btn>
+			</v-card-actions>
+		</v-card>
 
-										<p class="main-content__body">
-										   Registration confirmation: Thank you for interest in BuyAnyLight. If you have any further questions,please contact us at info@buyanylight.com.
-										</p>
+	</v-dialog>
 
-									<!-- 	<h3 class="font-weight-medium">What happens next?</h3>
 
-										<p class="main-content__body mt-3">
-										  A verification link has been sent to your email account. please click on the link provided and continue using buyanylight.com. <a href="">if not received please click here!</a>
-										</p>
-										
-										<p class="main-content__body mt-3">
-										 for the mean time, you can browse our packages below.
-										</p> -->
 
-									</div>
+	<v-snackbar
+	v-model="snackbar"
+	absolute
+	top
+	right
+	color="act">
+		<span>Sign in successful!</span>
+		<v-icon dark>check_circle</v-icon>
+	</v-snackbar>
 
-									<div>
-										
+	<v-snackbar
+	v-model="snackbar_error"
+	absolute
+	top
+	right
+	color="red">
+		<span>Sign in unsuccessful!</span>
+		<v-icon dark>error</v-icon>
+	</v-snackbar>
 
-										<v-flex xs12>
-
-												<div class="pricing-container" style="display: none;">
-
-														<v-flex xs4>
-														  
-															<!-- <div class="col-md-4"> -->
-															<div class="pricing-item-container ">
-
-																<div class="pricing-item grey">
-
-																	<div class="pricing-item-title gold">
-
-																		<h1>Gold</h1>
-																		<h2>G+P+10</h2>
-
-																	</div>
-
-																	<div class="pricing-body">
-
-																		<div class="pricing-item-list">
-
-																			<ul>
-																				<li> <i class="fas fa-check"> </i>
-																					<span style="font-size: 20px;text-transform: uppercase;">Free Quotation</span>
-																				</li>
-
-																																									<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						Project Lighting Consultation                                                                                    </li>
-																																										<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						2 Times of Revision Request                                                                                    </li>
-																																										<li> <i class=" fas fa-check"> </i> &nbsp;&nbsp;
-																						Designated Lighting Designer                                                                                    </li>
-																																										<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						Request a Sample                                                                                    </li>
-																																										<li> <i class=" fas fa-check"> </i> &nbsp;&nbsp;
-																						Make your own Quote                                                                                    </li>
-																																								</ul>
-																		</div>
-
-																		<div class="pricing-item-price">
-																			<h1 class="text-light-gold">$ 1599 <span> / PROJECT SUBSCRIPTION FEE </span> </h1>
-																		</div>
-
-																		<!-- <p> it will be charged at the time of purchase </p> -->
-
-																	</div>
-
-																 <!--    <div class="text-xs-center button-holder">
-																		<a class="button gold" href="#">Learn More</a>
-																		<a class="button-outline text-light-gold border-light-gold" onclick="scrollToSection('#corporate')">Learn More</a>
-																	</div>
-																				  -->                                                
-
-																																	</div>
-
-															</div>
-															<!-- </div> -->
-														</v-flex>
-														
-
-														<v-flex xs4>
-															  
-															
-															<!-- <div class="col-md-4"> -->
-															<div  class="pricing-item-container ">
-																<div class="pricing-item grey">
-
-																	<div class="pricing-item-title diamond">
-
-																		<h1>Diamond</h1>
-																		<h2>G+P+20</h2>
-
-																	</div>
-
-																	<div class="pricing-body">
-
-																		<div class="pricing-item-list">
-
-																			<ul>
-																				<li> <i class="fas fa-check"> </i>
-																					<span style="font-size: 20px;text-transform: uppercase;">Free Quotation</span>
-																				</li>
-
-																																									<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						Project Lighting Consultation                                                                                    </li>
-																																										<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						3 Times of Revision Request                                                                                    </li>
-																																										<li> <i class=" fas fa-check"> </i> &nbsp;&nbsp;
-																						Designated Lighting Designer                                                                                    </li>
-																																										<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						Request a Sample                                                                                    </li>
-																																										<li> <i class=" fas fa-check"> </i> &nbsp;&nbsp;
-																						Make your own Quote                                                                                    </li>
-																																								</ul>
-																		</div>
-
-																		<div class="pricing-item-price">
-																			<h1 class="text-diamond">$ 1999 <span> / PROJECT SUBSCRIPTION FEE </span> </h1>
-																		</div>
-
-																		<!-- <p> it will be charged at the time of purchase </p> -->
-
-																	</div>
-
-																  <!--   <div class="text-xs-center button-holder">
-																	  <a class="button diamond" href="#">Learn More</a>
-																	  <a class="button-outline text-diamond border-diamond" onclick="scrollToSection('#corporate')">Learn More</a>
-																  </div> -->
-																</div>
-															</div>
-															<!-- </div> -->
-														</v-flex>    
-														
-
-														<v-flex xs4>
-															  
-															
-															<!-- <div class="col-md-4"> -->
-															<div  class="pricing-item-container ">
-
-																<div class="pricing-item grey">
-
-																	<div class="pricing-item-title platinum">
-
-																		<h1>Platinum</h1>
-																		<h2>G+P+20</h2>
-
-																	</div>
-
-																	<div class="pricing-body">
-
-																		<div class="pricing-item-list">
-
-																			<ul>
-																				<li> <i class="fas fa-check"> </i>
-																					<span style="font-size: 20px;text-transform: uppercase;">Free Quotation</span>
-																				</li>
-
-																																									<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						Project Lighting Consultation                                                                                    </li>
-																																										<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						4 Times of Revision Request                                                                                    </li>
-																																										<li> <i class=" fas fa-check"> </i> &nbsp;&nbsp;
-																						Designated Lighting Designer                                                                                    </li>
-																																										<li> <i class="fas fa-check"> </i> &nbsp;&nbsp;
-																						Request a Sample                                                                                    </li>
-																																										<li> <i class=" fas fa-check"> </i> &nbsp;&nbsp;
-																						Make your own Quote                                                                                    </li>
-																																								</ul>
-																		</div>
-
-																		<div class="pricing-item-price">
-																			<h1 class="text-platinum">$ 2499 <span> / PROJECT SUBSCRIPTION FEE </span> </h1>
-																		</div>
-
-																		<!-- <p> it will be charged at the time of purchase </p> -->
-
-																	</div>
-
-																 <!--    <div class="text-xs-center button-holder">
-																	 <a class="button platinum" href="#">Learn More</a>
-																	 <a class="button-outline text-platinum border-platinum" onclick="scrollToSection('#corporate')">Learn More</a>
-																 </div>
-																  -->
-																</div>
-															</div>
-															<!-- </div> -->
-															</v-flex>    
-											</div>
-										  
-										</v-flex>
-
-										
-									</div>
-
-								</v-layout>
-							</v-card>  
-					   </v-flex>
-				</div>
-	</div>
-
-  </v-img>
-
+</span>
 </template>
 
 <script>
@@ -386,12 +257,10 @@ validations: {
 			required,
 			sameAsPassword: sameAs('password')
 		},
-		
 	},
 },
 
 validationMessages: {
-
 	form: {
 
 	   first_name: { required: 'Please enter your first name.'},
@@ -399,10 +268,7 @@ validationMessages: {
 	   email: { required: 'Please enter email', email: 'Email must be valid', isUnq: 'Email is already registered.' },
 	   password: { required: 'Please enter password', minLength: 'Password must be of 6 characters' },	
 	   confirmpassword: { required: 'Please confirm your Password.', sameAsPassword: 'Password does not match' },
-		
-
-	}
-
+	},
 },
 
 
@@ -411,9 +277,8 @@ components: {
 
 },
 
-data () {
+data () { return {
 
-  return {
 	type: 'buyer',
 	backgroundImg: '/static/background/buyer-background2.jpg',
 	logo: '/static/logos/logo-white.png',
@@ -432,13 +297,23 @@ data () {
 		first_name: null,
 		last_name: null,
 	},
-	formloading: false,
-	isStepOne: true,
+	formLoading: false,
 	isComplete: false,
 
-  }
+	dialog: false,
 
-},
+	snackbar: false,
+	snackbar_error: false,
+
+	// google login
+	/////////////////////////////////////////////////////
+	isInit: false, 
+	isSignIn: false,
+	googleLoading: false,
+	googleUser: null,
+	/////////////////////////////////////////////////////
+	// google login	
+}},
 
 
 computed:{
@@ -457,34 +332,32 @@ methods: {
 
 		if (!this.$v.$invalid) {
 
-				this.formloading = true
+				this.formLoading = true;
 				let data = {
-					'first_name': this.form.first_name,
-					'last_name': this.form.last_name,
-					'email': this.form.email,
-					'password': this.form.password,
-					'confirm_password': this.form.confirmpassword,
+					first_name: this.form.first_name,
+					last_name: this.form.last_name,
+					email: this.form.email,
+					password: this.form.password,
+					confirm_password: this.form.confirmpassword,
+					main_interest: (this.main_interest)?this.main_interest:'',					
 				};
 
 				this.$store.dispatch('auth/buyerRegistration_a', {
 					data: data,
 				})
 				.then((response) => {
-					// this.formloading = false
-					// console.log(response);
+					// this.formLoading = false
+					console.log('save() response',response);
 					if (response.status == 200) {
-						this.isStepOne = false
-						this.isComplete = true
-						this.formloading = false
+						this.formLoading = false;
+						this.dialog = true;
 					} else {
-						this.$v.$touch()
+						this.$v.$touch();
 					}
 				})
-				.catch((e) => {			        
-					this.formloading = false
-				})
-				.finally(() => {
-					 this.formloading = false
+				.catch((e) => {
+					console.log('error',e);				
+					this.formLoading = false;
 				})
 
 
@@ -492,9 +365,128 @@ methods: {
 
 	},
 
+
+	gotoHomePage(){
+		window.location.href = 'https://buyanylight.com'
+	},
+
+
+
+	// google login
+	////////////////////////////////////////////////////////////////////////
+	handleClickSignIn() {
+		this.form.email = null;
+		this.form.password = null;
+		this.form.confirmpassword = null;
+		this.form.first_name = null;
+		this.form.last_name = null;
+		this.$v.form.$reset();
+		console.log('handleClickSignIn')
+		this.googleLoading = true;
+		this.$gAuth.signIn()
+		.then(user => {
+			// On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
+			// console.log('GoogleUser', GoogleUser)
+			this.googleUser = user;
+			console.log('google user', user)
+			this.isSignIn = this.$gAuth.isAuthorized
+
+			this.loginViaOAuth();
+
+		})
+		.catch(error => {
+			// On fail do something
+			console.log('handleClickSignIn error',error)
+			this.googleLoading = false;
+		})
+	},
+	handleClickSignOut() {
+		this.$gAuth.signOut()
+		.then(() => {
+			// On success do something
+			this.isSignIn = this.$gAuth.isAuthorized
+		})
+		.catch(error => {
+			// On fail do something
+		})
+	},
+
+	loginViaOAuth() {
+
+
+		var user = {
+			first_name: this.googleUser.w3.ofa,
+			last_name: this.googleUser.w3.wea,
+			email: this.googleUser.w3.U3,
+			profile_image: this.googleUser.w3.Paa,
+			main_interest: (this.main_interest)?this.main_interest:'',
+			id_token: this.googleUser.Zi.Paa,
+			google: this.googleUser,
+		};
+
+		this.$store.dispatch('auth/retrieveTokenOAuth_a', {
+			user: user,
+			loginType: 'google',
+		}).then((response) => {
+			this.snackbar = true
+			this.snackbar_error = false
+
+			const vueThis = this;
+			setTimeout(function() {
+				vueThis.googleLoading = false;
+				// vueThis.$store.dispatch('auth/loginSuccess_a');
+
+					
+				if(vueThis.isInMobile())
+            	vueThis.$router.push({name:'Logout'});
+				else
+				vueThis.$store.dispatch('auth/loginSuccess_a');
+
+
+			}, 1500);
+
+		}).catch((e) => {
+			this.snackbar = false
+			this.snackbar_error = true
+			this.googleLoading = false;
+			console.log('Error: ' + e);
+		}).finally(() => {
+			// console.log('finally');
+			this.googleLoading = false;
+		});
+
+	},		
+	////////////////////////////////////////////////////////////////////////
+	// google login	
+},
+
+computed: {
+	main_interest(){
+		return this.$route.params.main_interest;
+	},
 },
 
 
+mounted(){
+
+	// google login
+	////////////////////////////////////////////////////////////////////////		
+	let that = this;
+	let checkGauthLoad = setInterval(function() {
+
+		that.isInit = (that.$gAuth) ? that.$gAuth.isInit : false;
+		that.isSignIn = (that.$gAuth) ? that.$gAuth.isAuthorized : false
+
+		console.log('that.$gAuth', that.$gAuth);
+		console.log('that.isInit', that.isInit);
+
+		if (that.isInit)
+			clearInterval(checkGauthLoad)
+
+	}, 1000);
+	////////////////////////////////////////////////////////////////////////		
+	// google login	
+},
 
 }
 </script>
@@ -502,6 +494,7 @@ methods: {
 
 
 <style scoped lang="scss">
+
 
 .registration_container {
 	overflow-y: auto;
@@ -518,29 +511,20 @@ methods: {
 
 }
 
-.registration-stepper {
-
-  // position: absolute;
-  // // top: 40%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
-  // width: 75%;
-  // margin-top: 25%;
-
-}
 
 .registration-success {
 
-  position: relative;
-  // top: 10%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
-	  padding-bottom: 80px;
 
   .heading {
 
 	h1 {
 
-		font-size: 3rem;
+		font-size: 6rem;
 		font-weight: bolder;
 		color: #555857;
 
@@ -549,23 +533,22 @@ methods: {
   }
   .main-content {
 
-	// text-align: center;
+	text-align: center;
 	
 	i {
 			color: #24b663;
-			font-size: 2rem;
+			font-size: 10rem;
 	}
 
 	p {
 
 		font-weight: 500;
-		font-size: 1rem;
+		font-size: 1.2rem;
 		color: #555857;
 		letter-spacing: 1px;
-		font-weight: 100;
+		text-transform: uppercase;
 
 	}
-
 
 
   }
@@ -574,33 +557,44 @@ methods: {
 
 
 .logo {
-  margin: 50px 29px -30px;
-  width: 180px;
+  margin: 22px 29px 15px;
+  width: 81px;
 
 }
 
+
 .page-vimg {
-	// height: 100vh;
-	// overflow-y: scroll !important;
+  background-image:
+	linear-gradient(to right bottom,
+	rgba(0, 0, 0, 0.7),
+	rgba(0, 0, 0, 0.7));
+	// width: 40px;
 }
 
 .page-wrap {
-  // top: 50%;
-  // transform: translate(-50%, -50%);
-  // width: 50%;
-  // height: 100%;
-  // padding: 100px;
-  // position: relative;
-  background: rgba(0, 0, 0, 0.6);
-
+	// top: 50%;
+	// transform: translate(-50%, -50%);
+	// width: 50%;
+	// height: 100%;
+	// padding: 100px;
+	// position: relative;
+	// background: rgba(0, 0, 0, 0.6);
+	.layout {		
+		background: linear-gradient(#7600ff, #aae4ff);
+		border-radius: 0px 10px 10px 0px;	
+	}
+}
+.page-wrap2 {
+	.v-card {
+		border-radius: 10px 0 0 10px !important;		
+	}
 }
 
 .page-content {
   position: relative;
-  // top: 8%;
+  // top: 30%;
   padding: 20px;
   // padding: 100px;
-    height: 100%;
 
 }
 
@@ -631,6 +625,27 @@ methods: {
   color: #314b5f;
 }
 
+
+.agree {
+	
+	margin-top: 20px;
+
+	p {
+
+		font-weight: 400;
+		line-height: 23px;
+		min-height: 16px;
+		-webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+		transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+		font-size: 12px;
+		color: grey;
+	
+		span {
+				display: block;
+		}
+
+	}
+}
 
 
 .videocontent { 
@@ -675,7 +690,7 @@ methods: {
    box-shadow: 1px 11px 20px 4px rgba(0,0,0,0.28);
    /*float: left;*/
    /*margin: 50px;*/
- 
+
 }
 
 .video-area h6 {
@@ -690,10 +705,130 @@ methods: {
 
 
 
+.v-input--selection-controls.v-input >>> .v-label { 
 
-</style>
+		font-weight: 400;
+	line-height: 23px;
+	min-height: 16px;
+	-webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+	transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+	font-size: 13px;
 
-<style scoped lang="scss">
+}
+
+.v-input--selection-controls {
+
+	margin-top: 0px;
+	padding-top: 0px;
+
+}
+
+ a {
+
+	cursor: pointer;
+	text-decoration: none;
+}
+
+
+
+
+.logo {
+  margin: 50px 29px -30px;
+  width: 180px;
+
+}
+
+
+#register-container {
+	// background-image: url("static/background/bg1-blur-compressed.jpg");
+	background-image: url("/static/background/bg1-blur-compressed.jpg");
+	background-size: cover;
+	background-position: center;
+
+	// .theme--light.v-stepper {
+	// 	background-color: transparent;
+	// 	box-shadow: none;
+	// 	/deep/ .v-stepper__header {
+	// 		background-color: #fff;
+	// 	}
+	// }
+}
+
+
+.theme--light.v-text-field--outline:not(.v-input--is-focused) /deep/ .v-input__slot:hover,
+.theme--light.v-text-field--outline /deep/ .v-input__slot {
+	border: 1px solid rgba(0,0,0,0.54);	
+}
+
+
+.v-text-field {
+	/deep/ .v-icon {
+		font-size: 20px;
+	}
+}
+
+
+
+.register-stepper.v-stepper /deep/  {
+
+	background-color: transparent;
+	box-shadow: none;
+	box-shadow: none;
+	.v-stepper__header {
+		height: 50px;
+		// background-color: #fff;
+		background-color: transparent;
+		box-shadow: none;
+		.v-stepper__step {
+			padding: 5px 24px;
+			.v-stepper__step__step {
+				background-color: #fff !important;
+				color: #000;
+				font-weight: bold;
+			}
+		}
+		.v-stepper__step.v-stepper__step--editable:hover {
+			background-color: transparent;
+		} 
+
+		.v-stepper__step.v-stepper__step--inactive{
+			.v-stepper__step__step {
+				background-color: #fff !important;
+				color: #000;
+				font-weight: bold;
+			}
+		}
+		.v-stepper__step.v-stepper__step--active{
+			.v-stepper__step__step {
+				background-color: #fff !important;
+				color: #000;
+				font-weight: bold;
+				font-size: 1.3em;
+				height: 35px;			    
+				min-width: 35px;
+				width: 35px;
+				border: 1px solid #fff !important;
+			}
+		}
+
+		.v-divider {
+			border: 2px solid #fff;
+			margin: 0 -40px;
+		}
+	}
+
+	.v-stepper__content {
+		max-width: 1300px;
+	
+	}	
+}
+
+
+.dark-blue {
+	background-color: rgb(118, 0, 255) !important;
+}
+
+
 
 @media only screen and (max-width: 959px) {
 
@@ -704,16 +839,18 @@ methods: {
 			height: 100vh;
 			overflow-y: scroll;
 		}
+		// top: 61%;
+	}
 
-	  // top: 64%;
-
+	.frmcontainer {
 	}
 
 	.page-content {
 		position: relative;
 		top: 8%;
 		padding: 20px;
-		margin-bottom: 164px;
+		margin-bottom: 50px;
+		// display: none;
 	}
 
 	.registration-success {
@@ -727,370 +864,44 @@ methods: {
 			font-size: 2rem;
 	}
 
-}
 
+	.main-wrapper {
+		flex-direction: column-reverse;		
+	}
 
-.v-input--selection-controls.v-input >>> .v-label { 
-
-	font-weight: 400;
-	line-height: 23px;
-	min-height: 16px;
-	-webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-	transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-	font-size: 13px;
-
-}
-
-.v-input--selection-controls {
-
-   margin-top: 0px;
-   padding-top: 0px;
-
-}
-
- a {
-	cursor: pointer;
-	text-decoration: none;
-
-}
-
-ul {
-
-		list-style-type: none;
-		padding-left: 0px;
-
+	.page-wrap {
+	    margin-top: 20px;
+	    margin-bottom: 20px;			
+		.layout {		
+			border-radius: 10px;	
+		}
+	}
+	.page-wrap2 {
+		.v-card {
+			border-radius: 10px !important;		
+		}
 	}
 
 
-
-
-
-
-/* PRICING */
-
-.pricing-area  {
-
-	/*background-image: url(../img/section_images/pricing.PNG);*/
-	background-position: bottom;
-	background-size: cover;
-	width: 100%;
-	background-color: transparent;
-/*     padding-top: 50px;
-	padding-bottom: 50px;*/
 }
 
+.google-login {
+	height: auto;
+    padding: 0;
+    box-shadow: none !important;
+    background-color: transparent !important; 
 
-.pricing-header {
-	margin: 0 auto;
-	width: 100%;
-	display: flex;
-	justify-content: center;
+    border: 1px solid #e0e0e0;
+    img {
+	    margin-right: 10px;
+	    height: 25px;
+	    margin: 5px 10px 5px 5px;
+    }
+
+
+    /deep/ .v-btn__loading {
+    	color: #000;
+    }
 }
-
-.pricing-header h1 {
-	color: #000;
-	text-align: center;
-	font-size: 30px;
-
-}
-
-.pricing-header h6 {
-	color: gray;
-	text-align: center;
-	font-size: 15px;
-}
-
-
-.pricing-header h6:after {
-	content: '';
-	position: absolute;
-	height: 3px;
-	width: 81px;
-	background: #000;
-	top: 70px;
-	left: 47%;
-
-}
-
-
-.pricing-container {
-
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 50px 50px 10px 50px;
-	text-align: left;
-
-}
-
-
-.pricing-item {
-	/*padding: 20px;*/
-	box-shadow: 0px 0px 0px grey;
-	-webkit-transition:  box-shadow .6s ease-out;
-	box-shadow: .8px .9px 3px grey;
-	margin-left: 10px;
-	border-top-left-radius: 11px;
-	border-top-right-radius: 11px;
-}
-
-.pricing-body {
-	/*padding: 25px 0px 0px 20px;*/
-	padding: 10px;
-	background-color: white;
-	padding-bottom: 20px;
-}
-
-.button {
-	display: inline-block;
-	border-radius: 50px;
-	padding: 0px 10px;
-	color: white;
-	font-size: 9.5px;
-	font-weight: 500;
-	line-height: 34px;
-	outline: none !important;
-	box-shadow: none !important;
-	text-align: center;
-	cursor: pointer;
-	transition: all 300ms linear 0s;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-}
-
-.button-holder {
-	padding: 20px;
-	background: white;
-}
-
-
-.button-outline {
-	display: inline-block;
-	border-radius: 50px;
-	padding: 0px 10px;
-	color: black;
-	font-size: 9.5px;
-	font-weight: 500;
-	line-height: 29px;
-	outline: none !important;
-	box-shadow: none !important;
-	text-align: center;
-	cursor: pointer;
-	transition: all 300ms linear 0s;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-}
-
-.pricing-item:hover{ 
-	 box-shadow: 1px 8px 20px grey;
-	-webkit-transition:  box-shadow .6s ease-in;
-}
-
-.grey {
-	background:#f6f6f6;
-}
-
-.white {
-	background: #ffffff;
-}
-
-
-/* for enterprise coloring */
-
-.light-blue{
-	background: #0c8db3;
-	color: #ffffff;
-}
-
-.text-light-blue {
-	color: #0c8db3 !important;
-}
-
-.border-light-blue {
-	border: 1px solid #0c8db3;  
-}
-
-.dark-blue{
-	background: #0a3265;
-	color: #ffffff;
-}
-
-.text-dark-blue {
-   color: #0a3265 !important;
-}
-
-.border-dark-blue {
-	border: 1px solid #0a3265;
-}
-
-.blue{
-  background: #2b4271;
-  color: #ffffff;
-}
-
-.text-blue {
-  color: #2b4271 !important;
-}
-
-.border-blue {
- border: 1px solid #2b4271;
-}
-
-/* for enterprise coloring */
-
-
-
-
-/* for corporate coloring  */
-
-.gold{
-  background: #b59807;
-  color: #ffffff;
-}
-
-.text-light-gold {
-	color: #b59807 !important;
-}
-
-.border-light-gold {
-	border: 1px solid #b59807;  
-}
-
-
-.diamond{
-  background: #595b5b;
-  color: #ffffff;
-}
-
-.text-light-diamond {
-	color: #595b5b !important;
-}
-
-.border-light-diamond {
-	border: 1px solid #595b5b;  
-}
-
-
-.platinum{
-  background: #708589;
-  color: #ffffff;
-}
-
-.text-platinum {
-	color: #708589 !important;
-}
-
-.border-platinum {
-	border: 1px solid #708589;  
-}
-/* for corporate coloring  */
-
-
-
-
-
-
-.basics{
-  background: #007991;
-  color: #ffffff;
-}
-
-.text-basics {
-	color: #007991 !important;
-}
-
-.border-basics {
-	border: 1px solid #007991;  
-}
-
-
-
-.essential{
-  background: #131313;
-  color: #ffffff;
-}
-
-
-.text-essential {
-	color: #131313 !important;
-}
-
-.border-essential {
-	border: 1px solid #131313;  
-}
-
-
-
-
-
-.pricing-item-title {
-	padding: 31px 1px 28px 28px;
-	border-top-left-radius: 11px;
-	border-top-right-radius: 11px;
-	background-image: url("https://www.transparenttextures.com/patterns/rice-paper-3.png");
-}
-
-.pricing-item-title h1 {
-
-	font-size: 13px;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: white;
-
-}
-
-
-.pricing-item-title h2 {
-
-	font-size: 17px;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	font-weight: 200;
-
-}
-
-.pricing-item-price h1 {
-	   font-size: 25px !important;
-	margin-bottom: 12px;
-	text-align: center;
-	margin-right: 30px;
-}
-
-.pricing-item-price h1 span {
-	color: gray;
-	font-size: 10px;
-}
-
-.pricing-item-list ul li {
-	font-size: 11px;
-	color: black;
-	padding: 5px;
-}
-
-.pricing-item-list p {
-	color: #ab1212;
-	font-size: 14px;
-	font-weight: 900;
-}
-
-.pricing-item-list i {
-	margin-right: 15px;
-}
-
-
-
-
-
-.grey {
-	background:#f6f6f6;
-}
-
-.white {
-	background: #ffffff;
-}
-
-
-
 
 </style>
