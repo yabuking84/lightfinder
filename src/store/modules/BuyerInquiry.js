@@ -46,20 +46,16 @@ const state = {
 			url3: 'award',
 		},
 
-		getCreditCardResource: {
-			method  : 'post',
-			url     : base_url+'/v1/pay/credit-card',
-		},
+		// getCreditCardResource: {
+		// 	method  : 'post',
+		// 	url     : base_url+'/v1/pay/credit-card',
+		// },
 
 		payByBankTransfer: {
 			method  : 'post',
 			url     : base_url+'/v1/pay/bank-transfer',
 		},
 
-		payByBankTransfer: {
-			method  : 'post',
-			url     : base_url+'/v1/pay/bank-transfer',
-		},
 
 		paySubscription: {
 			method  : 'post',
@@ -365,9 +361,7 @@ const actions = {
 
 			var method = state.api.getInquiryBid.method; 
 			var url = state.api.getInquiryBid.url+"/"+data.inq_id+"/"+state.api.getInquiryBid.url2; 
-			var headers = {token:localStorage.access_token,
-							"content-type": "application/json",
-							 };
+			var headers = { token:localStorage.access_token, "content-type": "application/json", };
 			axios({
 				method: method,
 				url: url,
@@ -390,58 +384,59 @@ const actions = {
 	},
 
 
-	getCreditCardResource(context, data) {
-		return new Promise((resolve, reject) => {
+	// getCreditCardResource(context, data) {
+	// 	return new Promise((resolve, reject) => {
 
-			var headers = { token: localStorage.access_token }
+	// 		var headers = { token: localStorage.access_token }
 
-			axios({
+	// 		axios({
 
-				method  : state.api.getCreditCardResource.method,
-				url     : state.api.getCreditCardResource.url,
-				headers : headers,
-				data 	: {
-					id: 	 data.inquiry_id,
-					type:    "inquiry",
-					payment_method_id: state.paymentMethod.creditCard,
-				},
-			})
-			.then(response => {
-				resolve(response.data);
-			})
-			.catch(error => {
-				// if(actions.checkToken(error)) {
-				if(context.dispatch('checkToken',error)) {
-					reject(error);
-				}
-			})
+	// 			method  : state.api.getCreditCardResource.method,
+	// 			url     : state.api.getCreditCardResource.url,
+	// 			headers : headers,
+	// 			data 	: {
+	// 				id: 	 data.inquiry_id,
+	// 				type:    "inquiry",
+	// 				payment_method_id: state.paymentMethod.creditCard,
+	// 			},
+	// 		})
+	// 		.then(response => {
+	// 			resolve(response.data);
+	// 		})
+	// 		.catch(error => {
+	// 			// if(actions.checkToken(error)) {
+	// 			if(context.dispatch('checkToken',error)) {
+	// 				reject(error);
+	// 			}
+	// 		})
 
-		}) 
-	},
+	// 	}) 
+	// },
 
 
-	getSampleOrderCreditCardResource(context, data) {
-		return new Promise((resolve, reject) => {
 
-			var headers = { token: localStorage.access_token }
-			axios({
-				method  : state.api.getCreditCardResource.method,
-				url     : state.api.getCreditCardResource.url,
-				headers : headers,
-				data 	: data,
-			})
-			.then(response => {
-				resolve(response.data);
-			})
-			.catch(error => {
-				// if(actions.checkToken(error)) {
-				if(context.dispatch('checkToken',error)) {
-					reject(error);
-				}
-			})
+	// getSampleOrderCreditCardResource(context, data) {
+	// 	return new Promise((resolve, reject) => {
 
-		}) 
-	},
+	// 		var headers = { token: localStorage.access_token }
+	// 		axios({
+	// 			method  : state.api.getCreditCardResource.method,
+	// 			url     : state.api.getCreditCardResource.url,
+	// 			headers : headers,
+	// 			data 	: data,
+	// 		})
+	// 		.then(response => {
+	// 			resolve(response.data);
+	// 		})
+	// 		.catch(error => {
+	// 			// if(actions.checkToken(error)) {
+	// 			if(context.dispatch('checkToken',error)) {
+	// 				reject(error);
+	// 			}
+	// 		})
+
+	// 	}) 
+	// },
 
 
 
@@ -456,8 +451,8 @@ const actions = {
 				url     : state.api.payByBankTransfer.url,
 				headers : headers,
 				data 	: {
-					id: 	 data.inquiry_id,
-					type:    "inquiry",
+					id: 	 data.id,
+					type:    data.payment_type,
 					payment_method_id: state.paymentMethod.bankTransfer,
 				},
 			})

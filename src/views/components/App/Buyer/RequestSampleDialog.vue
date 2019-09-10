@@ -12,7 +12,7 @@
 			</v-btn>
 		 </v-toolbar>
 
-		 <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form">
+		 <!-- <v-form @submit.prevent="$v.$invalid ? null : submit()" ref="form"></v-form> -->
 			<v-card class="pa-1 grey lighten-4">
 				<v-card-text>
 					<v-layout row wrap pa-0 mx-3>
@@ -156,7 +156,7 @@
 							</v-card>
 							<v-layout row wrap mt-2>
 								<v-flex xs12>
-									<v-btn large :loading="formLoading" @click="submit()" flat block class="red">
+									<v-btn large :loading="creditCardLoading" @click="payByCreditCard()" flat block class="red">
 										<span class="ml-1 white--text font-weight-bold">Pay Now</span>
 									</v-btn>
 								</v-flex>
@@ -165,14 +165,14 @@
 					</v-layout>
 				</v-card-text>
 			</v-card>
-		 </v-form>
 
-			<form method="post" :action="creditCard.url" ref="creditCardForm">
-				<input 
-				type="hidden" 
-				name="requestParameter" 
-				:value="creditCard.requestParameter">
-			</form>									
+
+
+		<foloosi-payment 
+		:reference_token="reference_token" 
+		@payment-success="paymentDone($event)">			
+		</foloosi-payment>
+
 
 	  </v-dialog>
 	</div>
@@ -188,8 +188,13 @@
 
 	import inqEvntBs from "@/bus/inquiry"
  
+	import FoloosiPayment from "@/views/Components/App/Payment/FoloosiPayment";
 
 	export default {
+
+		components: {
+			FoloosiPayment,
+		},
 
 	   props: ['bid', 'openSampleDialog', 'inquiry'],
 
@@ -233,15 +238,17 @@
 			},
 
 			calendar_menu: false,
-			formLoading: false,
 			odQuantity:null,
 			odUnitprice:null,
 			odTotalprice:null,
 
-			creditCard:{
-				url: null,
-				requestParameter: null,
-			},
+			// foloosi
+			/////////////////////////////////////
+			creditCardLoading: false,
+			reference_token:'',
+			/////////////////////////////////////
+			// foloosi
+
 		}),
 
 
@@ -267,40 +274,34 @@
 
 			},
 
-			submit() {
-				this.formLoading = true;
+			payByCreditCard() {
+				this.creditCardLoading = true;
 				this.$v.$touch();
 
 			  	if (this.$v.$invalid) {
-						this.formLoading = false;
+					this.creditCardLoading = false;
 			  	} else {		
 					var payload = {
 					    "id": this.bid.id,
-					    "type": "sample",
+					    "type": "lightfinder.sample",
 					    "payment_method_id": 1,
 					    "data": {
 					        "country_id": this.form.shipping_country_id,
 					        "address": this.form.shipping_address,
 					        "city": this.form.shipping_city,
 					        "postal": this.form.shipping_postal,
-					    },	
+					    },
 					};
-					console.log(payload);
-					console.log(localStorage.access_token);
+					// console.log(payload);
+					// console.log(localStorage.access_token);
 
-					this.$store.dispatch(this.getStore()+'/getSampleOrderCreditCardResource', payload)
+					this.$store.dispatch(this.getStore('pymnt')+'/getSampleOrderCreditCardResource_a', payload)
 					.then((response) => {
-						this.creditCard.requestParameter = response.request_parameter;
-						this.creditCard.url = response.request_url;
-
-						console.log(this.creditCard);
-						this.$nextTick().then(() => {
-							this.formLoading = false;
-							this.$refs.creditCardForm.submit();
-						});
+						this.reference_token = response.reference_token;
+						this.creditCardLoading = false;
 					})
 					.catch((e) => {
-						this.formLoading = false;
+						this.creditCardLoading = false;
 						console.log(e);
 					});
 

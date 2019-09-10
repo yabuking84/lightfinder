@@ -31,6 +31,10 @@
 							
 							<v-layout row wrap>
 
+								<!-- <v-flex xs12>
+									<pre>{{ project }}</pre>
+								</v-flex> -->
+
 								<v-flex xs5>
 									<v-layout column wrap>
 										<v-flex pb-0>

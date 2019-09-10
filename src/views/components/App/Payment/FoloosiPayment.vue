@@ -9,7 +9,7 @@
 	        <div id="foloosi_modal-inner">
 	            <div id="foloosi_content">
 	                <button data-dismiss="modal" 
-	                @click="test()" 
+	                @click="close()" 
 	                class="modalClose foloosi_close closemodalwrap" 
 	                data-close="" 
 	                type="button">&#215;</button>
@@ -20,48 +20,106 @@
 	</div>
 </div>
 
-
-<v-btn class="mt-5" @click="pay()" color="success">Payment</v-btn>
-
 </span>
 </template>
 
 <script>
-import Foloosi from "@/assets/foloosipay.v2.js";
+import config from '@/config/main'
 
 export default {
 
+props:{
+	reference_token: {
+		type: String,
+		default: '',
+	},
+
+},
+
 data(){return{
-	paymentResponse:null,
-	faloosi:null,
 	iframeSrc: '',
 	isOpen: false,
 }},
 
+created() {
+	this.open();
+},
+
 methods: {
 
-	pay(){
-		var options = {
-			"reference_token" : "U0sjdGVzdF8kMnkkMTAkLjBURmxxRnhNN3kuM0dvSGtESXFXZU8tMmJUMmVCejh0ODZQVlVrSHdIOXpNZ2hEbTVQTGkcVE4jRkxTQVBJNWQ2ZjgzMmRhZGI1ORxSVCMkMnkkMTAkMjl2ZUE5eEhKS0JodkFCVmRiS0k1ZWRSL2l1VEFUSS5DbEVxMkhmaWtpTUFyUHRBNTJ5dGU=",
-			"merchant_key" : "test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi", 
+	open(){
+
+		if(this.reference_token) {			
+			var options = {
+				"reference_token" : this.reference_token,
+				"merchant_key" : config.merchant_key, 
+			}
+
+			this.iframeSrc = 'https://widget.foloosi.com/?{"reference_token":"'+options.reference_token+'","secret_key":"'+options.merchant_key+'"}';
+			this.isOpen = true;
 		}
 
-		this.iframeSrc = 'https://widget.foloosi.com/?{"reference_token":"'+options.reference_token+'","secret_key":"'+options.merchant_key+'"}';
-
-		this.isOpen = true;
-
 	},
 
 
-	test(){
-		alert('asdasd');
+	close(){
+		this.isOpen = false;
+		this.iframeSrc = '';
 	},
 
+
+	onMessage(msg){
+		if(msg.data.status == 'success'){
+			//responde success code
+			console.log('onMessage success',msg);
+			console.log(msg.data.status);
+			console.log(msg.data.data.transaction_no);
+
+            this.$emit('payment-success', {
+            	status: msg.data.status,
+            	...msg.data.data,
+            });
+
+            setTimeout(()=>{
+	            this.close();            	
+            },2000);
+		}
+		if(msg.data.status == 'error'){
+			console.log('onMessage error',msg);
+			//responde error code
+			console.log(msg.data.status);
+			console.log(msg.data.data.payment_status);
+
+            this.$emit('payment-failed', {
+            	status: msg.data.status,
+            	...msg.data.data,
+            });
+
+            setTimeout(()=>{
+	            this.close();            	
+            },2000);
+		}		
+	},
+
+},
+
+watch: {
+	reference_token:{
+		handler(nVal,oVal){
+			this.open();
+		},
+		deep: true,
+	},
 },
 
 mounted(){
-	console.log(Foloosi);
+	
+	if(window.addEventListener)
+	window.addEventListener('message', this.onMessage, false);
+	else
+	window.attachEvent('onmessage', this.onMessage, false);	
 },
+
 
 
 }</script>

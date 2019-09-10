@@ -14,7 +14,7 @@
 				</a>
 				
 
-				<h4 v-html="test"></h4>
+				<h4 v-html="test">{{ test }}</h4>
 
 				<!-- if not mobile -->
 				<!-- //////////////////////////////////////////////////////////// -->
@@ -71,9 +71,22 @@
 						  >Login</v-btn>
 						</v-flex>
 
-						<!-- google login -->
+						<!-- social login -->
 						<!-- /////////////////////////////////////////////////// -->
 						<v-flex xs12 my-3 class="">
+							<v-btn 
+							style="height: 45px;"
+							flat
+							@click="handleClickSignIn()"
+							:loading="socialLoading"
+							class="social-buttons px-2 py-2">
+								<img class="mr-2" style="width: 30px;" src="/static/google/goggle-logo-transparent.png"> Google Login
+								<!-- <v-icon class="mr-2">fab fa-google</v-icon> Google Login -->
+							</v-btn>
+
+						</v-flex>
+
+						<v-flex xs12 my-3 class="" v-if="false">
 							<v-btn 
 							fab flat
 							@click="authenticate('google')"
@@ -102,7 +115,7 @@
 							</v-btn>
 						</v-flex>
 						<!-- /////////////////////////////////////////////////// -->
-						<!-- google login -->
+						<!-- social login -->
 						
 						<!-- Forgot password -->
 						<!-- ////////////////////////////////////////////// -->
@@ -111,7 +124,7 @@
 							:to="{ name: 'ForgotPasswordPage' }" 
 							tag="div" 
 							class="grey--text cursor-pointer">
-								<strong>Forgot Password ?</strong>
+								<strong>Forgot Password?</strong>
 							</router-link>
 						</v-flex>
 						<!-- ////////////////////////////////////////////// -->
@@ -359,10 +372,10 @@ export default {
 		
 		// google login
 		/////////////////////////////////////////////////////
-		// isInit: false, 
-		// isSignIn: false,
-		// googleLoading: false,
-		// googleUser: null,
+		isInit: false, 
+		isSignIn: false,
+		googleLoading: false,
+		googleUser: null,
 		/////////////////////////////////////////////////////
 		// google login
 
@@ -431,98 +444,98 @@ export default {
 
 		// google login
 		////////////////////////////////////////////////////////////////////////
-		// handleClickGetAuth() {
-		// 	this.$gAuth.getAuthCode()
-		// 	.then(authCode => {
-		// 		// On success
-		// 		return this.$http.post('http://your-backend-server.com/auth/google', {
-		// 			code: authCode,
-		// 			redirect_uri: 'postmessage'
-		// 		})
-		// 	})
-		// 	.then(response => {
-		// 		// And then
-		// 	})
-		// 	.catch(error => {
-		// 		// On fail do something
-		// 	})
-		// },
-		// handleClickSignIn() {
-		// 	console.log('handleClickSignIn')
-		// 	this.googleLoading = true;
-		// 	this.$gAuth.signIn()
-		// 	.then(user => {
-		// 		// On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-		// 		// console.log('GoogleUser', GoogleUser)
-		// 		this.googleUser = user;
-		// 		console.log('google user', user)
-		// 		this.isSignIn = this.$gAuth.isAuthorized
+		handleClickGetAuth() {
+			this.$gAuth.getAuthCode()
+			.then(authCode => {
+				// On success
+				return this.$http.post('http://your-backend-server.com/auth/google', {
+					code: authCode,
+					redirect_uri: 'postmessage'
+				})
+			})
+			.then(response => {
+				// And then
+			})
+			.catch(error => {
+				// On fail do something
+			})
+		},
+		handleClickSignIn() {
+			console.log('handleClickSignIn')
+			this.socialLoading = true;
+			this.$gAuth.signIn()
+			.then(user => {
+				// On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
+				// console.log('GoogleUser', GoogleUser)
+				this.googleUser = user;
+				console.log('google user', user)
+				this.isSignIn = this.$gAuth.isAuthorized
 
-		// 		this.loginViaOAuth();
+				this.loginViaOAuth();
 
-		// 	})
-		// 	.catch(error => {
-		// 		// On fail do something
-		// 		console.log('handleClickSignIn error',error)
-		// 		this.googleLoading = false;
-		// 	})
-		// },
-		// handleClickSignOut() {
-		// 	this.$gAuth.signOut()
-		// 	.then(() => {
-		// 		// On success do something
-		// 		this.isSignIn = this.$gAuth.isAuthorized
-		// 	})
-		// 	.catch(error => {
-		// 		// On fail do something
-		// 	})
-		// },
+			})
+			.catch(error => {
+				// On fail do something
+				console.log('handleClickSignIn error',error)
+				this.socialLoading = false;
+			})
+		},
+		handleClickSignOut() {
+			this.$gAuth.signOut()
+			.then(() => {
+				// On success do something
+				this.isSignIn = this.$gAuth.isAuthorized
+			})
+			.catch(error => {
+				// On fail do something
+			})
+		},
 
-		// loginViaOAuth() {
+		loginViaOAuth() {
 
 
-		// 	var user = {
-		// 		first_name: this.googleUser.w3.ofa,
-		// 		last_name: this.googleUser.w3.wea,
-		// 		email: this.googleUser.w3.U3,
-		// 		profile_image: this.googleUser.w3.Paa,
-		// 		main_interest: (this.main_interest)?this.main_interest:'',
-		// 		id_token: this.googleUser.Zi.Paa,
-		// 		google: this.googleUser,
-		// 	};
+			var user = {
+				first_name: this.googleUser.w3.ofa,
+				last_name: this.googleUser.w3.wea,
+				email: this.googleUser.w3.U3,
+				profile_image: this.googleUser.w3.Paa,
+				main_interest: (this.main_interest)?this.main_interest:'',
+				id_token: this.googleUser.Zi.Paa,
+				google: this.googleUser,
+			};
 
-		// 	this.$store.dispatch('auth/retrieveTokenOAuth_a', {
-		// 		user: user,
-		// 		loginType: 'google',
-		// 	}).then((response) => {
-		// 		this.snackbar = true
-		// 		this.snackbar_error = false
-		// 		this.resetForm()
-		// 		this.$v.$reset()
+			this.$store.dispatch('auth/retrieveTokenOAuth_a', {
+				user: user,
+				loginType: 'google',
+			}).then((response) => {
+				this.snackbar = true
+				this.snackbar_error = false
+				this.resetForm()
+				this.$v.$reset()
 
-		// 		const vueThis = this;
-		// 		setTimeout(function() {
-		// 			vueThis.googleLoading = false;
+				const vueThis = this;
+				setTimeout(function() {
+					vueThis.socialLoading = false;
 					
-		// 			if(vueThis.isInMobile())
-		// 			vueThis.$router.push({name:'Logout'});                
-		// 			else
-		// 			vueThis.$store.dispatch('auth/loginSuccess_a');
+					if(vueThis.isInMobile())
+					vueThis.$router.push({name:'Logout'});                
+					else
+					vueThis.$store.dispatch('auth/loginSuccess_a');
 
 
-		// 		}, 1500);
+				}, 1500);
 
-		// 	}).catch((e) => {
-		// 		this.snackbar = false
-		// 		this.snackbar_error = true
-		// 		this.googleLoading = false;
-		// 		console.log('Error: ' + e);
-		// 	}).finally(() => {
-		// 		// console.log('finally');
-		// 		this.googleLoading = false;
-		// 	});
+			}).catch((e) => {
+				this.snackbar = false
+				this.snackbar_error = true
+				this.socialLoading = false;
+				console.log('Error: ' + e);
+			}).finally(() => {
+				// console.log('finally');
+				this.socialLoading = false;
+			});
 
-		// },		
+		},		
 		////////////////////////////////////////////////////////////////////////
 		// google login
 
@@ -554,27 +567,74 @@ export default {
 
 
 
-			this.$auth.logout();
-			this.$auth.authenticate(provider)
-			.then(function (rspns) {
-				console.log(rspns);
-			})
-			.catch((e)=>{
-				console.log('catch e',e);
-			});
+			// this.$auth.logout();
+			// this.$auth.authenticate(provider)
+			// .then(function (rspns) {
+			// 	console.log(rspns);
+			// })
+			// .catch((e)=>{
+			// 	console.log('catch e',e);
+			// });
 
+
+			//Let's say the /me endpoint on the provider API returns a JSON object
+			//with the field "name" containing the name "John Doe"
+			var vueThis = this;
+
+			var user = {
+				first_name: '',
+				last_name: '',
+				email: '',
+				profile_image: '',
+				main_interest: '',
+				id_token: '',
+			};			
+
+			OAuth.initialize('bs3hAYi8z_hPxiu2H7VPlQve8aw');
+			OAuth.popup(provider)
+			.done(function(result) {
+				
+				console.log('result: ', result);
+
+				result.get()
+				.done(function (rspns) {
+
+					console.log('rspns: ', rspns);
+
+
+
+					if(provider=='google') {
+						vueThis.test = rspns.raw.names[0].displayName+" <br> "+rspns.email;
+
+					} 
+					else if(provider=='facebook') {
+						vueThis.test = rspns.name+" <br> "+rspns.email;
+					}
+					
+					console.log('vueThis.test: ', vueThis.test);
+
+				})
+				.fail(function (err) {
+					//handle error with err
+					console.log(err);
+				});
+
+			})
+			.fail(function (err) {
+				//handle error with err
+			});
 
 		
 		},
 
-		onMessage (msg) {
-			if (msg.origin == "https://almani.ddns.net:2021") {
-				console.log('email',msg.data.email);
-				console.log('fullname',msg.data.fullname);
+		// onMessage (msg) {
+		// 	if (msg.origin == "https://almani.ddns.net:2021") {
+		// 		console.log('email',msg.data.email);
+		// 		console.log('fullname',msg.data.fullname);
 
-				this.test = msg.data.email+" <br> "+msg.data.fullname;
-			}			
-		},	
+		// 		this.test = msg.data.email+" <br> "+msg.data.fullname;
+		// 	}			
+		// },	
 		////////////////////////////////////////////////////////////////////////
 		// Social Login
 	},
@@ -604,13 +664,13 @@ export default {
 
 		// console.log('googleUser',this.googleUser);
 
-		window.addEventListener('message', this.onMessage, false);
+		// window.addEventListener('message', this.onMessage, false);
 
 
 	},
  
 	beforeDestroy () {
-		window.removeEventListener('message', this.onMessage)
+		// window.removeEventListener('message', this.onMessage)
 	},
 
 	beforeCreate(){
@@ -668,4 +728,12 @@ export default {
 		color: #000;
 	}
 }
+
+
+.social-buttons {
+	/deep/ .v-btn__loading {
+	    color: #000;
+	}
+}
+
 </style>

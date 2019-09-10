@@ -1,10 +1,10 @@
 // DEVELOPEMENT
 //////////////////////////////////////////////////////////////
-// const apiURL = 'http://192.168.1.200:8000';
-// const socketURL = 'http://192.168.1.200:3000';
-// const websiteURL = 'http://almani.ddns.net:1984';
-// const devMode =  true;
-// const defaultMaxInqs =  99;
+const apiURL = 'http://192.168.1.200:8000';
+const socketURL = 'http://192.168.1.200:3000';
+const websiteURL = 'http://almani.ddns.net:1984';
+const devMode =  true;
+const defaultMaxInqs =  99;
 //////////////////////////////////////////////////////////////
 // DEVELOPEMENT
 
@@ -20,15 +20,16 @@
 
 // PRODUCTION
 //////////////////////////////////////////////////////////////
-const apiURL = 'https://api.buyanylight.com';
-const socketURL = 'https://data.buyanylight.com/socket.io';
-const websiteURL = 'https://lightfinder.buyanylight.com';
-const devMode =  false;
-const defaultMaxInqs =  1;
+// const apiURL = 'https://api.buyanylight.com';
+// const socketURL = 'https://data.buyanylight.com/socket.io';
+// const websiteURL = 'https://lightfinder.buyanylight.com';
+// const devMode =  false;
+// const defaultMaxInqs =  1;
 //////////////////////////////////////////////////////////////
 // PRODUCTION
 
 
+const merchant_key =  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi';
 
 export default {
 
@@ -37,6 +38,7 @@ export default {
 	websiteURL: websiteURL,
 	devMode: devMode,
 	defaultMaxInqs: defaultMaxInqs,
+	merchant_key: merchant_key,
 
 	awss3: {
 		signingURL:apiURL+"/v1/aws-s3-signature",

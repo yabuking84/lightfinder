@@ -187,7 +187,8 @@ app flat>
             </div>
         </v-avatar>
 
-        <v-list dense>
+        <!-- <v-list dense  style="position: fixed;"> -->
+        <v-list dense >
 
             <v-list-tile avatar>
                 <v-list-tile-avatar>
@@ -701,4 +702,8 @@ created()  {
     align-items: center;
     padding-top: 8px;
 }
+
+// /deep/ .v-menu__content {
+// 	position: fixed;
+// }
 </style>

@@ -47,14 +47,14 @@ lazy>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Amount to Pay</h4>
-							<h1>$ {{ currency(inquiry.amount) }}</h1>
+							<h1>$ {{ currency(amount) }}</h1>
 						</v-flex>
 						<v-flex xs12 py-4>
 							<v-divider></v-divider>
 						</v-flex>
 						<v-flex xs12 pa-2 v-if="!confirmed">
 							<h4 class="font-weight-thin">Please write this on the description:</h4>
-                			<h2>Payment for Inquiry# {{ inquiry.id }}</h2>                			
+                			<h2>{{ description }}</h2>                			
 						</v-flex>
 						<v-flex xs12 pa-2 mt-3 v-if="confirmed">
                 			<h2 style="text-align: center;">
@@ -120,10 +120,17 @@ export default {
 		inqMixin,
 	],
 
-	props:[
-		'openDialog',
-		'inquiry',
-	],
+	props:{
+
+		'openDialog': Boolean,
+		'description': String,
+		'id': String,
+		'amount': Number,
+		'paymentType': {
+			type:String,
+			default: 'inquiry',
+		},
+	},
 
 	data(){return{
 		confirmed: false,
@@ -132,18 +139,21 @@ export default {
 	methods:{
 		payByBankTransfer(){
 
-			this.$store.dispatch('byrInq/payByBankTransfer', {
-				inquiry_id: this.inquiry.id
-			})
-			.then((response) => {
+			if(this.paymentType=='inquiry') {				
+				this.$store.dispatch(this.getStore()+'/payByBankTransfer', {
+					id: this.id,
+					payment_type: this.paymentType,
+				})
+				.then((response) => {
 
-				console.log('payByBankTransfer', response);
-				this.confirmed = true;
-				inqEvntBs.emitPaymentMade();
-			})
-			.catch((e) => {
-				  console.log(e);				
-			});			
+					console.log('payByBankTransfer', response);
+					this.confirmed = true;
+					inqEvntBs.emitPaymentMade();
+				})
+				.catch((e) => {
+					  console.log(e);				
+				});			
+			}
 		},
 
 		closeDialog(){

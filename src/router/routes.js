@@ -266,13 +266,13 @@ const routes =
   
 	// // Payment
 	// //////////////////////////////////////////////////////
-	// {
-	// 	name: 'PaymentFoloosi',
-	// 	path: '/payment',
-	// 	components: { 
-	// 		default: Payment, 
-	// 	},
-	// },
+	{
+		name: 'PaymentFoloosi',
+		path: '/payment',
+		components: { 
+			default: Payment, 
+		},
+	},
 	// //////////////////////////////////////////////////////
 	// // My Tower
 

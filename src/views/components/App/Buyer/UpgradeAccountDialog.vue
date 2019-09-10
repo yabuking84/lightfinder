@@ -324,7 +324,6 @@ export default {
     		.then((rspns)=>{
     			console.log(rspns);
 
-				// console.log('getCreditCardResource', response);
 				this.creditCard.requestParameter = rspns.request_parameter;
 				this.creditCard.url = rspns.request_url;
 

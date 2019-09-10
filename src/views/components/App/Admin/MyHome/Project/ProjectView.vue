@@ -15,10 +15,10 @@
 					<h3 class="d-inline-block ml-2">Project {{ proj_id }}</h3>
 
 	
-					<v-btn class="white black--text pay-psf">
+					<!-- <v-btn class="white black--text pay-psf">
 						<v-icon class="mr-2">far fa-credit-card</v-icon>
 						PAY PSF
-					</v-btn>
+					</v-btn> -->
 
 				</v-flex>
 				
@@ -169,7 +169,9 @@ methods: {
 	},
 
 	getOrderedSamples(){
-		this.$store.dispatch(this.getStore('myHm')+'/getOrderedSamples_a')
+		this.$store.dispatch(this.getStore('myHm')+'/getOrderedSamples_a',{
+			proj_id: this.proj_id,
+		})
 		.then((rspns)=>{
 			// console.log(rspns);
 			this.orderedSamples = rspns;

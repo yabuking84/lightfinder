@@ -476,15 +476,15 @@
 									<!-- x<pre>{{ bidItem.sample_stage_id }}</pre>xx -->
 									<template v-if="!inquiry.awarded"> 										
 										<!-- <v-flex v-if="bidItem.sample_stage_id!=2001" xs6> -->
-										<v-flex v-if="!isBidSampleDisabled(bidItem.sample_stage_id)" xs6>
-											<v-btn 
+										<v-flex v-if="!isBidSampleDisabled(bidItem.sample_stage_id) && inquiry.sample_quantity" xs6>
+											<v-btn 											
 											flat block large 
 											class="green darken-2 " 
 											:disabled="(inquiry.awarded)?true:false" 
 											@click="openSample(bidItem)">
 												<i class="fas fa-lightbulb white--text "></i>
 												<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-											</v-btn>
+											</v-btn>											
 										</v-flex>
 
 										<v-flex v-if="bidItem.sample_stage_id==2001" xs6>

@@ -61,19 +61,46 @@
 
 
 
+	<!-- {{ revision.shipping_cost }} - {{ project.stage_id }} - {{ project.selected_quotation_id }} -->
 
-
-	<template v-if="revision.shipping_cost && project.status_id != 1004">
-		<v-flex xs8 offset-xs2 text-xs-center mt-4>
+	<template v-if="project.selected_quotation_id == rev_id">
+		<!-- <v-flex xs8 offset-xs2 text-xs-center mt-4>
 			<v-btn 
 			class="black white--text" 
 			block
 			:loading="btnLdng">
 				Pay Quotation
 			</v-btn>
+		</v-flex> -->
+
+		<v-flex xs6>
+			<v-btn block 
+			color="green darken-2" 
+			class="white--text payBtn"
+			@click="showBankTransferDetails=true">
+				<v-icon class="mr-2">
+					fas fa-money-check-alt
+				</v-icon>
+				<h4>BANK TRANSFER</h4>
+			</v-btn>
 		</v-flex>
+		<v-flex xs6>
+			<v-btn block 
+			color="blue darken-2" 
+			class="white--text payBtn"
+			:loading="creditCardLoading"
+			@click="payByCreditCard()">
+				<v-icon class="mr-2">
+					far fa-credit-card
+				</v-icon>
+				<h4>CREDIT CARD</h4>
+			</v-btn>
+
+		</v-flex>
+
 	</template>
-	<template v-else>
+
+	<template v-else-if="!project.selected_quotation_id">
 		<v-flex xs8 offset-xs2 text-xs-center mt-4>
 			<v-btn 
 			class="black white--text" 
@@ -83,6 +110,16 @@
 				Confirm this Revision
 			</v-btn>
 		</v-flex>
+	</template>
+
+	<template v-else>
+		<v-flex xs8 offset-xs2 text-xs-center mt-4>
+			<v-alert
+			:value="true"
+			type="info">
+				Already selected a revision.
+			</v-alert>			
+		</v-flex>		
 	</template>
 
 
@@ -128,7 +165,19 @@
 	
 
 
+<bank-transfer-details 
+:description="'Payment for My Home Project No. '+revision.id"
+:amount="overAllTotal" 
+:id="revision.id" 
+:paymentType="'myhome'" 
+:openDialog.sync="showBankTransferDetails">			
+</bank-transfer-details>
 
+
+<foloosi-payment 
+:reference_token="reference_token" 
+@payment-success="paymentDone($event)">
+</foloosi-payment>
 
 
 
@@ -137,6 +186,8 @@
 
 <script>
 import config from '@/config/main';
+import BankTransferDetails from "@/views/Components/App/Buyer/BankTransferDetails";
+import FoloosiPayment from "@/views/Components/App/Payment/FoloosiPayment";
 
 export default {
 	props: {
@@ -148,11 +199,19 @@ export default {
 		}
 	},
 
+	components: {
+		BankTransferDetails,
+		FoloosiPayment,
+	},
 
 	data(){ return {
 		btnLdng: false,
 		confirmRevisionDialog: false,
 		project: {},
+		showBankTransferDetails: false,
+
+		reference_token:'',
+		creditCardLoading: false,
 	}},
 
 	computed:{
@@ -203,8 +262,6 @@ export default {
 			})
 			.then((rspns)=>{
 				this.project = rspns;
-				// this is for test
-				this.project.selected_quotation_id = null;
 			})
 			.catch((e)=>{
 				console.log(e);
@@ -214,7 +271,7 @@ export default {
 		selectRevision(){
 
 			// set project  status to Confirmation
-			this.project.stage_id = 1004;
+			// this.project.stage_id = 1004;
 			this.project.selected_quotation_id = this.rev_id;
 
 	    	this.$store.dispatch(this.getStore('myHm')+'/editProject_a',{
@@ -224,11 +281,31 @@ export default {
 	    		},    		
 	    	})
 	    	.then((rspns)=>{
+				this.project.status_id = 1004;
 	    		this.confirmRevisionDialog=false;
 	    	})
 	    	.catch((e)=>{
 	    		console.log(e);
 	    	});
+
+		},
+
+		payByCreditCard() {
+
+			this.$store.dispatch(this.getStore('pymnt')+'/getCreditCardResource_a', {
+				id: this.proj_id,
+				type: "project",
+			})
+			.then((response) => {
+
+				console.log('getCreditCardResource', response);
+				this.reference_token = response.reference_token;
+				this.creditCardLoading = false;
+
+			})
+			.catch((e) => {
+				  console.log(e);				
+			});
 
 		},
 
@@ -277,5 +354,15 @@ export default {
     align-items: center;
     border-radius: 5px;
     border: 1px solid #000;
+}
+
+.payBtn {
+	height: 55px;
+	h4 {
+		white-space: normal;
+		line-height: normal;
+	    text-align: left;
+	    padding-left: 10px;		
+	}
 }
 </style>

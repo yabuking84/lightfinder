@@ -44,6 +44,13 @@ const state = {
 			url     : base_url+'/v1/admin/projects',
 			url2    : 'quotations',
 		},
+
+		getOrderedSamples: {
+			method  : 'get',
+			url     : base_url+'/v1/admin/projects',
+			url2    : 'sample-order',
+		},
+
 	},
 
 }
@@ -252,27 +259,28 @@ const actions = {
 
 	getOrderedSamples_a(context, data){
 		return new Promise((resolve, reject) => {
-			// var headers = {token:localStorage.access_token};
-			// var stage_id = (data && data.stage_id)?"stage_id="+data.stage_id:"";
-			// var with_bids = (data && data.with_bids)?"with_bids="+data.with_bids:"";
+			var headers = {
+				token:localStorage.access_token
+			};
 
-			// axios({
-			// 	method: state.api.getInquiries.method,
-			// 	url: state.api.getInquiries.url+"?"+stage_id+"&"+with_bids,
-			// 	headers: headers,
-			// })
-			// .then(response => {
-			// 	resolve(response.data);
-			// })
-			// .catch(error => {
-			// 	console.log('error getInquiries_a',error);
-			// 	// if(actions.checkToken(error)) {                
-			// 	if(context.dispatch('checkToken',error)) {
-			// 		reject(error);
-			// 	}
-			// })
+			axios({
+				method: state.api.getOrderedSamples.method,
+				url: state.api.getOrderedSamples.url+"/"+data.proj_id+"/"+state.api.getOrderedSamples.url2,
+				headers: headers,
+			})
+			.then(response => {
+				resolve(response.data);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
 
-			resolve(itemsTest);
+
+			// resolve(itemsTest);
 
 		});
 	},

@@ -103,6 +103,7 @@ const meta = {
 		inq: "byrInq",
 		myHm: "byrMyHm",
 		auth: "auth",
+		pymnt: "pymnt",
 	},
 }
 

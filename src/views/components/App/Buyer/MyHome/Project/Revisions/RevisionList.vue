@@ -6,9 +6,17 @@
 		    <template v-for="(revision,i) in revisions">
 				<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:project.id,rev_id:revision.id}}">
 
-			        <v-list-tile :key="'rev_'+i" avatar @click="">
+			        <v-list-tile :key="'rev_'+i" avatar>
 
 			            <v-list-tile-avatar>
+							<v-icon 
+							v-if="project.selected_quotation_id==revision.id"
+							class="green--text mr-2">fas fa-check-circle</v-icon>
+							
+							<v-icon v-else 
+							style="color:transparent;"
+							class="mr-2">fas fa-times-circle</v-icon>
+
 							<v-icon>far fa-file-pdf</v-icon>
 			            </v-list-tile-avatar>
 						
@@ -91,7 +99,7 @@ methods: {
 			proj_id: this.project.id,
 		})
 		.then((rspns)=>{
-			// console.log(rspns);
+			console.log(rspns);
 			this.revisions = rspns;
 		})
 		.catch((e)=>{
