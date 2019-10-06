@@ -11,6 +11,10 @@ import { store } from '@/store'
 import vm from '@/main.js';
 
 import hlprs from '@/mixins/helpers'
+
+
+import xmlToJSON from "xmlToJSON";
+
 const base_url = config.main.apiURL;
 
 const state = {
@@ -53,6 +57,7 @@ const state = {
 		},
 
 	},
+	// currency_rates: {},
 	token: localStorage.getItem('access_token') || null,
 	axios: {
 		config: {
@@ -72,6 +77,8 @@ const state = {
 		fax:      		localStorage.getItem('fax') || null,
 		address:      	localStorage.getItem('address') || null,
 		country_id:     localStorage.getItem('country_id') || null,
+
+		subscription:     localStorage.getItem('subscription') || null,
 	},
 
 
@@ -114,6 +121,7 @@ const mutations = {
 		state.auth_user.fax			= user.fax;
 		state.auth_user.address		= user.address;
 		state.auth_user.country_id 	= user.country_id;
+		state.auth_user.subscription 	= user.subscription;
 	},
 
 	DESTROY_AUTHUSER_M(state) {
@@ -130,11 +138,16 @@ const mutations = {
 		state.auth_user.fax			= null;
 		state.auth_user.address		= null;
 		state.auth_user.country_id	= null;
+		state.auth_user.subscription	= null;
 	},
 
 
 	CHANGE_TEST_M(state,data){
 		state.auth_user.name = data;
+	},
+
+	SET_CURRENCY_M(state,data){
+		state.currency_rates = data;
 	},
 
 }
@@ -158,10 +171,10 @@ const actions = {
 			})
 			.then(response => {
 
-				// console.log('dfatadfatadfatadfatadfata');
+				// console.log('retrieveToken_aretrieveToken_aretrieveToken_a');
 				// console.log(response.data);
 				// console.log(response.data.user);
-				// console.log('dfatadfatadfatadfatadfata');
+				// console.log('retrieveToken_aretrieveToken_aretrieveToken_a');
 				
 				var token = response.data.token;
 				var user = response.data.user;
@@ -171,9 +184,16 @@ const actions = {
 				// set token
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 				localStorage.setItem('access_token',token);
-				context.commit('SET_TOKEN_M',token);
+				// context.commit('SET_TOKEN_M',token);
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 				// set token
+
+				// set conversion
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// context.dispatch('setCurrency_a');
+				// localStorage.setItem('currency_rates',token);
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// set conversion
 
 				
 
@@ -192,6 +212,7 @@ const actions = {
 				localStorage.setItem('fax' 			,user.fax);
 				localStorage.setItem('address' 		,user.address);
 				localStorage.setItem('country_id' 	,user.country_id);
+				localStorage.setItem('subscription' 	,user.subscription);
 
 				context.commit('SET_AUTHUSER_M',user);
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -241,10 +262,10 @@ const actions = {
 			})
 			.then(response => {
 
-				// console.log('dfatadfatadfatadfatadfata');
+				// console.log('retrieveTokenOAuth_aretrieveTokenOAuth_aretrieveTokenOAuth_a');
 				// console.log(response.data);
 				// console.log(response.data.user);
-				// console.log('dfatadfatadfatadfatadfata');
+				// console.log('retrieveTokenOAuth_aretrieveTokenOAuth_aretrieveTokenOAuth_a');
 				
 				var token = response.data.token;
 				var user = response.data.user;
@@ -254,11 +275,18 @@ const actions = {
 				// set token
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 				localStorage.setItem('access_token',token);
-				context.commit('SET_TOKEN_M',token);
+				// context.commit('SET_TOKEN_M',token);
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 				// set token
 
-				
+
+				// set conversion
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// context.dispatch('setCurrency_a');
+				// localStorage.setItem('currency_rates',token);
+				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+				// set conversion
+
 
 				// set user details                
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -275,6 +303,7 @@ const actions = {
 				localStorage.setItem('fax' 			,user.fax);
 				localStorage.setItem('address' 		,user.address);
 				localStorage.setItem('country_id' 	,user.country_id);
+				localStorage.setItem('subscription' 	,user.subscription);
 
 				context.commit('SET_AUTHUSER_M',user);
 				// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -310,6 +339,8 @@ const actions = {
 
 		});
 	},
+
+				// localStorage.setItem('currency_rates',token);
 
 
 	retrieveInquiryStatuses_a(context){
@@ -559,7 +590,8 @@ const actions = {
 const getters = {
 	isLoggedIn_g(state){
 		return state.token !== null;
-	}
+	},
+
 }
 
 

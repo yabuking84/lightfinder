@@ -3,8 +3,27 @@
 // const apiURL = 'http://192.168.1.200:8000';
 // const socketURL = 'http://192.168.1.200:3000';
 // const websiteURL = 'http://almani.ddns.net:1984';
+// const apiURL = 'https://api.buyanylight.com';
+// const socketURL = 'https://data.buyanylight.com/socket.io';
+// const websiteURL = 'https://lightfinder.buyanylight.com';
 // const devMode =  true;
-// const defaultMaxInqs =  99;
+// const defaultMaxInqs =  1;
+// const merchant_key =  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi';
+// const eur_convesion_url =  '/static/currency/eur_conversion.xml';
+// // const crypto_convesion_url =  '/static/crypto.json';
+// const crypto_convesion_url =  'https://api.coinbase.com/v2/prices';
+//////////////////////////////////////////////////////////////
+// DEVELOPEMENT
+
+// DEVELOPEMENT 1
+//////////////////////////////////////////////////////////////
+// const apiURL = 'http://192.168.1.202/buyanylight_api/public';
+// const socketURL = 'http://192.168.1.200:3000';
+// const websiteURL = 'http://almani.ddns.net:1984';
+// const devMode =  true;
+// const defaultMaxInqs =  1;
+// const merchant_key =  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi';
+// const eur_convesion_url =  '/static/currency/eur_conversion.xml';
 //////////////////////////////////////////////////////////////
 // DEVELOPEMENT
 
@@ -25,6 +44,10 @@ const socketURL = 'https://data.buyanylight.com/socket.io';
 const websiteURL = 'https://lightfinder.buyanylight.com';
 const devMode =  false;
 const defaultMaxInqs =  1;
+const merchant_key =  'live_$2y$10$Q73YSkuFiykik9zVfS2BBORIwHPFfXTD0-73YXtUycUxdl5m-rCXC';
+const eur_convesion_url =  'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
+const crypto_convesion_url =  'https://api.coinbase.com/v2/prices';
+// const crypto_convesion_url =  'https://blockchain.info/ticker';
 //////////////////////////////////////////////////////////////
 // PRODUCTION
 
@@ -37,12 +60,33 @@ export default {
 	websiteURL: websiteURL,
 	devMode: devMode,
 	defaultMaxInqs: defaultMaxInqs,
+	merchant_key: merchant_key,
+	eur_convesion_url: eur_convesion_url,
+	crypto_convesion_url: crypto_convesion_url,
 
 	awss3: {
 		signingURL:apiURL+"/v1/aws-s3-signature",
         urls: {
         	inquiry: 'https://httpbin.org/post',
         },
+	},
+
+	plan: {
+		yearly:{
+			mini: 5499,
+			standard: 7699,
+			premium: 9899,
+		},
+		monthly:{
+			mini: 499,
+			standard: 699,
+			premium: 899,
+		},
+		maxInqs: {
+			mini: 3,
+			standard: 6,
+			premium: 10,
+		}
 	},
 
 	shipping_methods: [
@@ -239,26 +283,16 @@ export default {
 
 	polling: {
 		bidTable:{
-			time: 5000,
+			time: 150000,
 		},
 		inquiryTable: {
-			time: 10000,
+			time: 100000,
 		},
 		default: {
-			time: 5000,
+			time: 150000,
 		},
 	},
 
-
-	myHome:{
-		psf: 949,
-		balFee: 0.1,
-	},
-
-	myTower:{
-		psf: 1949,
-		balFee: 0.1,
-	},
 
 
 }

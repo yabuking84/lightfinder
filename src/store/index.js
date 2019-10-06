@@ -26,6 +26,8 @@ import ntfctns from './modules/Notifications'
 
 import msg from './modules/Messaging'
  
+import pymnt from './modules/Payment'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -45,6 +47,7 @@ export const store = new Vuex.Store({
     byrInq,
     byrMyHm,
     spplrInq,
+    pymnt,
     admnByr,
     admnSpplr,
     admnInq,

@@ -44,7 +44,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     watchOptions: {
       poll: config.dev.poll,
     },
-    allowedHosts:config.dev.allowedHosts,
+    allowedHosts: config.dev.allowedHosts,
+
+    // https: true,
+	disableHostCheck: true    
   },
   plugins: [
     new webpack.DefinePlugin({

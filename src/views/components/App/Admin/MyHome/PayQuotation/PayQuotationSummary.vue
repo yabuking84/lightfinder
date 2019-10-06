@@ -102,7 +102,8 @@ export default {
 		},
 
 		psf(){
-			return config.myHome.psf;
+			// return config.myHome.psf;
+			return this.$route.meta.psf;
 		},
 
 		overAllTotal(){

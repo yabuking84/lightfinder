@@ -1,4 +1,14 @@
 // Polyfills for IE Support
+
+// import 'es6-promise/auto'
+// require('es6-promise').polyfill();
+
+
+
+// require('babel-polyfill')
+// require('event-source-polyfill')
+// require('es6-promise/auto');
+
 import 'babel-polyfill'
 import 'event-source-polyfill'
 
@@ -41,7 +51,11 @@ import "@/assets/global.js"
 
 
 
-
+// cookies
+//////////////////////////////////////////////////////////////////////////
+Vue.use(require('vue-cookies'));
+//////////////////////////////////////////////////////////////////////////
+// cookies
 
 
 // google sign in
@@ -117,7 +131,7 @@ import VueAuthenticate from 'vue-authenticate'
 Vue.use(VueAuthenticate, {
 	// baseUrl: 'http://localhost', // Your API domain
 	// baseUrl: 'https://almani.ddns.net:1984/login', // Your API domain
-	baseUrl: 'https://almani.ddns.net:2021/BAL-Landing_Page/public', // Your API domain
+	// baseUrl: 'https://almani.ddns.net:2021/BAL-Landing_Page/public', // Your API domain
 	providers: {
 		// google: {
 		// 	clientId: '357366120684-4kni7uj7n2c86osuce6lf8t9t13m6fu8.apps.googleusercontent.com',
@@ -126,25 +140,41 @@ Vue.use(VueAuthenticate, {
 		// }
 	  
 		google: {
-			name: 'google',
 			clientId: '357366120684-4kni7uj7n2c86osuce6lf8t9t13m6fu8.apps.googleusercontent.com',
+			redirectUri: 'https://almani.ddns.net:2021/BAL-Landing_Page/public/auth/google/callback',
+			// name: 'google',
 			// clientSecret: 'zntZwZ5gc2pnUhDPK1067y36',
 			// url: '/auth/google',
-			authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
-			redirectUri: 'https://almani.ddns.net:2021/BAL-Landing_Page/public/auth/google/callback',
-			requiredUrlParams: ['scope'],
-			optionalUrlParams: ['display'],
-			scope: ['profile', 'email'],
-			scopePrefix: 'openid',
-			scopeDelimiter: ' ',
-			display: 'popup',
-			oauthType: '2.0',
+			// authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
+			// requiredUrlParams: ['scope'],
+			// optionalUrlParams: ['display'],
+			// scope: ['profile', 'email'],
+			// scopePrefix: 'openid',
+			// scopeDelimiter: ' ',
+			// display: 'popup',
+			// oauthType: '2.0',
 			popupOptions: { 
 				width: 452, 
 				height: 633,
 				location: 100, 
 			},
-		}
+		},
+
+
+	    linkedin: {
+			clientId: '81r09zbihvmjcl',
+			redirectUri: 'https://almani.ddns.net:2021/BAL-Landing_Page/public/auth/linkedin/callback',
+	    	// name: 'linkedin',
+	    	// url: '/auth/linkedin',
+	    	authorizationEndpoint: 'https://www.linkedin.com/oauth/v2/authorization',
+	    	// requiredUrlParams: ['state'],
+	    	scope: ['r_liteprofilexxx'],
+	    	// scopeDelimiter: ' ',
+	    	// state: 'STATE',
+	    	// oauthType: '2.0',
+	    	popupOptions: { width: 527, height: 582 }
+	    },
+
 
 	}
 })

@@ -27,34 +27,72 @@ lazy>
     			<v-layout row wrap>						
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Beneficiary</h4>
-							<h3>Standard Electronic Co., Limited</h3>
-						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Account No.</h4>
-							<h3>123-369-168838</h3>
+							<h3>Ms Dotcom Ventures FZE</h3>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Beneficiary's Bank</h4>
-							<h3>HSBC Hong Kong</h3>
+							<h3>Emirates NBD</h3>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Swift</h4>
-							<h3>HSBCHKHHHKH</h3>
+							<h3>EBILAEADJAZ</h3>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Bank Address</h4>
-							<h3>168838 Siomai Ampao St.</h3>
+							<h3>Jebal Ali Branch, Dubai, United Arab Emirates</h3>
 						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Amount to Pay</h4>
-							<h1>$ {{ currency(inquiry.amount) }}</h1>
-						</v-flex>
+
 						<v-flex xs12 py-4>
 							<v-divider></v-divider>
 						</v-flex>
+
+						<v-flex xs12 sm6 pa-2>
+							<h2>USD Account</h2>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Account No.</h4>
+							<h3>102-551-156-9802</h3>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Amount to Pay</h4>
+							<h1>$ {{ currency(amount) }}</h1>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">IBAN</h4>
+							<h3>AE340260001025511569802</h3>
+						</v-flex>						
+
+						 
+						<v-flex xs12 py-4>
+							<v-divider></v-divider>
+						</v-flex>						
+						<v-flex xs12 sm6 pa-2>
+							<h2>EUR Account</h2>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Account No.</h4>
+							<h3>102-551-156-9803</h3>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Amount to Pay</h4>
+							<h1>&euro; {{ currency(amountEUR_USD) }}</h1>
+						</v-flex>						
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">IBAN</h4>
+							<h3>AE340260001025511569802</h3>
+						</v-flex> 
+						
+
+
+
+						<v-flex xs12 py-4>
+							<v-divider></v-divider>
+						</v-flex>
+
+
 						<v-flex xs12 pa-2 v-if="!confirmed">
 							<h4 class="font-weight-thin">Please write this on the description:</h4>
-                			<h2>Payment for Inquiry# {{ inquiry.id }}</h2>                			
+                			<h2>{{ description }}</h2>                			
 						</v-flex>
 						<v-flex xs12 pa-2 mt-3 v-if="confirmed">
                 			<h2 style="text-align: center;">
@@ -81,6 +119,7 @@ lazy>
 				v-if="!confirmed"
 				color="green darken-2" 
 				class="white--text payBtn"
+				:loading="paymentLoading"
 				@click="payByBankTransfer()">
 					<v-icon class="mr-2">
 				    	fas fa-money-check-alt
@@ -91,12 +130,11 @@ lazy>
 
 				<v-btn large block
 				v-if="confirmed"
-				color="red darken-2" 
+				color="blue darken-2" 
 				class="white--text payBtn"
+				:loading="paymentLoading"
 				@click="closeDialog()">
-					<v-icon class="mr-2">
-				    	far fa-times-circle
-				    </v-icon>
+					<v-icon class="mr-2">far fa-check-circle</v-icon>
 					close
 				</v-btn>
 
@@ -120,36 +158,69 @@ export default {
 		inqMixin,
 	],
 
-	props:[
-		'openDialog',
-		'inquiry',
-	],
+	props:{
+
+		'openDialog': Boolean,
+		'description': String,
+		'id': String,
+		'amount': Number,
+		'paymentType': {
+			type:String,
+			default: 'inquiry',
+		},
+	},
 
 	data(){return{
 		confirmed: false,
+		paymentLoading: false,
+		amountEUR_USD: 0,
 	}},
 
 	methods:{
 		payByBankTransfer(){
 
-			this.$store.dispatch('byrInq/payByBankTransfer', {
-				inquiry_id: this.inquiry.id
-			})
-			.then((response) => {
-
-				console.log('payByBankTransfer', response);
-				this.confirmed = true;
-				inqEvntBs.emitPaymentMade();
-			})
-			.catch((e) => {
-				  console.log(e);				
-			});			
+			this.paymentLoading = true;
+			if(this.paymentType=='inquiry') {				
+				this.$store.dispatch(this.getStore('pymnt')+'/payByBankTransfer_a', {
+					id: this.id,
+					payment_type: this.paymentType,
+				})
+				.then((response) => {
+					console.log('payByBankTransfer', response);
+					this.paymentLoading = false;					
+					this.confirmed = true;
+					inqEvntBs.emitPaymentMade();
+				})
+				.catch((e) => {
+					this.paymentLoading = false;
+					console.log(e);				
+				});			
+			}
 		},
 
 		closeDialog(){
 
 			this.confirmed = false;
+			this.paymentLoading = false;
 			this.hideInquiry();
+		},
+
+		getEURConversion(){
+			this.$store.dispatch(this.getStore('pymnt')+'/getCurrency_a')
+			.then((rspns)=>{
+				this.amountEUR_USD =  this.amount/rspns.USD;
+			});
+		},
+	},
+
+
+	watch:{
+		openDialog:{
+			handler(nVal,oVal){
+				if(nVal){
+					this.getEURConversion();
+				} 
+			},
 		},
 	},
 

@@ -6,7 +6,7 @@
 		<v-layout row wrap>
 			
 			<v-flex xs12 class="white--text">
-				<router-link :to="{name:'AdminMyHome'}">
+				<router-link :to="{name:package.routeName.main}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -14,7 +14,7 @@
 					</h3>
 				</router-link> 
 				/
-				<router-link :to="{name:'AdminMyHomeProject', params:{proj_id:proj_id}}">
+				<router-link :to="{name:package.routeName.project, params:{proj_id:proj_id}}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -22,7 +22,7 @@
 					</h3>
 				</router-link> 
 				/
-				<router-link :to="{name:'AdminMyHomeRevisionView', params:{proj_id:proj_id,rev_id:rev_id}}">
+				<router-link :to="{name:package.routeName.revisionView, params:{proj_id:proj_id,rev_id:rev_id}}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -119,12 +119,14 @@ import { required, decimal } from 'vuelidate/lib/validators'
 
 import QuotationItems from '@/views/Components/App/Admin/MyHome/Project/Revisions/RevisionEditItems'
 import prjctEvntBs from '@/bus/project'
+import PackageMixin from '@/mixins/Package'
 
 import Vue from 'vue'
 
 export default {
 mixins:[
 	validationMixin,
+	PackageMixin,
 ],
 
 components: {
@@ -198,7 +200,7 @@ methods: {
 			this.clearItems();
 			prjctEvntBs.emiRefreshRevisionTable();
 			this.$router.push({
-				name:'AdminMyHomeRevisionView',
+				name:this.package.routeName.revisionView,
 				params:{
 					proj_id: this.proj_id,
 					rev_id: this.rev_id,

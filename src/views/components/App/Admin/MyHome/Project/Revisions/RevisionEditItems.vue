@@ -150,7 +150,7 @@ import { required, decimal } from 'vuelidate/lib/validators'
 
 
 import ImageUpload from "@/views/Components/App/Admin/MyHome/Project/CreateQuotation/CreateQuotationItemFile"
-import ImageView from "@/views/Components/App/Admin/MyHome/ImageView";
+import ImageView from "@/views/Components/App/MyHome/ImageView";
 
 import Vue from 'vue'
 

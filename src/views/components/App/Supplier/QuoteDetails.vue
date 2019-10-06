@@ -42,6 +42,7 @@
 			<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 			<!-- <v-toolbar-title @click="bidDialog=true" class="subheading font-weight-light pa-2"> -->
 			<!-- {{ hasBid }} {{ bid.stage_id }} {{ bid.sample_stage_id }} -->
+			<!-- {{ inquiry.awarded }} - {{ bid.stage_id }} -->
 			<v-toolbar-title class="subheading font-weight-light pa-2">
 					<template v-if="!inquiry.awarded">
 					<v-btn v-if="hasBid && bid.stage_id==1001" @click="openEditQuote()" class="font-weight-light" color="light-blue lighten-1" dark small >

@@ -16,7 +16,7 @@
                                     <v-card-title primary-title>
                                         <div>
                                             <div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-                                            <div class="black--text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            <div class="black--text">We have received your inquiry and we'll take care of it as fast as possible. We're on it...
                                             </div>
                                         </div>
                                     </v-card-title>

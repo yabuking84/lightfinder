@@ -174,20 +174,19 @@ app flat>
 	<v-btn @click="bounce()">bounce</v-btn> -->
 	<!-- ttttttttttttttttttttttttttttttttttttttttt -->
 	<!-- test -->
-
 	<inquiry-counter v-if="isRole('buyer')"></inquiry-counter>
-
 
     <v-spacer></v-spacer>
 
-    <v-menu offset-x>
+    <v-menu offset-x fixed>
         <v-avatar slot="activator" size="40">
             <div :style="avatarBgImage">
                 <!-- <img :src="authUser.avatar" :alt="authUser.name"> -->
             </div>
         </v-avatar>
 
-        <v-list dense>
+        <!-- <v-list dense  style="position: fixed;"> -->
+        <v-list dense >
 
             <v-list-tile avatar>
                 <v-list-tile-avatar>
@@ -252,6 +251,7 @@ app flat>
         </v-list>
 
     </v-menu>
+
 </v-toolbar>
 
 <v-snackbar 
@@ -287,7 +287,6 @@ style="cursor: pointer;">
 
 
 
-G:\xampp-php7.2\htdocs\buyanylight_final\src\views\Components\App\Buyer\InquiryCounter.vue
 
 
 <script>
@@ -701,4 +700,10 @@ created()  {
     align-items: center;
     padding-top: 8px;
 }
+
+// /deep/ .v-menu__content {
+// 	position: fixed;
+// }
+
+
 </style>

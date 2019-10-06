@@ -205,7 +205,7 @@ import InquiryTableGridItem from "@/views/Components/App/InquiryTableGridItem";
 
 import config from "@/config/main"
 
-import isotope from 'vueisotope'
+// import isotope from 'vueisotope'
 
 export default {
 
@@ -217,7 +217,7 @@ export default {
 	components: {
 		InquiryStatusButtons,
 		InquiryTableGridItem,
-		isotope,
+		// isotope,
 	},
 
 	props:{

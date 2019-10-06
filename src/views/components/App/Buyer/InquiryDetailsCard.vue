@@ -159,11 +159,11 @@
 									<div v-if="inquiryAttachments.length">
 
 									<v-layout row wrap>
-										 <v-flex xs4 v-for="(attachment, index) in inquiryAttachments" :key="attachment+'_'+index">
+										<v-flex xs4 v-for="(attachment, index) in inquiryAttachments" :key="attachment+'_'+index">
 												 <a target="_blank" :href="attachment.location">
 													<v-icon style="font-size: 80px !important;padding: 10px;" color="red" large>fas fa-file-pdf</v-icon>
 												 </a>   
-										  </v-flex> 
+										</v-flex> 
 									</v-layout>
 									  
 									</div>
@@ -183,7 +183,7 @@
 								<!-- /////////////////////////////////////////////////////////////////////////////////////////////// -->
 								<template>
 									<v-flex xs12 pb-0>
-									<h4 class="font-weight-medium ">Shipping Addresses</h4>
+										<h4 class="font-weight-medium ">Shipping Addresses</h4>
 									</v-flex>
 
 									<v-flex xs12 >

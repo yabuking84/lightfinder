@@ -76,6 +76,7 @@
 									<v-btn block 
 									color="blue darken-2" 
 									class="white--text payBtn"
+									:loading="creditCardLoading"
 									@click="payByCreditCard()">
 										<v-icon class="mr-2">
 											far fa-credit-card
@@ -83,12 +84,12 @@
 										<h4>CREDIT CARD</h4>
 									</v-btn>
 
-									<form method="post" :action="creditCard.url" ref="creditCardForm">
+									<!-- <form method="post" :action="creditCard.url" ref="creditCardForm">
 										<input 
 										type="hidden" 
 										name="requestParameter" 
 										:value="creditCard.requestParameter">
-									</form>									
+									</form> -->
 								</v-flex>
 
 							</v-layout>		                	
@@ -102,23 +103,45 @@
 
 		</v-card>
 
-		<bank-transfer-details :inquiry="inquiry" :openDialog.sync="showBankTransferDetails"></bank-transfer-details>
+		<bank-transfer-details 
+		:description="'Payment for Inquiry# '+inquiry.id"
+		:amount="amountToPay" 
+		:id="inquiry.id" 
+		:openDialog.sync="showBankTransferDetails">			
+		</bank-transfer-details>
+
+
+		<foloosi-payment 
+		:reference_token="reference_token" 
+		@payment-success="paymentSuccess($event)"
+		@payment-failed="paymentFailed($event)">
+		</foloosi-payment>
 
 		</template>
 
 	</v-alert>	
 </template>
 <script>
+// import Foloosi from "@/assets/foloosipay.v2.js";
+
 // import helpers from "@/mixins/helpers";
 import BankTransferDetails from "@/views/Components/App/Buyer/BankTransferDetails";
+
+import FoloosiPayment from "@/views/Components/App/Payment/FoloosiPayment";
+
+import inqMixin from "@/mixins/inquiry"
+
+
 export default {
 
 	mixins: [
 		// helpers,
+		inqMixin,
 	],
 
 	components: {
 		BankTransferDetails,
+		FoloosiPayment,
 	},
 
 	props:[
@@ -127,11 +150,20 @@ export default {
 
 	data() { return {
 		showBankTransferDetails: false,
-		creditCard:{
-			url: null,
-			requestParameter: null,
-		},
+		// creditCard:{
+		// 	url: null,
+		// 	requestParameter: null,
+		// },
 		amountToPay: this.inquiry.amount + this.inquiry.shipping_cost,
+
+
+		
+		// foloosi
+		/////////////////////////////////////
+		creditCardLoading: false,
+		reference_token:'',
+		/////////////////////////////////////
+		// foloosi
 	}},
 
 	created(){
@@ -141,40 +173,61 @@ export default {
 	methods:{
 
 		payByCreditCard() {
-
-			this.$store.dispatch(this.getStore()+'/getCreditCardResource', {
-				inquiry_id: this.inquiry.id
+			this.creditCardLoading = true;
+			this.$store.dispatch(this.getStore('pymnt')+'/getCreditCardResource_a', {
+				id: this.inquiry.id,
+				type: "lightfinder.inquiry",
 			})
 			.then((response) => {
-
-				// console.log('getCreditCardResource', response);
-				this.creditCard.requestParameter = response.request_parameter;
-				this.creditCard.url = response.request_url;
-
-				this.$nextTick()
-				.then(() => {
-					this.$refs.creditCardForm.submit();
-				});
-
+				console.log('getCreditCardResource', response);
+				this.reference_token = response.reference_token;
+				this.creditCardLoading = false;
 			})
 			.catch((e) => {
-				  console.log(e);				
+				  console.log(e);
 			});
-
 		},
 
+		paymentSuccess(data){
 
+			// 'inquiry'
+
+			console.log('paymentDone',data);
+
+			this.$store.dispatch(this.getStore('pymnt')+'/setPurchaseAsPaid_a',{
+				transaction_id: data.transaction_no,
+				id: this.inquiry.id,
+				type: 'lightfinder.inquiry',
+			})
+			.then((rspns)=>{
+				console.log(rspns);
+				this.closeOpenInquiry();
+			})
+			.catch((e)=>{
+
+			});
+		},
+
+		paymentFailed(data){
+			console.log('paymentFailed',data);
+		},
+
+		closeOpenInquiry(){
+            this.openInquiry = false;
+		},
 	},
 
 	watch:{
 		inquiry:{
-            handler(nVal, oVal) {
-	            if(nVal) 
-                 this.amountToPay = this.inquiry.amount + this.inquiry.shipping_cost;
-            },
-            deep: true,
+			handler(nVal, oVal) {
+				if(nVal)
+				this.amountToPay = this.inquiry.amount + this.inquiry.shipping_cost;
+			},
+			deep: true,
 		},
-	},	
+	},
+
+
 
 }	
 </script>

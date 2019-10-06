@@ -305,13 +305,15 @@ export default {
 					sample_shipping_postal: sampleShippingPostal,
 
 					"attachments": [],
+
+					package_type: this.$route.meta.package_type,
+
 				})
 				.then((rspns)=>{
 					console.log(rspns);
 					prjctEvntBs.emiRefreshProjectTable();
 					this.dialog = false;
 
-					
 				})
 				.catch((e)=>{
 					console.log(e);

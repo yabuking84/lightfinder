@@ -7,67 +7,73 @@ import config from '@/config/index';
 
 let base_url = config.main.apiURL;
 const state = {
-  api: {
-    get: {
-      /*
-      	get all buyer
-      */
-      method: 'get',
-      getAllBuyer: {
-        url: base_url + `/v1/admin/buyers`
-      },
+	api: {
+	    get: {
+	    	/*
+	      	get all buyer
+	    	*/
+	    	method: 'get',
+	    	getAllBuyer: {
+	    		url: base_url + `/v1/admin/buyers`
+	    	},
 
-      /*
-      	get single buyer
-      */
+	    	/*
+	      	get single buyer
+	    	*/
 
-      getBuyer: {
-        url: base_url + `/v1/admin/buyers`
-      },
+	    	getBuyer: {
+	    	  	url: base_url + `/v1/admin/buyers`
+	    	},
 
-    },
+	    },
 
-    post: {
+	    post: {
+	      method: 'post',
+	      /*
+	          post single buyer
+	      */
+	      addBuyer: {
+	        url: base_url + `/v1/admin/buyers`
+	      }
+	    },
 
-      method: 'post',
+	    /* PATCH */
+	    patch: {
+	      method: 'patch',
+	      /* patch single buyer */
+	      editBuyer: {
+	        url: base_url+'/v1/admin/buyers'
+	      }
+	    },
 
-      /*
-          post single buyer
-      */
-      addBuyer: {
-        url: base_url + `/v1/admin/buyers`
-      }
-    },
+	    /* DELETE */
 
-    /* PATCH */
-    patch: {
-      method: 'patch',
-      /* patch single buyer */
-      editBuyer: {
-        url: base_url+'/v1/admin/buyers'
-      }
-    },
+	    delete: {
 
-    /* DELETE */
+	      method: 'delete',
+	      /* delete single buyer */
+	      deleteBuyer: {
+	        url: base_url+'/v1/admin/buyers'
+	      }
+	    },
 
-    delete: {
+	     // {{url}}/v1/admin/buyers/{{buyer_id}}/subscriptions/{{subscription_id}}/paid
 
-      method: 'delete',
-      /* delete single buyer */
-      deleteBuyer: {
-        url: base_url+'/v1/admin/buyers'
-      }
-    }
+	    markSubscriptionAsPaid: {
+			method  : 'put',
+			url     : base_url+'/v1/admin/buyers',
+			url2    : 'subscriptions',	    	
+			url3    : 'paid',	    	
+	    },
 
+	},
 
-
-  },
-  token: localStorage.getItem('access_token') || null,
-  axios: {
-    config: {
-      headers: { 'Authorization': "bearer" + (localStorage.getItem('access_token') || null) }
-    }
-  }
+	token: localStorage.getItem('access_token') || null,
+	axios: {
+	    config: {
+	      headers: { 'Authorization': "bearer" + (localStorage.getItem('access_token') || null) }
+	    }
+	}
 }
 
 const mutations = {
@@ -184,11 +190,48 @@ const actions = {
   },
 
 
+  	markSubscriptionAsPaid_a(context,data){
+		return new Promise((resolve, reject) => {
+			var headers = {
+				token: localStorage.access_token,
+				"content-type": "application/json",
+			};
+
+			var url = ""; 
+			url+= state.api.markSubscriptionAsPaid.url+"/";
+			url+= data.buyer_id+"/";
+			url+= state.api.markSubscriptionAsPaid.url2+"/";
+			url+= data.subscription_id+"/";
+			url+= state.api.markSubscriptionAsPaid.url3;
+
+			console.log(url);
+
+			axios({
+				method: state.api.markSubscriptionAsPaid.method,
+				url: url,
+				headers: headers,
+			})
+			.then(response => {
+				console.log(response);
+				resolve(response);
+			})
+			.catch(error => {
+				if (typeof error.response !== "undefined" && error.response.data.error == "Provided token is expired.") {
+					console.log("EXPIRED")
+					router.push({'name': 'Logout'});
+				} else {
+					console.log("normal error!")
+					reject(error)
+				}
+			});
+		})  		
+  	},
+
 }
 export default {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions
+	namespaced: true,
+	state,
+	getters,
+	mutations,
+	actions,
 }

@@ -2,7 +2,7 @@
 // import Vuex from 'vuex';
 import axios from 'axios';
 import router from '@/router'
-
+import { groupBy, omit, mapValues } from 'lodash'
 import config from '@/config/index'
 
 import {projectsTest,filesTest,itemsTest} from '@/data/ProjectDummyData'
@@ -73,11 +73,15 @@ const actions = {
 				"content-type": "application/json",
 			};
 
+
 			axios({
 				method: state.api.addProject.method,
 				url: state.api.addProject.url,
 				headers: headers,
-				data: JSON.stringify(data)
+				data: JSON.stringify({
+					...data,
+					package_type: data.package_type,
+				}),
 			})
 			.then(response => {
 				resolve(response);
@@ -241,6 +245,9 @@ const actions = {
 				data: JSON.stringify(data.formData),
 			})
 			.then(response => {
+				// console.log('XXXXXXXXXX');
+				// console.log(response);
+				// console.log('XXXXXXXXXX');
 				resolve(response.data);
 			})
 			.catch(error => {
@@ -251,7 +258,7 @@ const actions = {
 				}
 			})
 
-			resolve(itemsTest);
+			// resolve(itemsTest);
 
 		});
 	},
@@ -264,11 +271,64 @@ const actions = {
 
 			axios({
 				method: state.api.getOrderedSamples.method,
-				url: state.api.getOrderedSamples.url+"/"+data.proj_id+"/"+state.api.getOrderedSamples.url2,
+				url: state.api.getOrderedSamples.url+"/"+data.proj_id+"/"+state.api.getOrderedSamples.url2+"?paid=1",
 				headers: headers,
 			})
 			.then(response => {
+				// console.log(response.data);
+
+				var orders = mapValues(
+					groupBy(response.data, 'group_id'),
+					clist => clist.map (
+						order => {
+							return {
+								...order,
+								loading: false,
+							}
+						}
+					)
+				);
+				// console.log(orders);
+
+				resolve(orders);
+			})
+			.catch(error => {
+				console.log('error getInquiries_a',error);
+				// if(actions.checkToken(error)) {                
+				if(context.dispatch('checkToken',error)) {
+					reject(error);
+				}
+			})
+
+			// resolve(itemsTest);
+
+		});
+	},
+
+	getOrderedSamplesByGrpId_a(context, data){
+		return new Promise((resolve, reject) => {
+			var headers = {
+				token:localStorage.access_token
+			};
+
+			axios({
+				method: state.api.getOrderedSamples.method,
+				url: state.api.getOrderedSamples.url+"/"+data.proj_id+"/"+state.api.getOrderedSamples.url2+"?paid=1&group_id="+data.group_id,
+				headers: headers,
+			})
+			.then(response => {
+				// console.log(response.data);
 				resolve(response.data);
+
+				// var orders = mapValues(
+				// 	groupBy(response.data, 'group_id'),
+				// 	clist => clist.map (
+				// 		order => omit(order, 'group_id')
+				// 	)
+				// );
+				// console.log(orders);
+
+				// resolve(orders);
 			})
 			.catch(error => {
 				console.log('error getInquiries_a',error);

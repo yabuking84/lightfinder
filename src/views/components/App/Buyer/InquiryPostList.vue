@@ -17,7 +17,7 @@
 			<v-flex xs12 mx-5 mt-3 mb-3>
 				 <div>
 					<div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-					<div class="blue-grey--text">We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
+					<div class="blue-grey--text">We have received your inquiry and we'll take care of it as fast as possible. We're on it...
 					</div>
 				</div>  
 			</v-flex>
@@ -476,15 +476,15 @@
 									<!-- x<pre>{{ bidItem.sample_stage_id }}</pre>xx -->
 									<template v-if="!inquiry.awarded"> 										
 										<!-- <v-flex v-if="bidItem.sample_stage_id!=2001" xs6> -->
-										<v-flex v-if="!isBidSampleDisabled(bidItem.sample_stage_id)" xs6>
-											<v-btn 
+										<v-flex v-if="!isBidSampleDisabled(bidItem.sample_stage_id) && inquiry.sample_quantity" xs6>
+											<v-btn 											
 											flat block large 
 											class="green darken-2 " 
 											:disabled="(inquiry.awarded)?true:false" 
 											@click="openSample(bidItem)">
 												<i class="fas fa-lightbulb white--text "></i>
 												<span class="font-weight-bold ml-1 white--text ">Request Sample</span>
-											</v-btn>
+											</v-btn>											
 										</v-flex>
 
 										<v-flex v-if="bidItem.sample_stage_id==2001" xs6>

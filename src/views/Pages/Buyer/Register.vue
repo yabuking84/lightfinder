@@ -46,6 +46,7 @@
 							autocomplete="off" 
 							@blur="$v.form.last_name.$touch()"
 							:error-messages="fieldErrors('form.last_name')">
+							<!-- :error-messages="['test']"> -->
 							</v-text-field>
 
 							<v-text-field 
@@ -177,9 +178,9 @@
 				<div class="agree">
 					<h2 class="black--text mb-4">VERIFICATION REQUIRED</h2>
 					<p style="font-size:1em;"> 
-						<span class="mb-4">Thank you so much for signing up with Buy Any Light (BAL). You're almost there!</span>
-						<span class="mb-4">Our management is evaluating your application. We will get back to you once we have reviewed all the details.</span>
-						<span class="mb-4">Meanwhile, please verify your e-mail ID by clicking on the link that is sent to your registered e-mail ID.</span>
+						<span class="mb-4">Thank you so much for signing up with BuyAnyLight (BAL).</span>
+						<span class="mb-4">Please verify your email ID by clicking on the link that was send to your registered e-mail ID.</span>
+						<span class="mb-4">If you have not received any e-mail from us, please check your Spam/Junk Email folder.</span>
 					</p>
 				</div>
 			</v-card-text>
