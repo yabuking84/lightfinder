@@ -46,7 +46,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     allowedHosts: config.dev.allowedHosts,
 
-    https: true,
+    // https: true,
 	disableHostCheck: true    
   },
   plugins: [

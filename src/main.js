@@ -131,7 +131,7 @@ import VueAuthenticate from 'vue-authenticate'
 Vue.use(VueAuthenticate, {
 	// baseUrl: 'http://localhost', // Your API domain
 	// baseUrl: 'https://almani.ddns.net:1984/login', // Your API domain
-	baseUrl: 'https://almani.ddns.net:2021/BAL-Landing_Page/public', // Your API domain
+	// baseUrl: 'https://almani.ddns.net:2021/BAL-Landing_Page/public', // Your API domain
 	providers: {
 		// google: {
 		// 	clientId: '357366120684-4kni7uj7n2c86osuce6lf8t9t13m6fu8.apps.googleusercontent.com',

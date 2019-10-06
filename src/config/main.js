@@ -3,12 +3,15 @@
 // const apiURL = 'http://192.168.1.200:8000';
 // const socketURL = 'http://192.168.1.200:3000';
 // const websiteURL = 'http://almani.ddns.net:1984';
+// const apiURL = 'https://api.buyanylight.com';
+// const socketURL = 'https://data.buyanylight.com/socket.io';
+// const websiteURL = 'https://lightfinder.buyanylight.com';
 // const devMode =  true;
-// const defaultMaxInqs =  99;
+// const defaultMaxInqs =  1;
 // const merchant_key =  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi';
 // const eur_convesion_url =  '/static/currency/eur_conversion.xml';
-// const crypto_convesion_url =  'https://api.coinbase.com/v2/prices';
 // // const crypto_convesion_url =  '/static/crypto.json';
+// const crypto_convesion_url =  'https://api.coinbase.com/v2/prices';
 //////////////////////////////////////////////////////////////
 // DEVELOPEMENT
 
@@ -280,13 +283,13 @@ export default {
 
 	polling: {
 		bidTable:{
-			time: 10000,
+			time: 150000,
 		},
 		inquiryTable: {
-			time: 10000,
+			time: 100000,
 		},
 		default: {
-			time: 10000,
+			time: 150000,
 		},
 	},
 

@@ -11,12 +11,12 @@
 
 		<v-card-title class="black white--text headline pa-3">
 			<v-layout row wrap justify-space-between align-center>
-			  
+
 				<span class="ml-3">Upgrade Account</span>
 
 				<v-btn dark flat @click="closeDialog()">
 					<v-icon>close</v-icon>
-				</v-btn>      	  	
+				</v-btn>
 		</v-layout>
 		</v-card-title>
 

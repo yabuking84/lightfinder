@@ -282,7 +282,7 @@
 													<v-text-field 
 													outline
 													  color="black" 
-													  label="We Chat Id" 
+													  label="WeChat Id" 
 													  v-model="form.wechatid"
 													  :error-messages="fieldErrors('form.wechatid')">
 													</v-text-field>  
@@ -474,10 +474,9 @@
 														outline
 														  color="black" 
 														  label="IBAN:" 
-														  v-model="form.iban" 
-														  required 
-														  :error-messages="fieldErrors('form.iban')" 
-														  @blur="$v.form.iban.$touch()">
+														  v-model="form.iban">
+														  <!-- @blur="$v.form.iban.$touch()"> -->
+														  <!-- :error-messages="fieldErrors('form.iban')"  -->
 												   </v-text-field>
 
 												</v-flex>
@@ -588,15 +587,15 @@
 						<span class="mb-4"> 1.) We hereby verify that all information and attachments on this form are fully true and correct to the best of my knowledge.</span>
 						<span class="mb-4"> 2.) We confirm to provide samples and supply orders from client with no minimum quantity required.</span>
 						<span class="mb-4"> 3.) We confirm, that BuyAnyLight Inspector can visit our company/factory to check on all the information given in this form.</span>
-						<span class="mb-4"> 4.) We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation!</span>
-						<span class="mb-4"> 5.) We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to:</span>
+						<span class="mb-4"> 4.) We confirm, that any losses/damages caused of false information given in this form, BuyAnyLight has the right to claim for full compensation.</span>
+						<span class="mb-4"> 5.) We agree that all submitted information can be used internally by BuyAnyLight for product sourcing inquiries. Those requests will be sent by our system or one of our employees to the contact details provided in this form. Make sure those details are correct in order to not miss our inquiries! You can unsubscribe from our sourcing database anytime by sending an email to: <a href="mailto:info@buyanylight.com">info@buyanylight.com</a></span>
 					</p>
 
-					<p class="mb-1"> 
-						* By clicking the submit button you agree the above conditions.
+					<p class="mb-1" style="font-size:0.8em; line-height: normal;"> 
+						*By clicking the submit button you agree the above conditions.
 					</p>
-					<p class="">
-						* Every lighting manufacturer's registration is subject to approval from BAL
+					<p class="" style="font-size:0.8em; line-height: normal;">
+						*Every lighting manufacturer's registration is subject to approval from BAL
 					</p>				
 				</div>
 			</v-card-text>
@@ -625,9 +624,10 @@
 				<div class="agree">
 					<h2 class="black--text mb-4">VERIFICATION REQUIRED</h2>
 					<p style="font-size:1em;"> 
-						<span class="mb-4">Thank you so much for signing up with Buy Any Light (BAL). You're almost there!</span>
+						<span class="mb-4">Thank you so much for signing up with BuyAnyLight (BAL). You are almost there!</span>
 						<span class="mb-4">Our management is evaluating your application. We will get back to you once we have reviewed all the details.</span>
-						<span class="mb-4">Meanwhile, please verify your e-mail ID by clicking on the link that is sent to your registered e-mail ID.</span>
+						<span class="mb-4">Meanwhile, please verify your email ID by clicking on the link that was send to your registered e-mail ID.</span>
+						<span class="mb-4">If you have not received any e-mail from us, please check your Spam/Junk Email folder.</span>
 					</p>
 				</div>
 			</v-card-text>
@@ -800,7 +800,7 @@ export default {
 
 	  accountname: { required },
 	  accountnumber: { required },
-	  iban: { required },
+	  // iban: { required },
 	  bankname: { required },
 	  bankaddress: { required },
 	  swiftcode: { required },
@@ -827,7 +827,7 @@ export default {
 	  zipcode: { required: 'Please enter your zipcode.' },
 	  phonenumber: { required: 'Please enter your Phone Number.' },
 	  mobilenumber: { required: 'Please enter your Moble Number.' },
-	  wechatid: { required: 'Please enter your We Chat ID' },
+	  wechatid: { required: 'Please enter your WeChat ID' },
 	  companyestablishedyear: { required: 'Please enter Company Established year.'},
 	  numberofemployees: { required: 'Please enter the number of employees.'},
 	  numberofworkersinfactory: { required: 'Please enter the number of workers in factory.'},
@@ -836,7 +836,7 @@ export default {
 	 
 	  accountname: { required: 'Please enter your Account Name'},
 	  accountnumber: { required: 'Please enter your Account Number'},
-	  iban: { required: 'Please enter your IBAN'},
+	  // iban: { required: 'Please enter your IBAN'},
 	  bankname: { required: 'Please enter your Bank Name'},
 	  bankaddress: { required: 'Please enter your Bank Address'},
 	  swiftcode: { required: 'Please enter your Swift Code' },

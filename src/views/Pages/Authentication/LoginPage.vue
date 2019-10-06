@@ -674,26 +674,26 @@ export default {
 
 		// google login
 		////////////////////////////////////////////////////////////////////////		
-		let that = this;
-		let checkGauthLoad = setInterval(function() {
+		// let that = this;
+		// let checkGauthLoad = setInterval(function() {
 
-			that.isInit = (that.$gAuth) ? that.$gAuth.isInit : false;
-			that.isSignIn = (that.$gAuth) ? that.$gAuth.isAuthorized : false
+		// 	that.isInit = (that.$gAuth) ? that.$gAuth.isInit : false;
+		// 	that.isSignIn = (that.$gAuth) ? that.$gAuth.isAuthorized : false
 
-			console.log('that.$gAuth', that.$gAuth);
-			console.log('that.isInit', that.isInit);
-			// console.log('that.$gAuth.GoogleAuth', that.$gAuth.GoogleAuth);
+		// 	console.log('that.$gAuth', that.$gAuth);
+		// 	console.log('that.isInit', that.isInit);
+		// 	// console.log('that.$gAuth.GoogleAuth', that.$gAuth.GoogleAuth);
 
-			if (that.isInit)
-			clearInterval(checkGauthLoad)
+		// 	if (that.isInit)
+		// 	clearInterval(checkGauthLoad)
 
-		}, 3000);
+		// }, 3000);
 
 
-		setTimeout(()=>{
-			if(!this.isInit)
-			this.snackbar_cookie = true;
-		},5000);
+		// setTimeout(()=>{
+		// 	if(!this.isInit)
+		// 	this.snackbar_cookie = true;
+		// },5000);
 
 		////////////////////////////////////////////////////////////////////////		
 		// google login
