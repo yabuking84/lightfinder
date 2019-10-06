@@ -4,15 +4,15 @@
 		<v-layout row wrap>
 			
 			<v-flex xs12 class="white--text">
-				<router-link :to="{name:'BuyerMyHome'}">
+				<router-link :to="{name:package.routeName.main}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
-						My Home
+						{{ package.title }}
 					</h3>
 				</router-link> 
 				/
-				<router-link :to="{name:'BuyerMyHomeProject', params:{proj_id:proj_id}}">
+				<router-link :to="{name:package.routeName.project, params:{proj_id:proj_id}}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -37,7 +37,7 @@
 
 								<router-link 
 								v-if="project.selected_quotation_id == rev_id || project.stage_id!=1004"
-								:to="{name:'BuyerMyHomeOrderSamples', params:{proj_id:proj_id,rev_id:rev_id}}">
+								:to="{name:package.routeName.orderSamples, params:{proj_id:proj_id,rev_id:rev_id}}">
 									<v-btn class="black white--text">
 										order samples
 									</v-btn>
@@ -81,6 +81,7 @@
 import Messaging from "@/views/Components/App/Buyer/MyHome/Project/ProjectViewMessagingBox"
 import RevisionViewTable from "@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionViewTable";
 import RevisionViewSummary from "@/views/Components/App/Buyer/MyHome/Project/Revisions/RevisionViewSummary";
+import PackageMixin from '@/mixins/Package'
 
 export default {
 
@@ -89,20 +90,13 @@ export default {
 		RevisionViewTable,
 		RevisionViewSummary,
 	},
+	
+	mixins: [PackageMixin],
 
 	data() { return {
 		project: {},
 		revision: {},
 	}},
-
-	computed:{
-		proj_id(){
-			return this.$route.params.proj_id;
-		},
-		rev_id(){
-			return this.$route.params.rev_id;
-		},
-	},
 
 	created(){
 		this.getRevision();	
@@ -136,6 +130,17 @@ export default {
 				console.log(e);
 			});
 		},
+	},
+
+
+	computed:{
+		proj_id(){
+			return this.$route.params.proj_id;
+		},
+		rev_id(){
+			return this.$route.params.rev_id;
+		},
+	
 	},
 
 

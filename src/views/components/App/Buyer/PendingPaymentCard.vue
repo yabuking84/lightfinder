@@ -105,7 +105,7 @@
 
 		<bank-transfer-details 
 		:description="'Payment for Inquiry# '+inquiry.id"
-		:amount="inquiry.amount" 
+		:amount="amountToPay" 
 		:id="inquiry.id" 
 		:openDialog.sync="showBankTransferDetails">			
 		</bank-transfer-details>
@@ -113,7 +113,8 @@
 
 		<foloosi-payment 
 		:reference_token="reference_token" 
-		@payment-success="paymentDone($event)">			
+		@payment-success="paymentSuccess($event)"
+		@payment-failed="paymentFailed($event)">
 		</foloosi-payment>
 
 		</template>
@@ -128,12 +129,14 @@ import BankTransferDetails from "@/views/Components/App/Buyer/BankTransferDetail
 
 import FoloosiPayment from "@/views/Components/App/Payment/FoloosiPayment";
 
+import inqMixin from "@/mixins/inquiry"
 
 
 export default {
 
 	mixins: [
 		// helpers,
+		inqMixin,
 	],
 
 	components: {
@@ -185,23 +188,33 @@ export default {
 			});
 		},
 
-		paymentDone(data){
+		paymentSuccess(data){
 
 			// 'inquiry'
 
 			console.log('paymentDone',data);
 
 			this.$store.dispatch(this.getStore('pymnt')+'/setPurchaseAsPaid_a',{
-				transition_id: transaction_no,
+				transaction_id: data.transaction_no,
 				id: this.inquiry.id,
 				type: 'lightfinder.inquiry',
 			})
 			.then((rspns)=>{
-
+				console.log(rspns);
+				this.closeOpenInquiry();
 			})
-			.catch();
+			.catch((e)=>{
+
+			});
 		},
 
+		paymentFailed(data){
+			console.log('paymentFailed',data);
+		},
+
+		closeOpenInquiry(){
+            this.openInquiry = false;
+		},
 	},
 
 	watch:{

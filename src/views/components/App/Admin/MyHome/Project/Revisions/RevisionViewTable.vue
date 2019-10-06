@@ -38,7 +38,7 @@ class="elevation-1 item-table">
 
 
 <script>
-import ImageView from "@/views/Components/App/Buyer/MyHome/ImageView";
+import ImageView from "@/views/Components/App/MyHome/ImageView";
 
 export default {
 	components:{

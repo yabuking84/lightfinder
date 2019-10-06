@@ -4,15 +4,15 @@
 		<v-layout row wrap>
 			
 			<v-flex xs12 class="white--text">
-				<router-link :to="{name:'BuyerMyHome'}">
+				<router-link :to="{name:package.routeName.main}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
-						My Home
+						{{ package.title }}
 					</h3>
 				</router-link> 
 				/
-				<router-link :to="{name:'BuyerMyHomeProject', params:{proj_id:proj_id}}">
+				<router-link :to="{name:package.routeName.project, params:{proj_id:proj_id}}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -20,7 +20,7 @@
 					</h3>
 				</router-link> 
 				/
-				<router-link :to="{name:'BuyerMyHomeRevisionView', params:{proj_id:proj_id,rev_id:rev_id}}">
+				<router-link :to="{name:package.routeName.revisionView, params:{proj_id:proj_id,rev_id:rev_id}}">
 					<h3 
 					class="white--text d-inline-block mr-2"
 					style="border-bottom: 1px solid;">
@@ -67,6 +67,7 @@
 
 import PaymentSampleSummary from "@/views/Components/App/Buyer/MyHome/OrderSamples/OrderSamplesPaymentSummary"
 import PaymentSampleOrderTable from "@/views/Components/App/Buyer/MyHome/OrderSamples/OrderSamplesTable"
+import PackageMixin from '@/mixins/Package'
 
 export default {
 
@@ -74,6 +75,8 @@ export default {
 		PaymentSampleSummary,
 		PaymentSampleOrderTable,
 	},
+
+	mixins: [PackageMixin],
 
 
 	data() { return {
@@ -86,14 +89,6 @@ export default {
 
 	}},
 
-	computed:{
-		proj_id(){
-			return this.$route.params.proj_id;
-		},
-		rev_id(){
-			return this.$route.params.rev_id;
-		},
-	},
 
 	created(){
 		this.getSamples();	
@@ -128,6 +123,18 @@ export default {
 	    		console.log(e);
 	    	});
 	    },
+
+	},
+
+
+	computed:{
+		
+		proj_id(){
+			return this.$route.params.proj_id;
+		},
+		rev_id(){
+			return this.$route.params.rev_id;
+		},
 
 	},
 

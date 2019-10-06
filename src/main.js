@@ -1,4 +1,14 @@
 // Polyfills for IE Support
+
+// import 'es6-promise/auto'
+// require('es6-promise').polyfill();
+
+
+
+// require('babel-polyfill')
+// require('event-source-polyfill')
+// require('es6-promise/auto');
+
 import 'babel-polyfill'
 import 'event-source-polyfill'
 
@@ -41,7 +51,11 @@ import "@/assets/global.js"
 
 
 
-
+// cookies
+//////////////////////////////////////////////////////////////////////////
+Vue.use(require('vue-cookies'));
+//////////////////////////////////////////////////////////////////////////
+// cookies
 
 
 // google sign in

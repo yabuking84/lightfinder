@@ -1,7 +1,7 @@
 <template>
-<v-dialog 
-:value="openDialog" 
-@input="$emit('update:openDialog', false)" 
+<v-dialog persistent
+:value="dialogLocal" 
+@input="closeDialog()" 
 max-width="600px"
 lazy>
 
@@ -12,6 +12,13 @@ lazy>
             src="/static/logos/logo-black.png" 
             title="BuyAnyLight.com">
     		<h2 class="ml-4">Bank Transfer Details</h2>
+
+    		<v-btn dark flat icon
+    		style="position: absolute; top: 0; right: 0; margin: 10px 10px;"
+    		class="black--text"
+    		@click="closeDialog()">
+				<v-icon>close</v-icon>
+			</v-btn>    
     	</v-card-title>
     	
     	<v-card-text>
@@ -55,7 +62,7 @@ lazy>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Amount to Pay</h4>
-							<h1>$ {{ currency(amount) }}</h1>
+							<h1>&euro; {{ currency(amount) }}</h1>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">IBAN</h4>
@@ -75,7 +82,7 @@ lazy>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Amount to Pay</h4>
-							<h1>&euro; {{ currency(amountEUR_USD) }}</h1>
+							<h1>$ {{ currency(amountEUR_USD) }}</h1>
 						</v-flex>						
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">IBAN</h4>
@@ -115,6 +122,7 @@ lazy>
 		<v-card-actions>
 
 			<v-layout row wrap align-center justify-center  ma-2 pa-2>
+
 				<v-btn large block
 				v-if="!confirmed"
 				color="green darken-2" 
@@ -126,14 +134,25 @@ lazy>
 				    </v-icon>
 					Confirm Bank Transfer was done!
 				</v-btn>
+				
+				<v-btn large block
+				v-if="error_banktransfer"
+				color="red darken-2" 
+				class="white--text payBtn"
+				:loading="paymentLoading"
+				@click="banktransferFailed()">
+					<v-icon class="mr-2">
+				    	fas fa-money-check-alt
+				    </v-icon>
+					Bank Transfer failed!
+				</v-btn>
 
 
 				<v-btn large block
 				v-if="confirmed"
 				color="blue darken-2" 
 				class="white--text payBtn"
-				:loading="paymentLoading"
-				@click="closeDialog()">
+				@click="banktransferSuccess()">
 					<v-icon class="mr-2">far fa-check-circle</v-icon>
 					close
 				</v-btn>
@@ -151,6 +170,9 @@ lazy>
 // import helpers from "@/mixins/helpers";
 import inqMixin from "@/mixins/inquiry"
 import inqEvntBs from "@/bus/inquiry"
+
+import { mapGetters } from 'vuex'
+
 export default {
 
 	mixins: [
@@ -160,49 +182,90 @@ export default {
 
 	props:{
 
-		'openDialog': Boolean,
+		'dialog': {
+			type: Boolean,
+			default: false,
+		},
 		'description': String,
 		'id': String,
 		'amount': Number,
-		'paymentType': {
-			type:String,
-			default: 'inquiry',
-		},
+		'paymentType': String,
+		'plan': String,		
 	},
 
-	data(){return{
+	data(){ return {
+		dialogLocal: false,
 		confirmed: false,
+		error_banktransfer: false,
 		paymentLoading: false,
 		amountEUR_USD: 0,
 	}},
 
+
+	created(){
+		
+	},
+
 	methods:{
 		payByBankTransfer(){
+			var payload = {};
 
 			this.paymentLoading = true;
-			if(this.paymentType=='inquiry') {				
-				this.$store.dispatch(this.getStore('pymnt')+'/payByBankTransfer_a', {
+
+			if(this.plan) { // for subscription
+				payload = {
+					id: this.id,
+					payment_type: "subscribe",
+					plan: this.plan,
+				};
+
+			} else {
+				payload = {
 					id: this.id,
 					payment_type: this.paymentType,
-				})
-				.then((response) => {
-					console.log('payByBankTransfer', response);
-					this.paymentLoading = false;					
-					this.confirmed = true;
-					inqEvntBs.emitPaymentMade();
-				})
-				.catch((e) => {
-					this.paymentLoading = false;
-					console.log(e);				
-				});			
+				}
 			}
+
+
+			this.$store.dispatch(this.getStore('pymnt')+'/payByBankTransfer_a', payload)
+			.then((response) => {
+				this.paymentLoading = false;
+				console.log('payByBankTransfer', response);
+				this.confirmed = true;
+			})
+			.catch((e) => {
+				console.log(e);
+				this.paymentLoading = false;
+				this.error_banktransfer = true;
+			});
+
+
+
+			// setTimeout(()=>{
+			// 	this.paymentLoading = false;
+			// 	this.confirmed = true;
+			// },2000);
+			
+		},
+
+		banktransferSuccess() {
+			this.$emit('banktransfer-success');
+			this.closeDialog();
+		},
+
+		banktransferFailed() {
+			this.$emit('banktransfer-failed');
+			this.closeDialog();
+		},
+
+
+		openDialog(){
+			this.dialogLocal = true;
 		},
 
 		closeDialog(){
-
-			this.confirmed = false;
-			this.paymentLoading = false;
-			this.hideInquiry();
+			this.dialogLocal = false;
+			this.$emit('update:dialog', false);
 		},
 
 		getEURConversion(){
@@ -211,15 +274,28 @@ export default {
 				this.amountEUR_USD =  this.amount/rspns.USD;
 			});
 		},
+
+
 	},
 
 
+
+	computed: {
+
+	},
+
+
+
+
 	watch:{
-		openDialog:{
+		dialog:{
 			handler(nVal,oVal){
 				if(nVal){
 					this.getEURConversion();
-				} 
+					this.openDialog();
+				} else {
+					// this.closeDialog();					
+				}
 			},
 		},
 	},

@@ -157,31 +157,7 @@ export default {
 			this.$v.$touch();
 
 			if(!this.$v.formData.$error) {
-
-				this.$store.dispatch(this.getStore()+'/addProject_a',{
-					"name": "Project Test",
-					"type": "my-home",
-					"budget": 0,
-					"shipping_method_id": 1,
-					
-					'shipping_address': null,
-					'shipping_street': null,
-					'shipping_city': null,
-					'shipping_postal': null,
-					'sample_shipping_address': null,
-					'sample_shipping_street': null,
-					'sample_shipping_city': null,
-					'sample_shipping_postal': null,
-
-					"attachments": [],
-				})
-				.then((rspns)=>{
-
-				})
-				.catch((e)=>{
-					console.log(e);
-				});
-
+				alert('Under Construction!');
 			}
 		}
 	},

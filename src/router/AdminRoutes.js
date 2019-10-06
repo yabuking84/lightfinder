@@ -109,6 +109,16 @@ const meta2 = {
 
 }
 
+const myHomeMeta = {
+	...meta2,
+	package_type: 'my-home',
+}
+
+
+const myTowerMeta = {
+	...meta2,
+	package_type: 'my-tower',
+}
 
 export default [
 	{
@@ -139,6 +149,37 @@ export default [
 		props: { default:true },
 
 	},
+
+
+
+
+
+	{
+		name: 'AdminInquiryView',
+		path: '/lightfinder/inquiry/:inquiry_id',
+		components: {
+			default: AdminInquiry, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: AdminInquiryView,
+		},
+		meta: meta,
+		props: { default:true },
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
 	{
 		name: 'AdminBuyer',
 		path: '/buyer/',
@@ -209,7 +250,7 @@ export default [
 			header: AppToolbar, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -221,7 +262,7 @@ export default [
 			header: AppToolbar, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	// {
@@ -247,7 +288,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -259,7 +300,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -271,7 +312,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -283,7 +324,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -295,7 +336,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},	
 	//////////////////////////////////////////////////////
 	// My Home
@@ -312,8 +353,94 @@ export default [
 			header: AppToolbar, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myTowerMeta,
 	},
+
+	{
+		name: 'AdminMyTowerProject',
+		path: '/my-tower/project/:proj_id',
+		components: { 
+			default: AdminMyHomeProject, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	// {
+	// 	name: 'AdminMyTowerOrderedSamples',
+	// 	path: '/my-home/project/:proj_id',
+	// 	components: { 
+	// 		default: AdminMyHomeOrderedSamples, 
+	// 		sidebar: AppSidebar, 
+	// 		header: AppToolbar, 
+	// 		footer: AppFooter,
+	// 	},
+	// 	meta: meta2,
+	// },
+
+
+
+	{
+		name: 'AdminMyTowerPayQuotation',
+		path: '/my-tower/project/:proj_id/payment',
+		components: { 
+			default: AdminMyHomePayQuotation, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'AdminMyTowerRevisionView',
+		path: '/my-tower/project/:proj_id/revision/:rev_id',
+		components: { 
+			default: AdminMyHomeRevisionView, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'AdminMyTowerRevisionEdit',
+		path: '/my-tower/project/:proj_id/revision/:rev_id/edit-revision',
+		components: { 
+			default: AdminMyHomeRevisionEdit, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'AdminMyTowerRevisionCopy',
+		path: '/my-tower/project/:proj_id/revision/:rev_id/copy-revision',
+		components: { 
+			default: AdminMyHomeRevisionCopy, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'AdminMyTowerOrderSamples',
+		path: '/my-tower/project/:proj_id/revision/:rev_id/order-samples',
+		components: { 
+			default: AdminMyHomeOrderSamples, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},		
 	//////////////////////////////////////////////////////
 	// My Tower
 

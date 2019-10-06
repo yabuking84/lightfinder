@@ -101,8 +101,7 @@ data:() => ({
 
 }),
 
-created(){
-	// console.log('PIT');
+created(){	
 	this.getProjects();
 	prjctEvntBs.onRefreshProjectTable(() => {
 		this.getProjects();
@@ -114,8 +113,16 @@ methods:{
 	getProjects(){
 		this.$store.dispatch(this.getStore('myHm')+'/getProjects_a')
 		.then((rspns)=>{
-			// console.log(rspns);
-			this.items = rspns;
+
+			console.log(rspns);
+
+			var pt =  this.$route.meta.package_type;
+			console.log(pt);
+
+			this.items = rspns.filter((item) => {
+				return item.package_type == pt;
+			});
+
 		})
 		.catch((e)=>{
 			console.log(e);
@@ -129,6 +136,17 @@ methods:{
 
 }
 </script>
+
+
+
+<style>
+/deep/ .v-data-iterator__actions__select,
+/deep/ .theme--light.v-data-iterator .v-data-iterator__actions {
+	text-shadow: 0px 0px 1px #fff;
+	font-size: 15px;	
+}	
+
+</style>
 
 
 

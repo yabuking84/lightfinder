@@ -1,7 +1,7 @@
 <template>
 <v-dialog 
-:value="openDialog" 
-@input="$emit('update:openDialog', false)" 
+:value="dialogLocal" 
+@input="" 
 max-width="600px"
 lazy>
 
@@ -27,69 +27,31 @@ lazy>
     			<v-layout row wrap>						
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Beneficiary</h4>
-							<h3>Ms Dotcom Ventures FZE</h3>
-						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Beneficiary's Bank</h4>
-							<h3>Emirates NBD</h3>
-						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Swift</h4>
-							<h3>EBILAEADJAZ</h3>
-						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Bank Address</h4>
-							<h3>Jebal Ali Branch, Dubai, United Arab Emirates</h3>
-						</v-flex>
-
-						<v-flex xs12 py-4>
-							<v-divider></v-divider>
-						</v-flex>
-
-						<v-flex xs12 sm6 pa-2>
-							<h2>USD Account</h2>
+							<h3>Standard Electronic Co., Limited</h3>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Account No.</h4>
-							<h3>102-551-156-9802</h3>
+							<h3>123-369-168838</h3>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Beneficiary's Bank</h4>
+							<h3>HSBC Hong Kong</h3>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Swift</h4>
+							<h3>HSBCHKHHHKH</h3>
+						</v-flex>
+						<v-flex xs12 sm6 pa-2>
+							<h4 class="font-weight-thin">Bank Address</h4>
+							<h3>168838 Siomai Ampao St.</h3>
 						</v-flex>
 						<v-flex xs12 sm6 pa-2>
 							<h4 class="font-weight-thin">Amount to Pay</h4>
 							<h1>$ {{ currency(amount) }}</h1>
 						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">IBAN</h4>
-							<h3>AE340260001025511569802</h3>
-						</v-flex>						
-
-						 
-						<v-flex xs12 py-4>
-							<v-divider></v-divider>
-						</v-flex>						
-						<v-flex xs12 sm6 pa-2>
-							<h2>EUR Account</h2>
-						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Account No.</h4>
-							<h3>102-551-156-9803</h3>
-						</v-flex>
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">Amount to Pay</h4>
-							<h1>&euro; {{ currency(amountEUR_USD) }}</h1>
-						</v-flex>						
-						<v-flex xs12 sm6 pa-2>
-							<h4 class="font-weight-thin">IBAN</h4>
-							<h3>AE340260001025511569802</h3>
-						</v-flex> 
-						
-
-
-
 						<v-flex xs12 py-4>
 							<v-divider></v-divider>
 						</v-flex>
-
-
 						<v-flex xs12 pa-2 v-if="!confirmed">
 							<h4 class="font-weight-thin">Please write this on the description:</h4>
                 			<h2>{{ description }}</h2>                			
@@ -115,6 +77,7 @@ lazy>
 		<v-card-actions>
 
 			<v-layout row wrap align-center justify-center  ma-2 pa-2>
+
 				<v-btn large block
 				v-if="!confirmed"
 				color="green darken-2" 
@@ -126,15 +89,28 @@ lazy>
 				    </v-icon>
 					Confirm Bank Transfer was done!
 				</v-btn>
+				
+				<v-btn large block
+				v-if="!error_banktransfer"
+				color="red darken-2" 
+				class="white--text payBtn"
+				:loading="closeDialog()"
+				@click="banktransferFailed()">
+					<v-icon class="mr-2">
+				    	fas fa-money-check-alt
+				    </v-icon>
+					Bank Transfer failed!
+				</v-btn>
 
 
 				<v-btn large block
 				v-if="confirmed"
-				color="blue darken-2" 
+				color="red darken-2" 
 				class="white--text payBtn"
-				:loading="paymentLoading"
-				@click="closeDialog()">
-					<v-icon class="mr-2">far fa-check-circle</v-icon>
+				@click="banktransferSuccess()">
+					<v-icon class="mr-2">
+				    	far fa-times-circle
+				    </v-icon>
 					close
 				</v-btn>
 
@@ -160,7 +136,7 @@ export default {
 
 	props:{
 
-		'openDialog': Boolean,
+		'dialog': Boolean,
 		'description': String,
 		'id': String,
 		'amount': Number,
@@ -170,59 +146,74 @@ export default {
 		},
 	},
 
-	data(){return{
+	data(){ return {
+		dialogLocal: false,
 		confirmed: false,
+		error_banktransfer: false,
 		paymentLoading: false,
-		amountEUR_USD: 0,
 	}},
 
 	methods:{
-		payByBankTransfer(){
-
+		payByBankTransfer(){		
 			this.paymentLoading = true;
-			if(this.paymentType=='inquiry') {				
-				this.$store.dispatch(this.getStore('pymnt')+'/payByBankTransfer_a', {
-					id: this.id,
-					payment_type: this.paymentType,
-				})
-				.then((response) => {
-					console.log('payByBankTransfer', response);
-					this.paymentLoading = false;					
-					this.confirmed = true;
-					inqEvntBs.emitPaymentMade();
-				})
-				.catch((e) => {
-					this.paymentLoading = false;
-					console.log(e);				
-				});			
-			}
+			this.$store.dispatch(this.getStore('pymnt')+'/payByBankTransfer_a', {
+				id: this.$route.params.proj_id,
+				payment_type: 'project',
+			})
+			.then((response) => {
+				this.paymentLoading = false;
+				console.log('payByBankTransfer', response);
+				this.confirmed = true;
+				// this.$emit('banktransfer-success');
+			})
+			.catch((e) => {
+				console.log(e);				
+				this.paymentLoading = false;
+				this.error_banktransfer = true;
+				// this.$emit('banktransfer-failed');
+			});			
+			
+		},
+
+		banktransferSuccess() {
+			this.$emit('banktransfer-success');
+			this.closeDialog();
+		},
+
+		banktransferFailed() {
+			this.$emit('banktransfer-failed');
+			this.closeDialog();
+		},
+
+
+		openDialog(){
+			console.log('this.dialogLocal',this.dialogLocal);
+			this.dialogLocal = true;
+			console.log('this.dialogLocal',this.dialogLocal);
 		},
 
 		closeDialog(){
-
-			this.confirmed = false;
-			this.paymentLoading = false;
-			this.hideInquiry();
-		},
-
-		getEURConversion(){
-			this.$store.dispatch(this.getStore('pymnt')+'/getCurrency_a')
-			.then((rspns)=>{
-				this.amountEUR_USD =  this.amount/rspns.USD;
-			});
+			this.dialogLocal = false;
+			this.$emit('update:dialog', false);			
 		},
 	},
 
 
 	watch:{
-		openDialog:{
+		dialog:{
 			handler(nVal,oVal){
+				console.log('dialog prop',nVal);
 				if(nVal){
-					this.getEURConversion();
-				} 
+					// this.openDialog();
+					this.dialogLocal = true;
+					console.log('this.openDialog()');
+				} else {
+					// this.closeDialog();					
+					// console.log('this.closeDialog()');
+				}
 			},
 		},
-	},
+	}
 
 }
 </script>

@@ -4,11 +4,11 @@
 			<v-layout row wrap>
 				
 				<v-flex xs12 class="white--text" style="position: relative;">
-					<router-link :to="{name:'AdminMyHome'}">
+					<router-link :to="{name:package.routeName.main}">
 						<h3 
 						class="white--text d-inline-block mr-2"
 						style="border-bottom: 1px solid;">
-							My Home
+							{{ package.title }}
 						</h3>
 					</router-link> 
 					/
@@ -79,7 +79,7 @@
 						  	<h3>Ordered Samples </h3>
 						</v-card-title>
 						<v-card-text style="height:300px">
-							<ordered-samples v-if="orderedSamples" :ordered-samples="orderedSamples"></ordered-samples>
+							<ordered-samples v-if="orderedSamples" :proj_id="proj_id" :ordered-samples="orderedSamples"></ordered-samples>
 						</v-card-text>
 
 					</v-card>
@@ -125,8 +125,10 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import vue2Dropzone from 'vue2-dropzone'
 
 import config from '@/config/index'
+import PackageMixin from '@/mixins/Package'
 
 export default {
+mixins: [PackageMixin],
 components:{
 	Messaging,
 	Files,

@@ -4,7 +4,7 @@
 
 		<v-list class="revision-list">
 		    <template v-for="(revision,i) in revisions">
-				<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:project.id,rev_id:revision.id}}">
+				<router-link :to="{name:package.routeName.revisionView,params:{proj_id:project.id,rev_id:revision.id}}">
 
 			        <v-list-tile :key="'rev_'+i" avatar>
 
@@ -31,7 +31,7 @@
 						<v-layout row wrap>
 
 
-		                    <router-link :to="{name:'BuyerMyHomeOrderSamples', params:{proj_id:project.id,rev_id:revision.id}}">
+		                    <router-link :to="{name:package.routeName.orderSamples, params:{proj_id:project.id,rev_id:revision.id}}">
 		        			<v-tooltip bottom>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text" small style="min-width: 35px;">
@@ -43,7 +43,7 @@
 		                    </router-link>
 
 
-							<router-link :to="{name:'BuyerMyHomeRevisionView',params:{proj_id:project.id,rev_id:revision.id}}">
+							<router-link :to="{name:package.routeName.revisionView,params:{proj_id:project.id,rev_id:revision.id}}">
 		        			<v-tooltip bottom dark style="background-color: red;">
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
@@ -75,6 +75,7 @@
 
 
 <script>
+import PackageMixin from '@/mixins/Package'
 
 
 export default {
@@ -82,11 +83,17 @@ props:[
 	'project',
 ],
 
+mixins: [
+	PackageMixin,
+],
+
 data(){return{
 	revisions: [],
 }},
 
 created(){
+
+	console.log('this.project',this.project);
 	this.getRevisions();
 },
 

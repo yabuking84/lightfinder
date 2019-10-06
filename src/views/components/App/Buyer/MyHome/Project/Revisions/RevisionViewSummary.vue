@@ -4,8 +4,8 @@
 	  
 	<v-flex xs12>
 		<table class="payment-summary mt-3 ">
-			<tr>
-				<td class="px-4">PSF:</td>
+			<tr v-if="!this.project.project_fee_paid">
+				<td class="px-4">PSF: </td>
 				<td class="currency">$ {{ currency(psf) }}</td>
 			</tr>
 			<!-- //////////////////////////////////////////////////////////////// -->
@@ -62,66 +62,86 @@
 
 
 	<!-- {{ revision.shipping_cost }} - {{ project.stage_id }} - {{ project.selected_quotation_id }} -->
+	<!-- <pre>{{ project }}</pre> -->
 
-	<template v-if="project.selected_quotation_id == rev_id">
-		<!-- <v-flex xs8 offset-xs2 text-xs-center mt-4>
-			<v-btn 
-			class="black white--text" 
-			block
-			:loading="btnLdng">
-				Pay Quotation
-			</v-btn>
-		</v-flex> -->
-
-		<v-flex xs6>
-			<v-btn block 
-			color="green darken-2" 
-			class="white--text payBtn"
-			@click="showBankTransferDetails=true">
-				<v-icon class="mr-2">
-					fas fa-money-check-alt
-				</v-icon>
-				<h4>BANK TRANSFER</h4>
-			</v-btn>
-		</v-flex>
-		<v-flex xs6>
-			<v-btn block 
-			color="blue darken-2" 
-			class="white--text payBtn"
-			:loading="creditCardLoading"
-			@click="payByCreditCard()">
-				<v-icon class="mr-2">
-					far fa-credit-card
-				</v-icon>
-				<h4>CREDIT CARD</h4>
-			</v-btn>
-
-		</v-flex>
-
-	</template>
-
-	<template v-else-if="!project.selected_quotation_id">
+	<template v-if="this.project.stage_id == 1006">
 		<v-flex xs8 offset-xs2 text-xs-center mt-4>
-			<v-btn 
-			class="black white--text" 
-			block
-			@click="confirmRevisionDialog=true"
-			:loading="btnLdng">
-				Confirm this Revision
-			</v-btn>
-		</v-flex>
+				<v-alert
+				:value="true"
+				type="info">
+					BAL is confirming payment.
+				</v-alert>			
+		</v-flex>				
 	</template>
-
+	<template v-else-if="this.project.stage_id == 2001">
+		<v-flex xs8 offset-xs2 text-xs-center mt-4>
+				<v-alert
+				:value="true"
+				type="success">
+					This is already paid.
+				</v-alert>			
+		</v-flex>				
+	</template>
 	<template v-else>
-		<v-flex xs8 offset-xs2 text-xs-center mt-4>
-			<v-alert
-			:value="true"
-			type="info">
-				Already selected a revision.
-			</v-alert>			
-		</v-flex>		
-	</template>
+		<template v-if="project.selected_quotation_id == rev_id">
+			<!-- <v-flex xs8 offset-xs2 text-xs-center mt-4>
+				<v-btn 
+				class="black white--text" 
+				block
+				:loading="btnLdng">
+					Pay Quotation
+				</v-btn>
+			</v-flex> -->
 
+			<v-flex xs6>
+				<v-btn block 
+				color="green darken-2" 
+				class="white--text payBtn"
+				@click="showBankTransferDetails=true">
+					<v-icon class="mr-2">
+						fas fa-money-check-alt
+					</v-icon>
+					<h4>BANK TRANSFER</h4>
+				</v-btn>
+			</v-flex>
+			<v-flex xs6>
+				<v-btn block 
+				color="blue darken-2" 
+				class="white--text payBtn"
+				:loading="creditCardLoading"
+				@click="payByCreditCard()">
+					<v-icon class="mr-2">
+						far fa-credit-card
+					</v-icon>
+					<h4>CREDIT CARD</h4>
+				</v-btn>
+
+			</v-flex>
+
+		</template>
+
+		<template v-else-if="!project.selected_quotation_id">
+			<v-flex xs8 offset-xs2 text-xs-center mt-4>
+				<v-btn 
+				class="black white--text" 
+				block
+				@click="confirmRevisionDialog=true"
+				:loading="btnLdng">
+					Confirm this Revision
+				</v-btn>
+			</v-flex>
+		</template>
+
+		<template v-else>
+			<v-flex xs8 offset-xs2 text-xs-center mt-4>
+				<v-alert
+				:value="true"
+				type="info">
+					Already selected a revision.
+				</v-alert>			
+			</v-flex>		
+		</template>
+	</template>
 
 
 
@@ -166,17 +186,20 @@
 
 
 <bank-transfer-details 
+paymentType="project" 
 :description="'Payment for My Home Project No. '+revision.id"
 :amount="overAllTotal" 
-:id="revision.id" 
-:paymentType="'myhome'" 
-:openDialog.sync="showBankTransferDetails">			
+:id="$route.params.proj_id" 
+:dialog.sync="showBankTransferDetails"
+@banktransfer-success="banktransferSuccess($event)"
+@banktransfer-failed="banktransfertFailed($event)">
 </bank-transfer-details>
 
 
 <foloosi-payment 
 :reference_token="reference_token" 
-@payment-success="paymentDone($event)">
+@payment-success="paymentSuccess($event)"
+@payment-failed="paymentFailed($event)">
 </foloosi-payment>
 
 
@@ -186,8 +209,9 @@
 
 <script>
 import config from '@/config/main';
-import BankTransferDetails from "@/views/Components/App/Buyer/BankTransferDetails";
+import BankTransferDetails from "@/views/Components/App/Buyer/MyHome/BankTransferDetails";
 import FoloosiPayment from "@/views/Components/App/Payment/FoloosiPayment";
+import PackageMixin from '@/mixins/Package'
 
 export default {
 	props: {
@@ -198,6 +222,10 @@ export default {
 			},
 		}
 	},
+
+	mixins: [
+		PackageMixin,
+	],
 
 	components: {
 		BankTransferDetails,
@@ -235,7 +263,11 @@ export default {
 		},
 
 		psf(){
-			return config.myHome.psf;
+			if(!this.project.project_fee_paid)
+			return this.$route.meta.psf;
+			// return config.myHome.psf;
+			else
+			return 0;
 		},
 
 		overAllTotal(){
@@ -291,7 +323,7 @@ export default {
 		},
 
 		payByCreditCard() {
-
+			this.creditCardLoading = true;
 			this.$store.dispatch(this.getStore('pymnt')+'/getCreditCardResource_a', {
 				id: this.proj_id,
 				type: "project",
@@ -309,6 +341,56 @@ export default {
 
 		},
 
+		paymentSuccess(data){
+
+			console.log(data);
+
+			this.$store.dispatch(this.getStore('pymnt')+'/setPurchaseAsPaid_a', {
+				transaction_id: data.transaction_no,
+				id: this.proj_id,
+				type: "project",
+			})
+			.then((response) => {
+
+				this.$router.push({
+					name: this.package.routeName.project,
+					params:{
+						proj_id: this.proj_id,
+					},
+				});				
+
+			})
+			.catch((e) => {
+				console.log(e);				
+
+				this.$router.push({
+					name: this.package.routeName.project,
+					params:{
+						proj_id: this.proj_id,
+					},
+				});				
+
+				
+			});
+
+		},
+
+		paymentFailed(data){
+			console.log(data);
+		},
+
+
+		banktransferSuccess(data){
+			this.$router.push({
+				name: this.package.routeName.project,
+				params:{
+					proj_id: this.proj_id,
+				},
+			});		
+		},
+		banktransferFailed(data){
+
+		},
 	},
 
 }

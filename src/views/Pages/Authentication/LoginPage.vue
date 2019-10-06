@@ -18,8 +18,8 @@
 
 				<!-- if not mobile -->
 				<!-- //////////////////////////////////////////////////////////// -->
-				<!-- <template v-if="!isInMobile()">					 -->
-				<template v-if="true">
+				<template v-if="!isInMobile()">
+				<!-- <template v-if="true"> -->
 				<!-- <div class="headline">Sign in to your account</div> -->
 				<v-form @submit.prevent="" ref="form">
 				  <v-layout wrap row pa-4>
@@ -74,11 +74,14 @@
 						<!-- social login -->
 						<!-- /////////////////////////////////////////////////// -->
 						<v-flex xs12 my-3 class="">
+							<!-- :disabled="$v.$invalid && $gAuth.isInit" -->
+							<!-- :disabled="!$gAuth.isInit" -->
 							<v-btn 
 							style="height: 45px;"
 							flat
 							@click="handleClickSignIn()"
 							:loading="socialLoading"
+							:disabled="!isInit"
 							class="social-buttons px-2 py-2">
 								<img class="mr-2" style="width: 30px;" src="/static/google/goggle-logo-transparent.png"> Google Login
 								<!-- <v-icon class="mr-2">fab fa-google</v-icon> Google Login -->
@@ -244,24 +247,32 @@
 	</two-weeks-dialog>
 
 	<v-snackbar
-	  v-model="snackbar"
-	  absolute
-	  top
-	  right
-	  color="act"
-	>
+	v-model="snackbar"
+	absolute
+	top
+	right
+	color="act">
 	  <span>Sign in successful!</span>
 	  <v-icon dark>check_circle</v-icon>
 	</v-snackbar>
 
 	<v-snackbar
-	  v-model="snackbar_error"
-	  absolute
-	  top
-	  right
-	  color="red"
-	>
+	v-model="snackbar_error"
+	absolute
+	top
+	right
+	color="red">
 	  <span>Sign in unsuccessful!</span>
+	  <v-icon dark>error</v-icon>
+	</v-snackbar>
+
+	<v-snackbar
+	v-model="snackbar_cookie"
+	absolute
+	top
+	right
+	color="red">
+	  <span>Third-party cookies maybe blocked on you browser, please unblocked them&nbsp;&nbsp;</span>
 	  <v-icon dark>error</v-icon>
 	</v-snackbar>
 
@@ -362,6 +373,7 @@ export default {
 		form: Object.assign({}, defaultForm),
 		snackbar: false,
 		snackbar_error: false,
+		snackbar_cookie: false,
 		// backgroundImg: '/static/doc-images/HexesisMaterial01.png'
 		// backgroundImg: '/static/background-img/dubai-waters-blue-1.jpg'
 		// backgroundImg: '/static/boats/boats-uploaded/boat4.jpg',
@@ -444,27 +456,31 @@ export default {
 
 		// google login
 		////////////////////////////////////////////////////////////////////////
-		handleClickGetAuth() {
-			this.$gAuth.getAuthCode()
-			.then(authCode => {
-				// On success
-				return this.$http.post('http://your-backend-server.com/auth/google', {
-					code: authCode,
-					redirect_uri: 'postmessage'
-				})
-			})
-			.then(response => {
-				// And then
-			})
-			.catch(error => {
-				// On fail do something
-			})
-		},
+		// handleClickGetAuth() {
+		// 	this.$gAuth.getAuthCode()
+		// 	.then(authCode => {
+		// 		// On success
+		// 		return this.$http.post('http://your-backend-server.com/auth/google', {
+		// 			code: authCode,
+		// 			redirect_uri: 'postmessage'
+		// 		})
+		// 	})
+		// 	.then(response => {
+		// 		// And then
+		// 	})
+		// 	.catch(error => {
+		// 		// On fail do something
+		// 	})
+		// },
 		handleClickSignIn() {
 			console.log('handleClickSignIn')
+			console.log('this.$gAuth',this.$gAuth)
 			this.socialLoading = true;
+
+
 			this.$gAuth.signIn()
 			.then(user => {
+				console.log('this.$gAuth',this.$gAuth)
 				// On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
 				// console.log('GoogleUser', GoogleUser)
 				this.googleUser = user;
@@ -474,9 +490,21 @@ export default {
 				this.loginViaOAuth();
 
 			})
-			.catch(error => {
+			.catch(e => {
 				// On fail do something
-				console.log('handleClickSignIn error',error)
+				console.log('handleClickSignIn e',e)
+				console.log('this.$gAuth',this.$gAuth)
+
+				// alert here that to unblock 3rd party Cookies
+				//////////////////////////////////////////////////////////////////////////
+
+				// this.$cookies.set('test','value');
+				
+				if(e.error != "popup_closed_by_user" || !this.$gAuth.isAuthorized)
+				this.snackbar_cookie = true;
+				//////////////////////////////////////////////////////////////////////////
+				// alert here that to unblock 3rd party Cookies
+
 				this.socialLoading = false;
 			})
 		},
@@ -646,25 +674,36 @@ export default {
 
 		// google login
 		////////////////////////////////////////////////////////////////////////		
-		// let that = this;
-		// let checkGauthLoad = setInterval(function() {
+		let that = this;
+		let checkGauthLoad = setInterval(function() {
 
-		// 	that.isInit = (that.$gAuth) ? that.$gAuth.isInit : false;
-		// 	that.isSignIn = (that.$gAuth) ? that.$gAuth.isAuthorized : false
+			that.isInit = (that.$gAuth) ? that.$gAuth.isInit : false;
+			that.isSignIn = (that.$gAuth) ? that.$gAuth.isAuthorized : false
 
-		// 	// console.log('that.$gAuth', that.$gAuth);
-		// 	// console.log('that.isInit', that.isInit);
+			console.log('that.$gAuth', that.$gAuth);
+			console.log('that.isInit', that.isInit);
+			// console.log('that.$gAuth.GoogleAuth', that.$gAuth.GoogleAuth);
 
-		// 	if (that.isInit)
-		// 		clearInterval(checkGauthLoad)
+			if (that.isInit)
+			clearInterval(checkGauthLoad)
 
-		// }, 1000);
+		}, 3000);
+
+
+		setTimeout(()=>{
+			if(!this.isInit)
+			this.snackbar_cookie = true;
+		},5000);
+
 		////////////////////////////////////////////////////////////////////////		
 		// google login
 
 		// console.log('googleUser',this.googleUser);
 
 		// window.addEventListener('message', this.onMessage, false);
+
+		// if(!this.$gAuth.isAuthorized && this.$gAuth.isInit)
+		// this.snackbar_cookie = true;
 
 
 	},

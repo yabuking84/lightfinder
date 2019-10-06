@@ -45,8 +45,9 @@
 							prepend-inner-icon="fas fa-user"
 							autocomplete="off" 
 							@blur="$v.form.last_name.$touch()"
-							:error-messages="fieldErrors('form.last_name')">
+							:error-messages="['test']">
 							</v-text-field>
+							<!-- :error-messages="fieldErrors('form.last_name')"> -->
 
 							<v-text-field 
 							outline

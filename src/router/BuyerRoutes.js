@@ -20,6 +20,7 @@ import BuyerMyHomeOrderSamples from "@/views/Components/App/Buyer/MyHome/OrderSa
 
 // import BuyerMyTower from '@/views/Pages/Buyer/MyTower'
 import BuyerMyTowerUnderConstruction from '@/views/Pages/Buyer/MyTowerUnderConstruction'
+import BuyerMyTower from '@/views/Pages/Buyer/MyTower'
 
 import config from '@/config/index'
 
@@ -124,6 +125,19 @@ const meta2 = {
 }
 
 
+const myHomeMeta = {
+	...meta2,
+	package_type: 'my-home',
+	psf: 949,
+}
+
+
+const myTowerMeta = {
+	...meta2,
+	package_type: 'my-tower',
+	psf: 1949,
+}
+
 export default [
 
 	// {
@@ -224,7 +238,7 @@ export default [
 
 	// {
 	//     name: 'BuyerInquiryView',
-	//     path: '/buyer/inquiry/:inq_id',
+	//     path: '/lightfinder/inquiry/:inq_id',
 	//     components: { 
 	//         default: BuyerInquiryView, 
 	//         sidebar: AppSidebar, 
@@ -240,6 +254,19 @@ export default [
 
 
 
+	{
+		name: 'BuyerInquiryView',
+		path: '/lightfinder/inquiry/:inquiry_id',
+		components: {
+			default: BuyerHome, 
+			sidebar: AppSidebar, 
+			header: AppToolbar, 
+			footer: AppFooter,
+			dialog: BuyerInquiryView,
+		},
+		meta: meta1,
+	},
+
 
 
 
@@ -259,6 +286,8 @@ export default [
 
 	// My Home
 	//////////////////////////////////////////////////////
+
+
 
 	{
 		name: 'BuyerMyHome',
@@ -270,7 +299,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -282,7 +311,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -294,7 +323,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -306,7 +335,7 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	{
@@ -318,27 +347,93 @@ export default [
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
 		},
-		meta: meta2,
+		meta: myHomeMeta,
 	},
 
 	//////////////////////////////////////////////////////
 	// My Home
 
 
+
+
+
+
 	// My Tower
 	//////////////////////////////////////////////////////
+	// {
+	// 	name: 'BuyerMyTower',
+	// 	path: '/my-tower',
+	// 	components: { 
+	// 		default: BuyerMyTowerUnderConstruction, 
+	// 		sidebar: AppSidebar, 
+	// 		header: AppToolbarMyHmMyTwr, 
+	// 		footer: AppFooter,
+	// 		dialog: BuyerInquiryView,
+	// 	},
+	// 	meta: meta2,
+	// },
+
+
 	{
 		name: 'BuyerMyTower',
 		path: '/my-tower',
 		components: { 
-			default: BuyerMyTowerUnderConstruction, 
+			default: BuyerMyTower, 
+			// default: BuyerMyHomeUnderConstruction, 
 			sidebar: AppSidebar, 
 			header: AppToolbarMyHmMyTwr, 
 			footer: AppFooter,
-			dialog: BuyerInquiryView,
 		},
-		meta: meta2,
+		meta: myTowerMeta,
 	},
+
+	{
+		name: 'BuyerMyTowerProject',
+		path: '/my-tower/project/:proj_id',
+		components: { 
+			default: BuyerMyHomeProject, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'BuyerMyTowerPayQuotation',
+		path: '/my-tower/project/:proj_id/payment',
+		components: { 
+			default: BuyerMyHomePayQuotation, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'BuyerMyTowerRevisionView',
+		path: '/my-tower/project/:proj_id/revision/:rev_id',
+		components: { 
+			default: BuyerMyHomeRevisionView, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},
+
+	{
+		name: 'BuyerMyTowerOrderSamples',
+		path: '/my-tower/project/:proj_id/revision/:rev_id/order-samples',
+		components: { 
+			default: BuyerMyHomeOrderSamples, 
+			sidebar: AppSidebar, 
+			header: AppToolbarMyHmMyTwr, 
+			footer: AppFooter,
+		},
+		meta: myTowerMeta,
+	},	
 	//////////////////////////////////////////////////////
 	// My Tower
 

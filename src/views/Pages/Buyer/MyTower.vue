@@ -8,12 +8,12 @@
 				<v-flex xs12>
 					<project-table>
 						<template #project-link="sp">
-							<router-link :to="{name:'AdminMyTowerProject', params:{proj_id:sp.item.id}}">
+							<router-link :to="{name:'BuyerMyTowerProject', params:{proj_id:sp.item.id}}">
 								<v-btn color="black" class="white--text" style="min-width:50px;">
 									<v-icon style="font-size: 1em;">fas fa-search</v-icon>
 								</v-btn>
-							</router-link>
-						</template>						
+							</router-link >
+						</template>
 					</project-table>
 				</v-flex>
 			</v-layout>
@@ -35,11 +35,11 @@ export default {
 	},
 
 	data: () => ({
-		
+	
 	}),
 
 }
-
+	
 </script>
 
 

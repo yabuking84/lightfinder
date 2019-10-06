@@ -1,6 +1,6 @@
 import config from '@/config/main';
 
-const defaultMaxInqs = config.defaultMaxInqs;
+// const defaultMaxInqs = config.defaultMaxInqs;
 
 export default {
 	
@@ -10,18 +10,23 @@ export default {
 			return new Promise((resolve,reject)=>{
 				this.$store.dispatch(this.getStore()+'/getActiveSubscription_a')
 				.then((rspns)=>{
-					// console.log('setMaxInqs rspns',rspns);
+					console.log('setMaxInqs rspns',rspns);
 					var retVal = {
 						max_inquiry: 0,
 						package_type: 0,
 					};
-					if(rspns) {
+					if(rspns && rspns.paid) { // paid should be 1
 						retVal.max_inquiry = rspns.inclusions.max_inquiry;
 						retVal.package_type = rspns.package_type;
 					}
+					else if(rspns && !rspns.paid) { // if Bank Transfer and still confirming						
+						retVal.max_inquiry = this.defaultMaxInqs;
+						retVal.package_type = rspns.package_type;
+						retVal.bankTransferStatus = 'confirming';
+					}
 					else {
 						// if no / free subscription
-						retVal.max_inquiry = defaultMaxInqs;
+						retVal.max_inquiry = this.defaultMaxInqs;
 						retVal.package_type = 'free';
 					}
 
@@ -35,7 +40,7 @@ export default {
 		},
 
 		getTotalInqs(){
-			return new Promise((resolve, reject) => {			
+			return new Promise((resolve, reject) => {
 				this.$store.dispatch(this.getStore()+'/getInquiries_a')
 				.then((rspns)=>{
 					// console.log('Inquiries ',rspns);
@@ -225,6 +230,23 @@ export default {
 		// },
 
 
+		defaultMaxInqs() {
+
+			if(config.devMode) {
+				return config.defaultMaxInqs;
+			} else {				
+				var subscrpt = this.$store.state.auth.auth_user.subscription;
+
+				if(subscrpt=='monthly.mini' || subscrpt=='yearly.mini')
+				return config.plan.maxInqs.mini;
+				else if(subscrpt=='monthly.standard' || subscrpt=='yearly.standard')
+				return config.plan.maxInqs.standard;
+				else if(subscrpt=='monthly.premium' || subscrpt=='yearly.premium')
+				return config.plan.maxInqs.premium;
+				else
+				return config.defaultMaxInqs;
+			}
+		},
 
 
 		storeType(){

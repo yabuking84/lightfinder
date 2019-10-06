@@ -30,8 +30,7 @@
 
 						<div>
 							<div class="headline font-weight-bold orange--text darken-3">WAITING FOR VERIFICATION</div>
-							<div class="blue-grey--text" >We have already received your inquiry, please wait for a moment for reviewing the inquiry. our staff is given care of it! chow ..
-							</div>
+							<div class="blue-grey--text" >We have received your inquiry and we'll take care of it as fast as possible. We're on it...</div>
 						</div>
 					</v-flex>
 

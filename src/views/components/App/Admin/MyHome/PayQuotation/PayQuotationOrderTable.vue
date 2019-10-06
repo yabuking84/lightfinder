@@ -91,7 +91,7 @@
 	</v-card>	
 </template>
 <script>
-import ImageView from "@/views/Components/App/Admin/MyHome/ImageView";
+import ImageView from "@/views/Components/App/MyHome/ImageView";
 
 
 export default {

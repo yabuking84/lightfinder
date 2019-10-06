@@ -21,7 +21,7 @@
 						<v-list-tile-action>
 							<v-layout row wrap>
 							  
-		                    <router-link :to="{name:'AdminMyHomeOrderSamples', params:{proj_id:proj_id,rev_id:revision.id}}">
+		                    <router-link :to="{name:package.routeName.orderSamples, params:{proj_id:proj_id,rev_id:revision.id}}">
 		        			<v-tooltip bottom dark>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text" small style="min-width: 35px;">
@@ -33,7 +33,7 @@
 		                    </router-link>
 
 
-							<router-link :to="{name:'AdminMyHomeRevisionEdit',params:{proj_id:proj_id,rev_id:revision.id}}">
+							<router-link :to="{name:package.routeName.revisionEdit,params:{proj_id:proj_id,rev_id:revision.id}}">
 		        			<v-tooltip bottom dark>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
@@ -45,7 +45,7 @@
 	                        </router-link>
 
 
-							<router-link :to="{name:'AdminMyHomeRevisionCopy',params:{proj_id:proj_id,rev_id:revision.id}}">
+							<router-link :to="{name:package.routeName.revisionCopy,params:{proj_id:proj_id,rev_id:revision.id}}">
 		        			<v-tooltip bottom dark>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
@@ -56,7 +56,7 @@
                         	</v-tooltip>
 	                        </router-link>
 
-							<router-link :to="{name:'AdminMyHomeRevisionView',params:{proj_id:proj_id,rev_id:revision.id}}">
+							<router-link :to="{name:package.routeName.revisionView,params:{proj_id:proj_id,rev_id:revision.id}}">
 		        			<v-tooltip bottom dark>
 			        		<template #activator="{ on }">
 								<v-btn v-on="on" class="black white--text ml-2" small style="min-width: 35px;">
@@ -84,12 +84,14 @@
 
 <script>
 import prjctEvntBs from '@/bus/project'
+import PackageMixin from '@/mixins/Package'
 
 
 export default {
 props:[
 	'proj_id',
 ],
+mixins: [PackageMixin],
 
 data(){return{
 	revisions: [],
@@ -106,7 +108,7 @@ created(){
 methods: {
 
 	getRevisions(){
-		console.log('getRevisions');
+		// console.log('getRevisions');
 		this.$store.dispatch(this.getStore('myHm')+'/getQuotations_a',{
 			proj_id: this.proj_id,
 		})

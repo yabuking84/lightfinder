@@ -182,3 +182,17 @@ input[type=number]::-webkit-outer-spin-button {
 .text-transform-none {
 	text-transform: none !important;
 }
+
+
+
+.v-dialog .v-image__image--cover {
+    background-size: contain;
+    background-color: white;
+}
+
+
+
+
+.v-menu__content--fixed {
+	position: fixed;
+}

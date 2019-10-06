@@ -170,7 +170,8 @@
 
 		<foloosi-payment 
 		:reference_token="reference_token" 
-		@payment-success="paymentDone($event)">			
+		@payment-success="paymentSuccess($event)"
+		@payment-failed="paymentFailed($event)">			
 		</foloosi-payment>
 
 
@@ -189,6 +190,8 @@
 	import inqEvntBs from "@/bus/inquiry"
  
 	import FoloosiPayment from "@/views/Components/App/Payment/FoloosiPayment";
+	
+	import inqMixin from "@/mixins/inquiry"
 
 	export default {
 
@@ -201,8 +204,8 @@
 	   mixins: [
 
 			// helpers,
-			validationMixin
-
+			validationMixin,
+			inqMixin,
 		],
 
 		validations: {
@@ -340,6 +343,31 @@
 			},
 
 
+			paymentSuccess(data){
+				console.log('paymentDone',data);
+
+				this.$store.dispatch(this.getStore('pymnt')+'/setPurchaseAsPaid_a',{
+					transaction_id: data.transaction_no,
+					"id": this.bid.id,
+					type: 'lightfinder.sample',
+				})
+				.then((rspns)=>{
+					console.log(rspns);
+					this.closeDialog();
+					this.closeOpenInquiry();
+				})
+				.catch((e)=>{
+
+				});
+			},
+
+			paymentFailed(data){
+				console.log('paymentFailed',data);
+			},
+
+			closeOpenInquiry(){
+	            this.openInquiry = false;
+			},
 		},
 
 		watch: {

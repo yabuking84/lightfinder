@@ -81,12 +81,15 @@
 
 <script>
 import config from '@/config/main';
+import PackageMixin from '@/mixins/Package'
 
 export default {
 	props: {
 		proj_id: String,
 		samples: Array,
 	},
+	
+	mixins: [PackageMixin],
 
 	data(){ return {
 	}},
@@ -104,7 +107,8 @@ export default {
 		},
 
 		psf(){
-			return config.myHome.psf;
+			// return config.myHome.psf;
+			return this.$route.meta.psf;
 		},
 
 		sampleLength(){

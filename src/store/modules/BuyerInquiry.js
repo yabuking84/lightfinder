@@ -62,10 +62,12 @@ const state = {
 			url     : base_url+'/v1/pay/credit-card',
 		},
 
+
 		updateProfile: {
 			method  : 'patch',
 			url     : base_url+'/v1/profile',
 		},
+
 
 		updatePassword: {
 			method  : 'patch',
@@ -127,6 +129,7 @@ const actions = {
 				headers: headers,
 			})
 			.then(response => {
+				console.log(response);
 				resolve(response.data[0]);
 			})
 			.catch(error => {
@@ -440,34 +443,34 @@ const actions = {
 
 
 
-	payByBankTransfer(context, data) {
-		return new Promise((resolve, reject) => {
+	// payByBankTransfer(context, data) {
+	// 	return new Promise((resolve, reject) => {
 
-			var headers = { token: localStorage.access_token }
+	// 		var headers = { token: localStorage.access_token }
 
-			axios({
+	// 		axios({
 
-				method  : state.api.payByBankTransfer.method,
-				url     : state.api.payByBankTransfer.url,
-				headers : headers,
-				data 	: {
-					id: 	 data.id,
-					type:    data.payment_type,
-					payment_method_id: state.paymentMethod.bankTransfer,
-				},
-			})
-			.then(response => {
-				resolve(response);
-			})
-			.catch(error => {
-				// if(actions.checkToken(error)) {
-				if(context.dispatch('checkToken',error)) {
-					reject(error);
-				}
-			})
+	// 			method  : state.api.payByBankTransfer.method,
+	// 			url     : state.api.payByBankTransfer.url,
+	// 			headers : headers,
+	// 			data 	: {
+	// 				id: 	 data.id,
+	// 				type:    data.payment_type,
+	// 				payment_method_id: state.paymentMethod.bankTransfer,
+	// 			},
+	// 		})
+	// 		.then(response => {
+	// 			resolve(response);
+	// 		})
+	// 		.catch(error => {
+	// 			// if(actions.checkToken(error)) {
+	// 			if(context.dispatch('checkToken',error)) {
+	// 				reject(error);
+	// 			}
+	// 		})
 
-		}) 
-	},
+	// 	}) 
+	// },
 
 
 	paySubscription_a(context, data) {

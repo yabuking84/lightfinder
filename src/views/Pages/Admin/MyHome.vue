@@ -12,7 +12,7 @@
 								<v-btn color="black" class="white--text" style="min-width:50px;">
 									<v-icon style="font-size: 1em;">fas fa-search</v-icon>
 								</v-btn>
-							</router-link >
+							</router-link>
 						</template>						
 					</project-table>
 				</v-flex>
