@@ -14,7 +14,7 @@
 				</a>
 				
 
-				<h4 v-html="test">{{ test }}</h4>
+				<!-- <h4 v-html="test">{{ test }}</h4> -->
 
 				<!-- if not mobile -->
 				<!-- //////////////////////////////////////////////////////////// -->
@@ -76,12 +76,12 @@
 						<v-flex xs12 my-3 class="">
 							<!-- :disabled="$v.$invalid && $gAuth.isInit" -->
 							<!-- :disabled="!$gAuth.isInit" -->
+							<!-- :disabled="!isInit" -->
 							<v-btn 
 							style="height: 45px;"
 							flat
 							@click="handleClickSignIn()"
 							:loading="socialLoading"
-							:disabled="!isInit"
 							class="social-buttons px-2 py-2">
 								<img class="mr-2" style="width: 30px;" src="/static/google/goggle-logo-transparent.png"> Google Login
 								<!-- <v-icon class="mr-2">fab fa-google</v-icon> Google Login -->
@@ -500,8 +500,9 @@ export default {
 
 				// this.$cookies.set('test','value');
 				
-				if(e.error != "popup_closed_by_user" || !this.$gAuth.isAuthorized)
-				this.snackbar_cookie = true;
+				// uncomment this later
+				// if(e.error != "popup_closed_by_user" || !this.$gAuth.isAuthorized)
+				// this.snackbar_cookie = true;
 				//////////////////////////////////////////////////////////////////////////
 				// alert here that to unblock 3rd party Cookies
 

@@ -6,12 +6,14 @@ import config from '@/config/index'
 import { store } from '@/store'
 
 
+
 // import Contacts from '@/views/Applications/Contacts'
 // import Chat from '@/views/Applications/Chat'
 
 // Pages
 import RegisterPage from '@/views/Pages/Authentication/RegisterPage'
 import AuthPage from '@/views/Pages/Authentication/AuthPage'
+import VerificationPage from '@/views/Pages/Authentication/VerificationPage'
 import ForgotPasswordPage from '@/views/Pages/Authentication/ForgotPasswordPage'
 import LockScreenPage from '@/views/Pages/Authentication/LockScreenPage'
 
@@ -24,6 +26,7 @@ import PricingStyleTwo from '@/views/Pages/Pricing/PricingStyleTwo'
 import CountdownPage from '@/views/Pages/CountdownPage'
 import MaintenancePage from '@/views/Pages/MaintenancePage'
 import ProfileView from '@/views/Pages/Profile'
+import Captcha from '@/views/Pages/Captcha'
 
 
 
@@ -104,10 +107,23 @@ const routes =
     //     },
     // },
     {
+        path: '/login/verification/:result',
+        name: 'Verification',
+        component: VerificationPage,
+    },
+
+    {
+        path: '//login/verification/:result',
+        name: 'Verification2',
+        component: VerificationPage,
+    },
+
+    {
         path: '/login',
         name: 'Login',
         component: LoginPage,
     },
+
     {
         path: '/logout',
         name: 'Logout',
@@ -139,6 +155,14 @@ const routes =
 		path: '/buyer/register',
 		components: {
 			default: BuyerRegistration
+		}
+	},
+
+	{
+		name: 'Captcha',
+		path: '/buyer/captcha',
+		components: {
+			default: Captcha
 		}
 	},
 

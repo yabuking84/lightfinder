@@ -90,8 +90,8 @@
 
 						<v-flex xs12>
 							<v-layout row wrap text-xs-center justify-center align-center>
-							  	<!-- Login form submit -->
-							  	<v-flex xs6 class="white--text no-mrpd">
+								<!-- Login form submit -->
+								<v-flex xs6 class="white--text no-mrpd">
 
 									<v-btn 
 									style="background-color: #7600ff !important;"
@@ -101,7 +101,7 @@
 									@click="save()">
 										<span class="dark-blue white--text font-weight-light ls-1">SIGN UP</span>
 									</v-btn>
-							  	</v-flex>
+								</v-flex>
 							</v-layout>
 						</v-flex>
 
@@ -231,7 +231,11 @@ import vue2Dropzone from 'vue2-dropzone'
 
 import config from '@/config/index'
 
+// import { VueReCaptcha } from 'vue-recaptcha-v3'
 
+// import Vue from 'vue'
+
+import { load } from 'recaptcha-v3'
 
 
 export default {
@@ -301,6 +305,8 @@ data () { return {
 	formLoading: false,
 	isComplete: false,
 
+	googleCaptchaToken: null,
+
 	dialog: false,
 
 	snackbar: false,
@@ -334,35 +340,57 @@ methods: {
 		if (!this.$v.$invalid) {
 
 				this.formLoading = true;
-				let data = {
-					first_name: this.form.first_name,
-					last_name: this.form.last_name,
-					email: this.form.email,
-					password: this.form.password,
-					confirm_password: this.form.confirmpassword,
-					main_interest: (this.main_interest)?this.main_interest:'',					
-				};
 
-				this.$store.dispatch('auth/buyerRegistration_a', {
-					data: data,
-				})
-				.then((response) => {
-					// this.formLoading = false
-					console.log('save() response',response);
-					if (response.status == 200) {
+				load('6Lc8aL4UAAAAAF_ke1eo_DaLKtrNK3Y1xTC6lQKe')
+				.then((recaptcha) => {
+
+					recaptcha.execute('registration').then((token) => {
+						console.log(token) // Will print the token
+						this.googleToken = token;
+
+						let data = {
+							first_name: this.form.first_name,
+							last_name: this.form.last_name,
+							email: this.form.email,
+							password: this.form.password,
+							confirm_password: this.form.confirmpassword,
+							main_interest: (this.main_interest)?this.main_interest:'',					
+							googleToken: this.googleToken,
+						};
+
+						this.$store.dispatch('auth/buyerRegistration_a', {
+							data: data,
+						})
+						.then((response) => {
+							console.log('save() response',response);
+							if (response.status == 200) {
+								this.formLoading = false;
+								this.dialog = true;
+							} else {
+								this.$v.$touch();
+							}
+						})
+						.catch((e) => {
+							console.log('error',e);
+							this.formLoading = false;
+							this.snackbar_error = true;
+						})
+
+					})
+					.catch((e)=>{
+						console.log('Google Captcha Error 1: ',e);
 						this.formLoading = false;
-						this.dialog = true;
-					} else {
-						this.$v.$touch();
-					}
+						this.snackbar_error = true;
+					});
+
 				})
-				.catch((e) => {
-					console.log('error',e);				
+				.catch((e)=>{
+					console.log('Google Captcha Error 2: ',e);
 					this.formLoading = false;
-				})
+					this.snackbar_error = true;
+				});
 
-
-			}
+		}
 
 	},
 
@@ -439,7 +467,7 @@ methods: {
 
 					
 				if(vueThis.isInMobile())
-            	vueThis.$router.push({name:'Logout'});
+				vueThis.$router.push({name:'Logout'});
 				else
 				vueThis.$store.dispatch('auth/loginSuccess_a');
 
@@ -487,10 +515,28 @@ mounted(){
 	}, 1000);
 	////////////////////////////////////////////////////////////////////////		
 	// google login	
+
+
+
+	// loadRecaptchaV3('6Lc8aL4UAAAAAF_ke1eo_DaLKtrNK3Y1xTC6lQKe', {
+	// 	useRecaptchaNet: true,
+	// })
+	// .then((recaptcha)=>{
+	// 	recaptcha('registration').then((token) => {
+	// 		console.log(token) // Will print the token
+	// 	})
+	// 	.catch((e)=>{
+	// 		console.log('Google Captcha');
+	// 	});
+	// });
+
+	
 },
 
-}
-</script>
+
+
+
+} </script>
 
 
 
@@ -871,8 +917,8 @@ mounted(){
 	}
 
 	.page-wrap {
-	    margin-top: 20px;
-	    margin-bottom: 20px;			
+		margin-top: 20px;
+		margin-bottom: 20px;			
 		.layout {		
 			border-radius: 10px;	
 		}
@@ -888,21 +934,21 @@ mounted(){
 
 .google-login {
 	height: auto;
-    padding: 0;
-    box-shadow: none !important;
-    background-color: transparent !important; 
+	padding: 0;
+	box-shadow: none !important;
+	background-color: transparent !important; 
 
-    border: 1px solid #e0e0e0;
-    img {
-	    margin-right: 10px;
-	    height: 25px;
-	    margin: 5px 10px 5px 5px;
-    }
+	border: 1px solid #e0e0e0;
+	img {
+		margin-right: 10px;
+		height: 25px;
+		margin: 5px 10px 5px 5px;
+	}
 
 
-    /deep/ .v-btn__loading {
-    	color: #000;
-    }
+	/deep/ .v-btn__loading {
+		color: #000;
+	}
 }
 
 </style>

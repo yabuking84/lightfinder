@@ -56,6 +56,8 @@ const state = {
 			url: base_url+'/v1/contact-us',
 		},
 
+
+
 	},
 	// currency_rates: {},
 	token: localStorage.getItem('access_token') || null,

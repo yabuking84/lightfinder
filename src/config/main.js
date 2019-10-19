@@ -1,71 +1,71 @@
+
 // DEVELOPEMENT
 //////////////////////////////////////////////////////////////
-// const apiURL = 'http://192.168.1.200:8000';
-// const socketURL = 'http://192.168.1.200:3000';
-// const websiteURL = 'http://almani.ddns.net:1984';
-// const apiURL = 'https://api.buyanylight.com';
-// const socketURL = 'https://data.buyanylight.com/socket.io';
-// const websiteURL = 'https://lightfinder.buyanylight.com';
-// const devMode =  true;
-// const defaultMaxInqs =  1;
-// const merchant_key =  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi';
-// const eur_convesion_url =  '/static/currency/eur_conversion.xml';
-// // const crypto_convesion_url =  '/static/crypto.json';
-// const crypto_convesion_url =  'https://api.coinbase.com/v2/prices';
+const developement = {
+	apiURL : 'http://192.168.1.200:8000',
+	socketURL : 'http://192.168.1.200:3000',
+	websiteURL : 'http://almani.ddns.net:1984',
+	devMode :  true,
+	defaultMaxInqs :  99,
+	merchant_key :  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi',
+	eur_convesion_url :  '/static/currency/eur_conversion.xml',
+	// crypto_convesion_url :  '/static/crypto.json';
+	crypto_convesion_url :  'https://api.coinbase.com/v2/prices',
+}
 //////////////////////////////////////////////////////////////
 // DEVELOPEMENT
 
-// DEVELOPEMENT 1
-//////////////////////////////////////////////////////////////
-// const apiURL = 'http://192.168.1.202/buyanylight_api/public';
-// const socketURL = 'http://192.168.1.200:3000';
-// const websiteURL = 'http://almani.ddns.net:1984';
-// const devMode =  true;
-// const defaultMaxInqs =  1;
-// const merchant_key =  'test_$2y$10$.0TFlqFxM7y.3GoHkDIqWeO-2bT2eBz8t86PVUkHwH9zMghDm5PLi';
-// const eur_convesion_url =  '/static/currency/eur_conversion.xml';
-//////////////////////////////////////////////////////////////
-// DEVELOPEMENT
-
-// DEVELOPEMENT 2
-//////////////////////////////////////////////////////////////
-// const apiURL = 'https://api.buyanylight.com';
-// const socketURL = 'https://data.buyanylight.com/socket.io';
-// const websiteURL = 'https://tawing.net';
-// const devMode =  true;
-// const defaultMaxInqs =  99;
-//////////////////////////////////////////////////////////////
-// DEVELOPEMENT 2
 
 // PRODUCTION
 //////////////////////////////////////////////////////////////
-const apiURL = 'https://api.buyanylight.com';
-const socketURL = 'https://data.buyanylight.com/socket.io';
-const websiteURL = 'https://lightfinder.buyanylight.com';
-const devMode =  false;
-const defaultMaxInqs =  1;
-const merchant_key =  'live_$2y$10$Q73YSkuFiykik9zVfS2BBORIwHPFfXTD0-73YXtUycUxdl5m-rCXC';
-const eur_convesion_url =  'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
-const crypto_convesion_url =  'https://api.coinbase.com/v2/prices';
-// const crypto_convesion_url =  'https://blockchain.info/ticker';
+const production = {
+	apiURL : 'https://api.buyanylight.com',
+	// socketURL : 'https://data.buyanylight.com/socket.io',
+	socketURL : 'https://data3.buyanylight.com/socket.io',
+	websiteURL : 'https://lightfinder.buyanylight.com',
+	devMode :  false,
+	defaultMaxInqs :  1,
+	merchant_key :  'live_$2y$10$Q73YSkuFiykik9zVfS2BBORIwHPFfXTD0-73YXtUycUxdl5m-rCXC',
+	// eur_convesion_url :  'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml',
+	eur_convesion_url :  '/static/currency/eur_conversion.xml',
+	crypto_convesion_url :  'https://api.coinbase.com/v2/prices',
+	// crypto_convesion_url :  'https://blockchain.info/ticker',
+}
 //////////////////////////////////////////////////////////////
 // PRODUCTION
 
+// PRODUCTION Test
+//////////////////////////////////////////////////////////////
+const productionTest = {
+	apiURL : 'https://api.buyanylight.com',
+	socketURL : 'https://data.buyanylight.com/socket.io',
+	websiteURL : 'https://tawing.net',
+	devMode :  false,
+	defaultMaxInqs :  1,
+	merchant_key :  'live_$2y$10$Q73YSkuFiykik9zVfS2BBORIwHPFfXTD0-73YXtUycUxdl5m-rCXC',
+	eur_convesion_url :  'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml',
+	crypto_convesion_url :  'https://api.coinbase.com/v2/prices',
+}
+//////////////////////////////////////////////////////////////
+// PRODUCTION Test
 
+
+const env = {
+	...developement,
+};
 
 export default {
-
-	apiURL: apiURL,
-	socketURL: socketURL,
-	websiteURL: websiteURL,
-	devMode: devMode,
-	defaultMaxInqs: defaultMaxInqs,
-	merchant_key: merchant_key,
-	eur_convesion_url: eur_convesion_url,
-	crypto_convesion_url: crypto_convesion_url,
+	apiURL: env.apiURL,
+	socketURL: env.socketURL,
+	websiteURL: env.websiteURL,
+	devMode: env.devMode,
+	defaultMaxInqs: env.defaultMaxInqs,
+	merchant_key: env.merchant_key,
+	eur_convesion_url: env.eur_convesion_url,
+	crypto_convesion_url: env.crypto_convesion_url,
 
 	awss3: {
-		signingURL:apiURL+"/v1/aws-s3-signature",
+		signingURL:env.apiURL+"/v1/aws-s3-signature",
         urls: {
         	inquiry: 'https://httpbin.org/post',
         },

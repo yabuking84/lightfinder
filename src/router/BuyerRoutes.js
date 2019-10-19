@@ -116,9 +116,14 @@ const meta1 = {
 const meta2 = {
 	...meta,
 	style:{
-		backgroundImage:'url(/static/bg-image.png)',
-		backgroundSize: '100% auto ',
-		backgroundPositionY: '-20vh',
+		// backgroundImage:'url(/static/bg-image.png)',
+		// backgroundSize: '100% auto ',
+		// backgroundPositionY: '-20vh',
+		backgroundImage:'url(/static/bg-image3.png)',
+		backgroundSize: '45%',
+		backgroundPosition: 'center',
+		backgroundRepeat: 'repeat',
+
 		backgroundAttachment: 'fixed',
 	},
 

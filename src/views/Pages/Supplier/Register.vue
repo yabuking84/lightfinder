@@ -472,9 +472,9 @@
 												  
 												   <v-text-field 
 														outline
-														  color="black" 
-														  label="IBAN:" 
-														  v-model="form.iban">
+														color="black" 
+														label="IBAN:" 
+														v-model="form.iban">
 														  <!-- @blur="$v.form.iban.$touch()"> -->
 														  <!-- :error-messages="fieldErrors('form.iban')"  -->
 												   </v-text-field>
@@ -969,7 +969,7 @@ export default {
 		this.$v.form.numberofworkersinfactory.$touch();
 		this.$v.form.accountname.$touch();
 		this.$v.form.accountnumber.$touch();
-		this.$v.form.iban.$touch();
+		// this.$v.form.iban.$touch();
 		this.$v.form.bankname.$touch();
 		this.$v.form.bankaddress.$touch();
 		this.$v.form.swiftcode.$touch();
@@ -979,7 +979,6 @@ export default {
 			&& !this.$v.form.numberofworkersinfactory.$invalid
 			&& !this.$v.form.accountname.$invalid 
 			&& !this.$v.form.accountnumber.$invalid 
-			&& !this.$v.form.iban.$invalid
 			&& !this.$v.form.bankname.$invalid 
 			&& !this.$v.form.bankaddress.$invalid 
 			&& !this.$v.form.swiftcode.$invalid) {
@@ -1408,7 +1407,13 @@ export default {
 
 
 
-.register-stepper.v-stepper /deep/  {
+/deep/ .theme--light.v-stepper .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) .v-stepper__step__step {
+	background-color: #fff !important;
+	color: #000;
+	font-weight: bold;
+}
+
+/deep/ .register-stepper.v-stepper  {
 
 	background-color: transparent;
 	box-shadow: none;

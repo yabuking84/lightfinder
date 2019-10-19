@@ -139,13 +139,37 @@ methods:{
 
 
 
-<style>
+<style scoped lang="scss">
 /deep/ .v-data-iterator__actions__select,
 /deep/ .theme--light.v-data-iterator .v-data-iterator__actions {
 	text-shadow: 0px 0px 1px #fff;
-	font-size: 15px;	
-}	
+	font-size: 15px;
+}
 
+/deep/ .theme--light.v-data-iterator .v-data-iterator__actions__select .v-select .v-select__selection--comma,
+/deep/ .theme--light.v-select .v-select__selections,
+/deep/ .v-data-iterator__actions__select,
+/deep/ .theme--light.v-data-iterator .v-data-iterator__actions {
+	color: #fff  !important;
+}
+
+/deep/ .v-select__slot {
+	color: #fff;
+    text-shadow: 0px 0px 1px #fff;
+}
+
+/deep/ .theme--light.v-icon {
+	color: rgba(255, 255, 255, 0.54);
+}
+
+/deep/ .theme--light.v-text-field .v-input__slot:before {
+	border-color: rgba(255, 255, 255, 0.42);
+}
+
+/deep/ .v-text-field.v-input--is-focused .v-input__slot:after,
+/deep/ .theme--light.v-text-field:not(.v-input--has-state) .v-input__slot:hover:before {
+	border-color: rgba(255, 255, 255, 0.42);	
+}
 </style>
 
 
