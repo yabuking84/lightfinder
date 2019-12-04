@@ -6,6 +6,28 @@ import getters from './getters'
 import navigation from './modules/navigation'
 import swatch from './modules/swatch'
 
+// import axios from 'axios';
+import auth from './modules/auth'
+import cat from './modules/category'
+import byrInq from './modules/BuyerInquiry'
+import spplrInq from './modules/SupplierInquiry'
+// import adminHelper from './modules/adminHelper'
+import admnByr from './modules/AdminBuyer'
+import admnSpplr from './modules/AdminSupplier'
+import admnInq from './modules/AdminInquiries'
+import admnMyHm from './modules/AdminMyHome'
+
+import byrMyHm from './modules/BuyerMyHome'
+
+import inq from './modules/Inquiry'
+
+import sckts from './modules/Sockets'
+import ntfctns from './modules/Notifications'
+
+import msg from './modules/Messaging'
+ 
+import pymnt from './modules/Payment'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -15,6 +37,21 @@ export const store = new Vuex.Store({
   actions,
   modules: {
     navigation,
-    swatch
+    swatch,
+    auth,
+    sckts,
+    msg,
+    ntfctns,
+    cat,
+    inq,
+    byrInq,
+    byrMyHm,
+    spplrInq,
+    pymnt,
+    admnByr,
+    admnSpplr,
+    admnInq,
+    admnMyHm,
+
   }
 })

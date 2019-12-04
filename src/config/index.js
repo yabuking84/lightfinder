@@ -16,6 +16,11 @@ import schemes from './schemes'
 import navigation from './navigation'
 import swatch from './swatch'
 
+
+import auth from './auth'
+import main from './main'
+import countries from './countries'
+
 export const configSchemes = schemes
 export const configNavigation = navigation
 export const configSwatch = swatch
@@ -23,5 +28,8 @@ export const configSwatch = swatch
 export default {
   schemes,
   navigation,
-  swatch
+  swatch,
+  auth,
+  main,
+  countries,
 }

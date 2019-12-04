@@ -5,10 +5,10 @@
  * Ref: store/modules/swatch.js
  */
 export default {
-  navDrawerAlphaImage: '/static/sidebar-imgs/sb-bg7.jpg',
-  navDrawerScheme: 'md-black-500',
-  navToolbarScheme: 'md-white-500',
-  navFooterScheme: 'md-black-500',
-  alpha: false, // Transparent Background of the sidebar navigation
-  variant: false
+	navDrawerAlphaImage: '/static/sidebar-imgs/sb-bg7.jpg',
+	navDrawerScheme: 'md-black-500',
+	navToolbarScheme: 'md-white-500',
+	navFooterScheme: 'md-white-500',
+	alpha: false, // Transparent Background of the sidebar navigation
+	variant: false
 }

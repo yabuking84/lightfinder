@@ -3,7 +3,7 @@
     <v-flex xs12 center-align>
       <v-layout wrap>
         <v-flex xs12 class="text-xs-center">
-          <img src="/static/forgotpassword-vuse.svg" alt="" height="145px">
+          <!-- <img src="/static/forgotpassword-vuse.svg" alt="" height="145px"> -->
           <div class="headline">Forgot Password?</div>
           <p class="centered headline-caption-text mt-3 px-4">Provide your e-mail address to reset your password</p>
         </v-flex>
@@ -26,12 +26,12 @@
               <v-layout row wrap text-xs-center>
                 <!-- Login form submit -->
                 <v-flex xs12 class="no-mrpd">
-                  <v-btn
-                    color="act"
+                  <v-btn                    
                     type="submit"
                     :loading="loader"
                     :disabled="($v.$invalid || loader)"
-                    block
+                    block 
+                    flat class="black white--text mt-4"
                     :class="$v.$invalid ? '' : 'white--text'"
                   >Get OTP</v-btn>
                 </v-flex>
@@ -48,6 +48,7 @@
   import validationMixin from '@/mixins/validationMixin'
 
   export default {
+  	silentTranslationWarn: true,
     mixins: [validationMixin],
     validations: {
       email: { required, email }
@@ -58,31 +59,44 @@
         email: 'Email must be valid'
       }
     },
+
     created () {
     },
-    data () {
-      return {
+
+    data () { return {
         errors: null,
         email: null,
         loader: false
-      }
-    },
+    }},
+
     methods: {
-      submit () {
-        this.loader = true
-        setTimeout(() => {
-          this.loader = false
-          this.$emit('next', { email: this.email })
-        }, 2000)
-      },
-      resetForm () {
-        // this.form = Object.assign({}, defaultForm)
-        // this.$refs.sendpasscode.reset()
-        // this.$v.$reset()
-      }
+    	submit () {
+    		this.loader = true
+    		setTimeout(() => {
+    		  this.loader = false
+    		  this.$emit('next', { email: this.email })
+    		}, 3000)
+    	},
+    	resetForm () {
+			// this.form = Object.assign({}, defaultForm)
+			// this.$refs.sendpasscode.reset()
+			// this.$v.$reset()
+    	}
     },
+
     watch: {
 
     }
   }
 </script>
+
+
+<style scoped lang="scss">
+.theme--light.v-btn.v-btn--disabled {
+	color: rgba(255, 255, 255, 0.31) !important;
+}
+
+.theme--light.v-btn.v-btn--disabled /deep/ .v-btn__loading {
+    color: rgba(255, 255, 255, 1) !important;
+}
+</style>

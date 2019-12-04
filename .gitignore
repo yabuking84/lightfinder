@@ -8,6 +8,15 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 
+/_backup/
+/build/
+/config/
+/test/
+package.json
+
+
+
+
 # Editor directories and files
 .idea
 .vscode
@@ -15,3 +24,10 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+package-lock\.json
+
+package\.json
+
+
+config/

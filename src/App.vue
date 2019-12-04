@@ -1,40 +1,58 @@
 <template>
-  <v-app :dark="colorScheme.dark" :class="colorScheme.scheme">
-    <router-view name="header"/>
-    <router-view name="sidebar"/>
-    <v-content>
-      <router-view/>
-    </v-content>
-    <router-view name="footer"/>
-    <!-- <app-settings :drawer="subDrawer" @toggleSubDrawer="handleSubdrawer"></app-settings>     -->
-    <!-- Toggle settings button -->
-  </v-app>
+    <v-app 
+    :dark="colorScheme.dark" 
+    :class="colorScheme.scheme">
+
+        <router-view name="header"/>
+        <router-view name="sidebar"/>
+
+        <v-content :style="style">
+
+            <router-view/>
+        </v-content>
+
+
+        <router-view name="footer"/>
+
+        
+        <router-view name="dialog"/>
+
+    </v-app>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import AppSettings from '@/views/components/AppSettings'
 
 export default {
-  data () {
-    return {
-      subDrawer: true
-    }
-  },
-  computed: {
-    ...mapGetters({
-      colorScheme: 'colorScheme'
-    })
-  },
-  components: {
-    AppSettings
-  },
 
-  methods: {
-    handleSubdrawer (value) {
-      this.subDrawer = value
-    }
-  }
+components: {
+
+},
+
+data () { return {
+	subDrawer: false
+}},
+
+computed: {
+	...mapGetters({
+		colorScheme: 'colorScheme'
+	}),
+
+	style(){
+		
+		if(this.$route.meta.style) {			
+			return this.$route.meta.style;
+		} 
+		else {			
+			return {};
+		}
+	},
+
+},
+
+
+methods: {
+
+}
+
 }
 </script>
-
-
